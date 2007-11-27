@@ -1,0 +1,179 @@
+#ifndef MCNI_GEOMETRY_VECTOR3_H
+#error Vector3.icc not meaningful outside Vector3.h
+#endif
+
+
+#include <iostream>
+
+
+namespace mcni {
+  
+  // implementations
+  template <class T>
+  Vector3 <T>::Vector3 ( const T & xx, const T & yy, const T & zz) 
+    : x(m_data[0]), y(m_data[1]), z(m_data[2])
+  {
+    x = xx; y = yy; z = zz;
+  }
+  
+  template <class T>
+  Vector3 <T>::Vector3 ( const T & xx) 
+    : x(m_data[0]), y(m_data[1]), z(m_data[2])
+  {
+    x = y = z = xx;
+  }
+  
+  template <class T>
+  Vector3 <T>::Vector3 ( )
+    : x(m_data[0]), y(m_data[1]), z(m_data[2])
+  {
+    x = y = z = 0;
+  }
+  
+  template <class T>
+  Vector3 <T>::Vector3
+  ( const Vector3<T> & rhs )
+    : x(m_data[0]), y(m_data[1]), z(m_data[2])
+  {
+    std::copy( rhs.begin(), rhs.end(), begin() );
+  }
+  
+  template <class T>
+  const Vector3 <T> & Vector3<T>::operator = ( const Vector3<T> & rhs )
+  {
+    std::copy( rhs.begin(), rhs.end(), begin() );
+    return *this;
+  }
+  
+  template <class T>
+  Vector3 <T> & 
+  Vector3 <T>::normalize
+  ( void) 
+  {
+    *this = (*this)*(1.0/length()); return *this;
+  }
+  
+  template <class T>
+  T 
+  Vector3<T>::length
+  (void) const
+  { 
+    return sqrt(fabs(x)*fabs(x)+fabs(y)*fabs(y)+fabs(z)*fabs(z));
+  }
+  
+  // operators
+  template <class T>
+  const T & Vector3<T>::operator[]
+  ( size_t i ) const
+  {
+    if (i<3) return m_data[i];
+    else  {
+      const char * msg = "out of bound";
+      std::cerr << "Vector3: " << msg << std::endl;
+      throw (msg);
+    }
+  }
+  
+  template <class T>
+  T & Vector3<T>::operator[]
+  ( size_t i ) 
+  {
+    if (i<3) return m_data[i];
+    else  {
+      const char * msg = "out of bound";
+      std::cerr << "Vector3: " << msg << std::endl;
+      throw (msg);
+    }
+  }
+  
+  template <class T>
+  Vector3<T> Vector3<T>::operator+(const Vector3<T> & b) const
+  {
+    return Vector3<T>( x +b.x, y +b.y, z +b.z);
+  }
+  
+  template <class T>
+  const Vector3<T> & Vector3<T>::operator+=(const Vector3<T> & b)
+  {
+    x += b.x;
+    y += b.y;
+    z += b.z;
+    
+    return *this;
+  }
+  
+  template <class T>
+  Vector3<T> Vector3<T>::operator-(const Vector3<T> & b) const
+  {
+    return Vector3<T>( x -b.x, y -b.y, z -b.z);
+  }
+  
+  template <class T>
+  const Vector3<T> & Vector3<T>::operator-=(const Vector3<T> & b)
+  {
+    x -= b.x;
+    y -= b.y;
+    z -= b.z;
+    
+    return *this;
+  }
+  
+  template <class T>
+  Vector3<T> Vector3<T>::operator-() const
+  {
+    return Vector3<T>( -x, -y, -z);
+  }
+  
+  template <class T>
+  Vector3<T> Vector3<T>::operator*(T n) const
+  {
+    return Vector3<T>( n*x, n*y, n*z);
+  }
+  
+  template <class T>
+  Vector3<T> Vector3<T>::operator*(const Vector3<T> & b) const
+  {
+    return Vector3<T>( y*b.z-z*b.y, z*b.x-x*b.z, x*b.y-y*b.x);
+  }
+  
+  template <class T>
+  T operator|( const Vector3<T> & a, const Vector3<T> & b)
+  {
+    return a.x*b.x+a.y*b.y+a.z*b.z;
+  }
+  
+  template <class T>
+  Vector3<T> operator*( T n, const Vector3<T> & a)
+  {
+    return a*n;
+  }
+  
+  template <class T>
+  std::ostream & operator<<(std::ostream & os, const Vector3<T> &v)
+  {
+    os <<'(' <<v.x <<',' <<v.y <<',' <<v.z <<')';
+    return os;
+  }
+  
+  
+  //! calculate "stars" of 3D vector3 x,y,z
+  template <class FLOAT>
+  void get_inversions( const Vector3<FLOAT> &x, const Vector3<FLOAT> &y, 
+		       const Vector3<FLOAT> &z, Vector3<FLOAT> &x_star, 
+		       Vector3<FLOAT> &y_star, Vector3<FLOAT> &z_star )
+  {
+    Vector3<FLOAT> yXz = y*z;
+    Vector3<FLOAT> zXx = z*x;
+    Vector3<FLOAT> xXy = x*y;
+    
+    yXz.normalize();
+    zXx.normalize();
+    xXy.normalize();
+    
+    x_star = yXz*(1./x.length());
+    y_star = zXx*(1./y.length());
+    z_star = xXy*(1./z.length());
+  }
+  
+  
+}
