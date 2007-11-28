@@ -30,6 +30,7 @@ EXPORT_HEADERS = \
 	Neutron.h \
 	Spin.h Spin.icc \
 	State.h State.icc \
+	Ceventbuffer.h \
 
 
 # version

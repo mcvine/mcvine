@@ -36,6 +36,7 @@ PROJ_SRCS = \
 	EventBuffer.cc \
 	Spin.cc \
 	State.cc \
+	Ceventbuffer.cc \
 
 
 PROJ_TIDY += $(PROJ_SRCS)
@@ -58,6 +59,9 @@ Spin.cc: ../neutron/Spin.cc
 
 State.cc: ../neutron/State.cc
 	cp ../neutron/State.cc .
+
+Ceventbuffer.cc: ../neutron/Ceventbuffer.cc
+	cp ../neutron/Ceventbuffer.cc .
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

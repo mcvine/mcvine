@@ -1,51 +1,57 @@
 # -*- Makefile -*-
 #
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
 #                               Michael A.G. Aivazis
 #                        California Institute of Technology
-#                        (C) 1998-2004  All Rights Reserved
+#                        (C) 1998-2005  All Rights Reserved
 #
-# <LicenseText>
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-PROJECT = simulation
-PACKAGE = tests
 
-PROJ_CLEAN += $(PROJ_CPPTESTS)
+PROJECT = mcni/tests
+PACKAGE = libmcni
 
-PROJ_PYTESTS =  alltests.py
-PROJ_CPPTESTS = testVector3 testNeutronEvent
-PROJ_TESTS = $(PROJ_PYTESTS) $(PROJ_CPPTESTS)
-PROJ_LIBRARIES = -L$(BLD_LIBDIR) -ljournal -lmcni
+
+# directory structure
+
+BUILD_DIRS = \
+	test \
+	math \
+	geometry \
+	neutron \
+	sharedlib \
+
+OTHER_DIRS = \
+
+RECURSE_DIRS = $(BUILD_DIRS) $(OTHER_DIRS)
 
 
 #--------------------------------------------------------------------------
-#
+# build the library
+all: 
+	BLD_ACTION="all" $(MM) recurse
 
-all: $(PROJ_TESTS)
+test: 
+	BLD_ACTION="test" $(MM) recurse
 
-test:
-	for test in $(PROJ_TESTS) ; do $${test}; done
+distclean::
+	BLD_ACTION="distclean" $(MM) recurse
 
-release: tidy
-	cvs release .
+clean::
+	BLD_ACTION="clean" $(MM) recurse
 
-update: clean
-	cvs update .
+tidy::
+	BLD_ACTION="tidy" $(MM) recurse
 
 #--------------------------------------------------------------------------
-#
 
-testVector3: testVector3.cc $(BLD_LIBDIR)/libsimulation_common.$(EXT_SAR)
-	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ testVector3.cc $(PROJ_LIBRARIES)
-
-testNeutronEvent: testNeutronEvent.cc $(BLD_LIBDIR)/libsimulation_common.$(EXT_SAR)
-	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ testNeutronEvent.cc $(PROJ_LIBRARIES)
 
 
 # version
-# $Id: Make.mm 620 2007-07-11 23:24:50Z linjiao $
+# $Id$
 
+#
 # End of file
+

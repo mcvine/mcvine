@@ -15,11 +15,11 @@
 #include <iostream>
 #include "mcni/geometry/Vector3.h"
 #include "mcni/neutron/Event.h"
-
+#include "mcni/test/assert.h"
 
 using namespace mcni;
 
-void basicTests()
+void test_basics()
 {
   Vector3<double> v(0,0,3000), r(0,0,0);
   Neutron::Spin s;
@@ -28,10 +28,26 @@ void basicTests()
   std::cout << ev << std::endl;
 }
 
+void test2()
+{
+  typedef Vector3<double> v3_t;
+
+  v3_t v(0,0,3000), r(0,0,0);
+  Neutron::Spin s;
+  Neutron::State state(r,v,s);
+  Neutron::Event ev(state, 0, 1);
+  assertVectorAlmostEqual( v, ev.state.velocity );
+  assertVectorAlmostEqual( r, ev.state.position );
+  assertAlmostEqual( ev.time, 0 );
+  assertAlmostEqual( ev.probability, 1 );
+  assertAlmostEqual( ev.state.spin.s1, s.s1 );
+  assertAlmostEqual( ev.state.spin.s2, s.s2 );  
+}
 
 int main()
 {
-  basicTests();
+  test_basics();
+  test2();
 }
 
 // version
