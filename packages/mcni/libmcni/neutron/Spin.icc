@@ -1,0 +1,40 @@
+// -*- C++ -*-
+// 
+//  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// 
+//                                 Jiao Lin
+//                      California Institute of Technology
+//                      (C) 2004-2007  All Rights Reserved
+// 
+//  <LicenseText>
+// 
+//  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// 
+
+
+#ifndef MCNI_NEUTRON_SPIN_H
+#error Spin.icc not meaningful outside Spin.h
+#else
+
+
+mcni::Neutron::Spin::Spin (double i_s1, double i_s2)
+  : s1(i_s1), s2(i_s2)
+{}
+
+mcni::Neutron::Spin::Spin()
+  : s1(0), s2(0)
+{}
+
+void mcni::Neutron::Spin::print( std::ostream &os ) const 
+{
+  os << "(" << s1 << ", " << s2 <<")" ;
+}
+
+
+#endif
+
+
+// version
+// $Id: neutron_buffer.h 598 2007-01-21 19:48:06Z linjiao $
+
+// End of file

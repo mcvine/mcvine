@@ -148,13 +148,6 @@ namespace mcni {
     return a*n;
   }
   
-  template <class T>
-  std::ostream & operator<<(std::ostream & os, const Vector3<T> &v)
-  {
-    os <<'(' <<v.x <<',' <<v.y <<',' <<v.z <<')';
-    return os;
-  }
-  
   
   //! calculate "stars" of 3D vector3 x,y,z
   template <class FLOAT>
@@ -176,4 +169,15 @@ namespace mcni {
   }
   
   
+} // mcni:
+
+
+template <class T>
+std::ostream & operator<<(std::ostream & os, const mcni::Vector3<T> &v)
+{
+  os <<'(' <<v.x <<',' <<v.y <<',' <<v.z <<')';
+  return os;
 }
+  
+
+

@@ -77,9 +77,6 @@ namespace mcni{
   template <class T>
   Vector3 <T> operator*(T n, const Vector3 <T> & a);
   
-  template <class T>
-  std::ostream & operator<<(std::ostream & os, const Vector3 <T> &v);
-  
   
   // specializations
   typedef Vector3<double> dVector3;
@@ -109,6 +106,11 @@ namespace mcni{
 
 } // mcni:
 
+
+// 
+template <class T>
+std::ostream & operator<<(std::ostream & os, const mcni::Vector3 <T> &v);
+  
 
 #include "Vector3.icc"
 

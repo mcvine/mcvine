@@ -1,0 +1,43 @@
+// -*- C++ -*-
+// 
+//  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// 
+//                                  Jiao Lin
+//                        California Institute of Technology
+//                        (C) 2004-2007  All Rights Reserved
+// 
+//  <LicenseText>
+// 
+//  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// 
+
+
+#ifndef MCNI_NEUTRON_EVENT_H
+#error Event.icc not meaningful outside Event.h
+#else
+
+
+mcni::Neutron::Event::Event
+( const State &i_state, double i_time, double i_probability ) 
+  : state(i_state), time(i_time), probability(i_probability) 
+{}
+      
+      
+mcni::Neutron::Event::Event() 
+  : state(), time(0), probability(1)
+{}
+
+
+void mcni::Neutron::Event::print( std::ostream &os) const 
+{
+  os << "Neutron state=" << state << ",time=" << time
+     << "probability="<< probability;
+}
+      
+#endif
+
+
+// version
+// $Id: neutron_buffer.h 598 2007-01-21 19:48:06Z linjiao $
+
+// End of file

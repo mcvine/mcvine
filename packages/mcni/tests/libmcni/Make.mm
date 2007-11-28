@@ -16,7 +16,7 @@ PACKAGE = tests
 PROJ_CLEAN += $(PROJ_CPPTESTS)
 
 PROJ_PYTESTS =  alltests.py
-PROJ_CPPTESTS = testVector3
+PROJ_CPPTESTS = testVector3 testNeutronEvent
 PROJ_TESTS = $(PROJ_PYTESTS) $(PROJ_CPPTESTS)
 PROJ_LIBRARIES = -L$(BLD_LIBDIR) -ljournal -lmcni
 
@@ -40,6 +40,9 @@ update: clean
 
 testVector3: testVector3.cc $(BLD_LIBDIR)/libsimulation_common.$(EXT_SAR)
 	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ testVector3.cc $(PROJ_LIBRARIES)
+
+testNeutronEvent: testNeutronEvent.cc $(BLD_LIBDIR)/libsimulation_common.$(EXT_SAR)
+	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ testNeutronEvent.cc $(PROJ_LIBRARIES)
 
 
 # version

@@ -21,6 +21,7 @@ BUILD_DIRS = \
 	test \
 	math \
 	geometry \
+	neutron \
 	sharedlib \
 
 OTHER_DIRS = \

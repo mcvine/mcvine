@@ -1,0 +1,42 @@
+// -*- C++ -*-
+// 
+//  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// 
+//                                 Jiao Lin
+//                      California Institute of Technology
+//                      (C) 2004-2007  All Rights Reserved
+// 
+//  <LicenseText>
+// 
+//  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// 
+
+
+#ifndef MCNI_NEUTRON_STATE_H
+#error State.icc not meaningful outside State.h
+#else
+
+
+mcni::Neutron::State::State
+(const vector3_t &i_position, const vector3_t &i_velocity, const Spin & i_s) 
+  : position(i_position), velocity(i_velocity), spin(i_s)
+{}
+      
+mcni::Neutron::State::State()
+  : position(vector3_t(0,0,0)), velocity(vector3_t(0,0,0)), spin()
+{ }
+      
+void mcni::Neutron::State::print( std::ostream &os ) const {
+  os << "position=" << position <<", "
+     << "velocity=" << velocity <<", "
+     << "spin=" << spin;
+} 
+      
+
+
+#endif // NEUTRON_NEUTRON_STATE_H
+
+// version
+// $Id: neutron_buffer.h 598 2007-01-21 19:48:06Z linjiao $
+
+// End of file

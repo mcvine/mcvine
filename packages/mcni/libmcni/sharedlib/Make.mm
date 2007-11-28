@@ -32,6 +32,10 @@ all: $(PROJ_SAR) export
 PROJ_SRCS = \
 	exception.cc \
 	Vector3.cc \
+	Event.cc \
+	EventBuffer.cc \
+	Spin.cc \
+	State.cc \
 
 
 PROJ_TIDY += $(PROJ_SRCS)
@@ -42,6 +46,18 @@ exception.cc: ../test/exception.cc
 
 Vector3.cc: ../geometry/Vector3.cc
 	cp ../geometry/Vector3.cc .
+
+Event.cc: ../neutron/Event.cc
+	cp ../neutron/Event.cc .
+
+EventBuffer.cc: ../neutron/EventBuffer.cc
+	cp ../neutron/EventBuffer.cc .
+
+Spin.cc: ../neutron/Spin.cc
+	cp ../neutron/Spin.cc .
+
+State.cc: ../neutron/State.cc
+	cp ../neutron/State.cc .
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
