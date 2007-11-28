@@ -1,0 +1,42 @@
+// -*- C++ -*-
+//
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//
+//                                   Jiao Lin
+//                      California Institute of Technology
+//                        (C) 2007  All Rights Reserved
+//
+// {LicenseText}
+//
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//
+
+#ifndef MCNI_GEOMETRY_ROTATIONMATRIX_H
+#error RotationMatrix.icc not meaningful outside RotationMatrix.h
+#else
+
+template <typename NumberType>
+mcni::RotationMatrix<NumberType>::RotationMatrix ()
+  :base_t()
+{}
+
+template <typename NumberType>
+mcni::RotationMatrix<NumberType>::RotationMatrix 
+( element_t m11, element_t m12, element_t m13,
+  element_t m21, element_t m22, element_t m23,
+  element_t m31, element_t m32, element_t m33)
+  :base_t(m11, m12, m13, 
+	  m21, m22, m23,
+	  m31, m32, m33)
+{}
+
+
+#endif
+
+
+// version
+// $Id$
+
+// Generated automatically by CxxMill on Wed Nov 28 10:43:14 2007
+
+// End of file 

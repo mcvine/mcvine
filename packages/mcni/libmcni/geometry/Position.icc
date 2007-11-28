@@ -1,0 +1,50 @@
+// -*- C++ -*-
+//
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//
+//                                   Jiao Lin
+//                      California Institute of Technology
+//                        (C) 2007  All Rights Reserved
+//
+// {LicenseText}
+//
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//
+
+#ifndef MCNI_GEOMETRY_POSITION_H
+#error Position.icc not meaningful outside Position.h
+#else
+
+template <typename NumberType>
+mcni::Position<NumberType>::Position
+( const NumberType &x, const NumberType &y,  const NumberType &z)
+  :base_t(x,y,z)
+{}
+
+
+template <typename NumberType>
+mcni::Position<NumberType>::Position
+( const base_t & v )
+  :base_t(v)
+{}
+
+
+
+#include "matrix3_operators.h"
+template <typename NumberType>
+mcni::Position<NumberType> operator *
+(const mcni::Matrix3<NumberType> &m, const mcni::Position<NumberType> & r)
+{
+  using namespace mcni::matrix3_operators;
+  return dot_mv( m * r );
+}
+
+#endif
+
+
+// version
+// $Id$
+
+// Generated automatically by CxxMill on Wed Nov 28 10:43:14 2007
+
+// End of file 

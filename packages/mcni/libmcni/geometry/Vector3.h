@@ -31,8 +31,10 @@ namespace mcni{
     T &y;
     T &z;
     
-    // meta-data
+    // types
     typedef T value_type;
+
+    //
     inline static size_t size() { return 3; }
     
     // iterators
@@ -43,7 +45,7 @@ namespace mcni{
     inline const_iterator end() const {return m_data+3;}
     inline iterator end() {return m_data+3;}
     
-    // constructors
+    // meta-methods
     Vector3 ( const T & xx, const T & yy, const T & zz) ;
     Vector3 ( const T & xx ) ;
     Vector3 ( );

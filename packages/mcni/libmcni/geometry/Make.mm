@@ -25,7 +25,13 @@ all: export
 export:: export-package-headers
 
 EXPORT_HEADERS = \
-    Vector3.h Vector3.icc \
+	Vector3.h Vector3.icc \
+	Matrix3.h Matrix3.icc \
+	matrix3_operators.h \
+	Position.h Position.icc \
+	Velocity.h Velocity.icc \
+	RotationMatrix.h RotationMatrix.icc \
+	coords_transform.h coords_transform.icc \
 
 
 # version

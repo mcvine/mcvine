@@ -16,7 +16,7 @@ PACKAGE = tests
 PROJ_CLEAN += $(PROJ_CPPTESTS)
 
 PROJ_PYTESTS =  alltests.py
-PROJ_CPPTESTS = testVector3 
+PROJ_CPPTESTS = testVector3 testMatrix3 testcoords_transform
 PROJ_TESTS = $(PROJ_PYTESTS) $(PROJ_CPPTESTS)
 PROJ_LIBRARIES = -L$(BLD_LIBDIR) -ljournal -lmcni
 
@@ -38,8 +38,14 @@ update: clean
 #--------------------------------------------------------------------------
 #
 
-testVector3: testVector3.cc $(BLD_LIBDIR)/libsimulation_common.$(EXT_SAR)
+testVector3: testVector3.cc 
 	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ testVector3.cc $(PROJ_LIBRARIES)
+
+testMatrix3: testMatrix3.cc 
+	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ testMatrix3.cc $(PROJ_LIBRARIES)
+
+testcoords_transform: testcoords_transform.cc 
+	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ testcoords_transform.cc $(PROJ_LIBRARIES)
 
 
 # version

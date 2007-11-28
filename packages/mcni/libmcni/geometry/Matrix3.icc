@@ -1,0 +1,120 @@
+// -*- C++ -*-
+//  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// 
+//                                  Jiao Lin
+//                        California Institute of Technology
+//                        (C) 1998-2004  All Rights Reserved
+// 
+//  <LicenseText>
+// 
+//  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// 
+
+#ifndef MCNI_GEOMETRY_MATRIX3_H
+#error Matrix3.icc not meaningful outside Matrix3.h
+#else
+
+
+// helper
+template <typename T>
+void swap( T &a, T &b )
+{
+  T tmp = a;
+  a = b;
+  b = tmp;
+  return;
+}
+
+
+// meta-methods
+template <typename NumberType>
+mcni::Matrix3<NumberType>::Matrix3
+( const v3_t & xx, const v3_t & yy, const v3_t & zz)
+  : base_t( xx, yy, zz )
+{}
+
+
+template <typename NumberType>
+mcni::Matrix3<NumberType>::Matrix3
+( const v3_t & xx )
+  : base_t( xx )
+{}
+
+
+template <typename NumberType>
+mcni::Matrix3<NumberType>::Matrix3
+( )
+  : base_t( )
+{}
+
+
+template <typename NumberType>
+mcni::Matrix3<NumberType>::Matrix3
+( const m3_t & rhs )
+  : base_t( rhs ) 
+{}
+
+
+template <typename NumberType>
+mcni::Matrix3<NumberType>::Matrix3
+( NumberType m11, NumberType m12, NumberType m13,
+  NumberType m21, NumberType m22, NumberType m23,
+  NumberType m31, NumberType m32, NumberType m33)
+{
+  (*this)[0][0] = m11; (*this)[0][1] = m12; (*this)[0][2] = m13;
+  (*this)[1][0] = m21; (*this)[1][1] = m22; (*this)[1][2] = m23;
+  (*this)[2][0] = m31; (*this)[2][1] = m32; (*this)[2][2] = m33;
+}
+
+
+// operators  
+template <typename NumberType>
+NumberType & 
+mcni::Matrix3<NumberType>::operator () ( size_t x, size_t y ) 
+{ 
+  return (*this)[x][y];
+}
+
+template <typename NumberType>
+const NumberType & 
+mcni::Matrix3<NumberType>::operator () ( size_t x, size_t y ) const 
+{
+  return (*this)[x][y];
+}
+
+
+#include "matrix3_operators.h"
+template <typename NumberType>
+//this does not work
+//mcni::Matrix3<NumberType>::v3_t mcni::Matrix3<NumberType>::operator *
+//have to use
+mcni::Vector3<NumberType> mcni::Matrix3<NumberType>::operator *
+(const mcni::Matrix3<NumberType>::v3_t &v) const
+{
+  using namespace mcni::matrix3_operators;
+  return dot_mv( *this , v );
+}
+
+
+// methods
+template <typename NumberType>
+mcni::Matrix3<NumberType> & mcni::Matrix3<NumberType>::transpose
+()
+{
+  m3_t &m = *this;
+
+  swap( m(0,1), m(1,0) );
+  swap( m(0,2), m(2,0) );
+  swap( m(1,2), m(2,1) );
+  
+  return *this;
+}
+
+
+#endif
+
+
+// version
+// $Id: matrix3.icc 2 2005-06-08 18:28:09Z linjiao $
+
+// End of file

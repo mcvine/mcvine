@@ -1,0 +1,88 @@
+// -*- C++ -*-
+//  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// 
+//                                  Jiao Lin
+//                        California Institute of Technology
+//                        (C) 2005  All Rights Reserved
+// 
+//  <LicenseText>
+// 
+//  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// 
+
+
+#ifndef MCNI_GEOMETRY_COORDS_TRANSFORM_H
+#error coords_transform.icc not meaningful outside coords_transform.h
+#else
+
+
+// absolute --> relative
+template <typename NumberType>
+void mcni::abs2rel
+( Position<NumberType> &r, 
+  const Position<NumberType> & cs_pos, const RotationMatrix<NumberType> & cs_rot)
+{
+  r = Position<NumberType>( cs_rot * ( r - cs_pos ) );
+}
+
+
+template <typename NumberType>
+void mcni::abs2rel
+( Position<NumberType> &r, 
+  const Position<NumberType> & cs_pos)
+{
+  r -= cs_pos;
+}
+
+
+template <typename NumberType>
+void mcni::abs2rel
+( Velocity<NumberType> &v, 
+  const RotationMatrix<NumberType> & cs_rot)
+{
+  v = cs_rot * v;
+}
+
+
+
+// relative --> absolute
+template <typename NumberType>
+void mcni::rel2abs
+( Position<NumberType> &r,
+  const Position<NumberType> & cs_pos, const RotationMatrix<NumberType> & cs_rot)
+{
+  static RotationMatrix<NumberType> rot;
+  rot = cs_rot;
+  rot.transpose();
+  r = rot * r + cs_pos;
+}
+
+
+template <typename NumberType>
+void mcni::rel2abs
+( Position<NumberType> &r,
+  const Position<NumberType> & cs_pos)
+{
+  r += cs_pos;
+}
+
+
+template <typename NumberType>
+void mcni::rel2abs
+( Velocity<NumberType> &v,
+  const RotationMatrix<NumberType> & cs_rot)
+{
+  static RotationMatrix<NumberType> rot;
+  rot = cs_rot;
+  rot.transpose();
+  v = rot * v;
+}
+
+
+#endif
+
+
+// version
+// $Id: coords_change.cc 7 2005-06-09 21:36:49Z linjiao $
+
+// End of file
