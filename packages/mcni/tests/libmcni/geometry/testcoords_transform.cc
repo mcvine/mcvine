@@ -95,7 +95,7 @@ void test6()
   
   rel2abs( v, rot );
   
-  assertVectorAlmostEqual( v, v_t(2,-1,3) );
+  assertVectorAlmostEqual( v, v_t(-2,1,3) );
 }
 
 
@@ -105,6 +105,9 @@ int main()
   test1();
   test2();
   test3();
+  test4();
+  test5();
+  test6();
 }
 
 // version
