@@ -18,10 +18,12 @@ PACKAGE = libmcni
 # directory structure
 
 BUILD_DIRS = \
+	headers \
 	test \
 	math \
 	geometry \
 	neutron \
+	mcni \
 	sharedlib \
 
 OTHER_DIRS = \

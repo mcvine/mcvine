@@ -21,6 +21,7 @@ BUILD_DIRS = \
 	math \
 	geometry \
 	neutron \
+	mcni \
 	sharedlib \
 
 OTHER_DIRS = \

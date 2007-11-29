@@ -1,0 +1,43 @@
+// -*- C++ -*-
+//
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//
+//                                   Jiao Lin
+//                      California Institute of Technology
+//                         (C) 2005 All Rights Reserved  
+//
+// {LicenseText}
+//
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//
+
+
+#ifndef MCNI_EXCEPTIONS_H
+#error exceptions.icc not meaningful outside exceptions.h
+#else
+
+
+void
+mcni::throw_fatal_path_error
+( const char *channel, const journal::loc3_t &where, const char *msg )
+{
+  throw_( channel, where, msg);
+}
+
+void
+mcni::throw_fatal_path_error
+( const char *channel, const journal::loc2_t &where, const char *msg )
+{
+  throw_( channel, where, msg);
+}
+
+
+#endif
+
+
+// version
+// $Id: Exceptions.cc 41 2005-06-13 07:29:25Z linjiao $
+
+// Generated automatically by CxxMill on Thu Apr  7 15:02:19 2005
+
+// End of file 

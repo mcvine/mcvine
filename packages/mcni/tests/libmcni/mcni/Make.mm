@@ -16,7 +16,7 @@ PACKAGE = tests
 PROJ_CLEAN += $(PROJ_CPPTESTS)
 
 PROJ_PYTESTS =  alltests.py
-PROJ_CPPTESTS = testEvent testCeventbuffer
+PROJ_CPPTESTS = testAbstractNeutronScatterer
 PROJ_TESTS = $(PROJ_PYTESTS) $(PROJ_CPPTESTS)
 PROJ_LIBRARIES = -L$(BLD_LIBDIR) -ljournal -lmcni
 
@@ -38,11 +38,8 @@ update: clean
 #--------------------------------------------------------------------------
 #
 
-testCeventbuffer: testCeventbuffer.cc 
-	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ testCeventbuffer.cc $(PROJ_LIBRARIES)
-
-testEvent: testEvent.cc 
-	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ testEvent.cc $(PROJ_LIBRARIES)
+testAbstractNeutronScatterer: testAbstractNeutronScatterer.cc
+	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ testAbstractNeutronScatterer.cc $(PROJ_LIBRARIES)
 
 
 # version

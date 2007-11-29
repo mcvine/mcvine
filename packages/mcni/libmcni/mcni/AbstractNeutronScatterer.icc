@@ -1,0 +1,78 @@
+// -*- C++ -*-
+//
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//
+//                                   Jiao Lin
+//                      California Institute of Technology
+//                         (C) 2005 All Rights Reserved  
+//
+// {LicenseText}
+//
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//
+
+
+#ifndef MCNI_ABSTRACTNEUTRONSCATTERER_H
+#error AbstractNeutronScatterer.icc not meaningful outside AbstractNeutronScatterer.h
+#else
+
+#include <portinfo>
+#include "journal/error.h"
+#include "journal/debug.h"
+
+#include "mcni/neutron.h"
+
+#include "exceptions.h"
+
+
+void 
+mcni::absorb(Neutron::Event &ev)
+{
+#ifdef DEEPDEBUG
+  journal::debug_t debug("scatter");
+  debug << journal::at(__HERE__)
+	<<"* Warning: neutron " << ev << " absorbed."
+	<< journal::endl;
+#endif
+  ev.probability = -1;
+  throw neutron_absorbed();
+}
+
+
+bool 
+mcni::invalid(const Neutron::Event &ev)
+{
+  return (ev.probability < 0.0);
+}
+
+
+void
+mcni::AbstractNeutronScatterer::absorb
+(Neutron::Event &ev) 
+  const
+{
+  mcni::absorb( ev );
+}
+
+
+void
+mcni::AbstractNeutronScatterer::scatter( Neutron::Event & )
+{
+  journal::error_t err("AbstractNeutronScatterer");
+  
+  err << journal::at(__HERE__)
+      << "This function should not be called, unless the component is a detector!"
+      << journal::endl;
+  throw ;
+}
+
+
+#endif
+
+
+// version
+// $Id: AbstractNeutronScatterer.cc 591 2006-09-25 07:17:26Z linjiao $
+
+// Generated automatically by CxxMill on Thu Apr  7 14:44:15 2005
+
+// End of file 
