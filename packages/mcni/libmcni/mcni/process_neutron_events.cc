@@ -111,8 +111,6 @@ size_t mcni::process
 
 
 // version
-// $Id: AbstractNeutronScatterer.cc 591 2006-09-25 07:17:26Z linjiao $
-
-// Generated automatically by CxxMill on Thu Apr  7 14:44:15 2005
+// $Id$
 
 // End of file 
