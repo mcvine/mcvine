@@ -43,11 +43,12 @@ namespace mcni { namespace Neutron {
     struct State{
 
       // types
-      typedef Vector3<double> vector3_t;
+      typedef Position<double> position_t;
+      typedef Velocity<double> velocity_t;
 
       // meta-methods
-      inline State(const vector3_t &i_position, 
-		   const vector3_t &i_velocity,
+      inline State(const position_t &i_position, 
+		   const velocity_t &i_velocity,
 		   const Spin & i_s) ;
       inline State();
       
@@ -57,7 +58,8 @@ namespace mcni { namespace Neutron {
       inline void print( std::ostream &os ) const;
 
       // data
-      vector3_t position, velocity;
+      position_t position;
+      velocity_t velocity;
       Spin spin;
     };
     

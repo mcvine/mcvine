@@ -16,7 +16,7 @@ PACKAGE = tests
 PROJ_CLEAN += $(PROJ_CPPTESTS)
 
 PROJ_PYTESTS =  alltests.py
-PROJ_CPPTESTS = testEvent testCeventbuffer
+PROJ_CPPTESTS = testEvent testCeventbuffer testcoords_transform
 PROJ_TESTS = $(PROJ_PYTESTS) $(PROJ_CPPTESTS)
 PROJ_LIBRARIES = -L$(BLD_LIBDIR) -ljournal -lmcni
 
@@ -43,6 +43,9 @@ testCeventbuffer: testCeventbuffer.cc
 
 testEvent: testEvent.cc 
 	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ testEvent.cc $(PROJ_LIBRARIES)
+
+testcoords_transform: testcoords_transform.cc 
+	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ testcoords_transform.cc $(PROJ_LIBRARIES)
 
 
 # version

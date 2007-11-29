@@ -31,11 +31,6 @@ namespace mcni {
 }
 
 
-template <typename NumberType>
-mcni::Position<NumberType> operator *
-(const mcni::RotationMatrix<NumberType> & m, const mcni::Position<NumberType> &r );
-
-
 #include "Position.icc"
 
 #endif

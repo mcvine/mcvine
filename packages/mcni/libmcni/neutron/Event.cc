@@ -14,6 +14,8 @@
 
 #include <iostream>
 #include "mcni/geometry/Vector3.h"
+#include "mcni/geometry/Position.h"
+#include "mcni/geometry/Velocity.h"
 #include "mcni/neutron/Event.h"
 
 std::ostream & operator <<

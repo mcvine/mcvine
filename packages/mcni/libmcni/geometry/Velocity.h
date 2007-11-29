@@ -30,12 +30,6 @@ namespace mcni {
 
 }
 
-
-template <typename NumberType>
-mcni::Velocity<NumberType> operator *
-(const mcni::RotationMatrix<NumberType> & m, const mcni::Velocity<NumberType> &r );
-
-
 #include "Velocity.icc"
 
 #endif

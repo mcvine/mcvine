@@ -14,6 +14,8 @@
 
 #include <iostream>
 #include "mcni/geometry/Vector3.h"
+#include "mcni/geometry/Position.h"
+#include "mcni/geometry/Velocity.h"
 #include "mcni/neutron/Event.h"
 #include "mcni/test/assert.h"
 
@@ -21,7 +23,9 @@ using namespace mcni;
 
 void test_basics()
 {
-  Vector3<double> v(0,0,3000), r(0,0,0);
+  Position<double> r(0,0,0);
+  Velocity<double> v(0,0,3000);
+
   Neutron::Spin s;
   Neutron::State state(r,v,s);
   Neutron::Event ev(state, 0, 1);
@@ -30,9 +34,10 @@ void test_basics()
 
 void test2()
 {
-  typedef Vector3<double> v3_t;
+  typedef Position<double> r_t;
+  typedef Velocity<double> v_t;
 
-  v3_t v(0,0,3000), r(0,0,0);
+  v_t v(0,0,3000); r_t r(0,0,0);
   Neutron::Spin s;
   Neutron::State state(r,v,s);
   Neutron::Event ev(state, 0, 1);

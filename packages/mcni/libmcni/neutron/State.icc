@@ -18,12 +18,12 @@
 
 
 mcni::Neutron::State::State
-(const vector3_t &i_position, const vector3_t &i_velocity, const Spin & i_s) 
+(const position_t &i_position, const velocity_t &i_velocity, const Spin & i_s) 
   : position(i_position), velocity(i_velocity), spin(i_s)
 {}
       
 mcni::Neutron::State::State()
-  : position(vector3_t(0,0,0)), velocity(vector3_t(0,0,0)), spin()
+  : position(position_t(0,0,0)), velocity(velocity_t(0,0,0)), spin()
 { }
       
 void mcni::Neutron::State::print( std::ostream &os ) const {

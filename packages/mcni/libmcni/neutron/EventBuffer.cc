@@ -14,6 +14,8 @@
 #include <iostream>
 #include <vector>
 #include "mcni/geometry/Vector3.h"
+#include "mcni/geometry/Position.h"
+#include "mcni/geometry/Velocity.h"
 #include "mcni/neutron/EventBuffer.h"
 
 

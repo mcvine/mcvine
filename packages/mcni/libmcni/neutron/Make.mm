@@ -31,6 +31,7 @@ EXPORT_HEADERS = \
 	Spin.h Spin.icc \
 	State.h State.icc \
 	Ceventbuffer.h \
+	coords_transform.h coords_transform.icc \
 
 
 # version

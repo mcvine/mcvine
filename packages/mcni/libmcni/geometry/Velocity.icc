@@ -29,16 +29,6 @@ mcni::Velocity<NumberType>::Velocity
 {}
 
 
-#include "matrix3_operators.h"
-template <typename NumberType>
-mcni::Velocity<NumberType> operator *
-(const mcni::Matrix3<NumberType> &m, const mcni::Velocity<NumberType> & v)
-{
-  using namespace mcni::matrix3_operators;
-  return dot_mv( m * v );
-}
-
-
 #endif
 
 

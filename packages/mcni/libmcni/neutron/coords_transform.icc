@@ -1,0 +1,81 @@
+// -*- C++ -*-
+//  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// 
+//                                  Jiao Lin
+//                        California Institute of Technology
+//                        (C) 2005  All Rights Reserved
+// 
+//  <LicenseText>
+// 
+//  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// 
+
+
+#ifndef MCNI_NEUTRON_COORDS_TRANSFORM_H
+#error coords_transform.icc not meaningful outside coords_transform.h
+#else
+
+
+template <typename NumberType>
+bool mcni::is_almost_I(const RotationMatrix<NumberType> & rot)
+{
+  static const NumberType epsilon = 1e-8;
+  for (int i=0; i<3; i++)
+    for (int j=0; j<3; j++)
+      if (i==j) {
+	if ( std::abs(rot(i,i)-1) > epsilon ) return 0;
+      } else {
+	if ( std::abs(rot(i,j) ) > epsilon ) return 0;
+      }
+  return 1;  
+}
+
+template <typename NumberType>
+bool mcni::is_almost_0(const Position<NumberType> & vec)
+{
+  static const NumberType epsilon = 1e-8;
+  for (int i=0; i<3; i++)
+    if (std::abs(vec[i]) > epsilon) return 0;
+  return 1;
+}
+
+
+void mcni::abs2rel
+( Neutron::Event &ev,
+  const Position<double> & cs_pos, const RotationMatrix<double> & cs_rot)
+{
+  abs2rel(ev.state.position, cs_pos, cs_rot);
+  abs2rel(ev.state.velocity, cs_rot);
+}
+
+void mcni::abs2rel
+( Neutron::Event &ev,
+  const Position<double> & cs_pos)
+{
+  abs2rel(ev.state.position, cs_pos);
+}
+
+
+void mcni::rel2abs
+( Neutron::Event &ev,
+  const Position<double> & cs_pos, const RotationMatrix<double> & cs_rot)
+{
+  rel2abs(ev.state.position, cs_pos, cs_rot);
+  rel2abs(ev.state.velocity, cs_rot);
+}
+
+void mcni::rel2abs
+( Neutron::Event &ev,
+  const Position<double> & cs_pos)
+{
+  rel2abs(ev.state.position, cs_pos);
+}
+
+
+#endif
+
+
+// version
+// $Id: coords_transform.h 7 2005-06-09 21:36:49Z linjiao $
+
+// End of file

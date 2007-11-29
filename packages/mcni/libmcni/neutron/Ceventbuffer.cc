@@ -19,6 +19,8 @@
 #include <string>
 #include <vector>
 #include "mcni/geometry/Vector3.h"
+#include "mcni/geometry/Position.h"
+#include "mcni/geometry/Velocity.h"
 #include "mcni/neutron/EventBuffer.h"
 #include "mcni/neutron/Ceventbuffer.h"
 
@@ -63,8 +65,8 @@ void neutron_buffer_set_ntrn
   checkBuffer(bufferPtr);
   EventBuffer &buffer = *( static_cast<EventBuffer *>(bufferPtr) );
   
-  State ns(State::vector3_t(x,y,z),
-	   State::vector3_t(vx,vy,vz),
+  State ns(State::position_t(x,y,z),
+	   State::velocity_t(vx,vy,vz),
 	   Spin(s1,s2));
   
   buffer[idx] = Event(ns, t, p);
