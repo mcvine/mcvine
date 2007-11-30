@@ -15,14 +15,14 @@
 #error Position.icc not meaningful outside Position.h
 #else
 
-template <typename NumberType>
+template <class NumberType>
 mcni::Position<NumberType>::Position
 ( const NumberType &x, const NumberType &y,  const NumberType &z)
   :base_t(x,y,z)
 {}
 
 
-template <typename NumberType>
+template <class NumberType>
 mcni::Position<NumberType>::Position
 ( const base_t & v )
   :base_t(v)

@@ -16,7 +16,7 @@
 
 namespace mcni {
   
-  template <typename NumberType>
+  template <class NumberType>
   class Position: public Vector3<NumberType> {
   public:
 

@@ -11,47 +11,39 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 PROJECT = mcni
+PACKAGE = tests
 
-BUILD_DIRS = \
-    instrument_simulator  \
-    neutron_coordinates_transformers  \
+PROJ_TIDY += alltests.py $(PROJ_CPPTESTS)
+PROJ_CLEAN += alltests.py $(PROJ_CPPTESTS)
 
-RECURSE_DIRS = $(BUILD_DIRS)
-
-PACKAGE = mcni
-
-#--------------------------------------------------------------------------
-#
-
-all: export
-
-tidy::
-	BLD_ACTION="tidy" $(MM) recurse
-
+PROJ_PYTESTS =  alltests.py
+PROJ_CPPTESTS = 
+PROJ_TESTS = $(PROJ_PYTESTS) $(PROJ_CPPTESTS)
+PROJ_LIBRARIES = -L$(BLD_LIBDIR) -ljournal -lmcni
 
 
 #--------------------------------------------------------------------------
 #
-# export
 
-EXPORT_PYTHON_MODULES = \
-	AbstractComponent.py \
-	DummyComponent.py \
-	Geometer.py \
-	Instrument.py \
-	__init__.py \
+all: $(PROJ_TESTS)
 
+test: alltests.py
+	for test in $(PROJ_TESTS) ; do $${test}; done
 
+release: tidy
+	cvs release .
 
-export:: export-python-modules 
-	BLD_ACTION="export" $(MM) recurse
+update: clean
+	cvs update .
 
+#--------------------------------------------------------------------------
+#
 
-include doxygen/default.def
-docs: export-doxygen-docs
+alltests.py: ../alltests.py
+	cp ../alltests.py .
 
 
 # version
-# $Id: Make.mm 1404 2007-08-29 15:43:42Z linjiao $
+# $Id: Make.mm 620 2007-07-11 23:24:50Z linjiao $
 
 # End of file

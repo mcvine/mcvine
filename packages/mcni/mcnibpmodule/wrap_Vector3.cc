@@ -1,7 +1,7 @@
-#include "wrap_vector3.h"
+#include "wrap_Vector3.h"
 
-void wrapVector3s()
+void wrap_Vector3s()
 {
-  wrapVector3<double>( "Vector3_double" );
-  wrapVector3< Vector3<double> >( "Matrix3_double" );
+  using namespace wrap;
+  wrap_Vector3<double>( "double" );
 }

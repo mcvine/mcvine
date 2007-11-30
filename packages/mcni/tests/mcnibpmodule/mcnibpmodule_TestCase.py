@@ -26,8 +26,28 @@ class mcnibpmodule_TestCase(unittest.TestCase):
 
     def testVector3(self):
         v3 = binding.Vector3_double(1,2,3)
+        list(v3)
         return
     
+
+    def testNeutronEventBuffer(self):
+        n = 100
+        events = binding.NeutronEventBuffer( n )
+        self.assertEqual( len(events), n )
+        list(events)
+        return
+
+    def testNeutronCoordsTransform(self):
+        n = 100
+        events = binding.NeutronEventBuffer( n )
+        r = binding.Position_double(1,2,3)
+        m = binding.RotationMatrix_double( 0, -1, 0,
+                                           1, 0, 0,
+                                           0, 0, 1 )
+        binding.abs2rel_batch( events, r, m )
+        return
+        
+
     pass  # end of mcnibpmodule_TestCase
 
     

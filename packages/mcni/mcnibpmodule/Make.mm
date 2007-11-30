@@ -24,6 +24,9 @@ PROJ_CXX_SRCLIB = -lboost_python  -L$(BOOSTPYTHON_LIBDIR) -ljournal -lmcni
 
 PROJ_SRCS = \
 	wrap_Vector3.cc \
+	wrap_Matrix3.cc \
+	wrap_geometry.cc \
+	wrap_neutron.cc \
 
 
 include doxygen/default.def
