@@ -1,0 +1,16 @@
+Monte Carlo simulation of neutron instrument.
+
+This is the foundation of the MCViNE.
+
+Monte Carlo instrument simulation involvs simulation of a 
+sequance of neutron components.
+mcni defines an instrument as a sequence of neutron components,
+and the positions and orientations of those components are
+kept in a geometer.
+A simulator runs neutrons through this sequence.
+
+All Monte Carlo neutron components must be derived from
+AbstractComponent.
+
+mcni package takes care of instrument level. mccomponents
+package will take care of simulatoin of neutron components.
