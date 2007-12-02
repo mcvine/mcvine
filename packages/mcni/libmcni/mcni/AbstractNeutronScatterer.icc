@@ -35,7 +35,6 @@ mcni::absorb(Neutron::Event &ev)
 	<< journal::endl;
 #endif
   ev.probability = -1;
-  throw neutron_absorbed();
 }
 
 
@@ -43,27 +42,6 @@ bool
 mcni::invalid(const Neutron::Event &ev)
 {
   return (ev.probability < 0.0);
-}
-
-
-void
-mcni::AbstractNeutronScatterer::absorb
-(Neutron::Event &ev) 
-  const
-{
-  mcni::absorb( ev );
-}
-
-
-void
-mcni::AbstractNeutronScatterer::scatter( Neutron::Event & )
-{
-  journal::error_t err("AbstractNeutronScatterer");
-  
-  err << journal::at(__HERE__)
-      << "This function should not be called, unless the component is a detector!"
-      << journal::endl;
-  throw ;
 }
 
 

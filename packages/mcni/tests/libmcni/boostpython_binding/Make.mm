@@ -10,13 +10,14 @@
 #
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-PROJECT = simulation
+PROJECT = mcni
 PACKAGE = tests
 
-PROJ_CLEAN += $(PROJ_CPPTESTS)
+PROJ_TIDY += alltests.py $(PROJ_CPPTESTS)
+PROJ_CLEAN += alltests.py $(PROJ_CPPTESTS)
 
 PROJ_PYTESTS =  alltests.py
-PROJ_CPPTESTS = testAbstractNeutronScatterer testAbstractNeutronComponent 
+PROJ_CPPTESTS = 
 PROJ_TESTS = $(PROJ_PYTESTS) $(PROJ_CPPTESTS)
 PROJ_LIBRARIES = -L$(BLD_LIBDIR) -ljournal -lmcni
 
@@ -26,7 +27,7 @@ PROJ_LIBRARIES = -L$(BLD_LIBDIR) -ljournal -lmcni
 
 all: $(PROJ_TESTS)
 
-test:
+test: alltests.py
 	for test in $(PROJ_TESTS) ; do $${test}; done
 
 release: tidy
@@ -38,11 +39,8 @@ update: clean
 #--------------------------------------------------------------------------
 #
 
-testAbstractNeutronScatterer: testAbstractNeutronScatterer.cc
-	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ testAbstractNeutronScatterer.cc $(PROJ_LIBRARIES)
-
-testAbstractNeutronComponent: testAbstractNeutronComponent.cc
-	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ testAbstractNeutronComponent.cc $(PROJ_LIBRARIES)
+alltests.py: ../alltests.py
+	cp ../alltests.py .
 
 
 # version

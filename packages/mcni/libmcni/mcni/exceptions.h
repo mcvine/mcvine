@@ -21,12 +21,6 @@
 
 namespace mcni {
 
-  //! exception for events in which a neutron is absorbed
-  class neutron_absorbed: public Exception{
-  public:
-    neutron_absorbed(const char *m="neutron absorbed") : Exception(m) {}
-  };
-  
   //! exception for events in which a neutron entering a fatal path
   class neutron_fatal_path: public Exception{
   public:
@@ -35,9 +29,9 @@ namespace mcni {
 
   // convenient methods
   inline void throw_fatal_path_error
-  ( const char *channel, const journal::loc3_t & whre, const char *msg );
+  ( const char *channel, const journal::loc3_t & where, const char *msg );
   inline void throw_fatal_path_error
-  ( const char *channel, const journal::loc2_t & whre, const char *msg );
+  ( const char *channel, const journal::loc2_t & where, const char *msg );
 }
 
 #include "exceptions.icc"

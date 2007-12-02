@@ -23,7 +23,8 @@ namespace mcni{
   }
 
   //! base class for neutron scatterers.
-  /*! abstract base. define the interface of a neutron scatterer with neutron(s).
+  /*! abstract base. define the interface of a neutron 
+    scatterer interacting with neutron(s).
    */
   class AbstractNeutronScatterer {
   public:
@@ -34,13 +35,9 @@ namespace mcni{
     // methods
     // interactions with neutron
     /// absorb a neutron.
-    virtual inline void absorb(Neutron::Event &) const;
+    virtual void absorb(Neutron::Event &);
     /// scatter a neutron
-    virtual void scatter(Neutron::Event &) const = 0;
-    /// scatter a neutron
-    /// method for a neutron component that will change its own state when doing
-    /// scattering. this is more useful for detectors.
-    virtual inline void scatter(Neutron::Event &);
+    virtual void scatter(Neutron::Event &) = 0;
   };
 
 

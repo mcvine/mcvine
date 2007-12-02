@@ -15,8 +15,8 @@ PACKAGE = tests
 
 PROJ_CLEAN += $(PROJ_CPPTESTS)
 
-PROJ_PYTESTS = signon.py
-PROJ_CPPTESTS = hello
+PROJ_PYTESTS =
+PROJ_CPPTESTS = 
 PROJ_TESTS = $(PROJ_PYTESTS) $(PROJ_CPPTESTS)
 PROJ_LIBRARIES = -L$(BLD_LIBDIR) -lmcni
 
@@ -27,6 +27,8 @@ PROJ_LIBRARIES = -L$(BLD_LIBDIR) -lmcni
 
 BUILD_DIRS = \
 	libmcni \
+	mcni \
+	mcnibpmodule \
 
 OTHER_DIRS = \
 
@@ -45,12 +47,13 @@ test:
 tidy::
 	BLD_ACTION="tidy" $(MM) recurse
 
+clean::
+	BLD_ACTION="clean" $(MM) recurse
+
 
 #--------------------------------------------------------------------------
 #
 
-hello: hello.cc $(BLD_LIBDIR)/libmcni.$(EXT_SAR)
-	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ hello.cc $(PROJ_LIBRARIES)
 
 # version
 # $Id$

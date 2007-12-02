@@ -27,6 +27,9 @@ PROJ_SRCS = \
 	wrap_Matrix3.cc \
 	wrap_geometry.cc \
 	wrap_neutron.cc \
+	wrap_abstractneutronscatterer.cc \
+	wrap_abstractneutroncomponent.cc \
+	wrap_dummycomponent.cc \
 
 
 include doxygen/default.def

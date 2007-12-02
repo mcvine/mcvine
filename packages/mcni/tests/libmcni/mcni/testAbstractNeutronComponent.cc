@@ -14,31 +14,41 @@
 
 #include <iostream>
 #include "mcni/neutron.h"
-#include "mcni/AbstractNeutronScatterer.h"
+#include "mcni/AbstractNeutronComponent.h"
+#include "mcni/process_neutron_events.h"
 #include "mcni/test/assert.h"
 
 using namespace mcni;
 
 
-class Scatterer: public AbstractNeutronScatterer{
+class Component: public AbstractNeutronComponent{
 public:
-  Scatterer() {}
+  Component(const char * name): AbstractNeutronComponent(name) {}
   virtual void scatter(Neutron::Event &) 
   {
   }
 };
 
+
 void test1()
 {
-  Scatterer s;
+  Component component("component");
   Neutron::Event ev;
-  s.scatter( ev );
+  component.scatter( ev );
+}
+
+void test2()
+{
+  Component component("component");
+  Neutron::Events evts(100);
+  process( component, evts );
 }
 
 
 int main()
 {
   test1();
+  test2();
 }
 
 // version

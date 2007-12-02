@@ -19,6 +19,9 @@ void wrap_Vector3s();
 void wrap_Matrix3s();
 void wrap_geometry();
 void wrap_neutron();
+void wrap_abstractneutronscatterer();
+void wrap_abstractneutroncomponent();
+void wrap_dummycomponent();
 
 
 BOOST_PYTHON_MODULE(mcnibp)
@@ -28,6 +31,9 @@ BOOST_PYTHON_MODULE(mcnibp)
   wrap_Matrix3s();
   wrap_geometry();
   wrap_neutron();
+  wrap_abstractneutronscatterer();
+  wrap_abstractneutroncomponent();
+  wrap_dummycomponent();
 }
 
 

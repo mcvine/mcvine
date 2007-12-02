@@ -39,7 +39,7 @@ class SimulationNode(Connectable):
             position, orientation,
             self.position, self.orientation)
         
-        neutrons = self.component.process(neutrons)
+        self.component.process(neutrons)
         
         self._outputs['neutrons'] = neutrons
         self._outputs['position'] = self.position

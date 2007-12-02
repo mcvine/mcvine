@@ -23,6 +23,7 @@ BUILD_DIRS = \
 	neutron \
 	mcni \
 	sharedlib \
+	boostpython_binding \
 
 OTHER_DIRS = \
 

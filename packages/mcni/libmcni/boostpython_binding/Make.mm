@@ -14,6 +14,7 @@
 include local.def
 
 PROJECT = mcni
+PACKAGE = boostpython_binding
 
 PROJ_TMPDIR = $(BLD_TMPDIR)/$(PROJECT)/$(PACKAGE)
 
@@ -24,11 +25,7 @@ all: export
 export:: export-package-headers
 
 EXPORT_HEADERS = \
-	exceptions.h exceptions.icc \
-	AbstractNeutronScatterer.h AbstractNeutronScatterer.icc \
-	AbstractNeutronComponent.h \
-	process_neutron_events.h \
-	DummyComponent.h \
+    wrap_component.h \
 
 
 # version

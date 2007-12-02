@@ -11,25 +11,21 @@
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //
 
-#ifndef MCNI_PROCESS_NEUTRON_EVENTS_H
-#define MCNI_PROCESS_NEUTRON_EVENTS_H
 
+#include "mcni/AbstractNeutronScatterer.h"
 
-namespace mcni{
+void
+mcni::AbstractNeutronScatterer::absorb
+(Neutron::Event &ev) 
+{
+  mcni::absorb( ev );
+}
 
-  // forward declaration
-  class AbstractNeutronComponent;
-
-  // convenient methods
-  void process(AbstractNeutronComponent &sk, Neutron::Events &buffer);
-
-} // mcni
-
-
-#endif // MCNI_PROCESS_NEUTRON_EVENTS_H
 
 
 // version
-// $Id: process_neutron_events.h 591 2006-09-25 07:17:26Z linjiao $
+// $Id: AbstractNeutronScatterer.cc 591 2006-09-25 07:17:26Z linjiao $
+
+// Generated automatically by CxxMill on Thu Apr  7 14:44:15 2005
 
 // End of file 
