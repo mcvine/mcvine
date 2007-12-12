@@ -32,6 +32,7 @@ all: $(PROJ_SAR) export
 PROJ_SRCS = \
 	Box.cc \
 	Printer.cc \
+	LineIntersector.cc \
 
 
 PROJ_TIDY += $(PROJ_SRCS)
@@ -42,6 +43,9 @@ Box.cc: ../geometry/primitives/Box.cc
 
 Printer.cc: ../geometry/visitors/Printer.cc
 	cp ../geometry/visitors/Printer.cc .
+
+LineIntersector.cc: ../geometry/visitors/LineIntersector.cc
+	cp ../geometry/visitors/LineIntersector.cc .
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

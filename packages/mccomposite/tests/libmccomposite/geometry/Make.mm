@@ -16,9 +16,9 @@ PACKAGE = tests
 PROJ_CLEAN += $(PROJ_CPPTESTS)
 
 PROJ_PYTESTS =  alltests.py
-PROJ_CPPTESTS = testPrinter
+PROJ_CPPTESTS = testPrinter testLineIntersector
 PROJ_TESTS = $(PROJ_PYTESTS) $(PROJ_CPPTESTS)
-PROJ_LIBRARIES = -L$(BLD_LIBDIR) -ljournal -lmccomposite
+PROJ_LIBRARIES = -L$(BLD_LIBDIR) -ljournal -lmccomposite -lmcni -lmcstas_compact
 
 
 #--------------------------------------------------------------------------
@@ -40,6 +40,9 @@ update: clean
 
 testPrinter: testPrinter.cc 
 	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ testPrinter.cc $(PROJ_LIBRARIES)
+
+testLineIntersector: testLineIntersector.cc 
+	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ testLineIntersector.cc $(PROJ_LIBRARIES)
 
 
 # version

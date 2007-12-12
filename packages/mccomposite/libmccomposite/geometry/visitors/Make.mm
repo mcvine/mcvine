@@ -39,6 +39,7 @@ export:: export-headers
 EXPORT_HEADERS = \
 	AbstractShapeVisitor.h \
 	Printer.h \
+	LineIntersector.h \
 
 
 
