@@ -1,0 +1,64 @@
+// -*- C++ -*-
+//
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//
+//                                   Jiao Lin
+//                      California Institute of Technology
+//                        (C) 2007  All Rights Reserved
+//
+// {LicenseText}
+//
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//
+
+
+#ifndef MCCOMPOSITE_GEOMETRY_ARROW_H
+#error Arrow.icc not meaningful outside Arrow.h
+#else
+
+
+#include <iostream>
+
+
+// Arrow
+template <typename Position, typename Direction>
+mccomposite::Arrow<Position, Direction>::Arrow
+(const position_t & i_start, const direction_t & i_direction )
+  : start(i_start), 
+    direction(i_direction)
+{
+}
+
+template <typename Position, typename Direction>
+mccomposite::Arrow<Position, Direction>::Arrow
+()
+  : start(0,0,0),
+    direction(0,0,1)
+{
+}
+
+
+template <typename Position, typename Direction>
+void
+mccomposite::Arrow<Position, Direction>::print
+(std::ostream & os) const
+{
+  os << "arrow: " << start << "-->" << direction;
+}
+
+
+template <typename Position, typename Direction>
+std::ostream & operator << 
+(std::ostream & os, const mccomposite::Arrow<Position, Direction> & arrow)
+{
+  arrow.print( os );
+  return os;
+}
+
+
+#endif
+
+// version
+// $Id$
+
+// End of file 

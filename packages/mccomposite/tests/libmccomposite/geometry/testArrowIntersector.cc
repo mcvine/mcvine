@@ -14,19 +14,24 @@
 
 #include <iostream>
 #include "mccomposite/geometry/shapes.h"
-#include "mccomposite/geometry/visitors/LineIntersector.h"
-
+#include "mccomposite/geometry/visitors/ArrowIntersector.h"
+#include "mcni/geometry/Vector3.h"
+#include "mcni/geometry/Position.h"
 
 using namespace mccomposite;
+using namespace std;
 using namespace mcni;
 
 void test1()
 {
   Box box(1,2,3);
-  LineIntersector intersector;
-  intersector.setArrow( Position<double> (0,0,-5), Vector3<double>(0,0,1) );
+  typedef Position<double> position_t;
+  typedef Vector3<double> direction_t;
+  typedef ArrowIntersector<position_t, direction_t> Intersector;
+  Intersector intersector;
+  intersector.setArrow( position_t (0,0,-5), direction_t(0,0,1) );
 
-  LineIntersector::distances_t distances = intersector.calculate_intersections( box );
+  Intersector::distances_t distances = intersector.calculate_intersections( box );
   assert (distances.size() == 2);
   assert (distances[0] == 3.5 );
   assert (distances[1] == 6.5 );

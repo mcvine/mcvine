@@ -39,8 +39,9 @@ export:: export-headers
 EXPORT_HEADERS = \
 	AbstractShapeVisitor.h \
 	Printer.h \
-	LineIntersector.h \
-
+	Arrow.h Arrow.icc \
+	ArrowIntersector.h ArrowIntersector.icc \
+	shapes.h \
 
 
 # version

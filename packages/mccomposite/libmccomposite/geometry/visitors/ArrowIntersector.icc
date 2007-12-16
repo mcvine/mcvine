@@ -1,0 +1,101 @@
+#ifndef MCCOMPOSITE_GEOMETRY_ARROWINTERSECTOR_H
+#error ArrowIntersector.icc not meaningful outside ArrowIntersector.h
+#else
+
+
+
+// meta-methods
+template <typename Position, typename Direction, typename Float>
+mccomposite::ArrowIntersector<Position, Direction, Float>::ArrowIntersector
+()
+{
+}
+
+template <typename Position, typename Direction, typename Float>
+mccomposite::ArrowIntersector<Position, Direction, Float>::ArrowIntersector
+(const arrow_t & arrow)
+  : m_arrow( arrow )
+{
+}
+
+template <typename Position, typename Direction, typename Float>
+mccomposite::ArrowIntersector<Position, Direction, Float>::~ArrowIntersector
+()
+{
+}
+
+
+// methods
+template <typename Position, typename Direction, typename Float>
+void mccomposite::ArrowIntersector<Position, Direction, Float>::setArrow
+(const arrow_t & arrow)
+{
+  m_arrow = arrow;
+  reset();
+}
+
+template <typename Position, typename Direction, typename Float>
+void mccomposite::ArrowIntersector<Position, Direction, Float>::setArrow
+(const Position & start, 
+ const Direction & direction)
+{
+  m_arrow.start = start;
+  m_arrow.direction = direction;
+  reset();
+}
+
+
+template <typename Position, typename Direction, typename Float>
+void mccomposite::ArrowIntersector<Position, Direction, Float>::reset
+()
+{
+  m_distances.clear();
+}
+
+template <typename Position, typename Direction, typename Float>
+typename mccomposite::ArrowIntersector<Position, Direction, Float>::distances_t
+mccomposite::ArrowIntersector<Position, Direction, Float>::calculate_intersections
+( const AbstractShape & shape ) 
+{
+  shape.identify( *this );
+  return m_distances;
+}
+
+
+
+#include "mcstas_compact/mcstas_compact.h"
+
+// visiting methods
+template <typename Position, typename Direction, typename Float>
+void
+mccomposite::ArrowIntersector<Position, Direction, Float>::onBox
+( const Box & box ) 
+{
+  const Position & start = m_arrow.start;
+  const Direction & direction = m_arrow.direction;
+
+  double dt_in, dt_out;
+
+  double x = start.x; 
+  double y = start.y;
+  double z = start.z;
+
+  double vx = direction.x;
+  double vy = direction.y;
+  double vz = direction.z;
+
+  if ( ! McStas::box_intersect
+       ( &dt_in,  &dt_out,  x,  y,  z,  vx,  vy,  vz,  
+	 box.edgeX,  box.edgeY,  box.edgeZ) )
+    return;
+
+  // std::cout << dt_in << std::endl;
+  //  std::cout << dt_out << std::endl;
+  
+  if (dt_in>0) m_distances.push_back( dt_in );
+  if (dt_out>0) m_distances.push_back( dt_out );
+  
+  return ;
+}
+
+#endif
