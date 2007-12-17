@@ -11,27 +11,34 @@
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //
 
-#ifndef MCCOMPOSITE_GEOMETRY_ABSTRACTSHAPE_H
-#define MCCOMPOSITE_GEOMETRY_ABSTRACTSHAPE_H
+#ifndef MCCOMPOSITE_GEOMETRY_OPERATIONS_UNION_H
+#define MCCOMPOSITE_GEOMETRY_OPERATIONS_UNION_H
+
+
+#include "Composition.h"
 
 
 namespace mccomposite {
-
+  
   namespace geometry {
-
-    struct AbstractShapeVisitor;
     
-    struct AbstractShape {
+    struct Union: public Composition {
       
       //meta methods
-      virtual ~AbstractShape( ) {};
+      Union( const AbstractShape & body1, const AbstractShape & body2 )
+	: Composition( body1, body2 )
+      {}
+      virtual ~Union( ) {};
       
       //methods
-      virtual void identify( AbstractShapeVisitor & visitor ) const = 0;
+      virtual void identify( AbstractShapeVisitor & visitor ) const 
+      {
+	visitor.onUnion( *this );
+      }
     };
-
+    
   }
-
+  
 }
 
 

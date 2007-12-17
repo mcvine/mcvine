@@ -13,7 +13,7 @@
 
 include local.def
 
-PROJECT = mccomposite/geometry/visitors
+PROJECT = mccomposite/geometry/operations
 
 # directory structure
 
@@ -37,11 +37,18 @@ export:: export-headers
 
 
 EXPORT_HEADERS = \
+	AbstractShape.h \
 	AbstractShapeVisitor.h \
-	Printer.h Printer.icc \
-	Arrow.h Arrow.icc \
-	ArrowIntersector.h ArrowIntersector.icc \
-	shapes.h \
+	Composition.h \
+	Difference.h \
+	Dilation.h \
+	Intersection.h \
+	Reflection.h \
+	Rotation.h \
+	Transformation.h \
+	Translation.h \
+	Union.h \
+	all.h \
 
 
 # version

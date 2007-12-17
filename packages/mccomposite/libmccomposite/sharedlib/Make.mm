@@ -30,13 +30,21 @@ all: $(PROJ_SAR) export
 
 
 PROJ_SRCS = \
+	Arrow.cc \
+	ArrowIntersector.cc \
 	Box.cc \
 	Printer.cc \
-	LineIntersector.cc \
+	shape2ostream.cc \
 
 
 PROJ_TIDY += $(PROJ_SRCS)
 
+
+Arrow.cc: ../geometry/visitors/Arrow.cc
+	cp ../geometry/visitors/Arrow.cc .
+
+ArrowIntersector.cc: ../geometry/visitors/ArrowIntersector.cc
+	cp ../geometry/visitors/ArrowIntersector.cc .
 
 Box.cc: ../geometry/primitives/Box.cc
 	cp ../geometry/primitives/Box.cc .
@@ -44,8 +52,9 @@ Box.cc: ../geometry/primitives/Box.cc
 Printer.cc: ../geometry/visitors/Printer.cc
 	cp ../geometry/visitors/Printer.cc .
 
-LineIntersector.cc: ../geometry/visitors/LineIntersector.cc
-	cp ../geometry/visitors/LineIntersector.cc .
+shape2ostream.cc: ../geometry/shape2ostream.cc
+	cp ../geometry/shape2ostream.cc .
+
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

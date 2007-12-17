@@ -23,53 +23,53 @@
 
 
 namespace mccomposite {
-
-  /// compute intersections between a shape and a given arrow
-  /// It populates a list of numbers and return it, 
-  /// each number corresponds to 
-  /// one intersection. The number is the "distance" from the
-  /// starting point of the arrow to an intersection point.
-  /// The "distance" could be positive or negative, because
-  /// the arrow has a direction.
-  /// Please note the "distance" is measured by the unit of the
-  /// the length of the "direction" vector. In other words,
-  /// they are more like "time" if you consider "direction" vector
-  /// as "velocity" vector.
-  template <typename Position, typename Direction, typename Float = double>
-  struct ArrowIntersector: public AbstractShapeVisitor {
+  
+  namespace geometry {
     
-    // types
-    typedef Arrow<Position, Direction> arrow_t;
-    typedef Float distance_t;
-    typedef std::vector<distance_t> distances_t;
+    /// compute intersections between a shape and a given arrow
+    /// It populates a list of numbers and return it, 
+    /// each number corresponds to 
+    /// one intersection. The number is the "distance" from the
+    /// starting point of the arrow to an intersection point.
+    /// The "distance" could be positive or negative, because
+    /// the arrow has a direction.
+    /// Please note the "distance" is measured by the unit of the
+    /// the length of the "direction" vector. In other words,
+    /// they are more like "time" if you consider "direction" vector
+    /// as "velocity" vector.
+    struct ArrowIntersector: public AbstractShapeVisitor {
+      
+      // types
+      typedef Arrow arrow_t;
+      typedef double distance_t;
+      typedef std::vector<distance_t> distances_t;
+      
+      
+      //meta methods
+      ArrowIntersector( const arrow_t & arrow );
+      ArrowIntersector();
+      virtual ~ArrowIntersector( );
+      
+      //methods
+      void setArrow(const Position & start, 
+		    const Direction & direction);
+      void setArrow(const arrow_t & arrow);
+      distances_t calculate_intersections(const AbstractShape & shape);
+      
+      //  visiting methods
+      virtual void onBox( const Box & box );
+      
+    private:
+      void reset();
+      
+      // data
+      arrow_t m_arrow;
+      distances_t m_distances;
+    };
     
-
-    //meta methods
-    ArrowIntersector( const arrow_t & arrow );
-    ArrowIntersector();
-    virtual ~ArrowIntersector( );
-
-    //methods
-    void setArrow(const Position & start, 
-		  const Direction & direction);
-    void setArrow(const arrow_t & arrow);
-    distances_t calculate_intersections(const AbstractShape & shape);
-
-    //  visiting methods
-    virtual void onBox( const Box & box );
-
-  private:
-    void reset();
-
-    // data
-    arrow_t m_arrow;
-    distances_t m_distances;
-  };
-
+  }
 }
 
-
-#include "ArrowIntersector.icc"
 
 #endif
 

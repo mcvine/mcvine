@@ -18,6 +18,7 @@ PROJECT = mccomposite/geometry
 # directory structure
 
 BUILD_DIRS = \
+	operations \
 	primitives \
 	visitors \
 
@@ -39,8 +40,13 @@ export:: export-package-headers
 EXPORT_HEADERS = \
 	AbstractShape.h \
 	AbstractShapeVisitor.h \
-	ShapePrinter.h \
+	Direction.h \
+	Position.h \
+	RotationMatrix.h \
+	Vector.h \
+	operations.h \
 	primitives.h \
+	shape2ostream.h \
 	shapes.h \
 
 

@@ -20,19 +20,23 @@
 
 namespace mccomposite{ 
 
-  //! box: a Shape
-  struct Box : public AbstractShape {
+  namespace geometry{
 
-    // meta-methods
-    Box( double edgeX, double edgeY, double edgeZ);
-    ~Box();
+    //! box: a Shape
+    struct Box : public AbstractShape {
+      
+      // meta-methods
+      Box( double edgeX, double edgeY, double edgeZ);
+      ~Box();
+      
+      // methods
+      void identify( AbstractShapeVisitor & visitor ) const ;
+      // data
+      double edgeX, edgeY, edgeZ;
+    };
 
-    // methods
-    void identify( AbstractShapeVisitor & visitor ) const ;
-    // data
-    double edgeX, edgeY, edgeZ;
-  };
-  
+  }
+
 }
 
 

@@ -11,12 +11,18 @@
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //
 
+#include "mcni/geometry/Vector3.h"
+#include "mcni/geometry/Position.h"
 
-#ifndef MCCOMPOSITE_GEOMETRY_ARROW_H
-#error Arrow.icc not meaningful outside Arrow.h
-#else
+namespace mccomposite{
 
-#endif
+  namespace geometry {
+
+    typedef mcni::Position<double> Position;
+
+  }
+
+}
 
 // version
 // $Id$

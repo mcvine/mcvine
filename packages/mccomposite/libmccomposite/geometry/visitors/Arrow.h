@@ -15,38 +15,41 @@
 #ifndef MCCOMPOSITE_GEOMETRY_ARROW_H
 #define MCCOMPOSITE_GEOMETRY_ARROW_H
 
+
+#include "mccomposite/geometry/Position.h"
+#include "mccomposite/geometry/Direction.h"
+
+
 namespace mccomposite {
-
-  template <typename Position, typename Direction>
-  struct Arrow{
-
-    // types
-    typedef Position position_t;
-    typedef Direction direction_t;
+  
+  namespace geometry {
     
-    // meta methods
-    Arrow( const position_t & start, const direction_t & direction );
-    Arrow();
-
-    // methods
-    /// Just for ostream << operator
-    void print( std::ostream & os ) const;
-
-    // data
-    position_t start;
-    direction_t direction;
-  };
-
+    struct Arrow{
+      
+      // types
+      typedef Position position_t;
+      typedef Direction direction_t;
+      
+      // meta methods
+      Arrow( const position_t & start, const direction_t & direction );
+      Arrow();
+      
+      // methods
+      /// Just for ostream << operator
+      void print( std::ostream & os ) const;
+      
+      // data
+      position_t start;
+      direction_t direction;
+    };
+    
+  }
 }
 
-
 // ostream
-template <typename Position, typename Direction>
 std::ostream & operator << 
-(std::ostream & os, const mccomposite::Arrow<Position, Direction> & arrow);
+(std::ostream & os, const mccomposite::geometry::Arrow & arrow);
 
-
-#include "Arrow.icc"
 
 #endif
 

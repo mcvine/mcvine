@@ -14,18 +14,18 @@
 #include "mccomposite/geometry/AbstractShapeVisitor.h"
 #include "mccomposite/geometry/primitives/Box.h"
 
-mccomposite::Box::Box
+mccomposite::geometry::Box::Box
 (double i_edgeX, double i_edgeY, double i_edgeZ )
   : edgeX(i_edgeX), edgeY(i_edgeY), edgeZ(i_edgeZ)
 {
 }
 
-mccomposite::Box::~Box
+mccomposite::geometry::Box::~Box
 ()
 {
 }
 
-void mccomposite::Box::identify( AbstractShapeVisitor & visitor ) const 
+void mccomposite::geometry::Box::identify( AbstractShapeVisitor & visitor ) const 
 {
   visitor.onBox( *this );
 }

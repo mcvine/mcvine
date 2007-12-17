@@ -4,7 +4,7 @@
 //
 //                                   Jiao Lin
 //                      California Institute of Technology
-//                        (C) 2007  All Rights Reserved
+//                         (C) 2005 All Rights Reserved  
 //
 // {LicenseText}
 //
@@ -12,13 +12,24 @@
 //
 
 
-#ifndef MCCOMPOSITE_GEOMETRY_ARROW_H
-#error Arrow.icc not meaningful outside Arrow.h
-#else
+#include <iostream>
+#include "mccomposite/geometry/operations/Dilation.h"
 
-#endif
+
+using namespace mccomposite;
+
+void test1()
+{
+}
+
+
+
+int main()
+{
+  test1();
+}
 
 // version
-// $Id$
+// $Id: testvector3.cc 310 2005-11-27 04:11:41Z linjiao $
 
 // End of file 

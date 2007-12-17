@@ -16,7 +16,7 @@ PACKAGE = tests
 PROJ_CLEAN += $(PROJ_CPPTESTS)
 
 PROJ_PYTESTS =  alltests.py
-PROJ_CPPTESTS = testPrinter testArrowIntersector
+PROJ_CPPTESTS = testPrinter testArrowIntersector testDilation
 PROJ_TESTS = $(PROJ_PYTESTS) $(PROJ_CPPTESTS)
 PROJ_LIBRARIES = -L$(BLD_LIBDIR) -ljournal -lmccomposite -lmcni -lmcstas_compact
 
@@ -37,6 +37,9 @@ update: clean
 
 #--------------------------------------------------------------------------
 #
+
+testDilation: testDilation.cc 
+	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ testDilation.cc $(PROJ_LIBRARIES)
 
 testPrinter: testPrinter.cc 
 	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ testPrinter.cc $(PROJ_LIBRARIES)

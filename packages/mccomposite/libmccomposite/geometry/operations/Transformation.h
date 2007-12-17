@@ -11,27 +11,35 @@
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //
 
-#ifndef MCCOMPOSITE_GEOMETRY_ABSTRACTSHAPE_H
-#define MCCOMPOSITE_GEOMETRY_ABSTRACTSHAPE_H
+#ifndef MCCOMPOSITE_GEOMETRY_TRANSFORMATION_H
+#define MCCOMPOSITE_GEOMETRY_TRANSFORMATION_H
+
+
+#include "AbstractShapeVisitor.h"
+#include "AbstractShape.h"
 
 
 namespace mccomposite {
-
+  
   namespace geometry {
-
-    struct AbstractShapeVisitor;
     
-    struct AbstractShape {
+    struct Transformation: public AbstractShape {
       
       //meta methods
-      virtual ~AbstractShape( ) {};
+      Transformation( const AbstractShape & i_body ) 
+	: body( i_body )
+      {}
+      virtual ~Transformation( ) {};
       
       //methods
       virtual void identify( AbstractShapeVisitor & visitor ) const = 0;
+
+      //data
+      const AbstractShape & body;
     };
-
+    
   }
-
+  
 }
 
 
@@ -41,3 +49,4 @@ namespace mccomposite {
 // $Id$
 
 // End of file 
+

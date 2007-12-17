@@ -11,12 +11,17 @@
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //
 
+#include "mcni/geometry/Vector3.h"
 
-#ifndef MCCOMPOSITE_GEOMETRY_ARROW_H
-#error Arrow.icc not meaningful outside Arrow.h
-#else
+namespace mccomposite{
 
-#endif
+  namespace geometry {
+
+    typedef mcni::Vector3<double> Direction;
+
+  }
+
+}
 
 // version
 // $Id$

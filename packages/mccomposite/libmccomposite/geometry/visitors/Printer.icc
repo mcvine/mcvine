@@ -1,0 +1,6 @@
+#ifndef MCCOMPOSITE_GEOMETRY_PRINTER_H
+#error Printer.icc not meaningful outside Printer.h
+#else
+
+
+#endif

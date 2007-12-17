@@ -18,16 +18,16 @@
 #include "mcni/geometry/Vector3.h"
 #include "mcni/geometry/Position.h"
 
-using namespace mccomposite;
 using namespace std;
-using namespace mcni;
+using namespace mccomposite::geometry;
+
 
 void test1()
 {
   Box box(1,2,3);
-  typedef Position<double> position_t;
-  typedef Vector3<double> direction_t;
-  typedef ArrowIntersector<position_t, direction_t> Intersector;
+  typedef Position position_t;
+  typedef Vector direction_t;
+  typedef ArrowIntersector Intersector;
   Intersector intersector;
   intersector.setArrow( position_t (0,0,-5), direction_t(0,0,1) );
 
