@@ -1,0 +1,11 @@
+geometry c++ library. it is following the ideas of pyre.geometry.
+It is quite generic, although it currently depends on mcni. 
+All mcni dependencies are in the header files in the top level 
+directory. Please grep for mcni and take a look.
+If we want to make it independent of mcni, we just need to 
+implement those classes:
+
+ - Position
+ - Direction
+ - Vector
+ - RotationMatrix
