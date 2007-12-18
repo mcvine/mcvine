@@ -71,12 +71,39 @@ void test4()
   assert (distances[1] == 6 );
 }
 
+void test5()
+{
+  Box box1(1,1,1);
+  Box box2(2,2,2);
+  Difference diff(box2, box1);
+
+  Arrow arrow( Position (0,0,-5), Direction(0,0,1) );
+
+  ArrowIntersector::distances_t distances = intersect(arrow, diff);
+
+  assert (distances.size() == 4);
+  assert (distances[0] == 4 );
+  assert (distances[1] == 4.5 );
+  assert (distances[2] == 5.5 );
+  assert (distances[3] == 6 );
+
+  Arrow arrow2( Position (0.75,0,-5), Direction(0,0,1) );
+
+  ArrowIntersector::distances_t distances2 = intersect(arrow2, diff);
+
+  assert (distances2.size() == 2);
+  assert (distances2[0] == 4 );
+  assert (distances2[1] == 6 );
+
+}
+
 int main()
 {
   test1();
   test2();
   test3();
   test4();
+  test5();
 }
 
 // version
