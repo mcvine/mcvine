@@ -21,6 +21,16 @@ mcni::AbstractNeutronScatterer::absorb
   mcni::absorb( ev );
 }
 
+void
+mcni::AbstractNeutronScatterer::scatterM
+(const Neutron::Event &ev, Neutron::Events & evts) 
+{
+  // default implementation is single-scattering
+  evts.resize(1);
+  evts[0] = ev;
+  scatter( evts[0] );
+}
+
 
 
 // version

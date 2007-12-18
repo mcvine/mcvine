@@ -15,12 +15,9 @@
 #define MCNI_ABSTRACTNEUTRONSCATTERER_H
 
 
-namespace mcni{
+#include "neutron.h"
 
-  // forward declaration
-  namespace Neutron {
-    struct Event;
-  }
+namespace mcni{
 
   //! base class for neutron scatterers.
   /*! abstract base. define the interface of a neutron 
@@ -38,6 +35,11 @@ namespace mcni{
     virtual void absorb(Neutron::Event &);
     /// scatter a neutron
     virtual void scatter(Neutron::Event &) = 0;
+    /// a neutron becomes multiple neutrons when scattered.
+    /// The second parameter is a vector of events. This vector should
+    /// be of size 0. 
+    /// The first parameter is the incident neutron event.
+    virtual void scatterM(const Neutron::Event &, Neutron::Events &);
   };
 
 

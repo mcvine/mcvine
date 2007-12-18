@@ -18,10 +18,11 @@
 namespace mcni{
 
   // forward declaration
-  class AbstractNeutronComponent;
+  class AbstractNeutronScatterer;
 
   // convenient methods
-  void process(AbstractNeutronComponent &sk, Neutron::Events &buffer);
+  void process(AbstractNeutronScatterer &sk, Neutron::Events &buffer);
+  void processM(AbstractNeutronScatterer &sk, Neutron::Events &buffer);
 
 } // mcni
 

@@ -18,11 +18,13 @@
 
 #include "mcni/neutron.h"
 
-#include "mcni/AbstractNeutronComponent.h"
+#include "mcni/AbstractNeutronScatterer.h"
 #include "mcni/process_neutron_events.h"
 #include "mcni/exceptions.h"
 
 #include <numeric>
+#include <functional>
+#include <algorithm>
 
 
 namespace {
@@ -44,19 +46,7 @@ namespace {
       
       Neutron::Event &ev = evts[index];
       
-      //if (ev.probability < 0) continue;
-
       nc->scatter( ev ); 
-      /*
-      try {
-	nc->scatter( ev ); 
-      }
-      catch (const neutron_fatal_path & err ) {
-	// 
-	throw;
-      }
-      */
-      
       if (ev.probability < 0) {
 	// swap the current event with the last event
 	swap_temp = evts[index];
@@ -72,13 +62,57 @@ namespace {
     // remove the absorbed neutron events
     evts.erase( evts.begin() + nn, evts.end() );
   }
+
+  struct WasAbsorbed : public std::unary_function<const mcni::Neutron::Event &, bool> {
+    bool operator() (const mcni::Neutron::Event & event)
+    {
+      return event.probability<0.;
+    }
+  };
+  
+  template <class NC>
+  void _processM_T
+  (NC *nc, mcni::Neutron::Events &evts)
+  {
+#ifdef DEEPDEBUG
+    journal::debug_t debug("scatter");
+#endif
+    using namespace mcni;
+    using namespace std;
+
+    static Neutron::Event swap_temp;
+    static Neutron::Events scattered;
+    static WasAbsorbed wasAbsorbed;
+    Neutron::Events ret;
+    
+    size_t nn = evts.size();
+    
+    for (size_t index=0; index<nn; index++) {
+
+      Neutron::Event &ev = evts[index];
+      scattered.clear();
+      nc->scatterM( ev, scattered );
+
+      remove_copy_if(scattered.begin(), scattered.end(),
+		     back_inserter(ret),
+		     wasAbsorbed);
+    }
+    
+    evts.swap( ret );
+  }
   
 }
 
 void mcni::process
-(AbstractNeutronComponent &nc, Neutron::Events &buffer)
+(AbstractNeutronScatterer &nc, Neutron::Events &buffer)
 {
-  _process_T<AbstractNeutronComponent>( &nc, buffer );
+  _process_T<AbstractNeutronScatterer>( &nc, buffer );
+}
+
+void mcni::processM
+(AbstractNeutronScatterer &nc, Neutron::Events &buffer)
+{
+  _processM_T<AbstractNeutronScatterer>( &nc, buffer );
 }
 
 
