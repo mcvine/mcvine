@@ -37,6 +37,7 @@ PROJ_SRCS = \
 	Locator.cc \
 	Sphere.cc \
 	Printer.cc \
+	intersect.cc \
 	locate.cc \
 	shape2ostream.cc \
 
@@ -64,6 +65,9 @@ Locator.cc: ../geometry/visitors/Locator.cc
 
 Printer.cc: ../geometry/visitors/Printer.cc
 	cp ../geometry/visitors/Printer.cc .
+
+intersect.cc: ../geometry/intersect.cc
+	cp ../geometry/intersect.cc .
 
 locate.cc: ../geometry/locate.cc
 	cp ../geometry/locate.cc .

@@ -44,6 +44,7 @@ EXPORT_HEADERS = \
 	Position.h \
 	RotationMatrix.h \
 	Vector.h \
+	intersect.h \
 	locate.h \
 	operations.h \
 	primitives.h \
