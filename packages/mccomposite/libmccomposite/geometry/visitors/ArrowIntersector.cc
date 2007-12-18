@@ -4,6 +4,26 @@
 #include "mccomposite/geometry/visitors/Locator.h"
 #include "mccomposite/geometry/intersect.h"
 #include "mccomposite/geometry/locate.h"
+#include "mccomposite/geometry/shape2ostream.h"
+
+#include "journal/debug.h"
+
+
+namespace ArrowIntersector_impl{
+
+  char * jrnltag = "mccomposite.geometry.ArrowIntersector";
+  
+}
+
+template <typename T>
+std::ostream & operator << ( std::ostream & os, const std::vector<T> & v )
+{
+  typedef typename std::vector<T>::const_iterator Iterator;
+  for ( Iterator it = v.begin(); it != v.end(); it++ )
+    os << *it << ", ";
+  return os;
+}
+
 
 
 // meta-methods
@@ -87,12 +107,17 @@ mccomposite::geometry::ArrowIntersector::visit
 	 box.edgeX,  box.edgeY,  box.edgeZ) )
     return;
   
-  // std::cout << dt_in << std::endl;
-  //  std::cout << dt_out << std::endl;
+  m_distances.push_back( dt_in );
+  m_distances.push_back( dt_out );
   
-  if (dt_in>0) m_distances.push_back( dt_in );
-  if (dt_out>0) m_distances.push_back( dt_out );
-  
+#ifdef DEBUG
+  journal::debug_t debug( ArrowIntersector_impl::jrnltag );
+
+  debug << journal::at(__HERE__) 
+	<< m_distances << journal::endl
+    ;
+#endif
+
   return ;
 }
 
@@ -123,11 +148,8 @@ mccomposite::geometry::ArrowIntersector::visit
 	 cylinder.radius, cylinder.height) )
     return;
   
-  // std::cout << dt_in << std::endl;
-  //  std::cout << dt_out << std::endl;
-  
-  if (dt_in>0) m_distances.push_back( dt_in );
-  if (dt_out>0) m_distances.push_back( dt_out );
+  m_distances.push_back( dt_in );
+  m_distances.push_back( dt_out );
   
   return;
 }
@@ -207,7 +229,22 @@ namespace ArrowIntersector_impl{
     {}
     bool operator() (double distance) 
     {
-      return locate( m_arrow.start + distance * m_arrow.direction, m_shape ) != Locator::onborder;
+      bool ret = locate( m_arrow.start + distance * m_arrow.direction, m_shape ) != Locator::onborder;
+
+#ifdef DEBUG
+      journal::debug_t debug( ArrowIntersector_impl::jrnltag );
+      
+      debug << journal::at(__HERE__) 
+	    << "start = " << m_arrow.start << journal::newline
+	    << "direction = " << m_arrow.direction << journal::newline
+	    << "distance = " << distance << journal::newline
+	    << "point = " << m_arrow.start + distance * m_arrow.direction << journal::newline
+	    << "shape = " << m_shape << journal::newline
+	    << "isNotOnBorder = " << ret
+	    << journal::endl;
+      ;
+#endif
+      return ret;
     }
     
   private:
@@ -228,11 +265,15 @@ namespace ArrowIntersector_impl{
   {
     using namespace std;
     isNotOnBorder isnotonborder( arrow, shape );
-    remove_if(dists1.begin(), dists1.end(), isnotonborder );
-    remove_if(dists2.begin(), dists1.end(), isnotonborder );
     
-    std::copy( dists1.begin(), dists1.end(), std::back_inserter( ret ) );
-    std::copy( dists2.begin(), dists2.end(), std::back_inserter( ret ) );  
+    typedef distances_t::iterator iterator_t;
+    iterator_t dists1_newend = \
+      remove_if(dists1.begin(), dists1.end(), isnotonborder );
+    iterator_t dists2_newend = \
+      remove_if(dists2.begin(), dists2.end(), isnotonborder );
+    
+    std::copy( dists1.begin(), dists1_newend, std::back_inserter( ret ) );
+    std::copy( dists2.begin(), dists2_newend, std::back_inserter( ret ) );  
     
     sort( ret.begin(), ret.end() );
   }
@@ -279,6 +320,15 @@ mccomposite::geometry::ArrowIntersector::visit
 
   distances_t dists1 = intersect( m_arrow, body1 );
   distances_t dists2 = intersect( m_arrow, body2 );
+
+#ifdef DEBUG
+  journal::debug_t debug( ArrowIntersector_impl::jrnltag );
+
+  debug << journal::at(__HERE__) 
+	<< dists1 << journal::newline
+	<< dists2 << journal::endl
+    ;
+#endif
   
   m_distances.clear();
   
@@ -292,6 +342,22 @@ mccomposite::geometry::ArrowIntersector::visit
 {
   const AbstractShape &body = dilation->body ; 
   const double &scale = dilation->scale ;
+  
+  Arrow save = m_arrow;
+  m_arrow.start = m_arrow.start *(1./scale);
+  m_arrow.direction = m_arrow.direction * (1./scale);
+  
+  body.identify( *this );
+
+#ifdef DEBUG
+  journal::debug_t debug( ArrowIntersector_impl::jrnltag );
+
+  debug << journal::at(__HERE__) 
+	<< m_distances << journal::endl
+    ;
+#endif
+
+  m_arrow = save;
 }
 
 
@@ -308,6 +374,13 @@ mccomposite::geometry::ArrowIntersector::visit
 {
   const AbstractShape &body = translation->body ; 
   const Vector &vector = translation->vector ;
+
+  Arrow save = m_arrow;
+  m_arrow.start = m_arrow.start - vector;
+  
+  body.identify( *this );
+
+  m_arrow = save;
 }
 
 void
@@ -315,5 +388,7 @@ mccomposite::geometry::ArrowIntersector::visit
 ( const Rotation * rotation )
 {
   const AbstractShape &body = rotation->body ; 
+  
+  throw;
 }
 

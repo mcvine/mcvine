@@ -1,4 +1,16 @@
 #include "mccomposite/geometry/visitors/Locator.h"
+#include "mccomposite/geometry/shape2ostream.h"
+
+#include "journal/debug.h"
+
+
+namespace Locator_impl{
+
+  char * jrnltag = "mccomposite.geometry.Locator";
+  
+}
+
+
 
 mccomposite::geometry::Locator::Locator
 (double i_roundingErrorTolerance)
@@ -101,8 +113,8 @@ mccomposite::geometry::Locator::visit
   const AbstractShape &body2 = difference->body2 ;
   Location p1 = locate( body1 );
   Location p2 = locate( body2 );
-  if (p1 == outside or p2 == inside) {location = outside; return;}
-  if (p1 == onborder or p2 == onborder) {location = onborder; return;}
+  if (p1 == outside || p2 == inside) {location = outside; return;}
+  if (p1 == onborder || p2 == onborder) {location = onborder; return;}
   location = inside; return;
 }
 
@@ -114,8 +126,8 @@ mccomposite::geometry::Locator::visit
   const AbstractShape &body2 = intersection->body2 ;
   Location p1 = locate( body1 );
   Location p2 = locate( body2 );
-  if (p1 == outside or p2 == outside) {location = outside; return;}
-  if (p1 == inside and p2 == inside) {location = inside; return;}
+  if (p1 == outside || p2 == outside) {location = outside; return;}
+  if (p1 == inside && p2 == inside) {location = inside; return;}
   location = onborder; return;
 }
 
@@ -127,8 +139,20 @@ mccomposite::geometry::Locator::visit
   const AbstractShape &body2 = aunion->body2 ;
   Location p1 = locate( body1 );
   Location p2 = locate( body2 );
-  if (p1 == inside or p2 == inside) {location = inside; return;}
-  if (p1 == onborder or p2 == onborder) {location = onborder; return;}
+
+#ifdef DEBUG
+  journal::debug_t debug( Locator_impl::jrnltag );
+
+  debug << journal::at(__HERE__) 
+	<< "point = " << point << journal::newline
+	<< "body1 = " << body1 << ", location = " << p1 << journal::newline
+	<< "body2 = " << body2 << ", location = " << p2 << journal::newline
+	<< journal::endl
+    ;
+#endif
+
+  if (p1 == inside || p2 == inside) {location = inside; return;}
+  if (p1 == onborder || p2 == onborder) {location = onborder; return;}
   location = outside; return;
 }
 

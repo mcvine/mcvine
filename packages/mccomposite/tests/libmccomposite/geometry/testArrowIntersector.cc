@@ -19,6 +19,9 @@
 #include "mcni/geometry/Vector3.h"
 #include "mcni/geometry/Position.h"
 
+
+#include "journal/debug.h"
+
 using namespace std;
 using namespace mccomposite::geometry;
 
@@ -63,12 +66,20 @@ void test3()
 void test4()
 {
   Sphere sphere(1);
+
   Arrow arrow( Position (0,0,-5), Direction(0,0,1) );
 
   ArrowIntersector::distances_t distances = intersect(arrow, sphere);
   assert (distances.size() == 2);
   assert (distances[0] == 4 );
   assert (distances[1] == 6 );
+
+  Arrow arrow2( Position (0,0,0), Direction(0,0,1) );
+
+  ArrowIntersector::distances_t distances2 = intersect(arrow2, sphere);
+  assert (distances2.size() == 2);
+  assert (distances2[0] == -1 );
+  assert (distances2[1] == 1 );
 }
 
 void test5()
@@ -97,13 +108,56 @@ void test5()
 
 }
 
+void test6()
+{
+  Box box(2,2,2);
+  Translation translated(box, Vector(0,0,0.5));
+  Union aunion(box, translated);
+
+  Arrow arrow( Position (0,0,-5), Direction(0,0,1) );
+
+  ArrowIntersector::distances_t distances = intersect(arrow, aunion);
+
+  assert (distances.size() == 2);
+  assert (distances[0] == 4 );
+  assert (distances[1] == 6.5 );
+
+  Arrow arrow2( Position (0.5,0.5,-5), Direction(0,0,1) );
+
+  ArrowIntersector::distances_t distances2 = intersect(arrow2, aunion);
+
+  assert (distances2.size() == 2);
+  assert (distances2[0] == 4 );
+  assert (distances2[1] == 6.5 );
+
+}
+
+void test10()
+{
+  Box box(1,1,1);
+  Dilation dilation(box, 10);
+
+  Arrow arrow1( Position (0,0,-4), Direction(0,0,1) );
+
+  ArrowIntersector::distances_t distances1 = intersect(arrow1, dilation);
+
+  assert (distances1.size() == 2);
+  assert ( abs(distances1[0] - (-1)) < 1.e-7);
+  assert ( abs(distances1[1] - 9) < 1.e-7);
+}
+
+
 int main()
 {
+  //  journal::debug_t("mccomposite.geometry.ArrowIntersector").activate();
+//   journal::debug_t("mccomposite.geometry.Locator").activate();
   test1();
   test2();
   test3();
   test4();
   test5();
+  test6();
+  test10();
 }
 
 // version
