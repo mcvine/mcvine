@@ -26,6 +26,9 @@ void test1()
   Printer printer(std::cout);
   box.identify( printer );
   std::cout << std::endl;
+
+  std::cout << Cylinder(1,2) << std::endl;
+  std::cout << Sphere(1) << std::endl;
 }
 
 

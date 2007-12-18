@@ -33,7 +33,11 @@ PROJ_SRCS = \
 	Arrow.cc \
 	ArrowIntersector.cc \
 	Box.cc \
+	Cylinder.cc \
+	Locator.cc \
+	Sphere.cc \
 	Printer.cc \
+	locate.cc \
 	shape2ostream.cc \
 
 
@@ -49,8 +53,20 @@ ArrowIntersector.cc: ../geometry/visitors/ArrowIntersector.cc
 Box.cc: ../geometry/primitives/Box.cc
 	cp ../geometry/primitives/Box.cc .
 
+Cylinder.cc: ../geometry/primitives/Cylinder.cc
+	cp ../geometry/primitives/Cylinder.cc .
+
+Sphere.cc: ../geometry/primitives/Sphere.cc
+	cp ../geometry/primitives/Sphere.cc .
+
+Locator.cc: ../geometry/visitors/Locator.cc
+	cp ../geometry/visitors/Locator.cc .
+
 Printer.cc: ../geometry/visitors/Printer.cc
 	cp ../geometry/visitors/Printer.cc .
+
+locate.cc: ../geometry/locate.cc
+	cp ../geometry/locate.cc .
 
 shape2ostream.cc: ../geometry/shape2ostream.cc
 	cp ../geometry/shape2ostream.cc .

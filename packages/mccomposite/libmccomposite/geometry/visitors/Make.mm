@@ -38,6 +38,7 @@ export:: export-headers
 
 EXPORT_HEADERS = \
 	AbstractShapeVisitor.h \
+	Locator.h \
 	Printer.h Printer.icc \
 	Arrow.h Arrow.icc \
 	ArrowIntersector.h ArrowIntersector.icc \

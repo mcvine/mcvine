@@ -44,6 +44,7 @@ EXPORT_HEADERS = \
 	Position.h \
 	RotationMatrix.h \
 	Vector.h \
+	locate.h \
 	operations.h \
 	primitives.h \
 	shape2ostream.h \

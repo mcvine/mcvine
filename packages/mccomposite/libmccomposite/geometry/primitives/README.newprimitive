@@ -1,0 +1,7 @@
+To implement a new primitive, for example, pyramid
+
+1. implement Pyramid.h and Pyramid.cc, following example of Cylinder.*
+2. add a forward declaration in ../AbstractShapeVisitor.h, and add a visit method for Pyramid 
+3. implement a method for Pyramid in every visitor types in ../visitors
+4. add a line of #include "Pyramid.h" to all.h
+

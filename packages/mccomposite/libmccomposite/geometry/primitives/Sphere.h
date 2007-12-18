@@ -4,7 +4,7 @@
 //
 //                                   Jiao Lin
 //                      California Institute of Technology
-//                        (C) 2007 All Rights Reserved  
+//                        (C) 2005 All Rights Reserved
 //
 // {LicenseText}
 //
@@ -12,38 +12,39 @@
 //
 
 
-#ifndef MCCOMPOSITE_GEOMETRY_PRIMITIVES_BOX_H
-#define MCCOMPOSITE_GEOMETRY_PRIMITIVES_BOX_H
+#ifndef MCCOMPOSITE_GEOMETRY_PRIMITIVES_SPHERE_H
+#define MCCOMPOSITE_GEOMETRY_PRIMITIVES_SPHERE_H
 
 
 #include "AbstractShape.h"
 
 namespace mccomposite{ 
 
-  namespace geometry{
-
-    //! box: a Shape
-    struct Box : public AbstractShape {
+  namespace geometry {
+    
+    //! sphere: a Shape
+    /// a sphere. 
+    struct Sphere : public AbstractShape {
       
-      // meta-methods
-      Box( double edgeX, double edgeY, double edgeZ);
-      ~Box();
+      //meta methods
+      Sphere( double radius );
+      ~Sphere() ;
       
       //methods
       virtual void identify( AbstractShapeVisitor & visitor ) const;
-
-      // data
-      double edgeX, edgeY, edgeZ;
+      
+      //data
+      double radius;
     };
-
+    
   }
 
 }
 
-
-#endif //MCCOMPOSITE_GEOMETRY_PRIMITIVES_BOX_H
+#endif //MCCOMPOSITE_GEOMETRY_PRIMITIVES_SPHERE_H
 
 // version
-// $Id: Box.h 7 2005-06-09 21:36:49Z linjiao $
+// $Id: Sphere.h 505 2006-04-10 06:13:56Z jiao $
 
 // End of file 
+

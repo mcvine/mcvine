@@ -4,7 +4,7 @@
 //
 //                                   Jiao Lin
 //                      California Institute of Technology
-//                         (C) 2005 All Rights Reserved
+//                        (C) 2005 All Rights Reserved
 //
 // {LicenseText}
 //
@@ -12,25 +12,28 @@
 //
 
 #include "mccomposite/geometry/AbstractShapeVisitor.h"
-#include "mccomposite/geometry/primitives/Box.h"
+#include "mccomposite/geometry/primitives/Sphere.h"
 
-mccomposite::geometry::Box::Box
-(double i_edgeX, double i_edgeY, double i_edgeZ )
-  : edgeX(i_edgeX), edgeY(i_edgeY), edgeZ(i_edgeZ)
+
+mccomposite::geometry::Sphere::Sphere
+( double i_radius )
+  : radius(i_radius)
 {
 }
 
-mccomposite::geometry::Box::~Box
+
+mccomposite::geometry::Sphere::~Sphere
 ()
 {
 }
 
-void mccomposite::geometry::Box::identify( AbstractShapeVisitor & visitor ) const 
+void mccomposite::geometry::Sphere::identify( AbstractShapeVisitor & visitor ) const 
 {
   visitor.visit( this );
 }
 
+
 // version
-// $Id: Box.cc 225 2005-08-02 15:56:48Z linjiao $
+// $Id: Sphere.cc 176 2005-07-19 12:50:03Z linjiao $
 
 // End of file 

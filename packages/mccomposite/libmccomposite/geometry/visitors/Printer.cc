@@ -9,98 +9,117 @@ mccomposite::geometry::Printer::Printer
 
 
 void
-mccomposite::geometry::Printer::onBox
-( const Box & box ) 
+mccomposite::geometry::Printer::visit
+( const Box * box ) 
 {
   os << "Box("
-     << "x=" << box.edgeX << ","
-     << "y=" << box.edgeY << "," 
-     << "z=" << box.edgeZ << ","  
+     << "x=" << box->edgeX << ","
+     << "y=" << box->edgeY << "," 
+     << "z=" << box->edgeZ << ","  
      << ")" ;
 }
 
 void
-mccomposite::geometry::Printer::onDifference
-( const Difference & difference ) 
+mccomposite::geometry::Printer::visit
+( const Cylinder * cylinder ) 
+{
+  os << "Cylinder("
+     << "radius=" << cylinder->radius << ","
+     << "height=" << cylinder->height << "," 
+     << ")" ;
+}
+
+void
+mccomposite::geometry::Printer::visit
+( const Sphere * sphere ) 
+{
+  os << "Sphere("
+     << "radius=" << sphere->radius
+     << ")" ;
+}
+
+void
+mccomposite::geometry::Printer::visit
+( const Difference * difference ) 
 {
   os << "(" 
-     << difference.body1 
+     << difference->body1 
      << " - "
-     << difference.body2
+     << difference->body2
      << ")"
     ;
 }
 
 void
-mccomposite::geometry::Printer::onIntersection
-( const Intersection & intersection ) 
+mccomposite::geometry::Printer::visit
+( const Intersection * intersection ) 
 {
   os << "("  
-     << intersection.body1 
+     << intersection->body1 
      << " and "
-     << intersection.body2
+     << intersection->body2
      << ")"
     ;
 }
 
 void
-mccomposite::geometry::Printer::onUnion
-( const Union & aunion ) 
+mccomposite::geometry::Printer::visit
+( const Union * aunion ) 
 {
   os << "("
-     << aunion.body1 
+     << aunion->body1 
      << " or "
-     << aunion.body2
+     << aunion->body2
      << ")"
     ;
 }
 
 void
-mccomposite::geometry::Printer::onDilation
-( const Dilation & dilation ) 
+mccomposite::geometry::Printer::visit
+( const Dilation * dilation ) 
 {
   os << "("
-     << dilation.scale 
+     << dilation->scale 
      << " * "
-     << dilation.body
+     << dilation->body
      << ")"
     ;
 }
 
 
 void
-mccomposite::geometry::Printer::onReflection
-( const Reflection & reflection ) 
+mccomposite::geometry::Printer::visit
+( const Reflection * reflection ) 
 {
   os << "("
      << "reflection of "
-     << reflection.body
+     << reflection->body
      << " about "
-     << reflection.vector
+     << reflection->vector
      << ")"
     ;
 }
 
 void
-mccomposite::geometry::Printer::onTranslation
-( const Translation & translation ) 
+mccomposite::geometry::Printer::visit
+( const Translation * translation ) 
 {
   os << "("
-     << translation.body
+     << translation->body
      << " translated to "
-     << translation.vector
+     << translation->vector
      << ")"
     ;
 }
 
 void
-mccomposite::geometry::Printer::onRotation
-( const Rotation & rotation )
+mccomposite::geometry::Printer::visit
+( const Rotation * rotation )
 {
   os << "("
-     << rotation.body
+     << rotation->body
      << " rotation by "
-     << rotation.rotmat
+     << rotation->rotmat
      << ")"
     ;
 }

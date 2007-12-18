@@ -16,9 +16,9 @@
 
 
 namespace mccomposite {
-
+  
   namespace geometry {
-
+    
     struct AbstractShapeVisitor;
     
     struct AbstractShape {
@@ -28,10 +28,11 @@ namespace mccomposite {
       
       //methods
       virtual void identify( AbstractShapeVisitor & visitor ) const = 0;
+      
     };
-
+    
   }
-
+  
 }
 
 

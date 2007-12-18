@@ -33,7 +33,7 @@ namespace mccomposite {
       //methods
       virtual void identify( AbstractShapeVisitor & visitor ) const 
       {
-	visitor.onDifference( *this );
+	visitor.visit( this );
       }
     };
     

@@ -11,11 +11,11 @@
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //
 
-
-#ifndef MCCOMPOSITE_GEOMETRY_PRINTER_H
-#define MCCOMPOSITE_GEOMETRY_PRINTER_H
+#ifndef MCCOMPOSITE_GEOMETRY_LOCATOR_H
+#define MCCOMPOSITE_GEOMETRY_LOCATOR_H
 
 #include <iostream>
+#include "mccomposite/geometry/Position.h"
 #include "AbstractShapeVisitor.h"
 #include "shapes.h"
 
@@ -24,14 +24,21 @@ namespace mccomposite {
   
   namespace geometry {
 
-    struct Printer: public AbstractShapeVisitor {
+    /// Determine if a point is inside or outside of a shape
+    struct Locator: public AbstractShapeVisitor {
       
+      //types
+      enum Location {inside, onborder, outside};
+
       //meta methods
-      Printer( std::ostream & os );
-      virtual ~Printer( ) {};
-      
+      Locator( double roundingErrorTolerance = 1.e-7 );
+      virtual ~Locator( ) {};
+
       //methods
-      //visiting methods 
+      void setPoint( const Position & point );
+      Location locate( const AbstractShape & s );
+
+      //visiting methods
       // for primitives
       void visit( const Box * box );
       void visit( const Cylinder * cylinder );
@@ -46,13 +53,16 @@ namespace mccomposite {
       void visit( const Union * adunion );
       
       //data
-      std::ostream & os;
+      Position point;
+      Location location;
+      double roundingErrorTolerance;
     };
     
   }
 }
 
 #endif
+
 
 // version
 // $Id$

@@ -34,7 +34,7 @@ namespace mccomposite {
       //methods
       virtual void identify( AbstractShapeVisitor & visitor ) const 
       {
-	visitor.onRotation( *this );
+	visitor.visit( this );
       }
 
       //data

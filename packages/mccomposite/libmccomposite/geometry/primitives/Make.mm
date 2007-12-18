@@ -1,3 +1,16 @@
+# -*- Makefile -*-
+#
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#
+#                               Michael A.G. Aivazis
+#                        California Institute of Technology
+#                        (C) 1998-2005  All Rights Reserved
+#
+# <LicenseText>
+#
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#
+
 
 include local.def
 
@@ -27,6 +40,8 @@ export:: export-headers
 EXPORT_HEADERS = \
 	AbstractShape.h \
 	Box.h \
+	Cylinder.h \
+	Sphere.h \
 	all.h \
 
 

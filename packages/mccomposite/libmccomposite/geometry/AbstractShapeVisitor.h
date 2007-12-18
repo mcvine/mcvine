@@ -22,6 +22,8 @@ namespace mccomposite {
 
     /// forward declaration
     struct Box;
+    struct Cylinder;
+    struct Sphere;
     struct Difference;
     struct Dilation;
     struct Intersection;
@@ -39,15 +41,17 @@ namespace mccomposite {
       
       //methods
       // for primitives
-      virtual void onBox( const Box & box ) = 0;
+      virtual void visit( const Box * box ) = 0;
+      virtual void visit( const Cylinder * cylinder ) = 0;
+      virtual void visit( const Sphere * sphere ) = 0;
       // for operations
-      virtual void onDifference( const Difference & difference ) = 0;
-      virtual void onDilation( const Dilation & dilation ) = 0;
-      virtual void onIntersection( const Intersection & intersection ) = 0;
-      virtual void onReflection( const Reflection & reflection ) = 0;
-      virtual void onRotation( const Rotation & rotation ) = 0;
-      virtual void onTranslation( const Translation & translation ) = 0;
-      virtual void onUnion( const Union & aunion ) = 0;
+      virtual void visit( const Difference * difference ) = 0;
+      virtual void visit( const Dilation * dilation ) = 0;
+      virtual void visit( const Intersection * intersection ) = 0;
+      virtual void visit( const Reflection * reflection ) = 0;
+      virtual void visit( const Rotation * rotation ) = 0;
+      virtual void visit( const Translation * translation ) = 0;
+      virtual void visit( const Union * aunion ) = 0;
     };
     
   }

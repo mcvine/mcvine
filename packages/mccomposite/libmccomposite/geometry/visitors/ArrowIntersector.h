@@ -54,10 +54,11 @@ namespace mccomposite {
       void setArrow(const Position & start, 
 		    const Direction & direction);
       void setArrow(const arrow_t & arrow);
-      distances_t calculate_intersections(const AbstractShape & shape);
+      distances_t calculate_intersections(const AbstractShape * shape);
       
       //  visiting methods
-      virtual void onBox( const Box & box );
+      virtual void visit( const Box * box );
+      virtual void visit( const Cylinder * cylinder );
       
     private:
       void reset();

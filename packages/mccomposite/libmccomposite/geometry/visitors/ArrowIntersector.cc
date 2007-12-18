@@ -45,9 +45,9 @@ void mccomposite::geometry::ArrowIntersector::reset
 
 mccomposite::geometry::ArrowIntersector::distances_t
 mccomposite::geometry::ArrowIntersector::calculate_intersections
-( const AbstractShape & shape ) 
+( const AbstractShape * shape ) 
 {
-  shape.identify( *this );
+  shape->identify( *this );
   return m_distances;
 }
 
@@ -57,9 +57,11 @@ mccomposite::geometry::ArrowIntersector::calculate_intersections
 
 // visiting methods
 void
-mccomposite::geometry::ArrowIntersector::onBox
-( const Box & box ) 
+mccomposite::geometry::ArrowIntersector::visit
+( const Box * boxptr )
 {
+  const Box & box = *boxptr;
+
   const Position & start = m_arrow.start;
   const Direction & direction = m_arrow.direction;
 
@@ -87,4 +89,37 @@ mccomposite::geometry::ArrowIntersector::onBox
   return ;
 }
 
+
+void
+mccomposite::geometry::ArrowIntersector::visit
+( const Cylinder * cylptr )
+{
+  const Cylinder & cylinder = *cylptr;
+
+  const Position & start = m_arrow.start;
+  const Direction & direction = m_arrow.direction;
+
+  double dt_in, dt_out;
+
+  double x = start.x; 
+  double y = start.y;
+  double z = start.z;
+
+  double vx = direction.x;
+  double vy = direction.y;
+  double vz = direction.z;
+
+  if ( ! McStas::cylinder_intersect
+       ( &dt_in,  &dt_out,  x,  y,  z,  vx,  vy,  vz,  
+	 cylinder.radius, cylinder.height) )
+    return;
+
+  // std::cout << dt_in << std::endl;
+  //  std::cout << dt_out << std::endl;
+  
+  if (dt_in>0) m_distances.push_back( dt_in );
+  if (dt_out>0) m_distances.push_back( dt_out );
+  
+  return;
+}
 
