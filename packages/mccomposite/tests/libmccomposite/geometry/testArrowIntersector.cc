@@ -19,12 +19,21 @@
 #include "mcni/geometry/Vector3.h"
 #include "mcni/geometry/Position.h"
 
-
 #include "journal/debug.h"
 
 using namespace std;
 using namespace mccomposite::geometry;
+char * jrnltag ="testArrowIntersector";
 
+template <typename T>
+std::ostream & operator << 
+( std::ostream & os, const std::vector<T> & v )
+{
+  typedef std::vector<T> V;
+  for (typename V::const_iterator it = v.begin(); it<v.end(); it++)
+    os << *it << ", ";
+  return os;
+}
 
 void test1()
 {
@@ -92,6 +101,13 @@ void test5()
 
   ArrowIntersector::distances_t distances = intersect(arrow, diff);
 
+#ifdef DEBUG
+  journal::debug_t debug(jrnltag);
+  debug << journal::at (__HERE__) 
+	<< distances
+	<< journal::endl;
+#endif
+
   assert (distances.size() == 4);
   assert (distances[0] == 4 );
   assert (distances[1] == 4.5 );
@@ -149,8 +165,11 @@ void test10()
 
 int main()
 {
-  //  journal::debug_t("mccomposite.geometry.ArrowIntersector").activate();
+#ifdef DEBUG
+//   journal::debug_t("mccomposite.geometry.ArrowIntersector").activate();
 //   journal::debug_t("mccomposite.geometry.Locator").activate();
+//   journal::debug_t(jrnltag).activate();
+#endif
   test1();
   test2();
   test3();

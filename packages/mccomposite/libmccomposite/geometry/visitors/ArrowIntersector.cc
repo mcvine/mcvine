@@ -256,84 +256,59 @@ namespace ArrowIntersector_impl{
   typedef ArrowIntersector::distances_t distances_t;
   
   // clean up intersection list (distances) so that only 
-  // points on border are reserved; then sort the list
-  void clean
-  ( distances_t & dists1, 
-    distances_t & dists2,
+  // points on border are reserved
+  void remove_points_on_on_border
+  ( distances_t & dists,
     const Arrow & arrow, const AbstractShape & shape,
-    distances_t & ret )
+    distances_t & ret)
   {
     using namespace std;
     isNotOnBorder isnotonborder( arrow, shape );
     
-    typedef distances_t::iterator iterator_t;
-    iterator_t dists1_newend = \
-      remove_if(dists1.begin(), dists1.end(), isnotonborder );
-    iterator_t dists2_newend = \
-      remove_if(dists2.begin(), dists2.end(), isnotonborder );
-    
-    std::copy( dists1.begin(), dists1_newend, std::back_inserter( ret ) );
-    std::copy( dists2.begin(), dists2_newend, std::back_inserter( ret ) );  
-    
-    sort( ret.begin(), ret.end() );
+    remove_copy_if( dists.begin(), dists.end(), back_inserter( ret ),
+		    isnotonborder); 
   }
 
 }
+
+
+void 
+mccomposite::geometry::ArrowIntersector::visit_composition
+(const Composition * composition)
+{
+  const std::vector< const AbstractShape * > & shapes = composition->shapes;
+  using namespace ArrowIntersector_impl;
+  
+  m_distances.clear();
+
+  for (size_t i=0; i<shapes.size(); i++) {
+    distances_t dists = intersect( m_arrow, *(shapes[i]) );
+    remove_points_on_on_border( dists, m_arrow, *composition, m_distances );
+  }
+  
+  std::sort( m_distances.begin(), m_distances.end() );
+}
+
 
 void
 mccomposite::geometry::ArrowIntersector::visit
 ( const Difference * difference ) 
 {
-  const AbstractShape &body1 = difference->body1 ; 
-  const AbstractShape &body2 = difference->body2 ;
-  distances_t dists1 = intersect( m_arrow, body1 );
-  distances_t dists2 = intersect( m_arrow, body2 );
-  
-  m_distances.clear();
-  
-  using namespace ArrowIntersector_impl;
-  clean( dists1, dists2, m_arrow, *difference, m_distances);
+  visit_composition( difference );
 }
 
 void
 mccomposite::geometry::ArrowIntersector::visit
 ( const Intersection * intersection ) 
 {
-  const AbstractShape &body1 = intersection->body1 ; 
-  const AbstractShape &body2 = intersection->body2 ;
-
-  distances_t dists1 = intersect( m_arrow, body1 );
-  distances_t dists2 = intersect( m_arrow, body2 );
-  
-  m_distances.clear();
-  
-  using namespace ArrowIntersector_impl;
-  clean( dists1, dists2, m_arrow, *intersection, m_distances);
+  visit_composition( intersection );
 }
 
 void
 mccomposite::geometry::ArrowIntersector::visit
 ( const Union * aunion ) 
 {
-  const AbstractShape &body1 = aunion->body1 ; 
-  const AbstractShape &body2 = aunion->body2 ;
-
-  distances_t dists1 = intersect( m_arrow, body1 );
-  distances_t dists2 = intersect( m_arrow, body2 );
-
-#ifdef DEBUG
-  journal::debug_t debug( ArrowIntersector_impl::jrnltag );
-
-  debug << journal::at(__HERE__) 
-	<< dists1 << journal::newline
-	<< dists2 << journal::endl
-    ;
-#endif
-  
-  m_distances.clear();
-  
-  using namespace ArrowIntersector_impl;
-  clean( dists1, dists2, m_arrow, *aunion, m_distances);
+  visit_composition( aunion );
 }
 
 void

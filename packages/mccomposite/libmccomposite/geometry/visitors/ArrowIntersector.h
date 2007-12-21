@@ -69,13 +69,16 @@ namespace mccomposite {
       void visit( const Rotation * rotation );
       void visit( const Translation * translation );
       void visit( const Union * adunion );
-      
+
     private:
       void reset();
       
       // data
       arrow_t m_arrow;
       distances_t m_distances;
+
+      // impl. details
+      void visit_composition( const Composition * composition );
     };
     
   }

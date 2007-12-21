@@ -43,9 +43,9 @@ mccomposite::geometry::Printer::visit
 ( const Difference * difference ) 
 {
   os << "(" 
-     << difference->body1 
+     << *(difference->shapes[0])
      << " - "
-     << difference->body2
+     << *(difference->shapes[1])
      << ")"
     ;
 }
@@ -54,24 +54,26 @@ void
 mccomposite::geometry::Printer::visit
 ( const Intersection * intersection ) 
 {
-  os << "("  
-     << intersection->body1 
-     << " and "
-     << intersection->body2
-     << ")"
-    ;
+  const Composition::shapecontainer_t & shapes = intersection->shapes;
+  os << "(" ;
+  for (size_t i=0; i<shapes.size(); i++)  {
+    os << (*shapes[0]);
+    if (i!= shapes.size()-1) os << " and ";
+  }
+  os << ")" ;
 }
 
 void
 mccomposite::geometry::Printer::visit
 ( const Union * aunion ) 
 {
-  os << "("
-     << aunion->body1 
-     << " or "
-     << aunion->body2
-     << ")"
-    ;
+  const Composition::shapecontainer_t & shapes = aunion->shapes;
+  os << "(" ;
+  for (size_t i=0; i<shapes.size(); i++)  {
+    os << (*shapes[0]);
+    if (i!= shapes.size()-1) os << " and ";
+  }
+  os << ")" ;
 }
 
 void

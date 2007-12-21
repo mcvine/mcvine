@@ -25,8 +25,11 @@ namespace mccomposite {
     struct Intersection: public Composition {
       
       //meta methods
-      Intersection( const AbstractShape & body1, const AbstractShape & body2 )
-	: Composition( body1, body2 )
+      Intersection( const AbstractShape & shape1, const AbstractShape & shape2 )
+	: Composition( shape1, shape2 )
+      {}
+      Intersection( const Composition::shapecontainer_t & shapes )
+	: Composition( shapes )
       {}
       virtual ~Intersection( ) {};
       

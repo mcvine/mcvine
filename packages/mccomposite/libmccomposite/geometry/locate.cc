@@ -4,7 +4,7 @@ mccomposite::geometry::Locator::Location locate
 ( const mccomposite::geometry::Position & position, 
   const mccomposite::geometry::AbstractShape & shape )
 {
-  static mccomposite::geometry::Locator locator;
+  mccomposite::geometry::Locator locator;
   locator.setPoint( position );
   return locator.locate( shape );
 }

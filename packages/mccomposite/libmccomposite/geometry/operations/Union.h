@@ -25,8 +25,11 @@ namespace mccomposite {
     struct Union: public Composition {
       
       //meta methods
-      Union( const AbstractShape & body1, const AbstractShape & body2 )
-	: Composition( body1, body2 )
+      Union( const AbstractShape & shape1, const AbstractShape & shape2 )
+	: Composition( shape1, shape2 )
+      {}
+      Union( const Composition::shapecontainer_t & shapes )
+	: Composition( shapes )
       {}
       virtual ~Union( ) {};
       

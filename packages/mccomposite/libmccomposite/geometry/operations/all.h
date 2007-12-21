@@ -1,4 +1,4 @@
-
+#include "Composition.h"
 #include "Difference.h"
 #include "Dilation.h"
 #include "Intersection.h"

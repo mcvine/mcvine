@@ -109,8 +109,8 @@ void
 mccomposite::geometry::Locator::visit
 ( const Difference * difference ) 
 {
-  const AbstractShape &body1 = difference->body1 ; 
-  const AbstractShape &body2 = difference->body2 ;
+  const AbstractShape &body1 = *(difference->shapes[0]) ; 
+  const AbstractShape &body2 = *(difference->shapes[1]) ;
   Location p1 = locate( body1 );
   Location p2 = locate( body2 );
   if (p1 == outside || p2 == inside) {location = outside; return;}
@@ -122,12 +122,17 @@ void
 mccomposite::geometry::Locator::visit
 ( const Intersection * intersection ) 
 {
-  const AbstractShape &body1 = intersection->body1 ; 
-  const AbstractShape &body2 = intersection->body2 ;
-  Location p1 = locate( body1 );
-  Location p2 = locate( body2 );
-  if (p1 == outside || p2 == outside) {location = outside; return;}
-  if (p1 == inside && p2 == inside) {location = inside; return;}
+  const Composition::shapecontainer_t & shapes = intersection->shapes;
+
+  bool isinside = 1;
+  for (size_t i=0; i<shapes.size(); i++) {
+    Location p = locate( *(shapes[i]) );
+    if (p == outside) {location = outside; return;}
+    isinside &= p==inside;
+  }
+
+  if (isinside) {location = inside; return;}
+
   location = onborder; return;
 }
 
@@ -135,25 +140,18 @@ void
 mccomposite::geometry::Locator::visit
 ( const Union * aunion ) 
 {
-  const AbstractShape &body1 = aunion->body1 ; 
-  const AbstractShape &body2 = aunion->body2 ;
-  Location p1 = locate( body1 );
-  Location p2 = locate( body2 );
+  const Composition::shapecontainer_t & shapes = aunion->shapes;
 
-#ifdef DEBUG
-  journal::debug_t debug( Locator_impl::jrnltag );
+  bool isoutside = 1;
+  for (size_t i=0; i<shapes.size(); i++) {
+    Location p = locate( *(shapes[i]) );
+    if (p == inside) {location = inside; return;}
+    isoutside &= p==outside;
+  }
 
-  debug << journal::at(__HERE__) 
-	<< "point = " << point << journal::newline
-	<< "body1 = " << body1 << ", location = " << p1 << journal::newline
-	<< "body2 = " << body2 << ", location = " << p2 << journal::newline
-	<< journal::endl
-    ;
-#endif
+  if (isoutside) {location = outside; return;}
 
-  if (p1 == inside || p2 == inside) {location = inside; return;}
-  if (p1 == onborder || p2 == onborder) {location = onborder; return;}
-  location = outside; return;
+  location = onborder; return;
 }
 
 void
