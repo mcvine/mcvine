@@ -16,7 +16,7 @@ PACKAGE = tests
 PROJ_CLEAN += $(PROJ_CPPTESTS)
 
 PROJ_PYTESTS =  alltests.py
-PROJ_CPPTESTS = testPrinter testArrowIntersector testDilation testLocator
+PROJ_CPPTESTS = testPrinter testArrowIntersector testDilation testLocator test_intersect
 PROJ_TESTS = $(PROJ_PYTESTS) $(PROJ_CPPTESTS)
 PROJ_LIBRARIES = -L$(BLD_LIBDIR) -ljournal -lmccomposite -lmcni -lmcstas_compact
 
@@ -43,6 +43,9 @@ testDilation: testDilation.cc
 
 testPrinter: testPrinter.cc 
 	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ testPrinter.cc $(PROJ_LIBRARIES)
+
+test_intersect: test_intersect.cc 
+	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ test_intersect.cc $(PROJ_LIBRARIES)
 
 testLocator: testLocator.cc 
 	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ testLocator.cc $(PROJ_LIBRARIES)

@@ -25,6 +25,8 @@ export:: export-package-headers
 
 EXPORT_HEADERS = \
 	AbstractNeutronScatterer.h AbstractNeutronScatterer.icc \
+	CompositeNeutronScatterer.h \
+	neutron_propagation.h \
 
 # version
 # $Id: Make.mm,v 1.1.1.1 2005/03/08 16:13:51 aivazis Exp $

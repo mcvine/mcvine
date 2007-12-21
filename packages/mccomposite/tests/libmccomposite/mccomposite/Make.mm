@@ -16,9 +16,9 @@ PACKAGE = tests
 PROJ_CLEAN += $(PROJ_CPPTESTS)
 
 PROJ_PYTESTS =  alltests.py
-PROJ_CPPTESTS = testAbstractNeutronScatterer testAbstractNeutronComponent 
+PROJ_CPPTESTS = testAbstractNeutronScatterer testCompositeNeutronScatterer 
 PROJ_TESTS = $(PROJ_PYTESTS) $(PROJ_CPPTESTS)
-PROJ_LIBRARIES = -L$(BLD_LIBDIR) -ljournal -lmccomposite
+PROJ_LIBRARIES = -L$(BLD_LIBDIR) -ljournal -lmcni -lmccomposite -lmcstas_compact
 
 
 #--------------------------------------------------------------------------
@@ -41,8 +41,8 @@ update: clean
 testAbstractNeutronScatterer: testAbstractNeutronScatterer.cc
 	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ testAbstractNeutronScatterer.cc $(PROJ_LIBRARIES)
 
-testAbstractNeutronComponent: testAbstractNeutronComponent.cc
-	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ testAbstractNeutronComponent.cc $(PROJ_LIBRARIES)
+testCompositeNeutronScatterer: testCompositeNeutronScatterer.cc
+	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ testCompositeNeutronScatterer.cc $(PROJ_LIBRARIES)
 
 
 # version

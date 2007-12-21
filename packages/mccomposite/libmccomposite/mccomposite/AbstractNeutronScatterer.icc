@@ -16,31 +16,10 @@
 #error AbstractNeutronScatterer.icc not meaningful outside AbstractNeutronScatterer.h
 #else
 
-
-mccomposite::AbstractNeutronScatterer::AbstractNeutronScatterer
-(const AbstractShape & shape)
-  : m_shape( shape )
-{
-}
-
-mccomposite::AbstractNeutronScatterer::~AbstractNeutronScatterer
-()
-{
-}
-
-const AbstractShape & mccomposite::AbstractNeutronScatterer::shape
-() const
-{
-  return m_shape;
-}
-
-
 #endif
 
 
 // version
 // $Id: AbstractNeutronScatterer.cc 591 2006-09-25 07:17:26Z linjiao $
-
-// Generated automatically by CxxMill on Thu Apr  7 14:44:15 2005
 
 // End of file 

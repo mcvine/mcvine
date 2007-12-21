@@ -1,0 +1,74 @@
+// -*- C++ -*-
+//
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//
+//                                   Jiao Lin
+//                      California Institute of Technology
+//                        (C) 2007  All Rights Reserved
+//
+// {LicenseText}
+//
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//
+
+#ifndef MCCOMPOSITE_GEOMETRY_INTERSECT_H
+#error intersect.icc not meaningful outside intersect.h
+#else
+
+#include "locate.h"
+
+namespace mccomposite {
+  
+  namespace geometry {
+    
+    template <typename index_t>
+    index_t find_1st_hit
+    ( const Position start, const Direction & direction, 
+      const std::vector<const AbstractShape *> & shapes )  
+    {
+      
+      Arrow arrow(start, direction);
+      
+      Union all( shapes );
+      
+      ArrowIntersector::distances_t distances = 
+	intersect( arrow, all );
+      
+      double minimum_positive_distance = -1;
+      
+      // distances increases monotonically. so we just need
+      // to find the first distance that is positive
+      // this is not an efficient algorithm. but this is probably
+      // ok because we are thinking of order of 10 shapes.
+      // later we can reimplement this to run faster in case
+      // of large number of shapes
+      for (index_t i=0; i<distances.size(); i++) 
+	if (distances[i]>0) {
+	  minimum_positive_distance = distances[i];
+	  break;
+	}
+      
+      if (minimum_positive_distance<0) return -1;
+      
+      // find the shape by checking whether the point is on the border
+      // of the shape.
+      Position point = start + minimum_positive_distance * direction;
+      for (index_t i=0; i<shapes.size(); i++) {
+	if ( locate(point, *(shapes[i])) == Locator::onborder )
+	  return i;
+      }
+      
+      // should we throw an exception here?
+      return -1;
+    }
+    
+  }
+  
+}
+
+#endif
+
+// version
+// $Id$
+
+// End of file 
