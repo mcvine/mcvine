@@ -36,8 +36,8 @@ namespace mcni{
     /// scatter a neutron
     virtual void scatter(Neutron::Event &) = 0;
     /// a neutron becomes multiple neutrons when scattered.
-    /// The second parameter is a vector of events. This vector should
-    /// be of size 0. 
+    /// The second parameter is a vector of events, to which the
+    /// scattered neutrons will be appended.
     /// The first parameter is the incident neutron event.
     virtual void scatterM(const Neutron::Event &, Neutron::Events &);
   };

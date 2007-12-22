@@ -17,7 +17,9 @@
 
 template <typename NumberType>
 mcni::RotationMatrix<NumberType>::RotationMatrix ()
-  :base_t()
+  :base_t(1,0,0,
+	  0,1,0,
+	  0,0,1)
 {}
 
 template <typename NumberType>

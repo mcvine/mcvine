@@ -26,6 +26,7 @@ namespace mcni {
     // meta-methods
     inline Position( const NumberType &x, const NumberType &y,  const NumberType &z);
     inline Position( const base_t & v );
+    inline Position();
   };
 
 }

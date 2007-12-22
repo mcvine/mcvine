@@ -28,6 +28,12 @@ mcni::Position<NumberType>::Position
   :base_t(v)
 {}
 
+template <class NumberType>
+mcni::Position<NumberType>::Position
+( )
+  :base_t()
+{}
+
 
 #endif
 
