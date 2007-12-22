@@ -14,6 +14,10 @@ namespace mccomposite {
     ( const Arrow & arrow, 
       const AbstractShape & shape );
 
+    ArrowIntersector::distances_t forward_intersect
+    ( const Arrow & arrow, 
+      const AbstractShape & shape );
+
     /// find the index of the shape in the list "shapes"
     /// that is first hit by a particle.
     /// the particle's position and moving direction is given.

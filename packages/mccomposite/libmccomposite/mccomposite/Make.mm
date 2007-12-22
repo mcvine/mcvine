@@ -26,6 +26,8 @@ export:: export-package-headers
 EXPORT_HEADERS = \
 	AbstractNeutronScatterer.h AbstractNeutronScatterer.icc \
 	CompositeNeutronScatterer.h \
+	CompositeNeutronScatterer_Impl.h \
+	Geometer.h Geometer.icc \
 	neutron_propagation.h \
 
 # version

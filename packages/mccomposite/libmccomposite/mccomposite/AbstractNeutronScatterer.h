@@ -17,6 +17,7 @@
 #include "mcni/neutron.h"
 #include "mcni/AbstractNeutronScatterer.h"
 #include "mccomposite/geometry/AbstractShape.h"
+#include "mccomposite/geometry/Position.h"
 
 namespace mccomposite{
   
@@ -51,28 +52,36 @@ namespace mccomposite{
     // methods
     virtual void scatter(mcni::Neutron::Event &);
     virtual void scatterM(const mcni::Neutron::Event &, mcni::Neutron::Events &);
-    /// scatterer interacts with a neutron. 
-    /// Scatterer could absorb, scatter, or do nothing to the given neutron.
-    /// note: neutron must be propagate out of the scatterer!
-    virtual InteractionType interact(mcni::Neutron::Event &ev) = 0;
-    /// scatterer interacts with a neutron with the probability of
-    /// multiple scattering.
-    /// Scatterer could absorb, scatter, or do nothing to the given neutron.
-    /// Multiple scattering is possible.
-    /// note: neutrons must be propagate out of the scatterer!
-    virtual InteractionType interactM(const mcni::Neutron::Event &, mcni::Neutron::Events &);
-    /// attenuate a neutron event.
-    /// this method reduce the incident neutron is probability by
-    /// calculating the attenuation along its path through the scatterer.
-    /// Please notice that the attenuation could be due to both the absorption
-    /// and the scattering.
-    /// note: neutron must be propagated out of the scatterer!
-    virtual void attenuate(mcni::Neutron::Event & );
+
+    /// scatterer interacts with a neutron in its first section of continuous path thru the scatterer.
+    /// for most scatterer, a neutron will pass it in one continuous path.
+    /// but sometimes a scatterer will be passed in more than one paths.
+    /// Think about a hollow cylinder, for example.
+    /// This method calculates the interaction between a neutron and the
+    /// scatterer in the first path.
+    /// Note: neutron must be propagated out to the first out-surface it intersects.
+    virtual InteractionType interact_path1(mcni::Neutron::Event &ev) = 0;
+    /// scatterer interacts with a neutron and possibly create a lot of neutrons
+    /// in its first continous path through this scatterer.
+    /// This is the multiple-scattering version of interact_path1.
+    /// The default implementation just does single-scattering.
+    virtual InteractionType interactM_path1(const mcni::Neutron::Event &, mcni::Neutron::Events &);
+
+    ///calculate attenuation of a neutron done by this scatterer.
+    ///The neutron event is given, and also the end point of the neutron would go.
+    ///The end point must be on the path where the neutron event is flying.
+    virtual double calculate_attenuation
+    ( const mcni::Neutron::Event &ev, const geometry::Position & end ) const;
+
+    /// my shape
     const AbstractShape & shape() const;
     
   private:
     // data
     const AbstractShape & m_shape;
+    // 
+    struct Details;
+    std::auto_ptr< Details > m_details;
   };
   
 } // mccomposite

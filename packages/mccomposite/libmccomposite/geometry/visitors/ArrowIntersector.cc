@@ -364,6 +364,16 @@ mccomposite::geometry::ArrowIntersector::visit
 {
   const AbstractShape &body = rotation->body ; 
   
-  throw;
+  RotationMatrix rotmat = rotation->rotmat;
+
+  rotmat.transpose();
+
+  Arrow save = m_arrow;
+  m_arrow.start = rotmat * m_arrow.start;
+  m_arrow.direction = rotmat * m_arrow.direction;
+
+  body.identify( *this );
+
+  m_arrow = save;
 }
 

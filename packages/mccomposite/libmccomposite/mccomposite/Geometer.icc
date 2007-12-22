@@ -1,0 +1,56 @@
+// -*- C++ -*-
+//
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//
+//                                   Jiao Lin
+//                      California Institute of Technology
+//                        (C) 2007  All Rights Reserved
+//
+// {LicenseText}
+//
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//
+
+#ifndef MCCOMPOSITE_GEOMETER_H
+#error Geometer.icc not meaningful outside Geometer.h
+#else
+
+
+template <typename element_t>
+mccomposite::Geometer<element_t>::Geometer
+()
+{}
+
+
+template <typename element_t>
+void 
+mccomposite::Geometer<element_t>::remember
+( const element_t & element, const position_t & position, const orientation_t & orientation)
+{
+  m_e2info[ &element ] = info_t( position, orientation );
+}
+    
+
+template <typename element_t>
+const typename mccomposite::Geometer<element_t>::position_t & 
+mccomposite::Geometer<element_t>::getPosition( const element_t & e) 
+{
+  return m_e2info[ &e ].first;
+}
+
+
+template <typename element_t>
+const typename mccomposite::Geometer<element_t>::orientation_t &
+mccomposite::Geometer<element_t>::getOrientation( const element_t &e ) 
+{
+  return m_e2info[ &e ].second;
+}
+
+
+
+#endif
+
+// version
+// $Id$
+
+// End of file 

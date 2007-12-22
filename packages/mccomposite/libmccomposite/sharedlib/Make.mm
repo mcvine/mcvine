@@ -32,6 +32,7 @@ all: $(PROJ_SAR) export
 PROJ_SRCS = \
 	AbstractNeutronScatterer.cc \
 	CompositeNeutronScatterer.cc \
+	CompositeNeutronScatterer_Impl.cc \
 	Arrow.cc \
 	ArrowIntersector.cc \
 	Box.cc \
@@ -52,6 +53,9 @@ AbstractNeutronScatterer.cc: ../mccomposite/AbstractNeutronScatterer.cc
 
 CompositeNeutronScatterer.cc: ../mccomposite/CompositeNeutronScatterer.cc
 	cp ../mccomposite/CompositeNeutronScatterer.cc .
+
+CompositeNeutronScatterer_Impl.cc: ../mccomposite/CompositeNeutronScatterer_Impl.cc
+	cp ../mccomposite/CompositeNeutronScatterer_Impl.cc .
 
 Arrow.cc: ../geometry/visitors/Arrow.cc
 	cp ../geometry/visitors/Arrow.cc .

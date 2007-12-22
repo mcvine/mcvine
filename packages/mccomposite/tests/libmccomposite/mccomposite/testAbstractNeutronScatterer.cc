@@ -26,7 +26,7 @@ public:
   Scatterer(const mccomposite::geometry::AbstractShape & shape) 
     : AbstractNeutronScatterer( shape ) 
   {}
-  InteractionType interact(mcni::Neutron::Event &) 
+  InteractionType interact_path1(mcni::Neutron::Event &) 
   {
     return none;
   }
