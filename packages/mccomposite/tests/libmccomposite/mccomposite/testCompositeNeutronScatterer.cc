@@ -131,8 +131,6 @@ void test2()
 
   scatterers.push_back( &s );
 
-  std::cout << scatterers << std::endl;
-
   Geometer<AbstractNeutronScatterer> g;
   CompositeNeutronScatterer cs( box, scatterers, g );
 
@@ -145,8 +143,8 @@ void test2()
   mcni::Neutron::Event save = ev;
 
   assert (cs.interact_path1( ev )==AbstractNeutronScatterer::scattering);
-//   assert (ev.state.position.z == 0.5);
-//   assert (ev.time == 5.5);
+  assert (ev.state.position.z == 0.5);
+  assert (ev.time == 5.5);
 }
 
 
@@ -359,12 +357,12 @@ void test6()
 
   evts.clear();
   cs.scatterM( ev, evts ) ;
-//   assert (evts.size() == 2);
-//   assert (evts[0].state.position.z == 2.1 );
-//   assert (evts[0].time == 7.1);
-//   assert (evts[0].state.velocity.z == 1);
-//   assert (evts[1].state.position.x == 2.1 );
-//   assert (evts[1].state.velocity.x == 1);
+  assert (evts.size() == 2);
+  assert (evts[0].state.position.z == 2.1 );
+  assert (evts[0].time == 7.1);
+  assert (evts[0].state.velocity.z == 1);
+  assert (evts[1].state.position.x == 2.1 );
+  assert (evts[1].state.velocity.x == 1);
 }
 
 
@@ -420,17 +418,17 @@ void test7()
 int main()
 {
 #ifdef DEBUG
-  journal::debug_t("mccomposite.geometry.ArrowIntersector").activate();
-  journal::debug_t("mccomposite.geometry.Locator").activate();
-  journal::debug_t("CompositeNeutronScatterer_Impl").activate();
+//   journal::debug_t("mccomposite.geometry.ArrowIntersector").activate();
+//   journal::debug_t("mccomposite.geometry.Locator").activate();
+//   journal::debug_t("CompositeNeutronScatterer_Impl").activate();
 #endif
-     test1();
-      test2();
-       test3();
-       test4();
-     test5();
-    test6();
-    test7();
+  test1();
+  test2();
+  test3();
+  test4();
+  test5();
+  test6();
+  test7();
 }
 
 // version

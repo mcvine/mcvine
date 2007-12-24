@@ -186,10 +186,7 @@ mccomposite::CompositeNeutronScatterer_Impl::calculate_attenuation
   for (size_t scatterer_index; scatterer_index<m_scatterers.size(); 
        scatterer_index++) {
 
-    std::cout << scatterer_index << std::endl;
-    std::cout << m_scatterers << std::endl;
     AbstractNeutronScatterer & scatterer = *(m_scatterers[scatterer_index]);
-    std::cout << "hello" << std::endl;
     ev1 = ev;
 
 #ifdef DEBUG
