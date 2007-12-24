@@ -28,6 +28,7 @@ EXPORT_HEADERS = \
 	CompositeNeutronScatterer.h \
 	CompositeNeutronScatterer_Impl.h \
 	Geometer.h Geometer.icc \
+	exception.h \
 	neutron_propagation.h \
 	vector2ostream.h \
 

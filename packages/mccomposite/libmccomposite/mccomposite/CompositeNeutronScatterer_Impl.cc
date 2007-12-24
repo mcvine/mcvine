@@ -27,7 +27,7 @@ namespace mccomposite {
   
   namespace CompositeNeutronScatterer_ImplDetails{
     
-    char * jrnltag = "CompositeNeutronScatterer_Impl";
+    char jrnltag[] = "CompositeNeutronScatterer_Impl";
     
     ///to save the temp shapes
     struct TempShapes {
@@ -183,7 +183,7 @@ mccomposite::CompositeNeutronScatterer_Impl::calculate_attenuation
   double ret = 1.;
   mcni::Neutron::Event ev1;
   
-  for (size_t scatterer_index; scatterer_index<m_scatterers.size(); 
+  for (size_t scatterer_index=0; scatterer_index<m_scatterers.size(); 
        scatterer_index++) {
 
     AbstractNeutronScatterer & scatterer = *(m_scatterers[scatterer_index]);

@@ -42,6 +42,7 @@ PROJ_SRCS = \
 	Printer.cc \
 	intersect.cc \
 	locate.cc \
+	neutron_propagation.cc \
 	shape2ostream.cc \
 
 
@@ -86,6 +87,9 @@ locate.cc: ../geometry/locate.cc
 
 shape2ostream.cc: ../geometry/shape2ostream.cc
 	cp ../geometry/shape2ostream.cc .
+
+neutron_propagation.cc: ../mccomposite/neutron_propagation.cc
+	cp ../mccomposite/neutron_propagation.cc .
 
 
 
