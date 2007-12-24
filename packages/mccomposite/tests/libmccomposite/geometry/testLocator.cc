@@ -12,6 +12,7 @@
 //
 
 
+#include <cassert>
 #include <iostream>
 #include "mccomposite/geometry/shapes.h"
 #include "mccomposite/geometry/locate.h"

@@ -37,6 +37,13 @@ namespace mccomposite {
     /// the length of the "direction" vector. In other words,
     /// they are more like "time" if you consider "direction" vector
     /// as "velocity" vector.
+    /// Note: 
+    /// If the start point is inside of a shape, the implementations
+    /// here must garauntee that the number of forward intersections 
+    /// is even.
+    /// If the start point is outside  a shape, the implementations
+    /// here must garauntee that the number of forward intersections 
+    /// is odd.
     struct ArrowIntersector: public AbstractShapeVisitor {
       
       // types

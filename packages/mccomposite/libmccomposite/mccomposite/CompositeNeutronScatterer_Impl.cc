@@ -26,9 +26,9 @@
 namespace mccomposite {
   
   namespace CompositeNeutronScatterer_ImplDetails{
-
+    
     char * jrnltag = "CompositeNeutronScatterer_Impl";
-
+    
     ///to save the temp shapes
     struct TempShapes {
       
@@ -48,7 +48,7 @@ namespace mccomposite {
     /// to local coord system of an element. 
     /// The position of the element is given by "offset", 
     /// its orientation is specified by "rotmat".
-    void global2local				\
+    void global2local					\
     (mccomposite::geometry::Position & position, 
      mccomposite::geometry::Direction & direction, 
      const mccomposite::geometry::Vector & offset, 
@@ -67,7 +67,7 @@ namespace mccomposite {
     /// The position of the element in the global coord system
     /// is given by "offset", 
     /// its orientation is specified by "rotmat".
-    void local2global				\
+    void local2global					\
     (mccomposite::geometry::Position & position, 
      mccomposite::geometry::Direction & direction, 
      const mccomposite::geometry::Vector & offset, 
@@ -175,18 +175,39 @@ double
 mccomposite::CompositeNeutronScatterer_Impl::calculate_attenuation
 (const mcni::Neutron::Event & ev, const geometry::Position & end)
 {
+  using namespace CompositeNeutronScatterer_ImplDetails;
+#ifdef DEBUG
+  journal::debug_t debug( jrnltag );
+#endif
+
   double ret = 1.;
+  mcni::Neutron::Event ev1;
   
   for (size_t scatterer_index; scatterer_index<m_scatterers.size(); 
        scatterer_index++) {
-    
-    mcni::Neutron::Event ev1 = ev;
-    
+
+    std::cout << scatterer_index << std::endl;
+    std::cout << m_scatterers << std::endl;
     AbstractNeutronScatterer & scatterer = *(m_scatterers[scatterer_index]);
+    std::cout << "hello" << std::endl;
+    ev1 = ev;
+
+#ifdef DEBUG
+    debug << journal::at(__HERE__)
+	  << "scatterer id = " << scatterer_index
+	  << ", its shape = " << scatterer.shape()
+	  << journal::endl;
+#endif
     
     // convert to local coords
     m_details->global2local(ev1, scatterer);
     
+#ifdef DEBUG
+    debug << journal::at(__HERE__)
+	  << "event = " << ev
+	  << ", converted to local coordiante: " << ev1
+	  << journal::endl;
+#endif
     //
     ret *= scatterer.calculate_attenuation( ev1, end );
   }
@@ -202,7 +223,7 @@ mccomposite::CompositeNeutronScatterer_Impl::interactM_path1
   using namespace geometry;
   using namespace CompositeNeutronScatterer_ImplDetails;
   typedef int index_t;
-
+  
 #ifdef DEBUG
   journal::debug_t debug( jrnltag );
 #endif
@@ -210,7 +231,7 @@ mccomposite::CompositeNeutronScatterer_Impl::interactM_path1
   mcni::Neutron::Event ev1 = ev;
   
   // if the event is outside of my shape, propagate it to the surface
-  if (locate(ev1.state.position, m_shape) == Locator::outside) {
+  if (locate(ev1, m_shape) == Locator::outside) {
     
     // 1. find the intersection
     ArrowIntersector::distances_t distances = forward_intersect
@@ -241,20 +262,20 @@ mccomposite::CompositeNeutronScatterer_Impl::interactM_path1
       const mcni::Neutron::Event & ev = to_be_scattered[i];
       
 #ifdef DEBUG
-    debug << journal::at(__HERE__)
-	  << "now dealing with neutron " << ev
-	  << journal::endl;
+      debug << journal::at(__HERE__)
+	    << "now dealing with neutron " << ev
+	    << journal::endl;
 #endif
       // find out if it hits a scatterer
       index_t scatterer_index = find_1st_hit<index_t>
 	( ev.state.position, ev.state.velocity, m_shapes );
       
 #ifdef DEBUG
-    debug << journal::at(__HERE__)
-	  << "1st scatterer encountered is scatterer # " << scatterer_index
-	  << journal::endl;
+      debug << journal::at(__HERE__)
+	    << "1st scatterer encountered is scatterer # " << scatterer_index
+	    << journal::endl;
 #endif
-
+      
       // no hit, that event will go out. so add that to the out-list
       if (scatterer_index<0 or scatterer_index>=m_scatterers.size()) 
 	{ evts.push_back(ev); continue; }
@@ -262,13 +283,13 @@ mccomposite::CompositeNeutronScatterer_Impl::interactM_path1
       // try to scatter the neutron off the 1st scatterer it hits
       // 1. the scattterer
       AbstractNeutronScatterer & scatterer = *(m_scatterers[scatterer_index]);
-
+      
 #ifdef DEBUG
-    debug << journal::at(__HERE__)
-	  << "The scatterer has shape: " << scatterer.shape()
-	  << journal::endl;
+      debug << journal::at(__HERE__)
+	    << "The scatterer has shape: " << scatterer.shape()
+	    << journal::endl;
 #endif
-
+      
       // 2. the scattered neutrons will be stored here
       mcni::Neutron::Events newly_scattered;
       // 3. convert event to local coords
@@ -283,7 +304,7 @@ mccomposite::CompositeNeutronScatterer_Impl::interactM_path1
       // if we reach here, that means we got some new neutrons
       // 1. convert neutrons back to global coordinate
       m_details->local2global( newly_scattered, scatterer );
-
+      
       // 2. we need to check those neutrons. 
       // some of them may already exited first surface. we just need
       // to add to the out-list. The rest we need to deal with them
@@ -293,9 +314,9 @@ mccomposite::CompositeNeutronScatterer_Impl::interactM_path1
 	const mcni::Neutron::Event & ev = newly_scattered[new_neutron_index];
 	
 	// exited. add it to the out-list
-	if (locate(ev.state.position, m_shape) != Locator::inside)
+	if (locate(ev, m_shape) != Locator::inside)
 	  { evts.push_back(ev); continue; }
-
+	
 	// not exited. need to scatter again.
 	to_be_scattered2.push_back( ev );
       }
@@ -323,7 +344,7 @@ mccomposite::CompositeNeutronScatterer_Impl::scatterM
 #ifdef DEBUG
   journal::debug_t debug( jrnltag );
 #endif
-
+  
   mcni::Neutron::Events scattered;
   scattered.push_back( ev );
   
@@ -346,32 +367,32 @@ mccomposite::CompositeNeutronScatterer_Impl::scatterM
       // and the next intersection is on the border.
       // If it is on the border that means it is going out.
       ArrowIntersector::distances_t distances = forward_intersect(ev, m_shape);
-
+      
 #ifdef DEBUG
-    debug << journal::at(__HERE__)
-	  << "scatter neutron " << ev << journal::newline
-	  << "distances = " << distances
-	  << journal::endl;
+      debug << journal::at(__HERE__)
+	    << "scatter neutron " << ev << journal::newline
+	    << "distances = " << distances
+	    << journal::endl;
 #endif
-
+      
       if (distances.size()==0 or
 	  (distances.size()==1 
-	   and locate(ev.state.position+ev.state.velocity*(distances[0]/2), m_shape)==Locator::onborder) )
+	   and geometry::locate(ev.state.position+ev.state.velocity*(distances[0]/2), m_shape)==Locator::onborder) )
 	{ 
 #ifdef DEBUG
-    debug << journal::at(__HERE__)
-	  << "this neutron is going out: " << ev 
-	  << journal::endl;
+	  debug << journal::at(__HERE__)
+		<< "this neutron is going out: " << ev 
+		<< journal::endl;
 #endif
 	  evts.push_back( ev ); continue; 
 	}
       
 #ifdef DEBUG
-    debug << journal::at(__HERE__)
-	  << "this neutron needs further scattering: " << ev 
-	  << journal::endl;
+      debug << journal::at(__HERE__)
+	    << "this neutron needs further scattering: " << ev 
+	    << journal::endl;
 #endif
-
+      
       // try to scatter the neutron 
       itype = interactM_path1( ev, scattered2 );
       
@@ -394,36 +415,83 @@ mccomposite::CompositeNeutronScatterer_Impl::InteractionType
 mccomposite::CompositeNeutronScatterer_Impl::interact_path1
 (mcni::Neutron::Event & ev)
 {
+  using namespace CompositeNeutronScatterer_ImplDetails;
+#ifdef DEBUG
+  journal::debug_t debug( jrnltag );
+#endif
+  
   using namespace geometry;
   
+#ifdef DEBUG
+  debug << journal::at(__HERE__)
+	<< "Deal with neutron: " << ev 
+	<< journal::endl;
+#endif
   int scatterer_index = find_1st_hit<int>
     ( ev.state.position, ev.state.velocity, m_shapes );
   
+#ifdef DEBUG
+  debug << journal::at(__HERE__)
+	<< "1st hit scatterer index: " << scatterer_index
+	<< journal::endl;
+#endif
   // nothing hit. should just let go the neutron
   if (scatterer_index < 0 or scatterer_index >= m_scatterers.size() ) 
     return scatterer_interface::none;
   
   // the scatterer
   AbstractNeutronScatterer & scatterer = *(m_scatterers[scatterer_index]);
+#ifdef DEBUG
+  debug << journal::at(__HERE__)
+	<< "scatterer shape: " << scatterer.shape()
+	<< "scatterer position, orientation: " << m_geometer.getPosition(scatterer)
+	<< ", " << m_geometer.getOrientation(scatterer)
+	<< journal::endl;
+#endif
   // need to convert event to local coords before scattering
   mcni::Neutron::Event local_event = ev;
   m_details->global2local(local_event, scatterer);
+#ifdef DEBUG
+  debug << journal::at(__HERE__)
+	<< "local event: " << local_event
+	<< journal::endl;
+#endif
   // delegate the scaterer to deal with the neutron
   scatterer_interface::InteractionType itype = scatterer.interact_path1( local_event );
   
+#ifdef DEBUG
+  debug << journal::at(__HERE__)
+	<< "interaction type: " << itype
+	<< journal::endl;
+#endif
   // this means that the neutron is absorbed
   if (itype == scatterer_interface::absorption) {
     ev.probability = -1;
+#ifdef DEBUG
+    debug << journal::at(__HERE__)
+	  << "neutron absorbed: " << ev
+	  << journal::endl;
+#endif
     return itype;
   }
   
   // now we need to convert back coordinate
   m_details->local2global( local_event, scatterer );
   ev = local_event;
+#ifdef DEBUG
+  debug << journal::at(__HERE__)
+	<< "neutron back at global coordinates: " << ev
+	<< journal::endl;
+#endif
   
   // if the neutron just passed the scatterer without scattering
   if (itype == scatterer_interface::none) {
     // then we need to do scattering again
+#ifdef DEBUG
+    debug << journal::at(__HERE__)
+	  << "neutron needs more interaction: " << ev
+	  << journal::endl;
+#endif
     return interact_path1( ev );
   }
   
@@ -432,11 +500,22 @@ mccomposite::CompositeNeutronScatterer_Impl::interact_path1
   // and propagate neutron out.
   // 1. save the neutron
   mcni::Neutron::Event save = ev;
-  // 2. propagate to surface
-  propagate_to_next_out_surface( ev, m_shape );
+  // 2. propagate to surface if necessary
+  if (locate(ev, m_shape) == Locator::inside) 
+    propagate_to_next_out_surface( ev, m_shape );
+#ifdef DEBUG
+  debug << journal::at(__HERE__)
+	<< "neutron propagated to next out surface: " << ev
+	<< journal::endl;
+#endif
   // 3. compute attenuation
   double attenuation = calculate_attenuation( save, ev.state.position );
   ev.probability *= attenuation;
+#ifdef DEBUG
+  debug << journal::at(__HERE__)
+	<< "neutron attenuated: " << ev
+	<< journal::endl;
+#endif
   
   return scatterer_interface::scattering;
 }

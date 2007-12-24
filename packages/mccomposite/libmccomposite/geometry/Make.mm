@@ -48,6 +48,7 @@ EXPORT_HEADERS = \
 	locate.h \
 	operations.h \
 	primitives.h \
+	tolerance.h \
 	shape2ostream.h \
 	shapes.h \
 

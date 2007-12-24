@@ -57,7 +57,7 @@ mccomposite::geometry::Printer::visit
   const Composition::shapecontainer_t & shapes = intersection->shapes;
   os << "(" ;
   for (size_t i=0; i<shapes.size(); i++)  {
-    os << (*shapes[0]);
+    os << (*shapes[i]);
     if (i!= shapes.size()-1) os << " and ";
   }
   os << ")" ;
@@ -70,7 +70,7 @@ mccomposite::geometry::Printer::visit
   const Composition::shapecontainer_t & shapes = aunion->shapes;
   os << "(" ;
   for (size_t i=0; i<shapes.size(); i++)  {
-    os << (*shapes[0]);
+    os << (*shapes[i]);
     if (i!= shapes.size()-1) os << " and ";
   }
   os << ")" ;

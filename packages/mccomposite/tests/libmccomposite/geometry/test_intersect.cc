@@ -12,6 +12,7 @@
 //
 
 
+#include <cassert>
 #include <iostream>
 #include "mccomposite/geometry/shapes.h"
 #include "mccomposite/geometry/intersect.h"
@@ -56,17 +57,74 @@ void test2()
   Position start(0,0,-5);
   Direction direction(0,0,1);
   assert (find_1st_hit< int >( start, direction, shapes )==0);
+
+  start = Position(0, 0, -1);
+  assert (find_1st_hit< int >( start, direction, shapes )==1);  
+
+  start = Position(0, 0, -1+1e-10);
+  assert (find_1st_hit< int >( start, direction, shapes )==1);  
+
+  start = Position(0, 0, -1-1e-10);
+  assert (find_1st_hit< int >( start, direction, shapes )==1);  
+
+  start = Position(0, 0, -0.5);
+  assert (find_1st_hit< int >( start, direction, shapes )==1);  
+
+  start = Position(0, 0, 0);
+  assert (find_1st_hit< int >( start, direction, shapes )==1);  
+
+  start = Position(0, 0, 0.5);
+  assert (find_1st_hit< int >( start, direction, shapes )==1);  
+
+  start = Position(0, 0, 1);
+  assert (find_1st_hit< int >( start, direction, shapes )==0);
+
+  start = Position(0, 0, 1-1.e-10);
+  assert (find_1st_hit< int >( start, direction, shapes )==0);
+
+  start = Position(0, 0, 1+1.e-10);
+  assert (find_1st_hit< int >( start, direction, shapes )==0);
+
+  start = Position(0, 0, 1-1.e-5);
+  assert (find_1st_hit< int >( start, direction, shapes )==1);
+
+  start = Position(0, 0, 1-1.e-6);
+  assert (find_1st_hit< int >( start, direction, shapes )==1);
+
+  start = Position(0, 0, 1-1.e-7);
+  assert (find_1st_hit< int >( start, direction, shapes )==0);
+
 }
+
+
+void test3()
+{
+  Box box(1,1,1);
+  Sphere sphere1( 2), sphere2( 2.1 );
+  Difference shell(sphere2, sphere1);
+  
+  std::vector<const AbstractShape *> shapes;
+  shapes.push_back( &shell );
+  shapes.push_back( &box );
+
+  Position start(0,0,0.5);
+  Direction direction(0,0,1);
+  assert (find_1st_hit< int >( start, direction, shapes )==0);
+}
+
+
 
 int main()
 {
 #ifdef DEBUG
 //   journal::debug_t("mccomposite.geometry.ArrowIntersector").activate();
-//   journal::debug_t("mccomposite.geometry.Locator").activate();
+//    journal::debug_t("mccomposite.geometry.Locator").activate();
+//    journal::debug_t("mccomposite.geometry.intersect").activate();
 //   journal::debug_t(jrnltag).activate();
 #endif
   test1();
   test2();
+  test3();
 }
 
 // version

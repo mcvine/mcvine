@@ -43,6 +43,7 @@ EXPORT_HEADERS = \
 	Arrow.h Arrow.icc \
 	ArrowIntersector.h ArrowIntersector.icc \
 	shapes.h \
+	tolerance.h \
 
 
 # version

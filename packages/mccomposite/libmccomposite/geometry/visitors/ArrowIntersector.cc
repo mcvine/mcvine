@@ -5,6 +5,7 @@
 #include "mccomposite/geometry/intersect.h"
 #include "mccomposite/geometry/locate.h"
 #include "mccomposite/geometry/shape2ostream.h"
+#include "mccomposite/geometry/tolerance.h"
 
 #include "journal/debug.h"
 
@@ -14,16 +15,6 @@ namespace ArrowIntersector_impl{
   char * jrnltag = "mccomposite.geometry.ArrowIntersector";
   
 }
-
-template <typename T>
-std::ostream & operator << ( std::ostream & os, const std::vector<T> & v )
-{
-  typedef typename std::vector<T>::const_iterator Iterator;
-  for ( Iterator it = v.begin(); it != v.end(); it++ )
-    os << *it << ", ";
-  return os;
-}
-
 
 
 // meta-methods
@@ -80,6 +71,11 @@ mccomposite::geometry::ArrowIntersector::calculate_intersections
 
 #include "mcstas_compact/mcstas_compact.h"
 
+bool isInvaildDirection( const mccomposite::geometry::Direction & direction )
+{
+  return (direction[0] == 0 && direction[1] == 0 && direction[2] == 0 );
+}
+
 // visiting methods
 void
 mccomposite::geometry::ArrowIntersector::visit
@@ -91,6 +87,7 @@ mccomposite::geometry::ArrowIntersector::visit
   
   const Position & start = m_arrow.start;
   const Direction & direction = m_arrow.direction;
+  if (isInvaildDirection(direction)) return;
   
   double dt_in, dt_out;
   
@@ -132,6 +129,7 @@ mccomposite::geometry::ArrowIntersector::visit
   
   const Position & start = m_arrow.start;
   const Direction & direction = m_arrow.direction;
+  if (isInvaildDirection(direction)) return;
   
   double dt_in, dt_out;
   
@@ -211,6 +209,7 @@ mccomposite::geometry::ArrowIntersector::visit
   
   const Position & start = m_arrow.start;
   const Direction & direction = m_arrow.direction;
+  if (isInvaildDirection(direction)) return;
   
   calc_intersects_line_sphere( start, direction, sphere.radius, m_distances );
   return;
@@ -257,7 +256,7 @@ namespace ArrowIntersector_impl{
   
   // clean up intersection list (distances) so that only 
   // points on border are reserved
-  void remove_points_on_on_border
+  void remove_points_not_on_border
   ( distances_t & dists,
     const Arrow & arrow, const AbstractShape & shape,
     distances_t & ret)
@@ -271,6 +270,14 @@ namespace ArrowIntersector_impl{
 
 }
 
+namespace mccomposite{ namespace geometry{
+    inline bool eq_double( double a, double b ) 
+    {
+      double max = std::max(std::abs(a), std::abs(b));
+      return max < tolerance || std::abs((a-b)/max) < tolerance ;
+    }
+  }
+}
 
 void 
 mccomposite::geometry::ArrowIntersector::visit_composition
@@ -278,15 +285,38 @@ mccomposite::geometry::ArrowIntersector::visit_composition
 {
   const std::vector< const AbstractShape * > & shapes = composition->shapes;
   using namespace ArrowIntersector_impl;
-  
-  m_distances.clear();
 
+  // gather intersections and remove intersections that are not on border
+  distances_t distances;  
   for (size_t i=0; i<shapes.size(); i++) {
     distances_t dists = intersect( m_arrow, *(shapes[i]) );
-    remove_points_on_on_border( dists, m_arrow, *composition, m_distances );
+    remove_points_not_on_border( dists, m_arrow, *composition, distances );
   }
   
-  std::sort( m_distances.begin(), m_distances.end() );
+  // sort intersections
+  std::sort( distances.begin(), distances.end() );
+
+  // this turns out to be more troublesome than not doing it.
+  // so let us comment it out:
+//   // removed repeated intersection
+//   distances_t::iterator newend = std::unique
+//     ( distances.begin(), distances.end(), eq_double);
+
+  // copy to result container
+  m_distances.clear();
+//   copy( distances.begin(), newend, std::back_inserter(m_distances) );
+  copy( distances.begin(), distances.end(), std::back_inserter(m_distances) );
+
+#ifdef DEBUG
+  journal::debug_t debug( ArrowIntersector_impl::jrnltag );
+
+  debug << journal::at(__HERE__) 
+	<< m_distances << journal::endl
+    ;
+#endif
+
+  //
+  if (m_distances.size()%2==1) throw "odd number of intersections";
 }
 
 

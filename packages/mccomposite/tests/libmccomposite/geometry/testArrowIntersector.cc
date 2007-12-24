@@ -12,6 +12,7 @@
 //
 
 
+#include <cassert>
 #include <iostream>
 #include "mccomposite/geometry/shapes.h"
 #include "mccomposite/geometry/visitors/ArrowIntersector.h"
@@ -25,15 +26,6 @@ using namespace std;
 using namespace mccomposite::geometry;
 char * jrnltag ="testArrowIntersector";
 
-template <typename T>
-std::ostream & operator << 
-( std::ostream & os, const std::vector<T> & v )
-{
-  typedef std::vector<T> V;
-  for (typename V::const_iterator it = v.begin(); it<v.end(); it++)
-    os << *it << ", ";
-  return os;
-}
 
 void test1()
 {
@@ -148,6 +140,24 @@ void test6()
 
 }
 
+// union of shapes that have same edge
+void test7()
+{
+  Box box(2,2,2);
+  Union aunion(box, box);
+
+  Arrow arrow( Position (0,0,-5), Direction(0,0,1) );
+
+  ArrowIntersector::distances_t distances = intersect(arrow, aunion);
+
+  assert (distances.size() == 4);
+  assert (distances[0] == 4 );
+  assert (distances[1] == 4 );
+  assert (distances[2] == 6 );
+  assert (distances[3] == 6 );
+
+}
+
 void test10()
 {
   Box box(1,1,1);
@@ -176,6 +186,7 @@ int main()
   test4();
   test5();
   test6();
+  test7();
   test10();
 }
 

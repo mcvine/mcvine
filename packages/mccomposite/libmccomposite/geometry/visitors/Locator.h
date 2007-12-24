@@ -18,6 +18,7 @@
 #include "mccomposite/geometry/Position.h"
 #include "AbstractShapeVisitor.h"
 #include "shapes.h"
+#include "tolerance.h"
 
 
 namespace mccomposite {
@@ -31,7 +32,7 @@ namespace mccomposite {
       enum Location {inside, onborder, outside};
 
       //meta methods
-      Locator( double roundingErrorTolerance = 1.e-7 );
+      Locator( double roundingErrorTolerance = tolerance );
       virtual ~Locator( ) {};
 
       //methods

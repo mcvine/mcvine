@@ -23,7 +23,7 @@ namespace mccomposite {
     /// the particle's position and moving direction is given.
     template <typename index_t>
     index_t find_1st_hit
-    ( const Position start, const Direction & direction, 
+    ( const Position & start, const Direction & direction, 
       const std::vector<const AbstractShape *> & shapes );
     
   }

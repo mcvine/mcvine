@@ -24,9 +24,9 @@ namespace mccomposite {
       remove_copy_if
 	(all.begin(), all.end(), back_inserter( ret ),
 	 bind2nd( less<double>(), 0 ) );
-
+      
       return ret;
-			  
+      
     }
 
   }

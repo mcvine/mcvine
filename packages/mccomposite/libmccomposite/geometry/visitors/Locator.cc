@@ -49,7 +49,7 @@ mccomposite::geometry::Locator::visit
   const double & z = point.z;
 
   const double & ret = roundingErrorTolerance;
-
+  
   using std::abs;
   
   if (abs(x) > (X+ret)/2. || abs(y) > (Y+ret)/2. || abs(z) > (Z+ret)/2.)
@@ -113,9 +113,10 @@ mccomposite::geometry::Locator::visit
   const AbstractShape &body2 = *(difference->shapes[1]) ;
   Location p1 = locate( body1 );
   Location p2 = locate( body2 );
-  if (p1 == outside || p2 == inside) {location = outside; return;}
-  if (p1 == onborder || p2 == onborder) {location = onborder; return;}
-  location = inside; return;
+  if (p1 == outside || p2 == inside) {location = outside;}
+  else if (p1 == onborder || p2 == onborder) {location = onborder;}
+  else location = inside; 
+  return;
 }
 
 void
