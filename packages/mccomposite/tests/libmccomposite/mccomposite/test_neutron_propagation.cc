@@ -30,34 +30,65 @@ void test1()
 
   geometry::Box box(2,2,2);
 
-  propagate_to_next_out_surface(ev, box);
+  propagate_to_next_exiting_surface(ev, box);
   assert (ev.state.position.z == 1);
   assert (ev.time == 6);
 
 
   ev = save;
   ev.state.position.z = 0.;
-  propagate_to_next_out_surface(ev, box);
+  propagate_to_next_exiting_surface(ev, box);
   assert (ev.state.position.z == 1);
   assert (ev.time == 1);
 
   ev = save;
   ev.state.position.z = -1;
-  propagate_to_next_out_surface(ev, box);
+  propagate_to_next_exiting_surface(ev, box);
   assert (ev.state.position.z == 1);
   assert (ev.time == 2);
 
   ev = save;
   ev.state.position.z = -1-1e-10;
-  propagate_to_next_out_surface(ev, box);
+  propagate_to_next_exiting_surface(ev, box);
   assert (ev.state.position.z == 1);
   assert (ev.time == 2+1e-10);
 
   ev = save;
   ev.state.position.z = -1+1e-10;
-  propagate_to_next_out_surface(ev, box);
+  propagate_to_next_exiting_surface(ev, box);
   assert (ev.state.position.z == 1);
   assert (ev.time == 2-1e-10);
+
+  ev = save;
+  ev.state.position.z = -5;
+  propagate_to_next_incident_surface(ev, box);
+  assert (ev.state.position.z == -1);
+  assert (ev.time == 4);
+
+  ev = save;
+  ev.state.position.z = -1;
+  propagate_to_next_incident_surface(ev, box);
+  assert (ev.state.position.z == -1);
+  assert (ev.time == 0);
+
+  ev = save;
+  ev.state.position.z = -1+1.e-10;
+  propagate_to_next_incident_surface(ev, box);
+  assert (ev.state.position.z == -1+1.e-10);
+  assert (ev.time == 0);
+
+  ev = save;
+  ev.state.position.z = -1-1.e-10;
+  propagate_to_next_incident_surface(ev, box);
+  assert (ev.state.position.z == -1-1.e-10);
+  assert (ev.time == 0);
+
+  ev.state.position.z = -1;
+  assert (tof_before_exit(ev, box) == 2);
+  ev.state.position.z = 0;
+  assert (tof_before_exit(ev, box) == 1);
+  ev.state.position.z = 1;
+  assert (tof_before_exit(ev, box) == 0);
 }
 
 void test2()
@@ -73,34 +104,59 @@ void test2()
   ev.state.velocity = mccomposite::geometry::Direction(0,0,1);
   save = ev;
 
-  propagate_to_next_out_surface(ev, shape);
+  propagate_to_next_exiting_surface(ev, shape);
   assert (ev.state.position.z == 1);
   assert (ev.time == 6);
 
 
   ev = save;
   ev.state.position.z = 0.;
-  propagate_to_next_out_surface(ev, shape);
+  propagate_to_next_exiting_surface(ev, shape);
   assert (ev.state.position.z == 1);
   assert (ev.time == 1);
 
   ev = save;
   ev.state.position.z = -1;
-  propagate_to_next_out_surface(ev, shape);
+  propagate_to_next_exiting_surface(ev, shape);
   assert (ev.state.position.z == 1);
   assert (ev.time == 2);
 
   ev = save;
   ev.state.position.z = -1-1e-10;
-  propagate_to_next_out_surface(ev, shape);
+  propagate_to_next_exiting_surface(ev, shape);
   assert (ev.state.position.z == 1);
   assert (ev.time == 2+1e-10);
 
   ev = save;
   ev.state.position.z = -1+1e-10;
-  propagate_to_next_out_surface(ev, shape);
+  propagate_to_next_exiting_surface(ev, shape);
   assert (ev.state.position.z == 1);
   assert (ev.time == 2-1e-10);
+
+  ev = save;
+  ev.state.position.z = -5;
+  propagate_to_next_incident_surface(ev, box);
+  assert (ev.state.position.z == -1);
+  assert (ev.time == 4);
+
+  ev = save;
+  ev.state.position.z = -1;
+  propagate_to_next_incident_surface(ev, box);
+  assert (ev.state.position.z == -1);
+  assert (ev.time == 0);
+
+  ev = save;
+  ev.state.position.z = -1+1.e-10;
+  propagate_to_next_incident_surface(ev, box);
+  assert (ev.state.position.z == -1+1.e-10);
+  assert (ev.time == 0);
+
+  ev = save;
+  ev.state.position.z = -1-1.e-10;
+  propagate_to_next_incident_surface(ev, box);
+  assert (ev.state.position.z == -1-1.e-10);
+  assert (ev.time == 0);
+
 }
 
 
@@ -118,19 +174,51 @@ void test3()
   ev.state.velocity = mccomposite::geometry::Direction(0,0,1);
   save = ev;
 
-  propagate_to_next_out_surface(ev, shape);
+  propagate_to_next_exiting_surface(ev, shape);
   assert (ev.state.position.z == 1);
   assert (ev.time == 6);
 
   ev = save;
   ev.state.position.z = 1.;
-  try {
-    propagate_to_next_out_surface(ev, shape);
-    throw "If we reach here, it is bad";
-  }
-  catch (mccomposite::Exception e) {
-    std::cout << "good, exception caught: " << e.what() << std::endl;
-  }
+  propagate_to_next_exiting_surface(ev, shape);
+  assert (ev.state.position.z == 1);
+  assert (ev.time == 0);
+  
+  ev = save;
+  ev.state.position.z = 1.+1.e-10;
+  propagate_to_next_exiting_surface(ev, shape);
+  assert (ev.state.position.z == 1.+1.e-10);
+  assert (ev.time == 0);
+  
+  ev = save;
+  ev.state.position.z = 1.-1.e-10;
+  propagate_to_next_exiting_surface(ev, shape);
+  assert (ev.state.position.z == 1.-1.e-10);
+  assert (ev.time == 0);
+  
+  ev = save;
+  ev.state.position.z = 1.+1.e-3;
+  propagate_to_next_exiting_surface(ev, shape);
+  assert (ev.state.position.z == 4);
+  assert (ev.time == 3-1.e-3);
+  
+  ev = save;
+  ev.state.position.z = 1;
+  propagate_to_next_incident_surface(ev, shape);
+  assert (ev.state.position.z ==2);
+  assert (ev.time == 1);
+  
+  ev = save;
+  ev.state.position.z = 1+1.e-10;
+  propagate_to_next_incident_surface(ev, shape);
+  assert (ev.state.position.z ==2);
+  assert (ev.time == 1-1.e-10);
+  
+  ev = save;
+  ev.state.position.z = 1-1.e-10;
+  propagate_to_next_incident_surface(ev, shape);
+  assert (ev.state.position.z ==2);
+  assert (ev.time == 1+1.e-10);
   
 }
 

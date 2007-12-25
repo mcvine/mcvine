@@ -31,6 +31,7 @@ EXPORT_HEADERS = \
 	exception.h \
 	neutron_propagation.h \
 	vector2ostream.h \
+	mccomposite.h \
 
 # version
 # $Id: Make.mm,v 1.1.1.1 2005/03/08 16:13:51 aivazis Exp $

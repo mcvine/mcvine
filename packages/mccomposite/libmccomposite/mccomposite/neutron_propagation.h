@@ -1,3 +1,17 @@
+// -*- C++ -*-
+//
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//
+//                                   Jiao Lin
+//                      California Institute of Technology
+//                        (C) 2007  All Rights Reserved
+//
+// {LicenseText}
+//
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//
+
+
 #ifndef MCCOMPOSITE_NEUTRON_PROPAGATION_H
 #define MCCOMPOSITE_NEUTRON_PROPAGATION_H
 
@@ -64,24 +78,45 @@ namespace mccomposite{
   //   1. inside the shape
   //   2. outside the shape
   //   3. on the input surface of the shape
-  // It cannot be on the output surface of the shape
-  void propagate_to_next_out_surface
+  // If the starting point is already on the exiting surface of the shape,
+  // nothing will be done.
+  void propagate_to_next_exiting_surface
   ( mcni::Neutron::Event & ev, const geometry::AbstractShape & shape);
 
 
-  // propagate a neutron to the next in-surface of a shape
+  // propagate a neutron to the next incident-surface of a shape
   // please notice that a neutorn could go through a shape in/out
   // several times. For example, a neutron can go through a 
   // hollow cylinder by entering/exiting it twice (one at the
   // front surface, and another at the back surface.
   // note: shape cannot be infinitely large.
-  // note: point must be out of shape, or it may be at the exiting
+  // note: point must be out of shape, or it may be at an exiting
   //  surface.
-  inline void propagate_to_next_in_surface
+  // note: if the starting point is already on a
+  //  incident surface, nothing will be done.
+  void propagate_to_next_incident_surface
   ( mcni::Neutron::Event & ev, const geometry::AbstractShape & shape);
+
+  // calcualte the total tof of neutron for it to exit
+  // the given shape for the first time.
+  // please notice that a neutorn could go through a shape in/out
+  // several times. For example, a neutron can go through a 
+  // hollow cylinder by entering/exiting it twice (one at the
+  // front surface, and another at the back surface.
+  // note: shape cannot be infinitely large.
+  // note: point must be inside the shape, or it may be at an incident
+  // surface.
+  double tof_before_exit
+  ( const mcni::Neutron::Event & ev, const geometry::AbstractShape & shape);
 
 }
 
 
 
 #endif
+
+
+// version
+// $Id$
+
+// End of file 

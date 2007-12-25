@@ -12,6 +12,8 @@
 //
 
 
+#include "mccomposite/geometry/geometry.h"
+
 
 // version
 // $Id$

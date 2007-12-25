@@ -30,7 +30,7 @@ public:
   {}
   InteractionType interact_path1(mcni::Neutron::Event &ev) 
   {
-    mccomposite::propagate_to_next_out_surface( ev, shape() );
+    mccomposite::propagate_to_next_exiting_surface( ev, shape() );
     return none;
   }
 };
@@ -42,7 +42,7 @@ public:
   {}
   InteractionType interact_path1(mcni::Neutron::Event & ev) 
   {
-    mccomposite::propagate_to_next_out_surface( ev, shape() );
+    mccomposite::propagate_to_next_exiting_surface( ev, shape() );
     return scattering;
   }
 };
@@ -57,7 +57,7 @@ public:
   {}
   InteractionType interact_path1(mcni::Neutron::Event & ev) 
   {
-    mccomposite::propagate_to_next_out_surface( ev, shape() );
+    mccomposite::propagate_to_next_exiting_surface( ev, shape() );
     InteractionType itype;
     if (forwarding) itype = scattering;
     else itype = none;
@@ -77,7 +77,7 @@ public:
   {}
   InteractionType interact_path1(mcni::Neutron::Event & ev) 
   {
-    mccomposite::propagate_to_next_out_surface( ev, shape() );
+    mccomposite::propagate_to_next_exiting_surface( ev, shape() );
     return scattering;
   }
   

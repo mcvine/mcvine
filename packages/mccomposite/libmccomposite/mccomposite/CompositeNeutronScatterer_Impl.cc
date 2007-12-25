@@ -499,7 +499,7 @@ mccomposite::CompositeNeutronScatterer_Impl::interact_path1
   mcni::Neutron::Event save = ev;
   // 2. propagate to surface if necessary
   if (locate(ev, m_shape) == Locator::inside) 
-    propagate_to_next_out_surface( ev, m_shape );
+    propagate_to_next_exiting_surface( ev, m_shape );
 #ifdef DEBUG
   debug << journal::at(__HERE__)
 	<< "neutron propagated to next out surface: " << ev
