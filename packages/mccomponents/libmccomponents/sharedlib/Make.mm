@@ -31,13 +31,17 @@ all: $(PROJ_SAR) export
 
 PROJ_SRCS = \
 	HomogeneousNeutronScatterer.cc \
+	random.cc \
 
 
 PROJ_TIDY += $(PROJ_SRCS)
 
 
-HomogeneousNeutronScatterer.cc: ../mccomposite/HomogeneousNeutronScatterer.cc
-	cp ../mccomposite/HomogeneousNeutronScatterer.cc .
+HomogeneousNeutronScatterer.cc: ../mccomponents/HomogeneousNeutronScatterer.cc
+	cp ../mccomponents/HomogeneousNeutronScatterer.cc .
+
+random.cc: ../mccomponents/random.cc
+	cp ../mccomponents/random.cc .
 
 
 

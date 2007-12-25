@@ -24,7 +24,9 @@ all: export
 export:: export-package-headers
 
 EXPORT_HEADERS = \
-	HomogeneousNeutronScatterer.h HomogeneousNeutronScatterer.icc \
+	AbstractScatteringKernel.h \
+	HomogeneousNeutronScatterer.h \
+	random.h \
 
 # version
 # $Id: Make.mm,v 1.1.1.1 2005/03/08 16:13:51 aivazis Exp $
