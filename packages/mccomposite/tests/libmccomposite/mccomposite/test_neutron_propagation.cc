@@ -223,11 +223,52 @@ void test3()
 }
 
 
+void test4()
+{
+  using namespace mcni;
+  using namespace mccomposite;
+
+  geometry::Box box(2,2,2);
+
+  Neutron::Event ev;
+  ev.state.velocity = mccomposite::geometry::Direction(0,0,1);
+
+  ev.state.position = mccomposite::geometry::Position(0,0,-5);
+  assert (is_exiting( ev, box ) == 0);
+
+  ev.state.position = mccomposite::geometry::Position(0,0,1);
+  assert (is_exiting( ev, box ) == 1);
+
+  ev.state.position = mccomposite::geometry::Position(0,0,2);
+  assert (is_exiting( ev, box ) == 1);
+
+}
+
+
+void test5()
+{
+  using namespace mcni;
+  using namespace mccomposite;
+
+  Neutron::Event ev;
+  ev.state.position = mccomposite::geometry::Position(0,0,-5);
+  ev.state.velocity = mccomposite::geometry::Direction(0,0,1);
+  assert (is_moving( ev ) == 1);
+
+  ev.state.velocity = mccomposite::geometry::Direction(0,0,0);
+  assert (is_moving( ev ) == 0);
+
+}
+
+
+
 int main()
 {
   test1();
   test2();
   test3();
+  test4();
+  test5();
 }
 
 // version

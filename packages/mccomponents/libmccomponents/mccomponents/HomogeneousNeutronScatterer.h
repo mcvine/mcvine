@@ -36,6 +36,9 @@ namespace mccomponents{
   class HomogeneousNeutronScatterer: public AbstractNeutronScatterer {
   public:
 
+    //static data
+    static const double minimum_neutron_event_probability = 1.e-20;
+
     //types
     typedef AbstractNeutronScatterer base_t;
     struct Weights {
@@ -83,6 +86,12 @@ namespace mccomponents{
 
   private:
     
+    // helpers
+    /// helper for interactM_path1. 
+    /// the only difference between this method and interactM_path1 is that 
+    /// it does not propagate neutron to the surface.
+    void _interactM1(const mcni::Neutron::Event &, mcni::Neutron::Events &);
+    // data
     AbstractScatteringKernel & m_kernel;
     Weights m_weights;
     random::Generator m_randomnumbergenerator;

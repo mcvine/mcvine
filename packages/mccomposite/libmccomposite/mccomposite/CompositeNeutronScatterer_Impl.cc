@@ -348,6 +348,9 @@ mccomposite::CompositeNeutronScatterer_Impl::scatterM
       
       // for each event
       const mcni::Neutron::Event & ev = scattered[i];
+
+      // if the neutron is not moving, we don't have a way to deal with it
+      if (! is_moving( ev ) ) continue;
       
       // find out if it intersects with this scatterer
       // if not, it should be let go.
@@ -508,6 +511,9 @@ mccomposite::CompositeNeutronScatterer_Impl::scatter
 {
   using namespace geometry;
 
+  // if the neutron is not moving, we don't have a way to deal with it
+  if (! is_moving( ev ) ) {ev.probability = -1; return;}
+      
   // event is exiting, nothing need to be done
   if (is_exiting(ev, m_shape)) return;
 

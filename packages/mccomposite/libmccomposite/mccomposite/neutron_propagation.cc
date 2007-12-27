@@ -163,6 +163,9 @@ namespace mccomposite {
 
     tofs_t tofs = forward_intersect( ev, shape );
 
+    // if no interactions, that means the event is already exiting
+    if (tofs.size() == 0) return 1;
+
     // if event is outside the shape, but will hit the shape again, it 
     // does not count as exiting
     if (location==geometry::Locator::outside && tofs.size() > 0 ) return 0;
@@ -182,6 +185,12 @@ namespace mccomposite {
     }
     
     return 1;
+  }
+
+  bool is_moving (const mcni::Neutron::Event &ev)
+  {
+    static const double minimum_velocity = 1.e-6; // typical thermal neutron are 10^3 m/s
+    return (ev.state.velocity.length()>minimum_velocity);
   }
 
 }

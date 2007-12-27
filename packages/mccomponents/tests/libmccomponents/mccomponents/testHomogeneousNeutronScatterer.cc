@@ -237,17 +237,72 @@ void test4()
 }
 
 
+void test5()
+{
+  using namespace mccomponents;
+  
+  mccomposite::geometry::Box box(1,1,1);
+  Absorber kernel;
+  HomogeneousNeutronScatterer::Weights weights;
+
+  HomogeneousNeutronScatterer absorber( box, kernel, weights );
+
+  mcni::Neutron::Event event, save;
+  save.state.position = mccomposite::geometry::Position( 0,0, -5 );
+  save.state.velocity = mccomposite::geometry::Direction( 0,0, 1 );
+  event = save;
+  
+  mcni::Neutron::Events events;
+  
+  absorber.scatterM( event, events );
+  
+  assert (events.size()==0);
+}
+
+
+void test6()
+{
+  using namespace mccomponents;
+  double size = 1e-4;
+  mccomposite::geometry::Box box(size, size, size);
+  ToX kernel;
+  HomogeneousNeutronScatterer::Weights weights;
+
+  HomogeneousNeutronScatterer scatterer( box, kernel, weights );
+  
+  mcni::Neutron::Event event, save;
+  save.state.position = mccomposite::geometry::Position( 0,0, -5 );
+  save.state.velocity = mccomposite::geometry::Direction( 0,0, 1 );
+  event = save;
+  
+  mcni::Neutron::Events events;
+  
+  scatterer.scatterM( event, events );
+  
+  assert ( events.size() > 1 );
+  size_t max_scatterings =  log10( size/HomogeneousNeutronScatterer::minimum_neutron_event_probability)/log10(1/size) + 2 ;
+  assert ( events.size() <= max_scatterings );
+
+  // scattered events should consists of
+  //  - barely attenuated neutron along (0,0,1)
+  //  - scattered to (1,0,0) with probability in the order of "size/2"
+  //  - addtional neutrons to (1,0,0) with probability in the order of "size/2^n"
+  std::cout << events << std::endl;
+}
+
 
 int main()
 {
 #ifdef DEBUG
   //journal::debug_t("HomogeneousNeutronScatterer").activate();
-  //journal::debug_t("CompositeNeutronScatterer_Impl").activate();
+  // journal::debug_t("CompositeNeutronScatterer_Impl").activate();
 #endif
   test1();
   test2();
   test3();
   test4();
+  test5();
+  test6();
   return 0;
 }
 

@@ -117,6 +117,8 @@ namespace mccomposite{
   bool is_exiting
   ( const mcni::Neutron::Event & ev, const geometry::AbstractShape & shape);
 
+  /// test if a neutron is moving (has velocity)
+  bool is_moving (const mcni::Neutron::Event &ev);
 }
 
 
