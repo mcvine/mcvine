@@ -109,6 +109,14 @@ namespace mccomposite{
   double tof_before_exit
   ( const mcni::Neutron::Event & ev, const geometry::AbstractShape & shape);
 
+
+  /// test if a neutron is exiting a shape and never hits it again.
+  /// note: sometimes a neutron could be exiting from a shape, but
+  /// will hit the shape again, for example, when a neutron inside 
+  /// a hllow box.
+  bool is_exiting
+  ( const mcni::Neutron::Event & ev, const geometry::AbstractShape & shape);
+
 }
 
 

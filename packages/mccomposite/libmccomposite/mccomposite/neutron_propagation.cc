@@ -152,6 +152,38 @@ namespace mccomposite {
     return t;
   }
 
+
+  bool is_exiting
+  ( const mcni::Neutron::Event & ev, const geometry::AbstractShape & shape)
+  {
+    Location location = locate(ev, shape);
+
+    // if event is still inside the shape, it is not exiting
+    if (location==geometry::Locator::inside) return 0;
+
+    tofs_t tofs = forward_intersect( ev, shape );
+
+    // if event is outside the shape, but will hit the shape again, it 
+    // does not count as exiting
+    if (location==geometry::Locator::outside && tofs.size() > 0 ) return 0;
+
+    // if we reach here, the neutron is on surface. 
+    // we are almost certain it is exiting. one more test need to be done,
+    // however. we need to make sure all intersections are simply 
+    // trivial repetition of the same surface.
+    double previous = 0;
+    for (size_t tof_index =0; tof_index < tofs.size(); tof_index++) {
+      double now = tofs[tof_index];
+      double middle = (previous + now)/2.;
+      if (geometry::locate(ev.state.position + middle * ev.state.velocity, 
+			   shape) != geometry::Locator::onborder )
+	return 0;
+      previous = now;
+    }
+    
+    return 1;
+  }
+
 }
 
 

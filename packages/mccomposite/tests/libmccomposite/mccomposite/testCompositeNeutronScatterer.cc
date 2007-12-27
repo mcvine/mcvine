@@ -113,8 +113,17 @@ void test1()
   Geometer<AbstractNeutronScatterer> g;
   CompositeNeutronScatterer cs( box, scatterers, g );
 
-  mcni::Neutron::Event ev;
+  mcni::Neutron::Event ev, save;
+  ev.state.position = geometry::Position( 0,0,-5 );
+  ev.state.velocity = geometry::Direction( 0,0,1 );
+  ev.probability = 1;
+  ev.time = 0;
+  save = ev;
+
   assert (cs.interact_path1( ev )==AbstractNeutronScatterer::none);
+  
+  ev = save;
+  cs.scatter(ev);
 }
 
 // simple. a box just just forwards any input neutron.
@@ -220,12 +229,13 @@ void test4()
   ev.probability = 1.;
 
   mcni::Neutron::Event save = ev;
-  assert (cs.interact_path1( ev ) == AbstractNeutronScatterer::scattering);
-  assert (ev.state.position.z == 0.5 );
-  assert (ev.time == 5.5 );
+  assert (cs.interact_path1( ev ) == AbstractNeutronScatterer::none);
+  assert (ev.state.position.z == -2 );
+  assert (ev.time == 3 );
 
   ev = save;
   cs.scatter( ev ) ;
+  std::cout << ev << std::endl;
   assert (abs(ev.state.position.z-2.1) < 1.e-5 );
   assert (ev.time == 7.1);
 }
@@ -305,9 +315,9 @@ void test5()
   assert (ev.time == 3 );
 
   ev = save;
-  assert (cs.interact_path1( ev ) == AbstractNeutronScatterer::scattering);
-  assert (ev.state.position.z == 0.5 );
-  assert (ev.time == 5.5 );
+  assert (cs.interact_path1( ev ) == AbstractNeutronScatterer::none);
+  assert (ev.state.position.z == -2 );
+  assert (ev.time == 3 );
 
   ev = save;
   cs.scatter( ev ) ;
@@ -415,6 +425,44 @@ void test7()
 }
 
 
+// a box that does nothing to neutron, and then another box
+// that scatters, 
+void test8()
+{
+  using namespace mccomposite;
+
+  geometry::Box box(1,1,1);
+  Nothing s1(box);
+  Forwarding s2(box);
+
+  CompositeNeutronScatterer::scatterercontainer_t scatterers;
+
+  scatterers.push_back( &s1 );
+  scatterers.push_back( &s2 );
+  
+  typedef CompositeNeutronScatterer::geometer_t geometer_t;
+  geometer_t g;
+  g.remember( s1, geometer_t::position_t(0,0,-1), geometer_t::orientation_t() );
+  g.remember( s2, geometer_t::position_t(0,0,1), geometer_t::orientation_t() );
+
+  geometry::Translation b1( box, geometer_t::position_t(0,0,-1) );
+  geometry::Translation b2( box, geometer_t::position_t(0,0,1) );
+  geometry::Union shape(b1, b2);
+
+  CompositeNeutronScatterer cs( shape, scatterers, g );
+
+  mcni::Neutron::Event ev;
+  ev.state.position = geometry::Position(0,0,-5);
+  ev.state.velocity = geometry::Direction(0,0,1);
+  ev.time = 0;
+  ev.probability = 1.;
+  
+  assert (cs.interact_path1( ev )==AbstractNeutronScatterer::none);
+  
+}
+
+
+
 int main()
 {
 #ifdef DEBUG
@@ -429,6 +477,7 @@ int main()
   test5();
   test6();
   test7();
+  test8();
 }
 
 // version

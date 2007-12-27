@@ -229,16 +229,9 @@ mccomposite::CompositeNeutronScatterer_Impl::interactM_path1
   
   // if the event is outside of my shape, propagate it to the surface
   if (locate(ev1, m_shape) == Locator::outside) {
-    
-    // 1. find the intersection
-    ArrowIntersector::distances_t distances = forward_intersect
-      ( ev1, m_shape );
-    
-    // 2. propagate the neutron to first surface
-    if (distances.size() != 0 ) 
-      propagate(ev1, distances[0]);
+    propagate_to_next_incident_surface( ev1, m_shape );
   }
-  
+
   mcni::Neutron::Events to_be_scattered;
   to_be_scattered.push_back( ev1 );
   
@@ -358,31 +351,15 @@ mccomposite::CompositeNeutronScatterer_Impl::scatterM
       
       // find out if it intersects with this scatterer
       // if not, it should be let go.
-      // The difficulty is the neutron is on the border, the forward_intersection
-      // might find an intersection at zero distance.
-      // Here we choose to find out if the middle point of the neutron
-      // and the next intersection is on the border.
-      // If it is on the border that means it is going out.
-      ArrowIntersector::distances_t distances = forward_intersect(ev, m_shape);
       
+      if (is_exiting( ev, m_shape ) ) {
 #ifdef DEBUG
-      debug << journal::at(__HERE__)
-	    << "scatter neutron " << ev << journal::newline
-	    << "distances = " << distances
-	    << journal::endl;
+	debug << journal::at(__HERE__)
+	      << "this neutron is going out: " << ev 
+	      << journal::endl;
 #endif
-      
-      if (distances.size()==0 or
-	  (distances.size()==1 
-	   and geometry::locate(ev.state.position+ev.state.velocity*(distances[0]/2), m_shape)==Locator::onborder) )
-	{ 
-#ifdef DEBUG
-	  debug << journal::at(__HERE__)
-		<< "this neutron is going out: " << ev 
-		<< journal::endl;
-#endif
-	  evts.push_back( ev ); continue; 
-	}
+	evts.push_back( ev ); continue; 
+      }
       
 #ifdef DEBUG
       debug << journal::at(__HERE__)
@@ -485,6 +462,11 @@ mccomposite::CompositeNeutronScatterer_Impl::interact_path1
   
   // if the neutron just passed the scatterer without scattering
   if (itype == scatterer_interface::none) {
+    // if the neutron already at exiting surface or outside
+    // the scatterer, nothing need to be done
+    if (locate(ev, m_shape)!=geometry::Locator::inside)
+      return itype;
+    // if still insdie the composite, 
     // then we need to do scattering again
 #ifdef DEBUG
     debug << journal::at(__HERE__)
@@ -525,20 +507,30 @@ mccomposite::CompositeNeutronScatterer_Impl::scatter
 (mcni::Neutron::Event & ev)
 {
   using namespace geometry;
-  
+
+  // event is exiting, nothing need to be done
+  if (is_exiting(ev, m_shape)) return;
+
+  // otherwise, interacts once.
   scatterer_interface::InteractionType itype = interact_path1( ev );
   
   // if it is absorbed or it does not hit anything. we don't
   // need do more.
-  if (itype != scatterer_interface::scattering) return;
+  if (itype == scatterer_interface::absorption) return;
+
+  if (itype == scatterer_interface::none) {
+    // need to call scatter again
+    scatter( ev );
+    return;
+  }
   
   // when we reach here, this means the event was scattered. 
   // we still need to attenuate the outgoing event
   // 1. find intersections
-  ArrowIntersector::distances_t distances = intersect(ev, m_shape);
+  tofs_t tofs = intersect(ev, m_shape);
   
   // 2. no intersection. nothing to do
-  if (distances.size()==0) 
+  if (tofs.size()==0) 
     return;
   
   // 3. with intersection. propagate to the last intersection and 
