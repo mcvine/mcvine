@@ -18,14 +18,17 @@
 
 struct mccomposite::AbstractNeutronScatterer::Details {
   Details( AbstractNeutronScatterer & scatterer ) 
-    : composite( scatterer.shape(), scatterers, geometer )
   {
     scatterers.push_back( &scatterer );
+    composite = std::auto_ptr<CompositeNeutronScatterer_Impl> 
+      (new CompositeNeutronScatterer_Impl
+       ( scatterer.shape(), scatterers, geometer ) 
+       );
   }
 
   CompositeNeutronScatterer_Impl::scatterercontainer_t scatterers;
   CompositeNeutronScatterer_Impl::geometer_t geometer;
-  CompositeNeutronScatterer_Impl composite;
+  std::auto_ptr<CompositeNeutronScatterer_Impl> composite;
 };
 
 
@@ -52,7 +55,7 @@ void
 mccomposite::AbstractNeutronScatterer::scatter
 (mcni::Neutron::Event & ev)
 {
-  m_details->composite.scatter( ev );
+  m_details->composite->scatter( ev );
 }
 
 double
@@ -66,7 +69,7 @@ void
 mccomposite::AbstractNeutronScatterer::scatterM
 (const mcni::Neutron::Event & ev, mcni::Neutron::Events &evts)
 {
-  m_details->composite.scatterM(ev, evts);
+  m_details->composite->scatterM(ev, evts);
 }
 
 mccomposite::AbstractNeutronScatterer::InteractionType

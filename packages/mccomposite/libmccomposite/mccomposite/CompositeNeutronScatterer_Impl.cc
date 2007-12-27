@@ -419,13 +419,15 @@ mccomposite::CompositeNeutronScatterer_Impl::interact_path1
   
   using namespace geometry;
   
-#ifdef DEBUG
-  debug << journal::at(__HERE__)
-	<< "Deal with neutron: " << ev 
-	<< journal::endl;
-#endif
   int scatterer_index = find_1st_hit<int>
     ( ev.state.position, ev.state.velocity, m_shapes );
+
+#ifdef DEBUG
+  debug << journal::at(__HERE__)
+	<< "find 1st hit of neutron " << ev
+	<< " w.r.t shapes " << geometry::Union( m_shapes )
+	<< journal::endl;
+#endif
   
 #ifdef DEBUG
   debug << journal::at(__HERE__)
