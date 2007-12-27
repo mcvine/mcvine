@@ -11,6 +11,7 @@
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //
 
+#include "mcni/neutron.h"
 
 namespace mccomponents {
 
@@ -26,6 +27,7 @@ namespace mccomponents {
     virtual double absorption_coefficient( const mcni::Neutron::Event & ev ) = 0;
     virtual double scattering_coefficient( const mcni::Neutron::Event & ev ) = 0;
     virtual void scatter( mcni::Neutron::Event & ev ) = 0;
+    virtual void absorb( mcni::Neutron::Event & ev ) = 0;
 
   };
 

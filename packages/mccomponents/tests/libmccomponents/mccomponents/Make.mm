@@ -16,7 +16,7 @@ PACKAGE = tests
 PROJ_CLEAN += $(PROJ_CPPTESTS)
 
 PROJ_PYTESTS =  alltests.py
-PROJ_CPPTESTS = test_random
+PROJ_CPPTESTS = test_random testHomogeneousNeutronScatterer
 PROJ_TESTS = $(PROJ_PYTESTS) $(PROJ_CPPTESTS)
 PROJ_LIBRARIES = -L$(BLD_LIBDIR) -ljournal -lmcni -lmccomposite -lmcstas_compact -lmccomponents
 
@@ -40,6 +40,9 @@ update: clean
 
 test_random: test_random.cc
 	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ test_random.cc $(PROJ_LIBRARIES)
+
+testHomogeneousNeutronScatterer: testHomogeneousNeutronScatterer.cc
+	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ testHomogeneousNeutronScatterer.cc $(PROJ_LIBRARIES)
 
 # version
 # $Id: Make.mm 620 2007-07-11 23:24:50Z linjiao $

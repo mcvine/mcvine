@@ -16,6 +16,7 @@
 
 
 #include "mccomposite/mccomposite.h"
+#include "random.h"
 
 
 namespace mccomponents{
@@ -24,6 +25,7 @@ namespace mccomponents{
   typedef mccomposite::AbstractShape AbstractShape;
 
   class AbstractScatteringKernel;
+
 
   //! class for homogeneous neutron scatterers.
   /*! objects of this class are homogeneous neutron scaterers, for example,
@@ -41,12 +43,22 @@ namespace mccomponents{
       Weights() 
 	: absorption(1), scattering(1), transmission(1)
       {}
+      Weights(double i_absorption, 
+	      double i_scattering, 
+	      double i_transmission) 
+	: absorption(i_absorption), 
+	  scattering(i_scattering), 
+	  transmission(i_transmission)
+      {}
     };
     
     // meta-methods
     HomogeneousNeutronScatterer
     ( const AbstractShape & shape, AbstractScatteringKernel & kernel,
       const Weights & weights );
+    HomogeneousNeutronScatterer
+    ( const AbstractShape & shape, AbstractScatteringKernel & kernel,
+      const Weights & weights, double seed);
     virtual ~HomogeneousNeutronScatterer();
 
     /// scatterer interacts with a neutron in its first section of continuous path thru the scatterer.
@@ -73,6 +85,7 @@ namespace mccomponents{
     
     AbstractScatteringKernel & m_kernel;
     Weights m_weights;
+    random::Generator m_randomnumbergenerator;
   };
 
 

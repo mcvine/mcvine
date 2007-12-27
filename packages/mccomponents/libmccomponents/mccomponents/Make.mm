@@ -26,6 +26,7 @@ export:: export-package-headers
 EXPORT_HEADERS = \
 	AbstractScatteringKernel.h \
 	HomogeneousNeutronScatterer.h \
+	exception.h \
 	random.h \
 
 # version
