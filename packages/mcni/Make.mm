@@ -18,6 +18,7 @@ PROJECT = mcni
 BUILD_DIRS = \
     libmcni \
     mcnimodule \
+    mcnibpmodule \
     mcni \
 
 OTHER_DIRS = \
