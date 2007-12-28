@@ -11,15 +11,15 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
 
-PROJECT = 
-MODULE = neutron_printerbp
-PACKAGE = neutron_printerbpmodule
+PROJECT = xxxPROJECTxxx
+MODULE = xxxMODULExxxbp
+PACKAGE = xxxMODULExxxbpmodule
 
 include std-pythonmodule.def
 include local.def
 
 
-PROJ_CXX_SRCLIB = -lboost_python  -L$(BOOSTPYTHON_LIBDIR) -ljournal -lmcni
+PROJ_CXX_SRCLIB = -lboost_python  -L$(BOOSTPYTHON_LIBDIR) -ljournal -lmcni  -lmccomposite -lmcstas_compact
 
 
 PROJ_SRCS = \
@@ -27,10 +27,10 @@ PROJ_SRCS = \
 
 
 EXPORT_PYTHON_MODULES = \
-	neutron_printer.py \
-
+	xxxMODULExxx.py
 
 export:: export-python-modules 
+
 
 include doxygen/default.def
 docs: export-doxygen-docs

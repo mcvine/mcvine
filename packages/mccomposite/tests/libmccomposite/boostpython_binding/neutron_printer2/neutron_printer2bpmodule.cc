@@ -18,7 +18,7 @@
 void wrap();
 
 
-BOOST_PYTHON_MODULE(neutron_printerbp)
+BOOST_PYTHON_MODULE(neutron_printer2bp)
 {
   using namespace boost::python;
   wrap();
