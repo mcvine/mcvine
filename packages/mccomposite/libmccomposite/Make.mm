@@ -23,6 +23,7 @@ BUILD_DIRS = \
 	geometry \
 	mccomposite \
 	sharedlib \
+	boostpython_binding \
 
 OTHER_DIRS = \
 

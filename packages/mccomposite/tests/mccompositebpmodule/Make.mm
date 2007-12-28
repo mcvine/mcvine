@@ -25,7 +25,7 @@ PROJ_LIBRARIES = -L$(BLD_LIBDIR) -ljournal -lmcni -lmccomposite
 #--------------------------------------------------------------------------
 #
 
-all: $(PROJ_TESTS)
+all: neutron_printer2 $(PROJ_TESTS)
 
 test: alltests.py
 	for test in $(PROJ_TESTS) ; do $${test}; done
@@ -38,6 +38,9 @@ update: clean
 
 #--------------------------------------------------------------------------
 #
+
+neutron_printer2::
+	cd neutron_printer2 ; $(MM) ; cd -
 
 alltests.py: ../alltests.py
 	cp ../alltests.py .

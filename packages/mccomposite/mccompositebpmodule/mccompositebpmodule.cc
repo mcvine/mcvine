@@ -15,6 +15,13 @@
 #include <boost/python.hpp>
 
 namespace wrap_mccomposite{
+  void wrap_basics();
+
+  void wrap_AbstractShape();
+  void wrap_shapecontainer();
+  void wrap_primitives();
+  void wrap_operations();
+
   void wrap_geometers();
   void wrap_AbstractNeutronScatterer();
   void wrap_scatterercontainer();
@@ -26,6 +33,13 @@ BOOST_PYTHON_MODULE(mccompositebp)
 {
   using namespace boost::python;
   using namespace wrap_mccomposite;
+
+  wrap_basics();
+
+  wrap_AbstractShape();
+  wrap_shapecontainer();
+  wrap_primitives();
+  wrap_operations();
 
   wrap_geometers();
   wrap_AbstractNeutronScatterer();

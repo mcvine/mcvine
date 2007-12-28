@@ -13,26 +13,23 @@
 
 #include "mccomposite/CompositeNeutronScatterer.h"
 
-#include <boost/python.hpp>
-#include "wrap_vector.h"
+#include "mccomposite/boostpython_binding/wrap_scatterer.h"
 
 
 namespace wrap_mccomposite {
 
   void wrap_CompositeNeutronScatterer()
   {
-    using namespace boost::python;
-    using namespace mccomposite;
 
+    using namespace mccomposite::boostpython_binding;
 
-    wrap_vector2<AbstractNeutronScatterer *>( "NeutronScatterer_p" );
-
-    class_<CompositeNeutronScatterer, bases<AbstractNeutronScatterer>, 
-      boost::noncopyable>
+    scatterer_wrapper<CompositeNeutronScatterer>::wrap
       ("CompositeNeutronScatterer", 
+
        init< const AbstractShape &, 
        const CompositeNeutronScatterer::scatterercontainer_t &, 
-       const CompositeNeutronScatterer::geometer_t &> () 
+       const CompositeNeutronScatterer::geometer_t &> 
+       () 
        [with_custodian_and_ward<1,2,
 	with_custodian_and_ward<1,3,
 	with_custodian_and_ward<1,4> > > () ]

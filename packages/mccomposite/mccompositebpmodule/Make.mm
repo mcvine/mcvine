@@ -23,7 +23,12 @@ PROJ_CXX_SRCLIB = -lboost_python  -L$(BOOSTPYTHON_LIBDIR) -ljournal -lmccomposit
 
 
 PROJ_SRCS = \
+	wrap_basics.cc \
+	wrap_AbstractShape.cc \
+	wrap_shapecontainer.cc \
 	wrap_geometers.cc \
+	wrap_primitives.cc \
+	wrap_operations.cc \
 	wrap_scatterercontainer.cc \
 	wrap_AbstractNeutronScatterer.cc \
 	wrap_CompositeNeutronScatterer.cc \

@@ -11,18 +11,34 @@
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //
 
-#include "mccomposite/AbstractNeutronScatterer.h"
-#include "wrap_vector.h"
+#include "mccomposite/geometry/primitives.h"
+
+#include <boost/python.hpp>
 
 
 namespace wrap_mccomposite {
 
-  void wrap_scatterercontainer()
+  void wrap_primitives()
   {
     using namespace boost::python;
-    using namespace mccomposite;
+    using namespace mccomposite::geometry;
 
-    wrap_pointer_vector<AbstractNeutronScatterer>( "NeutronScatterer" );
+
+    class_<Box, bases<AbstractShape> >
+      ("Block", 
+       init< double, double, double>() )
+      ;
+    
+    class_<Sphere, bases<AbstractShape> >
+      ("Sphere", 
+       init< double >() )
+      ;
+
+    class_<Cylinder, bases<AbstractShape> >
+      ("Cylinder", 
+       init< double, double >() )
+      ;
+
   }
 }
 

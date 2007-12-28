@@ -20,14 +20,34 @@ debug = journal.debug( "mccompositebpmodule_TestCase" )
 warning = journal.warning( "mccompositebpmodule_TestCase" )
 
 
+import mcni
 from mccomposite import mccompositebp as binding
 
 class mccompositebpmodule_TestCase(unittest.TestCase):
 
     def testGeometer(self):
+        'geometer'
         geometer = binding.Geometer_NeutronScatterer( );
         return
-        
+
+
+    def testCompositeNeutronScatterer(self):
+        'CompositeNeutronScatterer'
+        geometer = binding.Geometer_NeutronScatterer( );
+        shape = binding.Block(1,1,1)
+
+        from neutron_printer2 import cScatterer as Printer
+        printer = Printer( shape )
+
+        scatterers = binding.pointer_vector_NeutronScatterer(0)
+        scatterers.append( printer )
+
+        cs = binding.CompositeNeutronScatterer( shape, scatterers, geometer )
+
+        ev = mcni.neutron( r = (0,0,-5), v = (0,0,1) )
+
+        cs.scatter(ev)
+        return
 
     pass  # end of mccompositebpmodule_TestCase
 

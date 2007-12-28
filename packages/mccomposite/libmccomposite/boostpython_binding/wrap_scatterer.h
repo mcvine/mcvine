@@ -13,24 +13,25 @@
 
 
 #include <boost/python.hpp>
-#include "mcni/AbstractNeutronComponent.h"
+#include "mccomposite/AbstractNeutronScatterer.h"
 
 
-namespace mcni {
+namespace mccomposite {
   namespace boostpython_binding {
     
-    using namespace mcni;
+    using namespace mccomposite;
     using namespace boost::python;
     
-    /// wrap a neutron component class
+    /// wrap a neutron scatterer class that is derived from mccomposite::AbstractNeutronScatterer
     /// Usage:
-    ///  component_wrapper<component_t>::wrap( component_name, init< ... >() );
+    ///  scatterer_wrapper<scatterer_t>::wrap( scatterer_name, init< ... >() );
     /// Examples:
-    ///  component_wrapper<Guide>::wrap( "guide", init< double, double, double >() );
-    template <typename Component>
-    struct component_wrapper
+    ///  scatterer_wrapper<Aluminum>::wrap( "Aluminum", init< double, double, ... >() );
+    template <typename Scatterer>
+    struct scatterer_wrapper
     {
-      typedef boost::python::class_< Component, bases< AbstractNeutronComponent > > wrap;
+      typedef boost::python::class_< Scatterer, bases< AbstractNeutronScatterer >,
+				     boost::noncopyable> wrap;
     };
   }
 }
