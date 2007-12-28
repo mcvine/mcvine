@@ -5,25 +5,25 @@ Following is a tutorial. The result of this tutorial is saved in directory ../ne
 
 1. copy this directory to a new directory dedicated for your new project,
    say neutron_printer
-1. edit wrap.cc. add definition of the component class, and its binding code.
+1. edit wrap.cc to add definition of the component class, and its binding code.
 1. rename componentbpmodule.cc to neutron_printerbpmodule.cc
   and replace "xxxMODULExxx" in that file to the module name you want.
   In this example, we use "neutron_printerbp"
 1. rename component.py to neutron_printer.py and edit it to read:
-import mcni.mcnibp
-from neutron_printerbp import NeutronPrinter as cComponent
-The 1st line is necessary because we need to import bindings of base classes of mcni.
-The 2nd line import the boost python binding of the new c++ component and name
-it "cComponent". You can rename it to whatever you want. 
+  >>> import mcni.mcnibp
+  >>> from neutron_printerbp import NeutronPrinter as cComponent
+  The 1st line is necessary because we need to import bindings of base classes of mcni.
+  The 2nd line import the boost python binding of the new c++ component and name
+  it "cComponent". You can rename it to whatever you want. 
 1. edit Make.mm
-First few lines:
-PROJECT = 
-MODULE = neutron_printerbp
-PACKAGE = neutron_printerbpmodule
+  First few lines:
+  PROJECT = 
+  MODULE = neutron_printerbp
+  PACKAGE = neutron_printerbpmodule
 
-Last few lines:
-EXPORT_PYTHON_MODULES = \
+  Last few lines:
+  EXPORT_PYTHON_MODULES = \
 	neutron_printer.py \
 
-export:: export-python-modules 
+  export:: export-python-modules 
 1. run mm 
