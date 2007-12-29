@@ -44,6 +44,7 @@ EXPORT_HEADERS = \
 	Position.h \
 	RotationMatrix.h \
 	Vector.h \
+	exception.h \
 	geometry.h \
 	intersect.h intersect.icc \
 	locate.h \

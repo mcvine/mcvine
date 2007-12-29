@@ -43,7 +43,10 @@ void wrap()
   using namespace mccomposite::boostpython_binding;
 
   boostpython_binding::scatterer_wrapper<mccomposite::NeutronPrinter>::wrap
-    ("NeutronPrinter", init<const mccomposite::geometry::AbstractShape &>() );
+    ("NeutronPrinter", 
+     init<const mccomposite::geometry::AbstractShape &>() 
+     [with_custodian_and_ward<1,2>()]
+     );
 }
 
 

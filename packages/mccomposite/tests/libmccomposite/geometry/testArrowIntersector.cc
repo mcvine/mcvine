@@ -58,10 +58,48 @@ void test3()
   Cylinder cylinder(1,2);
   Arrow arrow( Position (0,0,-5), Direction(0,0,1) );
 
-  ArrowIntersector::distances_t distances = intersect(arrow, cylinder);
+  ArrowIntersector::distances_t distances;
+  distances = intersect(arrow, cylinder);
   assert (distances.size() == 2);
   assert (distances[0] == 4 );
   assert (distances[1] == 6 );
+
+  Cylinder cylinder1(1,1);
+  Arrow arrow1( Position (0,0,-5), Direction(0,0,1) );
+
+  distances = intersect(arrow1, cylinder1);
+  assert (distances.size() == 2);
+  assert (distances[0] == 4.5 );
+  assert (distances[1] == 5.5 );
+
+
+  arrow1.start = Position(0.22,0.35,-5);
+  arrow1.direction = Direction(0,0,1);
+
+  distances = intersect(arrow1, cylinder1);
+  assert (distances.size() == 2);
+  assert (distances[0] == 4.5 );
+  assert (distances[1] == 5.5 );
+
+
+  arrow1.start = Position(-5,0,0);
+  arrow1.direction = Direction(1,0,0);
+
+  distances = intersect(arrow1, cylinder1);
+  assert (distances.size() == 2);
+  assert (distances[0] == 4 );
+  assert (distances[1] == 6 );
+
+
+  using std::sqrt; using std::abs;
+  arrow1.start = Position(sqrt(2)/2,-5,0.17);
+  arrow1.direction = Direction(0,1,0);
+
+  distances = intersect(arrow1, cylinder1);
+  assert (distances.size() == 2);
+  assert (abs(distances[0] - ( 5-sqrt(2)/2 ) ) < 1.e-10 );
+  assert (abs(distances[1] - ( 5+sqrt(2)/2 ) ) < 1.e-10 );
+
 }
 
 void test4()

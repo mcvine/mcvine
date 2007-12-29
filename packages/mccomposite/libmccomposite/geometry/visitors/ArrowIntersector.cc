@@ -7,6 +7,8 @@
 #include "mccomposite/geometry/shape2ostream.h"
 #include "mccomposite/geometry/tolerance.h"
 
+#include "mccomposite/geometry/exception.h"
+
 #include "journal/debug.h"
 
 
@@ -115,6 +117,8 @@ mccomposite::geometry::ArrowIntersector::visit
     ;
 #endif
 
+  //
+  //if (m_distances.size()%2==1) throw Exception("odd number of intersections");
   return ;
 }
 
@@ -142,13 +146,15 @@ mccomposite::geometry::ArrowIntersector::visit
   double vz = direction.z;
   
   if ( ! McStas::cylinder_intersect
-       ( &dt_in,  &dt_out,  x,  y,  z,  vx,  vy,  vz,  
+       ( &dt_in,  &dt_out,  y,  z,  x,  vy,  vz,  vx,  
 	 cylinder.radius, cylinder.height) )
     return;
   
   m_distances.push_back( dt_in );
   m_distances.push_back( dt_out );
   
+  //
+  //  if (m_distances.size()%2==1) throw Exception("odd number of intersections");
   return;
 }
 
@@ -184,12 +190,12 @@ void calc_intersects_line_sphere
   
   if (b2m4ac <0) return;
   
-  double acc = 1.e-20;
+//   double acc = 1.e-20;
   
-  if (b2m4ac < acc ) {
-    roots.push_back( - r0dotv/v2);
-    return;
-  }
+//   if (b2m4ac < acc ) {
+//     roots.push_back( - r0dotv/v2);
+//     return;
+//   }
   
   double sqrt_b2m4ac = sqrt( b2m4ac );
   roots.push_back( - (r0dotv + sqrt_b2m4ac )/v2 );
@@ -212,6 +218,8 @@ mccomposite::geometry::ArrowIntersector::visit
   if (isInvaildDirection(direction)) return;
   
   calc_intersects_line_sphere( start, direction, sphere.radius, m_distances );
+  //
+  //  if (m_distances.size()%2==1) throw Exception("odd number of intersections");
   return;
 }
 
@@ -311,12 +319,16 @@ mccomposite::geometry::ArrowIntersector::visit_composition
   journal::debug_t debug( ArrowIntersector_impl::jrnltag );
 
   debug << journal::at(__HERE__) 
+	<< "intersections between " 
+	<< "arrow(" << m_arrow.start << "," << m_arrow.direction << ")"
+	<< " and shape (" << *composition << ")"
+	<< " are "
 	<< m_distances << journal::endl
     ;
 #endif
 
   //
-  if (m_distances.size()%2==1) throw "odd number of intersections";
+  //  if (m_distances.size()%2==1) throw Exception("odd number of intersections");
 }
 
 
@@ -363,6 +375,8 @@ mccomposite::geometry::ArrowIntersector::visit
 #endif
 
   m_arrow = save;
+  //
+  //  if (m_distances.size()%2==1) throw Exception("odd number of intersections");
 }
 
 
@@ -370,7 +384,7 @@ void
 mccomposite::geometry::ArrowIntersector::visit
 ( const Reflection * reflection ) 
 {
-  throw;
+  throw Exception("not implemented");
 }
 
 void
@@ -386,6 +400,8 @@ mccomposite::geometry::ArrowIntersector::visit
   body.identify( *this );
 
   m_arrow = save;
+  //
+  //  if (m_distances.size()%2==1) throw Exception("odd number of intersections");
 }
 
 void
@@ -405,5 +421,7 @@ mccomposite::geometry::ArrowIntersector::visit
   body.identify( *this );
 
   m_arrow = save;
+  //
+  //  if (m_distances.size()%2==1) throw Exception("odd number of intersections");
 }
 

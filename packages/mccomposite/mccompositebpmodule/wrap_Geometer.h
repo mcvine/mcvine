@@ -34,7 +34,7 @@ namespace wrap_mccomposite {
     
     class_<w_t>
       (name.c_str(), init<>())
-      .def( "remember", &w_t::remember )
+      .def( "register", &w_t::remember )
       .def( "getPosition", &w_t::getPosition, return_internal_reference<1>() )
       .def( "getOrientation", &w_t::getOrientation, return_internal_reference<1>() )
       ;

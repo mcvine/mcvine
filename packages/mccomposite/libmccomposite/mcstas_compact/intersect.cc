@@ -169,9 +169,16 @@ McStas::cylinder_intersect(double *t0, double *t1, double x, double y, double z,
   double D, t_in, t_out, y_in, y_out;
   int ret=1;
 
+  //added by linjiao
+  if (vz*vz+vx*vx==0) {
+    if (x*x+z*z>=r*r) return 0;
+    if (vy>0) {*t0 = (-h/2-y)/vy; *t1 = (h/2-y)/vy;}
+    else {*t0 = (h/2-y)/vy; *t1 = (-h/2-y)/vy;}
+    return 2;
+  }
+
   D = (2*vx*x + 2*vz*z)*(2*vx*x + 2*vz*z)
     - 4*(vx*vx + vz*vz)*(x*x + z*z - r*r);
-
   if (D>=0)
   {
     t_in  = (-(2*vz*z + 2*vx*x) - sqrt(D))/(2*(vz*vz + vx*vx));

@@ -526,6 +526,7 @@ mccomposite::CompositeNeutronScatterer_Impl::scatter
 
   if (itype == scatterer_interface::none) {
     // need to call scatter again
+    propagate_to_next_incident_surface( ev, m_shape );
     scatter( ev );
     return;
   }

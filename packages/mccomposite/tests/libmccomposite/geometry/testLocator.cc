@@ -93,6 +93,18 @@ void test4()
   assert (locate( Position(0,0,0), intersection ) == Locator::onborder);
   assert (locate( Position(0,0,0.51), intersection ) == Locator::outside);
   assert (locate( Position(0,0,0.2), intersection ) == Locator::inside);
+
+  Box box1(2,2,2);
+  Intersection intersection2(box1, translation);
+  assert (locate( Position(0,0,1), intersection2 ) == Locator::onborder);
+  assert (locate( Position(0,0,0), intersection2 ) == Locator::onborder);
+
+  Cylinder cylinder(2,2);
+  Sphere sphere(2);
+  Intersection intersection3(cylinder, sphere);
+  assert (locate( Position(0,0,1), intersection3 ) == Locator::onborder);
+  assert (locate( Position(0,0,2), intersection3 ) == Locator::outside);
+
 }
 
 void test5()

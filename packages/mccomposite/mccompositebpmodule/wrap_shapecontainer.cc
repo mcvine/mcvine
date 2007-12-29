@@ -22,7 +22,7 @@ namespace wrap_mccomposite {
     using namespace boost::python;
     using namespace mccomposite::geometry;
 
-    wrap_pointer_vector<AbstractShape>( "Shape" );
+    wrap_pointer_vector<const AbstractShape>( "Shape" );
   }
 }
 

@@ -58,7 +58,7 @@ mccomposite::geometry::Printer::visit
   os << "(" ;
   for (size_t i=0; i<shapes.size(); i++)  {
     os << (*shapes[i]);
-    if (i!= shapes.size()-1) os << " and ";
+    if (i!= shapes.size()-1) os << " ^ ";
   }
   os << ")" ;
 }
@@ -71,7 +71,7 @@ mccomposite::geometry::Printer::visit
   os << "(" ;
   for (size_t i=0; i<shapes.size(); i++)  {
     os << (*shapes[i]);
-    if (i!= shapes.size()-1) os << " and ";
+    if (i!= shapes.size()-1) os << " + ";
   }
   os << ")" ;
 }

@@ -12,11 +12,20 @@
 //
 
 
+#include <sstream>
 #include <boost/python.hpp>
 #include "mccomposite/geometry/AbstractShape.h"
+#include "mccomposite/geometry/shape2ostream.h"
 
 
 namespace wrap_mccomposite {
+
+  const char * shape_str( const mccomposite::geometry::AbstractShape & shape )
+  {
+    std::ostringstream oss;
+    oss << shape;
+    return oss.str().c_str();
+  }
 
   void wrap_AbstractShape()
   {
@@ -24,6 +33,7 @@ namespace wrap_mccomposite {
 
     class_<mccomposite::geometry::AbstractShape, boost::noncopyable>
       ("AbstractShape", no_init)
+      .def("__str__", &shape_str)
       ;
 
   }

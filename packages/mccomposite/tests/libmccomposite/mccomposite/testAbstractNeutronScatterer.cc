@@ -27,8 +27,9 @@ public:
   None(const mccomposite::geometry::AbstractShape & shape) 
     : AbstractNeutronScatterer( shape ) 
   {}
-  InteractionType interact_path1(mcni::Neutron::Event &) 
+  InteractionType interact_path1(mcni::Neutron::Event &ev) 
   {
+    mccomposite::propagate_to_next_exiting_surface( ev, shape() );
     return none;
   }
 };
@@ -67,17 +68,20 @@ public:
 
 void test1()
 {
+  std::cout << "test1 - a scatterer with a shape of a block and no scattering" << std::endl;
   using namespace mccomposite;
 
   geometry::Box box(1,1,1);
   None s(box);
   mcni::Neutron::Event ev;
+  ev.state.velocity = geometry::Direction(0,0,1);
   assert (s.interact_path1( ev )==AbstractNeutronScatterer::none);
 }
 
 
 void test2()
 {
+  std::cout << "test1 - a scatterer scatters to x direction" << std::endl;
   using namespace mccomposite;
 
   geometry::Box box(1,1,1);
@@ -98,10 +102,35 @@ void test2()
 }
 
 
+void test3()
+{
+  std::cout << "test3 - a scatterer with a shape of difference and no scattering" << std::endl;
+  using namespace mccomposite;
+
+  geometry::Box box1(2,2,2), box2(1,1,1);
+  geometry::Difference diff(box1, box2);
+  None s(diff);
+
+  mcni::Neutron::Event ev;
+  ev.state.position = geometry::Position(0,0,-5);
+  ev.state.velocity = geometry::Position(0,0,1);
+ 
+  s.scatter(ev);
+  
+  assert( ev.state.position.x == 0 );
+  assert( ev.state.position.y == 0 );
+  assert( ev.state.position.z == 1 );
+}
+
+
 int main()
 {
-  test1();
-  test2();
+//   journal::debug_t("mccomposite.geometry.ArrowIntersector").activate();
+//   journal::debug_t("mccomposite.geometry.Locator").activate();
+//    journal::debug_t("CompositeNeutronScatterer_Impl").activate();
+ test1();
+ test2();
+  test3();
 }
 
 // version
