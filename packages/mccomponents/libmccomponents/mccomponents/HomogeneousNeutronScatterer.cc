@@ -28,6 +28,9 @@ namespace mccomponents {
 }
 
 
+const double mccomponents::HomogeneousNeutronScatterer::minimum_neutron_event_probability = 1.e-20;
+
+
 mccomponents::HomogeneousNeutronScatterer::~HomogeneousNeutronScatterer
 ()
 {

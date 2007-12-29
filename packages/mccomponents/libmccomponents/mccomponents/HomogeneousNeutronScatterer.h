@@ -37,7 +37,8 @@ namespace mccomponents{
   public:
 
     //static data
-    static const double minimum_neutron_event_probability = 1.e-20;
+    //static const double minimum_neutron_event_probability = 1.e-20;
+    static const double minimum_neutron_event_probability;
 
     //types
     typedef AbstractNeutronScatterer base_t;
