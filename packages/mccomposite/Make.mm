@@ -18,6 +18,7 @@ PROJECT = mccomposite
 BUILD_DIRS = \
     libmccomposite \
     mccompositemodule \
+    mccompositebpmodule \
     mccomposite \
 
 OTHER_DIRS = \
