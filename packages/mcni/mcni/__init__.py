@@ -63,6 +63,13 @@ def neutron(r = (0,0,0), v = (0,0,3000), s = (0,1), time = 0, prob = 1.):
     return NeutronEvent(state(r,v,s), time, prob)
 
 
+def _import_bindings():
+    import mcnibp
+    return
+
+_import_bindings()
+
+
 # version
 __id__ = "$Id$"
 

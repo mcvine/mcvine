@@ -14,24 +14,24 @@
 
 class Geometer:
 
-    '''Geometer holds geometrical info about an instrument'''
+    '''Geometer holds geometrical info of elements relative to host'''
 
     def __init__(self):
         self._registry = {}
         return
 
 
-    def register(self, component, position, orientation):
-        self._registry[component] = position, orientation
+    def register(self, element, position, orientation):
+        self._registry[element] = position, orientation
         return
 
 
-    def position(self, component):
-        return self._registry[component][0]
+    def position(self, element):
+        return self._registry[element][0]
 
 
-    def orientation(self, component):
-        return self._registry[component][1]
+    def orientation(self, element):
+        return self._registry[element][1]
 
     pass # Geometer
 
