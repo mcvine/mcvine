@@ -16,9 +16,11 @@ PROJECT = mccomponents
 # directory structure
 
 BUILD_DIRS = \
-    libmccomponents \
+	libmccomponents \
+	mccomponentsbpmodule \
+	mccomponents \
 #    mccomponentsmodule \
-#    mccomponents \
+
 
 OTHER_DIRS = \
     tests \

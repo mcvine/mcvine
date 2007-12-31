@@ -10,24 +10,20 @@
 #
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+
 PROJECT = mccomponents
-
-BUILD_DIRS = \
-	bindings \
-
-RECURSE_DIRS = $(BUILD_DIRS)
-
-PACKAGE = mccomponents
+PACKAGE = bindings
 
 #--------------------------------------------------------------------------
 #
 
 all: export
 
-tidy::
-	BLD_ACTION="tidy" $(MM) recurse
+release: tidy
+	cvs release .
 
-
+update: clean
+	cvs update .
 
 #--------------------------------------------------------------------------
 #
@@ -35,24 +31,15 @@ tidy::
 
 EXPORT_PYTHON_MODULES = \
 	AbstractBinding.py \
-	AbstractVisitor.py \
-	CompositeKernel.py \
-	ComputingEngineConstructor.py \
-	HomogeneousScatterer.py \
-	Kernel.py \
-	KernelComputingEngineFactory.py \
+	BoostPythonBinding.py \
 	__init__.py \
 
 
-export:: export-python-modules 
-	BLD_ACTION="export" $(MM) recurse
+export:: export-package-python-modules
 
-
-include doxygen/default.def
-docs: export-doxygen-docs
 
 
 # version
-# $Id: Make.mm 1404 2007-08-29 15:43:42Z linjiao $
+# $Id: Make.mm 1212 2006-11-21 21:59:44Z linjiao $
 
 # End of file

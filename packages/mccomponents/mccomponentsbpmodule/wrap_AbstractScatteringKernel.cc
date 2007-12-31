@@ -22,9 +22,14 @@ namespace wrap_mccomponents {
   void wrap_AbstractScatteringKernel()
   {
     using namespace boost::python;
+    using namespace mccomponents;
 
-    class_<mccomponents::AbstractScatteringKernel, boost::noncopyable>
+    class_<AbstractScatteringKernel, boost::noncopyable>
       ("AbstractScatteringKernel", no_init)
+      .def("scatter", &AbstractScatteringKernel::scatter)
+      .def("absorb", &AbstractScatteringKernel::absorb)
+      .def("scattering_coefficient", &AbstractScatteringKernel::scattering_coefficient)
+      .def("absorption_coefficient", &AbstractScatteringKernel::absorption_coefficient)
       ;
 
   }
