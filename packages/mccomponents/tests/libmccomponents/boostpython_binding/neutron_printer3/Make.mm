@@ -11,22 +11,26 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
 
-PROJECT = mccomponents
-MODULE = mccomponents
-PACKAGE = mccomponentsbpmodule
+PROJECT = 
+MODULE = neutron_printer3bp
+PACKAGE = neutron_printer3bpmodule
 
 include std-pythonmodule.def
 include local.def
 
 
-PROJ_CXX_SRCLIB = -lboost_python  -L$(BOOSTPYTHON_LIBDIR) -ljournal -lmccomposite -lmcni -lmcstas_compact -lmccomponents
+PROJ_CXX_SRCLIB = -lboost_python  -L$(BOOSTPYTHON_LIBDIR) -ljournal -lmcni -lmccomposite -lmcstas_compact -lmccomponents
 
 
 PROJ_SRCS = \
-	wrap_HomogeneousNeutronScatterer.cc \
-	wrap_AbstractScatteringKernel.cc \
-	wrap_CompositeScatteringKernel.cc \
+	wrap.cc \
 
+
+EXPORT_PYTHON_MODULES = \
+	neutron_printer3.py \
+
+
+export:: export-python-modules 
 
 include doxygen/default.def
 docs: export-doxygen-docs

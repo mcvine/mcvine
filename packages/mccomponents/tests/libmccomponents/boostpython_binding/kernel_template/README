@@ -1,0 +1,29 @@
+This template helps developers to extend mccomponents to introduce new neutron
+scattering kernels.
+
+Following is a tutorial. The result of this tutorial is saved in directory ../neutron_printer3
+
+1. copy this directory to a new directory dedicated for your new project,
+   say neutron_printer3
+1. edit wrap.cc to add definition of the kernel class, and its binding code.
+1. rename kernelbpmodule.cc to neutron_printer3bpmodule.cc
+  and replace "xxxMODULExxx" in that file to the module name you want.
+  In this example, we use "neutron_printer3bp"
+1. rename kernel.py to neutron_printer3.py and edit it to read:
+  >>> import mccomponents
+  >>> from neutron_printer3bp import NeutronPrinter as cKernel
+  The 1st line is necessary because we need to import bindings of base classes of mccoponents.
+  The 2nd line import the boost python binding of the new c++ kernel and name
+  it "cKernel". You can rename it to whatever you want. 
+1. edit Make.mm
+  First few lines:
+  PROJECT = 
+  MODULE = neutron_printer3bp
+  PACKAGE = neutron_printer3bpmodule
+
+  Last few lines:
+  EXPORT_PYTHON_MODULES = \
+	neutron_printer3.py \
+
+  export:: export-python-modules 
+1. run mm 

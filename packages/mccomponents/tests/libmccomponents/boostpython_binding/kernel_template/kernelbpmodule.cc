@@ -14,25 +14,18 @@
 
 #include <boost/python.hpp>
 
-namespace wrap_mccomponents{
-  void wrap_HomogeneousNeutronScatterer();
-  void wrap_AbstractScatteringKernel();
-  void wrap_CompositeScatteringKernel();
-}
+
+void wrap();
 
 
-BOOST_PYTHON_MODULE(mccomponentsbp)
+BOOST_PYTHON_MODULE(xxxMODULExxxbp)
 {
   using namespace boost::python;
-  using namespace wrap_mccomponents;
-
-  wrap_HomogeneousNeutronScatterer();
-  wrap_AbstractScatteringKernel();
-  wrap_CompositeScatteringKernel();
+  wrap();
 }
 
 
 // version
-// $Id: mccompositebpmodule.cc 658 2007-10-24 21:33:08Z linjiao $
+// $Id: module.cc 658 2007-10-24 21:33:08Z linjiao $
 
 // End of file 

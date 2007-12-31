@@ -11,6 +11,11 @@
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //
 
+
+#ifndef MCCOMPONENTS_ABSTRACTSCATTERINGKERNEL_H
+#define MCCOMPONENTS_ABSTRACTSCATTERINGKERNEL_H
+
+
 #include "mcni/neutron.h"
 
 namespace mccomponents {
@@ -33,6 +38,8 @@ namespace mccomponents {
 
 }
 
+
+#endif
 
 
 // version

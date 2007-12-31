@@ -10,23 +10,24 @@
 #
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-PROJECT = mccomponents
+PROJECT = mccomponents/mccomponentsbpmodule
 PACKAGE = tests
 
-PROJ_CLEAN += $(PROJ_CPPTESTS)
+PROJ_TIDY += alltests.py $(PROJ_CPPTESTS)
+PROJ_CLEAN += alltests.py $(PROJ_CPPTESTS)
 
 PROJ_PYTESTS =  alltests.py
-PROJ_CPPTESTS = test_random testHomogeneousNeutronScatterer testCompositeScatteringKernel
+PROJ_CPPTESTS = 
 PROJ_TESTS = $(PROJ_PYTESTS) $(PROJ_CPPTESTS)
-PROJ_LIBRARIES = -L$(BLD_LIBDIR) -ljournal -lmcni -lmccomposite -lmcstas_compact -lmccomponents
+PROJ_LIBRARIES = -L$(BLD_LIBDIR) -ljournal -lmcni -lmccomposite -lmccomponents
 
 
 #--------------------------------------------------------------------------
 #
 
-all: $(PROJ_TESTS)
+all: neutron_printer3 $(PROJ_TESTS)
 
-test:
+test: alltests.py
 	for test in $(PROJ_TESTS) ; do $${test}; done
 
 release: tidy
@@ -38,15 +39,11 @@ update: clean
 #--------------------------------------------------------------------------
 #
 
-test_random: test_random.cc
-	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ test_random.cc $(PROJ_LIBRARIES)
+neutron_printer3::
+	cd neutron_printer3 ; $(MM) ; cd -
 
-testHomogeneousNeutronScatterer: testHomogeneousNeutronScatterer.cc
-	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ testHomogeneousNeutronScatterer.cc $(PROJ_LIBRARIES)
-
-testCompositeScatteringKernel: testCompositeScatteringKernel.cc
-	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ testCompositeScatteringKernel.cc $(PROJ_LIBRARIES)
-
+alltests.py: ../alltests.py
+	cp ../alltests.py .
 
 
 # version

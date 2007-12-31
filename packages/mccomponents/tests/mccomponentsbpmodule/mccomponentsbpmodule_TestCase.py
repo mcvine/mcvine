@@ -1,0 +1,66 @@
+#!/usr/bin/env python
+#
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#
+#                                   Jiao Lin
+#                      California Institute of Technology
+#                        (C) 2007 All Rights Reserved  
+#
+# {LicenseText}
+#
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#
+
+
+
+import unittestX as unittest
+import journal
+
+debug = journal.debug( "mccomponentsbpmodule_TestCase" )
+warning = journal.warning( "mccomponentsbpmodule_TestCase" )
+
+
+import mcni
+from mccomponents import mccomponentsbp
+from mccomposite import mccompositebp 
+
+class mccomponentsbpmodule_TestCase(unittest.TestCase):
+
+    def testCompositeScatteringKernel(self):
+        'CompositeScatteringKernel'
+        shape = mccompositebp.Block(1,1,1)
+
+        from neutron_printer3 import cKernel as Printer
+        printer = Printer( )
+
+        mcweights = mccomponentsbp.MCWeights_AbsorptionScatteringTransmission()
+        scatterer = mccomponentsbp.HomogeneousNeutronScatterer(
+            shape, printer, mcweights )
+
+        for i in range(100):
+            ev = mcni.neutron( r = (0,0,-5), v = (0,0,1) )
+            scatterer.scatter(ev)
+            continue
+        return
+
+    pass  # end of mccomponentsbpmodule_TestCase
+
+    
+def pysuite():
+    suite1 = unittest.makeSuite(mccomponentsbpmodule_TestCase)
+    return unittest.TestSuite( (suite1,) )
+
+def main():
+    #debug.activate()
+    pytests = pysuite()
+    alltests = unittest.TestSuite( (pytests, ) )
+    unittest.TextTestRunner(verbosity=2).run(alltests)
+    
+    
+if __name__ == "__main__":
+    main()
+    
+# version
+__id__ = "$Id$"
+
+# End of file 

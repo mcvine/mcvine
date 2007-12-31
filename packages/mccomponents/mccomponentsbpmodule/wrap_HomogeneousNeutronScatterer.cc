@@ -47,6 +47,12 @@ namespace wrap_mccomponents {
 	     > > () ] )
       ;
 
+    
+    class_<mccomponents::HomogeneousNeutronScatterer::Weights>
+      ("MCWeights_AbsorptionScatteringTransmission",
+       init<> ()
+       )
+      .def( init<double, double, double>() );
   }
 }
 

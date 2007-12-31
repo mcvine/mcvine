@@ -21,6 +21,7 @@ BUILD_DIRS = \
 	headers \
 	mccomponents \
 	sharedlib \
+	boostpython_binding \
 
 OTHER_DIRS = \
 

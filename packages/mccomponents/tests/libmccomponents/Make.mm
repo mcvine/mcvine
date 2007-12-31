@@ -18,6 +18,7 @@ PACKAGE = libmccomponents
 
 BUILD_DIRS = \
 	mccomponents \
+	boostpython_binding \
 
 OTHER_DIRS = \
 

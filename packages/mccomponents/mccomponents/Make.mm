@@ -9,31 +9,42 @@
 # <LicenseText>
 #
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#
 
 PROJECT = mccomponents
-MODULE = mccomponents
-PACKAGE = mccomponentsbpmodule
 
-include std-pythonmodule.def
-include local.def
+BUILD_DIRS = \
+
+RECURSE_DIRS = $(BUILD_DIRS)
+
+PACKAGE = mccomponents
+
+#--------------------------------------------------------------------------
+#
+
+all: export
+
+tidy::
+	BLD_ACTION="tidy" $(MM) recurse
 
 
-PROJ_CXX_SRCLIB = -lboost_python  -L$(BOOSTPYTHON_LIBDIR) -ljournal -lmccomposite -lmcni -lmcstas_compact -lmccomponents
+
+#--------------------------------------------------------------------------
+#
+# export
+
+EXPORT_PYTHON_MODULES = \
+	__init__.py \
 
 
-PROJ_SRCS = \
-	wrap_HomogeneousNeutronScatterer.cc \
-	wrap_AbstractScatteringKernel.cc \
-	wrap_CompositeScatteringKernel.cc \
+export:: export-python-modules 
+	BLD_ACTION="export" $(MM) recurse
 
 
 include doxygen/default.def
 docs: export-doxygen-docs
 
 
-
 # version
-# $Id: Make.mm 658 2007-10-24 21:33:08Z linjiao $
+# $Id: Make.mm 1404 2007-08-29 15:43:42Z linjiao $
 
 # End of file

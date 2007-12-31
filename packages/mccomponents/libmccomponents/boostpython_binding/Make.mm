@@ -14,6 +14,7 @@
 include local.def
 
 PROJECT = mccomponents
+PACKAGE = boostpython_binding
 
 PROJ_TMPDIR = $(BLD_TMPDIR)/$(PROJECT)/$(PACKAGE)
 
@@ -24,12 +25,8 @@ all: export
 export:: export-package-headers
 
 EXPORT_HEADERS = \
-	AbstractScatteringKernel.h \
-	CompositeScatteringKernel.h \
-	HomogeneousNeutronScatterer.h \
-	exception.h \
-	mccomponents.h \
-	random.h \
+    wrap_kernel.h \
+
 
 # version
 # $Id: Make.mm,v 1.1.1.1 2005/03/08 16:13:51 aivazis Exp $
