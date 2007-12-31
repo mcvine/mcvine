@@ -26,8 +26,8 @@ from mccomposite import mccompositebp
 
 class mccomponentsbpmodule_TestCase(unittest.TestCase):
 
-    def testCompositeScatteringKernel(self):
-        'CompositeScatteringKernel'
+    def testHomogeneousNeutronScatterer(self):
+        'HomogeneousNeutronScatterer'
         shape = mccompositebp.Block(1,1,1)
 
         from neutron_printer3 import cKernel as Printer
@@ -37,7 +37,29 @@ class mccomponentsbpmodule_TestCase(unittest.TestCase):
         scatterer = mccomponentsbp.HomogeneousNeutronScatterer(
             shape, printer, mcweights )
 
-        for i in range(100):
+        for i in range(10):
+            ev = mcni.neutron( r = (0,0,-5), v = (0,0,1) )
+            scatterer.scatter(ev)
+            continue
+        return
+
+    def testCompositeScatteringKernel(self):
+        'CompositeScatteringKernel'
+        shape = mccompositebp.Block(1,1,1)
+
+        from neutron_printer3 import cKernel as Printer
+        printer = Printer( )
+
+        kernels = mccomponentsbp.pointer_vector_Kernel(0)
+        kernels.append( printer )
+
+        kernelcomposite = mccomponentsbp.CompositeScatteringKernel( kernels )
+
+        mcweights = mccomponentsbp.MCWeights_AbsorptionScatteringTransmission()
+        scatterer = mccomponentsbp.HomogeneousNeutronScatterer(
+            shape, kernelcomposite, mcweights )
+
+        for i in range(10):
             ev = mcni.neutron( r = (0,0,-5), v = (0,0,1) )
             scatterer.scatter(ev)
             continue

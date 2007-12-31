@@ -26,6 +26,7 @@ PROJ_SRCS = \
 	wrap_HomogeneousNeutronScatterer.cc \
 	wrap_AbstractScatteringKernel.cc \
 	wrap_CompositeScatteringKernel.cc \
+	wrap_kernelcontainer.cc \
 
 
 include doxygen/default.def
