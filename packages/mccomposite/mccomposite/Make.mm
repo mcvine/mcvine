@@ -36,7 +36,6 @@ tidy::
 
 EXPORT_PYTHON_MODULES = \
 	AbstractBinding.py \
-	AbstractComputingEngineFactory.py \
 	AbstractOrientationConvention.py \
 	AbstractVisitor.py \
 	CompositeScatterer.py \
