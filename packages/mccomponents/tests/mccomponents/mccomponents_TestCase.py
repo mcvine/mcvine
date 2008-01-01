@@ -20,31 +20,37 @@ debug = journal.debug( "mccomponents_TestCase" )
 warning = journal.warning( "mccomponents_TestCase" )
 
 
-import mccomponents, mcni
+import mccomponents, mccomposite, mcni
+
+# python class from new kernel
+from mccomponents.Kernel import Kernel
+class NeutronPrinter(Kernel):
+    def identify(self, visitor): return visitor.onNeutronPrinter(self)
+    pass
+
+#register new kernel type
+# 2. the handler to construct c++ engine
+def onNeutronPrinter(self, printer):
+    return self.factory.neutronprinter( )
+# 3. the handler to call python bindings 
+def neutronprinter(self):
+    from neutron_printer3 import cKernel
+    return cKernel( )
+# 4. register the new class and handlers
+mccomponents.register( NeutronPrinter, onNeutronPrinter,
+                     {'BoostPythonBinding':neutronprinter} )
 
 class mccomponents_TestCase(unittest.TestCase):
+
+    def __init__(self, *args, **kwds):
+        unittest.TestCase.__init__(self, *args, **kwds)
+        return
+        
 
     def test(self):
         '''create pure python representation of a composite kernel,
         and render the c++ computation engine of that kernel
         '''
-        #register new kernel type
-        # 1. the pure python class
-        from mccomponents.Kernel import Kernel
-        class NeutronPrinter(Kernel):
-            def identify(self, visitor): return visitor.onNeutronPrinter(self)
-            pass
-        # 2. the handler to construct c++ engine
-        def onNeutronPrinter(self, printer):
-            return self.factory.neutronprinter( )
-        # 3. the handler to call python bindings 
-        def neutronprinter(self):
-            from neutron_printer3 import cKernel
-            return cKernel( )
-        # 4. register the new class and handlers
-        mccomponents.register( NeutronPrinter, onNeutronPrinter,
-                             {'BoostPythonBinding':neutronprinter} )
-
         #create pure python representation of kernel composite
         composite_kernel = mccomponents.compositeKernel()
         nprinter = NeutronPrinter( )
@@ -55,9 +61,56 @@ class mccomponents_TestCase(unittest.TestCase):
 
         ev = mcni.neutron( r = (0,0,0), v = (0,0,1) )
         ccomposite_kernel.scatter(ev)
-        
+
         return
-            
+
+
+    def test2(self):
+        '''create pure python representation of a homogeneous scatterer,
+        and render the c++ computation engine of that kernel
+        '''
+        from mccomposite.geometry import primitives
+        shape = primitives.block( (1,1,1) )
+        nprinter = NeutronPrinter( )
+        scatterer = mccomponents.homogeneousScatterer(shape, nprinter)
+
+        #render the c++ representation
+        cscatterer = mccomponents.scattererEngine( scatterer )
+
+        for i in range(10):
+            ev = mcni.neutron( r = (0,0,-5), v = (0,0,1) )
+            cscatterer.scatter(ev)
+            continue
+        return
+    
+
+    def test3(self):
+        '''create pure python representation of a homogeneous scatterer with
+        composite kernel. render the c++ computation engine of that kernel.
+        '''
+        #shape
+        from mccomposite.geometry import primitives
+        shape = primitives.block( (1,1,1) )
+
+        #kernel
+        nprinter = NeutronPrinter( )
+        
+        #composite kernel
+        composite_kernel = mccomponents.compositeKernel()
+        composite_kernel.addElement( nprinter )
+
+        #scatterer
+        scatterer = mccomponents.homogeneousScatterer(shape, composite_kernel)
+
+        #render the c++ representation
+        cscatterer = mccomponents.scattererEngine( scatterer )
+
+        for i in range(10):
+            ev = mcni.neutron( r = (0,0,-5), v = (0,0,1) )
+            cscatterer.scatter(ev)
+            continue
+        return
+    
     pass  # end of mccomponents_TestCase
 
 
@@ -65,6 +118,7 @@ class mccomponents_TestCase(unittest.TestCase):
 def pysuite():
     suite1 = unittest.makeSuite(mccomponents_TestCase)
     return unittest.TestSuite( (suite1,) )
+
 
 def main():
     #debug.activate()

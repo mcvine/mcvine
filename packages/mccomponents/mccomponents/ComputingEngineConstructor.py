@@ -37,10 +37,10 @@ class ComputingEngineConstructor( AbstractVisitor ):
             ckernels.append( ckernel )
             continue
 
-        return factory.composite( ckernels )
+        return factory.compositekernel( ckernels )
 
     
-    def onHomogenousScatterer(self, scatterer):
+    def onHomogeneousScatterer(self, scatterer):
         factory = self.factory
 
         ckernel = scatterer.kernel().identify(self)
@@ -50,7 +50,7 @@ class ComputingEngineConstructor( AbstractVisitor ):
         cweights = factory.mcweights_absorption_scattering_transmission(
             scatterer.mcweights_absorption_scattering_transmission)
 
-        return factory.homogeneousScatterer( cshape, ckernel, cweights )
+        return factory.homogeneousscatterer( cshape, ckernel, cweights )
 
     pass # end of ComputingEngineConstructor
 

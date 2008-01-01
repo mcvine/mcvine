@@ -22,12 +22,20 @@ class BoostPythonBinding(base):
     '''factory class of boost python computing engine of scatterers
     '''
 
-    def composite(self, kernels):
+    def compositekernel(self, kernels):
         return binding.CompositeScatteringKernel( kernels )
 
 
     def kernelcontainer(self):
         return binding.pointer_vector_Kernel( 0 )
+
+
+    def mcweights_absorption_scattering_transmission(self, weights ):
+        return binding.MCWeights_AbsorptionScatteringTransmission( *weights )
+
+
+    def homogeneousscatterer(self, shape, kernel, weights):
+        return binding.HomogeneousNeutronScatterer(shape, kernel, weights )
 
 
     pass # end of BoostPythonBinding
