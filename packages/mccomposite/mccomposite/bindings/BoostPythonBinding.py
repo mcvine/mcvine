@@ -22,7 +22,7 @@ class BoostPythonBinding(base):
     '''factory class of boost python computing engine of scatterers
     '''
 
-    def composite(self, shape, elements, geometer):
+    def compositescatterer(self, shape, elements, geometer):
         return binding.CompositeNeutronScatterer( shape, elements, geometer )
 
 

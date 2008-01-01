@@ -11,6 +11,12 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
 
+def classes():
+    '''return all binding classes'''
+    import BoostPythonBinding
+    return {'BoostPythonBinding': BoostPythonBinding.BoostPythonBinding}
+
+
 def registries():
     import BoostPythonBinding 
     return { 'BoostPythonBinding': BoostPythonBinding.register }

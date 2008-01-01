@@ -15,7 +15,7 @@
 class AbstractBinding:
 
 
-    def composite(self, shape, elements, geometer):
+    def compositescatterer(self, shape, elements, geometer):
         raise NotImplementedError
 
 

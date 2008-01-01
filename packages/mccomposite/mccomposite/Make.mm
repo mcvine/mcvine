@@ -15,6 +15,7 @@ PROJECT = mccomposite
 BUILD_DIRS = \
 	geometry  \
 	bindings \
+	orientation_conventions \
 
 RECURSE_DIRS = $(BUILD_DIRS)
 

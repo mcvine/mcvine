@@ -86,7 +86,8 @@ class mccomposite_TestCase(unittest.TestCase):
         ccomposite.scatter(ev)
         
         return
-            
+
+
     pass  # end of mccomposite_TestCase
 
 

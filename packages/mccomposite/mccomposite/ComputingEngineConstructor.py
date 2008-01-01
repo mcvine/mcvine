@@ -44,7 +44,7 @@ class ComputingEngineConstructor( AbstractVisitor ):
 
         cshape = composite.shape().identify(self)
 
-        return factory.composite( cshape, cscatterers, cgeometer )
+        return factory.compositescatterer( cshape, cscatterers, cgeometer )
 
 
     def onUnion(self, union):
@@ -111,24 +111,24 @@ def register( scatterer_type, constructor_visiting_method, override = False ):
         if not override:
             raise ValueError , "Cannot register handler for type %s"\
                   "%s already registered as handler for type %s" % (
-                scatterer_type, methodname, _types[name] )
+                scatterer_type, methodname, _registry[name] )
         pass
     
     setattr( ComputingEngineConstructor, methodname, constructor_visiting_method )
 
-    global _types
-    _types[ name ] = scatterer_type
+    global _registry
+    _registry[ name ] = scatterer_type
     return
 
 
-_types = {}
-def _init_types():
+_registry = {}
+def _init_registry():
     from CompositeScatterer import CompositeScatterer
-    _types['CompositeScatterer'] = CompositeScatterer
+    _registry['CompositeScatterer'] = CompositeScatterer
     return
 
 
-_init_types()
+_init_registry()
 
 
 # version

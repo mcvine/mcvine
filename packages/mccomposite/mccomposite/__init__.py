@@ -18,17 +18,18 @@ def composite( *args ):
 
 
 
-def scattererEngine( scatterer, binding = None, orientation_convention = None ):
+def scattererEngine( scatterer,
+                     binding = "BoostPythonBinding",
+                     orientation_convention = "McStasConvention" ):
     "render the c++ engine of the given scatterer"
-    if binding is None:
-        from bindings.BoostPythonBinding import BoostPythonBinding
-        binding = BoostPythonBinding()
-        pass
+    
+    from bindings import classes as bindingClasses
+    bindingClass = bindingClasses()[ binding ]
+    binding = bindingClass()
 
-    if orientation_convention is None:
-        from McStasConvention import McStasConvention
-        orientation_convention = McStasConvention()
-        pass
+    from orientation_conventions import classes
+    conventionClass = classes()[ orientation_convention ]
+    orientation_convention = conventionClass()
 
     from ScattererComputingEngineFactory import ScattererComputingEngineFactory
     factory = ScattererComputingEngineFactory( binding, orientation_convention )
