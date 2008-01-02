@@ -16,15 +16,15 @@
 import unittestX as unittest
 import journal
 
-debug = journal.debug( "mccomponentsbpmodule_TestCase" )
-warning = journal.warning( "mccomponentsbpmodule_TestCase" )
+debug = journal.debug( "homogeneous_scatterer_TestCase" )
+warning = journal.warning( "homogeneous_scatterer_TestCase" )
 
 
 import mcni
-from mccomponents import mccomponentsbp
 from mccomposite import mccompositebp 
+from mccomponents import mccomponentsbp
 
-class mccomponentsbpmodule_TestCase(unittest.TestCase):
+class homogeneous_scatterer_TestCase(unittest.TestCase):
 
     def testHomogeneousNeutronScatterer(self):
         'HomogeneousNeutronScatterer'
@@ -65,11 +65,11 @@ class mccomponentsbpmodule_TestCase(unittest.TestCase):
             continue
         return
 
-    pass  # end of mccomponentsbpmodule_TestCase
+    pass  # end of homogeneous_scatterer_TestCase
 
     
 def pysuite():
-    suite1 = unittest.makeSuite(mccomponentsbpmodule_TestCase)
+    suite1 = unittest.makeSuite(homogeneous_scatterer_TestCase)
     return unittest.TestSuite( (suite1,) )
 
 def main():

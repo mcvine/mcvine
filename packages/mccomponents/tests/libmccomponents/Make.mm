@@ -17,6 +17,7 @@ PACKAGE = libmccomponents
 # directory structure
 
 BUILD_DIRS = \
+	homogeneous_scatterer \
 	mccomponents \
 	boostpython_binding \
 
