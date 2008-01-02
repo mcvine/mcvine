@@ -14,7 +14,7 @@
 
 #include <sstream>
 #include <boost/python.hpp>
-#include "mccomponents/CompositeScatteringKernel.h"
+#include "mccomponents/homogeneous_scatterer/CompositeScatteringKernel.h"
 #include "mccomponents/boostpython_binding/wrap_kernel.h"
 
 

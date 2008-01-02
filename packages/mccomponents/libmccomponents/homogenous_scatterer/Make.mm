@@ -14,6 +14,8 @@
 include local.def
 
 PROJECT = mccomponents
+PACKAGE = homogeneous_scatterer
+
 
 PROJ_TMPDIR = $(BLD_TMPDIR)/$(PROJECT)/$(PACKAGE)
 
@@ -28,7 +30,6 @@ EXPORT_HEADERS = \
 	CompositeScatteringKernel.h \
 	HomogeneousNeutronScatterer.h \
 	exception.h \
-	mccomponents.h \
 	random.h \
 
 # version

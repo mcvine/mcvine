@@ -12,7 +12,7 @@
 //
 
 #include <cstdlib>
-#include "mccomponents/random.h"
+#include "mccomponents/homogeneous_scatterer/random.h"
 
 
 struct mccomponents::random::Generator::Details{

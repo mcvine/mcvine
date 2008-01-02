@@ -11,7 +11,7 @@
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //
 
-#include "mccomponents/AbstractScatteringKernel.h"
+#include "mccomponents/homogeneous_scatterer/AbstractScatteringKernel.h"
 #include "wrap_vector.h"
 
 

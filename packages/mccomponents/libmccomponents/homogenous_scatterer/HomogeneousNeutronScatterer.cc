@@ -11,8 +11,8 @@
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //
 
-#include "mccomponents/HomogeneousNeutronScatterer.h"
-#include "mccomponents/AbstractScatteringKernel.h"
+#include "mccomponents/homogeneous_scatterer/HomogeneousNeutronScatterer.h"
+#include "mccomponents/homogeneous_scatterer/AbstractScatteringKernel.h"
 #include "mccomposite/neutron_propagation.h"
 
 

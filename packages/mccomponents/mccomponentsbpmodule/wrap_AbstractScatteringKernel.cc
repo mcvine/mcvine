@@ -14,7 +14,7 @@
 
 #include <sstream>
 #include <boost/python.hpp>
-#include "mccomponents/AbstractScatteringKernel.h"
+#include "mccomponents/homogeneous_scatterer/AbstractScatteringKernel.h"
 
 
 namespace wrap_mccomponents {

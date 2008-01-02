@@ -23,7 +23,7 @@ warning = journal.warning( "mccomponents_TestCase" )
 import mccomponents, mccomposite, mcni
 
 # python class from new kernel
-from mccomponents.Kernel import Kernel
+from mccomponents.homogeneous_scatterer.Kernel import Kernel
 class NeutronPrinter(Kernel):
     def identify(self, visitor): return visitor.onNeutronPrinter(self)
     pass
@@ -37,8 +37,9 @@ def neutronprinter(self):
     from neutron_printer3 import cKernel
     return cKernel( )
 # 4. register the new class and handlers
-mccomponents.register( NeutronPrinter, onNeutronPrinter,
-                     {'BoostPythonBinding':neutronprinter} )
+mccomponents.homogeneous_scatterer.register (
+    NeutronPrinter, onNeutronPrinter,
+    {'BoostPythonBinding':neutronprinter} )
 
 class mccomponents_TestCase(unittest.TestCase):
 
@@ -52,12 +53,13 @@ class mccomponents_TestCase(unittest.TestCase):
         and render the c++ computation engine of that kernel
         '''
         #create pure python representation of kernel composite
-        composite_kernel = mccomponents.compositeKernel()
+        composite_kernel = mccomponents.homogeneous_scatterer.compositeKernel()
         nprinter = NeutronPrinter( )
         composite_kernel.addElement( nprinter )
 
         #render the c++ representation
-        ccomposite_kernel = mccomponents.kernelEngine( composite_kernel )
+        ccomposite_kernel = mccomponents.homogeneous_scatterer.kernelEngine(
+            composite_kernel )
 
         ev = mcni.neutron( r = (0,0,0), v = (0,0,1) )
         ccomposite_kernel.scatter(ev)
@@ -72,10 +74,10 @@ class mccomponents_TestCase(unittest.TestCase):
         from mccomposite.geometry import primitives
         shape = primitives.block( (1,1,1) )
         nprinter = NeutronPrinter( )
-        scatterer = mccomponents.homogeneousScatterer(shape, nprinter)
+        scatterer = mccomponents.homogeneous_scatterer.homogeneousScatterer(shape, nprinter)
 
         #render the c++ representation
-        cscatterer = mccomponents.scattererEngine( scatterer )
+        cscatterer = mccomponents.homogeneous_scatterer.scattererEngine( scatterer )
 
         for i in range(10):
             ev = mcni.neutron( r = (0,0,-5), v = (0,0,1) )
@@ -96,14 +98,15 @@ class mccomponents_TestCase(unittest.TestCase):
         nprinter = NeutronPrinter( )
         
         #composite kernel
-        composite_kernel = mccomponents.compositeKernel()
+        composite_kernel = mccomponents.homogeneous_scatterer.compositeKernel()
         composite_kernel.addElement( nprinter )
 
         #scatterer
-        scatterer = mccomponents.homogeneousScatterer(shape, composite_kernel)
+        scatterer = mccomponents.homogeneous_scatterer.homogeneousScatterer(
+            shape, composite_kernel)
 
         #render the c++ representation
-        cscatterer = mccomponents.scattererEngine( scatterer )
+        cscatterer = mccomponents.homogeneous_scatterer.scattererEngine( scatterer )
 
         for i in range(10):
             ev = mcni.neutron( r = (0,0,-5), v = (0,0,1) )

@@ -12,7 +12,7 @@
 
 
 PROJECT = mccomponents
-PACKAGE = bindings
+PACKAGE = homogeneous_scatterer/bindings
 
 #--------------------------------------------------------------------------
 #

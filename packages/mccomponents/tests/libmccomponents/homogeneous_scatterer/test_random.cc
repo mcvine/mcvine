@@ -13,7 +13,7 @@
 
 #include <iostream>
 #include <cassert>
-#include "mccomponents/random.h"
+#include "mccomponents/homogeneous_scatterer/random.h"
 
 
 void test1()

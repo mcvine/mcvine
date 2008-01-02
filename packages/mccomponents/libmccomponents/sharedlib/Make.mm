@@ -38,14 +38,14 @@ PROJ_SRCS = \
 PROJ_TIDY += $(PROJ_SRCS)
 
 
-HomogeneousNeutronScatterer.cc: ../mccomponents/HomogeneousNeutronScatterer.cc
-	cp ../mccomponents/HomogeneousNeutronScatterer.cc .
+HomogeneousNeutronScatterer.cc: ../homogeneous_scatterer/HomogeneousNeutronScatterer.cc
+	cp ../homogeneous_scatterer/HomogeneousNeutronScatterer.cc .
 
-random.cc: ../mccomponents/random.cc
-	cp ../mccomponents/random.cc .
+random.cc: ../homogeneous_scatterer/random.cc
+	cp ../homogeneous_scatterer/random.cc .
 
-CompositeScatteringKernel.cc: ../mccomponents/CompositeScatteringKernel.cc
-	cp ../mccomponents/CompositeScatteringKernel.cc .
+CompositeScatteringKernel.cc: ../homogeneous_scatterer/CompositeScatteringKernel.cc
+	cp ../homogeneous_scatterer/CompositeScatteringKernel.cc .
 
 
 

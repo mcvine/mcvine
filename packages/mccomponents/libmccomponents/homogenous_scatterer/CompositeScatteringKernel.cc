@@ -12,8 +12,8 @@
 //
 
 #include "mccomposite/mccomposite.h"
-#include "mccomponents/random.h"
-#include "mccomponents/CompositeScatteringKernel.h"
+#include "mccomponents/homogeneous_scatterer/random.h"
+#include "mccomponents/homogeneous_scatterer/CompositeScatteringKernel.h"
 
 
 struct mccomponents::CompositeScatteringKernel::Details{

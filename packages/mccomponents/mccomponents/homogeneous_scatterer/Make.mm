@@ -11,13 +11,13 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 PROJECT = mccomponents
+PACKAGE = homogeneous_scatterer
+
 
 BUILD_DIRS = \
-	homogeneous_scatterer \
+	bindings \
 
 RECURSE_DIRS = $(BUILD_DIRS)
-
-PACKAGE = mccomponents
 
 #--------------------------------------------------------------------------
 #
@@ -34,10 +34,17 @@ tidy::
 # export
 
 EXPORT_PYTHON_MODULES = \
+	AbstractBinding.py \
+	AbstractVisitor.py \
+	CompositeKernel.py \
+	ComputingEngineConstructor.py \
+	HomogeneousScatterer.py \
+	Kernel.py \
+	KernelComputingEngineFactory.py \
 	__init__.py \
 
 
-export:: export-python-modules 
+export:: export-package-python-modules 
 	BLD_ACTION="export" $(MM) recurse
 
 

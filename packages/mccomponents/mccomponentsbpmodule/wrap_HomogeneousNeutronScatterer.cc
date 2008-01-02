@@ -11,8 +11,8 @@
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //
 
-#include "mccomponents/AbstractScatteringKernel.h"
-#include "mccomponents/HomogeneousNeutronScatterer.h"
+#include "mccomponents/homogeneous_scatterer/AbstractScatteringKernel.h"
+#include "mccomponents/homogeneous_scatterer/HomogeneousNeutronScatterer.h"
 
 #include "mccomposite/boostpython_binding/wrap_scatterer.h"
 

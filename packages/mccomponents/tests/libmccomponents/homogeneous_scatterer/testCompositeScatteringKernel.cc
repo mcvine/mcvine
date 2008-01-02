@@ -14,7 +14,7 @@
 #include <iostream>
 #include <cassert>
 #include "mccomposite/mccomposite.h"
-#include "mccomponents/CompositeScatteringKernel.h"
+#include "mccomponents/homogeneous_scatterer/CompositeScatteringKernel.h"
 
 #ifdef DEBUG
 #include "journal/debug.h"

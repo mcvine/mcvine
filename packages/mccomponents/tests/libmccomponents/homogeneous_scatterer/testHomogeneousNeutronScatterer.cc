@@ -13,8 +13,8 @@
 
 #include <iostream>
 #include <cassert>
-#include "mccomponents/AbstractScatteringKernel.h"
-#include "mccomponents/HomogeneousNeutronScatterer.h"
+#include "mccomponents/homogeneous_scatterer/AbstractScatteringKernel.h"
+#include "mccomponents/homogeneous_scatterer/HomogeneousNeutronScatterer.h"
 
 #ifdef DEBUG
 #include "journal/debug.h"

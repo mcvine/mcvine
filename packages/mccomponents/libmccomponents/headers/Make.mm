@@ -25,6 +25,7 @@ all: export
 export:: export-package-headers
 
 EXPORT_HEADERS = \
+	mccomponents.h \
 
 
 # version

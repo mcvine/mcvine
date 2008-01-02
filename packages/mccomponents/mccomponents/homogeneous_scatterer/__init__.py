@@ -85,7 +85,7 @@ def register( newtype, ctor_handler, binding_handlers):
 
 def _import_bindings():
     import mccomposite
-    import mccomponentsbp
+    import mccomponents.mccomponentsbp
     return
 
 _import_bindings()
