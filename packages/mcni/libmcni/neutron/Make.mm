@@ -27,11 +27,11 @@ export:: export-package-headers
 EXPORT_HEADERS = \
 	Event.h Event.icc \
 	EventBuffer.h \
-	Neutron.h \
 	Spin.h Spin.icc \
 	State.h State.icc \
 	Ceventbuffer.h \
 	coords_transform.h coords_transform.icc \
+	units_conversion.h \
 
 
 # version

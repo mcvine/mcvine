@@ -53,6 +53,8 @@ namespace mcni { namespace Neutron {
       inline State();
       
       // methdos
+      /// energy of neutron
+      inline double energy( ) const;
       /// print to an output stream.
       /// Useful for defining operator << 
       inline void print( std::ostream &os ) const;

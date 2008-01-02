@@ -31,7 +31,13 @@ void mcni::Neutron::State::print( std::ostream &os ) const {
      << "velocity=" << velocity <<", "
      << "spin=" << spin;
 } 
-      
+
+
+#include "mcni/neutron/units_conversion.h"
+double mcni::Neutron::State::energy( ) const {
+  using namespace neutron_units_conversion;
+  return v2E( velocity.length() );
+}      
 
 
 #endif // NEUTRON_NEUTRON_STATE_H

@@ -30,6 +30,7 @@ void test_basics()
   Neutron::State state(r,v,s);
   Neutron::Event ev(state, 0, 1);
   std::cout << ev << std::endl;
+  assertAlmostEqual( ev.energy(), 47.043, 2 );
 }
 
 void test2()
