@@ -12,7 +12,7 @@
 //
 
 #include "mccomposite/mccomposite.h"
-#include "mccomponents/homogeneous_scatterer/random.h"
+#include "mccomponents/math/random.h"
 #include "mccomponents/homogeneous_scatterer/CompositeScatteringKernel.h"
 
 

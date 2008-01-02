@@ -16,7 +16,7 @@
 
 
 #include "mccomposite/mccomposite.h"
-#include "random.h"
+#include "mccomponents/math/random.h"
 
 
 namespace mccomponents{

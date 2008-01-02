@@ -14,9 +14,10 @@
 include local.def
 
 PROJECT = mccomponents
+PACKAGE = physics
+
 
 PROJ_TMPDIR = $(BLD_TMPDIR)/$(PROJECT)/$(PACKAGE)
-
 
 all: export
 
@@ -25,9 +26,7 @@ all: export
 export:: export-package-headers
 
 EXPORT_HEADERS = \
-	mccomponents.h \
-	exception.h \
-
+	constants.h \
 
 # version
 # $Id: Make.mm,v 1.1.1.1 2005/03/08 16:13:51 aivazis Exp $

@@ -1,0 +1,54 @@
+#ifndef MCCOMPONENTS_KERNELS_Z2CHANNEL_H
+#error  Z2Channel.icc not meaningful outsied Z2Channel.h
+#else
+
+
+#include <sstream>
+#include "mccomponents/exception.h"
+
+
+mccomponents::detector::Z2Channel::Z2Channel
+( double detlength, size_t npixels, 
+  const vector_t & axisDirection,
+  const vector_t & channel0Coords)
+  : m_pixelheight( detlength/npixels ),
+    m_npixels( npixels ),
+    m_axisDirection( axisDirection ),
+    m_channel0Coords( channel0Coords )
+{
+  std::ostringstream oss;
+  
+  if (detlength<=0) {
+    oss << "Z2Channel: detector lenght must be positive"
+	<< "detlength = " << detlength
+	<< "."
+      ;
+    throw Exception( oss.str().c_str() );
+  }
+
+  if (npixels == 0) {
+    oss << "Z2Channel: number of pixels must be positive: "
+	<< "npixels = " << npixels
+	<< "."
+      ;
+    throw Exception( oss.str().c_str() );
+  }
+}
+
+
+int
+mccomponents::detector::Z2Channel::operator()
+  ( const vector_t & neutron_coords ) 
+  const
+{
+  double z = ( (neutron_coords-m_channel0Coords) | m_axisDirection );
+  
+  int n = z/m_pixelheight;
+  
+  if (z < 0 or n >= m_npixels) return -1;
+  
+  return n;
+}
+
+
+#endif

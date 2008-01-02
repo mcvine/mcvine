@@ -33,6 +33,8 @@ PROJ_SRCS = \
 	HomogeneousNeutronScatterer.cc \
 	random.cc \
 	CompositeScatteringKernel.cc \
+	He3.cc \
+	He3Tube.cc \
 
 
 PROJ_TIDY += $(PROJ_SRCS)
@@ -41,11 +43,17 @@ PROJ_TIDY += $(PROJ_SRCS)
 HomogeneousNeutronScatterer.cc: ../homogeneous_scatterer/HomogeneousNeutronScatterer.cc
 	cp ../homogeneous_scatterer/HomogeneousNeutronScatterer.cc .
 
-random.cc: ../homogeneous_scatterer/random.cc
-	cp ../homogeneous_scatterer/random.cc .
+random.cc: ../math/random.cc
+	cp ../math/random.cc .
 
 CompositeScatteringKernel.cc: ../homogeneous_scatterer/CompositeScatteringKernel.cc
 	cp ../homogeneous_scatterer/CompositeScatteringKernel.cc .
+
+He3.cc: ../kernels/detector/He3.cc
+	cp ../kernels/detector/He3.cc .
+
+He3Tube.cc: ../kernels/detector/He3Tube.cc
+	cp ../kernels/detector/He3Tube.cc .
 
 
 

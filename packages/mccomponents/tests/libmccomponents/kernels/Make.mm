@@ -6,18 +6,12 @@
 #                        California Institute of Technology
 #                        (C) 1998-2005  All Rights Reserved
 #
-# <LicenseText>
-#
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
 
-include local.def
 
-PROJECT = mccomponents
-PACKAGE = kernels
-
-
-PROJ_TMPDIR = $(BLD_TMPDIR)/$(PROJECT)/$(PACKAGE)
+PROJECT = mccomponents/tests
+PACKAGE = libmccomponents/kernels
 
 
 # directory structure
@@ -30,24 +24,30 @@ OTHER_DIRS = \
 RECURSE_DIRS = $(BUILD_DIRS) $(OTHER_DIRS)
 
 
-
-all: export
+#--------------------------------------------------------------------------
+# build the library
+all: 
 	BLD_ACTION="all" $(MM) recurse
 
-tidy::
-	BLD_ACTION="tidy" $(MM) recurse
+test: 
+	BLD_ACTION="test" $(MM) recurse
+
+distclean::
+	BLD_ACTION="distclean" $(MM) recurse
 
 clean::
 	BLD_ACTION="clean" $(MM) recurse
 
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#
-export:: export-package-headers
+tidy::
+	BLD_ACTION="tidy" $(MM) recurse
 
-EXPORT_HEADERS = \
+#--------------------------------------------------------------------------
+
+
 
 # version
-# $Id: Make.mm,v 1.1.1.1 2005/03/08 16:13:51 aivazis Exp $
+# $Id$
 
 #
 # End of file
+

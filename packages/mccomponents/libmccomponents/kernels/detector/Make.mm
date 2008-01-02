@@ -14,19 +14,42 @@
 include local.def
 
 PROJECT = mccomponents
+PACKAGE = kernels/detector
+
 
 PROJ_TMPDIR = $(BLD_TMPDIR)/$(PROJECT)/$(PACKAGE)
 
 
+# directory structure
+
+BUILD_DIRS = \
+
+OTHER_DIRS = \
+
+RECURSE_DIRS = $(BUILD_DIRS) $(OTHER_DIRS)
+
+
+
 all: export
+	BLD_ACTION="all" $(MM) recurse
+
+tidy::
+	BLD_ACTION="tidy" $(MM) recurse
+
+clean::
+	BLD_ACTION="clean" $(MM) recurse
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
 export:: export-package-headers
 
 EXPORT_HEADERS = \
-	mccomponents.h \
-	exception.h \
+	AbstractScatteringKernel.h \
+	AbstractMultiChannelAnalyzer.h \
+	He3.h \
+	He3Tube.h \
+	Tof2Channel.h Tof2Channel.icc\
+	Z2Channel.h Z2Channel.icc\
 
 
 # version

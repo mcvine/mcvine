@@ -121,8 +121,12 @@ mccomponents::HomogeneousNeutronScatterer::interact_path1(mcni::Neutron::Event &
   
   if (r >= transmission_mark && r < absorption_mark ) {
     // absorption
-    ev.probability *= absorption_prob * (sum_of_weights/m_weights.absorption);
+    double x = m_randomnumbergenerator.generate(0, distance);
+    double prob = mu * distance * std::exp( -(mu+sigma) * x );
+    ev.probability *= prob * (sum_of_weights/m_weights.absorption);
+    propagate( ev, x/velocity );
     m_kernel.absorb( ev );
+
     ev.probability = -1;
     return base_t::absorption;
   }

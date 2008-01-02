@@ -12,6 +12,10 @@
 //
 
 
+#include "mccomponents/kernels/detector/He3.h"
+#include "mccomponents/exception.h"
+
+
 mccomponents::kernels::He3::He3
 ( double pressure )
   : m_pressure( pressure), 

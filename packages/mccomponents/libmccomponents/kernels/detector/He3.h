@@ -22,7 +22,7 @@ namespace mccomponents {
 
   namespace kernels {
 
-    /// base class from He3 related kernel
+    /// base class for He3 related kernel
     class He3: public AbstractScatteringKernel {
 
     public:

@@ -13,25 +13,30 @@
 
 #include <iostream>
 #include <cassert>
-#include "mccomponents/homogeneous_scatterer/random.h"
+#include "mccomponents/kernels/detector/Tof2Channel.h"
+
+#ifdef DEBUG
+#include "journal/debug.h"
+#endif
 
 
 void test1()
 {
-  mccomponents::random::Generator generator;
-  for (size_t i=0; i<10; i++)
-    std::cout << generator.generate01() << ", ";
-  std::cout << std::endl;
+  using namespace mccomponents::detector;
 
-  for (size_t i=0; i<10000000; i++) {
-    double t = generator.generate01() ;
-    assert( t>0.0 && t <1.0 );
-  }
+  Tof2Channel t2c( 1000., 5000., 1. );
+
+  assert (t2c(3000) == 2000);
+  assert (t2c(0) == -1);
+  assert (t2c(10000) == -1);
 }
 
 
 int main()
 {
+#ifdef DEBUG
+  //journal::debug_t("HomogeneousNeutronScatterer").activate();
+#endif
   test1();
   return 0;
 }

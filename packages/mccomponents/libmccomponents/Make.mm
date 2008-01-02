@@ -19,6 +19,8 @@ PACKAGE = libmccomponents
 
 BUILD_DIRS = \
 	headers \
+	math \
+	physics \
 	homogeneous_scatterer \
 	kernels \
 	sharedlib \

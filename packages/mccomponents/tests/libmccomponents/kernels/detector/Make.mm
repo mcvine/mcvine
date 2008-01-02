@@ -16,7 +16,7 @@ PACKAGE = tests
 PROJ_CLEAN += $(PROJ_CPPTESTS)
 
 PROJ_PYTESTS =  alltests.py
-PROJ_CPPTESTS = testHomogeneousNeutronScatterer testCompositeScatteringKernel
+PROJ_CPPTESTS = testTof2Channel testZ2Channel testHe3Tube
 PROJ_TESTS = $(PROJ_PYTESTS) $(PROJ_CPPTESTS)
 PROJ_LIBRARIES = -L$(BLD_LIBDIR) -ljournal -lmcni -lmccomposite -lmcstas_compact -lmccomponents
 
@@ -38,12 +38,14 @@ update: clean
 #--------------------------------------------------------------------------
 #
 
-testHomogeneousNeutronScatterer: testHomogeneousNeutronScatterer.cc
-	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ testHomogeneousNeutronScatterer.cc $(PROJ_LIBRARIES)
+testTof2Channel: testTof2Channel.cc
+	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ testTof2Channel.cc $(PROJ_LIBRARIES)
 
-testCompositeScatteringKernel: testCompositeScatteringKernel.cc
-	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ testCompositeScatteringKernel.cc $(PROJ_LIBRARIES)
+testZ2Channel: testZ2Channel.cc
+	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ testZ2Channel.cc $(PROJ_LIBRARIES)
 
+testHe3Tube: testHe3Tube.cc
+	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ testHe3Tube.cc $(PROJ_LIBRARIES)
 
 
 # version

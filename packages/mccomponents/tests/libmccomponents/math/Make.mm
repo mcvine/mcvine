@@ -16,7 +16,7 @@ PACKAGE = tests
 PROJ_CLEAN += $(PROJ_CPPTESTS)
 
 PROJ_PYTESTS =  alltests.py
-PROJ_CPPTESTS = testHomogeneousNeutronScatterer testCompositeScatteringKernel
+PROJ_CPPTESTS = test_random 
 PROJ_TESTS = $(PROJ_PYTESTS) $(PROJ_CPPTESTS)
 PROJ_LIBRARIES = -L$(BLD_LIBDIR) -ljournal -lmcni -lmccomposite -lmcstas_compact -lmccomponents
 
@@ -38,12 +38,8 @@ update: clean
 #--------------------------------------------------------------------------
 #
 
-testHomogeneousNeutronScatterer: testHomogeneousNeutronScatterer.cc
-	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ testHomogeneousNeutronScatterer.cc $(PROJ_LIBRARIES)
-
-testCompositeScatteringKernel: testCompositeScatteringKernel.cc
-	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ testCompositeScatteringKernel.cc $(PROJ_LIBRARIES)
-
+test_random: test_random.cc
+	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ test_random.cc $(PROJ_LIBRARIES)
 
 
 # version

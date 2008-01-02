@@ -1,0 +1,49 @@
+#ifndef MCCOMPONENTS_KERNELS_TOF2CHANNEL_H
+#error  Tof2Channel.icc not meaningful outsied Tof2Channel.h
+#else
+
+
+#include <sstream>
+#include "mccomponents/exception.h"
+
+
+mccomponents::detector::Tof2Channel::Tof2Channel
+(double tofmin, double tofmax, double tofstep)
+  : m_tofmin( tofmin ),
+    m_tofmax( tofmax ),
+    m_tofstep( tofstep )
+{
+  std::ostringstream oss;
+  
+  if (tofmax<=tofmin) {
+    oss << "Tof2Channel: min must be smaller that max:"
+	<< "tofmin = " << tofmin
+	<< ", tofmax = " << tofmax
+	<< "."
+      ;
+    throw Exception( oss.str().c_str() );
+  }
+
+  if (tofstep <= 0) {
+    oss << "Tof2Channel: step must be positive: "
+	<< "tofstep = " << tofstep
+	<< "."
+      ;
+    throw Exception( oss.str().c_str() );
+  }
+}
+
+
+int
+mccomponents::detector::Tof2Channel::operator()
+  ( double tof ) 
+  const
+{
+  if (tof < m_tofmin or tof >= m_tofmax) return -1;
+  
+  return int( (tof-m_tofmin)/m_tofstep );
+}
+
+
+
+#endif
