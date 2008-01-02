@@ -11,8 +11,8 @@
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //
 
-#include "AbstractScatteringKernel.h"
-#include "CompositeScatteringKernel.h"
+#include "homogeneous_scatterer/AbstractScatteringKernel.h"
+#include "homogeneous_scatterer/CompositeScatteringKernel.h"
 
 
 // version
