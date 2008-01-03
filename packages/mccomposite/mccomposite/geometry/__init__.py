@@ -11,9 +11,33 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
 
+
+def locate(position, shape):
+    import mccomposite.mccompositebp as b
+    from mccomposite import scattererEngine as cengine
+    location = b.locate( b.Position( *position ), cengine( shape, "BoostPythonBinding" ) )
+    global _location
+    return _location[ location ]
+
+
+_location = None
+def _init_location( ):
+    import mccomposite.mccompositebp as b
+    global _location
+    _location = {
+        b.location.inside: "inside",
+        b.location.onborder: "onborder",
+        b.location.outside: "outside",
+        }
+
+    return
+    
+
+
+_init_location()
+
+
 # version
 __id__ = "$Id$"
-
-# Generated automatically by PythonMill on Fri Dec 28 13:58:22 2007
 
 # End of file 

@@ -30,6 +30,7 @@ PROJ_SRCS = \
 	wrap_primitives.cc \
 	wrap_operations.cc \
 	wrap_scatterercontainer.cc \
+	wrap_shapeoperators.cc \
 	wrap_AbstractNeutronScatterer.cc \
 	wrap_CompositeNeutronScatterer.cc \
 

@@ -88,6 +88,14 @@ class mccomposite_TestCase(unittest.TestCase):
         return
 
 
+    def test_locate(self):
+        from mccomposite.geometry import primitives, locate
+        c = primitives.cylinder(1,1)
+
+        assert locate( (0,0,0), c ) == "inside"
+        return
+
+
     pass  # end of mccomposite_TestCase
 
 

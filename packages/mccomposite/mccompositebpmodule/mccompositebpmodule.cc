@@ -18,6 +18,8 @@ namespace wrap_mccomposite{
   void wrap_basics();
 
   void wrap_AbstractShape();
+  void wrap_shapeoperators();
+
   void wrap_shapecontainer();
   void wrap_primitives();
   void wrap_operations();
@@ -37,6 +39,8 @@ BOOST_PYTHON_MODULE(mccompositebp)
   wrap_basics();
 
   wrap_AbstractShape();
+  wrap_shapeoperators();
+
   wrap_shapecontainer();
   wrap_primitives();
   wrap_operations();
