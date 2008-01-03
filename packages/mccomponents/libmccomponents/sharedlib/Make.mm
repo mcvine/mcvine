@@ -33,6 +33,7 @@ PROJ_SRCS = \
 	HomogeneousNeutronScatterer.cc \
 	random.cc \
 	CompositeScatteringKernel.cc \
+	EventModeMCA.cc \
 	He3.cc \
 	He3Tube.cc \
 
@@ -54,6 +55,9 @@ He3.cc: ../kernels/detector/He3.cc
 
 He3Tube.cc: ../kernels/detector/He3Tube.cc
 	cp ../kernels/detector/He3Tube.cc .
+
+EventModeMCA.cc: ../kernels/detector/EventModeMCA.cc
+	cp ../kernels/detector/EventModeMCA.cc .
 
 
 

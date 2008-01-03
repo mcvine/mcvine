@@ -27,6 +27,8 @@ PROJ_SRCS = \
 	wrap_AbstractScatteringKernel.cc \
 	wrap_CompositeScatteringKernel.cc \
 	wrap_kernelcontainer.cc \
+	wrap_He3TubeKernel.cc \
+	wrap_EventModeMCA.cc \
 
 
 include doxygen/default.def

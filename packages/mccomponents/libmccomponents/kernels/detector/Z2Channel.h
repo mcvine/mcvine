@@ -45,7 +45,7 @@ namespace mccomponents {
       ///     then 
       ///       channel0Coords = (0,0,-0.5)
       ///       axisDirection = (0,0,1)
-      Z2Channel( double detlength, size_t npixels, 
+      inline Z2Channel( double detlength, size_t npixels, 
 		 const vector_t & axisDirection,
 		 const vector_t & channel0Coords);
 

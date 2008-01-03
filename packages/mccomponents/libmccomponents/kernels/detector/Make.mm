@@ -46,6 +46,7 @@ export:: export-package-headers
 EXPORT_HEADERS = \
 	AbstractScatteringKernel.h \
 	AbstractMultiChannelAnalyzer.h \
+	EventModeMCA.h \
 	He3.h \
 	He3Tube.h \
 	Tof2Channel.h Tof2Channel.icc\

@@ -27,7 +27,7 @@ namespace mccomponents {
 
       // meta methods
       /// ctor
-      Tof2Channel( double tofmin, double tofmax, double tofstep );
+      inline Tof2Channel( double tofmin, double tofmax, double tofstep );
 
       // methods
       inline int operator ()( double tof ) const;
