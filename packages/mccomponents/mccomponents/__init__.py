@@ -11,6 +11,17 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
 
+
+def _import_bindings():
+    import mccomposite
+    import mccomponents.mccomponentsbp
+    return
+
+_import_bindings()
+
+
+
+
 # version
 __id__ = "$Id$"
 

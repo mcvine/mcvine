@@ -57,7 +57,9 @@ class He3Tube_TestCase(unittest.TestCase):
         z2c = mccomponentsbp.Z2Channel(detlength, npixels, z_direction, pixel0)
 
         datafile = "test.out"
-        mca = mccomponentsbp.EventModeMCA( datafile, npixels )
+        dims = mccomponentsbp.vector_uint(0)
+        dims.append( npixels )
+        mca = mccomponentsbp.EventModeMCA( datafile, dims )
         
         tube_channels = mccomponentsbp.vector_int(0)
         tube_channels.append( detID )

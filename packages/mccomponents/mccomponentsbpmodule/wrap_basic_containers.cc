@@ -12,25 +12,18 @@
 //
 
 
-#include <sstream>
 #include <boost/python.hpp>
-#include "mccomponents/kernels/detector/EventModeMCA.h"
+#include "wrap_vector.h"
 
 
 namespace wrap_mccomponents {
 
-  void wrap_EventModeMCA()
+  void wrap_basic_containers()
   {
     using namespace boost::python;
-    using namespace mccomponents::detector;
 
-    typedef EventModeMCA w_t;
-
-    class_<w_t, bases<AbstractMultiChannelAnalyzer>, boost::noncopyable >
-      ("EventModeMCA",
-       init<const char *, w_t::indexes_t>()
-       )
-      ;
+    wrap_vector<int>( "int" ); 
+    wrap_vector<unsigned int>( "uint" ); 
   }
 }
 

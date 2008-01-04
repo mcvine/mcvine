@@ -11,14 +11,12 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 PROJECT = mccomponents
+PACKAGE = detector
+
 
 BUILD_DIRS = \
-	detector \
-	homogeneous_scatterer \
 
 RECURSE_DIRS = $(BUILD_DIRS)
-
-PACKAGE = mccomponents
 
 #--------------------------------------------------------------------------
 #
@@ -36,9 +34,15 @@ tidy::
 
 EXPORT_PYTHON_MODULES = \
 	__init__.py \
+	register_CompositeDetector.py \
+	register_DetectorSystem.py \
+	register_EventModeMCA.py \
+	register_He3Tube.py \
+	register_He3TubeKernel.py \
+	units.py \
 
 
-export:: export-python-modules 
+export:: export-package-python-modules 
 	BLD_ACTION="export" $(MM) recurse
 
 

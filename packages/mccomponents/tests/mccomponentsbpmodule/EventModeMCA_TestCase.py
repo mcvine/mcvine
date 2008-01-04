@@ -27,7 +27,9 @@ from mccomponents import mccomponentsbp
 class EventModeMCA_TestCase(unittest.TestCase):
 
     def test(self):
-        mca = mccomponentsbp.EventModeMCA( "test.out", 100 )
+        dims = mccomponentsbp.vector_uint( 0 )
+        dims.append( 100 )
+        mca = mccomponentsbp.EventModeMCA( "test.out", dims )
         return
             
     pass  # end of EventModeMCA_TestCase

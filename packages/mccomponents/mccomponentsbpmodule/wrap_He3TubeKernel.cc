@@ -16,7 +16,6 @@
 #include <boost/python.hpp>
 #include "mccomponents/kernels/detector/He3Tube.h"
 #include "mccomponents/boostpython_binding/wrap_kernel.h"
-#include "wrap_vector.h"
 
 
 namespace wrap_mccomponents {
@@ -56,8 +55,6 @@ namespace wrap_mccomponents {
       .def("__call__", &Z2Channel::operator () )
       ;
       
-    wrap_vector<int>( "int" ); // channel_t
-
   }
 }
 

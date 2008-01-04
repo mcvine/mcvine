@@ -29,6 +29,7 @@ PROJ_SRCS = \
 	wrap_kernelcontainer.cc \
 	wrap_He3TubeKernel.cc \
 	wrap_EventModeMCA.cc \
+	wrap_basic_containers.cc \
 
 
 include doxygen/default.def
