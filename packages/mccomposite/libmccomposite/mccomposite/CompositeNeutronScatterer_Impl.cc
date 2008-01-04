@@ -134,8 +134,8 @@ struct mccomposite::CompositeNeutronScatterer_Impl::Details {
 
 
 mccomposite::CompositeNeutronScatterer_Impl::CompositeNeutronScatterer_Impl
-(const AbstractShape & shape, const scatterercontainer_t & scatterers, 
- const geometer_t & geometer)
+( const AbstractShape & shape, const scatterercontainer_t & scatterers, 
+  const geometer_t & geometer )
   : m_shape( shape ),
     m_scatterers( scatterers ),
     m_geometer( geometer ),

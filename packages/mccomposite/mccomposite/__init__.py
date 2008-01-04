@@ -45,11 +45,24 @@ def register( newtype, ctor_handler, binding_handlers):
     binding_handlers will be attached to corresponding classes in 'bindings'
       subpackage.
     """
+    register_engine_ctor( newtype, ctor_handler )
+    register_binding_handlers( newtype, binding_handlers )
+    return
+
+
+def register_engine_ctor( newtype, ctor_handler ):
+    """register a new scatterer type and its engine constructor handler
+    """
     import ComputingEngineConstructor
     ComputingEngineConstructor.register(newtype, ctor_handler)
+    return
+
+
+def register_binding_handlers( newtype, binding_handlers ):
     import bindings
     bindings.register( newtype.__name__.lower(), binding_handlers )
     return
+
 
 
 def _import_bindings():
