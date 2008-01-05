@@ -13,7 +13,6 @@
 
 #include <vector>
 #include "mccomposite/CompositeNeutronScatterer_Impl.h"
-#include "mccomposite/geometry/operations/Union.h"
 #include "mccomposite/geometry/operations/Rotation.h"
 #include "mccomposite/geometry/operations/Translation.h"
 #include "mccomposite/geometry/intersect.h"
@@ -162,6 +161,8 @@ mccomposite::CompositeNeutronScatterer_Impl::CompositeNeutronScatterer_Impl
     // now we can add the translated shape to my list of shapes
     m_shapes.push_back( translated );
   }
+
+  m_union_of_all_shapes = geometry::Union( m_shapes );
 }
 
 
@@ -517,6 +518,15 @@ mccomposite::CompositeNeutronScatterer_Impl::scatter
   // event is exiting, nothing need to be done
   if (is_exiting(ev, m_shape)) return;
 
+  // event does not really hit me, return
+  // this is necessarily because the given "frame shape" of this composite
+  // might not be the union of all element shapes. 
+  // so the event might hit the "frame shape", but not really any scatterer
+  if (is_exiting(ev, m_union_of_all_shapes)) {
+    propagate_to_next_exiting_surface( ev, m_shape );
+    return;
+  }
+
   // otherwise, interacts once.
   scatterer_interface::InteractionType itype = interact_path1( ev );
   
@@ -526,7 +536,7 @@ mccomposite::CompositeNeutronScatterer_Impl::scatter
 
   if (itype == scatterer_interface::none) {
     // need to call scatter again
-    propagate_to_next_incident_surface( ev, m_shape );
+    propagate_to_next_incident_surface( ev, m_union_of_all_shapes );
     scatter( ev );
     return;
   }

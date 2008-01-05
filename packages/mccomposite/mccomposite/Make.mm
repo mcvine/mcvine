@@ -44,8 +44,10 @@ EXPORT_PYTHON_MODULES = \
 	Geometer.py \
 	McStasConvention.py \
 	Scatterer.py \
+	ScattererCopy.py \
 	ScattererComputingEngineFactory.py \
 	__init__.py \
+	units.py \
 
 
 export:: export-python-modules 

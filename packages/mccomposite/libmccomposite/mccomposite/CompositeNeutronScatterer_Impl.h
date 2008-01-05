@@ -19,6 +19,7 @@
 #include <vector>
 #include "AbstractNeutronScatterer.h"
 #include "Geometer.h"
+#include "geometry/operations/Union.h"
 
 
 namespace mccomposite{
@@ -51,6 +52,7 @@ namespace mccomposite{
     const AbstractShape &m_shape;
     const scatterercontainer_t & m_scatterers;
     std::vector< const AbstractShape * > m_shapes;
+    geometry::Union m_union_of_all_shapes;
     geometer_t m_geometer;
     struct Details;
     std::auto_ptr<Details> m_details;

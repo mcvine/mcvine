@@ -462,6 +462,44 @@ void test8()
 }
 
 
+// two boxes that does nothing to neutron
+// a "frame shape" is given to the composite of these two boxes
+// neutron goes to the gap in between the boxes
+void test9()
+{
+  using namespace mccomposite;
+
+  geometry::Box box(1,1,1);
+  Nothing s1(box);
+  Nothing s2(box);
+
+  CompositeNeutronScatterer::scatterercontainer_t scatterers;
+
+  scatterers.push_back( &s1 );
+  scatterers.push_back( &s2 );
+  
+  typedef CompositeNeutronScatterer::geometer_t geometer_t;
+  geometer_t g;
+  g.remember( s1, geometer_t::position_t(-1,0,0), geometer_t::orientation_t() );
+  g.remember( s2, geometer_t::position_t(1,0,0), geometer_t::orientation_t() );
+
+  geometry::Box shape(3,1,1);
+
+  CompositeNeutronScatterer cs( shape, scatterers, g );
+
+  mcni::Neutron::Event ev, save;
+  ev.state.position = geometry::Position(0,0,-5);
+  ev.state.velocity = geometry::Direction(0,0,1);
+  ev.time = 0;
+  ev.probability = 1.;
+  save = ev;
+  
+  assert (cs.interact_path1( ev )==AbstractNeutronScatterer::none);
+
+  ev = save;
+  cs.scatter(ev);
+}
+
 
 int main()
 {
@@ -478,6 +516,7 @@ int main()
   test6();
   test7();
   test8();
+  test9();
 }
 
 // version

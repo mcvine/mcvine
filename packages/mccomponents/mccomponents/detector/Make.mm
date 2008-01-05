@@ -35,6 +35,7 @@ tidy::
 EXPORT_PYTHON_MODULES = \
 	__init__.py \
 	register_CompositeDetector.py \
+	register_DetectorPack.py \
 	register_DetectorSystem.py \
 	register_EventModeMCA.py \
 	register_He3Tube.py \

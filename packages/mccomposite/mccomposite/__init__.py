@@ -13,9 +13,17 @@
 
 
 def composite( *args ):
+    '''create a new scatterer composite
+    '''
     from CompositeScatterer import CompositeScatterer
     return CompositeScatterer( *args )
 
+
+def scatterercopy( *args, **kwds ):
+    '''create a copy of a scatterer
+    '''
+    from ScattererCopy import ScattererCopy
+    return ScattererCopy( *args, **kwds )
 
 
 def scattererEngine( scatterer,

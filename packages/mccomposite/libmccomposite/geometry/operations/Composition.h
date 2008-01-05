@@ -37,7 +37,8 @@ namespace mccomposite {
 	shapes.push_back( &shape1 );
 	shapes.push_back( &shape2 );
       }
-      virtual ~Composition( ) {};
+      Composition() {}
+      virtual ~Composition( ) {}
       
       //methods
       virtual void identify( AbstractShapeVisitor & visitor ) const = 0;

@@ -19,6 +19,7 @@ class ComputingEngineConstructor( AbstractVisitor ):
 
     def __init__(self, factory):
         self.factory = factory
+        self._memo = {}
         return
 
 
@@ -27,6 +28,9 @@ class ComputingEngineConstructor( AbstractVisitor ):
     
 
     def onCompositeScatterer(self, composite):
+        ret =  self._get( composite )
+        if ret: return ret
+        
         factory = self.factory
         
         elements = composite.elements()
@@ -37,14 +41,21 @@ class ComputingEngineConstructor( AbstractVisitor ):
         for element in elements:
             cscatterer = element.identify(self) 
             cscatterers.append( cscatterer )
-            cposition = factory.position( geometer.position(element) )
-            corientation = factory.orientation( geometer.orientation(element) )
+            
+            position = self._remove_length_unit( geometer.position(element) )
+            cposition = factory.position( position )
+            
+            orientation = self._remove_angle_unit( geometer.orientation(element) )
+            corientation = factory.orientation( orientation )
+            
             cgeometer.register( cscatterer, cposition, corientation )
             continue
 
         cshape = composite.shape().identify(self)
 
-        return factory.compositescatterer( cshape, cscatterers, cgeometer )
+        ret =  factory.compositescatterer( cshape, cscatterers, cgeometer )
+        self._remember( composite, ret )
+        return ret
 
 
     def onUnion(self, union):
@@ -79,32 +90,62 @@ class ComputingEngineConstructor( AbstractVisitor ):
         factory = self.factory
         body = rotation.body
         cshape = body.identify(self)
-        rotmat = factory.orientation( rotation.angles )
+        angles = self._remove_angle_unit( rotation.angles )
+        rotmat = factory.orientation( angles )
         return factory.rotate( cshape, rotmat )
 
     def onTranslation(self, translation):
         factory = self.factory
         body = translation.body
         cshape = body.identify(self)
-        offset = factory.position( translation.vector )
+        vector = self._remove_length_unit( translation.vector )
+        offset = factory.position( vector )
         return factory.translate( cshape, offset )
 
 
     def onBlock(self, block):
-        diagonal = block.diagonal
+        diagonal = self._remove_length_unit( block.diagonal )
         return self.factory.block( diagonal )
 
     def onSphere(self, sphere):
-        return self.factory.sphere( sphere.radius )
+        r = self._remove_length_unit(sphere.radius)
+        return self.factory.sphere( r )
 
     def onCylinder(self, cylinder):
-        return self.factory.cylinder( cylinder.radius, cylinder.height )
+        p = self._remove_length_unit( (cylinder.radius, cylinder.height) )
+        return self.factory.cylinder( *p )
+
+
+    def onScattererCopy(self, copy):
+
+        reference = copy.reference ()
+        
+        import mccomposite
+        c = mccomposite.composite( reference.shape() )
+        c.addElement( reference )
+        
+        return c.identify(self)
+
+    def _remove_length_unit(self, t): return remove_unit( t, length_unit )
+    
+    def _remove_angle_unit(self, t): return remove_unit( t, angle_unit )
+    
+    
+    def _remember(self, visitee, cobject ):
+        self._memo[ visitee ] = cobject
+        return
+
+    def _get(self, visitee):
+        return self._memo.get( visitee )
 
     pass # end of ComputingEngineConstructor
 
 
 def register( scatterer_type, constructor_visiting_method, override = False ):
     '''register computing engine constructor method for a new scatterer type'''
+
+    global _registry
+    
     name = scatterer_type.__name__
     methodname = 'on%s' % name
     if hasattr(ComputingEngineConstructor, methodname):
@@ -116,7 +157,6 @@ def register( scatterer_type, constructor_visiting_method, override = False ):
     
     setattr( ComputingEngineConstructor, methodname, constructor_visiting_method )
 
-    global _registry
     _registry[ name ] = scatterer_type
     return
 
@@ -130,6 +170,63 @@ def _init_registry():
 
 _init_registry()
 
+
+
+def is_unitless_scalar( s ):
+    return isinstance(s, float) or isinstance(s, int)
+
+def remove_unit_of_scalar( s, unit ):
+    try:
+        s+unit
+        return s/unit
+    except:
+        raise ValueError, "incommpatible unit: %s, %s" % (s, unit)
+    
+
+def is_unitless_vector( v ):
+    for i in v:
+        if not is_unitless_scalar( i ):
+            return False
+        continue
+    return True
+
+
+def remove_unit_of_vector( v, unit ):
+    from numpy import array
+        
+    v = array(v) * 1.0
+    try:
+        v[0] + unit
+        #this means the v has compatible unit
+        v = v/unit
+    except:
+        pass
+
+    for i in v:
+        if not isinstance(i, float):
+            raise ValueError , "v should have unit of length: %s" %(
+                v, )
+        continue
+    # this means v already is a unitless vector
+    return v
+
+
+
+def remove_unit( something, unit ):
+    if '__iter__' in dir(something):
+        if not is_unitless_vector( something ):
+            return remove_unit_of_vector( something, unit)
+    else:
+        if not is_unitless_scalar( something ):
+            return remove_unit_of_scalar( something, unit )
+        pass
+    return something
+        
+
+
+import units
+length_unit = units.length.meter
+angle_unit = units.angle.degree
 
 # version
 __id__ = "$Id$"

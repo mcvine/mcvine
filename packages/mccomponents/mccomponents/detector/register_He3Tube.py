@@ -41,6 +41,9 @@ class Pixel:
     
 # 2. the handler to construct c++ engine
 def onHe3Tube(self, he3tube):
+    ret = self._get(he3tube)
+    if ret: return ret
+    
     from mccomposite.geometry import locate
     
     # assume all elements of he3tube are pixels
@@ -84,7 +87,10 @@ def onHe3Tube(self, he3tube):
         shape, kernel,
         mcweights_absorption_scattering_transmission \
         = he3tube.mcweights_absorption_scattering_transmission )
-    return scatterer.identify(self)
+    ret = scatterer.identify(self)
+
+    self._remember( he3tube, ret )
+    return ret
 
 
 

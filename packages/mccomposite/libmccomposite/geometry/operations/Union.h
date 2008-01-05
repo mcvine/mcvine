@@ -31,6 +31,9 @@ namespace mccomposite {
       Union( const Composition::shapecontainer_t & shapes )
 	: Composition( shapes )
       {}
+      Union() 
+	: Composition()
+      {}
       virtual ~Union( ) {};
       
       //methods

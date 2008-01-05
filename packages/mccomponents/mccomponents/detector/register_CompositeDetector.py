@@ -15,6 +15,11 @@
 # the interface
 from mccomposite.CompositeScatterer import CompositeScatterer as base
 class CompositeDetector(base):
+    def __init__(self, shape, id = 0):
+        base.__init__(self, shape)
+        self._id = id
+        return
+    def id(self): return self._id
     def identify(self, visitor): return visitor.onCompositeDetector(self)
     pass
 
@@ -35,8 +40,13 @@ def onCompositeDetector(self, composite):
         self._indexes_in_detsys.pop()
         
         cscatterers.append( cscatterer )
-        cposition = factory.position( geometer.position(element) )
-        corientation = factory.orientation( geometer.orientation(element) )
+
+        position = self._remove_length_unit( geometer.position(element) )
+        cposition = factory.position( position )
+            
+        orientation = self._remove_angle_unit( geometer.orientation(element) )
+        corientation = factory.orientation( orientation )
+            
         cgeometer.register( cscatterer, cposition, corientation )
         continue
 
