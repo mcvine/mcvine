@@ -416,9 +416,11 @@ mccomposite::CompositeNeutronScatterer_Impl::interact_path1
 	<< journal::endl;
 #endif
   // nothing hit. should just let go the neutron
-  if (scatterer_index < 0 or scatterer_index >= m_scatterers.size() ) 
+  if (scatterer_index < 0 or scatterer_index >= m_scatterers.size() ) {
+    propagate_to_next_exiting_surface( ev, m_shape );
     return scatterer_interface::none;
-  
+  }
+
   // the scatterer
   AbstractNeutronScatterer & scatterer = *(m_scatterers[scatterer_index]);
 #ifdef DEBUG

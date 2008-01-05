@@ -27,6 +27,8 @@ PROJ_LIBRARIES = -L$(BLD_LIBDIR) -lmcni -lmccomposite -lmccomponents
 
 BUILD_DIRS = \
 	libmccomponents \
+	mccomponents \
+	mccomponentsbpmodule \
 
 OTHER_DIRS = \
 

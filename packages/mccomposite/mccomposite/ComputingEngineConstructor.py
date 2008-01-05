@@ -104,7 +104,9 @@ class ComputingEngineConstructor( AbstractVisitor ):
 
 
     def onBlock(self, block):
-        diagonal = self._remove_length_unit( block.diagonal )
+        try: diagonal = block.diagonal
+        except AttributeError: diagonal = block.thickness, block.width, block.height
+        diagonal = self._remove_length_unit( diagonal )
         return self.factory.block( diagonal )
 
     def onSphere(self, sphere):
@@ -116,6 +118,16 @@ class ComputingEngineConstructor( AbstractVisitor ):
         return self.factory.cylinder( *p )
 
 
+    def onHollowCylinder(self, hollowCylinder):
+        from geometry.primitives import cylinder
+        from geometry.operations import subtract
+        r1 = hollowCylinder.in_radius
+        r2 = hollowCylinder.out_radius
+        h = hollowCylinder.height
+        shape = subtract( cylinder( r2, h ), cylinder(r1,h) )
+        return shape.identify(self)
+
+
     def onScattererCopy(self, copy):
 
         reference = copy.reference ()
@@ -125,6 +137,8 @@ class ComputingEngineConstructor( AbstractVisitor ):
         c.addElement( reference )
         
         return c.identify(self)
+
+    onCopy = onScattererCopy
 
     def _remove_length_unit(self, t): return remove_unit( t, length_unit )
     

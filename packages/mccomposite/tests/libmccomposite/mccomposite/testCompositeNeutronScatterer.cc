@@ -501,6 +501,45 @@ void test9()
 }
 
 
+// a box that does nothing to neutron
+// a "frame shape" is given to the composite of this one box.
+// that "frame shape" is larger.
+void test10()
+{
+  using namespace mccomposite;
+
+  geometry::Sphere sphere(1);
+  Nothing s(sphere);
+
+  CompositeNeutronScatterer::scatterercontainer_t scatterers1, scatterers2;
+
+  scatterers1.push_back( &s );
+  
+  typedef CompositeNeutronScatterer::geometer_t geometer_t;
+  geometer_t g1, g2;
+
+  geometry::Box shape1(2,2,2);
+
+  CompositeNeutronScatterer cs1( shape1, scatterers1, g1 );
+
+  geometry::Box shape2(3,3,3);
+  scatterers2.push_back( &cs1 );
+  CompositeNeutronScatterer cs2( shape2, scatterers2, g2 );
+
+  mcni::Neutron::Event ev, save;
+  ev.state.position = geometry::Position(0,0,-5);
+  ev.state.velocity = geometry::Direction(0.03,0.0332,1);
+  ev.time = 0;
+  ev.probability = 1.;
+  save = ev;
+  
+  assert (cs2.interact_path1( ev )==AbstractNeutronScatterer::none);
+  
+  ev = save;
+  cs2.scatter(ev);
+}
+
+
 int main()
 {
 #ifdef DEBUG
@@ -517,6 +556,7 @@ int main()
   test7();
   test8();
   test9();
+  test10();
 }
 
 // version

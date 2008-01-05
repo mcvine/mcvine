@@ -41,6 +41,7 @@ EXPORT_PYTHON_MODULES = \
 	register_He3Tube.py \
 	register_He3TubeKernel.py \
 	units.py \
+	utils.py \
 
 
 export:: export-package-python-modules 

@@ -81,12 +81,16 @@ def onHe3Tube(self, he3tube):
         pressure, self._indexes_in_detsys,
         tubeLength, npixels, axisDirection, pixel0position)
 
+    try:
+        mcweights = he3tube.mcweights_absorption_scattering_transmission
+    except AttributeError:
+        mcweights = 0.9, 0, 0.1
+
     # treat this detector as  a homogeneous scatterer
     import mccomponents.homogeneous_scatterer as mh
     scatterer = mh.homogeneousScatterer(
         shape, kernel,
-        mcweights_absorption_scattering_transmission \
-        = he3tube.mcweights_absorption_scattering_transmission )
+        mcweights_absorption_scattering_transmission = mcweights )
     ret = scatterer.identify(self)
 
     self._remember( he3tube, ret )
@@ -99,6 +103,9 @@ import mccomposite
 mccomposite.register_engine_ctor (He3Tube, onHe3Tube )
 
 
+#hack
+class Detector: pass
+mccomposite.register_engine_ctor (Detector, onHe3Tube )
 
 # version
 __id__ = "$Id$"

@@ -88,6 +88,18 @@ def eventModeMCA( *args, **kwds ):
     return EventModeMCA( *args, **kwds )
 
 
+def _register_all():
+    import register_CompositeDetector
+    import register_DetectorPack
+    import register_DetectorSystem
+    import register_EventModeMCA
+    import register_He3Tube
+    import register_He3TubeKernel
+    return
+
+_register_all()
+
+
 # version
 __id__ = "$Id$"
 

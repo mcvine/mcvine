@@ -1,0 +1,625 @@
+<?xml version="1.0"?>
+<!--
+! ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+!
+!                                   Jiao Lin
+!                      California Institute of Technology
+!                        (C) 2007  All Rights Reserved
+!
+! {LicenseText}
+!
+! ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-->
+
+<!DOCTYPE instrument>
+
+<Instrument guid="-1" name="ARCS">
+
+  <Moderator guid="1" type="non-existant" name="moderator" id="0">
+    <Shape>
+<!--
+Block
+
+  Its thickness is the length of the dimension that is parallel
+  to neutron beam.
+
+  Its height is its vertical length (parallel to gravity).
+
+  Its width is the 3rd dimension.
+
+-->
+<block width="0.1*m" height="0.1*m" thickness="0.1*m"/>
+    </Shape>
+  </Moderator>
+
+
+  <Monitor mode="monitor" guid="2" name="monitor0" sampledFraction="0.01" id="1">
+    <Shape>
+<!--
+Block
+
+  Its thickness is the length of the dimension that is parallel
+  to neutron beam.
+
+  Its height is its vertical length (parallel to gravity).
+
+  Its width is the 3rd dimension.
+
+-->
+<block width="0.0762*m" height="0.0762*m" thickness="0.0381*m"/>
+    </Shape>
+  </Monitor>
+
+
+  <Monitor mode="monitor" guid="3" name="monitor1" sampledFraction="0.01" id="2">
+    <Shape>
+<!--
+Block
+
+  Its thickness is the length of the dimension that is parallel
+  to neutron beam.
+
+  Its height is its vertical length (parallel to gravity).
+
+  Its width is the 3rd dimension.
+
+-->
+<block width="0.0762*m" height="0.0762*m" thickness="0.0381*m"/>
+    </Shape>
+  </Monitor>
+
+
+  <Sample guid="4" name="sample" id="3">
+  </Sample>
+
+
+  <DetectorSystem name='detectorSystem' guid='5'>
+
+    <Shape>
+      <hollowCylinder in_radius="2.9" out_radius="3.1" height="3.5"/>
+    </Shape>
+    
+    <DetectorPack name='detPack0' guid='1000'>
+      
+      <Shape>
+<block width="8.56*inch" height="1.005*m" thickness="1.0*inch"/>
+      </Shape>
+      
+      <Detector name='det0' guid='10000'>
+	
+	<Shape>
+<cylinder radius="0.5*inch" height="1.0*m"/>
+	</Shape>
+	
+<Pixel name="pix0" guid="100000"/>
+<Pixel name="pix1" guid="100001"/>
+<Pixel name="pix2" guid="100002"/>
+<Pixel name="pix3" guid="100003"/>
+<Pixel name="pix4" guid="100004"/>
+<Pixel name="pix5" guid="100005"/>
+<Pixel name="pix6" guid="100006"/>
+<Pixel name="pix7" guid="100007"/>
+<Pixel name="pix8" guid="100008"/>
+<Pixel name="pix9" guid="100009"/>
+<Pixel name="pix10" guid="100010"/>
+<Pixel name="pix11" guid="100011"/>
+<Pixel name="pix12" guid="100012"/>
+<Pixel name="pix13" guid="100013"/>
+<Pixel name="pix14" guid="100014"/>
+<Pixel name="pix15" guid="100015"/>
+<Pixel name="pix16" guid="100016"/>
+<Pixel name="pix17" guid="100017"/>
+<Pixel name="pix18" guid="100018"/>
+<Pixel name="pix19" guid="100019"/>
+<Pixel name="pix20" guid="100020"/>
+<Pixel name="pix21" guid="100021"/>
+<Pixel name="pix22" guid="100022"/>
+<Pixel name="pix23" guid="100023"/>
+<Pixel name="pix24" guid="100024"/>
+<Pixel name="pix25" guid="100025"/>
+<Pixel name="pix26" guid="100026"/>
+<Pixel name="pix27" guid="100027"/>
+<Pixel name="pix28" guid="100028"/>
+<Pixel name="pix29" guid="100029"/>
+<Pixel name="pix30" guid="100030"/>
+<Pixel name="pix31" guid="100031"/>
+<Pixel name="pix32" guid="100032"/>
+<Pixel name="pix33" guid="100033"/>
+<Pixel name="pix34" guid="100034"/>
+<Pixel name="pix35" guid="100035"/>
+<Pixel name="pix36" guid="100036"/>
+<Pixel name="pix37" guid="100037"/>
+<Pixel name="pix38" guid="100038"/>
+<Pixel name="pix39" guid="100039"/>
+<Pixel name="pix40" guid="100040"/>
+<Pixel name="pix41" guid="100041"/>
+<Pixel name="pix42" guid="100042"/>
+<Pixel name="pix43" guid="100043"/>
+<Pixel name="pix44" guid="100044"/>
+<Pixel name="pix45" guid="100045"/>
+<Pixel name="pix46" guid="100046"/>
+<Pixel name="pix47" guid="100047"/>
+<Pixel name="pix48" guid="100048"/>
+<Pixel name="pix49" guid="100049"/>
+<Pixel name="pix50" guid="100050"/>
+<Pixel name="pix51" guid="100051"/>
+<Pixel name="pix52" guid="100052"/>
+<Pixel name="pix53" guid="100053"/>
+<Pixel name="pix54" guid="100054"/>
+<Pixel name="pix55" guid="100055"/>
+<Pixel name="pix56" guid="100056"/>
+<Pixel name="pix57" guid="100057"/>
+<Pixel name="pix58" guid="100058"/>
+<Pixel name="pix59" guid="100059"/>
+<Pixel name="pix60" guid="100060"/>
+<Pixel name="pix61" guid="100061"/>
+<Pixel name="pix62" guid="100062"/>
+<Pixel name="pix63" guid="100063"/>
+<Pixel name="pix64" guid="100064"/>
+<Pixel name="pix65" guid="100065"/>
+<Pixel name="pix66" guid="100066"/>
+<Pixel name="pix67" guid="100067"/>
+<Pixel name="pix68" guid="100068"/>
+<Pixel name="pix69" guid="100069"/>
+<Pixel name="pix70" guid="100070"/>
+<Pixel name="pix71" guid="100071"/>
+<Pixel name="pix72" guid="100072"/>
+<Pixel name="pix73" guid="100073"/>
+<Pixel name="pix74" guid="100074"/>
+<Pixel name="pix75" guid="100075"/>
+<Pixel name="pix76" guid="100076"/>
+<Pixel name="pix77" guid="100077"/>
+<Pixel name="pix78" guid="100078"/>
+<Pixel name="pix79" guid="100079"/>
+<Pixel name="pix80" guid="100080"/>
+<Pixel name="pix81" guid="100081"/>
+<Pixel name="pix82" guid="100082"/>
+<Pixel name="pix83" guid="100083"/>
+<Pixel name="pix84" guid="100084"/>
+<Pixel name="pix85" guid="100085"/>
+<Pixel name="pix86" guid="100086"/>
+<Pixel name="pix87" guid="100087"/>
+<Pixel name="pix88" guid="100088"/>
+<Pixel name="pix89" guid="100089"/>
+<Pixel name="pix90" guid="100090"/>
+<Pixel name="pix91" guid="100091"/>
+<Pixel name="pix92" guid="100092"/>
+<Pixel name="pix93" guid="100093"/>
+<Pixel name="pix94" guid="100094"/>
+<Pixel name="pix95" guid="100095"/>
+<Pixel name="pix96" guid="100096"/>
+<Pixel name="pix97" guid="100097"/>
+<Pixel name="pix98" guid="100098"/>
+<Pixel name="pix99" guid="100099"/>
+<Pixel name="pix100" guid="100100"/>
+<Pixel name="pix101" guid="100101"/>
+<Pixel name="pix102" guid="100102"/>
+<Pixel name="pix103" guid="100103"/>
+<Pixel name="pix104" guid="100104"/>
+<Pixel name="pix105" guid="100105"/>
+<Pixel name="pix106" guid="100106"/>
+<Pixel name="pix107" guid="100107"/>
+<Pixel name="pix108" guid="100108"/>
+<Pixel name="pix109" guid="100109"/>
+<Pixel name="pix110" guid="100110"/>
+<Pixel name="pix111" guid="100111"/>
+<Pixel name="pix112" guid="100112"/>
+<Pixel name="pix113" guid="100113"/>
+<Pixel name="pix114" guid="100114"/>
+<Pixel name="pix115" guid="100115"/>
+<Pixel name="pix116" guid="100116"/>
+<Pixel name="pix117" guid="100117"/>
+<Pixel name="pix118" guid="100118"/>
+<Pixel name="pix119" guid="100119"/>
+<Pixel name="pix120" guid="100120"/>
+<Pixel name="pix121" guid="100121"/>
+<Pixel name="pix122" guid="100122"/>
+<Pixel name="pix123" guid="100123"/>
+<Pixel name="pix124" guid="100124"/>
+<Pixel name="pix125" guid="100125"/>
+<Pixel name="pix126" guid="100126"/>
+<Pixel name="pix127" guid="100127"/>
+<LocalGeometer registry-coordinate-system="InstrumentScientist">
+<Register name="pix0" position="(0*m,0*m,-0.496094*m)" orientation="(0, 0, 0)"/>
+<Register name="pix1" position="(0*m,0*m,-0.488281*m)" orientation="(0, 0, 0)"/>
+<Register name="pix2" position="(0*m,0*m,-0.480469*m)" orientation="(0, 0, 0)"/>
+<Register name="pix3" position="(0*m,0*m,-0.472656*m)" orientation="(0, 0, 0)"/>
+<Register name="pix4" position="(0*m,0*m,-0.464844*m)" orientation="(0, 0, 0)"/>
+<Register name="pix5" position="(0*m,0*m,-0.457031*m)" orientation="(0, 0, 0)"/>
+<Register name="pix6" position="(0*m,0*m,-0.449219*m)" orientation="(0, 0, 0)"/>
+<Register name="pix7" position="(0*m,0*m,-0.441406*m)" orientation="(0, 0, 0)"/>
+<Register name="pix8" position="(0*m,0*m,-0.433594*m)" orientation="(0, 0, 0)"/>
+<Register name="pix9" position="(0*m,0*m,-0.425781*m)" orientation="(0, 0, 0)"/>
+<Register name="pix10" position="(0*m,0*m,-0.417969*m)" orientation="(0, 0, 0)"/>
+<Register name="pix11" position="(0*m,0*m,-0.410156*m)" orientation="(0, 0, 0)"/>
+<Register name="pix12" position="(0*m,0*m,-0.402344*m)" orientation="(0, 0, 0)"/>
+<Register name="pix13" position="(0*m,0*m,-0.394531*m)" orientation="(0, 0, 0)"/>
+<Register name="pix14" position="(0*m,0*m,-0.386719*m)" orientation="(0, 0, 0)"/>
+<Register name="pix15" position="(0*m,0*m,-0.378906*m)" orientation="(0, 0, 0)"/>
+<Register name="pix16" position="(0*m,0*m,-0.371094*m)" orientation="(0, 0, 0)"/>
+<Register name="pix17" position="(0*m,0*m,-0.363281*m)" orientation="(0, 0, 0)"/>
+<Register name="pix18" position="(0*m,0*m,-0.355469*m)" orientation="(0, 0, 0)"/>
+<Register name="pix19" position="(0*m,0*m,-0.347656*m)" orientation="(0, 0, 0)"/>
+<Register name="pix20" position="(0*m,0*m,-0.339844*m)" orientation="(0, 0, 0)"/>
+<Register name="pix21" position="(0*m,0*m,-0.332031*m)" orientation="(0, 0, 0)"/>
+<Register name="pix22" position="(0*m,0*m,-0.324219*m)" orientation="(0, 0, 0)"/>
+<Register name="pix23" position="(0*m,0*m,-0.316406*m)" orientation="(0, 0, 0)"/>
+<Register name="pix24" position="(0*m,0*m,-0.308594*m)" orientation="(0, 0, 0)"/>
+<Register name="pix25" position="(0*m,0*m,-0.300781*m)" orientation="(0, 0, 0)"/>
+<Register name="pix26" position="(0*m,0*m,-0.292969*m)" orientation="(0, 0, 0)"/>
+<Register name="pix27" position="(0*m,0*m,-0.285156*m)" orientation="(0, 0, 0)"/>
+<Register name="pix28" position="(0*m,0*m,-0.277344*m)" orientation="(0, 0, 0)"/>
+<Register name="pix29" position="(0*m,0*m,-0.269531*m)" orientation="(0, 0, 0)"/>
+<Register name="pix30" position="(0*m,0*m,-0.261719*m)" orientation="(0, 0, 0)"/>
+<Register name="pix31" position="(0*m,0*m,-0.253906*m)" orientation="(0, 0, 0)"/>
+<Register name="pix32" position="(0*m,0*m,-0.246094*m)" orientation="(0, 0, 0)"/>
+<Register name="pix33" position="(0*m,0*m,-0.238281*m)" orientation="(0, 0, 0)"/>
+<Register name="pix34" position="(0*m,0*m,-0.230469*m)" orientation="(0, 0, 0)"/>
+<Register name="pix35" position="(0*m,0*m,-0.222656*m)" orientation="(0, 0, 0)"/>
+<Register name="pix36" position="(0*m,0*m,-0.214844*m)" orientation="(0, 0, 0)"/>
+<Register name="pix37" position="(0*m,0*m,-0.207031*m)" orientation="(0, 0, 0)"/>
+<Register name="pix38" position="(0*m,0*m,-0.199219*m)" orientation="(0, 0, 0)"/>
+<Register name="pix39" position="(0*m,0*m,-0.191406*m)" orientation="(0, 0, 0)"/>
+<Register name="pix40" position="(0*m,0*m,-0.183594*m)" orientation="(0, 0, 0)"/>
+<Register name="pix41" position="(0*m,0*m,-0.175781*m)" orientation="(0, 0, 0)"/>
+<Register name="pix42" position="(0*m,0*m,-0.167969*m)" orientation="(0, 0, 0)"/>
+<Register name="pix43" position="(0*m,0*m,-0.160156*m)" orientation="(0, 0, 0)"/>
+<Register name="pix44" position="(0*m,0*m,-0.152344*m)" orientation="(0, 0, 0)"/>
+<Register name="pix45" position="(0*m,0*m,-0.144531*m)" orientation="(0, 0, 0)"/>
+<Register name="pix46" position="(0*m,0*m,-0.136719*m)" orientation="(0, 0, 0)"/>
+<Register name="pix47" position="(0*m,0*m,-0.128906*m)" orientation="(0, 0, 0)"/>
+<Register name="pix48" position="(0*m,0*m,-0.121094*m)" orientation="(0, 0, 0)"/>
+<Register name="pix49" position="(0*m,0*m,-0.113281*m)" orientation="(0, 0, 0)"/>
+<Register name="pix50" position="(0*m,0*m,-0.105469*m)" orientation="(0, 0, 0)"/>
+<Register name="pix51" position="(0*m,0*m,-0.0976562*m)" orientation="(0, 0, 0)"/>
+<Register name="pix52" position="(0*m,0*m,-0.0898438*m)" orientation="(0, 0, 0)"/>
+<Register name="pix53" position="(0*m,0*m,-0.0820312*m)" orientation="(0, 0, 0)"/>
+<Register name="pix54" position="(0*m,0*m,-0.0742188*m)" orientation="(0, 0, 0)"/>
+<Register name="pix55" position="(0*m,0*m,-0.0664062*m)" orientation="(0, 0, 0)"/>
+<Register name="pix56" position="(0*m,0*m,-0.0585938*m)" orientation="(0, 0, 0)"/>
+<Register name="pix57" position="(0*m,0*m,-0.0507812*m)" orientation="(0, 0, 0)"/>
+<Register name="pix58" position="(0*m,0*m,-0.0429688*m)" orientation="(0, 0, 0)"/>
+<Register name="pix59" position="(0*m,0*m,-0.0351562*m)" orientation="(0, 0, 0)"/>
+<Register name="pix60" position="(0*m,0*m,-0.0273438*m)" orientation="(0, 0, 0)"/>
+<Register name="pix61" position="(0*m,0*m,-0.0195312*m)" orientation="(0, 0, 0)"/>
+<Register name="pix62" position="(0*m,0*m,-0.0117188*m)" orientation="(0, 0, 0)"/>
+<Register name="pix63" position="(0*m,0*m,-0.00390625*m)" orientation="(0, 0, 0)"/>
+<Register name="pix64" position="(0*m,0*m,0.00390625*m)" orientation="(0, 0, 0)"/>
+<Register name="pix65" position="(0*m,0*m,0.0117188*m)" orientation="(0, 0, 0)"/>
+<Register name="pix66" position="(0*m,0*m,0.0195312*m)" orientation="(0, 0, 0)"/>
+<Register name="pix67" position="(0*m,0*m,0.0273438*m)" orientation="(0, 0, 0)"/>
+<Register name="pix68" position="(0*m,0*m,0.0351562*m)" orientation="(0, 0, 0)"/>
+<Register name="pix69" position="(0*m,0*m,0.0429688*m)" orientation="(0, 0, 0)"/>
+<Register name="pix70" position="(0*m,0*m,0.0507812*m)" orientation="(0, 0, 0)"/>
+<Register name="pix71" position="(0*m,0*m,0.0585938*m)" orientation="(0, 0, 0)"/>
+<Register name="pix72" position="(0*m,0*m,0.0664062*m)" orientation="(0, 0, 0)"/>
+<Register name="pix73" position="(0*m,0*m,0.0742188*m)" orientation="(0, 0, 0)"/>
+<Register name="pix74" position="(0*m,0*m,0.0820312*m)" orientation="(0, 0, 0)"/>
+<Register name="pix75" position="(0*m,0*m,0.0898438*m)" orientation="(0, 0, 0)"/>
+<Register name="pix76" position="(0*m,0*m,0.0976562*m)" orientation="(0, 0, 0)"/>
+<Register name="pix77" position="(0*m,0*m,0.105469*m)" orientation="(0, 0, 0)"/>
+<Register name="pix78" position="(0*m,0*m,0.113281*m)" orientation="(0, 0, 0)"/>
+<Register name="pix79" position="(0*m,0*m,0.121094*m)" orientation="(0, 0, 0)"/>
+<Register name="pix80" position="(0*m,0*m,0.128906*m)" orientation="(0, 0, 0)"/>
+<Register name="pix81" position="(0*m,0*m,0.136719*m)" orientation="(0, 0, 0)"/>
+<Register name="pix82" position="(0*m,0*m,0.144531*m)" orientation="(0, 0, 0)"/>
+<Register name="pix83" position="(0*m,0*m,0.152344*m)" orientation="(0, 0, 0)"/>
+<Register name="pix84" position="(0*m,0*m,0.160156*m)" orientation="(0, 0, 0)"/>
+<Register name="pix85" position="(0*m,0*m,0.167969*m)" orientation="(0, 0, 0)"/>
+<Register name="pix86" position="(0*m,0*m,0.175781*m)" orientation="(0, 0, 0)"/>
+<Register name="pix87" position="(0*m,0*m,0.183594*m)" orientation="(0, 0, 0)"/>
+<Register name="pix88" position="(0*m,0*m,0.191406*m)" orientation="(0, 0, 0)"/>
+<Register name="pix89" position="(0*m,0*m,0.199219*m)" orientation="(0, 0, 0)"/>
+<Register name="pix90" position="(0*m,0*m,0.207031*m)" orientation="(0, 0, 0)"/>
+<Register name="pix91" position="(0*m,0*m,0.214844*m)" orientation="(0, 0, 0)"/>
+<Register name="pix92" position="(0*m,0*m,0.222656*m)" orientation="(0, 0, 0)"/>
+<Register name="pix93" position="(0*m,0*m,0.230469*m)" orientation="(0, 0, 0)"/>
+<Register name="pix94" position="(0*m,0*m,0.238281*m)" orientation="(0, 0, 0)"/>
+<Register name="pix95" position="(0*m,0*m,0.246094*m)" orientation="(0, 0, 0)"/>
+<Register name="pix96" position="(0*m,0*m,0.253906*m)" orientation="(0, 0, 0)"/>
+<Register name="pix97" position="(0*m,0*m,0.261719*m)" orientation="(0, 0, 0)"/>
+<Register name="pix98" position="(0*m,0*m,0.269531*m)" orientation="(0, 0, 0)"/>
+<Register name="pix99" position="(0*m,0*m,0.277344*m)" orientation="(0, 0, 0)"/>
+<Register name="pix100" position="(0*m,0*m,0.285156*m)" orientation="(0, 0, 0)"/>
+<Register name="pix101" position="(0*m,0*m,0.292969*m)" orientation="(0, 0, 0)"/>
+<Register name="pix102" position="(0*m,0*m,0.300781*m)" orientation="(0, 0, 0)"/>
+<Register name="pix103" position="(0*m,0*m,0.308594*m)" orientation="(0, 0, 0)"/>
+<Register name="pix104" position="(0*m,0*m,0.316406*m)" orientation="(0, 0, 0)"/>
+<Register name="pix105" position="(0*m,0*m,0.324219*m)" orientation="(0, 0, 0)"/>
+<Register name="pix106" position="(0*m,0*m,0.332031*m)" orientation="(0, 0, 0)"/>
+<Register name="pix107" position="(0*m,0*m,0.339844*m)" orientation="(0, 0, 0)"/>
+<Register name="pix108" position="(0*m,0*m,0.347656*m)" orientation="(0, 0, 0)"/>
+<Register name="pix109" position="(0*m,0*m,0.355469*m)" orientation="(0, 0, 0)"/>
+<Register name="pix110" position="(0*m,0*m,0.363281*m)" orientation="(0, 0, 0)"/>
+<Register name="pix111" position="(0*m,0*m,0.371094*m)" orientation="(0, 0, 0)"/>
+<Register name="pix112" position="(0*m,0*m,0.378906*m)" orientation="(0, 0, 0)"/>
+<Register name="pix113" position="(0*m,0*m,0.386719*m)" orientation="(0, 0, 0)"/>
+<Register name="pix114" position="(0*m,0*m,0.394531*m)" orientation="(0, 0, 0)"/>
+<Register name="pix115" position="(0*m,0*m,0.402344*m)" orientation="(0, 0, 0)"/>
+<Register name="pix116" position="(0*m,0*m,0.410156*m)" orientation="(0, 0, 0)"/>
+<Register name="pix117" position="(0*m,0*m,0.417969*m)" orientation="(0, 0, 0)"/>
+<Register name="pix118" position="(0*m,0*m,0.425781*m)" orientation="(0, 0, 0)"/>
+<Register name="pix119" position="(0*m,0*m,0.433594*m)" orientation="(0, 0, 0)"/>
+<Register name="pix120" position="(0*m,0*m,0.441406*m)" orientation="(0, 0, 0)"/>
+<Register name="pix121" position="(0*m,0*m,0.449219*m)" orientation="(0, 0, 0)"/>
+<Register name="pix122" position="(0*m,0*m,0.457031*m)" orientation="(0, 0, 0)"/>
+<Register name="pix123" position="(0*m,0*m,0.464844*m)" orientation="(0, 0, 0)"/>
+<Register name="pix124" position="(0*m,0*m,0.472656*m)" orientation="(0, 0, 0)"/>
+<Register name="pix125" position="(0*m,0*m,0.480469*m)" orientation="(0, 0, 0)"/>
+<Register name="pix126" position="(0*m,0*m,0.488281*m)" orientation="(0, 0, 0)"/>
+<Register name="pix127" position="(0*m,0*m,0.496094*m)" orientation="(0, 0, 0)"/>
+</LocalGeometer>
+
+      </Detector>
+
+<Copy name="det1" reference="10000" guid="10001"/>
+<Copy name="det2" reference="10000" guid="10002"/>
+<Copy name="det3" reference="10000" guid="10003"/>
+<Copy name="det4" reference="10000" guid="10004"/>
+<Copy name="det5" reference="10000" guid="10005"/>
+<Copy name="det6" reference="10000" guid="10006"/>
+<Copy name="det7" reference="10000" guid="10007"/>
+<LocalGeometer registry-coordinate-system="InstrumentScientist">
+
+	<!--
+	    180 degree comes from the convention mismatch between how ARCS instrument labels its pixels and how instrument simulation routines handles pixels.
+	-->
+
+<Register name="det0" position="(0*m,3.78*inch,0*m)" orientation="(0, 180, 0)"/>
+<Register name="det1" position="(0*m,2.7*inch,0*m)" orientation="(0, 180, 0)"/>
+<Register name="det2" position="(0*m,1.62*inch,0*m)" orientation="(0, 180, 0)"/>
+<Register name="det3" position="(0*m,0.54*inch,0*m)" orientation="(0, 180, 0)"/>
+<Register name="det4" position="(0*m,-0.54*inch,0*m)" orientation="(0, 180, 0)"/>
+<Register name="det5" position="(0*m,-1.62*inch,0*m)" orientation="(0, 180, 0)"/>
+<Register name="det6" position="(0*m,-2.7*inch,0*m)" orientation="(0, 180, 0)"/>
+<Register name="det7" position="(0*m,-3.78*inch,0*m)" orientation="(0, 180, 0)"/>
+</LocalGeometer>      
+      
+    </DetectorPack>
+
+<Copy name="detPack1" reference="1000" guid="1001"/>
+<Copy name="detPack2" reference="1000" guid="1002"/>
+<Copy name="detPack3" reference="1000" guid="1003"/>
+<Copy name="detPack4" reference="1000" guid="1004"/>
+<Copy name="detPack5" reference="1000" guid="1005"/>
+<Copy name="detPack6" reference="1000" guid="1006"/>
+<Copy name="detPack7" reference="1000" guid="1007"/>
+<Copy name="detPack8" reference="1000" guid="1008"/>
+<Copy name="detPack9" reference="1000" guid="1009"/>
+<Copy name="detPack10" reference="1000" guid="1010"/>
+<Copy name="detPack11" reference="1000" guid="1011"/>
+<Copy name="detPack12" reference="1000" guid="1012"/>
+<Copy name="detPack13" reference="1000" guid="1013"/>
+<Copy name="detPack14" reference="1000" guid="1014"/>
+<Copy name="detPack15" reference="1000" guid="1015"/>
+<Copy name="detPack16" reference="1000" guid="1016"/>
+<Copy name="detPack17" reference="1000" guid="1017"/>
+<Copy name="detPack18" reference="1000" guid="1018"/>
+<Copy name="detPack19" reference="1000" guid="1019"/>
+<Copy name="detPack20" reference="1000" guid="1020"/>
+<Copy name="detPack21" reference="1000" guid="1021"/>
+<Copy name="detPack22" reference="1000" guid="1022"/>
+<Copy name="detPack23" reference="1000" guid="1023"/>
+<Copy name="detPack24" reference="1000" guid="1024"/>
+<Copy name="detPack25" reference="1000" guid="1025"/>
+<Copy name="detPack26" reference="1000" guid="1026"/>
+<Copy name="detPack27" reference="1000" guid="1027"/>
+<Copy name="detPack28" reference="1000" guid="1028"/>
+<Copy name="detPack29" reference="1000" guid="1029"/>
+<Copy name="detPack30" reference="1000" guid="1030"/>
+<Copy name="detPack31" reference="1000" guid="1031"/>
+<Copy name="detPack32" reference="1000" guid="1032"/>
+<Copy name="detPack33" reference="1000" guid="1033"/>
+<Copy name="detPack34" reference="1000" guid="1034"/>
+<Copy name="detPack35" reference="1000" guid="1035"/>
+<Copy name="detPack36" reference="1000" guid="1036"/>
+<Copy name="detPack37" reference="1000" guid="1037"/>
+<Copy name="detPack38" reference="1000" guid="1038"/>
+<Copy name="detPack39" reference="1000" guid="1039"/>
+<Copy name="detPack40" reference="1000" guid="1040"/>
+<Copy name="detPack41" reference="1000" guid="1041"/>
+<Copy name="detPack42" reference="1000" guid="1042"/>
+<Copy name="detPack43" reference="1000" guid="1043"/>
+<Copy name="detPack44" reference="1000" guid="1044"/>
+<Copy name="detPack45" reference="1000" guid="1045"/>
+<Copy name="detPack46" reference="1000" guid="1046"/>
+<Copy name="detPack47" reference="1000" guid="1047"/>
+<Copy name="detPack48" reference="1000" guid="1048"/>
+<Copy name="detPack49" reference="1000" guid="1049"/>
+<Copy name="detPack50" reference="1000" guid="1050"/>
+<Copy name="detPack51" reference="1000" guid="1051"/>
+<Copy name="detPack52" reference="1000" guid="1052"/>
+<Copy name="detPack53" reference="1000" guid="1053"/>
+<Copy name="detPack54" reference="1000" guid="1054"/>
+<Copy name="detPack55" reference="1000" guid="1055"/>
+<Copy name="detPack56" reference="1000" guid="1056"/>
+<Copy name="detPack57" reference="1000" guid="1057"/>
+<Copy name="detPack58" reference="1000" guid="1058"/>
+<Copy name="detPack59" reference="1000" guid="1059"/>
+<Copy name="detPack60" reference="1000" guid="1060"/>
+<Copy name="detPack61" reference="1000" guid="1061"/>
+<Copy name="detPack62" reference="1000" guid="1062"/>
+<Copy name="detPack63" reference="1000" guid="1063"/>
+<Copy name="detPack64" reference="1000" guid="1064"/>
+<Copy name="detPack65" reference="1000" guid="1065"/>
+<Copy name="detPack66" reference="1000" guid="1066"/>
+<Copy name="detPack67" reference="1000" guid="1067"/>
+<Copy name="detPack68" reference="1000" guid="1068"/>
+<Copy name="detPack69" reference="1000" guid="1069"/>
+<Copy name="detPack70" reference="1000" guid="1070"/>
+<Copy name="detPack71" reference="1000" guid="1071"/>
+<Copy name="detPack72" reference="1000" guid="1072"/>
+<Copy name="detPack73" reference="1000" guid="1073"/>
+<Copy name="detPack74" reference="1000" guid="1074"/>
+<Copy name="detPack75" reference="1000" guid="1075"/>
+<Copy name="detPack76" reference="1000" guid="1076"/>
+<Copy name="detPack77" reference="1000" guid="1077"/>
+<Copy name="detPack78" reference="1000" guid="1078"/>
+<Copy name="detPack79" reference="1000" guid="1079"/>
+<Copy name="detPack80" reference="1000" guid="1080"/>
+<Copy name="detPack81" reference="1000" guid="1081"/>
+<Copy name="detPack82" reference="1000" guid="1082"/>
+<Copy name="detPack83" reference="1000" guid="1083"/>
+<Copy name="detPack84" reference="1000" guid="1084"/>
+<Copy name="detPack85" reference="1000" guid="1085"/>
+<Copy name="detPack86" reference="1000" guid="1086"/>
+<Copy name="detPack87" reference="1000" guid="1087"/>
+<Copy name="detPack88" reference="1000" guid="1088"/>
+<Copy name="detPack89" reference="1000" guid="1089"/>
+<Copy name="detPack90" reference="1000" guid="1090"/>
+<Copy name="detPack91" reference="1000" guid="1091"/>
+<Copy name="detPack92" reference="1000" guid="1092"/>
+<Copy name="detPack93" reference="1000" guid="1093"/>
+<Copy name="detPack94" reference="1000" guid="1094"/>
+<Copy name="detPack95" reference="1000" guid="1095"/>
+<Copy name="detPack96" reference="1000" guid="1096"/>
+<Copy name="detPack97" reference="1000" guid="1097"/>
+<Copy name="detPack98" reference="1000" guid="1098"/>
+<Copy name="detPack99" reference="1000" guid="1099"/>
+<Copy name="detPack100" reference="1000" guid="1100"/>
+<Copy name="detPack101" reference="1000" guid="1101"/>
+<Copy name="detPack102" reference="1000" guid="1102"/>
+<Copy name="detPack103" reference="1000" guid="1103"/>
+<Copy name="detPack104" reference="1000" guid="1104"/>
+<Copy name="detPack105" reference="1000" guid="1105"/>
+<Copy name="detPack106" reference="1000" guid="1106"/>
+<Copy name="detPack107" reference="1000" guid="1107"/>
+<Copy name="detPack108" reference="1000" guid="1108"/>
+<Copy name="detPack109" reference="1000" guid="1109"/>
+<Copy name="detPack110" reference="1000" guid="1110"/>
+<Copy name="detPack111" reference="1000" guid="1111"/>
+<Copy name="detPack112" reference="1000" guid="1112"/>
+<LocalGeometer registry-coordinate-system="InstrumentScientist">
+<Register name="detPack0" position="(-2.142267, 2.283199, 1.046357)" orientation="(0, 0, 133.17599999999999)"/>
+<Register name="detPack1" position="(-1.976764, 2.427902, 1.046357)" orientation="(0, 0, 129.15199999999999)"/>
+<Register name="detPack2" position="(-1.801514, 2.560635, 1.046357)" orientation="(0, 0, 125.128)"/>
+<Register name="detPack3" position="(-1.617382, 2.680742, 1.046357)" orientation="(0, 0, 121.104)"/>
+<Register name="detPack4" position="(-1.425276, 2.787632, 1.046357)" orientation="(0, 0, 117.08)"/>
+<Register name="detPack5" position="(-1.226142, 2.880778, 1.046357)" orientation="(0, 0, 113.056)"/>
+<Register name="detPack6" position="(-1.020963, 2.95972, 1.046357)" orientation="(0, 0, 109.032)"/>
+<Register name="detPack7" position="(-0.733967, 3.043616, 1.046357)" orientation="(0, 0, 103.55799999999999)"/>
+<Register name="detPack8" position="(-0.518574, 3.087618, 1.046357)" orientation="(0, 0, 99.534000000000006)"/>
+<Register name="detPack9" position="(-0.300624, 3.116397, 1.046357)" orientation="(0, 0, 95.510000000000005)"/>
+<Register name="detPack10" position="(-0.081192, 3.12981, 1.046357)" orientation="(0, 0, 91.486000000000004)"/>
+<Register name="detPack11" position="(0.138641, 3.127792, 1.046357)" orientation="(0, 0, 87.462000000000003)"/>
+<Register name="detPack12" position="(0.35779, 3.110352, 1.046357)" orientation="(0, 0, 83.438000000000002)"/>
+<Register name="detPack13" position="(0.575175, 3.077577, 1.046357)" orientation="(0, 0, 79.414000000000001)"/>
+<Register name="detPack14" position="(0.944804, 2.984904, 1.046357)" orientation="(0, 0, 72.436000000000007)"/>
+<Register name="detPack15" position="(1.151938, 2.911244, 1.046357)" orientation="(0, 0, 68.412000000000006)"/>
+<Register name="detPack16" position="(1.353393, 2.823231, 1.046357)" orientation="(0, 0, 64.388000000000005)"/>
+<Register name="detPack17" position="(1.548175, 2.721298, 1.046357)" orientation="(0, 0, 60.364000000000004)"/>
+<Register name="detPack18" position="(1.735323, 2.605947, 1.046357)" orientation="(0, 0, 56.340000000000003)"/>
+<Register name="detPack19" position="(1.913916, 2.477747, 1.046357)" orientation="(0, 0, 52.316000000000003)"/>
+<Register name="detPack20" position="(2.083072, 2.337331, 1.046357)" orientation="(0, 0, 48.292000000000002)"/>
+<Register name="detPack21" position="(2.29654, 2.127959, 1.046357)" orientation="(0, 0, 42.817999999999998)"/>
+<Register name="detPack22" position="(2.440206, 1.961555, 1.046357)" orientation="(0, 0, 38.793999999999997)"/>
+<Register name="detPack23" position="(2.571841, 1.78548, 1.046357)" orientation="(0, 0, 34.770000000000003)"/>
+<Register name="detPack24" position="(2.690796, 1.600601, 1.046357)" orientation="(0, 0, 30.746000000000002)"/>
+<Register name="detPack25" position="(2.796483, 1.40783, 1.046357)" orientation="(0, 0, 26.722000000000001)"/>
+<Register name="detPack26" position="(2.888383, 1.208118, 1.046357)" orientation="(0, 0, 22.697999999999993)"/>
+<Register name="detPack27" position="(3.008129, 0.868024, 1.046357)" orientation="(0, 0, 16.096000000000004)"/>
+<Register name="detPack28" position="(3.061626, 0.654791, 1.046357)" orientation="(0, 0, 12.072000000000003)"/>
+<Register name="detPack29" position="(3.100028, 0.438329, 1.046357)" orientation="(0, 0, 8.0480000000000018)"/>
+<Register name="detPack30" position="(3.123145, 0.219706, 1.046357)" orientation="(0, 0, 4.0240000000000009)"/>
+<Register name="detPack31" position="(3.130863, 0.0, 1.046357)" orientation="(0, 0, 0.0)"/>
+<Register name="detPack32" position="(3.123145, -0.219706, 1.046357)" orientation="(0, 0, -4.0240000000000009)"/>
+<Register name="detPack33" position="(3.100028, -0.438329, 1.046357)" orientation="(0, 0, -8.0480000000000018)"/>
+<Register name="detPack34" position="(3.039338, -0.751485, 1.046357)" orientation="(0, 0, -13.888000000000005)"/>
+<Register name="detPack35" position="(2.97911, -0.962916, 1.046357)" orientation="(0, 0, -17.912000000000006)"/>
+<Register name="detPack36" position="(2.904194, -1.169599, 1.046357)" orientation="(0, 0, -21.936000000000007)"/>
+<Register name="detPack37" position="(2.814959, -1.370515, 1.046357)" orientation="(0, 0, -25.959999999999994)"/>
+<Register name="detPack38" position="(-2.08197, 2.147227, 0.0)" orientation="(0, 0, 134.11599999999999)"/>
+<Register name="detPack39" position="(-1.91864, 2.294342, 0.0)" orientation="(0, 0, 129.904)"/>
+<Register name="detPack40" position="(-1.744945, 2.429064, 0.0)" orientation="(0, 0, 125.69200000000001)"/>
+<Register name="detPack41" position="(-1.561825, 2.550664, 0.0)" orientation="(0, 0, 121.48)"/>
+<Register name="detPack42" position="(-1.370267, 2.658487, 0.0)" orientation="(0, 0, 117.268)"/>
+<Register name="detPack43" position="(-1.171308, 2.751948, 0.0)" orientation="(0, 0, 113.056)"/>
+<Register name="detPack44" position="(-0.966022, 2.830545, 0.0)" orientation="(0, 0, 108.84399999999999)"/>
+<Register name="detPack45" position="(-0.71068, 2.905188, 0.0)" orientation="(0, 0, 103.746)"/>
+<Register name="detPack46" position="(-0.495383, 2.949539, 0.0)" orientation="(0, 0, 99.534000000000006)"/>
+<Register name="detPack47" position="(-0.27741, 2.977957, 0.0)" orientation="(0, 0, 95.322000000000003)"/>
+<Register name="detPack48" position="(-0.057939, 2.990289, 0.0)" orientation="(0, 0, 91.109999999999999)"/>
+<Register name="detPack49" position="(0.161846, 2.986468, 0.0)" orientation="(0, 0, 86.897999999999996)"/>
+<Register name="detPack50" position="(0.380756, 2.966515, 0.0)" orientation="(0, 0, 82.686000000000007)"/>
+<Register name="detPack51" position="(0.597609, 2.930537, 0.0)" orientation="(0, 0, 78.474000000000004)"/>
+<Register name="detPack52" position="(0.855652, 2.865841, 0.0)" orientation="(0, 0, 73.376000000000005)"/>
+<Register name="detPack53" position="(1.063828, 2.795256, 0.0)" orientation="(0, 0, 69.164000000000001)"/>
+<Register name="detPack54" position="(1.266258, 2.709571, 0.0)" orientation="(0, 0, 64.951999999999998)"/>
+<Register name="detPack55" position="(1.461848, 2.60925, 0.0)" orientation="(0, 0, 60.739999999999995)"/>
+<Register name="detPack56" position="(1.649542, 2.494834, 0.0)" orientation="(0, 0, 56.527999999999999)"/>
+<Register name="detPack57" position="(1.828325, 2.366942, 0.0)" orientation="(0, 0, 52.316000000000003)"/>
+<Register name="detPack58" position="(1.997232, 2.226264, 0.0)" orientation="(0, 0, 48.103999999999999)"/>
+<Register name="detPack59" position="(2.187156, 2.039984, 0.0)" orientation="(0, 0, 43.006)"/>
+<Register name="detPack60" position="(2.331079, 1.873834, 0.0)" orientation="(0, 0, 38.793999999999997)"/>
+<Register name="detPack61" position="(2.462411, 1.697562, 0.0)" orientation="(0, 0, 34.582000000000001)"/>
+<Register name="detPack62" position="(2.580441, 1.51212, 0.0)" orientation="(0, 0, 30.369999999999997)"/>
+<Register name="detPack63" position="(2.684532, 1.31851, 0.0)" orientation="(0, 0, 26.158000000000001)"/>
+<Register name="detPack64" position="(2.774123, 1.117778, 0.0)" orientation="(0, 0, 21.945999999999998)"/>
+<Register name="detPack65" position="(2.862474, 0.866849, 0.0)" orientation="(0, 0, 16.847999999999999)"/>
+<Register name="detPack66" position="(2.91841, 0.654268, 0.0)" orientation="(0, 0, 12.635999999999996)"/>
+<Register name="detPack67" position="(2.958582, 0.438152, 0.0)" orientation="(0, 0, 8.4240000000000066)"/>
+<Register name="detPack68" position="(2.982772, 0.219669, 0.0)" orientation="(0, 0, 4.2120000000000033)"/>
+<Register name="detPack69" position="(2.982772, -0.219669, 0.0)" orientation="(0, 0, -4.2120000000000033)"/>
+<Register name="detPack70" position="(2.958582, -0.438152, 0.0)" orientation="(0, 0, -8.4240000000000066)"/>
+<Register name="detPack71" position="(2.907944, -0.699317, 0.0)" orientation="(0, 0, -13.522000000000006)"/>
+<Register name="detPack72" position="(2.848727, -0.911008, 0.0)" orientation="(0, 0, -17.733999999999995)"/>
+<Register name="detPack73" position="(2.774123, -1.117778, 0.0)" orientation="(0, 0, -21.945999999999998)"/>
+<Register name="detPack74" position="(2.684532, -1.31851, 0.0)" orientation="(0, 0, -26.158000000000001)"/>
+<Register name="detPack75" position="(-2.142267, 2.283198, -1.050915)" orientation="(0, 0, 133.17599999999999)"/>
+<Register name="detPack76" position="(-1.976764, 2.427902, -1.050915)" orientation="(0, 0, 129.15199999999999)"/>
+<Register name="detPack77" position="(-1.801514, 2.560634, -1.050915)" orientation="(0, 0, 125.128)"/>
+<Register name="detPack78" position="(-1.617382, 2.680742, -1.050915)" orientation="(0, 0, 121.104)"/>
+<Register name="detPack79" position="(-1.425276, 2.787632, -1.050915)" orientation="(0, 0, 117.08)"/>
+<Register name="detPack80" position="(-1.226142, 2.880777, -1.050915)" orientation="(0, 0, 113.056)"/>
+<Register name="detPack81" position="(-1.020962, 2.959719, -1.050915)" orientation="(0, 0, 109.032)"/>
+<Register name="detPack82" position="(-0.733967, 3.043615, -1.050915)" orientation="(0, 0, 103.55799999999999)"/>
+<Register name="detPack83" position="(-0.518574, 3.087618, -1.050915)" orientation="(0, 0, 99.534000000000006)"/>
+<Register name="detPack84" position="(-0.300624, 3.116397, -1.050915)" orientation="(0, 0, 95.510000000000005)"/>
+<Register name="detPack85" position="(-0.081192, 3.12981, -1.050915)" orientation="(0, 0, 91.486000000000004)"/>
+<Register name="detPack86" position="(0.138641, 3.127792, -1.050915)" orientation="(0, 0, 87.462000000000003)"/>
+<Register name="detPack87" position="(0.35779, 3.110352, -1.050915)" orientation="(0, 0, 83.438000000000002)"/>
+<Register name="detPack88" position="(0.575174, 3.077576, -1.050915)" orientation="(0, 0, 79.414000000000001)"/>
+<Register name="detPack89" position="(0.944803, 2.984903, -1.050915)" orientation="(0, 0, 72.436000000000007)"/>
+<Register name="detPack90" position="(1.151938, 2.911244, -1.050915)" orientation="(0, 0, 68.412000000000006)"/>
+<Register name="detPack91" position="(1.353393, 2.823231, -1.050915)" orientation="(0, 0, 64.388000000000005)"/>
+<Register name="detPack92" position="(1.548174, 2.721297, -1.050915)" orientation="(0, 0, 60.364000000000004)"/>
+<Register name="detPack93" position="(1.735323, 2.605946, -1.050915)" orientation="(0, 0, 56.340000000000003)"/>
+<Register name="detPack94" position="(1.913915, 2.477747, -1.050915)" orientation="(0, 0, 52.316000000000003)"/>
+<Register name="detPack95" position="(2.083071, 2.337331, -1.050915)" orientation="(0, 0, 48.292000000000002)"/>
+<Register name="detPack96" position="(2.296539, 2.127959, -1.050915)" orientation="(0, 0, 42.817999999999998)"/>
+<Register name="detPack97" position="(2.440206, 1.961555, -1.050915)" orientation="(0, 0, 38.793999999999997)"/>
+<Register name="detPack98" position="(2.571841, 1.78548, -1.050915)" orientation="(0, 0, 34.770000000000003)"/>
+<Register name="detPack99" position="(2.690795, 1.600601, -1.050915)" orientation="(0, 0, 30.746000000000002)"/>
+<Register name="detPack100" position="(2.796483, 1.40783, -1.050915)" orientation="(0, 0, 26.722000000000001)"/>
+<Register name="detPack101" position="(2.888382, 1.208118, -1.050915)" orientation="(0, 0, 22.697999999999993)"/>
+<Register name="detPack102" position="(3.008128, 0.868024, -1.050915)" orientation="(0, 0, 16.096000000000004)"/>
+<Register name="detPack103" position="(3.061626, 0.654791, -1.050915)" orientation="(0, 0, 12.072000000000003)"/>
+<Register name="detPack104" position="(3.100027, 0.438329, -1.050915)" orientation="(0, 0, 8.0480000000000018)"/>
+<Register name="detPack105" position="(3.123144, 0.219706, -1.050915)" orientation="(0, 0, 4.0240000000000009)"/>
+<Register name="detPack106" position="(3.130863, 0.0, -1.050915)" orientation="(0, 0, 0.0)"/>
+<Register name="detPack107" position="(3.123144, -0.219706, -1.050915)" orientation="(0, 0, -4.0240000000000009)"/>
+<Register name="detPack108" position="(3.100027, -0.438329, -1.050915)" orientation="(0, 0, -8.0480000000000018)"/>
+<Register name="detPack109" position="(3.039338, -0.751485, -1.050915)" orientation="(0, 0, -13.888000000000005)"/>
+<Register name="detPack110" position="(2.97911, -0.962915, -1.050915)" orientation="(0, 0, -17.912000000000006)"/>
+<Register name="detPack111" position="(2.904194, -1.169599, -1.050915)" orientation="(0, 0, -21.936000000000007)"/>
+<Register name="detPack112" position="(2.814958, -1.370515, -1.050915)" orientation="(0, 0, -25.959999999999994)"/>
+</LocalGeometer>
+
+
+  </DetectorSystem>
+
+  <LocalGeometer registry-coordinate-system='InstrumentScientist'>
+    <Register name="moderator" position="(0*m, 0*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+    <Register name="monitor0" position="(3*m, 0*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+    <Register name="monitor1" position="(17*m, 0*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+    <Register name="sample" position="(13.5*m, 0*m, 0*m)" orientation="(0, 0, 0)"/>
+    <Register name='detectorSystem' position='(13.5,0,0)' orientation='(0,0,0)'/>
+  </LocalGeometer>
+
+  <InstrumentGeometer type='arcs' registry-coordinate-system='InstrumentScientist'/>
+  
+</Instrument>
+
+<!-- version-->
+<!-- $Id$-->
+<!-- End of file -->
