@@ -65,7 +65,7 @@ class detector_TestCase(unittest.TestCase):
             continue
         ds.addElement( he3tube )
 
-        cds = mh.scattererEngine( ds )
+        cds = mh.scattererEngine( ds, coordinate_system = "InstrumentScientist" )
 
         for i in range(nevents):
             if i%1000 == 0: print i

@@ -14,6 +14,11 @@
 from pyre.geometry.operations import *
 
 
+from pyre.geometry.operations.Difference import Difference
+from pyre.geometry.operations.Dilation import Dilation
+from pyre.geometry.operations.Translation import Translation
+
+
 #overload union and intersection to allow more-than-two elements
 from pyre.geometry.operations.Composition import Composition as base
 class Composition(base):

@@ -100,7 +100,7 @@ class detector_TestCase(unittest.TestCase):
             ds.addElement( packs[i], (x,y,z) )
             continue
 
-        cds = mh.scattererEngine( ds )
+        cds = mh.scattererEngine( ds, coordinate_system = "InstrumentScientist" )
 
         for i in range(nevents):
             if i%1000 == 0: print i
@@ -125,7 +125,7 @@ class detector_TestCase(unittest.TestCase):
         t.shape = n, 3
         p = t[:, 2].sum()
         print "absorbed neutrons: ", p
-        self.assert_( p>nevents*0.9 and p<nevents )
+        self.assert_( abs( p-(nevents*0.91) ) < 3*N.sqrt(p) )
         return
 
     pass  # end of detector_TestCase

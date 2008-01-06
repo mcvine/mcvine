@@ -57,7 +57,7 @@ def onCompositeDetector(self, composite):
 
 # 4. register the new class and handlers
 import mccomponents.homogeneous_scatterer as mh
-mh.register_engine_ctor (CompositeDetector, onCompositeDetector )
+mh.register_engine_renderer_handler (CompositeDetector, onCompositeDetector )
 
 
 # version

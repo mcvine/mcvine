@@ -11,11 +11,20 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
 
-from pyre.geometry.solids import *
 
-from pyre.geometry.solids.Cylinder import Cylinder
-from pyre.geometry.solids.Block import Block
-from pyre.geometry.solids.Sphere import Sphere
+#sometimes ScattererCopy are just called "Copy"
+from ScattererCopy import ScattererCopy
+class Copy(ScattererCopy):
+    def identify(self, visitor): return visitor.onCopy(self)
+    pass # Copy
+
+def onCopy(self, copy):
+    return self.onScattererCopy(copy)
+
+
+# 4. register the new class and handlers
+import geometry
+geometry.register_engine_renderer_handler(Copy, onCopy)
 
 
 # version

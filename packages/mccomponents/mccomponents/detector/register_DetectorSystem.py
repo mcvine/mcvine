@@ -61,7 +61,7 @@ def bp_tof2channel( self, tofmin, tofmax, tofstep ):
 
 # 4. register the new class and handlers
 import mccomponents.homogeneous_scatterer as mh
-mh.register_engine_ctor (DetectorSystem, onDetectorSystem )
+mh.register_engine_renderer_handler (DetectorSystem, onDetectorSystem )
 mh.register_binding_handlers(
     Tof2Channel,
     { 'BoostPythonBinding': bp_tof2channel }

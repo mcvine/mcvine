@@ -13,6 +13,7 @@
 PROJECT = mccomposite
 
 BUILD_DIRS = \
+	coordinate_systems \
 	geometry  \
 	bindings \
 	orientation_conventions \
@@ -40,14 +41,17 @@ EXPORT_PYTHON_MODULES = \
 	AbstractOrientationConvention.py \
 	AbstractVisitor.py \
 	CompositeScatterer.py \
-	ComputingEngineConstructor.py \
+	ScattererComputationEngineRenderer.py \
+	ScattererComputationEngineFactory.py \
 	Geometer.py \
 	McStasConvention.py \
 	Scatterer.py \
 	ScattererCopy.py \
-	ScattererComputingEngineFactory.py \
 	__init__.py \
 	units.py \
+	units_utils.py \
+	register_Copy.py \
+	register_HollowCylinder.py \
 
 
 export:: export-python-modules 

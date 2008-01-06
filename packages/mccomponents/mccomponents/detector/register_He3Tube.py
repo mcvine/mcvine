@@ -100,12 +100,12 @@ def onHe3Tube(self, he3tube):
 
 # 4. register the new class and handlers
 import mccomposite
-mccomposite.register_engine_ctor (He3Tube, onHe3Tube )
+mccomposite.register_engine_renderer_handler (He3Tube, onHe3Tube )
 
 
 #hack
 class Detector: pass
-mccomposite.register_engine_ctor (Detector, onHe3Tube )
+mccomposite.register_engine_renderer_handler (Detector, onHe3Tube )
 
 # version
 __id__ = "$Id$"

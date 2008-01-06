@@ -10,7 +10,7 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 PROJECT = mccomposite
-PACKAGE = geometry
+PACKAGE = coordinate_systems
 
 #--------------------------------------------------------------------------
 #
@@ -28,15 +28,9 @@ update: clean
 # export
 
 EXPORT_PYTHON_MODULES = \
-	ShapeComputationEngineRenderer.py \
-	ShapeComputationEngineFactory.py \
-	bindings.py \
-	primitives.py \
-	operations.py \
-	orientation_conventions.py \
-	units.py \
-	units_utils.py \
-	utils.py \
+	AbstractCSAdaptor_for_ShapeComputationEngineRenderer.py \
+	InstrumentScientistCSAdaptor_for_ShapeComputationEngineRenderer.py \
+	McStasCSAdaptor_for_ShapeComputationEngineRenderer.py \
 	__init__.py \
 
 

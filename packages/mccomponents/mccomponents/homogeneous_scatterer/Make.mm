@@ -37,10 +37,10 @@ EXPORT_PYTHON_MODULES = \
 	AbstractBinding.py \
 	AbstractVisitor.py \
 	CompositeKernel.py \
-	ComputingEngineConstructor.py \
+	KernelComputationEngineRenderer.py \
+	KernelComputationEngineFactory.py \
 	HomogeneousScatterer.py \
 	Kernel.py \
-	KernelComputingEngineFactory.py \
 	__init__.py \
 
 

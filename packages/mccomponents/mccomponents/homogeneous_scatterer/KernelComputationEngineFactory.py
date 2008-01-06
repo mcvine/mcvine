@@ -12,7 +12,7 @@
 #
 
 
-class KernelComputingEngineFactory(object):
+class KernelComputationEngineFactory(object):
 
     def __init__(self, binding):
         self.binding = binding
@@ -33,7 +33,7 @@ class KernelComputingEngineFactory(object):
         except:
             return getattr(self.binding, name)    
 
-    pass # end of KernelComputingEngineFactory
+    pass # end of KernelComputationEngineFactory
 
 
 # version

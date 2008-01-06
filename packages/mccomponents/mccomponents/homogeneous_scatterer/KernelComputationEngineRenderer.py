@@ -14,7 +14,7 @@
 
 from AbstractVisitor import AbstractVisitor
 
-class ComputingEngineConstructor( AbstractVisitor ):
+class KernelComputationEngineRenderer( AbstractVisitor ):
 
 
     def __init__(self, factory):
@@ -52,23 +52,25 @@ class ComputingEngineConstructor( AbstractVisitor ):
 
         return factory.homogeneousscatterer( cshape, ckernel, cweights )
 
-    pass # end of ComputingEngineConstructor
+    pass # end of KernelComputationEngineRenderer
 
 
-def register( kernel_type, constructor_visiting_method, override = False ):
+def register( kernel_type, renderer_handler_method, override = False ):
     '''register computing engine constructor method for a new kernel type'''
+    
+    global _registry
+
     name = kernel_type.__name__
     methodname = 'on%s' % name
-    if hasattr(ComputingEngineConstructor, methodname):
+    if hasattr(KernelComputationEngineRenderer, methodname):
         if not override:
             raise ValueError , "Cannot register handler for type %s"\
                   "%s already registered as handler for type %s" % (
                 kernel_type, methodname, _registry[name] )
         pass
     
-    setattr( ComputingEngineConstructor, methodname, constructor_visiting_method )
+    setattr( KernelComputationEngineRenderer, methodname, renderer_handler_method )
 
-    global _registry
     _registry[ name ] = kernel_type
     return
 

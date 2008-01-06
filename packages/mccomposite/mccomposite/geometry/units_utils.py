@@ -11,11 +11,8 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
 
-from pyre.geometry.solids import *
 
-from pyre.geometry.solids.Cylinder import Cylinder
-from pyre.geometry.solids.Block import Block
-from pyre.geometry.solids.Sphere import Sphere
+from mccomposite.units_utils import *
 
 
 # version

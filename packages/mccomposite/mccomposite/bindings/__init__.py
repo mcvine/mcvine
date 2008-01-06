@@ -22,10 +22,10 @@ def registries():
     return { 'BoostPythonBinding': BoostPythonBinding.register }
 
 
-def register( methodname, handlers ):
+def register( methodname, handlers, override = False ):
     regs = registries()
     for bindingname, handler in handlers.iteritems():
-        regs[ bindingname ]( methodname, handler )
+        regs[ bindingname ]( methodname, handler, override = override )
         continue
     return
 

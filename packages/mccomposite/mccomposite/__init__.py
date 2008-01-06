@@ -28,7 +28,8 @@ def scatterercopy( *args, **kwds ):
 
 def scattererEngine( scatterer,
                      binding = "BoostPythonBinding",
-                     orientation_convention = "McStasConvention" ):
+                     orientation_convention = "McStasConvention",
+                     coordinate_system = 'McStas'):
     "render the c++ engine of the given scatterer"
     
     from bindings import classes as bindingClasses
@@ -39,36 +40,40 @@ def scattererEngine( scatterer,
     conventionClass = classes()[ orientation_convention ]
     orientation_convention = conventionClass()
 
-    from ScattererComputingEngineFactory import ScattererComputingEngineFactory
-    factory = ScattererComputingEngineFactory( binding, orientation_convention )
-    from ComputingEngineConstructor import ComputingEngineConstructor
-    return ComputingEngineConstructor( factory ).render( scatterer )
+    from coordinate_systems import computationEngineRenderAdpator
+    Adaptor = computationEngineRenderAdpator( coordinate_system )
+
+    from ScattererComputationEngineFactory import ScattererComputationEngineFactory
+    factory = ScattererComputationEngineFactory( binding, orientation_convention )
+    from ScattererComputationEngineRenderer import ScattererComputationEngineRenderer
+    class R(Adaptor, ScattererComputationEngineRenderer): pass
+    return R( factory ).render( scatterer )
 
 
 
-def register( newtype, ctor_handler, binding_handlers):
+def register( newtype, renderer_handler, binding_handlers, override = False):
     """register a new scatterer type
 
-    ctor_handler will be attached to ComputingEngineConstructor
+    renderer_handler will be attached to ScattererComputationEngineRenderer
     binding_handlers will be attached to corresponding classes in 'bindings'
       subpackage.
     """
-    register_engine_ctor( newtype, ctor_handler )
-    register_binding_handlers( newtype, binding_handlers )
+    register_engine_renderer_handler( newtype, renderer_handler, override = override )
+    register_binding_handlers( newtype, binding_handlers, override = override )
     return
 
 
-def register_engine_ctor( newtype, ctor_handler ):
-    """register a new scatterer type and its engine constructor handler
+def register_engine_renderer_handler( newtype, renderer_handler, override = False):
+    """register a new scatterer type and its engine renderer handler
     """
-    import ComputingEngineConstructor
-    ComputingEngineConstructor.register(newtype, ctor_handler)
+    import ScattererComputationEngineRenderer
+    ScattererComputationEngineRenderer.register(newtype, renderer_handler, override = override )
     return
 
 
-def register_binding_handlers( newtype, binding_handlers ):
+def register_binding_handlers( newtype, binding_handlers, override = False):
     import bindings
-    bindings.register( newtype.__name__.lower(), binding_handlers )
+    bindings.register( newtype.__name__.lower(), binding_handlers, override = override )
     return
 
 

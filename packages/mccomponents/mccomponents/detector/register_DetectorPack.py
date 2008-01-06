@@ -26,7 +26,7 @@ def onDetectorPack(self, detectorPack):
 
 # 4. register the new class and handlers
 import mccomponents.homogeneous_scatterer as mh
-mh.register_engine_ctor (DetectorPack, onDetectorPack )
+mh.register_engine_renderer_handler (DetectorPack, onDetectorPack )
 
 
 

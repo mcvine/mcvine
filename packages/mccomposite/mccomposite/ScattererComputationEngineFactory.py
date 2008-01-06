@@ -12,7 +12,7 @@
 #
 
 
-class ScattererComputingEngineFactory(object):
+class ScattererComputationEngineFactory(object):
 
     def __init__(self, binding, orientationconvention):
         self.binding = binding
@@ -48,7 +48,7 @@ class ScattererComputingEngineFactory(object):
         except:
             return getattr(self.binding, name)    
 
-    pass # end of ScattererComputingEngineFactory
+    pass # end of ScattererComputationEngineFactory
 
 
 # version
