@@ -59,6 +59,7 @@ class ScattererComputationEngineRenderer( AbstractVisitor, ShapeComputationEngin
         
         cscatterers = factory.scatterercontainer()
         cgeometer = factory.geometer( )
+
         for element in elements:
             cscatterer = element.identify(self) 
             cscatterers.append( cscatterer )
@@ -68,7 +69,7 @@ class ScattererComputationEngineRenderer( AbstractVisitor, ShapeComputationEngin
             
             orientation = self._remove_angle_unit( geometer.orientation(element) )
             corientation = factory.orientation( orientation )
-            
+
             cgeometer.register( cscatterer, cposition, corientation )
             continue
 

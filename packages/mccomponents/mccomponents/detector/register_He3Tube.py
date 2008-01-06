@@ -59,7 +59,10 @@ def onHe3Tube(self, he3tube):
     geometer = he3tube.geometer
     for element in pixels:
         position = geometer.position(element)/units.length.meter
-        assert locate( position, shape ) == "inside"
+        cposition = self.factory.position( position )
+        assert self.factory.locate( cposition, cshape ) == "inside", \
+               "pixel at %s is not inside the tube %s" % (
+            position, cshape)
         continue
 
     #find the axis direction of the he3tube tube

@@ -31,11 +31,12 @@ import mccomposite.register_Copy
 import mccomposite.register_HollowCylinder
 
 
-outfilename = 'detector_xml-events.dat'
+outfilename = 'detector_xml2-events.dat'
 nevents = 10000
 absorption_weight = 0.9
 
-coordinate_system = 'InstrumentScientist'
+coordinate_system = 'McStas'
+#coordinate_system = 'InstrumentScientist'
 
 class detector_TestCase(unittest.TestCase):
 
@@ -52,6 +53,9 @@ class detector_TestCase(unittest.TestCase):
         
         detectorSystem = instrument.getDetectorSystem()
 
+        pack0 = detectorSystem.elements()[0]
+        dsg = detectorSystem.geometer
+
         tofparams = 0, 10e-3, 1e-4
         detectorSystem.tofparams = tofparams
         dims = getDetectorHierarchyDimensions( instrument )
@@ -63,7 +67,7 @@ class detector_TestCase(unittest.TestCase):
 
         for i in range(nevents):
             if i%1000 == 0: print i
-            ev = mcni.neutron( r = (0,0,0), v = (2000,1500,0) )
+            ev = mcni.neutron( r = (0,0,0), v = (1500,0,2000) )
             cds.scatter(ev)
             continue
 

@@ -1,12 +1,27 @@
+#!/usr/bin/env python
+#
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#
+#                                   Jiao Lin
+#                      California Institute of Technology
+#                        (C) 2007 All Rights Reserved  
+#
+# {LicenseText}
+#
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#
 
+
+## This package provide supports for the "instrument" package at
+## svn://danse.us/instrument
 
 
 def getDetectorHierarchyDimensions( instrument ):
     return GetDetectorHierarchyDimensions().render( instrument )
 
 
-def assignLocalGeometers( instrument ):
-    AssignLocalGeometers().render(instrument)
+def assignLocalGeometers( instrument, **kwds ):
+    AssignLocalGeometers().render(instrument, **kwds)
     return
 
 
@@ -88,7 +103,10 @@ class AssignLocalGeometers:
     This class go thru the representation and assign local geometers to composite nodes.
     '''
 
-    def render(self, instrument):
+    def render(self, instrument, coordinate_system = 'McStas'):
+        from instrument.geometers import coordinateSystem
+        self._cs = coordinateSystem( coordinate_system )
+        
         self.global_geometer = instrument.global_geometer = instrument.geometer
         instrument.identify(self)
         del self.global_geometer
@@ -96,7 +114,9 @@ class AssignLocalGeometers:
 
 
     def onComposite(self, composite):
-        composite.geometer = self.global_geometer._getLocalGeometer( composite )
+        geometer = self.global_geometer._getLocalGeometer( composite )
+        geometer.changeRequestCoordinateSystem( self._cs )
+        composite.geometer = geometer
         for element in composite.elements():
             element.identify(self)
         return
@@ -113,3 +133,10 @@ class AssignLocalGeometers:
 
 
     pass 
+
+
+# version
+__id__ = "$Id$"
+
+# End of file 
+

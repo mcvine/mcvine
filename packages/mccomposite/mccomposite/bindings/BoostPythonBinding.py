@@ -47,7 +47,11 @@ class BoostPythonBinding(base):
         rotmat1 = rotmat.copy()
         rotmat1.shape = -1,
         return binding.RotationMatrix( *rotmat1 )
+    
 
+    def locate(self, position, shape):
+        global _location
+        return _location[binding.locate( position, shape )]
 
     def unite(self, shapes):
         return binding.Union( shapes )
@@ -91,6 +95,22 @@ def register( methodname, method, override = False ):
     setattr( BoostPythonBinding, methodname, method )
 
     return
+
+
+
+_location = None
+def _init_location( ):
+    global _location
+    _location = {
+        binding.location.inside: "inside",
+        binding.location.onborder: "onborder",
+        binding.location.outside: "outside",
+        }
+
+    return
+    
+_init_location()
+
 
 
 # version
