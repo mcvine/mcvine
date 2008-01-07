@@ -29,6 +29,8 @@ PROJ_SRCS = \
 	wrap_kernelcontainer.cc \
 	wrap_He3TubeKernel.cc \
 	wrap_EventModeMCA.cc \
+	wrap_SQEkernel.cc \
+	wrap_GridSQE.cc \
 	wrap_basic_containers.cc \
 
 

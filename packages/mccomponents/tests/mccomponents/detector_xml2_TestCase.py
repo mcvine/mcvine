@@ -53,9 +53,6 @@ class detector_TestCase(unittest.TestCase):
         
         detectorSystem = instrument.getDetectorSystem()
 
-        pack0 = detectorSystem.elements()[0]
-        dsg = detectorSystem.geometer
-
         tofparams = 0, 10e-3, 1e-4
         detectorSystem.tofparams = tofparams
         dims = getDetectorHierarchyDimensions( instrument )

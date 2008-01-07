@@ -11,15 +11,13 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 PROJECT = mccomponents
+PACKAGE = sample
+
 
 BUILD_DIRS = \
-	detector \
-	homogeneous_scatterer \
-	sample \
+	idf \
 
 RECURSE_DIRS = $(BUILD_DIRS)
-
-PACKAGE = mccomponents
 
 #--------------------------------------------------------------------------
 #
@@ -36,11 +34,14 @@ tidy::
 # export
 
 EXPORT_PYTHON_MODULES = \
+	AbstractSQE.py \
 	__init__.py \
+	register_GridSQE.py \
+	register_SQEkernel.py \
 	units.py \
 
 
-export:: export-python-modules 
+export:: export-package-python-modules 
 	BLD_ACTION="export" $(MM) recurse
 
 

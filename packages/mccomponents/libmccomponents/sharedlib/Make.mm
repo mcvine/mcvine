@@ -36,6 +36,8 @@ PROJ_SRCS = \
 	EventModeMCA.cc \
 	He3.cc \
 	He3Tube.cc \
+	SQEkernel.cc \
+	GridSQE.cc \
 
 
 PROJ_TIDY += $(PROJ_SRCS)
@@ -59,6 +61,11 @@ He3Tube.cc: ../kernels/detector/He3Tube.cc
 EventModeMCA.cc: ../kernels/detector/EventModeMCA.cc
 	cp ../kernels/detector/EventModeMCA.cc .
 
+SQEkernel.cc: ../kernels/sample/SQEkernel.cc
+	cp ../kernels/sample/SQEkernel.cc .
+
+GridSQE.cc: ../kernels/sample/SQE/GridSQE.cc
+	cp ../kernels/sample/SQE/GridSQE.cc .
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

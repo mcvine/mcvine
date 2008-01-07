@@ -24,6 +24,7 @@ namespace wrap_mccomponents {
 
     wrap_vector<int>( "int" ); 
     wrap_vector<unsigned int>( "uint" ); 
+    wrap_vector<double>( "double" ); 
   }
 }
 

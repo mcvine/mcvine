@@ -14,7 +14,7 @@
 include local.def
 
 PROJECT = mccomponents
-PACKAGE = kernels
+PACKAGE = kernels/sample
 
 
 PROJ_TMPDIR = $(BLD_TMPDIR)/$(PROJECT)/$(PACKAGE)
@@ -23,8 +23,8 @@ PROJ_TMPDIR = $(BLD_TMPDIR)/$(PROJECT)/$(PACKAGE)
 # directory structure
 
 BUILD_DIRS = \
-	detector \
-	sample \
+	SQE \
+	phonon \
 
 OTHER_DIRS = \
 
@@ -46,6 +46,10 @@ clean::
 export:: export-package-headers
 
 EXPORT_HEADERS = \
+	AbstractScatteringKernel.h \
+	AbstractSQE.h \
+	SQEkernel.h \
+
 
 # version
 # $Id: Make.mm,v 1.1.1.1 2005/03/08 16:13:51 aivazis Exp $
