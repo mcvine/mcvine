@@ -11,48 +11,40 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 PROJECT = mccomponents
-PACKAGE = sample
+PACKAGE = tests
 
+PROJ_TIDY += alltests.py $(PROJ_CPPTESTS)
+PROJ_CLEAN += alltests.py $(PROJ_CPPTESTS)
 
-BUILD_DIRS = \
-	idf \
-	kernelxml \
-
-RECURSE_DIRS = $(BUILD_DIRS)
-
-#--------------------------------------------------------------------------
-#
-
-all: export
-	BLD_ACTION="all" $(MM) recurse
-
-tidy::
-	BLD_ACTION="tidy" $(MM) recurse
-
+PROJ_PYTESTS =  alltests.py
+PROJ_CPPTESTS = 
+PROJ_TESTS = $(PROJ_PYTESTS) $(PROJ_CPPTESTS)
+PROJ_LIBRARIES = -L$(BLD_LIBDIR) -ljournal -lmcni
 
 
 #--------------------------------------------------------------------------
 #
-# export
 
-EXPORT_PYTHON_MODULES = \
-	AbstractSQE.py \
-	__init__.py \
-	register_GridSQE.py \
-	register_SQEkernel.py \
-	register_KernelContainer.py \
-	units.py \
+all:  $(PROJ_TESTS)
+
+test: alltests.py
+	for test in $(PROJ_TESTS) ; do $${test}; done
+
+release: tidy
+	cvs release .
+
+update: clean
+	cvs update .
+
+#--------------------------------------------------------------------------
+#
 
 
-export:: export-package-python-modules 
-	BLD_ACTION="export" $(MM) recurse
-
-
-include doxygen/default.def
-docs: export-doxygen-docs
+alltests.py: ../alltests.py
+	cp ../alltests.py .
 
 
 # version
-# $Id: Make.mm 1404 2007-08-29 15:43:42Z linjiao $
+# $Id: Make.mm 620 2007-07-11 23:24:50Z linjiao $
 
 # End of file

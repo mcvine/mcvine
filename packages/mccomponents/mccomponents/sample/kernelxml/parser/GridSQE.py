@@ -15,14 +15,19 @@
 from AbstractNode import AbstractNode, debug
 
 
-class PowderSample(AbstractNode):
+class GridSQE(AbstractNode):
 
 
-    tag = "PowderSample"
+    tag = "GridSQE"
 
-    from sampleassembly.elements.PowderSample import PowderSample as ElementFactory 
+    def elementFactory( self, **kwds ):
+        datapath = kwds['data-path']
+        from mccomponents.sample.idf import readSQE
+        sqe = readSQE( datapath )
+        from mccomponents.sample import gridsqe, sqekernel
+        return sqekernel( gridsqe( sqe ) )
 
-    pass # end of PowderSample
+    pass # end of GridSQE
 
 
 # version

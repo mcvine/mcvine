@@ -25,15 +25,11 @@ all: export
 
 EXPORT_PYTHON_MODULES = \
 	AbstractNode.py \
-	Block.py \
-	Cylinder.py \
 	Document.py \
-	GlobalGeometer.py \
-	LocalGeometer.py \
-	PowderSample.py \
-	Register.py \
-	SampleAssembly.py \
-	Shape.py \
+	GridSQE.py \
+	KernelContainer.py \
+	ScatteringKernel.py \
+	SQEkernel.py \
 	__init__.py \
 
 

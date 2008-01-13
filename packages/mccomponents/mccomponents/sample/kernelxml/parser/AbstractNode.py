@@ -12,7 +12,7 @@
 #
 
 import journal
-debug = journal.debug("sampleassembly.xmlparser")
+debug = journal.debug("scatteringkernel.xmlparser")
 
 
 from pyre.xml.Node import Node
@@ -25,44 +25,21 @@ class XMLFormatError(Exception): pass
 
 class AbstractNode(Node):
 
-    ElementFactory = None # overload this to provide factory method of creating element
-
     def __init__(self, document, attributes):
         Node.__init__(self, document)
-
-        try:
-            name = attributes['name']
-        except KeyError:
-            print attributes.keys()
-            raise XMLFormatError, \
-                  "Element does not have the 'name' attribute."\
-                  "Element type: %s" % (
-                self.__class__.__name__ )
 
         # convert to dictionary
         attrs = {}
         for k,v in attributes.items(): attrs[str(k)] = v
-        del attrs['name']
 
-        # see if we have sampleassembly instance established
-        try:
-            sampleassembly = document.sampleassembly
-        except AttributeError :
-            sampleassembly = None
-            
         # new element
-        self.element = self.ElementFactory(name, **attrs)
+        self.element = self.elementFactory(**attrs)
 
-        #register guid, element pair
-        if sampleassembly is None and isSampleAssembly(self.element):
-            #establish sampleassembly instance
-            document.sampleassembly = sampleassembly = self.element
-            pass
-        if sampleassembly is None:
-            raise RuntimeError, "Sampleassembly is not yet defined"
-        #sampleassembly.guidRegistry.register( self.element.guid(), self.element )
-        
         return
+
+
+    def elementFactory(self, *args, **kwds):
+        raise NotImplementedError
 
 
     def notify(self, parent):
@@ -85,10 +62,6 @@ class AbstractNode(Node):
     pass
 
 
-
-def isSampleAssembly( element ):
-    from sampleassembly.elements.SampleAssembly import SampleAssembly
-    return isinstance( element, SampleAssembly )
 
 
 # version

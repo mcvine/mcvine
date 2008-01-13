@@ -15,37 +15,36 @@
 from pyre.xml.Node import Node
 
 
-class Shape(Node):
+class ScatteringKernel(Node):
 
 
-    tag = "Shape"
+    tag = "ScatteringKernel"
     
-     
     def __init__(self, document, attributes):
         Node.__init__(self, document)
         return
 
 
     def notify(self, parent):
-        #parent is a xml node. parent.element is a sampleassembly element
-        #that this shape should be attached to
-        target = parent.element
-        target.setShape( self._shape )
-        return 
+        #parent is the Document node. document.scatterer is a scatterer instance
+        #that this kernel should be attached to
+        target = parent.scatterer
+        target.setKernel( self._kernel )
+        parent.document = self._kernel
+        return
 
 
     def on_(self, sth):
-        self._shape = sth
+        self._kernel = sth
         return
 
-    onUnion = on_
-    onCylinder = onBlock = on_
+    onKernelContainer = onSQEkernel = on_
 
-    pass # end of Shape
+    pass # end of ScatteringKernel
     
 
 
 # version
-__id__ = "$Id: Geometer.py,v 1.1.1.1 2005/03/08 16:13:43 linjiao Exp $"
+__id__ = "$Id: ScatteringKernel.py,v 1.1.1.1 2005/03/08 16:13:43 linjiao Exp $"
 
 # End of file 

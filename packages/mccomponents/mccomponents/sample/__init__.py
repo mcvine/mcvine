@@ -22,6 +22,11 @@ def sqekernel(*args, **kwds):
     return SQEkernel( *args, **kwds )
 
 
+def kernelcontainer(*args, **kwds):
+    from register_KernelContainer import KernelContainer
+    return KernelContainer( *args, **kwds )
+
+
 # version
 __id__ = "$Id$"
 

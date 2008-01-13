@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE ScatteringKernel>
+
+<ScatteringKernel>
+  
+  <SQEkernel Q-range='0*angstrom**-1,12.*angstrom**-1' energy-range='-50*meV,50*meV'>
+  </SQEkernel>
+  
+</ScatteringKernel>

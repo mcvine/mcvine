@@ -13,7 +13,8 @@
 
 
 
-class CompositeKernel:
+from Kernel import Kernel
+class CompositeKernel(Kernel):
     
 
     def __init__(self):

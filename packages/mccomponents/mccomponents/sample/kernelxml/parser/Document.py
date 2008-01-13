@@ -19,20 +19,17 @@ class Document(DocumentNode):
 
 
     tags = [
-        "SampleAssembly",
-        'PowderSample',
+        "ScatteringKernel",
+        
+        'KernelContainer',
 
-        'LocalGeometer',
-        'Register',
-        'GlobalGeometer',
-
-        'Shape',
-        'Cylinder', 'Block',
+        'SQEkernel',
+        'GridSQE',
         ]
 
 
-    def onSampleAssembly(self, sampleassembly):
-        self.document = sampleassembly
+    def onScatteringKernel(self, scatteringkernel):
+        self.document = scatteringkernel
         return
 
 

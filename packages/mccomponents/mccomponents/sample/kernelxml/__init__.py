@@ -16,9 +16,9 @@ from Parser import Parser
 default_parser = Parser()
 
 
-def parse( stream ): return default_parser.parse( stream )
+def parse( stream, *args ): return default_parser.parse( stream, *args )
 
-def parse_file( filename ): return parse( open( filename ) )
+def parse_file( filename, *args ): return parse( open( filename ), *args )
 
 
 from Renderer import Renderer

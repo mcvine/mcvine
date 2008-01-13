@@ -33,9 +33,12 @@ class HomogeneousScatterer(Scatterer):
     def kernel(self): return self._kernel
 
 
+    def setKernel(self, kernel): self._kernel = kernel
+
+
     def identify(self, visitor): return visitor.onHomogeneousScatterer(self)
-    
-    
+
+
     pass # end of HomogeneousScatterer
 
 

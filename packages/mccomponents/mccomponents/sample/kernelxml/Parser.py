@@ -18,10 +18,12 @@ from pyre.xml.Parser import Parser as ParserBase
 class Parser(ParserBase):
 
 
-    def parse(self, stream, parserFactory=None):
+    def parse(self, stream, scatterer, parserFactory=None):
         from parser.Document import Document
+        document = Document(stream.name)
+        document.scatterer = scatterer
         return ParserBase.parse(
-            self, stream, Document(stream.name), parserFactory)
+            self, stream, document, parserFactory)
 
 
     def __init__(self):

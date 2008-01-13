@@ -16,8 +16,9 @@ from mccomponents.homogeneous_scatterer.Kernel import Kernel
 class SQEkernel(Kernel):
 
     def __init__(self,
-                 absorption_cross_section, scattering_cross_section,
-                 SQE, Qrange, Erange,
+                 absorption_cross_section = None,
+                 scattering_cross_section = None,
+                 SQE = None, Qrange = None, Erange = None,
                  ):
         '''new S(Q,E) kernel
   Inputs:
