@@ -46,6 +46,9 @@ class UnitsRemover:
         
     def remove_angle_unit( self, something ):
         return remove_unit( something, self.angle_unit )
+
+    def remove_unit( self, something, unit ):
+        return remove_unit( something, unit )
         
     pass # end of UnitsRemover
 
