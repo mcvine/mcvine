@@ -22,10 +22,24 @@ PROJ_TESTS = $(PROJ_PYTESTS) $(PROJ_CPPTESTS)
 PROJ_LIBRARIES = -L$(BLD_LIBDIR) -ljournal -lmcni
 
 
+# directory structure
+
+BUILD_DIRS = \
+	sampleassembly \
+
+OTHER_DIRS = \
+
+RECURSE_DIRS = $(BUILD_DIRS) $(OTHER_DIRS)
+
+
 #--------------------------------------------------------------------------
 #
 
-all:  $(PROJ_TESTS)
+all: $(PROJ_TESTS)
+	BLD_ACTION="all" $(MM) recurse
+
+tidy::
+	BLD_ACTION="tidy" $(MM) recurse
 
 test: alltests.py
 	for test in $(PROJ_TESTS) ; do $${test}; done
