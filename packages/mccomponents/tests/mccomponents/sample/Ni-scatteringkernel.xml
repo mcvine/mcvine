@@ -5,6 +5,7 @@
 <ScatteringKernel>
   
   <SQEkernel Q-range='0*angstrom**-1,12.*angstrom**-1' energy-range='-50*meV,50*meV'>
+    <GridSQE data-path="SQE-examples"/>
   </SQEkernel>
   
 </ScatteringKernel>

@@ -41,6 +41,7 @@ EXPORT_PYTHON_MODULES = \
 	register_GridSQE.py \
 	register_SQEkernel.py \
 	register_KernelContainer.py \
+	sampleassembly_support.py \
 	units.py \
 
 

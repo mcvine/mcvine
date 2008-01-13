@@ -59,6 +59,12 @@ class AbstractNode(Node):
         self.element.addElement( element )
         return
 
+
+    def _parse(self, expr):
+        return self._parser.parse(expr)
+
+    from pyre.units import parser
+    _parser = parser()
     pass
 
 

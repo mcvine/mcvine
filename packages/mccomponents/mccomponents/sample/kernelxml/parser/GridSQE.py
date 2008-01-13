@@ -24,8 +24,8 @@ class GridSQE(AbstractNode):
         datapath = kwds['data-path']
         from mccomponents.sample.idf import readSQE
         sqe = readSQE( datapath )
-        from mccomponents.sample import gridsqe, sqekernel
-        return sqekernel( gridsqe( sqe ) )
+        from mccomponents.sample import gridsqe
+        return gridsqe( sqe ) 
 
     pass # end of GridSQE
 

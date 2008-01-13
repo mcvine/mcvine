@@ -52,9 +52,23 @@ def onSQEkernel(self, sqekernel):
     Qrange = self._unitsRemover.remove_unit( Qrange, 1./units.length.angstrom )
 
     csqe = t.SQE.identify(self)
+
+    abs = t.absorption_cross_section
+    sctt = t.scattering_cross_section
+    if abs is None or sctt is None:
+        #need to get cross section from sample assembly representation
+        # svn://danse.us/inelastic/sample/.../sampleassembly
+        #origin is a node in the sample assembly representation
+        origin = t.scatterer_origin
+        from sampleassembly import cross_sections
+        abs, inc, coh = cross_sections( origin )
+        sctt = inc + coh
+        pass
+
+    abs, sctt = self._unitsRemover.remove_unit( (abs, sctt), 1./units.length.meter )
     
     return self.factory.sqekernel(
-        t.absorption_cross_section, t.scattering_cross_section,
+        abs, sctt,
         csqe, Erange, Qrange )
 
 

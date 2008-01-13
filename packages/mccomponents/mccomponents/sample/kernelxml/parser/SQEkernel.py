@@ -21,12 +21,12 @@ class SQEkernel(AbstractNode):
     tag = "SQEkernel"
 
     def elementFactory( self, **kwds ):
-        Qrange = kwds['Q-range']
-        Erange = kwds['energy-range']
+        Qrange = self._parse( kwds['Q-range'] )
+        Erange = self._parse( kwds['energy-range'] )
         scatterer = self.document.scatterer
 
-        from mccomponents.homogeneous_scatterer.HomogeneousScatterer import HomogeneousScatterer
-        assert isinstance(scatterer, HomogeneousScatterer )
+        #from mccomponents.homogeneous_scatterer.HomogeneousScatterer import HomogeneousScatterer
+        #assert isinstance(scatterer, HomogeneousScatterer )
 
         from mccomponents.sample import sqekernel
         return sqekernel(
@@ -36,6 +36,9 @@ class SQEkernel(AbstractNode):
     def onSQE(self, sqe):
         self.element.SQE = sqe
         return
+
+
+    onGridSQE = onSQE
 
 
     pass # end of SQEkernel
