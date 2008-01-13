@@ -38,8 +38,8 @@ class CompositeScatterer:
 
     def shape(self):
         if self._shape is None:
-            from geometry.operations import union
-            self._shape = union( [e.shape() for e in self.elements() ] )
+            from geometry.operations import unite
+            self._shape = unite( *[e.shape() for e in self.elements() ] )
             pass
         return self._shape
     

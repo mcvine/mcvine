@@ -64,6 +64,9 @@ def remove_unit( something, unit ):
     remove_unit( (1*meter, 2*meter), meter ) --> (1,2)
     remove_unit( (1*meter, 1*cm), meter ) --> (1,0.01)
     '''
+    if isinstance(something, basestring):
+        raise ValueError , "remove_unit cannot work directly with strings: %r" % (
+            something, )
     if '__iter__' in dir(something):
         if not is_unitless_vector( something ):
             return remove_unit_of_vector( something, unit)
