@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE homogeneous_scatterer>
+
+<!-- weights: absorption, scattering, transmission -->
+<homogeneous_scatterer mcweights="0, 1, 0">
+  <compositekernel>
+  </compositekernel>
+</homogeneous_scatterer>

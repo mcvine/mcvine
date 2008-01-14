@@ -11,12 +11,10 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 PROJECT = mccomponents
-PACKAGE = homogeneous_scatterer
-
+PACKAGE =  homogeneous_scatterer/hsxml
 
 BUILD_DIRS = \
-	bindings \
-	hsxml \
+    parser \
 
 RECURSE_DIRS = $(BUILD_DIRS)
 
@@ -24,10 +22,10 @@ RECURSE_DIRS = $(BUILD_DIRS)
 #
 
 all: export
+	BLD_ACTION="all" $(MM) recurse
 
 tidy::
 	BLD_ACTION="tidy" $(MM) recurse
-
 
 
 #--------------------------------------------------------------------------
@@ -35,25 +33,15 @@ tidy::
 # export
 
 EXPORT_PYTHON_MODULES = \
-	AbstractBinding.py \
-	AbstractVisitor.py \
-	CompositeKernel.py \
-	KernelComputationEngineRenderer.py \
-	KernelComputationEngineFactory.py \
-	HomogeneousScatterer.py \
-	Kernel.py \
-	__init__.py \
+	Parser.py \
+	Renderer.py \
+	__init__.py
 
 
 export:: export-package-python-modules 
-	BLD_ACTION="export" $(MM) recurse
-
-
-include doxygen/default.def
-docs: export-doxygen-docs
 
 
 # version
-# $Id: Make.mm 1404 2007-08-29 15:43:42Z linjiao $
+# $Id: Make.mm 1234 2007-09-18 18:32:56Z linjiao $
 
 # End of file
