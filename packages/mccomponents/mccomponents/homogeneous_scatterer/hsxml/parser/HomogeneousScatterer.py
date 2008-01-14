@@ -24,7 +24,12 @@ class HomogeneousScatterer(base):
     
     def __init__(self, document, attributes):
         base.__init__(self, document)
-        self._mcweights = attributes.get( 'mcweights' )
+        mcweights = attributes.get( 'mcweights' )
+        if mcweights:
+            mcweights = self._parse( mcweights )
+        else:
+            mcweights = 0, 1, 0
+        self._mcweights = mcweights
         return
 
 

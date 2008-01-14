@@ -45,7 +45,9 @@ class Renderer(base):
         self._write('<homogeneous_scatterer mcweights="%s">' % mcweights )
         self._indent()
 
-        hs.shape().identify(self)
+        shape = hs.shape()
+        if shape: shape.identify(self)
+        
         hs.kernel().identify(self)
         
         self._outdent()

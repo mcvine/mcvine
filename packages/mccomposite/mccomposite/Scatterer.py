@@ -20,6 +20,10 @@ class Scatterer:
     def shape(self):
         return self._shape
 
+    def setShape(self, shape):
+        self._shape = shape
+        return
+
     def identify(self, visitor):
         return visitor.onScatterer(self)
 

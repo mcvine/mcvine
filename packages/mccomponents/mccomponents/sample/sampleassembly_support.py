@@ -67,10 +67,12 @@ class SampleAssembly2CompositeScatterer:
 
 
 #go thru the scatterer composite tree and
-#find kernel xmls and load them.
-#each scatterer has an "origin" attached, and that "origin"
+#find scatterer xmls and load them.
+#Those scatterer xmls specify the mc simulation details.
+#each scatterer in the input composite has an "origin" attached, and that "origin"
 #is a node of "sampleassembly" package (svn://danse.us/inelastic/sample/.../sampleassembly).
-#Basisically, the scatterer composite tree is a result of SampleAssembly2CompositeScatterer.
+#Basisically, the input, a scatterer composite tree,
+#is result of SampleAssembly2CompositeScatterer rendering.
 class FindKernelsFromXMLs:
     
     def render(self, compositescatterer):
@@ -87,10 +89,22 @@ class FindKernelsFromXMLs:
     def onHomogeneousScatterer(self, scatterer):
         origin = scatterer.origin
         name = origin.name
-        xmlfilename = '%s-scatteringkernel.xml' % name
+        xmlfilename = '%s-scatterer.xml' % name
         from kernelxml import parse_file
-        kernel = parse_file( xmlfilename, scatterer )
-        #scatterer.setKernel( kernel )
+        mcscatterer = parse_file( xmlfilename )
+
+        # transfer weights
+        scatterer.mcweights_absorption_scattering_transmission = mcscatterer.mcweights_absorption_scattering_transmission
+                                                               
+        # transfer shape if necessary
+        shape = mcscatterer.shape()
+        if shape: scatterer.setShape( shape )
+        
+        # transfer kernel
+        kernel = mcscatterer.kernel()
+        scatterer.setKernel( kernel )
+
+        # remember origin
         kernel.scatterer_origin = origin
         return
 

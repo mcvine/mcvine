@@ -41,13 +41,28 @@ class Renderer(base):
     def onSQEkernel(self, sqekernel):
 
         self._write(
-            '<SQEkernel energy-range="%s" Q-range="%s">' )
+            '<SQEkernel energy-range="%s" Q-range="%s">' % (
+            sqekernel.Erange, sqekernel.Erange,
+            )
+            )
 
         self._indent()
         sqekernel.SQE.identify(self)
         self._outdent()
 
         self._write('</SQEkernel>')
+        return
+
+
+    def onGridSQE(self, gridsqe):
+        sqehist = gridsqe.sqehist
+        from histogram.hdf import dump
+        filename = 'sqehist.h5'
+        h5path = 'S(Q,E)'
+        dump(sqehist, filename, '/', 'c')
+        self._write(
+            '<GridSQE histogram-hdf-path="%s"/>' % '/'.join( [filename, h5path] )
+            )
         return
 
 

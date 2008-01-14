@@ -26,12 +26,25 @@ scattererxml = 'Ni-scatterer.xml'
 class scattererxml_TestCase(unittest.TestCase):
 
 
-    def test(self):
+    def test1(self):
+        'mccomponents.sample.kernelxml.parser'
         from mccomponents.sample.kernelxml import parse_file
         scatterer = parse_file( scattererxml )
 
         kernel = scatterer.kernel()
         self.assert_( isKernel( kernel ) )
+        return
+    
+
+    def test2(self):
+        'mccomponents.sample.kernelxml.renderer'
+        from mccomponents.sample.kernelxml import parse_file, render
+        scatterer = parse_file( scattererxml )
+        
+        renderedxml = "%s.rendered" % scattererxml
+        print >>open(renderedxml,'w'), '\n'.join(render(scatterer))
+
+        scatterer1 = parse_file( renderedxml )
         return
     
 
