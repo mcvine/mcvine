@@ -23,10 +23,6 @@ class SQEkernel(AbstractNode):
     def elementFactory( self, **kwds ):
         Qrange = self._parse( kwds['Q-range'] )
         Erange = self._parse( kwds['energy-range'] )
-        scatterer = self.document.scatterer
-
-        #from mccomponents.homogeneous_scatterer.HomogeneousScatterer import HomogeneousScatterer
-        #assert isinstance(scatterer, HomogeneousScatterer )
 
         from mccomponents.sample import sqekernel
         return sqekernel(

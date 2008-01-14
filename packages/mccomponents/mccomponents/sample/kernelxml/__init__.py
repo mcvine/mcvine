@@ -23,11 +23,11 @@ def parse_file( filename, *args ): return parse( open( filename ), *args )
 
 from Renderer import Renderer
 default_renderer = Renderer()
-def render( sampleassembly, renderer = None ):
-    '''render(sampleassembly) --> text of the xml file
+def render( scatterer, renderer = None ):
+    '''render(scatterer) --> text of the xml file
 
   - Inputs:
-    sampleassembly: sampleassembly hierarchy
+    scatterer: scatterer hierarchy
   - return: a list of strings
   '''
     if  renderer is None: renderer = default_renderer
@@ -49,17 +49,17 @@ def render( sampleassembly, renderer = None ):
 
     renderer.options = options
 
-    text = renderer.render( sampleassembly )
+    text = renderer.render( scatterer )
     return text
 
 
-def weave( sampleassembly, stream = None ):
+def weave( scatterer, stream = None ):
     if stream is None:
         import sys
         stream = sys.stdout
         pass
 
-    print >> stream, '\n'.join( render(sampleassembly) )
+    print >> stream, '\n'.join( render(scatterer) )
     return
 
 

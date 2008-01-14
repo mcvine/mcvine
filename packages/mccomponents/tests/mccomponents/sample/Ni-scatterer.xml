@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE scatterer>
+
+<!-- weights: absorption, scattering, transmission -->
+<homogeneous_scatterer mcweights="0, 1, 0">
+  
+  <SQEkernel Q-range='0*angstrom**-1,12.*angstrom**-1' energy-range='-50*meV,50*meV'>
+    <GridSQE data-path="SQE-examples"/>
+  </SQEkernel>
+  
+</homogeneous_scatterer>
+

@@ -12,10 +12,10 @@
 #
 
 
-from pyre.weaver.mills.XMLMill import XMLMill
+from mccomponents.homogeneous_scatterer.hsxml.Renderer import Renderer as base
 
 
-class Renderer(XMLMill):
+class Renderer(base):
 
 
     def render(self, kernel):
@@ -52,16 +52,7 @@ class Renderer(XMLMill):
 
 
     def __init__(self):
-        XMLMill.__init__(self)
-        return
-
-
-    def _renderDocument(self, document):
-        self._rep += ['', '<!DOCTYPE kernel>', '']
-
-        self._rep += ['<ScatteringKernel>']
-        document.identify(self)
-        self._rep += ['</ScatteringKernel>']
+        base.__init__(self)
         return
 
     pass # end of Renderer

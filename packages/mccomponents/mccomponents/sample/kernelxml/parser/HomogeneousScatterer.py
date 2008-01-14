@@ -11,25 +11,14 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
 
+from mccomponents.homogeneous_scatterer.hsxml.parser.HomogeneousScatterer import HomogeneousScatterer as base
 
-from mccomponents.homogeneous_scatterer.hsxml.parser.Document import Document as base
+class HomogeneousScatterer( base ):
 
+    onSQEkernel = base.onKernel
 
-class Document(base):
-
-
-    tags = [
-        'HomogeneousScatterer',
-        'KernelContainer',
-
-        'SQEkernel',
-        'GridSQE',
-        ]
-
-
-    pass # end of Document
 
 # version
-__id__ = "$Id: Document.py,v 1.1.1.1 2005/03/08 16:13:43 linjiao Exp $"
+__id__ = "$Id: __init__.py,v 1.1.1.1 2005/03/08 16:13:43 linjiao Exp $"
 
 # End of file 
