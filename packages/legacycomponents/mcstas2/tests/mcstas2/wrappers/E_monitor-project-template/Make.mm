@@ -9,29 +9,36 @@
 # <LicenseText>
 #
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-PROJECT = mcstas2
-PACKAGE = wrappers
-
-
-RECURSE_DIRS = \
-    binding \
-    component2cppClass \
-
-#--------------------------------------------------------------------------
 #
 
-all: export
-	BLD_ACTION="all" $(MM) recurse
+PROJECT = 
+MODULE = E_monitorbp
+PACKAGE = E_monitorbpmodule
 
-#--------------------------------------------------------------------------
-#
-# export
+include std-pythonmodule.def
+include local.def
+
+
+PROJ_CXX_SRCLIB = -lboost_python  -L$(BOOSTPYTHON_LIBDIR) -ljournal -lmcni -lmcstas2
+
+
+PROJ_SRCS = \
+	E_monitor.cc \
+	wrap.cc \
+
 
 EXPORT_PYTHON_MODULES = \
-    __init__.py \
+	E_monitor.py \
 
-export:: export-package-python-modules
+
+export:: export-python-modules 
+
+include doxygen/default.def
+docs: export-doxygen-docs
+
+
 
 # version
-# $Id: Make.mm 115 2004-09-22 22:29:06Z linjiao $
+# $Id: Make.mm 658 2007-10-24 21:33:08Z linjiao $
+
+# End of file

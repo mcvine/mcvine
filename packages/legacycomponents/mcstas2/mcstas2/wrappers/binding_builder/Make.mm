@@ -1,8 +1,9 @@
 PROJECT = mcstas2/wrappers
-PACKAGE = component2cppClass
+PACKAGE = binding_builder
 
 
 RECURSE_DIRS = \
+	mm \
 
 #--------------------------------------------------------------------------
 #
@@ -16,7 +17,6 @@ all: export
 
 EXPORT_PYTHON_MODULES = \
 	__init__.py \
-	component2cppClass.py \
 
 export:: export-package-python-modules
 

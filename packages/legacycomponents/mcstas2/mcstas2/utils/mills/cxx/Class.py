@@ -32,6 +32,19 @@ class Class:
         self.private_members = private_members
         return
 
+
+    def constructors(self):
+        ctorname = self.name
+        methods = self.public_methods
+        return filter( lambda x: x.name == ctorname, methods )
+    
+
+    def destructors(self):
+        dtorname = '~%s' % self.name
+        methods = self.public_methods
+        return filter( lambda x: x.name == dtorname, methods )
+    
+
     def identify(self, visitor): return visitor.onClass(self)
 
     pass # end of Class
@@ -73,8 +86,11 @@ def example():
                    namespace = "Greeting::Goodwill",
                    headers_dependent_on = ["iostream"],
                    parents = [parentClass] )
+    assert klass.constructors() == [ctor]
     return klass
 
+
+if __name__ == '__main__': example()
 
 # version
 __id__ = "$Id$"

@@ -9,29 +9,30 @@
 # <LicenseText>
 #
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#
 
 PROJECT = mcstas2
-PACKAGE = wrappers
+MODULE = mcstas2
+PACKAGE = mcstas2bpmodule
+
+include std-pythonmodule.def
+include local.def
 
 
-RECURSE_DIRS = \
-    binding \
-    component2cppClass \
+PROJ_CXX_SRCLIB = -lboost_python  -L$(BOOSTPYTHON_LIBDIR) -ljournal -lmcni -lmcstas2
 
-#--------------------------------------------------------------------------
-#
 
-all: export
-	BLD_ACTION="all" $(MM) recurse
+PROJ_SRCS = \
+	wrap_mcstas2_Component.cc \
+	wrap_mcni_integration_Component.cc \
 
-#--------------------------------------------------------------------------
-#
-# export
 
-EXPORT_PYTHON_MODULES = \
-    __init__.py \
+include doxygen/default.def
+docs: export-doxygen-docs
 
-export:: export-package-python-modules
+
 
 # version
-# $Id: Make.mm 115 2004-09-22 22:29:06Z linjiao $
+# $Id: Make.mm 658 2007-10-24 21:33:08Z linjiao $
+
+# End of file

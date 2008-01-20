@@ -11,12 +11,11 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 PROJECT = mcstas2
-PACKAGE = wrappers
+PACKAGE = wrappers/binding
 
 
 RECURSE_DIRS = \
-    binding \
-    component2cppClass \
+    boostpython \
 
 #--------------------------------------------------------------------------
 #

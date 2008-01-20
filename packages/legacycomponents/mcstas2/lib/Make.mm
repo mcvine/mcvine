@@ -23,7 +23,8 @@ PROJ_SRCS = \
 # directory structure
 
 BUILD_DIRS = \
-#  neutron \
+	mcni_integration \
+	boostpython_binding \
 
 OTHER_DIRS = \
 

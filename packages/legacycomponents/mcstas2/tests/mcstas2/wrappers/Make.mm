@@ -11,35 +11,53 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 PROJECT = mcstas2
-PACKAGE = mcstas2
+PACKAGE = tests
+
+PROJ_TIDY += alltests.py $(PROJ_CPPTESTS)
+PROJ_CLEAN += alltests.py $(PROJ_CPPTESTS)
+
+PROJ_PYTESTS =  alltests.py
+PROJ_CPPTESTS = 
+PROJ_TESTS = $(PROJ_PYTESTS) $(PROJ_CPPTESTS)
+PROJ_LIBRARIES = -L$(BLD_LIBDIR) -ljournal -lmcstas2
 
 
-RECURSE_DIRS = \
-    bindings \
-    utils \
-    wrappers \
+# directory structure
+
+BUILD_DIRS = \
+
+OTHER_DIRS = \
+
+RECURSE_DIRS = $(BUILD_DIRS) $(OTHER_DIRS)
+
 
 #--------------------------------------------------------------------------
 #
 
-all: export
+all: $(PROJ_TESTS)
 	BLD_ACTION="all" $(MM) recurse
 
 tidy::
 	BLD_ACTION="tidy" $(MM) recurse
 
+test: alltests.py
+	for test in $(PROJ_TESTS) ; do $${test}; done
+
+release: tidy
+	cvs release .
+
+update: clean
+	cvs update .
 
 #--------------------------------------------------------------------------
 #
-# export
 
-EXPORT_PYTHON_MODULES = \
-    __init__.py \
-    mcni_integration.py \
 
-EXPORT_BINS = \
+alltests.py: ../alltests.py
+	cp ../alltests.py .
 
-export:: export-python-modules export-binaries
 
 # version
-# $Id: Make.mm 470 2006-06-17 09:37:10Z linjiao $
+# $Id: Make.mm 620 2007-07-11 23:24:50Z linjiao $
+
+# End of file

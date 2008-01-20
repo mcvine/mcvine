@@ -135,12 +135,6 @@ def _arguments( params ):
     return [ _argument(param) for param in params ]
 
 
-def test():
-    hhfn, ccfn = component2HHandCC( "E_monitor.comp", '_test' )
-    return
-
-if __name__ == "__main__": test()
-
 
 # version
 __id__ = "$Id$"
