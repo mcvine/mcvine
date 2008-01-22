@@ -11,7 +11,7 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 PROJECT = mcstas2
-PACKAGE = components/source
+PACKAGE = components/sources
 
 
 RECURSE_DIRS = \

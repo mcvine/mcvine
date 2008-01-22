@@ -88,6 +88,9 @@ TRACE
   %}
 SAVE
   %{
+#ifdef DEBUG
+  printf("E_monitor: save\n");
+#endif
     DETECTOR_OUT_1D(
         "Energy monitor",
         "Energy [meV]",

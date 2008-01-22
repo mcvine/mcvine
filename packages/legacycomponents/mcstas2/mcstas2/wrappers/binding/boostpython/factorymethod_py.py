@@ -18,7 +18,8 @@ template = '''
 def factory( %(ctor_kwds)s ):
     from mcstas2.bindings import boostpython
     from %(bindingmodulename)s import %(component)s as f
-    return f( %(ctor_args)s )
+    from mcstas2.mcstas2bp import McStasComponentAsMcniComponent as component
+    return component( f( %(ctor_args)s ) )
 ''' 
 
 def generate( classname, ctorargs, bindingmodulename, path ):

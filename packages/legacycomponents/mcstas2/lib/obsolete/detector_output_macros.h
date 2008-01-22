@@ -18,11 +18,14 @@
 
 // macros for detector outputs
 
+
+// stripped off from mcstas-r.h
 // all macros are supposed by run inside the trace() method of class "Componnt"
 
 
-#include "misc_macros.h"
 #include "detector_outputs.h"
+
+#define NAME_CURRENT_COMP const_cast<char *>(m_name.c_str())
 
 #define DETECTOR_OUT(p0,p1,p2) mcdetector_out(NAME_CURRENT_COMP,p0,p1,p2,NULL)
 #define DETECTOR_OUT_0D(t,p0,p1,p2) mcdetector_out_0D(t,p0,p1,p2,NAME_CURRENT_COMP)

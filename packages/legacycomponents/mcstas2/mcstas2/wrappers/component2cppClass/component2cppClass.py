@@ -37,7 +37,8 @@ def component2cppClass( comp_filename ):
     private_member_declaration = compInfo.declare[1:-1]
     ctor_body = compInfo.initialize
     trace_method_body = compInfo.trace
-    dtor_body = compInfo.finalize
+    save_method_body = compInfo.save
+    dtor_body = 'mcuse_format("McStas"); save();\n' + compInfo.finalize
 
     ##     print class_name
     ##     for arg in ctor_args: print arg
@@ -57,6 +58,7 @@ def component2cppClass( comp_filename ):
                            private_member_declaration,
                            trace_method_args,
                            trace_method_body,
+                           save_method_body,
                            headers_dependent_on)
 
 
@@ -69,6 +71,7 @@ def createCppClass( name,
                     private_member_declaration,
                     trace_method_args,
                     trace_method_body,
+                    save_method_body,
                     headers_dependent_on):
 
     #ctor arguments become private members.
@@ -82,10 +85,10 @@ def createCppClass( name,
     
     #   other ctor arguments all will have prefix 'in_'
     ctor_args = [
-        Argument( arg.type,  "in_%s" % arg.name, arg.default ) for arg in ctor_args ]
+        Argument( arg.type,  "%s" % arg.name, arg.default ) for arg in ctor_args ]
     #
     #   transfer inputs to private members
-    ctor_getInputs = [ "%s = %s;" % (member.name, arg.name) for member, arg in \
+    ctor_getInputs = [ "this->%s = %s;" % (member.name, arg.name) for member, arg in \
                        zip( private_members, ctor_args ) ]
     #   ctor body
     ctor_body = ctor_body.split("\n")
@@ -101,8 +104,8 @@ def createCppClass( name,
     trace_body = trace_method_body.split('\n')
     trace_arguments = [ Argument( "double &", arg ) for arg in trace_method_args ]
     trace = Method( "trace", trace_arguments, trace_body, type = "void" )
-    
-    methods = [ctor, dtor, trace]
+    save = Method( 'save', [], save_method_body.split('\n'), type = 'void' )
+    methods = [ctor, dtor, trace, save]
 
     # data
     private = private_member_declaration.split("\n")

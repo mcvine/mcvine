@@ -21,6 +21,9 @@
 // all macros are supposed by run inside the trace() method of class "Componnt"
 
 
+#define NAME_CURRENT_COMP const_cast<char *>(m_name.c_str())
+
+
 //count normalization should be done in the application (instrument) level
 //not component level
 inline void mcset_ncount(double count) {throw;}

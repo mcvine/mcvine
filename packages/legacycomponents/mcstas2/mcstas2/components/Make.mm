@@ -15,8 +15,8 @@ PACKAGE = components
 
 
 RECURSE_DIRS = \
-    monitor \
-    source \
+    monitors \
+    sources \
 
 #--------------------------------------------------------------------------
 #

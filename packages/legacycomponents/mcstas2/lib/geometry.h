@@ -38,6 +38,9 @@ typedef double MCNUM;
 typedef struct {MCNUM x, y, z;} Coords;
 typedef MCNUM Rotation[3][3];
 
+extern MCNUM norotation[][3];
+#define ROT_A_CURRENT_COMP  norotation
+
 
 void randvec_target_rect_angular(double *xo, double *yo, double *zo, 
 				 double *solid_angle,

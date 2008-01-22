@@ -28,7 +28,7 @@ namespace mcstas2{
     Component( const char * name ) : m_name(name), m_gravity_on(0)  {}
     Component( ) : m_name("no name"), m_gravity_on(0)  {}
 
-    virtual ~Component() {}
+    virtual ~Component() { save(); }
 
     // methods
     inline const char * name() const { return m_name.c_str(); }
@@ -43,6 +43,9 @@ namespace mcstas2{
 		       double & t,
 		       double & s1,double & s2,
 		       double & p) = 0;
+    
+    /// save data. for monitors
+    virtual void save( ) {} // default implementation does nothing
 
   protected:
 

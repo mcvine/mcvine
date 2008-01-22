@@ -11,6 +11,8 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
 
+class NotRegisteredError(Exception): pass
+
 class Registry:
 
 
@@ -39,7 +41,7 @@ class Registry:
         try:
             module = __import__( modulename, {}, {}, [''] )
         except:
-            raise "component %r of category %r does not exist"
+            raise NotRegisteredError, "component %r of category %r "
 
         return module.factory
     
