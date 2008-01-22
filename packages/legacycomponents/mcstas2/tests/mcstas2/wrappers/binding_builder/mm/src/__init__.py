@@ -11,11 +11,9 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
 
-def binding( name ):
-    exec 'import %s as package' % name
-    return package
-
 # version
 __id__ = "$Id$"
+
+# Generated automatically by PythonMill on Mon Jan 21 12:11:26 2008
 
 # End of file 

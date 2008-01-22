@@ -16,6 +16,7 @@ PACKAGE = mcstas2
 
 RECURSE_DIRS = \
     bindings \
+    components \
     utils \
     wrappers \
 

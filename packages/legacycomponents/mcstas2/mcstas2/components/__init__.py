@@ -11,9 +11,23 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
 
-def binding( name ):
-    exec 'import %s as package' % name
-    return package
+
+def componentfactory( category, type ):
+    global _registry
+    return _registry.get( category, type )
+
+
+def registercomponentfactory( category, type, factory ):
+    global _registry
+    _registry.register( category, type, factory )
+    return
+
+
+from Registry import Registry
+_registry = Registry()
+del Registry
+
+
 
 # version
 __id__ = "$Id$"

@@ -11,9 +11,11 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
 
-def binding( name ):
-    exec 'import %s as package' % name
-    return package
+import tempfile
+
+def temporarydir( ):
+    return tempfile.mkdtemp( )
+
 
 # version
 __id__ = "$Id$"

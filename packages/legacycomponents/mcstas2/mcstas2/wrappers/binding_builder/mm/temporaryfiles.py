@@ -11,9 +11,7 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
 
-def binding( name ):
-    exec 'import %s as package' % name
-    return package
+from mcstas2.wrappers.temporaryfiles import *
 
 # version
 __id__ = "$Id$"

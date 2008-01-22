@@ -11,9 +11,15 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
 
-def binding( name ):
-    exec 'import %s as package' % name
-    return package
+
+def callmm( path ):
+    import os
+    curdir = os.path.abspath( os.curdir )
+    os.chdir( path )
+    if os.system( 'mm' ): raise "mm failed in %s" % path
+    os.chdir( curdir )
+    return
+    
 
 # version
 __id__ = "$Id$"

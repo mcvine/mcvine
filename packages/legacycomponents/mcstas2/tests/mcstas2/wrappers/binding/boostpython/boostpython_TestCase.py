@@ -40,7 +40,7 @@ class boostpython_TestCase(unittest.TestCase):
         wrap_cc = generate( klass.name, ctor.args, projectpath )
 
         from mcstas2.wrappers.binding.boostpython.factorymethod_py import generate
-        factorymethod_py = generate( componentname, bpbindingname, projectpath )
+        factorymethod_py = generate( klass.name, ctor.args, bpbindingname, projectpath )
         return
 
     pass  # end of boostpython_TestCase

@@ -11,9 +11,12 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
 
-def binding( name ):
-    exec 'import %s as package' % name
-    return package
+
+def build( binding ):
+    from builder import build
+    build( binding )
+    return
+
 
 # version
 __id__ = "$Id$"
