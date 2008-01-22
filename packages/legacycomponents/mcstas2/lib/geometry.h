@@ -42,12 +42,14 @@ extern MCNUM norotation[][3];
 #define ROT_A_CURRENT_COMP  norotation
 
 
-void randvec_target_rect_angular(double *xo, double *yo, double *zo, 
-				 double *solid_angle,
-				 double xi, double yi, double zi, double height, double width, Rotation A);        
-void randvec_target_rect(double *xo, double *yo, double *zo, 
-    double *solid_angle,
-	       double xi, double yi, double zi, double height, double width, Rotation A); 
+void randvec_target_rect_angular
+(double *xo, double *yo, double *zo, 
+ double *solid_angle,
+ double xi, double yi, double zi, double height, double width, Rotation A);        
+void randvec_target_rect
+(double *xo, double *yo, double *zo, 
+ double *solid_angle,
+ double xi, double yi, double zi, double height, double width, Rotation A); 
 
 
 #endif //H_MCSTAS2_GEOMETRY

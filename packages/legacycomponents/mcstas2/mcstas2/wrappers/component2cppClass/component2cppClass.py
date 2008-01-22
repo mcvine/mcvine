@@ -38,13 +38,13 @@ def component2cppClass( comp_filename ):
     ctor_body = compInfo.initialize
     trace_method_body = compInfo.trace
     save_method_body = compInfo.save
-    dtor_body = 'mcuse_format("McStas"); save();\n' + compInfo.finalize
+    finalize_body = compInfo.finalize
 
     ##     print class_name
     ##     for arg in ctor_args: print arg
     ##     print private_member_declaration
     ##     print ctor_body
-    ##     print dtor_body
+    ##     print finalize_body
 
     ##     print compInfo.header
     ##     print compInfo.save
@@ -54,11 +54,11 @@ def component2cppClass( comp_filename ):
     return createCppClass( class_name,
                            namespace, baseclass,
                            ctor_args, ctor_body,
-                           dtor_body,
                            private_member_declaration,
                            trace_method_args,
                            trace_method_body,
                            save_method_body,
+                           finalize_body,
                            headers_dependent_on)
 
 
@@ -67,11 +67,11 @@ from mcstas2.utils.mills.cxx.Class import Argument, Method, Member, Class, argum
 def createCppClass( name,
                     namespace, baseclass,
                     ctor_args, ctor_body,
-                    dtor_body,
                     private_member_declaration,
                     trace_method_args,
                     trace_method_body,
                     save_method_body,
+                    finalize_body,
                     headers_dependent_on):
 
     #ctor arguments become private members.
@@ -97,15 +97,22 @@ def createCppClass( name,
     ctor_args = [ ctor_args_name ] + ctor_args
     ctor = Method( name, ctor_args, ctor_body )
 
-    #   dtor
-    dtor = Method( '~%s' % name, [], dtor_body.split("\n") )
+    # dtor
+    dtor = Method( '~'+name, [], ['save();', 'finalize();'] )
+    
+    #   finalize
+    finalize = Method( 'finalize', [], finalize_body.split("\n"), type = 'void' )
 
     # methods
     trace_body = trace_method_body.split('\n')
     trace_arguments = [ Argument( "double &", arg ) for arg in trace_method_args ]
     trace = Method( "trace", trace_arguments, trace_body, type = "void" )
-    save = Method( 'save', [], save_method_body.split('\n'), type = 'void' )
-    methods = [ctor, dtor, trace, save]
+
+    save_body = save_method_body.split( '\n' )
+    save_body = [ 'mcuse_format("McStas");' ] + save_body # need to call mcuse_format before calling detector output methods
+    save = Method( 'save', [], save_body, type = 'void' )
+    
+    methods = [ctor, dtor, trace, save, finalize, ]
 
     # data
     private = private_member_declaration.split("\n")

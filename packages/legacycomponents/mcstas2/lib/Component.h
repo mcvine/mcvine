@@ -25,30 +25,37 @@ namespace mcstas2{
 
   public:
 
-    Component( const char * name ) : m_name(name), m_gravity_on(0)  {}
-    Component( ) : m_name("no name"), m_gravity_on(0)  {}
-
-    virtual ~Component() { save(); }
+    // meta-methods
+    Component( const char * name );
+    Component( );
+    virtual ~Component();
 
     // methods
-    inline const char * name() const { return m_name.c_str(); }
-    inline void subjectTo( const Gravity & g ) { m_g = g; m_gravity_on = 1; }
-    inline bool gravityIsOn() const { return m_gravity_on; }
-    inline const Gravity & gravity() const { return m_g; }
-    inline void setName( const char * name ) { m_name = name; }
+    const char * name() const;
+    // gravity related
+    void subjectTo( const Gravity & g );
+    bool gravityIsOn() const;
+    const Gravity & gravity() const;
 
     /// finding trace of a neutron in myself
-    virtual void trace(double & x,double & y,double & z,
-		       double & vx,double & vy,double & vz,
-		       double & t,
-		       double & s1,double & s2,
-		       double & p) = 0;
+    virtual void trace
+    (double & x,double & y,double & z,
+     double & vx,double & vy,double & vz,
+     double & t,
+     double & s1,double & s2,
+     double & p) = 0;
     
     /// save data. for monitors
-    virtual void save( ) {} // default implementation does nothing
+    virtual void save( );
+    /// finalize everything. this is almost just dtor.
+    virtual void finalize( );
 
   protected:
 
+    /// set this component's name. only called by subclass
+    void setName( const char * name );
+
+    // data
     std::string m_name;
     bool m_gravity_on;
     Gravity m_g;
