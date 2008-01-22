@@ -20,13 +20,11 @@ def component2HHandCC( component_filename, pathToSave ):
 
 
 
-from mcstas2.utils.parsers.ComponentParser import component as componentParserFactory
-componentParser = componentParserFactory()
 
 def component2cppClass( comp_filename ):
     #parse the mcstas component and get infos we want
-    s = open(comp_filename).read()
-    compInfo = componentParser.parseString( s )
+    from mcstas2.utils.parsers import parseComponent
+    compInfo = parseComponent( comp_filename )
 
     #massage those info and add some additional info and make the class
     class_name = compInfo.name

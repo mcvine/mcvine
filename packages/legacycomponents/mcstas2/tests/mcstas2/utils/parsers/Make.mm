@@ -10,37 +10,54 @@
 #
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-PROJECT = mcstas2/utils
-PACKAGE = parsers
+PROJECT = mcstas2
+PACKAGE = tests
 
-RECURSE_DIRS = \
-	pyparsing \
+PROJ_TIDY += alltests.py $(PROJ_CPPTESTS)
+PROJ_CLEAN += alltests.py $(PROJ_CPPTESTS)
+
+PROJ_PYTESTS =  alltests.py
+PROJ_CPPTESTS = 
+PROJ_TESTS = $(PROJ_PYTESTS) $(PROJ_CPPTESTS)
+PROJ_LIBRARIES = -L$(BLD_LIBDIR) -ljournal -lmcstas2
+
+
+# directory structure
+
+BUILD_DIRS = \
+
+OTHER_DIRS = \
+
+RECURSE_DIRS = $(BUILD_DIRS) $(OTHER_DIRS)
+
 
 #--------------------------------------------------------------------------
 #
 
-all: export
+all: $(PROJ_TESTS)
 	BLD_ACTION="all" $(MM) recurse
 
 tidy::
 	BLD_ACTION="tidy" $(MM) recurse
 
+test: alltests.py
+	for test in $(PROJ_TESTS) ; do $${test}; done
+
+release: tidy
+	cvs release .
+
+update: clean
+	cvs update .
 
 #--------------------------------------------------------------------------
 #
-# export
-
-EXPORT_PYTHON_MODULES = \
-	__init__.py \
-	ComponentHeaderParser.py \
-	ComponentInfo.py \
-	ComponentParser.py \
 
 
+alltests.py: ../alltests.py
+	cp ../alltests.py .
 
-export:: export-package-python-modules 
 
 # version
-# $Id: Make.mm 312 2005-06-02 20:25:25Z linjiao $
+# $Id: Make.mm 620 2007-07-11 23:24:50Z linjiao $
 
 # End of file

@@ -28,7 +28,7 @@ mcstas2::Component::Component( )
 mcstas2::Component:: ~Component()
 { finalize(); }
 
-    // methods
+
 const char *
 mcstas2::Component::name() const 
 { return m_name.c_str(); }
@@ -61,8 +61,6 @@ void mcstas2::Component::finalize()
 {
   std::cout << "finalize component \"" << name() << '"' << std::endl;
 }
-
-
 
 
 // version
