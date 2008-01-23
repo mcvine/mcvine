@@ -22,31 +22,28 @@ componentfile = '%s.comp' % componentname
 projectpath = '%s' % componentname
 bpbindingname = '%sbp' % componentname
 
-class boostpython_TestCase(unittest.TestCase):
+class TestCase(unittest.TestCase):
 
     def test(self):
         "codes for boost python binding"
-        from mcstas2.wrappers.binding.boostpython.module_cc import generate
-        module_cc = generate( bpbindingname, projectpath )
-
         from mcstas2.wrappers.component2cppClass.component2cppClass import component2cppClass
         klass = component2cppClass( componentfile )
 
-        from mcstas2.utils.mills.cxx.factory import createHHandCC
-        createHHandCC( klass, projectpath )
+        from mcstas2.utils.parsers import parseComponent
+        compinfo = parseComponent( componentfile )
 
-        ctor = klass.constructors() [0]
-        from mcstas2.wrappers.binding.boostpython.wrap_cc import generate
-        wrap_cc = generate( klass.name, ctor.args, projectpath )
+        from mcstas2.wrappers.pymodule import generate
+        sources = generate( compinfo, klass, bpbindingname, projectpath )
 
+        self.assertEqual( sources[0], '%s/%s.py' %(componentname, componentname) )
         return
-
-    pass  # end of boostpython_TestCase
+    
+    pass  # end of TestCase
 
 
 
 def pysuite():
-    suite1 = unittest.makeSuite(boostpython_TestCase)
+    suite1 = unittest.makeSuite(TestCase)
     return unittest.TestSuite( (suite1,) )
 
 

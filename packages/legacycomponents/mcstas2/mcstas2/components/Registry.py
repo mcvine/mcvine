@@ -23,6 +23,11 @@ class Registry:
         return
 
 
+    def registered(self, category, type):
+        key = category, type
+        return key in self.factories
+
+
     def register(self, category, type, module):
         self._addType( category, type )
         key = category, type
@@ -56,7 +61,7 @@ class Registry:
         except:
             raise NotRegisteredError, "component %r of category %r "
 
-        self.register( category, type, module.factory, module.info )
+        self.register( category, type, module )
         return module
 
 

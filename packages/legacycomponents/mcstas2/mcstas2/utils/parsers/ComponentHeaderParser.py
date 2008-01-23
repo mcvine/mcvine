@@ -58,19 +58,27 @@ def _parseParameters( lines ):
     input_sig = '* INPUT'
     output_sig = '* OUTPUT'
     for no, line in enumerate(lines):
-        if line.startswith( input_sig ): input_start = no
-        elif line.startswith( output_sig ): output_start = no
+        if line.startswith( input_sig ): input_start = no + 1
+        elif line.startswith( output_sig ): output_start = no + 1
         else: pass
         continue
-    if input_start is None or output_start is None:
+    if output_start is None:
+        output_start = len(lines)
+        if input_start is None:
+            input_start = 0
+            pass
+        pass
+
+    if output_start is None or input_start is None:
         raise "Parameter section should have two sections: inputs and outputs.\n%s" % (
             '\n'.join(lines), )
 
     #remove '* '
     for no, line in enumerate(lines): lines[ no ] = line[ 2: ]
-    
-    inputs = lines[input_start+1: output_start]
-    outputs = lines[output_start+1: ]
+
+    #separate lines to different categories
+    inputs = lines[input_start: output_start]
+    outputs = lines[output_start: ]
 
     input_parameters = _parseParameterList( inputs )
     output_parameters = _parseParameterList( outputs )
@@ -86,7 +94,9 @@ def _parseParameterList( params ):
         try:
             name, description = p.split(':')
         except:
-            raise ValueError, "Don't know how to parse %r" % (p,)
+            #this means this line belongs to the previous parameter
+            d[name] += p
+            pass
         name = name.strip()
         description = description.strip()
         d[name] = description

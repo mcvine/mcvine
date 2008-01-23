@@ -10,9 +10,8 @@
 #
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-
 PROJECT = mcstas2
-PACKAGE = wrappers/binding/boostpython
+PACKAGE = wrappers/pymodule
 
 
 RECURSE_DIRS = \
@@ -29,8 +28,7 @@ all: export
 
 EXPORT_PYTHON_MODULES = \
 	__init__.py \
-	module_cc.py \
-	wrap_cc.py \
+	factorymethod_py.py \
 
 export:: export-package-python-modules
 

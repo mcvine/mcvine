@@ -12,16 +12,23 @@
 #
 
 
+
+formatstr = '''
+Compoennt %(name)r: %(simple_description)s
+
+%(full_description)s
+'''
+
 class ComponentInfo:
 
-    def __init__(self, name, copyright, simple_description,
-                 full_description, 
-                 definition_parameters,
-                 setting_parameters,
-                 output_parameters,
-                 state_parameters,
-                 declare,
-                 initialize, trace, save, finalize
+    def __init__(self, name = 'name', copyright = '', simple_description ='',
+                 full_description = '', 
+                 definition_parameters = [],
+                 setting_parameters = [],
+                 output_parameters = [],
+                 state_parameters = [],
+                 declare = '',
+                 initialize='', trace='', save='', finalize=''
                  ):
         self.name = name
         self.copyright = copyright
@@ -38,17 +45,21 @@ class ComponentInfo:
         self.finalize = finalize
         return
 
+    def __str__(self):
+        d = self.__dict__
+        return formatstr % d
+
     pass # end of ComponentInfo
 
 
 
 class Parameter:
 
-    def __init__(self, name, type, value, description = '' ):
-        self.name = name
-        self.type = type
-        self.value = value
-        self.description = description
+    def __init__(self, name='name', type='', value='', description = '' ):
+        self.name = '%s' % name
+        self.type = '%s' % type
+        self.value = '%s' % value
+        self.description = '%s' % description
         return
 
     def __str__(self):

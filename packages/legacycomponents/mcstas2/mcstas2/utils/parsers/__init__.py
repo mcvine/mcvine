@@ -21,8 +21,8 @@ def parseComponent( component_file ):
     from ComponentHeaderParser import parse
     header = parse( info.header )
 
+    name = '%s' % info.name    
     assert header.componentname == info.name
-    name = info.name
 
     inputParamDescs = header.input_parameters
     outputParamDescs = header.output_parameters
@@ -31,7 +31,7 @@ def parseComponent( component_file ):
     setting_parameters = _addDescription( info.setting_parameters, inputParamDescs )
     output_parameters = _addDescription( info.output_parameters, outputParamDescs )
 
-    state_parameters = _addDescription( info.state_parameters, {} )
+    state_parameters = [ str(p) for p in info.state_parameters ]
     
     from ComponentInfo import ComponentInfo
     return ComponentInfo(
@@ -42,8 +42,9 @@ def parseComponent( component_file ):
         setting_parameters,
         output_parameters,
         state_parameters,
-        info.declare,
-        info.initialize, info.trace, info.save, info.finalize
+        '%s' % info.declare,
+        '%s' % info.initialize, '%s' % info.trace,
+        '%s' % info.save, '%s' % info.finalize
         )
 
 
@@ -53,7 +54,9 @@ def _addDescription( parameters, descriptions ):
     for param in parameters:
         name = param.name
         d = descriptions.get( name ) or ''
-        p = Parameter( name, param.type, param.value, d )
+        type = param.type
+        value = param.value
+        p = Parameter( name, type, value, d )
         ret.append( p )
         continue
     return ret

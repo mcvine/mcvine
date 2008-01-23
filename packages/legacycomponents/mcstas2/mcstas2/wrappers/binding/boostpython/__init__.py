@@ -28,12 +28,8 @@ def generate_binding_sources( bindingname, klass, path ):
     from wrap_cc import generate
     wrap_cc = generate( klass.name, ctor.args, path )
 
-    from factorymethod_py import generate
-    factorymethod_py = generate( klass.name, ctor.args, bindingname, path )
-    
     return {
         'c' : [module_cc, wrap_cc],
-        'python': [ factorymethod_py ],
         }
 
 

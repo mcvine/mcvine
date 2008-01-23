@@ -34,9 +34,13 @@ def wrap( componentfilename, componentcategory,
 
     if not bindingname: bindingname = '%s%s' % (componentname, bindingtype)
 
+    # read component info
+    from mcstas2.utils.parsers import parseComponent
+    compInfo = parseComponent( componentfilename )
+
     # generate c++ sources for the component
-    from component2cppClass.component2cppClass import component2cppClass
-    klass = component2cppClass( componentfilename )
+    from component2cppClass.component2cppClass import componentInfo2cppClass
+    klass = componentInfo2cppClass( compInfo )
     from mcstas2.utils.mills.cxx.factory import createHHandCC
     hh, cc = createHHandCC( klass, path )
 
@@ -44,6 +48,14 @@ def wrap( componentfilename, componentcategory,
     from binding import binding
     bindingsources = binding( bindingtype ).generate_binding_sources(
         bindingname, klass, path )
+
+    # genearte python code to wrap the binding into a factory method
+    from pymodule import generate
+    pysources = generate( compInfo, klass, bindingname, path ) 
+    if bindingsources.get( 'python' ) is None:
+        bindingsources['python'] = pysources
+    else:
+        bindingsources['python'] += pysources
 
     # build binding
     from binding_builder.Binding import Binding

@@ -11,6 +11,20 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
 
+def registered( category, type ):
+    global _registry
+    return _registry.registered( category, type )
+
+
+def categoriesInRegistry( ):
+    global _registry
+    return _registry.types.keys()
+
+
+def registeredComponentsInCategory( category ):
+    global _registry
+    return _registry.types.get( category ) or []
+
 
 def componentfactory( category, type ):
     global _registry

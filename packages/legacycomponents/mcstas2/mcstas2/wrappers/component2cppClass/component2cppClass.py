@@ -12,20 +12,19 @@
 #
 
 
-
-
 def component2HHandCC( component_filename, pathToSave ):
     from mcstas2.utils.mills.cxx.factory import createHHandCC
     return createHHandCC( component2cppClass( component_filename ), pathToSave )
-
-
 
 
 def component2cppClass( comp_filename ):
     #parse the mcstas component and get infos we want
     from mcstas2.utils.parsers import parseComponent
     compInfo = parseComponent( comp_filename )
+    return componentInfo2cppClass( compInfo )
 
+
+def componentInfo2cppClass( compInfo ):
     #massage those info and add some additional info and make the class
     class_name = compInfo.name
     ctor_args = _arguments(compInfo.definition_parameters) \
