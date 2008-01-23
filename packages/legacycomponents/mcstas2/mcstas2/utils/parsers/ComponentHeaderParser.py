@@ -100,7 +100,7 @@ def _parseFullDescription( lines ):
     #remove '* '
     for no, line in enumerate(lines): lines[ no ] = line[ 2: ]
     lines = filter( lambda x: len(x.strip()), lines )
-    return lines
+    return '\n'.join(lines)
 
 
 def _parseHeaderOfHeader( h ):
@@ -126,7 +126,7 @@ def _parseInfo( info ):
     copyright = info[: breaklineno]
     simple_description = info[ breaklineno + 1: ]
     simple_description = filter( lambda x: len(x.strip()), simple_description )
-    return copyright, simple_description
+    return '\n'.join(copyright), '\n'.join(simple_description)
 
 
 testtext = """

@@ -20,6 +20,22 @@ def factory( %(ctor_kwds)s ):
     from %(bindingmodulename)s import %(component)s as f
     from mcstas2.mcstas2bp import McStasComponentAsMcniComponent as component
     return component( f( %(ctor_args)s ) )
+
+from mcstas2.utils.parsers.ComponentInfo import Parameter
+class info:
+    name = %(name)r
+    copyright = """%(copyright)s"""
+    simple_description = """%(simple_description)s"""
+    full_description = """%(full_description)s""" 
+    definition_parameters = %(definition_parameters)s
+    setting_parameters = %(setting_parameters)s
+    output_parameters = %(output_parameters)s
+    state_parameters = %(state_parameters)s
+    declare = %(declare)s
+    initialize = %(initialize)s
+    trace = %(trace)s
+    save = %(save)s
+    finalize = %(finalize)s
 ''' 
 
 def generate( classname, ctorargs, bindingmodulename, path ):

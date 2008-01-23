@@ -31,7 +31,7 @@ def parseComponent( component_file ):
     setting_parameters = _addDescription( info.setting_parameters, inputParamDescs )
     output_parameters = _addDescription( info.output_parameters, outputParamDescs )
 
-    state_parameters = info.state_parameters
+    state_parameters = _addDescription( info.state_parameters, {} )
     
     from ComponentInfo import ComponentInfo
     return ComponentInfo(

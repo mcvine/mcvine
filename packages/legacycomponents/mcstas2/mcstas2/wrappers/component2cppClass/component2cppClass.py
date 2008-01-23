@@ -36,7 +36,7 @@ def component2cppClass( comp_filename ):
     ctor_body = compInfo.initialize
     trace_method_body = compInfo.trace
     save_method_body = compInfo.save
-    finalize_body = compInfo.finalize
+    finalize_method_body = compInfo.finalize
 
     ##     print class_name
     ##     for arg in ctor_args: print arg
@@ -56,7 +56,7 @@ def component2cppClass( comp_filename ):
                            trace_method_args,
                            trace_method_body,
                            save_method_body,
-                           finalize_body,
+                           finalize_method_body,
                            headers_dependent_on)
 
 

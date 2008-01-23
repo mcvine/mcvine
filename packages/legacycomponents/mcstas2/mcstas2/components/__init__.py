@@ -14,12 +14,17 @@
 
 def componentfactory( category, type ):
     global _registry
-    return _registry.get( category, type )
+    return _registry.getFactory( category, type )
 
 
-def registercomponentfactory( category, type, factory ):
+def componentinfo( category, type ):
     global _registry
-    _registry.register( category, type, factory )
+    return _registry.getInfo( category, type )
+
+
+def registercomponent( category, type, componentmodule ):
+    global _registry
+    _registry.register( category, type, componentmodule )
     return
 
 
