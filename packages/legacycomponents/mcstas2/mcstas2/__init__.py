@@ -20,6 +20,11 @@ def componentfactory( category, type ):
 
 
 def printcomponentinfo( category, type ):
+    print componentinfo( category, type )
+    return
+
+
+def componentinfo( category, type ):
     import components
     if components.registered( category, type ):
         from components import componentinfo
@@ -28,8 +33,7 @@ def printcomponentinfo( category, type ):
         from utils.parsers import parseComponent
         path = defaultcomponentpath( category, type )
         info = parseComponent( path )
-    print info
-    return
+    return info
 
 
 def listallcomponentcategories( ):
