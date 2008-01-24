@@ -42,7 +42,7 @@ class Renderer(base):
     def onHomogeneousScatterer(self, hs):
         self._write('')
         mcweights = hs.mcweights_absorption_scattering_transmission
-        self._write('<homogeneous_scatterer mcweights="%s">' % mcweights )
+        self._write('<homogeneous_scatterer mcweights="%s">' % (mcweights, ) )
         self._indent()
 
         shape = hs.shape()

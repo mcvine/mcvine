@@ -23,12 +23,14 @@ warning = journal.warning( "hsxml_TestCase" )
 class hsxml_TestCase(unittest.TestCase):
 
     def test(self):
+        'hsxml: parsing'
         from mccomponents.homogeneous_scatterer.hsxml import parse_file
         hs = parse_file( 'Ni-scatterer.xml' )
         print hs
         return
     
     def test1(self):
+        'hsxml: another parsing'
         from mccomponents.homogeneous_scatterer.hsxml import parse_file
         hs = parse_file( 'Ni1-scatterer.xml' )
         shape = hs.shape()
@@ -36,6 +38,24 @@ class hsxml_TestCase(unittest.TestCase):
 
         from mccomponents.homogeneous_scatterer.Kernel import Kernel
         self.assert_( isinstance( hs.kernel(), Kernel) )
+        return
+
+    def test2(self):
+        'parsing, rendering and parsing again'
+        filename = 'Ni1-scatterer.xml' 
+        from mccomponents.homogeneous_scatterer.hsxml import parse_file, weave
+        hs = parse_file( filename )
+
+        weaved = '%s.weaved' % filename
+        weave( hs, open( weaved, 'w' ) )
+
+        hs1 = parse_file( weaved )
+        
+        shape = hs1.shape()
+        self.assertEqual( shape.__class__.__name__, 'Sphere' )
+
+        from mccomponents.homogeneous_scatterer.Kernel import Kernel
+        self.assert_( isinstance( hs1.kernel(), Kernel) )
         return
     
     pass  # end of hsxml_TestCase
