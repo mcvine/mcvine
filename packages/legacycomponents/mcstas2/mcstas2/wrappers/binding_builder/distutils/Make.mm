@@ -11,12 +11,10 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 PROJECT = mcstas2/wrappers
-PACKAGE = binding_builder
+PACKAGE = binding_builder/distutils
 
 
 RECURSE_DIRS = \
-	distutils \
-	mm \
 
 #--------------------------------------------------------------------------
 #
@@ -28,12 +26,10 @@ tidy::
 	BLD_ACTION="tidy" $(MM) recurse
 
 #--------------------------------------------------------------------------
-#--------------------------------------------------------------------------
 #
 # export
 
 EXPORT_PYTHON_MODULES = \
-	Binding.py \
 	__init__.py \
 
 export:: export-package-python-modules

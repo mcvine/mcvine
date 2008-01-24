@@ -10,13 +10,11 @@
 #
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-PROJECT = mcstas2/wrappers
-PACKAGE = binding_builder
+PROJECT = softwareinstallationinfodb
+PACKAGE = softwareinstallationinfodb
 
 
 RECURSE_DIRS = \
-	distutils \
-	mm \
 
 #--------------------------------------------------------------------------
 #
@@ -27,16 +25,22 @@ all: export
 tidy::
 	BLD_ACTION="tidy" $(MM) recurse
 
-#--------------------------------------------------------------------------
+
 #--------------------------------------------------------------------------
 #
 # export
 
 EXPORT_PYTHON_MODULES = \
-	Binding.py \
-	__init__.py \
+    Info.py \
+    __init__.py \
+    boostpython.py \
+    caltech_config.py \
+    mcni.py \
+    mcstas2.py \
 
-export:: export-package-python-modules
+EXPORT_BINS = \
+
+export:: export-python-modules export-binaries
 
 # version
-# $Id: Make.mm 115 2004-09-22 22:29:06Z linjiao $
+# $Id: Make.mm 470 2006-06-17 09:37:10Z linjiao $

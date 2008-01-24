@@ -72,7 +72,7 @@ def build_binding(binding):
     #make a Make.mm and local.def there
     makemm = binding_mk.Generator(
         binding.python_package, binding.binding_module,
-        csources, binding.c_libs )
+        csources, binding.c_libs, binding.c_libdirs )
     makemm.generate( tmpdir )
 
     localdef = local_def.Generator(

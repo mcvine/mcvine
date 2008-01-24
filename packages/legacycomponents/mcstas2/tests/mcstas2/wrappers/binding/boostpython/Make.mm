@@ -13,7 +13,7 @@
 PROJECT = mcstas2
 PACKAGE = tests
 
-PROJ_TIDY += alltests.py $(PROJ_CPPTESTS)
+PROJ_TIDY += alltests.py $(PROJ_CPPTESTS) E_monitor/*
 PROJ_CLEAN += alltests.py $(PROJ_CPPTESTS)
 
 PROJ_PYTESTS =  alltests.py

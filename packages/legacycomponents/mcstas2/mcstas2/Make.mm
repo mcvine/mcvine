@@ -19,6 +19,7 @@ RECURSE_DIRS = \
     components \
     utils \
     wrappers \
+    softwareinstallationinfodb.mm \
 
 #--------------------------------------------------------------------------
 #
@@ -35,8 +36,11 @@ tidy::
 # export
 
 EXPORT_PYTHON_MODULES = \
-    __init__.py \
-    mcni_integration.py \
+	__init__.py \
+	dotmcstas.py \
+	mcni_integration.py \
+	pythonexportathome.py \
+	release.py \
 
 EXPORT_BINS = \
 

@@ -4,19 +4,20 @@
 #
 #                                   Jiao Lin
 #                      California Institute of Technology
-#                        (C) 2007  All Rights Reserved
+#                        (C) 2005 All Rights Reserved  
 #
 # {LicenseText}
 #
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
 
-import tempfile
 
-def temporarydir( ):
-    return tempfile.mkdtemp( )
+## .mcstas2 at user home directory
+import os
+home = os.path.expanduser( '~' )
+dotmcstas = os.path.join( home, '.mcstas2' )
 
-
+    
 # version
 __id__ = "$Id$"
 

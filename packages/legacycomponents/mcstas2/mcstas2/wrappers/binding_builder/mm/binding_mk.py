@@ -34,13 +34,14 @@ class Generator:
 
     target = 'Make.mm'
 
-    def __init__(self, package, bindingmodule, srcs, libs):
+    def __init__(self, package, bindingmodule, srcs, libs, libdirs):
         """Generator( 'mcstas2.components.monitors', 'E_monitorbp', ['E_monitor.cc'], ['mcstas2', 'mcni'] )
         """
         self.package = package
         self.bindingmodule = bindingmodule
         self.srcs = srcs
         self.libs = libs
+        self.libdirs = libdirs
         return
     
     def generate(self, path, target = None):
@@ -50,6 +51,8 @@ class Generator:
         
         srcs_str = '\n'.join( [ '\t%s \\' % src for src in self.srcs ] )
         libs_str = ' '.join( [ '-l %s' % lib for lib in self.libs ] )
+        libdirs_str = ' '.join( [ '-L%s' % libdir for libdir in self.libdirs ] )
+        libs_str += ' ' + libdirs_str
         package_str = self.package.replace( '.', '/' )
         content = template % {
             'pythonpackage' : package_str,

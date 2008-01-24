@@ -26,6 +26,28 @@ def builder( name ):
     return package
 
 
+def binding( *args, **kwds ):
+    deps = kwds.get( 'dependencies' )
+    del kwds['dependencies']
+    from Binding import Binding
+    ret = Binding( *args, **kwds )
+    if deps:
+        for dep in deps: _addDep( dep, ret )
+        pass
+    return ret
+
+
+def _addDep( dep, binding ):
+    import softwareinstallationinfodb
+    dep = softwareinstallationinfodb.info( dep )
+    include_dir = dep.include
+    binding.c_includes.append( include_dir )
+
+    library_dir = dep.lib
+    binding.c_libdirs.append( library_dir )
+    return
+
+
 # version
 __id__ = "$Id$"
 

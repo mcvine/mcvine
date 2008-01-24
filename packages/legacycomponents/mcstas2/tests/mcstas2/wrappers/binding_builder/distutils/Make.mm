@@ -13,7 +13,7 @@
 PROJECT = mcstas2
 PACKAGE = tests
 
-PROJ_TIDY += alltests.py $(PROJ_CPPTESTS)
+PROJ_TIDY += alltests.py $(PROJ_CPPTESTS) build
 PROJ_CLEAN += alltests.py $(PROJ_CPPTESTS)
 
 PROJ_PYTESTS =  alltests.py
@@ -25,8 +25,6 @@ PROJ_LIBRARIES = -L$(BLD_LIBDIR) -ljournal -lmcstas2
 # directory structure
 
 BUILD_DIRS = \
-	distutils \
-	mm \
 
 OTHER_DIRS = \
 

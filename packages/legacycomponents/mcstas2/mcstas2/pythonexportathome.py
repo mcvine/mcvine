@@ -4,19 +4,21 @@
 #
 #                                   Jiao Lin
 #                      California Institute of Technology
-#                        (C) 2007  All Rights Reserved
+#                        (C) 2005 All Rights Reserved  
 #
 # {LicenseText}
 #
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
 
-import tempfile
 
-def temporarydir( ):
-    return tempfile.mkdtemp( )
+## export directory of python modules at user's home directory
 
+from dotmcstas import dotmcstas
+import os
+path = os.path.join( dotmcstas, 'python' )
 
+    
 # version
 __id__ = "$Id$"
 

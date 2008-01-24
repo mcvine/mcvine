@@ -12,6 +12,10 @@
 #
 
 def componentfactory( category, type ):
+    '''obtain component factory method of given category and type
+Examples:
+  componentfactory( 'monitors', 'E_monitor' )
+  '''
     from components import componentfactory
     from components.Registry import NotRegisteredError
     try: f = componentfactory( category, type )
@@ -20,11 +24,19 @@ def componentfactory( category, type ):
 
 
 def printcomponentinfo( category, type ):
+    '''print info about the component of given category and type
+Examples:
+  printcomponentinfo( 'monitors', 'E_monitor' )
+  '''
     print componentinfo( category, type )
     return
 
 
 def componentinfo( category, type ):
+    '''obtain component info of given category and type
+Examples:
+  componentinfo( 'monitors', 'E_monitor' )
+  '''    
     import components
     if components.registered( category, type ):
         from components import componentinfo
@@ -36,7 +48,30 @@ def componentinfo( category, type ):
     return info
 
 
+def wrapcomponent( componentfilename, componentcategory, **kwds ):
+    from release import type as releasetype
+
+    #set appropriate builder
+    builders = {
+        'developer': 'mm',
+        'user': 'distutils',
+        }
+    if kwds.get('buildername') is None: kwds['buildername'] = builders[releasetype]
+
+    #set appropriate python export path
+    from pythonexportathome import path as pytreeathome
+    pythontrees = {
+        'developer': None,
+        'user': pytreeathome,
+        }
+    if kwds.get('pythonexportroot') is None: kwds['pythonexportroot'] = pythontrees[releasetype]
+
+    from wrappers import wrap
+    return wrap( componentfilename, componentcategory, **kwds )
+
+
 def listallcomponentcategories( ):
+    '''list all component categories'''
     defaultcategories = listalldefaultcomponentcategories()
     import components
     categoriesinregistry = components.categoriesInRegistry()
@@ -48,10 +83,6 @@ def listcomponentsincategory( category ):
     import components 
     registered = components.registeredComponentsInCategory( category )
     return uniquelist( defaultcomponents + registered )
-
-
-def uniquelist( l ):
-    return [ u for u in l if u not in locals()['_[1]'] ]
 
 
 def defaultcomponentfactory( category, type ):
@@ -121,6 +152,27 @@ def defaultcomponentlibrarypath( ):
               "  $ export %s=/.../mcstas/lib/mcstas\n"\
               % (var, var)
     return path
+
+
+
+def uniquelist( l ):
+    return [ u for u in l if u not in locals()['_[1]'] ]
+
+
+
+
+def _init():
+    from release import type as releasetype
+    #add user python tree to path if necessary
+    if releasetype == 'user':
+        from pythonexportathome import path as pytreeathome
+        import sys
+        sys.path = [pytreeathome] + sys.path
+        pass
+    return
+
+
+_init()
 
     
 # version

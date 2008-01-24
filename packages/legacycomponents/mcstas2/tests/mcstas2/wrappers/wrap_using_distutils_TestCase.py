@@ -16,35 +16,17 @@
 import unittestX as unittest
 import journal
 
-import mcstas2
 
+componentname = 'E_monitor'
+componentfile = '%s.comp' % componentname
+category = 'monitors'
 
-class TestCase(unittest.TestCase):
+class wrap_TestCase(unittest.TestCase):
 
-    def test1(self):
-        'printcomponentinfo'
-        mcstas2.printcomponentinfo( 'monitors', 'E_monitor' )
-        return
-
-    
-    def test2(self):
-        'list component categories'
-        print mcstas2.listallcomponentcategories( )
-        return
-
-
-    def test3(self):
-        'list components of a category'
-        print mcstas2.listcomponentsincategory( 'monitors' )
-        return
-
-
-    def test4(self):
-        'wrapcomponent'
-        componentname = 'E_monitor'
-        componentfile = '%s.comp' % componentname
-        category = 'monitors'
-        mcstas2.wrapcomponent( componentfile, category )
+    def test(self):
+        "wrap E_monitor"
+        from mcstas2.wrappers import wrap
+        wrap( componentfile, category, buildername = 'distutils' )
         from mcstas2.components import componentfactory
         emonfac = componentfactory( category, componentname )
         emon = emonfac(
@@ -54,13 +36,13 @@ class TestCase(unittest.TestCase):
             ymin=-0.2, ymax=0.2,
             Emin=50, Emax=60)
         return
-    
-    pass  # end of TestCase
+
+    pass  # end of wrap_TestCase
 
 
 
 def pysuite():
-    suite1 = unittest.makeSuite(TestCase)
+    suite1 = unittest.makeSuite(wrap_TestCase)
     return unittest.TestSuite( (suite1,) )
 
 

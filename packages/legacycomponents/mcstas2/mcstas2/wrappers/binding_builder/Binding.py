@@ -18,13 +18,14 @@ class Binding:
 
     def __init__(self, python_package, binding_module,
                  c_headers, c_sources, python_sources,
-                 c_libs = [], c_includes = []):
+                 c_libs = [], c_libdirs = [], c_includes = []):
         self.python_package = python_package
         self.binding_module = binding_module
         self.c_headers = c_headers
         self.c_sources = c_sources
         self.python_sources = python_sources
         self.c_libs = c_libs
+        self.c_libdirs = c_libdirs
         self.c_includes = c_includes
         return
 

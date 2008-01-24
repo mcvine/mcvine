@@ -4,19 +4,22 @@
 #
 #                                   Jiao Lin
 #                      California Institute of Technology
-#                        (C) 2007  All Rights Reserved
+#                        (C) 2005 All Rights Reserved  
 #
 # {LicenseText}
 #
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
 
-import tempfile
 
-def temporarydir( ):
-    return tempfile.mkdtemp( )
+import os
+dvdir = os.environ.get('DV_DIR')
+exportroot = os.environ.get('EXPORT_ROOT')
 
+if dvdir and exportroot: type = 'developer'
+else: type = 'user'
 
+    
 # version
 __id__ = "$Id$"
 
