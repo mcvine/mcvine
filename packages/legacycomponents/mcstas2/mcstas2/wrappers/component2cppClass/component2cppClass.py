@@ -133,7 +133,6 @@ def _argument( param ):
     input: parsed mcstas parameter. 
     note: mcstas parameters without type are doubles
     """
-    if param.type == "": return Argument("double", param.name, param.value)
     return Argument( param.type, param.name, param.value )
 
 

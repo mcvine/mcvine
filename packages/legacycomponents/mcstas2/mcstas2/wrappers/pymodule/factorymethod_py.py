@@ -23,6 +23,8 @@ def factory( %(ctor_kwds)s ):
 
 from mcstas2.utils.parsers.ComponentInfo import ComponentInfo, Parameter
 %(component_info)s
+
+factory.__doc__ = str(info)
 ''' 
 
 def generate( compinfo, klass, bindingmodulename, path ):
@@ -97,7 +99,7 @@ a.name = 'a'
 
 
 def _build_kwds_str( args ):
-    return ",".join( [ _arg_str( arg ) for arg in args] )
+    return ",".join( [ _kwd_str( arg ) for arg in args] )
 def _kwd_str( arg ):
     return "%s=%r" % (arg.name, arg.default)
 

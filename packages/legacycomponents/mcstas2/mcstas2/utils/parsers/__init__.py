@@ -32,12 +32,15 @@ def parseComponent( component_file ):
     output_parameters = _addDescription( info.output_parameters, outputParamDescs )
 
     state_parameters = [ str(p) for p in info.state_parameters ]
+
+    full_description = header.full_description.replace(
+        name+'(', name+'(name, ')
     
     from ComponentInfo import ComponentInfo
     return ComponentInfo(
         name,
         header.copyright, header.simple_description,
-        header.full_description, 
+        full_description,
         definition_parameters,
         setting_parameters,
         output_parameters,

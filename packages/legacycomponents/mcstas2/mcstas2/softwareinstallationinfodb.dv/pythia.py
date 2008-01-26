@@ -13,7 +13,7 @@
 
 
 from Info import Info
-info = Info( lib = '/lib', include = '/include' ) # for mm, config is not necessary
+info = Info( lib = '/lib', include = '/include' ) # for mm, pythia is already taken care of
 
 
 # version

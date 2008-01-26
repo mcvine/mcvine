@@ -4,13 +4,13 @@ PROJECT = mcstas2
 # directory structure
 
 BUILD_DIRS = \
-    examples \
-    lib \
-    mcstas2 \
-    component_library \
+	lib \
+	mcstas2bpmodule \
+	mcstas2 \
 
 
 OTHER_DIRS = \
+	tests \
 
 
 RECURSE_DIRS = $(BUILD_DIRS) $(OTHER_DIRS)

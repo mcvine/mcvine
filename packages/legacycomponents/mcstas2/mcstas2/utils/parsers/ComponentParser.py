@@ -50,11 +50,11 @@ def define():
 
 
 def def_parms():
-    parameter_type = Optional(oneOf( ["double", "int", "char *"] ))
+    parameter_type = Optional(oneOf( ["double", "int", "char *", "string"] ))
     parameter_type = parameter_type.setResultsName( "type" )  # double, int
     parameter_name = identifier.setResultsName( "name" )
     parameter_value = (number|string).setResultsName( "value" )
-    parameter_declr = Group( parameter_type + parameter_name + Suppress('=') + parameter_value ).setResultsName( "parameter" )
+    parameter_declr = Group( parameter_type + parameter_name + Optional( Suppress('=') + parameter_value ) ).setResultsName( "parameter" ) 
     parameter_list = delimitedList( parameter_declr )
     d = Suppress("DEFINITION") + Suppress("PARAMETERS") \
         + Suppress("(") \
@@ -64,10 +64,10 @@ def def_parms():
 
 
 def set_parms():
-    parameter_type = Optional(oneOf( ["double", "int", "char *"] )).setResultsName( "type" )  # double, int
+    parameter_type = Optional(oneOf( ["double", "string", "int", "char *"] )).setResultsName( "type" )  # double, int
     parameter_name = identifier.setResultsName( "name" )
     parameter_value = (number|string).setResultsName( "value" )
-    parameter_declr = Group( parameter_type + parameter_name + Suppress('=') + parameter_value ).setResultsName( "parameter" )
+    parameter_declr = Group( parameter_type + parameter_name + Optional( Suppress('=') + parameter_value) ).setResultsName( "parameter" )
     parameter_list = delimitedList( parameter_declr ) 
     d = Suppress("SETTING") + Suppress("PARAMETERS") \
         + Suppress("(") + parameter_list.setResultsName("setting_parameters") \
@@ -77,7 +77,8 @@ def set_parms():
 
 def output_parms():
     parameter_name = identifier
-    parameter_list = delimitedList( parameter_name )
+    parameter = Group( parameter_name.setResultsName('name') ).setResultsName('parameter')
+    parameter_list = delimitedList( parameter )
     d = Suppress("OUTPUT") + Suppress("PARAMETERS") \
         + Suppress("(") + Optional(parameter_list.setResultsName("output_parameters") ) \
         + Suppress(")")  + Optional(comment)
@@ -213,9 +214,18 @@ def test_component():
     parsed = component().parseString(s)
     print parsed.header
     print parsed.name
-    print 'definition parameters: ', parsed.definition_parameters
-    print 'setting parameters: ', parsed.setting_parameters
-    print 'output parameters: ', parsed.output_parameters
+    print 'definition parameters: '
+    for param in parsed.definition_parameters:
+        print '  name: %s, type: %s, value: %s' % (
+            param.name, param.type, param.value )
+    print 'setting parameters: '
+    for param in parsed.setting_parameters:
+        print '  name: %s, type: %s, value: %s' % (
+            param.name, param.type, param.value )
+    print 'output parameters: '
+    for param in parsed.output_parameters:
+        print '  name: %s, type: %s, value: %s' % (
+            param.name, param.type, param.value )
     print 'state parameters:', parsed.state_parameters
     print 'declare: ', parsed.declare
     print 'initialize: ', parsed.initialize
@@ -262,7 +272,7 @@ E_monitor = """
 * nchan:    Number of energy channels (1)
 * filename: Name of file in which to store the detector image (text)
 *
-* OUTPUT PARAMETERS:
+* OUTPUT PARAMETERS: 
 *
 * E_N:      Array of neutron counts
 * E_p:      Array of neutron weight counts
@@ -272,9 +282,9 @@ E_monitor = """
 *******************************************************************************/
 
 DEFINE COMPONENT E_monitor
-DEFINITION PARAMETERS ()
-SETTING PARAMETERS (int nchan=20, char *filename="e.dat", xmin=-0.2, xmax=0.2, ymin=-0.2, ymax=0.2, Emin=50, Emax=60)
-OUTPUT PARAMETERS () //(E_N, E_p, E_p2)
+DEFINITION PARAMETERS (nchan=20, string filename)
+SETTING PARAMETERS (xmin=0, xmax=0, ymin=0, ymax=0, xwidth=0, yheight=0, Emin, Emax)
+OUTPUT PARAMETERS (E_N, E_p, E_p2, S_p, S_pE, S_pE2)
 STATE PARAMETERS (x,y,z,vx,vy,vz,t,s1,s2,p)
 DECLARE
   %{

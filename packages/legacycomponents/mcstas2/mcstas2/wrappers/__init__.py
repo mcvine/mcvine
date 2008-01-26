@@ -12,6 +12,11 @@
 #
 
 
+import journal
+debug = journal.debug('mcstas2.wrappers' )
+
+
+
 def wrap( componentfilename, componentcategory,
           pythonpackage = None,
           path = None, componentname = None,
@@ -29,6 +34,9 @@ def wrap( componentfilename, componentcategory,
   pythonexportroot: directory where python modules are exported. Eg. $EXPORT_ROOT. None means pyton modules will be exported wherever the binding builder's default export path.
   
     """
+    
+    debug.log( 'pythonpackage=%s' % pythonpackage )
+    
 
     if pythonpackage is None:
         pythonpackage = 'mcstas2.components.%s' % componentcategory
@@ -58,7 +66,8 @@ def wrap( componentfilename, componentcategory,
 
     # generate bindings for the c++ class
     from binding import binding
-    bindingsources = binding( bindingtype ).generate_binding_sources(
+    binding = binding( bindingtype )
+    bindingsources = binding.generate_binding_sources(
         bindingname, klass, path )
 
     # genearte python code to wrap the binding into a factory method
@@ -70,18 +79,18 @@ def wrap( componentfilename, componentcategory,
         bindingsources['python'] += pysources
 
     # build binding
-    from binding_builder import binding
-    binding = binding(
+    from binding_builder import binding as bindingdataobject
+    bindingobj = bindingdataobject(
         python_package = pythonpackage, binding_module = bindingname,
         c_headers = [ hh ],
         c_sources = bindingsources['c'] + [cc],
         python_sources = bindingsources['python'],
-        c_libs = ['mcstas2', 'mcni' ],
+        c_libs = ['mcstas2', 'mcni' ] + binding.libstolink,
         c_includes = [ ],
         dependencies = [ bindingtype, 'caltech-config', 'mcstas2', 'mcni' ],
         )
     from binding_builder import builder
-    builder( buildername ).build( binding, pythonexportroot )
+    builder( buildername ).build( bindingobj, pythonexportroot )
     
     # register the new factory
     from mcstas2.components import registercomponent

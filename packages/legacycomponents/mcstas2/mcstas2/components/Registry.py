@@ -53,15 +53,27 @@ class Registry:
 
     
     def _getStaticComponent( self, key ):
+        from repositories import all as repos
+        repos = list(repos)
+        repos.reverse()
+        
         category, type = key
-        modulename = 'mcstas2.components.%s.%s' % (
-            category, type )
-        try:
-            module = __import__( modulename, {}, {}, [''] )
-        except:
-            raise NotRegisteredError, "component %r of category %r "
 
-        self.register( category, type, module )
+        module = None
+        for repo in repos:
+            modulename = '%s.%s.%s' % (
+                repo, category, type )
+            try:
+                module = __import__( modulename, {}, {}, [''] )
+            except:
+                continue
+            break
+
+        if module:
+            self.register( category, type, module )
+        else:
+            raise NotRegisteredError, "component %r of category %r "
+        
         return module
 
 

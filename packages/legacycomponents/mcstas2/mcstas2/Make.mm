@@ -19,7 +19,6 @@ RECURSE_DIRS = \
     components \
     utils \
     wrappers \
-    softwareinstallationinfodb.mm \
 
 #--------------------------------------------------------------------------
 #
@@ -39,6 +38,7 @@ EXPORT_PYTHON_MODULES = \
 	__init__.py \
 	dotmcstas.py \
 	mcni_integration.py \
+	mcstascomponentspythontreeathome.py \
 	pythonexportathome.py \
 	release.py \
 

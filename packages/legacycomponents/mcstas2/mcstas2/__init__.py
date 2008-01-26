@@ -50,6 +50,10 @@ Examples:
 
 def wrapcomponent( componentfilename, componentcategory, **kwds ):
     from release import type as releasetype
+    if releasetype == 'user':
+        from mcstascomponentspythontreeathome import init_category
+        init_category( componentcategory )
+        pass
 
     #set appropriate builder
     builders = {
@@ -66,6 +70,14 @@ def wrapcomponent( componentfilename, componentcategory, **kwds ):
         }
     if kwds.get('pythonexportroot') is None: kwds['pythonexportroot'] = pythontrees[releasetype]
 
+    #set appropriate python package
+    if releasetype == 'user':
+        from mcstascomponentspythontreeathome import packagename
+        pythonpackage = '%s.%s' % (packagename, componentcategory )
+    else:
+        pythonpackage = None
+    if kwds.get('pythonpackage') is None: kwds['pythonpackage'] = pythonpackage
+    
     from wrappers import wrap
     return wrap( componentfilename, componentcategory, **kwds )
 
@@ -87,8 +99,7 @@ def listcomponentsincategory( category ):
 
 def defaultcomponentfactory( category, type ):
     path = defaultcomponentpath( category, type )
-    from wrappers import wrap
-    wrap( path, category )
+    wrapcomponent( path, category )
     from components import componentfactory
     return componentfactory( category, type )
 
@@ -171,11 +182,15 @@ del version_info
 
 def _init():
     from release import type as releasetype
-    #add user python tree to path if necessary
     if releasetype == 'user':
+        #add user python tree to path if necessary
         from pythonexportathome import path as pytreeathome
         import sys
         sys.path = [pytreeathome] + sys.path
+        
+        #init mcstas components python tree if necessary
+        from mcstascomponentspythontreeathome import init 
+        init()
         pass
     return
 

@@ -52,13 +52,34 @@ class ComponentInfo:
     pass # end of ComponentInfo
 
 
+value_converters = {
+    'float': float,
+    'double': float,
+    'int': int,
+    'char *': str,
+    }
+
 
 class Parameter:
 
     def __init__(self, name='name', type='', value='', description = '' ):
         self.name = '%s' % name
-        self.type = '%s' % type
-        self.value = '%s' % value
+        type = '%s' % type
+        
+        #string --> char *
+        if type == 'string': type = 'char *'
+        #default type is double
+        if type == '': type = 'double'
+        
+        self.type = type
+
+        value_converter = value_converters[type]
+        try:
+            value = value_converter( value )
+        except:
+            value = value_converter( )
+        self.value = value
+        
         self.description = '%s' % description
         return
 

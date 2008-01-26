@@ -12,6 +12,10 @@
 #
 
 
+#libraries to be linked with
+libstolink = ['boost_python']
+
+
 def generate_binding_sources( bindingname, klass, path ):
     '''generate source codes for a binding
 

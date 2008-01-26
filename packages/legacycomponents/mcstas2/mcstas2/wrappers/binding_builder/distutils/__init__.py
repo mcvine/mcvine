@@ -12,6 +12,10 @@
 #
 
 
+import journal
+debug = journal.debug('binding_builder.distutils')
+
+
 def build( binding, site_package_path = None ):
     '''
     binding: the binding to build
@@ -56,11 +60,19 @@ def build( binding, site_package_path = None ):
     save = sys.argv
     sys.argv = ['', 'install']
     if site_package_path: sys.argv.append( '--install-lib=%s' % site_package_path )
+
+
+    name = python_package.split( '.' )[0]
+    packages = [python_package]
+    ext_modules = [ext]
+    debug.log('name=%s, packages=%s, package_dir=%s, ext_modules=%s' % (
+        name, packages, package_dir, ext_modules, )
+              )
     setup(
-        name = python_package.split( '.' )[0],
-        packages = [python_package],
+        name = name,
+        packages = packages,
         package_dir = package_dir,
-        ext_modules = [ ext ] )
+        ext_modules = ext_modules )
     sys.argv = save
     return
 
