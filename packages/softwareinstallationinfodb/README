@@ -1,0 +1,7 @@
+softwareinstallationinfodb is a pure python package containing installation info of various softwares that mcvine depends on.
+
+The directories:
+
+ softwareinstallationinfodb: just a prototype
+ softwareinstallationinfodb.dv: for developers
+ softwareinstallationinfodb.user: for users
