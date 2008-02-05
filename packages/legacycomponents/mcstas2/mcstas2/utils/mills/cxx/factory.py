@@ -4,7 +4,7 @@
 #
 #                                   Jiao Lin
 #                      California Institute of Technology
-#              (C) 2005 All Rights Reserved  All Rights Reserved
+#                        (C) 2005  All Rights Reserved
 #
 # {LicenseText}
 #
@@ -35,8 +35,12 @@ def createContentsOfHHandCC( klass ):
 
         pass # end of App
 
+    import sys
+    save = sys.argv
+    sys.argv = ['']
     app = App("tmp_app")
     app.run()
+    sys.argv = save
     hh, cc = app.results
     return hh,cc
 

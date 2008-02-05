@@ -11,20 +11,9 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
 
-
-class Info:
-
-    def __init__(self, root = None, include = None, lib = None, bin = None):
-        self.root = root
-        self.include = include
-        self.lib = lib
-        self.bin = bin
-        return
-
-    pass # end of Info
-
-
 # version
 __id__ = "$Id$"
+
+# Generated automatically by PythonMill on Mon Jan 21 19:52:58 2008
 
 # End of file 

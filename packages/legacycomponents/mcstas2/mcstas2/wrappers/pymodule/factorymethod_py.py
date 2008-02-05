@@ -27,9 +27,8 @@ from mcstas2.utils.parsers.ComponentInfo import ComponentInfo, Parameter
 factory.__doc__ = str(info)
 ''' 
 
-def generate( compinfo, klass, bindingmodulename, path ):
-    ctor = klass.constructors()[0]
-    ctorargs = ctor.args
+def generate( compinfo, bindingmodulename, path ):
+    ctorargs = compinfo.input_parameters
     compname = compinfo.name
     ctorargs_str = _build_args_str( ctorargs )
     ctorkwds_str = _build_kwds_str( ctorargs )
@@ -72,7 +71,7 @@ a.name = 'a'
 '''
 """
     ret = []
-    if isinstance(inst, int) :
+    if isinstance(inst, int) or isinstance(inst, float):
         ret.append( '%s = %r' % (name, inst) )
     elif isinstance(inst, basestring ):
         ret.append( '%s = """%s"""' % (name, inst) )

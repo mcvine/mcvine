@@ -14,7 +14,7 @@
 
 all = []
 
-default = 'mcstas.components'
+default = 'mcstas2.components'
 all.append(default)
 
 from mcstas2.release import type as releasetype

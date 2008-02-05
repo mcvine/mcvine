@@ -23,6 +23,15 @@ Examples:
     return f
 
 
+def componentmodule( category, type ):
+    '''obtain the python module for the given category and type
+Examples:
+  componentmodule( 'monitors', 'E_monitor' )
+  '''
+    f = componentfactory( category, type )
+    return __import__( f.__module__, {}, {}, [''] )
+
+
 def printcomponentinfo( category, type ):
     '''print info about the component of given category and type
 Examples:

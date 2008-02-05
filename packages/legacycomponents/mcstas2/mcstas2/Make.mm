@@ -17,6 +17,7 @@ PACKAGE = mcstas2
 RECURSE_DIRS = \
     bindings \
     components \
+    pyre_support \
     utils \
     wrappers \
 

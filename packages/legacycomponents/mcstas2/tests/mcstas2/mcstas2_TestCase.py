@@ -53,6 +53,7 @@ class TestCase(unittest.TestCase):
             xmin=-0.2, xmax=0.2,
             ymin=-0.2, ymax=0.2,
             Emin=50, Emax=60)
+        help( emonfac )
         return
     
     pass  # end of TestCase

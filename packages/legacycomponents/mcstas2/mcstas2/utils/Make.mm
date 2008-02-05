@@ -18,6 +18,7 @@ PACKAGE = utils
 RECURSE_DIRS = \
     mills \
     parsers \
+    pyre_support \
 
 #--------------------------------------------------------------------------
 #

@@ -12,19 +12,23 @@
 #
 
 
+import journal
+warning = journal.warning( 'mcstas2.parsers.ComponentInfo' )
+
 
 formatstr = '''
 Compoennt %(name)r: %(simple_description)s
 
 %(full_description)s
+
+%(parameters)s
 '''
 
 class ComponentInfo:
 
     def __init__(self, name = 'name', copyright = '', simple_description ='',
                  full_description = '', 
-                 definition_parameters = [],
-                 setting_parameters = [],
+                 input_parameters = [],
                  output_parameters = [],
                  state_parameters = [],
                  declare = '',
@@ -34,8 +38,7 @@ class ComponentInfo:
         self.copyright = copyright
         self.simple_description =simple_description
         self.full_description = full_description
-        self.definition_parameters = definition_parameters
-        self.setting_parameters = setting_parameters
+        self.input_parameters = input_parameters
         self.output_parameters = output_parameters
         self.state_parameters = state_parameters
         self.declare = declare
@@ -46,7 +49,11 @@ class ComponentInfo:
         return
 
     def __str__(self):
-        d = self.__dict__
+        d = self.__dict__.copy()
+        parameters = self.input_parameters
+        parameters_str = 'Parameters: \n'
+        parameters_str += '\n'.join( ['  - %s' % param for param in parameters ] )
+        d['parameters'] = parameters_str
         return formatstr % d
 
     pass # end of ComponentInfo
@@ -62,7 +69,7 @@ value_converters = {
 
 class Parameter:
 
-    def __init__(self, name='name', type='', value='', description = '' ):
+    def __init__(self, name='name', type='', default='', description = '' ):
         self.name = '%s' % name
         type = '%s' % type
         
@@ -75,17 +82,19 @@ class Parameter:
 
         value_converter = value_converters[type]
         try:
-            value = value_converter( value )
-        except:
-            value = value_converter( )
-        self.value = value
+            default = value_converter( default )
+        except Exception, err:
+            warning.log( 'parameter %s: %s: %s' % (
+                name, err.__class__.__name__, err) )
+            default = value_converter( )
+        self.default = default
         
         self.description = '%s' % description
         return
 
     def __str__(self):
         return '%s(%s, default = %s): %s' % (
-            self.name, self.type, self.value, self.description)
+            self.name, self.type, self.default, self.description)
 
 
     __repr__ = __str__

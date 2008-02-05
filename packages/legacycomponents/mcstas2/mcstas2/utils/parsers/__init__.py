@@ -12,6 +12,10 @@
 #
 
 
+## Parsers to parse Riseo McStas files such as
+##  - McStas component file
+
+
 def parseComponent( component_file ):
     from ComponentParser import component as componentParser
     parser = componentParser()
@@ -29,10 +33,19 @@ def parseComponent( component_file ):
 
     definition_parameters = _addDescription( info.definition_parameters, inputParamDescs )
     setting_parameters = _addDescription( info.setting_parameters, inputParamDescs )
+
+    from ComponentInfo import Parameter
+    name_parameter = Parameter( 'name', 'char *', name.lower(), 'component name' )
+    input_parameters = [name_parameter] + definition_parameters + setting_parameters
+    
     output_parameters = _addDescription( info.output_parameters, outputParamDescs )
 
     state_parameters = [ str(p) for p in info.state_parameters ]
 
+    # the original McStas component does not need a "name" argument, but
+    # the auto-generated c++ class and python component need a "name"
+    # argument. So we better add this to the description, which will
+    # become the documentation.
     full_description = header.full_description.replace(
         name+'(', name+'(name, ')
     
@@ -41,8 +54,7 @@ def parseComponent( component_file ):
         name,
         header.copyright, header.simple_description,
         full_description,
-        definition_parameters,
-        setting_parameters,
+        input_parameters,
         output_parameters,
         state_parameters,
         '%s' % info.declare,

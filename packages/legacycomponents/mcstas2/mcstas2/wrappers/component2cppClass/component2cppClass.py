@@ -12,6 +12,11 @@
 #
 
 
+## This module converts component info parsed from a McStas component
+## and create a c++ class for that component.
+## Please run corresponding test in the "tests" directory to see
+## what does it do.
+
 def component2HHandCC( component_filename, pathToSave ):
     from mcstas2.utils.mills.cxx.factory import createHHandCC
     return createHHandCC( component2cppClass( component_filename ), pathToSave )
@@ -27,8 +32,7 @@ def component2cppClass( comp_filename ):
 def componentInfo2cppClass( compInfo ):
     #massage those info and add some additional info and make the class
     class_name = compInfo.name
-    ctor_args = _arguments(compInfo.definition_parameters) \
-                + _arguments(compInfo.setting_parameters)
+    ctor_args = _arguments(compInfo.input_parameters) 
     output_params = compInfo.output_parameters
     trace_method_args = compInfo.state_parameters
     private_member_declaration = compInfo.declare[1:-1]
@@ -74,24 +78,32 @@ def createCppClass( name,
     #ctor arguments become private members.
     # E_monitor( int nchan ) --> E_mointor( int in_nchan ) { nchan = in_nchan; }
     #
-    private_members = [ argument2Member(arg) for arg in ctor_args ]
+    # 'name' is not a private member. it is a member of base class.
+    name_arg = ctor_args[0]
+    assert name_arg.name == 'name'
+    args = ctor_args[1:]
+    # 
+    private_members = [ argument2Member(arg) for arg in args ]
 
     # meta-methods
-    ctor_args_name = Argument( 'const char *', 'name' )
-    ctor_body_name = 'setName( name );'
+    #   argument "name" is necessary for the component c++ class.
+    #   its default would be the lower
+    #   case conversion of component name
+    ctor_body_name_assignment = 'setName( name );'
     
-    #   other ctor arguments all will have prefix 'in_'
+    #   other ctor arguments 
     ctor_args = [
-        Argument( arg.type,  "%s" % arg.name, arg.default ) for arg in ctor_args ]
+        Argument( arg.type,  "in_%s" % arg.name, arg.default ) for arg in args ]
     #
     #   transfer inputs to private members
-    ctor_getInputs = [ "this->%s = %s;" % (member.name, arg.name) for member, arg in \
+    ctor_getInputs = [ "%s = %s;" % (member.name, arg.name) for member, arg in \
                        zip( private_members, ctor_args ) ]
     #   ctor body
     ctor_body = ctor_body.split("\n")
-    ctor_body = [ctor_body_name] + ctor_getInputs + ctor_body
+    ctor_body = [ctor_body_name_assignment] + ctor_getInputs + ctor_body
 
-    ctor_args = [ ctor_args_name ] + ctor_args
+    #   add name arg back to the ctor arg list
+    ctor_args = [ name_arg ] + ctor_args
     ctor = Method( name, ctor_args, ctor_body )
 
     # dtor
@@ -133,7 +145,7 @@ def _argument( param ):
     input: parsed mcstas parameter. 
     note: mcstas parameters without type are doubles
     """
-    return Argument( param.type, param.name, param.value )
+    return Argument( param.type, param.name, param.default )
 
 
 def _arguments( params ):

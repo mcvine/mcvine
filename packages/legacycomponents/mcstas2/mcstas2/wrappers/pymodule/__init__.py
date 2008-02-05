@@ -15,9 +15,9 @@
 ## methods to create a python module to accompany the wrapped mcstas component
 
 
-def generate( componentinfo, klass, bindingname, path ):
+def generate( componentinfo, bindingname, path ):
     from factorymethod_py import generate
-    factorymethod_py = generate( componentinfo, klass, bindingname, path )
+    factorymethod_py = generate( componentinfo, bindingname, path )
     return [factorymethod_py]
 
 

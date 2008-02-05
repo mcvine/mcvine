@@ -72,7 +72,7 @@ def wrap( componentfilename, componentcategory,
 
     # genearte python code to wrap the binding into a factory method
     from pymodule import generate
-    pysources = generate( compInfo, klass, bindingname, path ) 
+    pysources = generate( compInfo, bindingname, path ) 
     if bindingsources.get( 'python' ) is None:
         bindingsources['python'] = pysources
     else:
