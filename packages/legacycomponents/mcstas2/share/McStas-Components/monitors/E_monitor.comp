@@ -97,16 +97,16 @@ TRACE
     int i;
     double E;
 
-    printf("E_monitor: Trace: %g,%g,%g, %g,%g,%g\n", x,y,z,vx,vy,vz);
+    //printf("E_monitor: Trace: %g,%g,%g, %g,%g,%g\n", x,y,z,vx,vy,vz);
     PROP_Z0;
-    printf("E_monitor: Propagated to z=0: %g,%g,%g, %g,%g,%g\n", x,y,z,vx,vy,vz);
+    //printf("E_monitor: Propagated to z=0: %g,%g,%g, %g,%g,%g\n", x,y,z,vx,vy,vz);
 
-    printf("E_monitor: Trace: E window=%g,%g, x window=%g,%g, y window = %g, %g\n",
-	   Emin, Emax, xmin, xmax, ymin, ymax);
+    //printf("E_monitor: Trace: E window=%g,%g, x window=%g,%g, y window = %g, %g\n",
+    //Emin, Emax, xmin, xmax, ymin, ymax);
     if (x>xmin && x<xmax && y>ymin && y<ymax)
     {
       E = VS2E*(vx*vx + vy*vy + vz*vz);
-      printf("E_monitor: E=%g\n", E);
+      //printf("E_monitor: E=%g\n", E);
       S_p += p;
       S_pE += p*E;
       S_pE2 += p*E*E;
