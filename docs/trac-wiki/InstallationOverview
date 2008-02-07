@@ -1,0 +1,10 @@
+= Overview of Installation of MCViNE =
+
+MCViNE currently is only tested in some unix platforms (linux and Mac OS X).
+Binary builds of MCViNE exists in the following platforms:
+
+ * redhat enterprise 
+
+-----
+
+back to [wiki:UserGuide User's Guide]

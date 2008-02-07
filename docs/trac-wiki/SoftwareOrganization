@@ -1,0 +1,23 @@
+= Software Organization =
+
+Installed MCViNE software has following directory structure:
+
+ * bin: simulation applications
+ * lib: c++ shared library 
+ * python: python modules
+ * include: c++ header files
+
+The main user interface of MCViNE is provided through python bindings in "python" directory.
+It contains the following packages:
+
+ * mcni: the base of mcvine. It provides fundamental data structures like Neutron, Component, and Instrument
+ * mccomposite: introduce geometrical shapes to component simulation
+ * mccomponents: introduce homogeneous scatterer and scattering kernels. provide tools to simulate sample assembly and detector system with hierarchy
+ * legacycomponents: simulation components derived from legacy MC neutron instrument simulation codes
+   - mcstas2: binding of McStas components
+   - vitess: TO BE ADDED
+   - ideas: TO BE ADDED
+
+-----
+
+back to [wiki:UserGuide User's Guide]

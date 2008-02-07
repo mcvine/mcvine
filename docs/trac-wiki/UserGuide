@@ -1,0 +1,42 @@
+[[PageOutline]]
+= MCViNE User's Guide =
+
+== An Introduction to MCViNE ==
+
+=== Welcome ===
+
+Welcome to the Monte Carlo VItual Neutron Experiment (MCViNE) User's Guide. 
+
+MCViNE is an open-source, object-oriented software system for simulating neutron experiment. 
+The software is large and complex, but designed carefully so that it is easy to use and extend once you learn about its basic design and implementation methodology. 
+
+MCViNE has a large collection (and hierachy) of simulation engines; it is therefore impossible to document all of them in this guide. This guide focus on providing you the basic concepts employed in design of this software. With those basic understanding, you could read Doxygen documentations of simulation engines for more details. 
+
+Don't hesitate to ask questions! Please read [wiki:UserFAQ FAQ] first though.
+
+MCViNE is a part of the [http://wiki.cacr.caltech.edu/danse DANSE] project.
+
+MCViNE is an open-source software. If you find MCViNE useful, we encourange you to contribute bug fixes, ideas, simulation algorithms, simulation applications back to the community.
+
+ 1. [wiki:UserGuideOrganization User Guide Organization]
+ 1. [wiki:HowToLearnMCViNE How to learn MCViNE]
+ 1. [wiki:SoftwareOrganization Software Organization]
+ 1. [wiki:UserGuide-AdditionalResources Additional Resources]
+
+=== Installation ===
+In this section you will find installation instructions of MCViNE software.
+Installing binary distribution of MCViNE is usually the best choice for
+users if your platform is supported. 
+Building from source is supported, and is usually necessary for developers.
+
+ 1. [wiki:InstallationOverview Overview]
+ 1. [wiki:UnixBinaryInstallation Install binaries on Unix Systems]
+ 1. [wiki:BuildFromSVN Build MCViNE from svn repository]
+
+=== System Ovierview ===
+
+ 1. [wiki:SystemArchitecture System Architecture]
+
+== Learn MCViNE by Examples ==
+
+

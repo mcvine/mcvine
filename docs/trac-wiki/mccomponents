@@ -1,0 +1,72 @@
+[[PageOutline]]
+= mccomponents =
+
+[source:trunk/packages/mccomponents source browser]
+
+== Introduction ==
+Package "mccomponents" is based on packages [wiki:mcni] and [wiki:mccomposite].
+It provides supports of one important type of neutron scatterer: homogenous neutron scatterer. 
+Many scatterers, such as those at the sample position, and He3 detector tubes, 
+can be regarded as homogenous neutron scatterers. 
+The definition of homogenous scatterer is that its scattering properties are 
+independent of the position of scattering. 
+This property of a homogenous scattterer allows us to delegate its neutron scattering 
+to a new class: [wiki:AbstractScatteringKernel]. 
+More details about homogeneous neutron scatterer is [wiki:HomogeneousNeutronScatterer here].
+
+This package also provides framework for building complex sample assembly and detector systems.
+
+With "mccomponents", developers can 
+
+ 1. create c++ homongeneous scatterers of different types:
+    * sample 
+    * detector
+ 2. create new c++ scattering kernel, create their bindings, and register them into the simulation framework.
+
+It consists of 
+
+ 1. a c++ library 
+    * [source:/trunk/packages/mccomponents/libmccomponents/homogeneous_scatterer homogeneous_scatterer]:  base classes such as HomogeneousScatterer
+    * [source:/trunk/packages/mccomponents/libmccomponents/kernels kernels]: prebuilt scattering kernels
+      * sample: sample kernels
+         * SQEkernel
+      * detector: detector kernels
+         * He3TubeKernel
+ 1. instructions for developers to extend it to create new scattering kernels in c++, and instructions to create python binding
+
+== Python library ==
+
+=== homogeneous_scatterer ===
+This is the foundation of "sample" and "detector" .
+
+=== sample ===
+The mccomponents python library provides methods to parse a xml file of a sample assembly and create a representation of that sample assembly, and methods to render c++ Monte Carlo simulation engine of this sample assembly reperesentation.
+
+=== detector ===
+The mccomponents python library provides methods to parse a xml file of a neutron instrument and create a representation of the detector system of that instrument, and methods to render c++ Monte Carlo simulation engine of this detector system representation.
+
+
+== C++ library ==
+=== homogeneous_scatterer ===
+Homogeneous scatterer is an important category in neutron scatterers. Scatterers of this category has uniform scattering properties throughout its body. Therefore, for a homogeneous scatterer, we can delegate its scattering process to a "scattering kernel". Please read [wiki:HomogeneousNeutronScatterer] for more details.
+
+The homogeneous_scatter c++ library provides the [wiki:HomogeneousNeutronScatterer] class, and [wiki:AbstractScatteringKernel-cpp the abstract base class] for scattering kernels. Some kernels are provided in the [source:/trunk/packages/mccomponents/libmccomponents/kernels mccomponents/kernels] library. You can extend this library to support your kernel by implementing new subclass of [wiki:AbstractScatteringKernel-cpp AbstractScatteringKernel].
+
+A [wiki:CompositeScatteringKernel-cpp] is provided in case a scatterer needs more than one scattering kernels. This is useful when, for example, users want to simulate both the phonon scattering and magnetic scattering.
+
+=== kernels ===
+This library contains subclasses of  [wiki:AbstractScatteringKernel-cpp AbstractScatteringKernel], and related implementation classes.
+
+==== detector ====
+This library contains 
+ * He3 tube scattering kernel
+
+==== sample ====
+This library contains
+ * S(Q,E ) kernel
+
+=== math ===
+basic math related stuff
+=== physics ===
+basic physics related stuff
+
