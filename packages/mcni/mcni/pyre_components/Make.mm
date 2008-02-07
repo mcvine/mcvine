@@ -10,7 +10,7 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 PROJECT = mcni
-PACKAGE = neutron_storage
+PACKAGE = pyre_components
 
 #--------------------------------------------------------------------------
 #
@@ -28,10 +28,10 @@ update: clean
 # export
 
 EXPORT_PYTHON_MODULES = \
+	MonochromaticSource.py \
+	NeutronFromStorage.py \
+	NeutronToStorage.py \
 	__init__.py \
-	idfneutron.py \
-	idf_usenumpy.py \
-	idf_usestruct.py \
 
 
 export:: export-package-python-modules

@@ -16,44 +16,34 @@
 ## this implementation use struct and is more compatible.
 
 import numpy
-from struct import pack,unpack,calcsize
 
-version=1
 
-intSize = calcsize('<i')
-longlongsize = calcsize('<q')
-dubSize = calcsize('<d')
-strSize = calcsize('<s')
+from struct import pack, unpack
+from idfneutron import version, headerfmtstr, headersize, neutronsfmtstr, ndblsperneutron, filetype
+
 
 def read( filename ):
     f=open(filename,'r').read()
-    i = 0
-    filetype,= unpack('<64s',f[i:i+64*strSize])          ; i += 64*strSize
-    version, = unpack('<i',f[i:i+intSize])               ; i += intSize
-    comment, = unpack('<1024s',f[i:i+1024*strSize])      ; i += 1024*strSize
-    N,       = unpack('<q',f[i:i+longlongsize])          ; i += longlongsize
-    neutrons = unpack('<%id' % (N*10,),f[i:])
-    neutrons = numpy.array(neutrons)
-    neutrons.shape = -1, 10
+    filetype, version, comment, N = unpack( headerfmtstr, f[ : headersize] )
+    neutrons = unpack(neutronsfmtstr % (N*ndblsperneutron,),f[headersize:])
+    neutrons = numpy.array(neutrons, dtype = numpy.double)
+    neutrons.shape = -1, ndblsperneutron
     return filetype.strip('\x00'),version,comment.strip('\x00'),neutrons
 
 
 def write( neutrons, filename='neutrons', comment = '' ):
     assert neutrons.dtype == numpy.double
     f=open(filename,'w')
-    f.write(pack('<64s','Neutron'))
-    f.write(pack('<i',version))
-    f.write(pack('<1024s',comment))
-    f.write(pack('<q',len(neutrons)))
+    f.write( pack(headerfmtstr, filetype, version, comment, len(neutrons) ) )
     neutrons = tuple( neutrons.reshape(-1) )
-    f.write(pack('<%id' % len(neutrons),*neutrons))
+    f.write(pack(neutronsfmtstr % len(neutrons),*neutrons))
     return
 
 
 def test():
     import numpy
-    neutrons = numpy.arange( 10000000, dtype = numpy.double )
-    neutrons.shape = -1, 10
+    neutrons = numpy.arange( 100000, dtype = numpy.double )
+    neutrons.shape = -1, ndblsperneutron
     filename = 'neutrons.dat'
     write( neutrons, filename )
     neutrons = read( filename )

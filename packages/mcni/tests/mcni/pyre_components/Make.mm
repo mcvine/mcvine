@@ -22,18 +22,6 @@ PROJ_TESTS = $(PROJ_PYTESTS) $(PROJ_CPPTESTS)
 PROJ_LIBRARIES = -L$(BLD_LIBDIR) -ljournal -lmcni
 
 
-# directory structure
-BUILD_DIRS = \
-	neutron_storage \
-	pyre_components \
-	pyre_support \
-
-
-OTHER_DIRS = \
-
-RECURSE_DIRS = $(BUILD_DIRS) $(OTHER_DIRS)
-
-
 #--------------------------------------------------------------------------
 #
 

@@ -119,7 +119,9 @@ class Instrument( base ):
 
         if not os.path.exists( outputdir ):
             os.makedirs( outputdir )
-            
+            pass
+
+        curdir = os.path.abspath( '.' )
         os.chdir( outputdir )
 
         import mcni
@@ -134,7 +136,8 @@ class Instrument( base ):
             neutrons = mcni.neutron_buffer( self.buffer_size )
             mcni.simulate( instrument, geometer, neutrons )
             continue
-        
+
+        os.chdir( curdir )
         return
 
 

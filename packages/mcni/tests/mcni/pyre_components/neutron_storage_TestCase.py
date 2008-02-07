@@ -1,0 +1,189 @@
+#!/usr/bin/env python
+#
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#
+#                                   Jiao Lin
+#                      California Institute of Technology
+#                        (C) 2007 All Rights Reserved  
+#
+# {LicenseText}
+#
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#
+
+
+
+import unittestX as unittest
+import journal
+
+debug = journal.debug( "mcni.pyre_components.test" )
+warning = journal.warning( "mcni.pyre_components.test" )
+
+
+
+neutron_storage_path = 'neutrons' 
+
+from mcni.pyre_support.Instrument import Instrument as base
+class Instrument1(base):
+
+    class Inventory( base.Inventory ):
+
+        from mcni.pyre_support import facility
+
+        from mcni.pyre_components.MonochromaticSource import MonochromaticSource 
+        source = facility('source', default = MonochromaticSource('source') )
+
+        from mcni.pyre_components.NeutronToStorage import NeutronToStorage
+        storage = facility('storage', default = NeutronToStorage( 'storage' ) )
+
+        pass # end of Inventory
+
+
+    def _defaults(self):
+        base._defaults(self)
+        self.inventory.sequence = ['source', 'storage']
+        
+        geometer = self.inventory.geometer
+        self.inventory.geometer.inventory.source = (0,0,0), (0,0,0)
+        self.inventory.geometer.inventory.storage = (0,0,1), (0,0,0)
+
+        source = self.inventory.source
+        source.inventory.position = '0,0,0'
+        source.inventory.velocity = '1000,2000,3000'
+
+        storage = self.inventory.storage
+        storage.inventory.path = neutron_storage_path
+        return
+    
+    pass # end of Instrument1
+
+
+
+from mcni.pyre_support.AbstractComponent import AbstractComponent
+class Verifier( AbstractComponent ):
+
+    def setTestFacility(self, testFacility):
+        self.testFacility = testFacility
+        return
+
+    def process(self, neutrons):
+        for i in range(len(neutrons)):
+            r = list( neutrons[i].state.position )
+            self.testFacility.assertVectorAlmostEqual(
+                r, (0,0,-1) )
+            
+            v = list( neutrons[i].state.velocity )
+            self.testFacility.assertVectorAlmostEqual(
+                v, (1000,2000,3000) )
+            continue
+        return neutrons
+
+    pass # end of Verifier
+
+class Instrument2(base):
+
+    class Inventory( base.Inventory ):
+
+        from mcni.pyre_support import facility
+
+        from mcni.pyre_components.NeutronFromStorage import NeutronFromStorage
+        source = facility('source', default = NeutronFromStorage('source') )
+
+        verifier = facility('verifier', default = Verifier( 'verifier' ) )
+
+        pass # end of Inventory
+
+
+    def main(self):
+        self.inventory.verifier.setTestFacility( self.testFacility )
+        base.main(self)
+        return
+
+
+    def _defaults(self):
+        base._defaults(self)
+        self.inventory.sequence = ['source', 'verifier']
+        
+        geometer = self.inventory.geometer
+        self.inventory.geometer.inventory.source = (0,0,0), (0,0,0)
+        self.inventory.geometer.inventory.verifier = (0,0,0), (0,0,0)
+
+        storage = self.inventory.source
+        storage.inventory.path = neutron_storage_path
+        return
+    
+    pass # end of Instrument1
+
+
+
+class TestCase(unittest.TestCase):
+
+
+    def test0(self):
+        'prepare'
+        import os, shutil
+        if os.path.exists( neutron_storage_path ): shutil.rmtree( neutron_storage_path )
+        return
+
+
+    def test1(self):
+        'neutron --> storage'
+        instrument = Instrument1('test1')
+
+        import sys
+        save = sys.argv
+        sys.argv = [
+            '',
+            '--ncount=10',
+            '--buffer_size=5',
+            '--output-dir=neutron_storage_test_out',
+            '--overwrite-datafiles',
+            ]
+
+        instrument.run()
+        sys.argv = save
+        return
+
+
+    def test2(self):
+        'storage --> verifier'
+        instrument = Instrument2('test2')
+        instrument.testFacility = self
+
+        import sys
+        save = sys.argv
+        sys.argv = [
+            '',
+            '--ncount=10',
+            '--buffer_size=5',
+            '--output-dir=neutron_storage_test_out',
+            '--overwrite-datafiles',
+            ]
+
+        instrument.run()
+        sys.argv = save
+        return
+
+
+    pass # end of TestCase
+
+
+def pysuite():
+    suite1 = unittest.makeSuite(TestCase)
+    return unittest.TestSuite( (suite1,) )
+
+def main():
+    #debug.activate()
+    pytests = pysuite()
+    alltests = unittest.TestSuite( (pytests, ) )
+    unittest.TextTestRunner(verbosity=2).run(alltests)
+    return
+
+
+if __name__ == "__main__":
+    main()
+    
+# version
+__id__ = "$Id$"
+
+# End of file 

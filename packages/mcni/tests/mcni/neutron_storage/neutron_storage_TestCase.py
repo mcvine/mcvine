@@ -47,6 +47,7 @@ def pysuite():
     suite1 = unittest.makeSuite(TestCase)
     return unittest.TestSuite( (suite1,) )
 
+
 def main():
     #debug.activate()
     pytests = pysuite()

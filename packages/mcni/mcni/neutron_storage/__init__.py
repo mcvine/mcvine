@@ -12,9 +12,13 @@
 #
 
 
+## load and dump neutrons to data file. file format is specified
+## in svn://danse.us/inelastic/idf/Neutron.v1
+
+
 import numpy
 
-eventlen = 10
+from idfneutron import ndblsperneutron
 
 def dump( neutrons, filename ):
     '''dump neutrons to the given file
@@ -36,23 +40,38 @@ def load( filename ):
     return:  a boost python instance of Neutron::Events, which can be
         created by mcni.neutron_buffer
     '''
-    from idf_usenumpy import read
-    filetype, version, comment, neutrons = read( filename )
-    assert filetype == 'Neutron'
-    assert version == 1
+    neutrons = readneutrons_asnpyarr( filename )
     neutrons = neutrons_from_npyarr( neutrons )
     return neutrons
 
 
-def neutrons_from_npyarr( arr ):
+def readneutrons_asnpyarr( filename ):
+    from idf_usenumpy import read
+    filetype, version, comment, neutrons = read( filename )
+    from idfneutron import version as ver, filetype as ft
+    assert filetype == ft
+    assert version == ver
+    return neutrons
+
+
+def neutrons_from_npyarr( arr, neutrons = None ):
     '''copy data from a numpy array to a boost python instance of
-    Neutron::Events
+    Neutron::Events.
+
+    arr: the numpy array
+    neutrons: the Neutron::Events instance where data will be copied.
+      if None, a new instance will be created.
     '''
     shape = arr.shape
-    assert shape[1] == eventlen
+    assert shape[1] == ndblsperneutron
     n = len(arr)
-    import mcni
-    neutrons = mcni.neutron_buffer( n )
+
+    if neutrons is None:
+        import mcni
+        neutrons = mcni.neutron_buffer( n )
+        pass
+
+    n = min( n, len(neutrons) )
 
     cevents = cevents_from_npyarr( arr )
     
@@ -65,7 +84,7 @@ def neutrons_as_npyarr( neutrons ):
     '''copy data from a boost python instance of Neutron::Events
     to a numpy array'''
     n = len(neutrons)
-    ceventsnpyarr = numpy.zeros( n*eventlen, numpy.double )
+    ceventsnpyarr = numpy.zeros( n*ndblsperneutron, numpy.double )
 
     cevents = cevents_from_npyarr( ceventsnpyarr )
     neutrons.toCevents( cevents, n )

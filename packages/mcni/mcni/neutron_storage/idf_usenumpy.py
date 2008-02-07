@@ -18,47 +18,25 @@
 
 import numpy
 
-version=1
 
-from struct import calcsize, pack
-intSize = calcsize('<i')
-longlongsize = calcsize('<q')
-dubSize = calcsize('<d')
-strSize = calcsize('<s')
+from struct import pack, unpack
+from idfneutron import version, headerfmtstr, headersize, neutronsfmtstr, ndblsperneutron, filetype
 
 
 def read( filename ):
-    s=open(filename,'r').read()
-    pointer = 0
-    size = 64
-    filetype = s[pointer: pointer + size]
-    pointer += size
+    f=open(filename,'r').read()
+    filetype, version, comment, N = unpack( headerfmtstr, f[ : headersize] )
 
-    size = intSize
-    version = numpy.fromstring( s[pointer: pointer+size], int )[0]
-    pointer += size
+    neutrons = numpy.fromstring( f[headersize:], numpy.double )
 
-    size = 1024
-    comment = s[pointer: pointer + size]
-    pointer += size
-    
-    size = longlongsize
-    N = numpy.fromstring( s[pointer: pointer+size], numpy.int64 )[0]
-    pointer += size
-
-    neutrons = numpy.fromstring( s[pointer:], numpy.double )
-
-    neutrons.shape = -1, 10
+    neutrons.shape = -1, ndblsperneutron
     return filetype.strip('\x00'),version,comment.strip('\x00'),neutrons
 
 
 def write( neutrons, filename='neutrons', comment = '' ):
     assert neutrons.dtype == numpy.double
     f=open(filename,'w')
-    f.write(pack('<64s','Neutron'))
-    f.write(pack('<i',version))
-    f.write(pack('<1024s',comment))
-    f.write(pack('<q',len(neutrons)))
+    f.write( pack(headerfmtstr, filetype, version, comment, len(neutrons) ) )
     
     neutrons.shape = -1,
     f.write( neutrons.tostring() )
@@ -67,8 +45,8 @@ def write( neutrons, filename='neutrons', comment = '' ):
 
 def test():
     import numpy
-    neutrons = numpy.arange( 10000000, dtype = numpy.double )
-    neutrons.shape = -1, 10
+    neutrons = numpy.arange( 1000000, dtype = numpy.double )
+    neutrons.shape = -1, ndblsperneutron
     filename = 'neutrons.dat'
     write( neutrons, filename )
     filetype, version, comment, neutrons = read( filename )
