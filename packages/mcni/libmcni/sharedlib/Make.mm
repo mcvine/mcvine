@@ -39,6 +39,7 @@ PROJ_SRCS = \
 	Ceventbuffer.cc \
 	process_neutron_events.cc \
 	coords_transform.cc \
+	event_cevent_conversion.cc \
 	neutron_units_conversion.cc \
 	AbstractNeutronScatterer.cc \
 
@@ -72,6 +73,9 @@ process_neutron_events.cc: ../mcni/process_neutron_events.cc
 
 coords_transform.cc: ../neutron/coords_transform.cc
 	cp ../neutron/coords_transform.cc .
+
+event_cevent_conversion.cc: ../neutron/event_cevent_conversion.cc
+	cp ../neutron/event_cevent_conversion.cc .
 
 neutron_units_conversion.cc: ../neutron/units_conversion.cc
 	cp ../neutron/units_conversion.cc neutron_units_conversion.cc

@@ -23,9 +23,6 @@
 struct PyMethodDef pymcni_methods[] = {
 
     // dummy entry for testing
-    {pymcni_hello__name__, pymcni_hello,
-     METH_VARARGS, pymcni_hello__doc__},
-
     {pymcni_copyright__name__, pymcni_copyright,
      METH_VARARGS, pymcni_copyright__doc__},
 

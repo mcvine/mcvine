@@ -20,11 +20,11 @@ extern char pymcni_copyright__doc__[];
 extern "C"
 PyObject * pymcni_copyright(PyObject *, PyObject *);
 
-// hello
-extern char pymcni_hello__name__[];
-extern char pymcni_hello__doc__[];
+// voidPtrAsNeutronBufferPtr
+extern char pymcni_voidPtrAsNeutronBufferPtr__name__[];
+extern char pymcni_voidPtrAsNeutronBufferPtr__doc__[];
 extern "C"
-PyObject * pymcni_hello(PyObject *, PyObject *);
+PyObject * pymcni_voidPtrAsNeutronBufferPtr(PyObject *, PyObject *);
 
 #endif
 

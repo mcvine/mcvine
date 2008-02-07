@@ -15,7 +15,6 @@
 #include <Python.h>
 
 #include "misc.h"
-#include "libmcni/hello.h"
 
 
 // copyright
@@ -32,15 +31,6 @@ PyObject * pymcni_copyright(PyObject *, PyObject *)
     return Py_BuildValue("s", pymcni_copyright_note);
 }
     
-// hello
-
-char pymcni_hello__doc__[] = "";
-char pymcni_hello__name__[] = "hello";
-
-PyObject * pymcni_hello(PyObject *, PyObject *)
-{
-    return Py_BuildValue("s", hello());
-}
     
 // version
 // $Id$

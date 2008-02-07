@@ -45,6 +45,7 @@ class mcni_TestCase(unittest.TestCase):
             self.assertVectorAlmostEqual( r, (1,2,3) )
             self.assertVectorAlmostEqual( v, (1,2,3) )
             continue
+        
         return
     
         

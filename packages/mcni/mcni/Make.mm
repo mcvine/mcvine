@@ -15,6 +15,7 @@ PROJECT = mcni
 BUILD_DIRS = \
     instrument_simulator  \
     neutron_coordinates_transformers  \
+    neutron_storage  \
     pyre_support  \
 
 RECURSE_DIRS = $(BUILD_DIRS)

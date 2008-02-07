@@ -30,6 +30,8 @@ EXPORT_HEADERS = \
 	Spin.h Spin.icc \
 	State.h State.icc \
 	Ceventbuffer.h \
+	cEvent.h \
+	event_cevent_conversion.h \
 	coords_transform.h coords_transform.icc \
 	units_conversion.h \
 

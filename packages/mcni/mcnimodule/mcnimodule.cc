@@ -17,6 +17,7 @@
 
 #include "exceptions.h"
 #include "bindings.h"
+#include "register_bp_voidptr_converters.h"
 
 
 char pymcni_module__doc__[] = "";
@@ -43,6 +44,8 @@ initmcni()
     pymcni_runtimeError = PyErr_NewException("mcni.runtime", 0, 0);
     PyDict_SetItemString(d, "RuntimeException", pymcni_runtimeError);
 
+    // register bp-void ptr converters
+    mcnimodule::register_bp_voidptr_converters();
     return;
 }
 

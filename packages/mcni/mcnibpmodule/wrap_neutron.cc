@@ -86,6 +86,23 @@ void wrap_neutron()
      init< size_t > ()  )
     .def("snapshot", &Neutron::EventBuffer::snapshot)
     .def("resize", &NEB_resize)
+    .def("fromCevents", &events_fromCevents)
+    .def("toCevents", &events_toCevents)
+    ;
+
+  
+  class_<cEvent>
+    ("cNeutronEvent")
+    .def_readwrite("x", &cEvent::x)
+    .def_readwrite("y", &cEvent::y)
+    .def_readwrite("z", &cEvent::z)
+    .def_readwrite("vx", &cEvent::vx)
+    .def_readwrite("vy", &cEvent::vy)
+    .def_readwrite("vz", &cEvent::vz)
+    .def_readwrite("s1", &cEvent::s1)
+    .def_readwrite("s2", &cEvent::s2)
+    .def_readwrite("time", &cEvent::time)
+    .def_readwrite("probability", &cEvent::probability)
     ;
 
   def("abs2rel_batch", abs2rel_batch);

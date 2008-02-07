@@ -18,12 +18,13 @@ MODULE = mcni
 include std-pythonmodule.def
 include local.def
 
-PROJ_CXX_SRCLIB = -lmcni
+PROJ_CXX_SRCLIB = -lmcni -lbpext
 
 PROJ_SRCS = \
-    bindings.cc \
-    exceptions.cc \
-    misc.cc
+	bindings.cc \
+	exceptions.cc \
+	misc.cc \
+	register_bp_voidptr_converters.cc \
 
 
 # version

@@ -4,7 +4,7 @@
 #
 #                               Michael A.G. Aivazis
 #                        California Institute of Technology
-#                        (C) 1998-2005  All Rights Reserved
+#                        (C) 1998-2004  All Rights Reserved
 #
 # <LicenseText>
 #
@@ -13,27 +13,14 @@
 PROJECT = mcni
 PACKAGE = tests
 
-PROJ_CLEAN += $(PROJ_CPPTESTS)
+PROJ_TIDY += alltests.py $(PROJ_CPPTESTS)
+PROJ_CLEAN += alltests.py $(PROJ_CPPTESTS)
 
-PROJ_PYTESTS =
+PROJ_PYTESTS =  alltests.py
 PROJ_CPPTESTS = 
 PROJ_TESTS = $(PROJ_PYTESTS) $(PROJ_CPPTESTS)
-PROJ_LIBRARIES = -L$(BLD_LIBDIR) -lmcni
+PROJ_LIBRARIES = -L$(BLD_LIBDIR) -ljournal -lmcni
 
-
-
-
-# directory structure
-
-BUILD_DIRS = \
-	libmcni \
-	mcni \
-	mcnimodule \
-	mcnibpmodule \
-
-OTHER_DIRS = \
-
-RECURSE_DIRS = $(BUILD_DIRS) $(OTHER_DIRS)
 
 #--------------------------------------------------------------------------
 #
@@ -41,22 +28,23 @@ RECURSE_DIRS = $(BUILD_DIRS) $(OTHER_DIRS)
 all: $(PROJ_TESTS)
 	BLD_ACTION="all" $(MM) recurse
 
-test:
+test: alltests.py
 	for test in $(PROJ_TESTS) ; do $${test}; done
-	BLD_ACTION="test" $(MM) recurse
 
-tidy::
-	BLD_ACTION="tidy" $(MM) recurse
+release: tidy
+	cvs release .
 
-clean::
-	BLD_ACTION="clean" $(MM) recurse
-
+update: clean
+	cvs update .
 
 #--------------------------------------------------------------------------
 #
 
+alltests.py: ../alltests.py
+	cp ../alltests.py .
+
 
 # version
-# $Id$
+# $Id: Make.mm 620 2007-07-11 23:24:50Z linjiao $
 
 # End of file
