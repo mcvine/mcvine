@@ -24,6 +24,7 @@ PROJ_LIBRARIES = -L$(BLD_LIBDIR) -ljournal -lmcni
 
 # directory structure
 BUILD_DIRS = \
+	components \
 	neutron_storage \
 	pyre_components \
 	pyre_support \

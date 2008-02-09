@@ -27,9 +27,7 @@ class MonochromaticSource( AbstractComponent ):
     
 
     def process(self, neutrons):
-        neutron = self.neutron
-        for i in range(len(neutrons)): neutrons[i] = neutron
-        return neutrons
+        return self.engine.process( neutrons )
 
 
     def _configure(self):
@@ -52,12 +50,12 @@ class MonochromaticSource( AbstractComponent ):
         from mcni import neutron
         self.neutron = neutron( r = self.position, v = self.velocity,
                                 time = self.time, prob = self.probability )
+        from mcni.components.MonochromaticSource import MonochromaticSource
+        self.engine = MonochromaticSource( self.name, self.neutron )
         return
 
     pass # end of Source
 
-
-import os, math, numpy
 
 
 # version

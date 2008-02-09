@@ -33,73 +33,20 @@ class NeutronToStorage( AbstractComponent ):
     
 
     def process(self, neutrons):
-        path = self.path
-        
-        n = len(neutrons)
-
-        packetsize = self._getpacketsize()
-        if packetsize is None:
-            self._setpacketsize( n )
-            packetsize = n
-            pass
-
-        if n != packetsize:
-            raise RuntimeError , "packet size in %r is %d, "\
-                  "but neutron buffer has size %d" % (
-                path, packetsize, n )
-
-        filename = self._uniquefilename()
-        from mcni.neutron_storage import dump
-        dump(neutrons, os.path.join( path, filename ) )
-        return neutrons
+        return self.engine.process( neutrons )
     
     
-    def _getpacketsize(self):
-        p = os.path.join( self.path, packetsizefile )
-        if not os.path.exists( p ): return
-        return long( open(p).read() )
-
-
-    def _setpacketsize(self, n):
-        p = os.path.join( self.path, packetsizefile )
-        open(p, 'wt').write( '%s' % n )
-        return
-
-
-    def _uniquefilename(self):
-        entries = os.listdir( self.path )
-        numbers = []
-        for entry in entries:
-            try: n = int( entry )
-            except: continue
-            numbers.append( n )
-            continue
-        if len(numbers) == 0: return '0'
-        return str( max(numbers) + 1 )
-    
-
     def _configure(self):
         AbstractComponent._configure(self)
         self.path = self.inventory.path
+        self.append = self.inventory.append
         return
 
 
     def _init(self):
         AbstractComponent._init(self)
-
-        path = self.path = os.path.abspath( self.path )
-
-        if os.path.exists( path ):
-            msg = 'path %r already exists. if you want to append neutron event files to '\
-                  'that directory, please set "append" to True' % path
-            if not self.inventory.append: raise msg
-            pass
-        
-        if not os.path.exists( path ): os.makedirs( path )
-        
-        if not os.path.isdir( path ):
-            raise IOError , "path %r is not a directory" % path
-
+        from mcni.components.NeutronToStorage import NeutronToStorage
+        self.engine = NeutronToStorage( self.name, self.path, self.append )
         return
 
     pass # end of Source
