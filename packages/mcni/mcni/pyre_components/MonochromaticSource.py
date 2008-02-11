@@ -12,10 +12,14 @@
 #
 
 
+from mcni.components.MonochromaticSource import MonochromaticSource as enginefactory, category
+
 from mcni.pyre_support.AbstractComponent import AbstractComponent
+
 
 class MonochromaticSource( AbstractComponent ):
 
+    __doc__ = enginefactory.__doc__
 
     class Inventory( AbstractComponent.Inventory ):
         import pyre.inventory as pinv
@@ -50,8 +54,7 @@ class MonochromaticSource( AbstractComponent ):
         from mcni import neutron
         self.neutron = neutron( r = self.position, v = self.velocity,
                                 time = self.time, prob = self.probability )
-        from mcni.components.MonochromaticSource import MonochromaticSource
-        self.engine = MonochromaticSource( self.name, self.neutron )
+        self.engine = enginefactory( self.name, self.neutron )
         return
 
     pass # end of Source

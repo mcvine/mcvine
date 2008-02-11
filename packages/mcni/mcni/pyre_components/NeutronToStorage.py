@@ -12,13 +12,8 @@
 #
 
 
-# Every directory containing neutron data files must have a
-# text file stating the number of neutrons in each neutron data
-# file.
-packetsizefile = 'packetsize'
+from mcni.components.NeutronToStorage import NeutronToStorage as enginefactory, category
 
-
-from mcni.neutron_storage import ndblsperneutron
 
 from mcni.pyre_support.AbstractComponent import AbstractComponent
 
@@ -45,20 +40,11 @@ class NeutronToStorage( AbstractComponent ):
 
     def _init(self):
         AbstractComponent._init(self)
-        from mcni.components.NeutronToStorage import NeutronToStorage
-        self.engine = NeutronToStorage( self.name, self.path, self.append )
+        self.engine = enginefactory( self.name, self.path, self.append )
         return
 
     pass # end of Source
 
-
-def filesize( n ):
-    '''calculate neutron file size given number of neutrons
-    '''
-    return titlesize + versionsize + commentsize + nsize + n * neutronsize
-
-
-import os, math, numpy
 
 
 # version

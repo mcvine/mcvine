@@ -31,7 +31,9 @@ EXPORT_PYTHON_MODULES = \
 	MonochromaticSource.py \
 	NeutronFromStorage.py \
 	NeutronToStorage.py \
+	Registry.py \
 	__init__.py \
+	repositories.py \
 
 
 export:: export-package-python-modules

@@ -12,22 +12,23 @@
 #
 
 
-## This package contains homogeneous scatterers that can
-## be modeled as a shape and a scattering kernel.
+from mcni.components.Registry import Registry as base
 
 
-def _import_bindings():
-    import mccomposite
-    import mccomponents.mccomponentsbp
-    return
-
-_import_bindings()
-
+class Registry(base):
+    
+    def setup_repos(self):
+        import repositories
+        print repositories
+        from repositories import all as repos
+        repos = list(repos)
+        repos.reverse()
+        self.repos = repos
+        return
 
 
 
 # version
 __id__ = "$Id$"
-
 
 # End of file 

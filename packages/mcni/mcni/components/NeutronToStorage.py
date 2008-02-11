@@ -12,6 +12,9 @@
 #
 
 
+category = 'monitors'
+
+
 # Every directory containing neutron data files must have a
 # text file stating the number of neutrons in each neutron data
 # file.
@@ -23,6 +26,16 @@ from mcni.neutron_storage import ndblsperneutron
 from mcni.AbstractComponent import AbstractComponent
 
 class NeutronToStorage( AbstractComponent ):
+
+
+    '''Save neutrons to data files.
+
+    This component saves neutrons to data files in a directory
+    of your choice. The data files are in the idf/Neutron format
+    (svn://danse.us/inelastic/idf/Neutron.v1). You will need
+    to specifiy the path of the directory where neutron files
+    will be saved.
+    '''
 
 
     def __init__(self, name, path, append = False):

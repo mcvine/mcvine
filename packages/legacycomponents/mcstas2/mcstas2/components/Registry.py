@@ -17,8 +17,8 @@ class Registry:
 
 
     def __init__(self):
-        self.factories = {}
-        self.infos = {} 
+        self.factories = {} # (category, type): factory
+        self.infos = {} # (category, type): info
         self.types = {} # dictionary of category: type list 
         return
 

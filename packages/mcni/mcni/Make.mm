@@ -44,7 +44,10 @@ EXPORT_PYTHON_MODULES = \
 	Geometer.py \
 	Instrument.py \
 	__init__.py \
-
+	component_suppliers.py \
+	utils.py \
+	_component_listing.py \
+	_component_factories.py \
 
 
 export:: export-python-modules 

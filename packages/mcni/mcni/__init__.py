@@ -71,6 +71,10 @@ def _import_bindings():
 _import_bindings()
 
 
+from _component_factories import *
+from _component_listing import *
+
+
 # version
 __id__ = "$Id$"
 

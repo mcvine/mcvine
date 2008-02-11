@@ -24,7 +24,22 @@ warning = journal.warning( "mcni.pyre_support.test" )
 class TestCase(unittest.TestCase):
 
 
+    def test1(self):
+        'mcni.pyre_support: componentfactory'
+        from mcni.pyre_support import componentfactory
+        f = componentfactory( 'sources', 'MonochromaticSource' )
+        from mcni.pyre_components.MonochromaticSource import MonochromaticSource
+        self.assertEqual( f, MonochromaticSource )
+
+        f1 = componentfactory( 'sources', 'Source_simple', 'mcstas2' )
+        import mcstas2.pyre_support 
+        f1a = mcstas2.pyre_support.componentfactory( 'sources', 'Source_simple' )
+        self.assertEqual( f1, f1a )
+        return
+
+
     def test(self):
+        'mcni.pyre_support: a simple pyre simulation app'
         instrument = Instrument('test')
         instrument.testFacility = self
 

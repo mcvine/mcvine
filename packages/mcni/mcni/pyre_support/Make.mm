@@ -34,6 +34,7 @@ EXPORT_PYTHON_MODULES = \
 	List.py \
 	NeutronComponentFacility.py \
 	__init__.py \
+	component_suppliers.py \
 
 
 export:: export-package-python-modules

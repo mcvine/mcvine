@@ -17,6 +17,15 @@ def facility(*args, **kwds):
     return NeutronComponentFacility( *args, **kwds )
 
 
+def componentfactory( category, type, supplier = 'mcni'):
+    from component_suppliers import all as getsuppliers
+    suppliers = getsuppliers()
+    suppliername = supplier
+    supplier = suppliers[ suppliername ]
+    f = getattr(supplier, 'componentfactory')
+    return f(category, type)
+
+
 # version
 __id__ = "$Id$"
 

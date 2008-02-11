@@ -12,22 +12,13 @@
 #
 
 
-## This package contains homogeneous scatterers that can
-## be modeled as a shape and a scattering kernel.
+all = []
 
-
-def _import_bindings():
-    import mccomposite
-    import mccomponents.mccomponentsbp
-    return
-
-_import_bindings()
-
-
+default = 'mcni.components'
+all.append(default)
 
 
 # version
 __id__ = "$Id$"
-
 
 # End of file 

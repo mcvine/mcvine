@@ -20,14 +20,24 @@ given mcstas component category and type.
     componentfactory( 'sources', 'Source_simple' )
     
     '''
+    factoryattributename = 'pyrecomponentfactory'
+    
     import mcstas2
     module = mcstas2.componentmodule( category, type )
+    
+    try: return getattr(module, factoryattributename)
+    except: pass
+    
     factory = module.factory
     info = module.info
     factory.arguments = info.input_parameters
     from mcstas2.utils.pyre_support import elementaryComponentClassGenerator as generator
     from mcni.pyre_support.AbstractComponent import AbstractComponent
-    return generator( ctor_takes_name = True, baseclass = AbstractComponent )( factory )
+    f = generator( ctor_takes_name = True, baseclass = AbstractComponent )( factory )
+
+    setattr( module, factoryattributename, f )
+
+    return f
 
 
 def facility( category, type, name ):
