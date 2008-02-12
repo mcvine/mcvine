@@ -16,12 +16,27 @@
 ## be modeled as a shape and a scattering kernel.
 
 
+
+
+def _register_components():
+    from mcni.components import registercomponent
+    
+    from sample import samplecomponent
+    registercomponent( 'samples', 'SampleAssemblyFromXml', samplecomponent )
+
+    from detector import detectorcomponent
+    registercomponent( 'detectors', 'DetectorSystemFromXml', detectorcomponent )
+    return
+
+
 def _import_bindings():
     import mccomposite
     import mccomponents.mccomponentsbp
     return
 
+
 _import_bindings()
+_register_components()
 
 
 

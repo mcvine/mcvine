@@ -25,10 +25,6 @@ PROJ_LIBRARIES = -L$(BLD_LIBDIR) -ljournal -lmcni
 # directory structure
 
 BUILD_DIRS = \
-	homogeneous_scatterer \
-	detector \
-	sample \
-	pyre_support \
 
 OTHER_DIRS = \
 

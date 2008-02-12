@@ -12,6 +12,41 @@
 #
 
 
+
+def detectorcomponent( name, instrumentxml, coordinate_system, tofparams, outfilename ):
+    import mccomposite.register_Copy
+    import mccomposite.register_HollowCylinder
+    
+    from instrument.nixml import parse_file
+    instrument = parse_file( instrumentxml )
+    
+    import instrument.geometers as ig
+    instrument.geometer.changeRequestCoordinateSystem(
+        ig.coordinateSystem( coordinate_system ) )
+        
+    from mccomponents.detector.utils import \
+         getDetectorHierarchyDimensions, assignLocalGeometers
+    assignLocalGeometers( instrument, coordinate_system = coordinate_system )
+        
+    detectorSystem = instrument.getDetectorSystem()
+
+    detectorSystem.tofparams = tofparams
+    dims = getDetectorHierarchyDimensions( instrument )
+    dims = [ dim for name, dim in dims ]
+
+    
+    mca = eventModeMCA(  outfilename, dims )
+    detectorSystem.mca = mca
+
+    import mccomponents.homogeneous_scatterer as mh
+    cds = mh.scattererEngine( detectorSystem, coordinate_system = coordinate_system )
+
+    instrument.geometer = instrument.global_geometer
+
+    cds.name = name
+    return cds
+
+
 import units
 
 def he3tube_withpixels(

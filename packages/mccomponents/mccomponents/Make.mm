@@ -16,6 +16,7 @@ BUILD_DIRS = \
 	detector \
 	homogeneous_scatterer \
 	sample \
+	pyre_support \
 
 RECURSE_DIRS = $(BUILD_DIRS)
 

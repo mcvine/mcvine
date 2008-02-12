@@ -20,13 +20,6 @@
 
 namespace {
   
-  void NeutronComponent_process
-  (mcni::AbstractNeutronComponent & component, mcni::Neutron::Events & events)
-  {
-    mcni::process( component, events );
-    return;
-  }
-    
 }
 
 void wrap_abstractneutroncomponent()
@@ -36,7 +29,6 @@ void wrap_abstractneutroncomponent()
   
   class_<AbstractNeutronComponent, bases<AbstractNeutronScatterer>, boost::noncopyable >
     ("AbstractNeutronComponent", no_init )
-    .def( "process", NeutronComponent_process)
     .def_readonly( "name", &AbstractNeutronComponent::name )
     ;
 }

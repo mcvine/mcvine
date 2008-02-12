@@ -20,6 +20,22 @@
 
 namespace {
   
+  void NeutronScatterer_process
+  (mcni::AbstractNeutronScatterer & scatterer, mcni::Neutron::Events & events)
+  {
+    mcni::process( scatterer, events );
+    return;
+  }
+    
+
+  void NeutronScatterer_processM
+  (mcni::AbstractNeutronScatterer & scatterer, mcni::Neutron::Events & events)
+  {
+    mcni::processM( scatterer, events );
+    return;
+  }
+    
+
   void NeutronScatterer_scatter
   (mcni::AbstractNeutronScatterer & scatterer, mcni::Neutron::Event & ev )
   {
@@ -47,6 +63,8 @@ void wrap_abstractneutronscatterer()
      no_init )
     .def("absorb", NeutronScatterer_absorb)
     .def("scatter", NeutronScatterer_scatter)
+    .def( "process", NeutronScatterer_process)
+    .def( "processM", NeutronScatterer_processM)
     ;
 }
 
