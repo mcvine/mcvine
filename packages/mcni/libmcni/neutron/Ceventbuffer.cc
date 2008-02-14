@@ -23,6 +23,7 @@
 #include "mcni/geometry/Velocity.h"
 #include "mcni/neutron/EventBuffer.h"
 #include "mcni/neutron/Ceventbuffer.h"
+#include "mcni/test/exception.h"
 
 
 using namespace mcni::Neutron;
@@ -33,7 +34,7 @@ void checkBuffer(void *bufferPtr)
 {
   if (bufferPtr==NULL) {
     std::cerr<<"Buffer has not been initialized!";
-    throw("buffer not initd");
+    throw mcni::Exception("buffer not initd");
   }
 }
 

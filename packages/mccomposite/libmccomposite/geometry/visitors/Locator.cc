@@ -1,5 +1,6 @@
 #include "mccomposite/geometry/visitors/Locator.h"
 #include "mccomposite/geometry/shape2ostream.h"
+#include "mccomposite/exception.h"
 
 #include "journal/debug.h"
 
@@ -172,7 +173,7 @@ void
 mccomposite::geometry::Locator::visit
 ( const Reflection * reflection ) 
 {
-  throw;
+  throw Exception("handler for Reflection not implemented");
 }
 
 void

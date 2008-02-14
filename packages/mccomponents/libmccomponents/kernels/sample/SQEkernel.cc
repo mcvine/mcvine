@@ -19,10 +19,25 @@
 #include "mccomponents/math/random.h"
 #include "mccomponents/physics/constants.h"
 
+#ifdef DEBUG
+#include "journal/debug.h"
+#endif
+
 
 struct mccomponents::kernels::SQEkernel::Details {
   random::Generator random_number_generator;
+
+#ifdef DEBUG
+  const static char jrnltag[];
+  journal::debug_t debug;
+  Details() : debug( jrnltag ) {}
+#endif
 };
+
+
+#ifdef DEBUG
+const char mccomponents::kernels::SQEkernel::Details::jrnltag[] = "SQEkernel";
+#endif
 
 
 mccomponents::kernels::SQEkernel::SQEkernel
@@ -86,6 +101,13 @@ mccomponents::kernels::SQEkernel::scatter
   double E;
   if (m_Emin > Ei) return; // if Ei is too small, won't scatter. nothing happen
   E = m_details->random_number_generator.generate( m_Emin, std::min(Ei, m_Emax) );
+#ifdef DEBUG
+  m_details->debug 
+    << journal::at(__HERE__)
+    << "generate E between " << m_Emin << " and " << std::min(Ei, m_Emax) 
+    << ", E=" << E
+    << journal::endl;
+#endif
 
   // final energy, wave vector
   double Ef = Ei - E;
@@ -97,6 +119,13 @@ mccomponents::kernels::SQEkernel::scatter
     Qmax = std::min(m_Qmax, ki+kf);
   if (Qmax<Qmin) return; // no scatter
   double Q = m_details->random_number_generator.generate(Qmin, Qmax);
+#ifdef DEBUG
+  m_details->debug 
+    << journal::at(__HERE__)
+    << "generate Q between " << Qmin << " and " << Qmax 
+    << ", Q=" << Q
+    << journal::endl;
+#endif
 
   // adjust probability of neutron event
   // !!!!!!!!!
@@ -129,6 +158,15 @@ mccomponents::kernels::SQEkernel::scatter
 
   V3d ekf = e1*cost + e2*sint*cosp + e3 *sint*sinp;
   
+#ifdef DEBUG
+  m_details->debug 
+    << journal::at(__HERE__)
+    << "e1 = " << e1 << journal::newline
+    << "e2 = " << e2 << journal::newline
+    << "e3 = " << e3 << journal::newline
+    << "ekf = " << ekf << journal::newline
+    << journal::endl;
+#endif
   ev.state.velocity = ekf * (kf*conversion::k2v);
 }
 

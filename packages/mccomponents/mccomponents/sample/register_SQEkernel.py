@@ -69,18 +69,18 @@ def onSQEkernel(self, sqekernel):
     
     return self.factory.sqekernel(
         abs, sctt,
-        csqe, Erange, Qrange )
+        csqe, Qrange, Erange )
 
 
 # 3. the handler to call python bindings
 def sqekernel(self, absorption_cross_section, scattering_cross_section,
-              sqe, Erange, Qrange):
+              sqe, Qrange, Erange):
     import mccomponents.mccomponentsbp as b
     Emin, Emax = Erange
     Qmin, Qmax = Qrange
     return b.SQEkernel(
         absorption_cross_section, scattering_cross_section,
-        sqe, Emin, Emax, Qmin, Qmax )
+        sqe, Qmin, Qmax, Emin, Emax )
 
 
 import mccomponents.homogeneous_scatterer as hs
