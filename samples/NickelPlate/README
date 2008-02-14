@@ -1,0 +1,9 @@
+Sample of a Nickel plate:
+
+Ni.xml: sample assembly xml. It only contains Ni plate.
+Ni plate-scatterer.xml: to describe the scattering property of Ni plate
+Ni.xyz: crystal structure of Ni crystal
+fakeSQE: SQE in idf format (svn://danse.us/inelastic/idf). It is a fake SQE
+plotSQE.py: script to plot SQE in idf format. example: plotSQE.py fakeSQE
+
+
