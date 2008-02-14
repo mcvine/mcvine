@@ -32,14 +32,22 @@ meter = units.length.meter
 
 outfilename = 'detector_complex-events.dat'
 nevents = 10000
-npixelsperdet = 128
-ndetsperpack = 8
+npixelsperdet = 100
+ndetsperpack = 7
 npacks = 30
 detradius = 0.0125 * meter
 detlength = 1 * meter
 detpressure = 10. * units.pressure.atm
 
-sample2det = 4 * meter
+L1 = 5. #distance from source to sample
+vi =3000. # velocity of neutrons
+L2 = 4. #distance from sample to detectors
+sample2det = L2 * meter
+L = L1 + L2
+
+packindexat0 = 2 # index of the detector pack for which scattering angle=0
+
+tofparams = tmin, tmax, tstep = 0, 10e-3, 1e-4
 
 absorption_weight = 0.9
 scattering_weight = 0
@@ -67,7 +75,7 @@ def makepack( ):
         continue
 
     for i in range(ndetsperpack):
-        y = -(ndetsperpack-1)/2*2*detradius + i*2*detradius
+        y = -(ndetsperpack-1.)/2*2*detradius + i*2*detradius
         pack.addElement( tubes[i], (0*meter, y, 0*meter) )
         continue
     return pack
@@ -78,7 +86,6 @@ class detector_TestCase(unittest.TestCase):
     def test1(self):
         'complex. pack, detector, pixel hierarchy'
         
-        tofparams = 0, 10e-3, 1e-4
         mca = md.eventModeMCA(
             outfilename,
             (npacks, ndetsperpack, npixelsperdet,) )
@@ -94,7 +101,7 @@ class detector_TestCase(unittest.TestCase):
 
         for i in range( npacks ):
             z = 0 * meter
-            angle = i* 5./180 * N.pi
+            angle = (i-packindexat0)* 5./180 * N.pi
             x = sample2det * math.cos(angle)
             y = sample2det * math.sin(angle)
             ds.addElement( packs[i], (x,y,z) )
@@ -104,7 +111,7 @@ class detector_TestCase(unittest.TestCase):
 
         for i in range(nevents):
             if i%1000 == 0: print i
-            ev = mcni.neutron( r = (-5,0,0), v = (3000,0,0) )
+            ev = mcni.neutron( r = (-L1,0,0), v = (vi,0,0) )
             cds.scatter(ev)
             continue
 
@@ -112,20 +119,24 @@ class detector_TestCase(unittest.TestCase):
 
 
     def test1a(self):
-        s = open(outfilename).read()
-        import struct
-        fmt = 'IId'
-        t = struct.unpack( fmt * (len(s) / struct.calcsize( fmt )) , s )
-        #print t
-        n = len(t)/len(fmt)
+        from mccomponents.detector.reduction_utils import readevents
+        events = readevents( outfilename )
+        n = len(events)
         print "number of cases where absorption happen: ", n
         self.assert_( abs(n-(nevents*absorption_weight)) < 3*N.sqrt(n) )
 
-        t = N.array(t)
-        t.shape = n, 3
-        p = t[:, 2].sum()
+        p = sum([ e[2] for e in events ] )
         print "absorbed neutrons: ", p
         self.assert_( abs( p-(nevents*0.91) ) < 3*N.sqrt(p) )
+
+        t = L/vi
+        tchannel = int( (t-tmin)/tstep )
+        for e in events:
+            # should hit center of tube
+            self.assert_( abs(e[0] - (npixelsperdet*((packindexat0+0.5)*ndetsperpack)) ) <= 1 )
+            # tof channel
+            self.assert_( abs(e[1] - tchannel) <= 1 )
+            continue
         return
 
     pass  # end of detector_TestCase

@@ -26,6 +26,8 @@ PROJ_LIBRARIES = -L$(BLD_LIBDIR) -ljournal -lmcstas2
 
 BUILD_DIRS = \
 	binding_builder \
+	component2cppClass \
+	pymodule \
 
 OTHER_DIRS = \
 

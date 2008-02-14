@@ -13,6 +13,7 @@
 PROJECT = mccomponents
 PACKAGE = tests
 
+PROJ_TIDY += $(PROJ_CPPTESTS)
 PROJ_CLEAN += $(PROJ_CPPTESTS)
 
 PROJ_PYTESTS =  alltests.py

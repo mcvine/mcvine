@@ -17,6 +17,7 @@
 #include <boost/python/iterator.hpp>
 #include <vector>
 #include <string>
+#include <sstream>
 
 namespace wrap {
   
@@ -58,6 +59,15 @@ namespace wrap {
     return v.size();
   }
   
+  template <typename Type>
+  inline const char * v_str( const vector<Type> & v)
+  {
+    std::ostringstream oss;
+    for (size_t i=0; i<v.size(); i++) 
+      oss << v[i] << ", ";
+    return oss.str().c_str();
+  }
+  
   
   template <typename ElementType>
   void wrap_vector2( const char * elementTypeName )
@@ -72,6 +82,7 @@ namespace wrap {
       .def("__getitem__", &v_getitem<ElementType>)
       .def("__setitem__", &v_setitem<ElementType>)
       .def("__iter__", boost::python::iterator<w_t>() )
+    //  .def("__str__", &v_str<ElementType> )
       ;
   }
   

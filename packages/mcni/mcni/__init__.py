@@ -65,6 +65,7 @@ def neutron(r = (0,0,0), v = (0,0,3000), s = (0,1), time = 0, prob = 1.):
 
 def _import_bindings():
     import mcnibp
+    import _patch_neutronevents_bp_interface
     import bpext, mcni
     return
 

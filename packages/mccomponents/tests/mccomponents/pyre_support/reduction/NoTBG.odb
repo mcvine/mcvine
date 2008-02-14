@@ -1,0 +1,10 @@
+from reduction.pyre.preprocessors.AbstractTimeIndependentBackgroundRemover import AbstractTimeIndependentBackgroundRemover as base
+class NoTBG(base):
+    def _update(self):
+        histogram = self._getInput('histogram')
+        self._setOutput( 'histogram', histogram )
+        return 
+    pass # 
+
+def tibgRemover(): return NoTBG( 'NoTBG' )
+

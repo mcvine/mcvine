@@ -1,0 +1,8 @@
+from reduction.pyre.preprocessors.AbstractNormalizer import AbstractNormalizer as base
+class NoNormalization(base):
+    def determineNorm(self):
+        return 1,0
+    pass # 
+
+def normalizer(): return NoNormalization( 'NoNormalization' )
+

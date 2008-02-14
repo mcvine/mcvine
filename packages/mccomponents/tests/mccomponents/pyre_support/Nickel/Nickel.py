@@ -11,13 +11,7 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
 
-
-
-import unittestX as unittest
-import journal
-
-debug = journal.debug( "pyre_support_TestCase" )
-warning = journal.warning( "pyre_support_TestCase" )
+from sim_params import *
 
 
 from mcni.pyre_support.Instrument import Instrument as base
@@ -40,7 +34,7 @@ class Instrument(base):
         pass # end of Inventory
 
 
-    def __init__(self, name = 'test'):
+    def __init__(self, name = 'test-Nickel'):
         base.__init__(self, name)
         return
 
@@ -48,49 +42,34 @@ class Instrument(base):
     def _defaults(self):
         base._defaults(self)
         self.inventory.sequence = ['source', 'sample', 'detector']
+
         geometer = self.inventory.geometer
-        self.inventory.geometer.inventory.source = (0,0,0), (0,0,0)
-        self.inventory.geometer.inventory.sample = (0,0,10), (0,0,0)
-        self.inventory.geometer.inventory.detector = (0,0,10), (0,0,0)
+        geometer.inventory.source = (0,0,0), (0,0,0)
+        geometer.inventory.sample = (0,0,mod2sample), (0,0,0)
+        geometer.inventory.detector = (0,0,mod2sample), (0,0,0)
+
+        source = self.inventory.source
+        source.inventory.position = 0,0,0
+        source.inventory.velocity = 0,0,vi
+        source.inventory.probability = 1
+        source.inventory.time = 0.0
+
+        sample = self.inventory.sample
+        sample.inventory.xml = 'Ni.xml'
+
+        detector = self.inventory.detector
+        detector.inventory.eventsdat = eventsdat
+        detector.inventory.instrumentxml = instrumentxml
+        detector.inventory.tofparams = str(tofparams)
         return
     
     pass # end of Instrument
 
 
 
-class TestCase(unittest.TestCase):
-
-
-    def test1(self):
-        instrument = Instrument( 'test' )
-
-        import sys
-        save = sys.argv
-        sys.argv = [
-            '',
-            '--ncount=10',
-            '--buffer_size=5',
-            '--output-dir=pyre_support_test_out',
-            '--overwrite-datafiles',
-            ]
-
-        instrument.run()
-        return
-    
-
-    pass  # end of TestCase
-
-
-def pysuite():
-    suite1 = unittest.makeSuite(TestCase)
-    return unittest.TestSuite( (suite1,) )
-
-
 def main():
-    #debug.activate()
-    pytests = pysuite()
-    alltests = unittest.TestSuite( (pytests, ) )
-    unittest.TextTestRunner(verbosity=2).run(alltests)
+    Instrument().run()
+    return
     
     
 if __name__ == "__main__":

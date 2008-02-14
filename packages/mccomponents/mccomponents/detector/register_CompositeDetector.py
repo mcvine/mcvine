@@ -33,9 +33,11 @@ def onCompositeDetector(self, composite):
 
     cscatterers = factory.scatterercontainer()
     cgeometer = factory.geometer( )
-    for element in elements:
-        
-        self._indexes_in_detsys.append( element.id() )
+    for index, element in enumerate(elements):
+
+        #index is the index of this element in its container
+        #this way array indexing will be easy.
+        self._indexes_in_detsys.append( index )
         cscatterer = element.identify(self)
         self._indexes_in_detsys.pop()
         

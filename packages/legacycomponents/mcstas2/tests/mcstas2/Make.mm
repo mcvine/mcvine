@@ -26,6 +26,8 @@ PROJ_LIBRARIES = -L$(BLD_LIBDIR) -ljournal -lmcstas2
 
 BUILD_DIRS = \
 	wrappers \
+	utils \
+	pyre_support \
 
 OTHER_DIRS = \
 

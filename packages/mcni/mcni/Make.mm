@@ -45,9 +45,11 @@ EXPORT_PYTHON_MODULES = \
 	Instrument.py \
 	__init__.py \
 	component_suppliers.py \
+	units.py \
 	utils.py \
 	_component_listing.py \
 	_component_factories.py \
+	_patch_neutronevents_bp_interface.py \
 
 
 export:: export-python-modules 

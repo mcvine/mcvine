@@ -31,6 +31,7 @@ EXPORT_PYTHON_MODULES = \
 	MonochromaticSource.py \
 	NeutronFromStorage.py \
 	NeutronToStorage.py \
+	NeutronsOnCone_FixedQE.py \
 	Registry.py \
 	__init__.py \
 	repositories.py \

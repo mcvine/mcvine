@@ -32,6 +32,11 @@ npixels = 100
 detradius = 0.0125
 detlength = 1
 
+L = 5. #distance from source to detector
+vi =3000. # velocity of neutrons
+
+tofparams = tmin, tmax, tstep = 0, 10e-3, 1e-4
+
 absorption_weight = 0.9
 scattering_weight = 0
 transmission_weight = 0.1
@@ -50,7 +55,6 @@ class detector_TestCase(unittest.TestCase):
             mcweights_absorption_scattering_transmission = (
             absorption_weight, scattering_weight, transmission_weight)
             )
-        tofparams = 0, 10e-3, 1e-4
         mca = md.eventModeMCA( 'events.dat', (ndets,npixels,) )
         ds = md.detectorSystem( cylinder, tofparams, mca )
 
@@ -69,7 +73,7 @@ class detector_TestCase(unittest.TestCase):
 
         for i in range(nevents):
             if i%1000 == 0: print i
-            ev = mcni.neutron( r = (-5,0,0), v = (3000,0,0) )
+            ev = mcni.neutron( r = (-L,0,0), v = (vi,0,0) )
             cds.scatter(ev)
             continue
 
@@ -77,17 +81,21 @@ class detector_TestCase(unittest.TestCase):
 
 
     def test1a(self):
-        s = open('events.dat').read()
-        import struct
-        fmt = 'IId'
-        t = struct.unpack( fmt * (len(s) / struct.calcsize( fmt )) , s )
-        n = len(t)/len(fmt)
+        from mccomponents.detector.reduction_utils import readevents
+        events = readevents( 'events.dat' )
+        n = len(events)
         self.assert_( abs(n-(nevents*absorption_weight)) < 3*N.sqrt(n) )
 
-        t = N.array(t)
-        t.shape = n, 3
-        p = t[:, 2].sum()
+        p = sum([ e[2] for e in events ] )
         self.assert_( abs( p-(nevents*0.908484) ) < 3*N.sqrt(p) )
+
+        t = L/vi
+        tchannel = int( (t-tmin)/tstep )
+        for e in events:
+            # should hit center of tube
+            self.assert_( abs(e[0] - (npixels/2)) <= 1 )
+            self.assertEqual( e[1], tchannel )
+            # 
         return
 
     pass  # end of detector_TestCase

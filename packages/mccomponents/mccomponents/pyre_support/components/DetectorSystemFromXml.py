@@ -37,6 +37,7 @@ class DetectorSystemFromXml( AbstractComponent ):
     
 
     def process(self, neutrons):
+        self._debug.log( 'detector accepting neutrons: %s' % (neutrons,) )
         return self.engine.process( neutrons )
 
 
@@ -58,6 +59,12 @@ class DetectorSystemFromXml( AbstractComponent ):
         eventsdat = self.eventsdat
         self.engine = enginefactory(
             self.name, instrumentxml, coordinate_system, tofparams, eventsdat )
+        return
+
+
+    def _fini(self):
+        del self.engine
+        AbstractComponent._fini(self)
         return
 
     pass # end of Source

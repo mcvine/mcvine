@@ -1,0 +1,13 @@
+from reduction.pyre.preprocessors.AbstractIncidentEnergySolver import AbstractIncidentEnergySolver as base
+class SetEi(base):
+    class Inventory( base.Inventory ):
+        import pyre.inventory as pinv
+        from pyre.units.energy import meV
+        Ei = pinv.dimensional( 'Ei', default = 60*meV )
+        pass # end of Inventory
+    def __call__(self, run):
+        return self.inventory.Ei
+    pass # 
+
+def eiSolver(): return SetEi( 'SetEi' )
+

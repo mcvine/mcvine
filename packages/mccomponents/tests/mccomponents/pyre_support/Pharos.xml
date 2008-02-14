@@ -1,0 +1,1044 @@
+<?xml version="1.0"?>
+<!--
+! ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+!
+!                                   Jiao Lin
+!                                   Caltech
+!
+! {LicenseText}
+!
+! ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-->
+
+<!DOCTYPE instrument>
+
+
+<Instrument guid="-1" name="Pharos" id="-1">
+
+    <DetectorSystem guid="1" name="detSystem" id="0">
+
+      <Shape>
+	<hollowCylinder in_radius="3.9" out_radius="4.1" height="1.1"/>
+      </Shape>
+    
+
+        <Detector name="detector1" pressure="10*atm" holdOff="1e-06*s" deadTime="1e-05*s" guid="3" type="He3 LPSD" id="1">
+            <Shape>
+            <!--
+            Cylinder
+
+  Its axis is vertical.
+
+  Attributes:
+    - radius
+    - height
+  
+            -->
+            <cylinder height="1*m" radius="0.0127*m"/>
+            </Shape>
+
+            <Pixel solidAngle="1.0" guid="4" name="pixel0" id="0">
+                <Shape>
+                <!--
+                Cylinder
+
+  Its axis is vertical.
+
+  Attributes:
+    - radius
+    - height
+  
+                -->
+                <cylinder height="0.025*m" radius="0.0127*m"/>
+                </Shape>
+            </Pixel>
+
+            <Copy guid="5" name="pixel1" reference="4" id="1" />
+            <Copy guid="6" name="pixel2" reference="4" id="2" />
+            <Copy guid="7" name="pixel3" reference="4" id="3" />
+            <Copy guid="8" name="pixel4" reference="4" id="4" />
+            <Copy guid="9" name="pixel5" reference="4" id="5" />
+            <Copy guid="10" name="pixel6" reference="4" id="6" />
+            <Copy guid="11" name="pixel7" reference="4" id="7" />
+            <Copy guid="12" name="pixel8" reference="4" id="8" />
+            <Copy guid="13" name="pixel9" reference="4" id="9" />
+            <Copy guid="14" name="pixel10" reference="4" id="10" />
+            <Copy guid="15" name="pixel11" reference="4" id="11" />
+            <Copy guid="16" name="pixel12" reference="4" id="12" />
+            <Copy guid="17" name="pixel13" reference="4" id="13" />
+            <Copy guid="18" name="pixel14" reference="4" id="14" />
+            <Copy guid="19" name="pixel15" reference="4" id="15" />
+            <Copy guid="20" name="pixel16" reference="4" id="16" />
+            <Copy guid="21" name="pixel17" reference="4" id="17" />
+            <Copy guid="22" name="pixel18" reference="4" id="18" />
+            <Copy guid="23" name="pixel19" reference="4" id="19" />
+            <Copy guid="24" name="pixel20" reference="4" id="20" />
+            <Copy guid="25" name="pixel21" reference="4" id="21" />
+            <Copy guid="26" name="pixel22" reference="4" id="22" />
+            <Copy guid="27" name="pixel23" reference="4" id="23" />
+            <Copy guid="28" name="pixel24" reference="4" id="24" />
+            <Copy guid="29" name="pixel25" reference="4" id="25" />
+            <Copy guid="30" name="pixel26" reference="4" id="26" />
+            <Copy guid="31" name="pixel27" reference="4" id="27" />
+            <Copy guid="32" name="pixel28" reference="4" id="28" />
+            <Copy guid="33" name="pixel29" reference="4" id="29" />
+            <Copy guid="34" name="pixel30" reference="4" id="30" />
+            <Copy guid="35" name="pixel31" reference="4" id="31" />
+            <Copy guid="36" name="pixel32" reference="4" id="32" />
+            <Copy guid="37" name="pixel33" reference="4" id="33" />
+            <Copy guid="38" name="pixel34" reference="4" id="34" />
+            <Copy guid="39" name="pixel35" reference="4" id="35" />
+            <Copy guid="40" name="pixel36" reference="4" id="36" />
+            <Copy guid="41" name="pixel37" reference="4" id="37" />
+            <Copy guid="42" name="pixel38" reference="4" id="38" />
+            <Copy guid="43" name="pixel39" reference="4" id="39" />
+            <LocalGeometer registry-coordinate-system="InstrumentScientist">
+                <Register name="pixel0" position="(0*m, 0*m, -0.4875*m)" orientation="(0.0, 0.0, 0.0)"/>
+                <Register name="pixel1" position="(0*m, 0*m, -0.4625*m)" orientation="(0.0, 0.0, 0.0)"/>
+                <Register name="pixel2" position="(0*m, 0*m, -0.4375*m)" orientation="(0.0, 0.0, 0.0)"/>
+                <Register name="pixel3" position="(0*m, 0*m, -0.4125*m)" orientation="(0.0, 0.0, 0.0)"/>
+                <Register name="pixel4" position="(0*m, 0*m, -0.3875*m)" orientation="(0.0, 0.0, 0.0)"/>
+                <Register name="pixel5" position="(0*m, 0*m, -0.3625*m)" orientation="(0.0, 0.0, 0.0)"/>
+                <Register name="pixel6" position="(0*m, 0*m, -0.3375*m)" orientation="(0.0, 0.0, 0.0)"/>
+                <Register name="pixel7" position="(0*m, 0*m, -0.3125*m)" orientation="(0.0, 0.0, 0.0)"/>
+                <Register name="pixel8" position="(0*m, 0*m, -0.2875*m)" orientation="(0.0, 0.0, 0.0)"/>
+                <Register name="pixel9" position="(0*m, 0*m, -0.2625*m)" orientation="(0.0, 0.0, 0.0)"/>
+                <Register name="pixel10" position="(0*m, 0*m, -0.2375*m)" orientation="(0.0, 0.0, 0.0)"/>
+                <Register name="pixel11" position="(0*m, 0*m, -0.2125*m)" orientation="(0.0, 0.0, 0.0)"/>
+                <Register name="pixel12" position="(0*m, 0*m, -0.1875*m)" orientation="(0.0, 0.0, 0.0)"/>
+                <Register name="pixel13" position="(0*m, 0*m, -0.1625*m)" orientation="(0.0, 0.0, 0.0)"/>
+                <Register name="pixel14" position="(0*m, 0*m, -0.1375*m)" orientation="(0.0, 0.0, 0.0)"/>
+                <Register name="pixel15" position="(0*m, 0*m, -0.1125*m)" orientation="(0.0, 0.0, 0.0)"/>
+                <Register name="pixel16" position="(0*m, 0*m, -0.0875*m)" orientation="(0.0, 0.0, 0.0)"/>
+                <Register name="pixel17" position="(0*m, 0*m, -0.0625*m)" orientation="(0.0, 0.0, 0.0)"/>
+                <Register name="pixel18" position="(0*m, 0*m, -0.0375*m)" orientation="(0.0, 0.0, 0.0)"/>
+                <Register name="pixel19" position="(0*m, 0*m, -0.0125*m)" orientation="(0.0, 0.0, 0.0)"/>
+                <Register name="pixel20" position="(0*m, 0*m, 0.0125*m)" orientation="(0.0, 0.0, 0.0)"/>
+                <Register name="pixel21" position="(0*m, 0*m, 0.0375*m)" orientation="(0.0, 0.0, 0.0)"/>
+                <Register name="pixel22" position="(0*m, 0*m, 0.0625*m)" orientation="(0.0, 0.0, 0.0)"/>
+                <Register name="pixel23" position="(0*m, 0*m, 0.0875*m)" orientation="(0.0, 0.0, 0.0)"/>
+                <Register name="pixel24" position="(0*m, 0*m, 0.1125*m)" orientation="(0.0, 0.0, 0.0)"/>
+                <Register name="pixel25" position="(0*m, 0*m, 0.1375*m)" orientation="(0.0, 0.0, 0.0)"/>
+                <Register name="pixel26" position="(0*m, 0*m, 0.1625*m)" orientation="(0.0, 0.0, 0.0)"/>
+                <Register name="pixel27" position="(0*m, 0*m, 0.1875*m)" orientation="(0.0, 0.0, 0.0)"/>
+                <Register name="pixel28" position="(0*m, 0*m, 0.2125*m)" orientation="(0.0, 0.0, 0.0)"/>
+                <Register name="pixel29" position="(0*m, 0*m, 0.2375*m)" orientation="(0.0, 0.0, 0.0)"/>
+                <Register name="pixel30" position="(0*m, 0*m, 0.2625*m)" orientation="(0.0, 0.0, 0.0)"/>
+                <Register name="pixel31" position="(0*m, 0*m, 0.2875*m)" orientation="(0.0, 0.0, 0.0)"/>
+                <Register name="pixel32" position="(0*m, 0*m, 0.3125*m)" orientation="(0.0, 0.0, 0.0)"/>
+                <Register name="pixel33" position="(0*m, 0*m, 0.3375*m)" orientation="(0.0, 0.0, 0.0)"/>
+                <Register name="pixel34" position="(0*m, 0*m, 0.3625*m)" orientation="(0.0, 0.0, 0.0)"/>
+                <Register name="pixel35" position="(0*m, 0*m, 0.3875*m)" orientation="(0.0, 0.0, 0.0)"/>
+                <Register name="pixel36" position="(0*m, 0*m, 0.4125*m)" orientation="(0.0, 0.0, 0.0)"/>
+                <Register name="pixel37" position="(0*m, 0*m, 0.4375*m)" orientation="(0.0, 0.0, 0.0)"/>
+                <Register name="pixel38" position="(0*m, 0*m, 0.4625*m)" orientation="(0.0, 0.0, 0.0)"/>
+                <Register name="pixel39" position="(0*m, 0*m, 0.4875*m)" orientation="(0.0, 0.0, 0.0)"/>
+            </LocalGeometer>
+        </Detector>
+
+        <Copy guid="45" name="detector2" reference="3" id="2" />
+        <Copy guid="47" name="detector3" reference="3" id="3" />
+        <Copy guid="49" name="detector4" reference="3" id="4" />
+        <Copy guid="51" name="detector5" reference="3" id="5" />
+        <Copy guid="53" name="detector6" reference="3" id="6" />
+        <Copy guid="55" name="detector7" reference="3" id="7" />
+        <Copy guid="57" name="detector8" reference="3" id="8" />
+        <Copy guid="59" name="detector9" reference="3" id="9" />
+        <Copy guid="61" name="detector10" reference="3" id="10" />
+        <Copy guid="63" name="detector11" reference="3" id="11" />
+        <Copy guid="65" name="detector12" reference="3" id="12" />
+        <Copy guid="67" name="detector13" reference="3" id="13" />
+        <Copy guid="69" name="detector14" reference="3" id="14" />
+        <Copy guid="71" name="detector15" reference="3" id="15" />
+        <Copy guid="73" name="detector16" reference="3" id="16" />
+        <Copy guid="75" name="detector17" reference="3" id="17" />
+        <Copy guid="77" name="detector18" reference="3" id="18" />
+        <Copy guid="79" name="detector19" reference="3" id="19" />
+        <Copy guid="81" name="detector20" reference="3" id="20" />
+        <Copy guid="83" name="detector21" reference="3" id="21" />
+        <Copy guid="85" name="detector22" reference="3" id="22" />
+        <Copy guid="87" name="detector23" reference="3" id="23" />
+        <Copy guid="89" name="detector24" reference="3" id="24" />
+        <Copy guid="91" name="detector41" reference="3" id="41" />
+        <Copy guid="93" name="detector42" reference="3" id="42" />
+        <Copy guid="95" name="detector43" reference="3" id="43" />
+        <Copy guid="97" name="detector44" reference="3" id="44" />
+        <Copy guid="99" name="detector45" reference="3" id="45" />
+        <Copy guid="101" name="detector46" reference="3" id="46" />
+        <Copy guid="103" name="detector47" reference="3" id="47" />
+        <Copy guid="105" name="detector48" reference="3" id="48" />
+        <Copy guid="107" name="detector49" reference="3" id="49" />
+        <Copy guid="109" name="detector50" reference="3" id="50" />
+        <Copy guid="111" name="detector51" reference="3" id="51" />
+        <Copy guid="113" name="detector52" reference="3" id="52" />
+        <Copy guid="115" name="detector53" reference="3" id="53" />
+        <Copy guid="117" name="detector54" reference="3" id="54" />
+        <Copy guid="119" name="detector55" reference="3" id="55" />
+        <Copy guid="121" name="detector56" reference="3" id="56" />
+        <Copy guid="123" name="detector57" reference="3" id="57" />
+        <Copy guid="125" name="detector58" reference="3" id="58" />
+        <Copy guid="127" name="detector59" reference="3" id="59" />
+        <Copy guid="129" name="detector60" reference="3" id="60" />
+        <Copy guid="131" name="detector61" reference="3" id="61" />
+        <Copy guid="133" name="detector62" reference="3" id="62" />
+        <Copy guid="135" name="detector63" reference="3" id="63" />
+        <Copy guid="137" name="detector64" reference="3" id="64" />
+        <Copy guid="139" name="detector65" reference="3" id="65" />
+        <Copy guid="141" name="detector66" reference="3" id="66" />
+        <Copy guid="143" name="detector67" reference="3" id="67" />
+        <Copy guid="145" name="detector68" reference="3" id="68" />
+        <Copy guid="147" name="detector69" reference="3" id="69" />
+        <Copy guid="149" name="detector70" reference="3" id="70" />
+        <Copy guid="151" name="detector71" reference="3" id="71" />
+        <Copy guid="153" name="detector72" reference="3" id="72" />
+        <Copy guid="155" name="detector73" reference="3" id="73" />
+        <Copy guid="157" name="detector74" reference="3" id="74" />
+        <Copy guid="159" name="detector75" reference="3" id="75" />
+        <Copy guid="161" name="detector76" reference="3" id="76" />
+        <Copy guid="163" name="detector77" reference="3" id="77" />
+        <Copy guid="165" name="detector78" reference="3" id="78" />
+        <Copy guid="167" name="detector79" reference="3" id="79" />
+        <Copy guid="169" name="detector80" reference="3" id="80" />
+        <Copy guid="171" name="detector81" reference="3" id="81" />
+        <Copy guid="173" name="detector82" reference="3" id="82" />
+        <Copy guid="175" name="detector83" reference="3" id="83" />
+        <Copy guid="177" name="detector84" reference="3" id="84" />
+        <Copy guid="179" name="detector85" reference="3" id="85" />
+        <Copy guid="181" name="detector86" reference="3" id="86" />
+        <Copy guid="183" name="detector87" reference="3" id="87" />
+        <Copy guid="185" name="detector88" reference="3" id="88" />
+        <Copy guid="187" name="detector89" reference="3" id="89" />
+        <Copy guid="189" name="detector90" reference="3" id="90" />
+        <Copy guid="191" name="detector91" reference="3" id="91" />
+        <Copy guid="193" name="detector92" reference="3" id="92" />
+        <Copy guid="195" name="detector93" reference="3" id="93" />
+        <Copy guid="197" name="detector94" reference="3" id="94" />
+        <Copy guid="199" name="detector95" reference="3" id="95" />
+        <Copy guid="201" name="detector96" reference="3" id="96" />
+        <Copy guid="203" name="detector97" reference="3" id="97" />
+        <Copy guid="205" name="detector98" reference="3" id="98" />
+        <Copy guid="207" name="detector99" reference="3" id="99" />
+        <Copy guid="209" name="detector100" reference="3" id="100" />
+        <Copy guid="211" name="detector101" reference="3" id="101" />
+        <Copy guid="213" name="detector102" reference="3" id="102" />
+        <Copy guid="215" name="detector103" reference="3" id="103" />
+        <Copy guid="217" name="detector104" reference="3" id="104" />
+        <Copy guid="219" name="detector105" reference="3" id="105" />
+        <Copy guid="221" name="detector106" reference="3" id="106" />
+        <Copy guid="223" name="detector107" reference="3" id="107" />
+        <Copy guid="225" name="detector108" reference="3" id="108" />
+        <Copy guid="227" name="detector109" reference="3" id="109" />
+        <Copy guid="229" name="detector110" reference="3" id="110" />
+        <Copy guid="231" name="detector111" reference="3" id="111" />
+        <Copy guid="233" name="detector112" reference="3" id="112" />
+        <Copy guid="235" name="detector113" reference="3" id="113" />
+        <Copy guid="237" name="detector114" reference="3" id="114" />
+        <Copy guid="239" name="detector115" reference="3" id="115" />
+        <Copy guid="241" name="detector116" reference="3" id="116" />
+        <Copy guid="243" name="detector117" reference="3" id="117" />
+        <Copy guid="245" name="detector118" reference="3" id="118" />
+        <Copy guid="247" name="detector119" reference="3" id="119" />
+        <Copy guid="249" name="detector120" reference="3" id="120" />
+        <Copy guid="251" name="detector121" reference="3" id="121" />
+        <Copy guid="253" name="detector122" reference="3" id="122" />
+        <Copy guid="255" name="detector123" reference="3" id="123" />
+        <Copy guid="257" name="detector124" reference="3" id="124" />
+        <Copy guid="259" name="detector125" reference="3" id="125" />
+        <Copy guid="261" name="detector126" reference="3" id="126" />
+        <Copy guid="263" name="detector127" reference="3" id="127" />
+        <Copy guid="265" name="detector128" reference="3" id="128" />
+
+        <Detector name="detector129" pressure="1.01325e+06*m**-1*kg*s**-2" holdOff="1e-06*s" deadTime="1e-05*s" guid="267" type="He3 LPSD" id="129">
+            <Shape>
+            <!--
+            Cylinder
+
+  Its axis is vertical.
+
+  Attributes:
+    - radius
+    - height
+  
+            -->
+            <cylinder height="1*m" radius="0.0127*m"/>
+            </Shape>
+
+            <Pixel solidAngle="1.0" guid="268" name="pixel0" id="0">
+                <Shape>
+                <!--
+                Cylinder
+
+  Its axis is vertical.
+
+  Attributes:
+    - radius
+    - height
+  
+                -->
+                <cylinder height="0.025*m" radius="0.0127*m"/>
+                </Shape>
+            </Pixel>
+
+            <Copy guid="269" name="pixel1" reference="268" id="1" />
+            <Copy guid="270" name="pixel2" reference="268" id="2" />
+            <Copy guid="271" name="pixel3" reference="268" id="3" />
+            <Copy guid="272" name="pixel4" reference="268" id="4" />
+            <Copy guid="273" name="pixel5" reference="268" id="5" />
+            <Copy guid="274" name="pixel6" reference="268" id="6" />
+            <Copy guid="275" name="pixel7" reference="268" id="7" />
+            <Copy guid="276" name="pixel8" reference="268" id="8" />
+            <Copy guid="277" name="pixel9" reference="268" id="9" />
+            <Copy guid="278" name="pixel10" reference="268" id="10" />
+            <Copy guid="279" name="pixel11" reference="268" id="11" />
+            <Copy guid="280" name="pixel12" reference="268" id="12" />
+            <Copy guid="281" name="pixel13" reference="268" id="13" />
+            <Copy guid="282" name="pixel14" reference="268" id="14" />
+            <Copy guid="283" name="pixel15" reference="268" id="15" />
+            <Copy guid="284" name="pixel16" reference="268" id="16" />
+            <Copy guid="285" name="pixel17" reference="268" id="17" />
+            <Copy guid="286" name="pixel18" reference="268" id="18" />
+            <Copy guid="287" name="pixel19" reference="268" id="19" />
+            <Copy guid="288" name="pixel20" reference="268" id="20" />
+            <Copy guid="289" name="pixel21" reference="268" id="21" />
+            <Copy guid="290" name="pixel22" reference="268" id="22" />
+            <Copy guid="291" name="pixel23" reference="268" id="23" />
+            <Copy guid="292" name="pixel24" reference="268" id="24" />
+            <Copy guid="293" name="pixel25" reference="268" id="25" />
+            <Copy guid="294" name="pixel26" reference="268" id="26" />
+            <Copy guid="295" name="pixel27" reference="268" id="27" />
+            <Copy guid="296" name="pixel28" reference="268" id="28" />
+            <Copy guid="297" name="pixel29" reference="268" id="29" />
+            <Copy guid="298" name="pixel30" reference="268" id="30" />
+            <Copy guid="299" name="pixel31" reference="268" id="31" />
+            <Copy guid="300" name="pixel32" reference="268" id="32" />
+            <Copy guid="301" name="pixel33" reference="268" id="33" />
+            <Copy guid="302" name="pixel34" reference="268" id="34" />
+            <Copy guid="303" name="pixel35" reference="268" id="35" />
+            <Copy guid="304" name="pixel36" reference="268" id="36" />
+            <Copy guid="305" name="pixel37" reference="268" id="37" />
+            <Copy guid="306" name="pixel38" reference="268" id="38" />
+            <Copy guid="307" name="pixel39" reference="268" id="39" />
+            <LocalGeometer registry-coordinate-system="InstrumentScientist">
+                <Register name="pixel0" position="(0*m, 0*m, -0.4875*m)" orientation="(0.0, 0.0, 0.0)"/>
+                <Register name="pixel1" position="(0*m, 0*m, -0.4625*m)" orientation="(0.0, 0.0, 0.0)"/>
+                <Register name="pixel2" position="(0*m, 0*m, -0.4375*m)" orientation="(0.0, 0.0, 0.0)"/>
+                <Register name="pixel3" position="(0*m, 0*m, -0.4125*m)" orientation="(0.0, 0.0, 0.0)"/>
+                <Register name="pixel4" position="(0*m, 0*m, -0.3875*m)" orientation="(0.0, 0.0, 0.0)"/>
+                <Register name="pixel5" position="(0*m, 0*m, -0.3625*m)" orientation="(0.0, 0.0, 0.0)"/>
+                <Register name="pixel6" position="(0*m, 0*m, -0.3375*m)" orientation="(0.0, 0.0, 0.0)"/>
+                <Register name="pixel7" position="(0*m, 0*m, -0.3125*m)" orientation="(0.0, 0.0, 0.0)"/>
+                <Register name="pixel8" position="(0*m, 0*m, -0.2875*m)" orientation="(0.0, 0.0, 0.0)"/>
+                <Register name="pixel9" position="(0*m, 0*m, -0.2625*m)" orientation="(0.0, 0.0, 0.0)"/>
+                <Register name="pixel10" position="(0*m, 0*m, -0.2375*m)" orientation="(0.0, 0.0, 0.0)"/>
+                <Register name="pixel11" position="(0*m, 0*m, -0.2125*m)" orientation="(0.0, 0.0, 0.0)"/>
+                <Register name="pixel12" position="(0*m, 0*m, -0.1875*m)" orientation="(0.0, 0.0, 0.0)"/>
+                <Register name="pixel13" position="(0*m, 0*m, -0.1625*m)" orientation="(0.0, 0.0, 0.0)"/>
+                <Register name="pixel14" position="(0*m, 0*m, -0.1375*m)" orientation="(0.0, 0.0, 0.0)"/>
+                <Register name="pixel15" position="(0*m, 0*m, -0.1125*m)" orientation="(0.0, 0.0, 0.0)"/>
+                <Register name="pixel16" position="(0*m, 0*m, -0.0875*m)" orientation="(0.0, 0.0, 0.0)"/>
+                <Register name="pixel17" position="(0*m, 0*m, -0.0625*m)" orientation="(0.0, 0.0, 0.0)"/>
+                <Register name="pixel18" position="(0*m, 0*m, -0.0375*m)" orientation="(0.0, 0.0, 0.0)"/>
+                <Register name="pixel19" position="(0*m, 0*m, -0.0125*m)" orientation="(0.0, 0.0, 0.0)"/>
+                <Register name="pixel20" position="(0*m, 0*m, 0.0125*m)" orientation="(0.0, 0.0, 0.0)"/>
+                <Register name="pixel21" position="(0*m, 0*m, 0.0375*m)" orientation="(0.0, 0.0, 0.0)"/>
+                <Register name="pixel22" position="(0*m, 0*m, 0.0625*m)" orientation="(0.0, 0.0, 0.0)"/>
+                <Register name="pixel23" position="(0*m, 0*m, 0.0875*m)" orientation="(0.0, 0.0, 0.0)"/>
+                <Register name="pixel24" position="(0*m, 0*m, 0.1125*m)" orientation="(0.0, 0.0, 0.0)"/>
+                <Register name="pixel25" position="(0*m, 0*m, 0.1375*m)" orientation="(0.0, 0.0, 0.0)"/>
+                <Register name="pixel26" position="(0*m, 0*m, 0.1625*m)" orientation="(0.0, 0.0, 0.0)"/>
+                <Register name="pixel27" position="(0*m, 0*m, 0.1875*m)" orientation="(0.0, 0.0, 0.0)"/>
+                <Register name="pixel28" position="(0*m, 0*m, 0.2125*m)" orientation="(0.0, 0.0, 0.0)"/>
+                <Register name="pixel29" position="(0*m, 0*m, 0.2375*m)" orientation="(0.0, 0.0, 0.0)"/>
+                <Register name="pixel30" position="(0*m, 0*m, 0.2625*m)" orientation="(0.0, 0.0, 0.0)"/>
+                <Register name="pixel31" position="(0*m, 0*m, 0.2875*m)" orientation="(0.0, 0.0, 0.0)"/>
+                <Register name="pixel32" position="(0*m, 0*m, 0.3125*m)" orientation="(0.0, 0.0, 0.0)"/>
+                <Register name="pixel33" position="(0*m, 0*m, 0.3375*m)" orientation="(0.0, 0.0, 0.0)"/>
+                <Register name="pixel34" position="(0*m, 0*m, 0.3625*m)" orientation="(0.0, 0.0, 0.0)"/>
+                <Register name="pixel35" position="(0*m, 0*m, 0.3875*m)" orientation="(0.0, 0.0, 0.0)"/>
+                <Register name="pixel36" position="(0*m, 0*m, 0.4125*m)" orientation="(0.0, 0.0, 0.0)"/>
+                <Register name="pixel37" position="(0*m, 0*m, 0.4375*m)" orientation="(0.0, 0.0, 0.0)"/>
+                <Register name="pixel38" position="(0*m, 0*m, 0.4625*m)" orientation="(0.0, 0.0, 0.0)"/>
+                <Register name="pixel39" position="(0*m, 0*m, 0.4875*m)" orientation="(0.0, 0.0, 0.0)"/>
+            </LocalGeometer>
+        </Detector>
+
+        <Copy guid="309" name="detector130" reference="267" id="130" />
+        <Copy guid="311" name="detector131" reference="267" id="131" />
+        <Copy guid="313" name="detector132" reference="267" id="132" />
+        <Copy guid="315" name="detector133" reference="267" id="133" />
+        <Copy guid="317" name="detector134" reference="267" id="134" />
+        <Copy guid="319" name="detector135" reference="267" id="135" />
+        <Copy guid="321" name="detector136" reference="267" id="136" />
+        <Copy guid="323" name="detector137" reference="267" id="137" />
+        <Copy guid="325" name="detector138" reference="267" id="138" />
+        <Copy guid="327" name="detector139" reference="267" id="139" />
+        <Copy guid="329" name="detector140" reference="267" id="140" />
+        <Copy guid="331" name="detector141" reference="267" id="141" />
+        <Copy guid="333" name="detector142" reference="267" id="142" />
+        <Copy guid="335" name="detector143" reference="267" id="143" />
+        <Copy guid="337" name="detector144" reference="267" id="144" />
+        <Copy guid="339" name="detector145" reference="267" id="145" />
+        <Copy guid="341" name="detector146" reference="267" id="146" />
+        <Copy guid="343" name="detector147" reference="267" id="147" />
+        <Copy guid="345" name="detector148" reference="267" id="148" />
+        <Copy guid="347" name="detector149" reference="267" id="149" />
+        <Copy guid="349" name="detector150" reference="267" id="150" />
+        <Copy guid="351" name="detector151" reference="267" id="151" />
+        <Copy guid="353" name="detector152" reference="267" id="152" />
+        <Copy guid="355" name="detector153" reference="267" id="153" />
+        <Copy guid="357" name="detector154" reference="267" id="154" />
+        <Copy guid="359" name="detector155" reference="267" id="155" />
+        <Copy guid="361" name="detector156" reference="267" id="156" />
+        <Copy guid="363" name="detector157" reference="267" id="157" />
+        <Copy guid="365" name="detector158" reference="267" id="158" />
+        <Copy guid="367" name="detector159" reference="267" id="159" />
+        <Copy guid="369" name="detector160" reference="267" id="160" />
+        <Copy guid="371" name="detector161" reference="267" id="161" />
+        <Copy guid="373" name="detector162" reference="267" id="162" />
+        <Copy guid="375" name="detector163" reference="267" id="163" />
+        <Copy guid="377" name="detector164" reference="267" id="164" />
+        <Copy guid="379" name="detector165" reference="267" id="165" />
+        <Copy guid="381" name="detector166" reference="267" id="166" />
+        <Copy guid="383" name="detector167" reference="267" id="167" />
+        <Copy guid="385" name="detector168" reference="267" id="168" />
+        <Copy guid="387" name="detector169" reference="267" id="169" />
+        <Copy guid="389" name="detector170" reference="267" id="170" />
+        <Copy guid="391" name="detector171" reference="267" id="171" />
+        <Copy guid="393" name="detector172" reference="267" id="172" />
+        <Copy guid="395" name="detector173" reference="267" id="173" />
+        <Copy guid="397" name="detector174" reference="267" id="174" />
+        <Copy guid="399" name="detector175" reference="267" id="175" />
+        <Copy guid="401" name="detector176" reference="267" id="176" />
+        <Copy guid="403" name="detector177" reference="267" id="177" />
+        <Copy guid="405" name="detector178" reference="267" id="178" />
+        <Copy guid="407" name="detector179" reference="267" id="179" />
+        <Copy guid="409" name="detector180" reference="267" id="180" />
+        <Copy guid="411" name="detector181" reference="267" id="181" />
+        <Copy guid="413" name="detector182" reference="267" id="182" />
+        <Copy guid="415" name="detector183" reference="267" id="183" />
+        <Copy guid="417" name="detector184" reference="267" id="184" />
+        <Copy guid="419" name="detector185" reference="267" id="185" />
+        <Copy guid="421" name="detector186" reference="267" id="186" />
+        <Copy guid="423" name="detector187" reference="267" id="187" />
+        <Copy guid="425" name="detector188" reference="267" id="188" />
+        <Copy guid="427" name="detector189" reference="267" id="189" />
+        <Copy guid="429" name="detector190" reference="267" id="190" />
+        <Copy guid="431" name="detector191" reference="267" id="191" />
+        <Copy guid="433" name="detector192" reference="267" id="192" />
+        <Copy guid="435" name="detector193" reference="267" id="193" />
+        <Copy guid="437" name="detector194" reference="267" id="194" />
+        <Copy guid="439" name="detector195" reference="267" id="195" />
+        <Copy guid="441" name="detector196" reference="267" id="196" />
+        <Copy guid="443" name="detector197" reference="267" id="197" />
+        <Copy guid="445" name="detector198" reference="267" id="198" />
+        <Copy guid="447" name="detector199" reference="267" id="199" />
+        <Copy guid="449" name="detector200" reference="267" id="200" />
+        <Copy guid="451" name="detector201" reference="267" id="201" />
+        <Copy guid="453" name="detector202" reference="267" id="202" />
+        <Copy guid="455" name="detector203" reference="267" id="203" />
+        <Copy guid="457" name="detector204" reference="267" id="204" />
+        <Copy guid="459" name="detector205" reference="267" id="205" />
+        <Copy guid="461" name="detector206" reference="267" id="206" />
+        <Copy guid="463" name="detector207" reference="267" id="207" />
+        <Copy guid="465" name="detector208" reference="267" id="208" />
+        <Copy guid="467" name="detector209" reference="267" id="209" />
+        <Copy guid="469" name="detector210" reference="267" id="210" />
+        <Copy guid="471" name="detector211" reference="267" id="211" />
+        <Copy guid="473" name="detector212" reference="267" id="212" />
+        <Copy guid="475" name="detector213" reference="267" id="213" />
+        <Copy guid="477" name="detector214" reference="267" id="214" />
+        <Copy guid="479" name="detector215" reference="267" id="215" />
+        <Copy guid="481" name="detector216" reference="267" id="216" />
+        <Copy guid="483" name="detector217" reference="267" id="217" />
+        <Copy guid="485" name="detector218" reference="267" id="218" />
+        <Copy guid="487" name="detector219" reference="267" id="219" />
+        <Copy guid="489" name="detector220" reference="267" id="220" />
+        <Copy guid="491" name="detector221" reference="267" id="221" />
+        <Copy guid="493" name="detector222" reference="267" id="222" />
+        <Copy guid="495" name="detector223" reference="267" id="223" />
+        <Copy guid="497" name="detector224" reference="267" id="224" />
+        <Copy guid="499" name="detector225" reference="267" id="225" />
+        <Copy guid="501" name="detector226" reference="267" id="226" />
+        <Copy guid="503" name="detector227" reference="267" id="227" />
+        <Copy guid="505" name="detector228" reference="267" id="228" />
+        <Copy guid="507" name="detector229" reference="267" id="229" />
+        <Copy guid="509" name="detector230" reference="267" id="230" />
+        <Copy guid="511" name="detector231" reference="267" id="231" />
+        <Copy guid="513" name="detector232" reference="267" id="232" />
+        <Copy guid="515" name="detector233" reference="267" id="233" />
+        <Copy guid="517" name="detector234" reference="267" id="234" />
+        <Copy guid="519" name="detector235" reference="267" id="235" />
+        <Copy guid="521" name="detector236" reference="267" id="236" />
+        <Copy guid="523" name="detector237" reference="267" id="237" />
+        <Copy guid="525" name="detector238" reference="267" id="238" />
+        <Copy guid="527" name="detector239" reference="267" id="239" />
+        <Copy guid="529" name="detector240" reference="267" id="240" />
+        <Copy guid="531" name="detector241" reference="267" id="241" />
+        <Copy guid="533" name="detector242" reference="267" id="242" />
+        <Copy guid="535" name="detector243" reference="267" id="243" />
+        <Copy guid="537" name="detector244" reference="267" id="244" />
+        <Copy guid="539" name="detector245" reference="267" id="245" />
+        <Copy guid="541" name="detector246" reference="267" id="246" />
+        <Copy guid="543" name="detector247" reference="267" id="247" />
+        <Copy guid="545" name="detector248" reference="267" id="248" />
+        <Copy guid="547" name="detector249" reference="267" id="249" />
+        <Copy guid="549" name="detector250" reference="267" id="250" />
+        <Copy guid="551" name="detector251" reference="267" id="251" />
+        <Copy guid="553" name="detector252" reference="267" id="252" />
+        <Copy guid="555" name="detector253" reference="267" id="253" />
+        <Copy guid="557" name="detector254" reference="267" id="254" />
+        <Copy guid="559" name="detector255" reference="267" id="255" />
+        <Copy guid="561" name="detector256" reference="267" id="256" />
+        <Copy guid="563" name="detector257" reference="267" id="257" />
+        <Copy guid="565" name="detector258" reference="267" id="258" />
+        <Copy guid="567" name="detector259" reference="267" id="259" />
+        <Copy guid="569" name="detector260" reference="267" id="260" />
+        <Copy guid="571" name="detector261" reference="267" id="261" />
+        <Copy guid="573" name="detector262" reference="267" id="262" />
+        <Copy guid="575" name="detector263" reference="267" id="263" />
+        <Copy guid="577" name="detector264" reference="267" id="264" />
+        <Copy guid="579" name="detector265" reference="267" id="265" />
+        <Copy guid="581" name="detector266" reference="267" id="266" />
+        <Copy guid="583" name="detector267" reference="267" id="267" />
+        <Copy guid="585" name="detector268" reference="267" id="268" />
+        <Copy guid="587" name="detector269" reference="267" id="269" />
+        <Copy guid="589" name="detector270" reference="267" id="270" />
+        <Copy guid="591" name="detector271" reference="267" id="271" />
+        <Copy guid="593" name="detector272" reference="267" id="272" />
+        <Copy guid="595" name="detector273" reference="267" id="273" />
+        <Copy guid="597" name="detector274" reference="267" id="274" />
+        <Copy guid="599" name="detector275" reference="267" id="275" />
+        <Copy guid="601" name="detector276" reference="267" id="276" />
+        <Copy guid="603" name="detector277" reference="267" id="277" />
+        <Copy guid="605" name="detector278" reference="267" id="278" />
+        <Copy guid="607" name="detector279" reference="267" id="279" />
+        <Copy guid="609" name="detector280" reference="267" id="280" />
+        <Copy guid="611" name="detector281" reference="267" id="281" />
+        <Copy guid="613" name="detector282" reference="267" id="282" />
+        <Copy guid="615" name="detector283" reference="267" id="283" />
+        <Copy guid="617" name="detector284" reference="267" id="284" />
+        <Copy guid="619" name="detector285" reference="267" id="285" />
+        <Copy guid="621" name="detector286" reference="267" id="286" />
+        <Copy guid="623" name="detector287" reference="267" id="287" />
+        <Copy guid="625" name="detector288" reference="267" id="288" />
+        <Copy guid="627" name="detector289" reference="267" id="289" />
+        <Copy guid="629" name="detector290" reference="267" id="290" />
+        <Copy guid="631" name="detector291" reference="267" id="291" />
+        <Copy guid="633" name="detector292" reference="267" id="292" />
+        <Copy guid="635" name="detector293" reference="267" id="293" />
+        <Copy guid="637" name="detector294" reference="267" id="294" />
+        <Copy guid="639" name="detector295" reference="267" id="295" />
+        <Copy guid="641" name="detector296" reference="267" id="296" />
+        <Copy guid="643" name="detector297" reference="267" id="297" />
+        <Copy guid="645" name="detector298" reference="267" id="298" />
+        <Copy guid="647" name="detector299" reference="267" id="299" />
+        <Copy guid="649" name="detector300" reference="267" id="300" />
+        <Copy guid="651" name="detector301" reference="267" id="301" />
+        <Copy guid="653" name="detector302" reference="267" id="302" />
+        <Copy guid="655" name="detector303" reference="267" id="303" />
+        <Copy guid="657" name="detector304" reference="267" id="304" />
+        <Copy guid="659" name="detector305" reference="267" id="305" />
+        <Copy guid="661" name="detector306" reference="267" id="306" />
+        <Copy guid="663" name="detector307" reference="267" id="307" />
+        <Copy guid="665" name="detector308" reference="267" id="308" />
+        <Copy guid="667" name="detector309" reference="267" id="309" />
+        <Copy guid="669" name="detector310" reference="267" id="310" />
+        <Copy guid="671" name="detector311" reference="267" id="311" />
+        <Copy guid="673" name="detector312" reference="267" id="312" />
+        <Copy guid="675" name="detector313" reference="267" id="313" />
+        <Copy guid="677" name="detector314" reference="267" id="314" />
+        <Copy guid="679" name="detector315" reference="267" id="315" />
+        <Copy guid="681" name="detector316" reference="267" id="316" />
+        <Copy guid="683" name="detector317" reference="267" id="317" />
+        <Copy guid="685" name="detector318" reference="267" id="318" />
+        <Copy guid="687" name="detector319" reference="267" id="319" />
+        <Copy guid="689" name="detector320" reference="267" id="320" />
+        <Copy guid="691" name="detector321" reference="267" id="321" />
+        <Copy guid="693" name="detector322" reference="267" id="322" />
+        <Copy guid="695" name="detector323" reference="267" id="323" />
+        <Copy guid="697" name="detector324" reference="267" id="324" />
+        <Copy guid="699" name="detector325" reference="267" id="325" />
+        <Copy guid="701" name="detector326" reference="267" id="326" />
+        <Copy guid="703" name="detector327" reference="267" id="327" />
+        <Copy guid="705" name="detector328" reference="267" id="328" />
+        <Copy guid="707" name="detector329" reference="267" id="329" />
+        <Copy guid="709" name="detector330" reference="267" id="330" />
+        <Copy guid="711" name="detector331" reference="267" id="331" />
+        <Copy guid="713" name="detector332" reference="267" id="332" />
+        <Copy guid="715" name="detector333" reference="267" id="333" />
+        <Copy guid="717" name="detector334" reference="267" id="334" />
+        <Copy guid="719" name="detector335" reference="267" id="335" />
+        <Copy guid="721" name="detector336" reference="267" id="336" />
+        <Copy guid="723" name="detector337" reference="267" id="337" />
+        <Copy guid="725" name="detector338" reference="267" id="338" />
+        <Copy guid="727" name="detector339" reference="267" id="339" />
+        <Copy guid="729" name="detector340" reference="267" id="340" />
+        <Copy guid="731" name="detector341" reference="267" id="341" />
+        <Copy guid="733" name="detector342" reference="267" id="342" />
+        <Copy guid="735" name="detector343" reference="267" id="343" />
+        <Copy guid="737" name="detector344" reference="267" id="344" />
+        <Copy guid="739" name="detector345" reference="267" id="345" />
+        <Copy guid="741" name="detector346" reference="267" id="346" />
+        <Copy guid="743" name="detector347" reference="267" id="347" />
+        <Copy guid="745" name="detector348" reference="267" id="348" />
+        <Copy guid="747" name="detector349" reference="267" id="349" />
+        <Copy guid="749" name="detector350" reference="267" id="350" />
+        <Copy guid="751" name="detector351" reference="267" id="351" />
+        <Copy guid="753" name="detector352" reference="267" id="352" />
+        <Copy guid="755" name="detector353" reference="267" id="353" />
+        <Copy guid="757" name="detector354" reference="267" id="354" />
+        <Copy guid="759" name="detector355" reference="267" id="355" />
+        <Copy guid="761" name="detector356" reference="267" id="356" />
+        <Copy guid="763" name="detector357" reference="267" id="357" />
+        <Copy guid="765" name="detector358" reference="267" id="358" />
+        <Copy guid="767" name="detector359" reference="267" id="359" />
+        <Copy guid="769" name="detector360" reference="267" id="360" />
+        <Copy guid="771" name="detector361" reference="267" id="361" />
+        <Copy guid="773" name="detector362" reference="267" id="362" />
+        <Copy guid="775" name="detector363" reference="267" id="363" />
+        <Copy guid="777" name="detector364" reference="267" id="364" />
+        <Copy guid="779" name="detector365" reference="267" id="365" />
+        <Copy guid="781" name="detector366" reference="267" id="366" />
+        <Copy guid="783" name="detector367" reference="267" id="367" />
+        <Copy guid="785" name="detector368" reference="267" id="368" />
+        <Copy guid="787" name="detector369" reference="267" id="369" />
+        <Copy guid="789" name="detector370" reference="267" id="370" />
+        <Copy guid="791" name="detector371" reference="267" id="371" />
+        <Copy guid="793" name="detector372" reference="267" id="372" />
+        <Copy guid="795" name="detector373" reference="267" id="373" />
+        <Copy guid="797" name="detector374" reference="267" id="374" />
+        <Copy guid="799" name="detector375" reference="267" id="375" />
+        <Copy guid="801" name="detector376" reference="267" id="376" />
+        <Copy guid="803" name="detector377" reference="267" id="377" />
+        <Copy guid="805" name="detector378" reference="267" id="378" />
+        <Copy guid="807" name="detector379" reference="267" id="379" />
+        <Copy guid="809" name="detector380" reference="267" id="380" />
+        <Copy guid="811" name="detector381" reference="267" id="381" />
+        <Copy guid="813" name="detector382" reference="267" id="382" />
+        <Copy guid="815" name="detector383" reference="267" id="383" />
+        <Copy guid="817" name="detector384" reference="267" id="384" />
+        <Copy guid="819" name="detector385" reference="267" id="385" />
+        <Copy guid="821" name="detector386" reference="267" id="386" />
+        <Copy guid="823" name="detector387" reference="267" id="387" />
+        <Copy guid="825" name="detector388" reference="267" id="388" />
+        <Copy guid="827" name="detector389" reference="267" id="389" />
+        <Copy guid="829" name="detector390" reference="267" id="390" />
+        <Copy guid="831" name="detector391" reference="267" id="391" />
+        <Copy guid="833" name="detector392" reference="267" id="392" />
+        <LocalGeometer registry-coordinate-system="InstrumentScientist">
+            <Register name="detector1" position="(3.97202*m, 0.764891*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector2" position="(3.97235*m, 0.736232*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector3" position="(3.97247*m, 0.707605*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector4" position="(3.97238*m, 0.679012*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector5" position="(3.97209*m, 0.650455*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector6" position="(3.9716*m, 0.621936*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector7" position="(3.97189*m, 0.593603*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector8" position="(3.97197*m, 0.565296*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector9" position="(3.97186*m, 0.537017*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector10" position="(3.97155*m, 0.508767*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector11" position="(3.97202*m, 0.480667*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector12" position="(3.9723*m, 0.452586*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector13" position="(3.97238*m, 0.424525*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector14" position="(3.97226*m, 0.396484*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector15" position="(3.97195*m, 0.368466*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector16" position="(3.97243*m, 0.340557*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector17" position="(3.97172*m, 0.312581*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector18" position="(3.97181*m, 0.284703*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector19" position="(3.9717*m, 0.256839*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector20" position="(3.9724*m, 0.229047*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector21" position="(3.97191*m, 0.201208*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector22" position="(3.97222*m, 0.173431*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector23" position="(3.97233*m, 0.145659*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector24" position="(3.97225*m, 0.117894*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector41" position="(3.9721*m, -0.122747*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector42" position="(3.97215*m, -0.150512*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector43" position="(3.972*m, -0.178284*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector44" position="(3.97166*m, -0.206061*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector45" position="(3.97212*m, -0.2339*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector46" position="(3.97239*m, -0.261756*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector47" position="(3.97246*m, -0.289628*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector48" position="(3.97233*m, -0.317513*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector49" position="(3.97201*m, -0.34541*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector50" position="(3.97249*m, -0.373412*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector51" position="(3.97177*m, -0.401337*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector52" position="(3.97186*m, -0.429378*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector53" position="(3.97174*m, -0.457439*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector54" position="(3.97242*m, -0.485641*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector55" position="(3.97191*m, -0.513747*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector56" position="(3.97219*m, -0.542004*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector57" position="(3.95348*m, -0.688571*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector58" position="(3.94858*m, -0.716155*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector59" position="(3.94348*m, -0.743704*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector60" position="(3.9382*m, -0.771216*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector61" position="(3.93272*m, -0.798691*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector62" position="(3.92705*m, -0.826127*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector63" position="(3.92118*m, -0.853522*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector64" position="(3.91497*m, -0.88156*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector65" position="(3.90872*m, -0.90887*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector66" position="(3.90228*m, -0.936135*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector67" position="(3.89565*m, -0.963355*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector68" position="(3.88883*m, -0.990528*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector69" position="(3.88182*m, -1.01765*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector70" position="(3.87462*m, -1.04473*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector71" position="(3.86724*m, -1.07175*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector72" position="(3.85966*m, -1.09872*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector73" position="(3.8517*m, -1.12632*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector74" position="(3.84374*m, -1.15318*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector75" position="(3.8356*m, -1.17998*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector76" position="(3.82727*m, -1.20673*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector77" position="(3.81875*m, -1.23342*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector78" position="(3.81004*m, -1.26005*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector79" position="(3.80115*m, -1.28662*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector80" position="(3.79208*m, -1.31313*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector81" position="(3.78282*m, -1.33957*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector82" position="(3.77314*m, -1.3666*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector83" position="(3.76351*m, -1.39291*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector84" position="(3.75369*m, -1.41915*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector85" position="(3.74369*m, -1.44532*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector86" position="(3.73351*m, -1.47142*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector87" position="(3.72315*m, -1.49745*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector88" position="(3.7126*m, -1.52341*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector89" position="(3.70188*m, -1.54929*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector90" position="(3.69097*m, -1.57509*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector91" position="(3.67988*m, -1.60082*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector92" position="(3.66833*m, -1.62711*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector93" position="(3.65688*m, -1.65268*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector94" position="(3.64526*m, -1.67817*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector95" position="(3.63345*m, -1.70358*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector96" position="(3.62147*m, -1.72891*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector97" position="(3.60931*m, -1.75415*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector98" position="(3.59698*m, -1.7793*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector99" position="(3.58447*m, -1.80437*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector100" position="(3.57179*m, -1.82935*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector101" position="(3.5586*m, -1.85486*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector102" position="(3.54557*m, -1.87966*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector103" position="(3.53236*m, -1.90437*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector104" position="(3.51898*m, -1.92898*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector105" position="(3.50543*m, -1.9535*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector106" position="(3.4917*m, -1.97792*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector107" position="(3.47781*m, -2.00225*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector108" position="(3.46375*m, -2.02648*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector109" position="(3.44951*m, -2.05062*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector110" position="(3.43475*m, -2.07525*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector111" position="(3.42018*m, -2.09917*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector112" position="(3.40544*m, -2.123*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector113" position="(3.39054*m, -2.14672*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector114" position="(3.37547*m, -2.17034*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector115" position="(3.36023*m, -2.19385*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector116" position="(3.34484*m, -2.21726*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector117" position="(3.32928*m, -2.24056*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector118" position="(3.31355*m, -2.26374*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector119" position="(3.29727*m, -2.2874*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector120" position="(3.28122*m, -2.31036*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector121" position="(3.26501*m, -2.33321*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector122" position="(3.24864*m, -2.35595*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector123" position="(3.23212*m, -2.37857*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector124" position="(3.21543*m, -2.40108*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector125" position="(3.19859*m, -2.42347*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector126" position="(3.18159*m, -2.44574*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector127" position="(3.16444*m, -2.46789*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector128" position="(3.1467*m, -2.49047*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector129" position="(3.12924*m, -2.51238*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector130" position="(3.11162*m, -2.53416*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector131" position="(3.09385*m, -2.55582*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector132" position="(3.07594*m, -2.57736*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector133" position="(3.05787*m, -2.59877*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector134" position="(3.03965*m, -2.62006*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector135" position="(3.02129*m, -2.64121*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector136" position="(3.00277*m, -2.66224*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector137" position="(2.98365*m, -2.68366*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector138" position="(2.96484*m, -2.70442*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector139" position="(2.94589*m, -2.72506*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector140" position="(2.92679*m, -2.74556*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector141" position="(2.90755*m, -2.76592*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector142" position="(2.88817*m, -2.78615*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector143" position="(2.86865*m, -2.80625*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector144" position="(2.84899*m, -2.82621*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector145" position="(2.82919*m, -2.84603*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector146" position="(2.80875*m, -2.8662*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector147" position="(2.78867*m, -2.88574*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector148" position="(2.76846*m, -2.90514*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector149" position="(2.74811*m, -2.92439*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector150" position="(2.72763*m, -2.94351*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector151" position="(2.70701*m, -2.96248*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector152" position="(2.68626*m, -2.9813*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector153" position="(2.66538*m, -2.99998*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector154" position="(2.64437*m, -3.01852*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector155" position="(2.62271*m, -3.03736*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector156" position="(2.60144*m, -3.0556*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector157" position="(2.58004*m, -3.07369*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector158" position="(2.55852*m, -3.09162*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector159" position="(2.53688*m, -3.10941*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector160" position="(2.51511*m, -3.12704*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector161" position="(2.49321*m, -3.14453*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector162" position="(2.4712*m, -3.16186*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector163" position="(2.44907*m, -3.17903*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector164" position="(2.42626*m, -3.19647*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector165" position="(2.40388*m, -3.21333*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector166" position="(2.38139*m, -3.23004*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector167" position="(2.35878*m, -3.24659*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector168" position="(2.33606*m, -3.26297*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector169" position="(2.2701*m, -3.3092*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector170" position="(2.24636*m, -3.32536*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector171" position="(2.22309*m, -3.34096*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector172" position="(2.19971*m, -3.3564*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector173" position="(2.17564*m, -3.37206*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector174" position="(2.15205*m, -3.38716*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector175" position="(2.12835*m, -3.4021*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector176" position="(2.10454*m, -3.41688*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector177" position="(2.08004*m, -3.43185*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector178" position="(2.05603*m, -3.44629*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector179" position="(2.03192*m, -3.46056*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector180" position="(2.00711*m, -3.47501*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector181" position="(1.9828*m, -3.48894*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector182" position="(1.95839*m, -3.50269*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector183" position="(1.93389*m, -3.51628*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector184" position="(1.90868*m, -3.53003*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector185" position="(1.88399*m, -3.54327*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector186" position="(1.85921*m, -3.55633*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector187" position="(1.83371*m, -3.56955*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector188" position="(1.80875*m, -3.58226*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector189" position="(1.78369*m, -3.5948*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector190" position="(1.75855*m, -3.60717*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector191" position="(1.7327*m, -3.61966*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector192" position="(1.70738*m, -3.63167*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector193" position="(1.68199*m, -3.6435*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector194" position="(1.65587*m, -3.65544*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector195" position="(1.63031*m, -3.66691*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector196" position="(1.60467*m, -3.6782*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector197" position="(1.57831*m, -3.68959*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector198" position="(1.55252*m, -3.70052*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector199" position="(1.52664*m, -3.71127*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector200" position="(1.5007*m, -3.72184*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector201" position="(1.47403*m, -3.73248*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector202" position="(1.44793*m, -3.74268*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector203" position="(1.42177*m, -3.7527*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector204" position="(1.39488*m, -3.76278*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector205" position="(1.36858*m, -3.77242*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector206" position="(1.34221*m, -3.78188*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector207" position="(1.31577*m, -3.79116*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector208" position="(1.28861*m, -3.80048*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector209" position="(1.26205*m, -3.80938*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector210" position="(1.23542*m, -3.8181*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector211" position="(1.20807*m, -3.82684*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector212" position="(1.18132*m, -3.83519*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector213" position="(1.15452*m, -3.84334*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector214" position="(1.12766*m, -3.85131*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector215" position="(1.10007*m, -3.85928*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector216" position="(1.0731*m, -3.86686*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector217" position="(1.04608*m, -3.87426*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector218" position="(1.01833*m, -3.88165*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector219" position="(0.991207*m, -3.88866*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector220" position="(0.964035*m, -3.89549*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector221" position="(0.936816*m, -3.90212*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector222" position="(0.90887*m, -3.90872*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector223" position="(0.88156*m, -3.91497*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector224" position="(0.854207*m, -3.92103*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector225" position="(0.826127*m, -3.92705*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector226" position="(0.798691*m, -3.93272*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector227" position="(0.771216*m, -3.9382*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector228" position="(0.743015*m, -3.94361*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector229" position="(0.715466*m, -3.94871*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector230" position="(0.687881*m, -3.9536*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector231" position="(0.660264*m, -3.95831*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector232" position="(0.631922*m, -3.96293*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector233" position="(0.60424*m, -3.96725*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector234" position="(0.576529*m, -3.97137*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector235" position="(0.548096*m, -3.97539*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector236" position="(0.520329*m, -3.97912*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector237" position="(0.492537*m, -3.98266*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector238" position="(0.464721*m, -3.986*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector239" position="(0.436187*m, -3.98922*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector240" position="(0.408326*m, -3.99217*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector241" position="(0.380446*m, -3.99493*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector242" position="(0.351849*m, -3.99755*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector243" position="(0.323933*m, -3.9999*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector244" position="(0.296*m, -4.00207*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector245" position="(0.268054*m, -4.00404*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector246" position="(0.239395*m, -4.00585*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector247" position="(0.211423*m, -4.00743*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector248" position="(0.183441*m, -4.00881*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector249" position="(0.15475*m, -4.01002*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector250" position="(0.126751*m, -4.011*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector251" position="(0.0987465*m, -4.01178*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector252" position="(0.0707368*m, -4.01238*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector253" position="(0.0420233*m, -4.01278*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector254" position="(0.014008*m, -4.01298*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector255" position="(-0.014008*m, -4.01298*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector256" position="(-0.0427236*m, -4.01277*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector257" position="(-0.0707368*m, -4.01238*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector258" position="(-0.0987465*m, -4.01178*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector259" position="(-0.127451*m, -4.01098*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector260" position="(-0.15545*m, -4.00999*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector261" position="(-0.183441*m, -4.00881*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector262" position="(-0.211423*m, -4.00743*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector263" position="(-0.240094*m, -4.00581*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector264" position="(-0.268054*m, -4.00404*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector265" position="(-0.296*m, -4.00207*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector266" position="(-0.324631*m, -3.99985*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector267" position="(-0.352547*m, -3.99748*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector268" position="(-0.380446*m, -3.99493*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector269" position="(-0.408326*m, -3.99217*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector270" position="(-0.436883*m, -3.98915*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector271" position="(-0.464721*m, -3.986*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector272" position="(-0.492537*m, -3.98266*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector273" position="(-0.521024*m, -3.97903*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector274" position="(-0.54879*m, -3.9753*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector275" position="(-0.576529*m, -3.97137*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector276" position="(-0.60424*m, -3.96725*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector277" position="(-0.632613*m, -3.96282*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector278" position="(-0.660264*m, -3.95831*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector279" position="(-0.687881*m, -3.9536*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector280" position="(-0.716155*m, -3.94858*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector281" position="(-0.789079*m, -3.93466*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector282" position="(-0.817214*m, -3.92891*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector283" position="(-0.845308*m, -3.92296*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector284" position="(-0.874042*m, -3.91666*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector285" position="(-0.902046*m, -3.9103*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector286" position="(-0.930004*m, -3.90375*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector287" position="(-0.957915*m, -3.89699*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector288" position="(-0.985776*m, -3.89004*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector289" position="(-1.01427*m, -3.88271*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector290" position="(-1.04202*m, -3.87535*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector291" position="(-1.06973*m, -3.8678*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector292" position="(-1.09738*m, -3.86004*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector293" position="(-1.12497*m, -3.85209*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector294" position="(-1.15318*m, -3.84374*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector295" position="(-1.18065*m, -3.83539*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector296" position="(-1.20807*m, -3.82684*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector297" position="(-1.23542*m, -3.8181*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector298" position="(-1.26271*m, -3.80916*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector299" position="(-1.2906*m, -3.79981*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector300" position="(-1.31776*m, -3.79047*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector301" position="(-1.34485*m, -3.78095*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector302" position="(-1.37187*m, -3.77123*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector303" position="(-1.39882*m, -3.76131*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector304" position="(-1.42635*m, -3.75096*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector305" position="(-1.45316*m, -3.74066*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector306" position="(-1.47989*m, -3.73016*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector307" position="(-1.50654*m, -3.71948*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector308" position="(-1.53312*m, -3.7086*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector309" position="(-1.56026*m, -3.69726*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector310" position="(-1.58668*m, -3.686*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector311" position="(-1.61302*m, -3.67455*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector312" position="(-1.63927*m, -3.66292*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector313" position="(-1.66544*m, -3.65109*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector314" position="(-1.69216*m, -3.63879*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector315" position="(-1.71815*m, -3.62659*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector316" position="(-1.74406*m, -3.6142*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector317" position="(-1.76988*m, -3.60163*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector318" position="(-1.7956*m, -3.58887*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector319" position="(-1.82186*m, -3.57561*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector320" position="(-1.8474*m, -3.56248*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector321" position="(-1.87285*m, -3.54917*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector322" position="(-1.8982*m, -3.53568*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector323" position="(-1.92345*m, -3.522*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector324" position="(-1.94922*m, -3.50781*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector325" position="(-1.97427*m, -3.49377*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector326" position="(-1.99922*m, -3.47955*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector327" position="(-2.02406*m, -3.46516*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector328" position="(-2.04881*m, -3.45059*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector329" position="(-2.07405*m, -3.43548*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector330" position="(-2.09858*m, -3.42055*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector331" position="(-2.123*m, -3.40544*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector332" position="(-2.14732*m, -3.39016*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector333" position="(-2.17152*m, -3.37471*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector334" position="(-2.1962*m, -3.3587*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector335" position="(-2.22018*m, -3.3429*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector336" position="(-2.24404*m, -3.32693*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector337" position="(-2.26779*m, -3.31078*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector338" position="(-2.29142*m, -3.29447*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector339" position="(-2.31551*m, -3.27759*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector340" position="(-2.33891*m, -3.26093*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector341" position="(-2.36218*m, -3.24411*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector342" position="(-2.38533*m, -3.22713*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector343" position="(-2.40837*m, -3.20998*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector344" position="(-2.43183*m, -3.19224*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector345" position="(-2.45461*m, -3.17475*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector346" position="(-2.47727*m, -3.15711*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector347" position="(-2.4998*m, -3.1393*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector348" position="(-2.5222*m, -3.12133*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector349" position="(-2.54501*m, -3.10276*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector350" position="(-2.56715*m, -3.08447*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector351" position="(-2.58915*m, -3.06602*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector352" position="(-2.61103*m, -3.04741*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector353" position="(-2.63276*m, -3.02865*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector354" position="(-2.6549*m, -3.00927*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector355" position="(-2.67636*m, -2.99019*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector356" position="(-2.69769*m, -2.97097*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector357" position="(-2.71888*m, -2.95159*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector358" position="(-2.73993*m, -2.93205*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector359" position="(-2.76135*m, -2.91189*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector360" position="(-2.78212*m, -2.89206*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector361" position="(-2.80274*m, -2.87207*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector362" position="(-2.82322*m, -2.85195*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector363" position="(-2.84356*m, -2.83167*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector364" position="(-2.86424*m, -2.81075*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector365" position="(-2.88428*m, -2.79018*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector366" position="(-2.90417*m, -2.76947*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector367" position="(-2.92391*m, -2.74862*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector368" position="(-2.94351*m, -2.72763*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector369" position="(-2.96342*m, -2.70598*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector370" position="(-2.98271*m, -2.6847*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector371" position="(-3.00184*m, -2.66329*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector372" position="(-3.02082*m, -2.64174*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector373" position="(-3.03965*m, -2.62006*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector374" position="(-3.05878*m, -2.5977*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector375" position="(-3.07729*m, -2.57575*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector376" position="(-3.09564*m, -2.55366*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector377" position="(-3.11383*m, -2.53145*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector378" position="(-3.13187*m, -2.5091*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector379" position="(-3.15018*m, -2.48607*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector380" position="(-3.16788*m, -2.46347*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector381" position="(-3.18543*m, -2.44074*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector382" position="(-3.20282*m, -2.41788*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector383" position="(-3.22004*m, -2.3949*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector384" position="(-3.2375*m, -2.37123*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector385" position="(-3.25439*m, -2.348*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector386" position="(-3.27111*m, -2.32466*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector387" position="(-3.28766*m, -2.30119*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector388" position="(-3.30404*m, -2.2776*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector389" position="(-3.32065*m, -2.25332*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector390" position="(-3.33669*m, -2.2295*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector391" position="(-3.35256*m, -2.20557*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+            <Register name="detector392" position="(-3.36825*m, -2.18152*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+        </LocalGeometer>
+    </DetectorSystem>
+
+
+    <Moderator guid="834" type="non-existant" name="moderator" id="1">
+        <Shape>
+        <!--
+        Block
+
+  Its thickness is the length of the dimension that is parallel
+  to neutron beam.
+  
+  Its height is its vertical length (parallel to gravity).
+
+  Its width is the 3rd dimension.
+  
+        -->
+        <block width="0.1*m" height="0.1*m" thickness="0.1*m"/>
+        </Shape>
+    </Moderator>
+
+
+    <Sample guid="835" name="sample" id="2">
+    </Sample>
+
+    <LocalGeometer registry-coordinate-system="InstrumentScientist">
+        <Register name="detSystem" position="(0*m, 0*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+        <Register name="moderator" position="(-20*m, 0*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+        <Register name="sample" position="(0*m, 0*m, 0*m)" orientation="(0.0, 0.0, 0.0)"/>
+    </LocalGeometer>
+    <InstrumentGeometer registry-coordinate-system="InstrumentScientist" type="arcs" />
+</Instrument>
+
+
+<!-- version-->
+<!-- $Id$-->
+
+<!-- Generated automatically by Renderer on Tue Feb 12 11:35:24 2008-->
+
+<!-- End of file -->

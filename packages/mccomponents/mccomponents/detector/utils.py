@@ -67,7 +67,7 @@ class GetDetectorHierarchyDimensions(Visitor):
                 self._layers.append( typeName )
                 pass
                 
-        elif self._level == len(self._indexShape):
+        elif self._level < len(self._indexShape):
             self._indexShape[self._level] = max(self._indexShape[self._level], n )
             # we assume that this detector system is flattenable
             typeName = self._layers[self._level] 

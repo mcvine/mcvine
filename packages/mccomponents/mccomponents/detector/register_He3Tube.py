@@ -39,11 +39,43 @@ class Pixel:
     pass
 
     
+
 # 2. the handler to construct c++ engine
 def onHe3Tube(self, he3tube):
-    ret = self._get(he3tube)
-    if ret: return ret
-    
+    return construct(self, he3tube)
+
+
+
+# 4. register the new class and handlers
+import mccomposite
+mccomposite.register_engine_renderer_handler (He3Tube, onHe3Tube )
+
+
+
+
+# the handler for a copy of he3tube
+def onHe3TubeCopy(self, copy):
+    he3tube = copy.reference()
+    return construct(self, he3tube)
+class He3TubeCopy: pass
+mccomposite.register_engine_renderer_handler( He3TubeCopy, onHe3TubeCopy )
+
+
+
+#hack
+#Detector actually means he3 tube. we should use more specific name
+#but right now instrument package still use "Detector", so we have
+#to have this hack
+class Detector: pass
+mccomposite.register_engine_renderer_handler (Detector, onHe3Tube )
+class DetectorCopy: pass
+mccomposite.register_engine_renderer_handler (DetectorCopy, onHe3TubeCopy )
+
+
+# implementation details
+
+def construct( self, he3tube ):
+    '''construct computation engine of given he3tube description'''
     from mccomposite.geometry import locate
     
     # assume all elements of he3tube are pixels
@@ -95,20 +127,10 @@ def onHe3Tube(self, he3tube):
         shape, kernel,
         mcweights_absorption_scattering_transmission = mcweights )
     ret = scatterer.identify(self)
-
-    self._remember( he3tube, ret )
     return ret
 
 
 
-# 4. register the new class and handlers
-import mccomposite
-mccomposite.register_engine_renderer_handler (He3Tube, onHe3Tube )
-
-
-#hack
-class Detector: pass
-mccomposite.register_engine_renderer_handler (Detector, onHe3Tube )
 
 # version
 __id__ = "$Id$"

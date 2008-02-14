@@ -13,7 +13,11 @@
 PROJECT = mcni
 PACKAGE = tests
 
-PROJ_TIDY += alltests.py $(PROJ_CPPTESTS)
+TESTTEMPOUTPUTDIRS = \
+	neutron_storage_test_out\
+	neutrons\
+
+PROJ_TIDY += alltests.py $(PROJ_CPPTESTS) $(TESTTEMPOUTPUTDIRS)
 PROJ_CLEAN += alltests.py $(PROJ_CPPTESTS)
 
 PROJ_PYTESTS =  alltests.py

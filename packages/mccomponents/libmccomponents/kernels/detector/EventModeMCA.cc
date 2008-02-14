@@ -36,6 +36,13 @@ mccomponents::detector::EventModeMCA::EventModeMCA
   : m_out( outfilename, std::ofstream::binary ),
     m_dims( dims )
 {
+#ifdef DEBUG
+  journal::debug_t debug( EventModeMCA_impl::jrnltag );
+  debug << journal::at(__HERE__)
+	<< "output file name: " << outfilename 
+	<< journal::endl;
+
+#endif
 }
 
 mccomponents::detector::EventModeMCA::~EventModeMCA()
@@ -47,6 +54,15 @@ void mccomponents::detector::EventModeMCA::accept
 ( const channels_t & channels, double n )
 {
   
+#ifdef DEBUG
+  journal::debug_t debug( EventModeMCA_impl::jrnltag );
+  debug << journal::at(__HERE__)
+	<< "channels: ";
+  for (size_t i=0; i<channels.size(); i++) debug << channels[i] << ", ";
+  debug << journal::newline;
+  debug << "n = " << n 
+	<< journal::endl;
+#endif
 
   if  (channels.size()!=m_dims.size()+1) {
     std::ostringstream oss;
@@ -54,6 +70,9 @@ void mccomponents::detector::EventModeMCA::accept
     oss << "channels = " << channels << ", "
 	<< "dims = " << m_dims
 	<< ".";
+#ifdef DEBUG
+    debug << journal::at(__HERE__) << oss.str() << journal::endl;
+#endif
     throw Exception( oss.str().c_str() );
   }
   
@@ -67,9 +86,13 @@ void mccomponents::detector::EventModeMCA::accept
 	  << "channel number = " << channels[i] << ", "
 	  << "dimension = " << m_dims[i]
 	  << ".";
+#ifdef DEBUG
+      debug << journal::at(__HERE__) << oss.str() << journal::endl;
+#endif
       throw Exception( oss.str().c_str() );
     }
   }
+
 
   index_t &pixelID = m_buffer.pixelID;
   pixelID = 0;
@@ -77,11 +100,23 @@ void mccomponents::detector::EventModeMCA::accept
     pixelID = pixelID * m_dims[i] + channels[i];
   }
 
+
   m_buffer.tofChannelNo = channels[channels.size()-1];
   m_buffer.n = n;
 
+#ifdef DEBUG
+  debug << journal::at(__HERE__)
+	<< "about to write  "
+	<< "pixelID=" << m_buffer.pixelID << ", "
+	<< "tofChannelNo=" << m_buffer.tofChannelNo << ", "
+	<< "n=" << m_buffer.n << ", "
+	<< journal::endl
+    ;
+#endif
+
   m_out.write( (const char *)&m_buffer, sizeof(m_buffer) );
 }
+
 
 
 

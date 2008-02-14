@@ -34,6 +34,7 @@ tidy::
 
 EXPORT_PYTHON_MODULES = \
 	__init__.py \
+	reduction_utils.py \
 	register_CompositeDetector.py \
 	register_DetectorPack.py \
 	register_DetectorSystem.py \

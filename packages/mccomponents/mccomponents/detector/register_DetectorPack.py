@@ -30,6 +30,16 @@ mh.register_engine_renderer_handler (DetectorPack, onDetectorPack )
 
 
 
+
+def onDetectorPackCopy(self, copy):
+    pack = copy.reference()
+    return self.onDetectorPack(pack)
+
+class DetectorPackCopy: pass
+mh.register_engine_renderer_handler( DetectorPackCopy, onDetectorPackCopy )
+
+
+
 # version
 __id__ = "$Id$"
 
