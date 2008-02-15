@@ -12,6 +12,8 @@
 //
 
 
+#include <cassert>
+
 #include "mccomponents/kernels/detector/EventModeMCA.h"
 #include "mccomposite/vector2ostream.h"
 #include "mccomponents/exception.h"

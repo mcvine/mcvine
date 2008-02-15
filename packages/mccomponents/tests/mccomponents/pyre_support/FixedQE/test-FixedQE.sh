@@ -1,8 +1,8 @@
 #!/usr/bin/env sh
 
 ./FixedQE.py \
-    --ncount=100000 \
-    --buffer_size=10000 \
+    --ncount=10000 \
+    --buffer_size=1000 \
     --output-dir=test1_out \
     --overwrite-datafiles \
     --journal.debug.CompositeNeutronScatterer_Impl \
