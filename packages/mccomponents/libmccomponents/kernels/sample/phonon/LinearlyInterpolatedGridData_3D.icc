@@ -1,0 +1,128 @@
+// -*- C++ -*-
+//
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//
+//                                   Jiao Lin
+//                      California Institute of Technology
+//                        (C) 2007  All Rights Reserved
+//
+// {LicenseText}
+//
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//
+
+#ifndef LINEARLYINTERPOLATEDGRIDDATA_3D_H
+#error LinearlyInterpolatedGridData_3D.icc not meaningful outside LinearlyInterpolatedGridData_3D.h 
+#else
+
+
+#include <sstream>
+#include <cmath>
+#include <vector>
+
+namespace LinearlyInterpolatedGridData_3D_impl{
+
+  // given x and axis, calculate (x-axis.start)/axis.step and break the result
+  // to an integer and a remainder
+  template< typename Float, typename N >
+  void value2index_and_remainder
+  ( const Float & value, 
+    DANSE::phonon::LinearlyInterpolatableAxis<Float, N> axis,
+    N &index, Float & remainder )
+  {
+    Float r = (value-axis.start)/axis.step;
+    if ( r<0 || r >= axis.n ) {
+      std::ostringstream oss;
+      oss << "value " << value << " is out of bound: ("
+	  << axis.start << ", " << axis.start + axis.n * axis.step 
+	  << ")" ;
+      throw DANSE::phonon::Exception( oss.str() );
+    }
+    
+    index = std::floor( r );
+    
+    remainder = r - index;
+  }
+
+  template< typename Array_3D, typename Index, typename Float>
+  inline Float getitem( const Array_3D & array, Index x, Index y, Index z)
+  {
+    static std::vector<Index> indexes(3);
+    indexes[0] = x; indexes[1] = y; indexes[2] = z;
+    return array[ indexes ];
+  }
+}
+
+
+template < typename Array_3D, typename FloatType,
+	   typename Size>
+DANSE::phonon::LinearlyInterpolatedGridData_3D<Array_3D, FloatType, Size> ::LinearlyInterpolatedGridData_3D
+( const axis_t & x, const axis_t & y, const axis_t & z,
+  const dataarray_t & dataarray )
+  : m_xaxis(x), m_yaxis(y), m_zaxis(z),
+    m_dataarray(dataarray)
+{
+  try {
+    std::vector<Size> indexes(3);
+    indexes[0] = x.n;
+    indexes[1] = y.n;
+    indexes[2] = z.n;
+    m_dataarray[ indexes ];
+  }
+  catch (...) {
+    std::ostringstream oss;
+    oss << "LinearlyInterpolatedGridData_3D ctor: "
+	<< "shape mismatch between axes and data array."
+	<< "axes: " << x.n << ", " << y.n << ", " << z.n << ", "
+	<< "dataarray: ";
+    for (unsigned int i=0; i<3; i++)
+      oss << m_dataarray.shape()[i] << "," ;
+
+    throw Exception( oss.str() );
+  }
+}
+
+
+
+#include "interpolate.h"
+
+template < typename Array_3D, typename FloatType,
+	   typename Size>
+FloatType
+DANSE::phonon::LinearlyInterpolatedGridData_3D<Array_3D, FloatType, Size>::operator ()
+  ( const FloatType & x, const FloatType & y, const FloatType & z ) const
+{
+
+  using namespace LinearlyInterpolatedGridData_3D_impl;
+
+  Size nx, ny, nz;
+  FloatType rx, ry, rz;
+
+  value2index_and_remainder(x, m_xaxis, nx, rx);
+  value2index_and_remainder(y, m_yaxis, ny, ry);
+  value2index_and_remainder(z, m_zaxis, nz, rz);
+
+  Size nx1 = nx+1, ny1 = ny+1, nz1 = nz+1;
+
+  FloatType 
+    u000 = getitem<dataarray_t, index_t, FloatType>( m_dataarray, nx, ny, nz ),
+    u100 = getitem<dataarray_t, index_t, FloatType>( m_dataarray, nx1,ny, nz ),
+    u010 = getitem<dataarray_t, index_t, FloatType>( m_dataarray, nx, ny1,nz ),
+    u001 = getitem<dataarray_t, index_t, FloatType>( m_dataarray, nx, ny, nz1 ),
+    u011 = getitem<dataarray_t, index_t, FloatType>( m_dataarray, nx, ny1,nz1 ),
+    u101 = getitem<dataarray_t, index_t, FloatType>( m_dataarray, nx1,ny, nz1 ),
+    u110 = getitem<dataarray_t, index_t, FloatType>( m_dataarray, nx1,ny1,nz ),
+    u111 = getitem<dataarray_t, index_t, FloatType>( m_dataarray, nx1,ny1,nz1 );
+    
+  return interp3D_01<FloatType>
+    (  u000,  u100,  u010,  u001,
+       u011,  u101,  u110,  u111,
+       rx, ry, rz );
+}
+
+#endif
+
+// version
+// $Id$
+
+// End of file 

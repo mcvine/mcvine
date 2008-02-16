@@ -1,0 +1,104 @@
+// -*- C++ -*-
+//
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//
+//                                   Jiao Lin
+//                      California Institute of Technology
+//                        (C) 2007  All Rights Reserved
+//
+// {LicenseText}
+//
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//
+
+
+#ifndef PHONON_LINEARLYINTERPOLATEDDISPERSIONONGRID_3D_H
+#error LinearlyInterpolatedDispersionOnGrid_3D.icc not meaningful outside LinearlyInterpolatedDispersionOnGrid_3D.h
+#else
+
+template <typename Array_7D, typename Array_4D>
+DANSE::phonon::LinearlyInterpolatedDispersionOnGrid_3D<Array_7D, Array_4D>::
+LinearlyInterpolatedDispersionOnGrid_3D
+( n_t nAtoms, const axis_t & QX, const axis_t & QY, const axis_t &QZ, 
+  epsilonarray_t & epsilon_data, Earray_t & E_data )
+  : AbstractDispersion_3D( nAtoms ),
+    m_Evsbranch( nBranches() ),
+    m_polvsbranchatom( nBranches() * nAtoms )
+{
+  assert (epsilon_data.dimension() == 7 );
+  assert (epsilon_data.shape()[0] == QX.n+1 );
+  assert (epsilon_data.shape()[1] == QY.n+1 );
+  assert (epsilon_data.shape()[2] == QZ.n+1 );
+  assert (epsilon_data.shape()[3] == nBranches() );
+  assert (epsilon_data.shape()[4] == nAtoms );
+  assert (epsilon_data.shape()[5] == 3 );
+  assert (epsilon_data.shape()[6] == 2 );
+
+  assert (E_data.dimension() == 4 );
+  assert (E_data.shape()[0] == QX.n+1 );
+  assert (E_data.shape()[1] == QY.n+1 );
+  assert (E_data.shape()[2] == QZ.n+1 );
+  assert (E_data.shape()[3] == nBranches() );
+
+  std::vector<int> indexes(7);
+  indexes[0] = indexes[1] = indexes[2] = indexes[5] = indexes[6] = -1;
+  
+  for (n_t branch = 0; branch < nBranches(); branch ++ )
+    for (n_t atom = 0; atom < nAtoms; atom ++ ) {
+      indexes[3] = branch;
+      indexes[4] = atom;
+      m_polvsbranchatom[ branch * nAtoms + atom ] = new interp_polarray_t1
+	( QX, QY, QZ, epsilon_data, indexes );
+    }
+
+
+  // init energy interpolated grid data
+  indexes.resize(4);
+
+  indexes[0] = indexes[1] = indexes[2] = -1;
+  
+  for (n_t branch = 0; branch < nBranches(); branch ++ ) {
+    indexes[3] = branch;
+    m_Evsbranch[ branch ] = new interp_Earray_t1
+      ( QX, QY, QZ, E_data, indexes );
+  }
+
+}
+      
+
+template <typename Array_7D, typename Array_4D>
+DANSE::phonon::LinearlyInterpolatedDispersionOnGrid_3D<Array_7D, Array_4D>::
+~LinearlyInterpolatedDispersionOnGrid_3D()
+{
+  for (n_t i=0; i<m_Evsbranch.size(); i++)
+    delete m_Evsbranch[i];
+
+  for (n_t i=0; i<m_polvsbranchatom.size(); i++)
+    delete m_polvsbranchatom[i];
+}
+
+
+template <typename Array_7D, typename Array_4D>
+typename DANSE::phonon::LinearlyInterpolatedDispersionOnGrid_3D<Array_7D, Array_4D>::epsilon_t
+DANSE::phonon::LinearlyInterpolatedDispersionOnGrid_3D<Array_7D, Array_4D>::
+polarization(n_t branch_id, n_t atom_id, const K_t &k) const 
+{
+  return m_polvsbranchatom[ branch_id * nAtoms() + atom_id ]->interpolated(k);
+}
+
+
+template <typename Array_7D, typename Array_4D>
+typename DANSE::phonon::LinearlyInterpolatedDispersionOnGrid_3D<Array_7D, Array_4D>::float_t
+DANSE::phonon::LinearlyInterpolatedDispersionOnGrid_3D<Array_7D, Array_4D>::
+energy(n_t branch_id, const K_t &k) const 
+{
+  return m_Evsbranch[ branch_id ]->interpolated(k.x, k.y, k.z);
+}
+
+
+#endif
+
+// version
+// $Id$
+
+// End of file 

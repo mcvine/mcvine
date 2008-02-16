@@ -17,8 +17,7 @@ PACKAGE = libmccomponents/kernels
 # directory structure
 
 BUILD_DIRS = \
-	detector \
-	sample \
+	phonon \
 
 OTHER_DIRS = \
 

@@ -44,6 +44,15 @@ clean::
 export:: export-package-headers
 
 EXPORT_HEADERS = \
+	AbstractDispersion_3D.h \
+	LinearlyInterpolatedGridData_3D.h \
+	LinearlyInterpolatedGridData_3D.icc \
+	LinearlyInterpolatedDispersionOnGrid_3D.h \
+	LinearlyInterpolatedDispersionOnGrid_3D.icc \
+	LinearlyInterpolatedPolarizationOnGrid_3D.h \
+	LinearlyInterpolatedPolarizationOnGrid_3D.icc \
+	exception.h \
+	interpolate.h \
 
 
 # version

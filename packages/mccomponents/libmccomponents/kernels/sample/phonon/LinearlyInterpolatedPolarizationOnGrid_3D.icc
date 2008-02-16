@@ -1,0 +1,79 @@
+// -*- C++ -*-
+//
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//
+//                                   Jiao Lin
+//                      California Institute of Technology
+//                        (C) 2007  All Rights Reserved
+//
+// {LicenseText}
+//
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//
+
+
+#ifndef PHONON_LINEARLYINTERPOLATEDPOLARIZATIONONGRID_3D_H
+#error LinearlyInterpolatedPolarizationOnGrid_3D.icc not meaningful outside LinearlyInterpolatedPolarizationOnGrid_3D.h
+#else
+
+template <typename Array_5D>
+DANSE::phonon::LinearlyInterpolatedPolarizationOnGrid_3D<Array_5D>::
+LinearlyInterpolatedPolarizationOnGrid_3D
+( const axis_t & QX, const axis_t & QY, const axis_t &QZ, array_t & data )
+  
+{
+  std::vector<int> indexes(5);
+  indexes[0] = indexes[1] = indexes[2] = -1; 
+  
+  indexes[3] = 0; indexes[4] = 0;
+  m_xr = new interp_t1( QX, QY, QZ, data, indexes );
+
+  indexes[3] = 0; indexes[4] = 1;
+  m_xi = new interp_t1( QX, QY, QZ, data, indexes );
+
+  indexes[3] = 1; indexes[4] = 0;
+  m_yr = new interp_t1( QX, QY, QZ, data, indexes );
+
+  indexes[3] = 1; indexes[4] = 1;
+  m_yi = new interp_t1( QX, QY, QZ, data, indexes );
+
+  indexes[3] = 2; indexes[4] = 0;
+  m_zr = new interp_t1( QX, QY, QZ, data, indexes );
+
+  indexes[3] = 2; indexes[4] = 1;
+  m_zi = new interp_t1( QX, QY, QZ, data, indexes );
+
+}
+      
+
+template <typename Array_5D>
+DANSE::phonon::LinearlyInterpolatedPolarizationOnGrid_3D<Array_5D>::
+~LinearlyInterpolatedPolarizationOnGrid_3D()
+{
+  delete m_xr; delete m_xi;
+  delete m_yr; delete m_yi;
+  delete m_zr; delete m_zi;
+}
+
+
+template <typename Array_5D>
+typename DANSE::phonon::LinearlyInterpolatedPolarizationOnGrid_3D<Array_5D>::epsilon_t
+DANSE::phonon::LinearlyInterpolatedPolarizationOnGrid_3D<Array_5D>::
+ operator() (const K_t &q) const
+{
+  return epsilon_t
+    ( complex_t( m_xr->interpolated(q.x, q.y, q.z),
+		 m_xi->interpolated(q.x, q.y, q.z) ) ,
+      complex_t( m_yr->interpolated(q.x, q.y, q.z),
+		 m_yi->interpolated(q.x, q.y, q.z) ) ,
+      complex_t( m_zr->interpolated(q.x, q.y, q.z),
+		 m_zi->interpolated(q.x, q.y, q.z) ) );
+}
+
+
+#endif
+
+// version
+// $Id$
+
+// End of file 

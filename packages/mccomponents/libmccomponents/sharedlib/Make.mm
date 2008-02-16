@@ -38,6 +38,8 @@ PROJ_SRCS = \
 	He3Tube.cc \
 	SQEkernel.cc \
 	GridSQE.cc \
+	AbstractDispersion_3D.cc \
+	LinearlyInterpolatedDispersionOnGrid_3D.cc \
 
 
 PROJ_TIDY += $(PROJ_SRCS)
@@ -66,6 +68,12 @@ SQEkernel.cc: ../kernels/sample/SQEkernel.cc
 
 GridSQE.cc: ../kernels/sample/SQE/GridSQE.cc
 	cp ../kernels/sample/SQE/GridSQE.cc .
+
+AbstractDispersion_3D.cc: ../kernels/sample/phonon/AbstractDispersion_3D.cc
+	cp ../kernels/sample/phonon/AbstractDispersion_3D.cc .
+
+LinearlyInterpolatedDispersionOnGrid_3D.cc: ../kernels/sample/phonon/LinearlyInterpolatedDispersionOnGrid_3D.cc
+	cp ../kernels/sample/phonon/LinearlyInterpolatedDispersionOnGrid_3D.cc .
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
