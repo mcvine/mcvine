@@ -1,0 +1,101 @@
+// -*- C++ -*-
+//
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//
+//                                   Jiao Lin
+//                      California Institute of Technology
+//                        (C) 2007  All Rights Reserved
+//
+// {LicenseText}
+//
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//
+
+#ifndef LINEARLYINTERPOLATEDGRIDDATA_1D_H
+#error LinearlyInterpolatedGridData_1D.icc not meaningful outside LinearlyInterpolatedGridData_1D.h 
+#else
+
+
+#include <sstream>
+#include <cmath>
+#include <vector>
+
+
+namespace LinearlyInterpolatedGridData_1D_impl{
+
+  // given x and axis, calculate (x-axis.start)/axis.step and break the result
+  // to an integer and a remainder
+  template< typename Float, typename N >
+  void value2index_and_remainder
+  ( const Float & value, 
+    DANSE::phonon::LinearlyInterpolatableAxis<Float, N> axis,
+    N &index, Float & remainder )
+  {
+    Float r = (value-axis.start)/axis.step;
+    if ( r<0 || r >= axis.n ) {
+      std::ostringstream oss;
+      oss << "value " << value << " is out of bound: ("
+	  << axis.start << ", " << axis.start + axis.n * axis.step 
+	  << ")" ;
+      throw DANSE::phonon::Exception( oss.str() );
+    }
+    
+    index = std::floor( r );
+    
+    remainder = r - index;
+  }
+
+}
+
+
+template < typename Array_1D, typename FloatType,
+	   typename IndexType>
+DANSE::phonon::LinearlyInterpolatedGridData_1D<Array_1D, FloatType, IndexType> ::LinearlyInterpolatedGridData_1D
+( const axis_t & x, const dataarray_t & dataarray )
+  : m_xaxis(x), m_dataarray(dataarray)
+{
+  try {
+    m_dataarray[ x.n ];
+  }
+  catch (...) {
+    std::ostringstream oss;
+    oss << "LinearlyInterpolatedGridData_1D ctor: "
+	<< "shape mismatch between x axis and y data array."
+	<< "x axis size = " << x.n;
+
+    throw Exception( oss.str() );
+  }
+}
+
+
+
+#include "interpolate.h"
+
+template < typename Array_1D, typename FloatType,
+	   typename IndexType>
+FloatType
+DANSE::phonon::LinearlyInterpolatedGridData_1D<Array_1D, FloatType, IndexType>::operator ()
+  ( const FloatType & x ) const
+{
+
+  index_t nx;
+  float_t rx;
+
+  LinearlyInterpolatedGridData_1D_impl::value2index_and_remainder<>(x, m_xaxis, nx, rx);
+
+  index_t nx1 = nx+1;
+
+  float_t 
+    y0 = m_dataarray[nx],
+    y1 = m_dataarray[nx1];
+
+  return interp1D_01<float_t>( y0, y1, rx );
+}
+
+#endif
+
+
+// version
+// $Id$
+
+// End of file 

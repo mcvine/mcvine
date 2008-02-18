@@ -39,7 +39,12 @@ PROJ_SRCS = \
 	SQEkernel.cc \
 	GridSQE.cc \
 	AbstractDispersion_3D.cc \
+	AtomicScatterer.cc \
 	LinearlyInterpolatedDispersionOnGrid_3D.cc \
+	kernels_sample_phonon_utils.cc \
+	physics_statistics.cc \
+	DWFromDOS.cc \
+	CoherentInelastic_PolyXtal.cc \
 
 
 PROJ_TIDY += $(PROJ_SRCS)
@@ -69,11 +74,26 @@ SQEkernel.cc: ../kernels/sample/SQEkernel.cc
 GridSQE.cc: ../kernels/sample/SQE/GridSQE.cc
 	cp ../kernels/sample/SQE/GridSQE.cc .
 
+AtomicScatterer.cc: ../kernels/sample/phonon/AtomicScatterer.cc
+	cp ../kernels/sample/phonon/AtomicScatterer.cc .
+
 AbstractDispersion_3D.cc: ../kernels/sample/phonon/AbstractDispersion_3D.cc
 	cp ../kernels/sample/phonon/AbstractDispersion_3D.cc .
 
 LinearlyInterpolatedDispersionOnGrid_3D.cc: ../kernels/sample/phonon/LinearlyInterpolatedDispersionOnGrid_3D.cc
 	cp ../kernels/sample/phonon/LinearlyInterpolatedDispersionOnGrid_3D.cc .
+
+kernels_sample_phonon_utils.cc: ../kernels/sample/phonon/utils.cc
+	cp ../kernels/sample/phonon/utils.cc kernels_sample_phonon_utils.cc
+
+physics_statistics.cc: ../physics/statistics.cc
+	cp ../physics/statistics.cc physics_statistics.cc
+
+CoherentInelastic_PolyXtal.cc: ../kernels/sample/phonon/CoherentInelastic_PolyXtal.cc
+	cp ../kernels/sample/phonon/CoherentInelastic_PolyXtal.cc CoherentInelastic_PolyXtal.cc
+
+DWFromDOS.cc: ../kernels/sample/phonon/DWFromDOS.cc
+	cp ../kernels/sample/phonon/DWFromDOS.cc DWFromDOS.cc
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

@@ -15,7 +15,7 @@
 
 
 
-#include "mcni/geometry/Vector3.h"
+#include "vector3.h"
 
 namespace DANSE{
   

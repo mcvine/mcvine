@@ -45,6 +45,18 @@ export:: export-package-headers
 
 EXPORT_HEADERS = \
 	AbstractDispersion_3D.h \
+	AbstractDebyeWallerFactor.h \
+	AbstractDOS.h \
+	AbstractScatteringKernel.h \
+	AtomicScatterer.h \
+	CoherentInelastic_PolyXtal.h \
+	DWFromDOS.h \
+	DWFromDOS.icc \
+	LinearlyInterpolatableAxis.h \
+	LinearlyInterpolatedDOS.h \
+	LinearlyInterpolatedDOS.icc \
+	LinearlyInterpolatedGridData_1D.h \
+	LinearlyInterpolatedGridData_1D.icc \
 	LinearlyInterpolatedGridData_3D.h \
 	LinearlyInterpolatedGridData_3D.icc \
 	LinearlyInterpolatedDispersionOnGrid_3D.h \
@@ -53,6 +65,8 @@ EXPORT_HEADERS = \
 	LinearlyInterpolatedPolarizationOnGrid_3D.icc \
 	exception.h \
 	interpolate.h \
+	utils.h \
+	vector3.h \
 
 
 # version

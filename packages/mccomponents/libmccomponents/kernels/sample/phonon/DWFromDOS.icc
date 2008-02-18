@@ -1,0 +1,124 @@
+// -*- C++ -*-
+// Debye Waller Factor
+//  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// 
+//                                  Jiao Lin
+//                        California Institute of Technology
+//                        (C) 1998-2004  All Rights Reserved
+// 
+//  <LicenseText>
+// 
+//  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// 
+
+#ifndef DANSE_PHONON_DWFROMDOS_H
+#error this is the implementation of template class DWFromDOS
+#else
+
+
+#include <portinfo>
+#include "journal/warning.h"
+#include "journal/debug.h"
+#include "journal/info.h"
+#include <iomanip>
+
+#include "mccomponents/physics/constants.h"
+#include "mccomponents/physics/statistics.h"
+
+
+template <typename FloatType>
+void DANSE::phonon::DWFromDOS<FloatType>::calc_DW_core
+(float_t atom_mass, float_t T_in_Kelvin )
+{
+
+  using namespace mccomponents;
+
+
+#ifdef DEBUG
+  journal::info_t info_DW("Debye Waller");
+  journal::debug_t debug_DW("Debye Waller");
+  journal::warning_t warning_DW("Debye Waller");
+#endif
+  m_core = 0.;
+  float_t norm_fac=0.;
+
+  using physics::BoseEinsteinDistribution;
+  const float_t & wmin = m_dos.min(), wmax = m_dos.max();
+  float_t dw = (wmax-wmin)/m_nSample;
+  float_t w, Z;
+
+  for (size_t i=0; i<m_nSample; i++) {
+    w = dw * i + wmin;
+    Z = m_dos( w );
+    if (w==0) {
+      //assert(Z==0); continue;
+      if (Z!=0) {
+#ifdef DEBUG
+	warning_DW<< journal::at(__HERE__)
+		  << "w=0, Z!=0" << journal::endl;
+#endif
+      }
+      continue;
+    }
+    m_core += (2*BoseEinsteinDistribution(w, T_in_Kelvin)+1)/w*Z;
+    norm_fac += Z;
+#ifdef DEBUG
+    debug_DW  << journal::at(__HERE__)
+	      << "w=" <<w << ","
+	      << "Z=" <<Z << ","
+	      << "BE="<<BoseEinsteinDistribution(w, T_in_Kelvin) << ","
+	      << "core=" <<m_core << ","
+	      << "norm_fac=" <<norm_fac << ","
+	      << journal::endl;
+#endif
+  }
+
+  using physics::e;
+  m_core /= e*1e-3;
+  m_core /= norm_fac; // now core = \int Z(w)*(2<n>+1)/(hbar*w) dw
+  
+#ifdef DEBUG
+  debug_DW  << journal::at(__HERE__)
+	    << m_core << journal::endl;
+#endif
+  using physics::hbar; using physics::atomic_mass;
+  m_core *= hbar*hbar/2/atomic_mass/atom_mass;
+  // now core = hbar^2/2M*integration
+  
+  m_core *= 1e20; // so that Q can be given in the unit A^-1
+  
+#ifdef DEBUG
+  debug_DW  << journal::at(__HERE__)
+	    << "hbar=" << hbar << ","
+	    << "atomic_mass=" <<atomic_mass << ","
+	    << "atom_mass="<<atom_mass << ","
+	    << "core=" <<m_core 
+	    << journal::endl;
+#endif
+}
+
+template <typename FloatType>
+FloatType 
+DANSE::phonon::DWFromDOS<FloatType>::DW
+( float_t Q_mag ) 
+  const
+{
+  return Q_mag*Q_mag*m_core;
+}
+
+template <typename FloatType>
+FloatType 
+DANSE::phonon::DWFromDOS<FloatType>::DW
+( const K_t & Q )
+  const
+{
+  return DW( Q.length() );
+}
+
+
+#endif // DANSE_PHONON_DWFROMDOS_H
+
+// version
+// $Id: DWFromDOS.icc 635 2007-08-02 20:12:47Z linjiao $
+
+// End of file

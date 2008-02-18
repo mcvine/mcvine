@@ -24,6 +24,9 @@ namespace mccomponents{
     const double atm = 1.013e5;
     const double pi = 3.1415926535897;
 
+    //! Temperature to Energy
+    const double Kelvin2meV = (1/11.605);
+
   } // physics::
 
 } // mccomponents::

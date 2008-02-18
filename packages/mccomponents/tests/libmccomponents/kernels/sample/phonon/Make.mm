@@ -20,10 +20,15 @@ PROJ_CLEAN += $(PROJ_CPPTESTS)
 PROJ_PYTESTS =  #alltests.py
 PROJ_CPPTESTS = test_LinearlyInterpolatedGridData_3D \
 	test_LinearlyInterpolatedPolarizationOnGrid_3D \
-	test_LinearlyInterpolatedDispersionOnGrid_3D 
+	test_LinearlyInterpolatedDispersionOnGrid_3D \
+	test_LinearlyInterpolatedGridData_1D \
+	test_LinearlyInterpolatedDOS \
+	test_CoherentInelastic_PolyXtal \
+
 
 PROJ_TESTS = $(PROJ_PYTESTS) $(PROJ_CPPTESTS)
 PROJ_LIBRARIES = -L$(BLD_LIBDIR) -ljournal -lmcni -lmccomposite -lmccomponents
+PROJ_CXX_DEFINES += DEEPDEBUG
 
 
 # directory structure
@@ -57,6 +62,12 @@ tidy::
 
 
 
+test_LinearlyInterpolatedGridData_1D: test_LinearlyInterpolatedGridData_1D.cc
+	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ test_LinearlyInterpolatedGridData_1D.cc $(PROJ_LIBRARIES)
+
+test_LinearlyInterpolatedDOS: test_LinearlyInterpolatedDOS.cc
+	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ test_LinearlyInterpolatedDOS.cc $(PROJ_LIBRARIES)
+
 test_LinearlyInterpolatedGridData_3D: test_LinearlyInterpolatedGridData_3D.cc
 	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ test_LinearlyInterpolatedGridData_3D.cc $(PROJ_LIBRARIES)
 
@@ -65,6 +76,9 @@ test_LinearlyInterpolatedPolarizationOnGrid_3D: test_LinearlyInterpolatedPolariz
 
 test_LinearlyInterpolatedDispersionOnGrid_3D: test_LinearlyInterpolatedDispersionOnGrid_3D.cc
 	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ test_LinearlyInterpolatedDispersionOnGrid_3D.cc $(PROJ_LIBRARIES)
+
+test_CoherentInelastic_PolyXtal: test_CoherentInelastic_PolyXtal.cc CoherentInelastic_PolyXtal_Example.h LinearlyInterpolatedDispersionOnGrid_3D_Example.h
+	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ test_CoherentInelastic_PolyXtal.cc $(PROJ_LIBRARIES)
 
 
 
