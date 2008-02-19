@@ -31,6 +31,7 @@ PROJ_SRCS = \
 	wrap_EventModeMCA.cc \
 	wrap_SQEkernel.cc \
 	wrap_GridSQE.cc \
+	wrap_Phonon_CoherentInelastic_PolyXtal_kernel.cc \
 	wrap_basic_containers.cc \
 
 
