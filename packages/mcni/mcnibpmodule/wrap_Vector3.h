@@ -28,7 +28,7 @@ namespace wrap {
   }
   
   template <typename Type>
-  inline Type V3_size( const Vector3<Type> & v3)
+  inline size_t V3_size( const Vector3<Type> & v3)
   {
     return Vector3<Type>::size();
   }

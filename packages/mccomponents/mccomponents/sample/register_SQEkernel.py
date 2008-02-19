@@ -59,6 +59,10 @@ def onSQEkernel(self, sqekernel):
         #need to get cross section from sample assembly representation
         # svn://danse.us/inelastic/sample/.../sampleassembly
         #origin is a node in the sample assembly representation
+        #
+        #scatterer_origin is assigned to kernel when a kernel is
+        #constructed from kernel xml.
+        #see sampleassembly_support.SampleAssembly2CompositeScatterer for details.
         origin = t.scatterer_origin
         from sampleassembly import cross_sections
         abs, inc, coh = cross_sections( origin )
