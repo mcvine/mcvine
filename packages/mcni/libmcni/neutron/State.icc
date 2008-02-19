@@ -18,7 +18,7 @@
 
 
 mcni::Neutron::State::State
-(const position_t &i_position, const velocity_t &i_velocity, const Spin & i_s) 
+(const position_t &i_position, const velocity_t &i_velocity, const spin_t & i_s) 
   : position(i_position), velocity(i_velocity), spin(i_s)
 {}
       

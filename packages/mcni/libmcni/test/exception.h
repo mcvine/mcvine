@@ -27,7 +27,8 @@ namespace mcni {
   public:
     
     /// ctor
-    Exception(const char *m) {_msg = std::string(m);}
+    Exception(const char *m) : _msg( m ) {}
+    Exception(const std::string &m) : _msg(m) {}
 
     /// dtor
     ~Exception() throw() {}

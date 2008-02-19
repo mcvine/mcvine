@@ -45,11 +45,12 @@ namespace mcni { namespace Neutron {
       // types
       typedef Position<double> position_t;
       typedef Velocity<double> velocity_t;
+      typedef Spin spin_t;
 
       // meta-methods
       inline State(const position_t &i_position, 
 		   const velocity_t &i_velocity,
-		   const Spin & i_s) ;
+		   const spin_t & i_s) ;
       inline State();
       
       // methdos
@@ -62,7 +63,7 @@ namespace mcni { namespace Neutron {
       // data
       position_t position;
       velocity_t velocity;
-      Spin spin;
+      spin_t spin;
     };
     
   }  // Neutron:

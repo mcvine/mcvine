@@ -50,6 +50,9 @@ namespace mcni{ namespace Neutron {
       by the probability of the current scattering process.
     */
     struct Event{
+
+      // types
+      typedef State state_t;
       
       // meta-methods
       inline Event( const State &state, double time, double probability );
