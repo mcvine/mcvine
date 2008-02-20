@@ -58,6 +58,7 @@ class He3Tube_TestCase(unittest.TestCase):
 
         datafile = "test.out"
         dims = mccomponentsbp.vector_uint(0)
+        dims.append( detID+1 ) # The first dimension is for detectors. must be larger than the largest number of detector IDs.
         dims.append( npixels )
         mca = mccomponentsbp.EventModeMCA( datafile, dims )
         
