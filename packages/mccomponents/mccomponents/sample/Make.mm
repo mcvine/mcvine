@@ -17,6 +17,7 @@ PACKAGE = sample
 BUILD_DIRS = \
 	idf \
 	kernelxml \
+	phonon \
 
 RECURSE_DIRS = $(BUILD_DIRS)
 

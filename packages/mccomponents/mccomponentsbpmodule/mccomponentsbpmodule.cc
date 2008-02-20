@@ -28,10 +28,15 @@ namespace wrap_mccomponents{
   void wrap_GridSQE();
 
   void wrap_NdArray();
+  void wrap_AbstractDOS();
+  void wrap_LinearlyInterpolatedDOS();
   void wrap_LinearlyInterpolatableAxis();
-  void wrap_LinearlyInterpolatedDispersionOnGrid_3D();
   void wrap_epsilon_t();
+  void wrap_AbstractDebyeWallerFactorCalculator();
+  void wrap_DWFromDOS();
   void wrap_AbstractDispersion_3D();
+  void wrap_LinearlyInterpolatedDispersionOnGrid_3D();
+  void wrap_AtomicScatterer();
   void wrap_Phonon_CoherentInelastic_PolyXtal_kernel();
 }
 
@@ -54,10 +59,16 @@ BOOST_PYTHON_MODULE(mccomponentsbp)
   wrap_GridSQE();
 
   wrap_NdArray();
+  wrap_AbstractDOS();
+  wrap_LinearlyInterpolatedDOS();
   wrap_LinearlyInterpolatableAxis();
-  wrap_LinearlyInterpolatedDispersionOnGrid_3D();
   wrap_epsilon_t();
+  wrap_AbstractDebyeWallerFactorCalculator();
+  wrap_DWFromDOS();
   wrap_AbstractDispersion_3D();
+  wrap_LinearlyInterpolatedDispersionOnGrid_3D();
+  
+  wrap_AtomicScatterer();
   wrap_Phonon_CoherentInelastic_PolyXtal_kernel();
 
 }

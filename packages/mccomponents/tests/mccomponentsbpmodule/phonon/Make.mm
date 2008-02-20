@@ -10,37 +10,22 @@
 #
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-PROJECT = mccomponents
+PROJECT = mccomponents/mccomponentsbpmodule
 PACKAGE = tests
 
-PROJ_TIDY += alltests.py $(PROJ_CPPTESTS) *.rendered
+PROJ_TIDY += alltests.py $(PROJ_CPPTESTS)
 PROJ_CLEAN += alltests.py $(PROJ_CPPTESTS)
 
 PROJ_PYTESTS =  alltests.py
 PROJ_CPPTESTS = 
 PROJ_TESTS = $(PROJ_PYTESTS) $(PROJ_CPPTESTS)
-PROJ_LIBRARIES = -L$(BLD_LIBDIR) -ljournal -lmcni
-
-
-# directory structure
-
-BUILD_DIRS = \
-	sampleassembly \
-	phonon \
-
-OTHER_DIRS = \
-
-RECURSE_DIRS = $(BUILD_DIRS) $(OTHER_DIRS)
+PROJ_LIBRARIES = -L$(BLD_LIBDIR) -ljournal -lmcni -lmccomposite -lmccomponents
 
 
 #--------------------------------------------------------------------------
 #
 
 all: $(PROJ_TESTS)
-	BLD_ACTION="all" $(MM) recurse
-
-tidy::
-	BLD_ACTION="tidy" $(MM) recurse
 
 test: alltests.py
 	for test in $(PROJ_TESTS) ; do $${test}; done

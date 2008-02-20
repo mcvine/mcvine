@@ -47,8 +47,8 @@ namespace DANSE{ namespace phonon {
     virtual ~AbstractDOS() {}
 
     /// minimum of phonon energy
-    const FLT & emin() const { return m_emin; }
-    const FLT & emax() const { return m_emax; }
+    FLT emin() const { return m_emin; }
+    FLT emax() const { return m_emax; }
 
     // 
     FLT operator () ( const FLT & e ) const {

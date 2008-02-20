@@ -58,9 +58,33 @@ namespace wrap_mccomponents {
     return v.size();
   }
   
+
+  template <typename Type>
+  inline void v_append( vector<Type> & v, const Type & e)
+  {
+    v.push_back( e );
+  }
+  
+  
+  template <typename ElementType>
+  void wrap_vector2( const char * elementTypeName )
+  {
+    std::string name("vector_");
+    name += elementTypeName;
+
+    typedef vector<ElementType> w_t;
+    class_<w_t>
+      (name.c_str(), init<size_t>())
+      .def("__len__", &v_size<ElementType> )
+      .def("__getitem__", &v_getitem<ElementType>)
+      .def("__setitem__", &v_setitem<ElementType>)
+      .def("__iter__", boost::python::iterator<w_t>() )
+      .def("append", &v_append<ElementType> )
+      ;
+  }
   
   template <typename Type>
-  inline void v_append( vector<Type *> & v, Type & e)
+  inline void v_append_pointer_of_reference( vector<Type *> & v, Type & e)
   {
     v.push_back( &e );
   }
@@ -78,7 +102,7 @@ namespace wrap_mccomponents {
       .def("__getitem__", &v_getitem<ElementType *>, return_internal_reference<1>())
       .def("__setitem__", &v_setitem<ElementType *>, return_internal_reference<1>())
       .def("__iter__", boost::python::iterator<w_t>() )
-      .def("append", &v_append<ElementType>, with_custodian_and_ward<1,2>())
+      .def("append", &v_append_pointer_of_reference<ElementType>, with_custodian_and_ward<1,2>())
       ;
   }
   

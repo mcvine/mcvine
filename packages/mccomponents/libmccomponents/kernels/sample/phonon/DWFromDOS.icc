@@ -43,7 +43,7 @@ void DANSE::phonon::DWFromDOS<FloatType>::calc_DW_core
   float_t norm_fac=0.;
 
   using physics::BoseEinsteinDistribution;
-  const float_t & wmin = m_dos.min(), wmax = m_dos.max();
+  const float_t & wmin = m_dos.emin(), wmax = m_dos.emax();
   float_t dw = (wmax-wmin)/m_nSample;
   float_t w, Z;
 

@@ -23,21 +23,35 @@ PROJ_CXX_SRCLIB = -lboost_python  -L$(BOOSTPYTHON_LIBDIR) -ljournal -lmccomposit
 
 
 PROJ_SRCS = \
+	wrap_basic_containers.cc \
 	wrap_HomogeneousNeutronScatterer.cc \
 	wrap_AbstractScatteringKernel.cc \
-	wrap_AbstractDispersion_3D.cc \
 	wrap_CompositeScatteringKernel.cc \
-	wrap_epsilon_t.cc \
 	wrap_kernelcontainer.cc \
 	wrap_He3TubeKernel.cc \
 	wrap_EventModeMCA.cc \
-	wrap_LinearlyInterpolatableAxis.cc \
-	wrap_LinearlyInterpolatedDispersionOnGrid_3D.cc \
-	wrap_NdArray.cc \
 	wrap_SQEkernel.cc \
 	wrap_GridSQE.cc \
+	wrap_AtomicScatterer.cc \
+	wrap_NdArray.cc \
+	wrap_AbstractDOS.cc \
+	wrap_LinearlyInterpolatedDOS.cc \
+	wrap_AbstractDebyeWallerFactorCalculator.cc \
+	wrap_DWFromDOS.cc \
+	wrap_LinearlyInterpolatableAxis.cc \
+	wrap_epsilon_t.cc \
+	wrap_AbstractDispersion_3D.cc \
+	wrap_LinearlyInterpolatedDispersionOnGrid_3D.cc \
 	wrap_Phonon_CoherentInelastic_PolyXtal_kernel.cc \
-	wrap_basic_containers.cc \
+
+
+TOUCH=touch
+
+wrap_basic_containers.cc: wrap_vector.h
+	$(TOUCH) wrap_basic_containers.cc
+
+wrap_kernelcontainer.cc: wrap_vector.h
+	$(TOUCH) wrap_kernelcontainer.cc
 
 
 include doxygen/default.def
