@@ -31,7 +31,7 @@ class mcnimodule_TestCase(unittest.TestCase):
         from numpyext import getdataptr
         ptr = getdataptr( arr )
         from bpext import wrap_ptr
-        import mcni
+        import mcni.mcni
         spin = wrap_ptr( ptr, 'NeutronSpin' )
         self.assertEqual( spin.s1, 1 )
         self.assertEqual( spin.s2, 2 )
@@ -44,7 +44,7 @@ class mcnimodule_TestCase(unittest.TestCase):
         from numpyext import getdataptr
         ptr = getdataptr( arr )
         from bpext import wrap_ptr
-        import mcni
+        import mcni.mcni
         event = wrap_ptr( ptr, 'cNeutronEvent' )
         self.assertEqual( event.x, 0 )
         self.assertEqual( event.y, 1 )
@@ -58,7 +58,7 @@ class mcnimodule_TestCase(unittest.TestCase):
         from numpyext import getdataptr
         ptr = getdataptr( arr )
         from bpext import wrap_ptr
-        import mcni
+        import mcni.mcni
         cevents = wrap_ptr( ptr, 'cNeutronEvent' )
 
         events = mcni.neutron_buffer(2)
