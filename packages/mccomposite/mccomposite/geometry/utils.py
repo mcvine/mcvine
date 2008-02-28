@@ -12,29 +12,18 @@
 #
 
 
-import mccomposite.mccompositebp as bp
+import mccomposite.bindings as bindings
+defaultbinding = bindings.default()
+del bindings
+
 
 def locate(position, shape):
     from mccomposite.geometry import shapeEngine as cengine
-    location = bp.locate( bp.Position( *position ), cengine( shape, "BoostPythonBinding" ) )
-    global _location
-    return _location[ location ]
-
-
-_location = None
-def _init_location( ):
-    global _location
-    _location = {
-        bp.location.inside: "inside",
-        bp.location.onborder: "onborder",
-        bp.location.outside: "outside",
-        }
-
-    return
-    
-
-
-_init_location()
+    location = defaultbinding.locate(
+        defaultbinding.position( position ),
+        cengine( shape, "BoostPythonBinding" )
+        )
+    return location
 
 
 # version

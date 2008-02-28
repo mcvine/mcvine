@@ -62,7 +62,7 @@ def cevents_from_npyarr( npyarr ):
 def _import_bindings():
     import mcni.mcnibp
     import _patch_neutronevents_bp_interface
-    import bpext, mcni
+    import bpext, mcni.mcni
     return
 
 _import_bindings()

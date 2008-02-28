@@ -78,15 +78,6 @@ def register_binding_handlers( newtype, binding_handlers, override = False):
 
 
 
-def _import_bindings():
-    import mcni
-    import mccompositebp
-    return
-
-_import_bindings()
-
-
-
 # version
 __id__ = "$Id$"
 

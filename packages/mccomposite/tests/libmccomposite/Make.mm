@@ -19,6 +19,7 @@ PACKAGE = libmccomposite
 BUILD_DIRS = \
 	geometry \
 	mccomposite \
+	boostpython_binding \
 
 OTHER_DIRS = \
 

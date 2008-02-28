@@ -12,8 +12,6 @@
 #
 
 
-import mccomposite.mccompositebp as binding
-
 
 from AbstractBinding import AbstractBinding as base
 
@@ -52,6 +50,7 @@ class BoostPythonBinding(base):
     def locate(self, position, shape):
         global _location
         return _location[binding.locate( position, shape )]
+    
 
     def unite(self, shapes):
         return binding.Union( shapes )
@@ -98,6 +97,10 @@ def register( methodname, method, override = False ):
 
 
 
+import mcni.bindings.boostpython
+import mccomposite.mccompositebp as binding
+
+
 _location = None
 def _init_location( ):
     global _location
@@ -110,6 +113,7 @@ def _init_location( ):
     return
     
 _init_location()
+
 
 
 

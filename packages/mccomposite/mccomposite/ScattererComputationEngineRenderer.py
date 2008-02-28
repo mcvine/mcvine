@@ -87,14 +87,9 @@ class ScattererComputationEngineRenderer( AbstractVisitor, ShapeComputationEngin
         return handler( copy )
 
 
-    def onScattererCopy1(self, copy):
-        reference = copy.reference ()
-        
-        import mccomposite
-        c = mccomposite.composite( reference.shape() )
-        c.addElement( reference )
-        
-        return c.identify(self)
+    def onCompositeScattererCopy(self, copy):
+        ref = copy.reference()
+        return ref.identify(self)
 
 
     def _remember(self, visitee, cobject ):
