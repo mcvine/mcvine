@@ -11,19 +11,12 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 PROJECT = mcni
+PACKAGE = bindings/boostpython
 
 BUILD_DIRS = \
-    bindings  \
-    components  \
-    instrument_simulator  \
-    neutron_coordinates_transformers  \
-    neutron_storage  \
-    pyre_components  \
-    pyre_support  \
 
 RECURSE_DIRS = $(BUILD_DIRS)
 
-PACKAGE = mcni
 
 #--------------------------------------------------------------------------
 #
@@ -40,19 +33,11 @@ tidy::
 # export
 
 EXPORT_PYTHON_MODULES = \
-	AbstractComponent.py \
-	DummyComponent.py \
-	Geometer.py \
-	Instrument.py \
 	__init__.py \
-	component_suppliers.py \
-	units.py \
-	utils.py \
-	_component_listing.py \
-	_component_factories.py \
+	_patch_neutronevents_bp_interface.py \
 
 
-export:: export-python-modules 
+export:: export-package-python-modules 
 	BLD_ACTION="export" $(MM) recurse
 
 

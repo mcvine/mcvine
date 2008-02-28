@@ -31,7 +31,6 @@ EXPORT_PYTHON_MODULES = \
 	AbstractNeutronCoordinatesTransformer.py \
 	__init__.py \
 	_transformers.py \
-	boostpython.py \
 	mcstas.py \
 	mcstasRotations.py \
 	utils.py \

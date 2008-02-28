@@ -19,16 +19,17 @@ def copyright():
     return "mcni.instrument_simulators module: Copyright (c) 2007 Jiao Lin";
 
 
-def simulator_McStas_BP( ):
+def simulator( neutron_coordinates_transformer ):
+    t = neutron_coordinates_transformer
     from AbstractInstrumentSimulator import AbstractInstrumentSimulator as base
-    from mcni.neutron_coordinates_transformers import transformer_McStas_BP
     class Simulator(base):
-        neutron_coordinates_transformer = transformer_McStas_BP
+        neutron_coordinates_transformer = t
         pass
     return Simulator()
 
 
-default_simulator = simulator_McStas_BP()
+from mcni.neutron_coordinates_transformers import default as default_neutron_coordinates_transformer
+default_simulator = simulator( default_neutron_coordinates_transformer )
 
 
 # version

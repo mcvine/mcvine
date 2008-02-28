@@ -1,7 +1,7 @@
 
 ## patch the interface of Neutron::Events boost python binding
 
-from mcnibp import vector_Event
+from mcni.mcnibp import vector_Event
 
 
 original__str__ = vector_Event.__str__

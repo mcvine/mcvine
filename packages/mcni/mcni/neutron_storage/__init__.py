@@ -73,7 +73,7 @@ def neutrons_from_npyarr( arr, neutrons = None ):
 
     n = min( n, len(neutrons) )
 
-    cevents = cevents_from_npyarr( arr )
+    cevents = binding.cevents_from_npyarr( arr )
     
     neutrons.fromCevents( cevents, n )
 
@@ -86,20 +86,14 @@ def neutrons_as_npyarr( neutrons ):
     n = len(neutrons)
     ceventsnpyarr = numpy.zeros( n*ndblsperneutron, numpy.double )
 
-    cevents = cevents_from_npyarr( ceventsnpyarr )
+    cevents = binding.cevents_from_npyarr( ceventsnpyarr )
     neutrons.toCevents( cevents, n )
     
     return ceventsnpyarr
 
 
-def cevents_from_npyarr( npyarr ):
-    '''convert a numpy array to a boost-python instance of Neutron::cEvent pointer'''
-    from numpyext import getdataptr
-    ptr = getdataptr( npyarr )
-    from bpext import wrap_ptr
-    import mcni
-    cevents = wrap_ptr( ptr, 'cNeutronEvent' )
-    return cevents
+
+from mcni.bindings import current as binding
 
 
 # version

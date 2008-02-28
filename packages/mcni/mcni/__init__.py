@@ -33,43 +33,19 @@ def instrument( *args, **kwds ):
     return Instrument( *args, **kwds )
 
 
-def neutron_buffer( n ):
-    from mcnibp import NeutronEventBuffer
-    return NeutronEventBuffer( n )
 
-
-def position( x,y,z ):
-    from mcnibp import Position_double
-    return Position_double( x,y,z )
-
-
-def velocity( x,y,z ):
-    from mcnibp import Velocity_double
-    return Velocity_double( x,y,z )
-
-
-def spin(s1, s2):
-    from mcnibp import NeutronSpin
-    return NeutronSpin( s1, s2 )
-
-
-def state(r = (0,0,0), v = (0,0,3000), s = (0,1)):
-    from mcnibp import NeutronState
-    return NeutronState( position( *r ), velocity( *v ), spin( *s ) )
-
-
-def neutron(r = (0,0,0), v = (0,0,3000), s = (0,1), time = 0, prob = 1.):
-    from mcnibp import NeutronEvent
-    return NeutronEvent(state(r,v,s), time, prob)
-
-
-def _import_bindings():
-    import mcnibp
-    import _patch_neutronevents_bp_interface
-    import bpext, mcni
-    return
-
-_import_bindings()
+from bindings import current as binding
+cpp_instance_factories = [
+    'neutron_buffer',
+    'position',
+    'velocity',
+    'spin',
+    'state',
+    'neutron',
+    ]
+for method in cpp_instance_factories:
+    exec '%s = binding.%s' % (method, method)
+    continue
 
 
 from _component_factories import *

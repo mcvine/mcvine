@@ -25,8 +25,21 @@ def all():
 
 class Supplier(object):
 
-    def __getattribute__(self, name):
+    def listallcomponentcategories(self):
         raise NotImplementedError
+
+    def listcomponentsincategory(self, category):
+        raise NotImplementedError
+
+    def componentfactory(self, category, type):
+        raise NotImplementedError
+
+    def componentinfo(self, category, type):
+        raise NotImplementedError
+
+    pass # end of Supplier
+
+
 
 class PyModuleAsSupplier(Supplier):
 
