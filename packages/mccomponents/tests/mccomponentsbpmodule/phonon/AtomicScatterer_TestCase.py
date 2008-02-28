@@ -16,35 +16,41 @@
 import unittestX as unittest
 import journal
 
-debug = journal.debug( "LinearlyInterpolatedDOS_TestCase" )
-warning = journal.warning( "LinearlyInterpolatedDOS_TestCase" )
+debug = journal.debug( "AtomicScatterer_TestCase" )
+warning = journal.warning( "AtomicScatterer_TestCase" )
 
+
+import mcni
+from mcni import mcnibp
+from mccomposite import mccompositebp 
+from mccomponents import mccomponentsbp
 
 class TestCase(unittest.TestCase):
 
-
     def test(self):
-        from mccomponents.sample.phonon.register_LinearlyInterpolatedDOS import linearlyinterpolateddos_bp
-        import numpy as N
-        Z = N.zeros( 50 )
-        area = 0
-        for i in range(50):
-            Z[i] = i*i
-            area += Z[i]
-            continue
-        dos = linearlyinterpolateddos_bp(0, 1., 50, Z )
-        self.assertAlmostEqual( dos( 3 ), 3.**2/area )
+        'AtomicScatterer'
+        position = mcnibp.Position_double( 0,0,0 )
+        mass = 50
+        import math
+        coherent_scattering_length = math.sqrt(5)
+        coherent_cross_section = 5
+        atom = mccomponentsbp.AtomicScatterer(
+            position, mass, coherent_scattering_length, coherent_cross_section,
+            )
         return
-    
+
+
+    def test2(self):
+        'vector<AtomicScatterer>'
+        atoms = mccomponentsbp.vector_AtomicScatterer(2)
+        return
 
     pass  # end of TestCase
 
-
-
+    
 def pysuite():
     suite1 = unittest.makeSuite(TestCase)
     return unittest.TestSuite( (suite1,) )
-
 
 def main():
     #debug.activate()

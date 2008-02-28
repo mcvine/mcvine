@@ -22,7 +22,7 @@ namespace wrap_mccomponents {
   {
     typedef DANSE::Histogram::NdArray<double *, double, unsigned int, size_t, 7> array_7d_t;
     typedef DANSE::Histogram::NdArray<double *, double, unsigned int, size_t, 4> array_4d_t;
-    wrap_LinearlyInterpolatedDispersionOnGrid_3D_T< array_7d_t, array_7d_t >
+    wrap_LinearlyInterpolatedDispersionOnGrid_3D_T< array_7d_t, array_4d_t >
       ( "LinearlyInterpolatedDispersionOnGrid_3D_dblarrays" );
   }
 

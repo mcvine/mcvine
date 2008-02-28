@@ -16,29 +16,35 @@
 import unittestX as unittest
 import journal
 
-debug = journal.debug( "LinearlyInterpolatedDOS_TestCase" )
-warning = journal.warning( "LinearlyInterpolatedDOS_TestCase" )
+debug = journal.debug( "LinearlyInterpolatedDispersion_3D_TestCase" )
+warning = journal.warning( "LinearlyInterpolatedDispersion_3D_TestCase" )
 
 
 class TestCase(unittest.TestCase):
 
 
     def test(self):
-        from mccomponents.sample.phonon.register_LinearlyInterpolatedDOS import linearlyinterpolateddos_bp
-        import numpy as N
-        Z = N.zeros( 50 )
-        area = 0
-        for i in range(50):
-            Z[i] = i*i
-            area += Z[i]
-            continue
-        dos = linearlyinterpolateddos_bp(0, 1., 50, Z )
-        self.assertAlmostEqual( dos( 3 ), 3.**2/area )
+        from mccomponents.sample.phonon.register_LinearlyInterpolatedDispersion_3D import linearlyinterpolateddispersion_3d_bp as factory
+        
+        nQs = 21
+        Q_axis = -10, 1., nQs
+        Q_axes = [Q_axis, Q_axis, Q_axis]
+        nAtoms = 5
+        nDims = 3
+        nBranches = nAtoms*nDims
+        import numpy
+        eps_data = numpy.zeros(
+            ( nQs, nQs, nQs, nBranches, nAtoms, nDims, 2 ),
+            dtype = numpy.double)
+        E_data = numpy.zeros(
+            ( nQs, nQs, nQs, nBranches ),
+            dtype = numpy.double)
+
+        disp = factory( nAtoms, Q_axes, eps_data, E_data )
         return
     
 
     pass  # end of TestCase
-
 
 
 def pysuite():

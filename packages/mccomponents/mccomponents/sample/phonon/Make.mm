@@ -34,7 +34,9 @@ tidy::
 EXPORT_PYTHON_MODULES = \
 	AbstractDOS.py \
 	__init__.py \
+	register_LinearlyInterpolatedDispersion_3D.py \
 	register_LinearlyInterpolatedDOS.py \
+	register_NdArray.py \
 
 
 export:: export-package-python-modules 

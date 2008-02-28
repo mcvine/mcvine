@@ -12,7 +12,7 @@
 #
 
 #factory method that wraps boost python binding
-def linearlyinterpolateddos(
+def linearlyinterpolateddos_bp(
     e0, de, n, Z):
     '''create boost python object of LinearlyInterpolatedDOS
 
@@ -74,7 +74,7 @@ def onLinearlyInterpolatedDOS(self, linearlyinterpolateddos):
 
 # 3. the handler to call python bindings
 def linearlyinterpolateddos_bp_handler(self, e0, de, n, Z):
-    return linearlyinterpolateddos(e0, de, n, Z)
+    return linearlyinterpolateddos_bp(e0, de, n, Z)
 
 
 import mccomponents.homogeneous_scatterer as hs

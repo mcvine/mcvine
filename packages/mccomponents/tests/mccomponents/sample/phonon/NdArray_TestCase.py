@@ -16,29 +16,26 @@
 import unittestX as unittest
 import journal
 
-debug = journal.debug( "LinearlyInterpolatedDOS_TestCase" )
-warning = journal.warning( "LinearlyInterpolatedDOS_TestCase" )
+debug = journal.debug( "NdArray_TestCase" )
+warning = journal.warning( "NdArray_TestCase" )
 
 
 class TestCase(unittest.TestCase):
 
 
     def test(self):
-        from mccomponents.sample.phonon.register_LinearlyInterpolatedDOS import linearlyinterpolateddos_bp
+        from mccomponents.sample.phonon.register_NdArray import ndarray_bp
         import numpy as N
-        Z = N.zeros( 50 )
-        area = 0
-        for i in range(50):
-            Z[i] = i*i
-            area += Z[i]
-            continue
-        dos = linearlyinterpolateddos_bp(0, 1., 50, Z )
-        self.assertAlmostEqual( dos( 3 ), 3.**2/area )
+        a = N.arange(12, dtype = N.double)
+        a.shape = 3,4
+        a1 = ndarray_bp( a )
+        assert a1.origin is a
+        self.assertEqual( a[2,1], 9 )
+        self.assertEqual( a1[ 2,1 ], 9 )
         return
     
 
     pass  # end of TestCase
-
 
 
 def pysuite():
@@ -48,6 +45,8 @@ def pysuite():
 
 def main():
     #debug.activate()
+    journal.debug('wrap_native_ptr').activate()
+    journal.debug('NdArray').activate()
     pytests = pysuite()
     alltests = unittest.TestSuite( (pytests, ) )
     unittest.TextTestRunner(verbosity=2).run(alltests)

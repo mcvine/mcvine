@@ -16,35 +16,42 @@
 import unittestX as unittest
 import journal
 
-debug = journal.debug( "LinearlyInterpolatedDOS_TestCase" )
-warning = journal.warning( "LinearlyInterpolatedDOS_TestCase" )
+debug = journal.debug( "NdArray_TestCase" )
+warning = journal.warning( "NdArray_TestCase" )
 
+
+import mcni
+from mccomposite import mccompositebp 
+from mccomponents import mccomponentsbp
 
 class TestCase(unittest.TestCase):
 
-
     def test(self):
-        from mccomponents.sample.phonon.register_LinearlyInterpolatedDOS import linearlyinterpolateddos_bp
-        import numpy as N
-        Z = N.zeros( 50 )
-        area = 0
-        for i in range(50):
-            Z[i] = i*i
-            area += Z[i]
-            continue
-        dos = linearlyinterpolateddos_bp(0, 1., 50, Z )
-        self.assertAlmostEqual( dos( 3 ), 3.**2/area )
+        import numpyext
+        import numpy
+        a = numpy.arange(12, dtype = numpy.double)
+        a.shape = 3,4
+        ptr = numpyext.getdataptr( a )
+        
+        import bpext
+        wp = bpext.wrap_native_ptr( ptr )
+        
+        shape = mccomponentsbp.vector_uint( 0 )
+        for i in a.shape: shape.append( i )
+        a1 = mccomponentsbp.new_NdArray_dblarr_2( wp, shape )
+        a1.origin = a
+
+        indexes = mccomponentsbp.vector_uint( 0 )
+        indexes.append( 2 ); indexes.append( 1 )
+        self.assertEqual( a1[ indexes ], 9 )
         return
     
-
     pass  # end of TestCase
 
-
-
+    
 def pysuite():
     suite1 = unittest.makeSuite(TestCase)
     return unittest.TestSuite( (suite1,) )
-
 
 def main():
     #debug.activate()
