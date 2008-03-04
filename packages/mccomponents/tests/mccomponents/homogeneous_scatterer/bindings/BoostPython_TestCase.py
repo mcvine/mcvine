@@ -16,41 +16,45 @@
 import unittestX as unittest
 import journal
 
-debug = journal.debug( "mcni.components.test" )
-warning = journal.warning( "mcni.components.test" )
-
+debug = journal.debug( "BoostPython_TestCase" )
+warning = journal.warning( "BoostPython_TestCase" )
 
 
 class TestCase(unittest.TestCase):
 
+    def test(self):
+        'mccomponents.homogeneous_scatterer: Boost python binding'
+        from mccomponents.homogeneous_scatterer.bindings import get
+        bp = get('BoostPython')
 
-    def test1(self):
-        'NeutronsOnCone_FixedQE'
-        from mcni.components.NeutronsOnCone_FixedQE import NeutronsOnCone_FixedQE as factory
-        component = factory( 'source', 8, 30, 70, 10.3 )
+        kernels = bp.kernelcontainer( )
+        ck = bp.compositekernel( kernels )
 
-        import mcni
-        neutrons = mcni.neutron_buffer( 10 )
-        component.process( neutrons )
-        print neutrons
+        cylinder = bp.cylinder( 0.02, 0.1 )
+
+        #this scatterer does not really have a kernel
+        hs = bp.homogeneousscatterer( cylinder, ck, (0,1,0) )
         return
+    
+    pass  # end of TestCase
 
-
-    pass # end of TestCase
 
 
 def pysuite():
     suite1 = unittest.makeSuite(TestCase)
     return unittest.TestSuite( (suite1,) )
 
+
 def main():
     #debug.activate()
+    #journal.debug("mccomposite.geometry.ArrowIntersector").activate()
+    #journal.debug("mccomposite.geometry.Locator").activate()
+    #journal.debug("CompositeNeutronScatterer_Impl").activate()
     pytests = pysuite()
     alltests = unittest.TestSuite( (pytests, ) )
     unittest.TextTestRunner(verbosity=2).run(alltests)
-    return
-
-
+    
+    
 if __name__ == "__main__":
     main()
     

@@ -17,8 +17,12 @@ def generateTransformerClass( convention, binding ):
     return _
 
 
-from mcni.bindings import boostpython
+from mcni.bindings import get as getBinding
+
 import mcstas
+
+
+boostpython = getBinding('BoostPython')
 transformer_McStas_BP = generateTransformer( mcstas, boostpython )
 
 

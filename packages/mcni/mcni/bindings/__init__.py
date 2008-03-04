@@ -16,7 +16,25 @@
 ## Each subpackage should provide factory methods of creating binded c++
 ## objects useful in mcni.
 
-import boostpython as current
+
+def default( ): return get('BoostPython')
+
+
+def get( type ):
+    """retrieve binding of given type
+
+    Example: get('BoostPython')
+    """
+    return classes()[ '%s' % type ]( )
+
+
+def classes():
+    '''return all binding classes'''
+    import boostpython
+    return {'BoostPython': boostpython.Binding}
+
+
+current = default()
 
 
 # version

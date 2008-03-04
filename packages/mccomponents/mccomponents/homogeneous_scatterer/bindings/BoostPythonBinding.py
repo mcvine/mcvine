@@ -12,12 +12,17 @@
 #
 
 
+
+import mccomposite.bindings
+mccomposite.bindings.get('BoostPython')
 import mccomponents.mccomponentsbp as binding
 
 
-from AbstractBinding import AbstractBinding as base
+from AbstractBinding import AbstractBinding as Interface
+from mccomposite.bindings.BoostPythonBinding import BoostPythonBinding as base
 
-class BoostPythonBinding(base):
+
+class BoostPythonBinding(base, Interface):
 
     '''factory class of boost python computing engine of scatterers
     '''
@@ -26,16 +31,13 @@ class BoostPythonBinding(base):
         return binding.CompositeScatteringKernel( kernels )
 
 
-    def kernelcontainer(self):
-        return binding.pointer_vector_Kernel( 0 )
-
-
-    def mcweights_absorption_scattering_transmission(self, weights ):
-        return binding.MCWeights_AbsorptionScatteringTransmission( *weights )
+    def kernelcontainer(self, size = 0):
+        return binding.pointer_vector_Kernel( size )
 
 
     def homogeneousscatterer(self, shape, kernel, weights):
-        return binding.HomogeneousNeutronScatterer(shape, kernel, weights )
+        cweights = binding.MCWeights_AbsorptionScatteringTransmission( *weights )
+        return binding.HomogeneousNeutronScatterer(shape, kernel, cweights )
 
 
     pass # end of BoostPythonBinding
@@ -54,6 +56,14 @@ def register( methodname, method, override = False ):
 
     return
 
+
+def extend( klass ):
+    "extend binding class with the new class"
+    global BoostPythonBinding
+    old = BoostPythonBinding
+    class _( klass, old ): pass
+    BoostPythonBinding = _
+    return
 
 
 # version

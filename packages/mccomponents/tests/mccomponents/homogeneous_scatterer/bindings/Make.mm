@@ -13,7 +13,7 @@
 PROJECT = mccomponents
 PACKAGE = tests
 
-PROJ_TIDY += alltests.py $(PROJ_CPPTESTS) *events.dat
+PROJ_TIDY += alltests.py $(PROJ_CPPTESTS)
 PROJ_CLEAN += alltests.py $(PROJ_CPPTESTS)
 
 PROJ_PYTESTS =  alltests.py
@@ -22,24 +22,28 @@ PROJ_TESTS = $(PROJ_PYTESTS) $(PROJ_CPPTESTS)
 PROJ_LIBRARIES = -L$(BLD_LIBDIR) -ljournal -lmcni
 
 
-
 # directory structure
 
 BUILD_DIRS = \
-	bindings \
 
 OTHER_DIRS = \
 
 RECURSE_DIRS = $(BUILD_DIRS) $(OTHER_DIRS)
 
+
 #--------------------------------------------------------------------------
 #
 
-all:  $(PROJ_TESTS)
+all: $(PROJ_TESTS)
 	BLD_ACTION="all" $(MM) recurse
+
+tidy::
+	BLD_ACTION="tidy" $(MM) recurse
 
 test: alltests.py
 	for test in $(PROJ_TESTS) ; do $${test}; done
+	BLD_ACTION="test" $(MM) recurse
+
 
 release: tidy
 	cvs release .

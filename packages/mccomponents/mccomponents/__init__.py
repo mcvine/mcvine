@@ -29,13 +29,7 @@ def _register_components():
     return
 
 
-def _import_bindings():
-    import mccomposite
-    import mccomponents.mccomponentsbp
-    return
 
-
-_import_bindings()
 _register_components()
 
 

@@ -47,10 +47,10 @@ class KernelComputationEngineRenderer( AbstractVisitor ):
 
         cshape = scatterer.shape().identify(self)
 
-        cweights = factory.mcweights_absorption_scattering_transmission(
-            scatterer.mcweights_absorption_scattering_transmission)
+        mcweights = scatterer.mcweights
 
-        return factory.homogeneousscatterer( cshape, ckernel, cweights )
+        return factory.homogeneousscatterer( cshape, ckernel, mcweights )
+    
 
     pass # end of KernelComputationEngineRenderer
 

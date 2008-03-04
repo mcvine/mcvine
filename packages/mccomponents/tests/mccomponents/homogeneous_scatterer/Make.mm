@@ -25,6 +25,7 @@ PROJ_LIBRARIES = -L$(BLD_LIBDIR) -ljournal -lmcni
 # directory structure
 
 BUILD_DIRS = \
+	bindings \
 	hsxml \
 
 OTHER_DIRS = \
@@ -43,6 +44,7 @@ tidy::
 
 test: alltests.py
 	for test in $(PROJ_TESTS) ; do $${test}; done
+	BLD_ACTION="test" $(MM) recurse
 
 release: tidy
 	cvs release .

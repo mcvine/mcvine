@@ -12,22 +12,14 @@
 #
 
 
-class AbstractBinding:
 
+from mccomponents.homogeneous_scatterer.bindings import default, get
 
-    def homogeneousscatterer(self, shape, kernel, weights):
-        raise NotImplementedError
-    
-        
-    def compositekernel(self, kernels):
-        raise NotImplementedError
+def _import():
+    import BoostPythonBinding
+    return
 
-
-    def kernelcontainer(self):
-        raise NotImplementedError
-
-
-    pass # end of AbstractBinding
+_import()
 
 
 # version

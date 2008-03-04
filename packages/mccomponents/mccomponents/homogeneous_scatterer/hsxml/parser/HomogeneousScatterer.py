@@ -44,7 +44,7 @@ class HomogeneousScatterer(base):
         from mccomponents.homogeneous_scatterer import homogeneousScatterer
         scatterer = homogeneousScatterer(
             shape, kernel,
-            mcweights_absorption_scattering_transmission = mcweights )
+            mcweights = mcweights )
         
         #parent is the Document node. 
         parent.document = scatterer

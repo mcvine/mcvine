@@ -13,9 +13,11 @@
 
 
 
-from AbstractBinding import AbstractBinding as base
+from AbstractBinding import AbstractBinding as Interface
 
-class BoostPythonBinding(base):
+from mcni.bindings.boostpython import Binding as base
+
+class BoostPythonBinding(base, Interface):
 
     '''factory class of boost python computing engine of scatterers
     '''

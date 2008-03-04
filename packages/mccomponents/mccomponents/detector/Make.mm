@@ -15,6 +15,7 @@ PACKAGE = detector
 
 
 BUILD_DIRS = \
+	bindings \
 
 RECURSE_DIRS = $(BUILD_DIRS)
 
@@ -22,6 +23,7 @@ RECURSE_DIRS = $(BUILD_DIRS)
 #
 
 all: export
+	BLD_ACTION="all" $(MM) recurse
 
 tidy::
 	BLD_ACTION="tidy" $(MM) recurse

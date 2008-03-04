@@ -46,6 +46,7 @@ tidy::
 
 test: alltests.py
 	for test in $(PROJ_TESTS) ; do $${test}; done
+	BLD_ACTION="test" $(MM) recurse
 
 release: tidy
 	cvs release .

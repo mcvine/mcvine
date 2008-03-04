@@ -12,7 +12,7 @@
 #
 
 
-from mcni.components.NeutronToStorage import NeutronToStorage as enginefactory, category
+from mcni.components.NeutronFromStorage import NeutronFromStorage as enginefactory, category
 
 from mcni.pyre_support.AbstractComponent import AbstractComponent
 

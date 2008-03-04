@@ -12,6 +12,18 @@
 #
 
 
+def default( ): return get('BoostPython')
+
+
+def get( type ):
+    """retrieve binding of given type
+
+    Example: get('BoostPython')
+    """
+    return classes()[ '%sBinding' % type ]( )
+
+
+
 def classes():
     import BoostPythonBinding
     return { 'BoostPythonBinding': BoostPythonBinding.BoostPythonBinding }

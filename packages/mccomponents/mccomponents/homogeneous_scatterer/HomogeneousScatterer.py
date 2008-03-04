@@ -17,16 +17,16 @@ from mccomposite.Scatterer import Scatterer
 class HomogeneousScatterer(Scatterer):
 
     def __init__(self, shape, kernel,
-                 mcweights_absorption_scattering_transmission = (1,1,1)):
+                 mcweights = (1,1,1)):
         '''create a new homogeneous scatterer
         
     shape: geometric shape
     kernel: scattering kernel
-    mcweights_absorption_scattering_transmission: monte carlo weights for (absorption, scattering, transmission)
+    mcweights: monte carlo weights for (absorption, scattering, transmission)
     '''
         Scatterer.__init__(self, shape)
         self._kernel = kernel
-        self.mcweights_absorption_scattering_transmission = mcweights_absorption_scattering_transmission
+        self.mcweights = mcweights
         return
     
     
