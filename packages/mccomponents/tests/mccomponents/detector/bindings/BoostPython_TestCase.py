@@ -21,37 +21,60 @@ warning = journal.warning( "BoostPython_TestCase" )
 
 
 from mccomponents.detector.bindings import get
-bp = get('BoostPython')
+binding = get('BoostPython')
 
+
+npacks = 10
+ntubes = 8
+npixels = 100
+eventfilename = "events.dat"
+
+packID = 3
+tubeID = 2
+
+tofmin, tofmax, tofstep = 0, 2.e-3, 10e-6
+pressure = 10
+tubeLength = 1.
+axisDirection = 0,0,1
+pixel0position = 0,0,-0.5
+neutronT = 1e-3
+pixelID = 33
+neutronPosition = 0,0, -0.5 + 0.01*pixelID
+prob = 1.222
 
 class TestCase(unittest.TestCase):
 
     def test1(self):
-        t2c = (tofmin, tofmax, tofstep) = 0, 2.e-3, 100
-        t2c = bp.tof2channel( *t2c )
+        t2c = binding.tof2channel( tofmin, tofmax, tofstep )
 
-        eventfilename = "events.dat"
-        detectorDims = 10, 8 # 10 packs, 8 tubes per pack
-        mca = bp.eventmodemca( eventfilename, detectorDims )
+        detectorDims = npacks, ntubes, npixels
+        mca = binding.eventmodemca( eventfilename, detectorDims )
         
-        pressure = 10
-        tubeIndexes = 3, 2
-        tubeLength = 1.
-        npixels = 128
-        axisDirection = 0,0,1
-        pixel0position = 0,0,-0.5
+        tubeIndexes = packID, tubeID
         
-        he3tubekernel = bp.he3tubekernel(
+        he3tubekernel = binding.he3tubekernel(
             pressure, tubeIndexes,
             tubeLength, npixels, axisDirection, pixel0position,
             t2c, mca)
 
         print dir(he3tubekernel)
-        neutron = bp.neutron( r = (-1,0,0), v = (1000,0,0) )
+        neutron = binding.neutron( r = neutronPosition, time = neutronT, prob = prob )
 
         he3tubekernel.absorb( neutron )
         return
 
+
+    def test2(self):
+        "read events and check them"
+        from mccomponents.detector.reduction_utils import readevents
+        evts = readevents( eventfilename )
+        self.assertEqual( len(evts), 1 )
+        evt = evts[0]
+        longpixelID, tofchannel, probability = evt
+        self.assertEqual( longpixelID, pixelID + npixels * (tubeID + ntubes*(packID)) )
+        self.assertEqual( tofchannel, int( (neutronT-tofmin)/tofstep ) )
+        self.assertEqual( probability, prob )
+        return
 
     pass  # end of TestCase
 

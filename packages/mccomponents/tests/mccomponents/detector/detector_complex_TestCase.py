@@ -66,7 +66,7 @@ def makepack( ):
         height = detlength,
         npixels = npixelsperdet, direction = 'z',
         id = 0, pressure = detpressure,
-        mcweights_absorption_scattering_transmission = (
+        mcweights = (
         absorption_weight, scattering_weight, transmission_weight)
         )
     tubes = [he3tube0]

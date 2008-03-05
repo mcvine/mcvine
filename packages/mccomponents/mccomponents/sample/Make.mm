@@ -15,6 +15,7 @@ PACKAGE = sample
 
 
 BUILD_DIRS = \
+	bindings \
 	idf \
 	kernelxml \
 	phonon \

@@ -12,18 +12,14 @@
 #
 
 
-import mccomposite.bindings as bindings
-defaultbinding = bindings.default()
-del bindings
 
+from mccomponents.homogeneous_scatterer.bindings import default, get
 
-def locate(position, shape):
-    from mccomposite.geometry import shapeEngine as cengine
-    location = defaultbinding.locate(
-        defaultbinding.position( *position ),
-        cengine( shape, "BoostPythonBinding" )
-        )
-    return location
+def _import():
+    import BoostPythonBinding
+    return
+
+_import()
 
 
 # version

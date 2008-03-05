@@ -52,7 +52,7 @@ class detector_TestCase(unittest.TestCase):
         he3tube = md.he3tube(
             cylinder, id = 0,
             pressure = units.pressure.atm * 10,
-            mcweights_absorption_scattering_transmission = (
+            mcweights = (
             absorption_weight, scattering_weight, transmission_weight)
             )
         mca = md.eventModeMCA( 'events.dat', (ndets,npixels,) )

@@ -50,7 +50,8 @@ namespace mccomponents {
       /// outfilename: binary output file name
       /// dims: dimensions of detector indexes. 
       /// For example, if we have 100 detector packs, each pack has 8 tubes, 
-      ///   dims = 100, 8
+      /// each tube has 128 pixels,
+      ///   dims = 100, 8, 128
       EventModeMCA( const char * outfilename, const indexes_t & dims);
       virtual ~EventModeMCA();
       

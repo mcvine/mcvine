@@ -33,7 +33,7 @@ class ScattererComputationEngineFactory(object):
 
     def position(self, position):
         'convert position (3-tuple) to an object understandable by engine factories'
-        return self.binding.position( position )
+        return self.binding.position( *position )
 
 
     def orientation(self, orientation):

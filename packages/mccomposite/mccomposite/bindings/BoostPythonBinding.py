@@ -38,8 +38,8 @@ class BoostPythonBinding(base, Interface):
         return binding.Geometer_NeutronScatterer( )
 
 
-    def position(self, vector):
-        return binding.Position(*vector)
+    #def position(self, vector):
+    #return binding.Position(*vector)
 
 
     def orientation(self, rotmat):

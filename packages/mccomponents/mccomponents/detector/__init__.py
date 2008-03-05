@@ -52,7 +52,7 @@ import units
 def he3tube_withpixels(
     radius = units.length.inch/2, height = units.length.meter,
     npixels = 128, direction = 'z', id = 0, pressure = 10*units.pressure.atm,
-    mcweights_absorption_scattering_transmission = (0.9,0,0.1),
+    mcweights = (0.9,0,0.1),
     ):
 
     import mccomposite.geometry.primitives as primitives
@@ -70,8 +70,8 @@ def he3tube_withpixels(
     ret = he3tube(
         cylinder, id = id,
         pressure = pressure,
-        mcweights_absorption_scattering_transmission \
-        = mcweights_absorption_scattering_transmission
+        mcweights \
+        = mcweights
         )
 
     import numpy as N

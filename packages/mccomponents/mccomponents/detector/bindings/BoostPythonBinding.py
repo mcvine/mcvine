@@ -22,6 +22,13 @@ import mccomposite.mccompositebp as b1
 class New:
 
     def eventmodemca( self, outfilename, detectorDims ):
+        '''eventmodemca( outfilename, detectorDims ): new event-mode mca
+        outfilename: output file name
+        detectorDims: detector dimensions.
+          For example, if a detectory system has 15 packs, 8 tubes per pack, 128 pixels per tube, then
+            detectorDims = 15,8,128
+            
+        '''
         dims = b.vector_uint( 0 )
         for dim in detectorDims: dims.append(dim)
         return b.EventModeMCA( outfilename, dims )

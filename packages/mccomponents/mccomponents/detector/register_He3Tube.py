@@ -19,11 +19,11 @@ import units
 from mccomposite.CompositeScatterer import CompositeScatterer as base
 class He3Tube(base):
     def __init__(self, shape, id = 0, pressure = units.pressure.atm,
-                 mcweights_absorption_scattering_transmission = (0.9,0,0.1) ):
+                 mcweights = (0.9,0,0.1) ):
         base.__init__(self, shape)
         self._id = id
         self._pressure = pressure
-        self.mcweights_absorption_scattering_transmission = mcweights_absorption_scattering_transmission
+        self.mcweights = mcweights
         return
     def id(self): return self._id
     def pressure(self): return self._pressure
@@ -117,7 +117,7 @@ def construct( self, he3tube ):
         tubeLength, npixels, axisDirection, pixel0position)
 
     try:
-        mcweights = he3tube.mcweights_absorption_scattering_transmission
+        mcweights = he3tube.mcweights
     except AttributeError:
         mcweights = 0.9, 0, 0.1
 
@@ -125,7 +125,7 @@ def construct( self, he3tube ):
     import mccomponents.homogeneous_scatterer as mh
     scatterer = mh.homogeneousScatterer(
         shape, kernel,
-        mcweights_absorption_scattering_transmission = mcweights )
+        mcweights = mcweights )
     ret = scatterer.identify(self)
     return ret
 
