@@ -17,6 +17,7 @@ BUILD_DIRS = \
 	geometry  \
 	bindings \
 	orientation_conventions \
+	extensions \
 
 RECURSE_DIRS = $(BUILD_DIRS)
 
@@ -50,8 +51,6 @@ EXPORT_PYTHON_MODULES = \
 	__init__.py \
 	units.py \
 	units_utils.py \
-	register_Copy.py \
-	register_HollowCylinder.py \
 
 
 export:: export-python-modules 

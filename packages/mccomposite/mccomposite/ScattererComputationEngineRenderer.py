@@ -12,6 +12,11 @@
 #
 
 
+
+import journal
+debug = journal.debug( "mccomposite.ScattererComputationEngineRenderer" )
+
+
 import units
 
 
@@ -49,9 +54,6 @@ class ScattererComputationEngineRenderer( AbstractVisitor, ShapeComputationEngin
     
 
     def onCompositeScatterer(self, composite):
-        ret =  self._get( composite )
-        if ret: return ret
-        
         factory = self.factory
         
         elements = composite.elements()
@@ -63,20 +65,20 @@ class ScattererComputationEngineRenderer( AbstractVisitor, ShapeComputationEngin
         for element in elements:
             cscatterer = element.identify(self) 
             cscatterers.append( cscatterer )
-            
+
             position = self._remove_length_unit( geometer.position(element) )
             cposition = factory.position( position )
             
             orientation = self._remove_angle_unit( geometer.orientation(element) )
             corientation = factory.orientation( orientation )
 
+            debug.log( "position = %s, orientation = %s" % (position, orientation ) )
             cgeometer.register( cscatterer, cposition, corientation )
             continue
 
         cshape = composite.shape().identify(self)
 
         ret =  factory.compositescatterer( cshape, cscatterers, cgeometer )
-        self._remember( composite, ret )
         return ret
 
 
@@ -91,13 +93,6 @@ class ScattererComputationEngineRenderer( AbstractVisitor, ShapeComputationEngin
         ref = copy.reference()
         return ref.identify(self)
 
-
-    def _remember(self, visitee, cobject ):
-        self._memo[ visitee ] = cobject
-        return
-
-    def _get(self, visitee):
-        return self._memo.get( visitee )
 
     pass # end of ScattererComputationEngineRenderer
 

@@ -12,20 +12,10 @@
 #
 
 
-#sometimes ScattererCopy are just called "Copy"
-from ScattererCopy import ScattererCopy
-class Copy(ScattererCopy):
-    def identify(self, visitor): return visitor.onCopy(self)
-    pass # Copy
-
-def onCopy(self, copy):
-    return self.onScattererCopy(copy)
-
-
-# 4. register the new class and handlers
-import geometry
-geometry.register_engine_renderer_handler(Copy, onCopy)
-
+## This package provides some optional extensions of
+## mccomposite elements.
+## The nodes in this package are required for all simulations,
+## but useful in many cases.
 
 # version
 __id__ = "$Id$"

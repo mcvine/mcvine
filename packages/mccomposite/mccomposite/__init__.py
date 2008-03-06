@@ -27,18 +27,16 @@ def scatterercopy( *args, **kwds ):
 
 
 def scattererEngine( scatterer,
-                     binding = "BoostPythonBinding",
+                     binding = "BoostPython",
                      orientation_convention = "McStasConvention",
                      coordinate_system = 'McStas'):
     "render the c++ engine of the given scatterer"
     
-    from bindings import classes as bindingClasses
-    bindingClass = bindingClasses()[ binding ]
-    binding = bindingClass()
+    from bindings import get as getBinding
+    binding = getBinding( binding )
 
-    from orientation_conventions import classes
-    conventionClass = classes()[ orientation_convention ]
-    orientation_convention = conventionClass()
+    from orientation_conventions import get
+    orientation_convention = get( orientation_convention )
 
     from coordinate_systems import computationEngineRenderAdpator
     Adaptor = computationEngineRenderAdpator( coordinate_system )

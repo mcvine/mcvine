@@ -25,7 +25,6 @@ PROJ_LIBRARIES = -L$(BLD_LIBDIR) -ljournal -lmcni
 # directory structure
 
 BUILD_DIRS = \
-	extensions \
 
 OTHER_DIRS = \
 
@@ -35,7 +34,7 @@ RECURSE_DIRS = $(BUILD_DIRS) $(OTHER_DIRS)
 #--------------------------------------------------------------------------
 #
 
-all: neutron_printer2 $(PROJ_TESTS)
+all:  $(PROJ_TESTS)
 	BLD_ACTION="all" $(MM) recurse	
 
 tidy::
@@ -52,10 +51,6 @@ update: clean
 
 #--------------------------------------------------------------------------
 #
-
-
-neutron_printer2::
-	cd neutron_printer2 ; $(MM) ; cd - 
 
 
 alltests.py: ../alltests.py

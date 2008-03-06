@@ -16,6 +16,18 @@
 #else
 
 
+#ifdef DEBUG
+#include "journal/debug.h"
+#endif
+
+
+namespace mccomposite { 
+  namespace Geometer_Impl {
+    const char jrnltag[] = "mccomposite.Geometer";
+  }
+}
+
+
 template <typename element_t>
 mccomposite::Geometer<element_t>::Geometer
 ()
@@ -27,6 +39,13 @@ void
 mccomposite::Geometer<element_t>::remember
 ( const element_t & element, const position_t & position, const orientation_t & orientation)
 {
+#ifdef DEBUG
+  journal::debug_t debug( Geometer_Impl::jrnltag );
+  debug << journal::at(__HERE__)
+	<< "position: " << position << ", "
+	<< "orientation: " << orientation
+	<< journal::endl;
+#endif
   m_e2info[ &element ] = info_t( position, orientation );
 }
     
