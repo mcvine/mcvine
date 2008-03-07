@@ -94,7 +94,7 @@ class FindKernelsFromXMLs:
         mcscatterer = parse_file( xmlfilename )
 
         # transfer weights
-        scatterer.mcweights_absorption_scattering_transmission = mcscatterer.mcweights_absorption_scattering_transmission
+        scatterer.mcweights = mcscatterer.mcweights
                                                                
         # transfer shape if necessary
         shape = mcscatterer.shape()

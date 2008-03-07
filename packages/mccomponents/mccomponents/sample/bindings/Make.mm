@@ -11,14 +11,10 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 PROJECT = mccomponents
-PACKAGE = sample
+PACKAGE = sample/bindings
 
 
 BUILD_DIRS = \
-	bindings \
-	idf \
-	kernelxml \
-	phonon \
 
 RECURSE_DIRS = $(BUILD_DIRS)
 
@@ -26,7 +22,6 @@ RECURSE_DIRS = $(BUILD_DIRS)
 #
 
 all: export
-	BLD_ACTION="all" $(MM) recurse
 
 tidy::
 	BLD_ACTION="tidy" $(MM) recurse
@@ -38,14 +33,8 @@ tidy::
 # export
 
 EXPORT_PYTHON_MODULES = \
-	AbstractSQE.py \
-	ComputationEngineRendererExtension.py \
-	GridSQE.py \
-	KernelContainer.py \
-	SQEkernel.py \
+	BoostPythonBinding.py \
 	__init__.py \
-	sampleassembly_support.py \
-	units.py \
 
 
 export:: export-package-python-modules 

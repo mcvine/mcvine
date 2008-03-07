@@ -44,18 +44,30 @@ def samplecomponent( name, sampleassembly_xml ):
 
 
 def gridsqe(*args, **kwds):
-    from register_GridSQE import GridSQE
+    from GridSQE import GridSQE
     return GridSQE( *args, **kwds )
 
 
 def sqekernel(*args, **kwds):
-    from register_SQEkernel import SQEkernel
+    from SQEkernel import SQEkernel
     return SQEkernel( *args, **kwds )
 
 
 def kernelcontainer(*args, **kwds):
-    from register_KernelContainer import KernelContainer
+    from KernelContainer import KernelContainer
     return KernelContainer( *args, **kwds )
+
+
+
+#make renderer extension available
+import ComputationEngineRendererExtension
+
+#make bindings available
+def _import_bindings():
+    import bindings
+    return
+
+_import_bindings()
 
 
 # version
