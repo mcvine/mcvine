@@ -14,8 +14,8 @@
 
 
 def detectorcomponent( name, instrumentxml, coordinate_system, tofparams, outfilename ):
-    import mccomposite.register_Copy
-    import mccomposite.register_HollowCylinder
+    import mccomposite.extensions.Copy
+    import mccomposite.extensions.HollowCylinder
     
     from instrument.nixml import parse_file
     instrument = parse_file( instrumentxml )
@@ -94,45 +94,43 @@ def he3tube_withpixels(
 
 
 def pack( *args, **kwds ):
-    from register_DetectorPack import DetectorPack
+    from elements.DetectorPack import DetectorPack
     return DetectorPack(*args, **kwds)
 
 
 def he3tubeKernel( *args, **kwds ):
-    from register_He3TubeKernel import He3TubeKernel
+    from elements.He3TubeKernel import He3TubeKernel
     return He3TubeKernel(*args, **kwds )
 
 
 def he3tube( *args, **kwds ):
-    from register_He3Tube import He3Tube
+    from elements.He3Tube import He3Tube
     return He3Tube(*args, **kwds)
 
 
 def pixel( *args, **kwds):
-    from register_He3Tube import Pixel
+    from elements.Pixel import Pixel
     return Pixel(*args, **kwds)
 
 
 def detectorSystem( *args, **kwds ):
-    from register_DetectorSystem import DetectorSystem
+    from elements.DetectorSystem import DetectorSystem
     return DetectorSystem( *args, **kwds )
 
 
 def eventModeMCA( *args, **kwds ):
-    from register_EventModeMCA import EventModeMCA
+    from elements.EventModeMCA import EventModeMCA
     return EventModeMCA( *args, **kwds )
 
 
-def _register_all():
-    import register_CompositeDetector
-    import register_DetectorPack
-    import register_DetectorSystem
-    import register_EventModeMCA
-    import register_He3Tube
-    import register_He3TubeKernel
+
+import ComputationEngineRendererExtension
+
+def _import_bindings():
+    import bindings
     return
 
-_register_all()
+_import_bindings()
 
 
 # version

@@ -11,13 +11,10 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 PROJECT = mccomponents
-PACKAGE = detector
+PACKAGE = detector/elements
 
 
 BUILD_DIRS = \
-	bindings \
-	elements \
-	optional_extensions \
 
 RECURSE_DIRS = $(BUILD_DIRS)
 
@@ -37,11 +34,15 @@ tidy::
 # export
 
 EXPORT_PYTHON_MODULES = \
-	ComputationEngineRendererExtension.py \
+	CompositeDetector.py \
+	DetectorPack.py \
+	DetectorSystem.py \
+	EventModeMCA.py \
+	He3Tube.py \
+	He3TubeKernel.py \
+	Pixel.py \
 	__init__.py \
-	reduction_utils.py \
 	units.py \
-	utils.py \
 
 
 export:: export-package-python-modules 

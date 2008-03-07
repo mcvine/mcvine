@@ -87,6 +87,16 @@ def _init_registry():
 _init_registry()
 
 
+
+def extend( klass ):
+    "extend renderer class with the new class"
+    global KernelComputationEngineRenderer
+    old = KernelComputationEngineRenderer
+    class _( klass, old ): pass
+    KernelComputationEngineRenderer = _
+    return
+
+
 # version
 __id__ = "$Id$"
 

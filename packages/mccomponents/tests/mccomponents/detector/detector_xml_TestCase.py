@@ -23,12 +23,13 @@ warning = journal.warning( "detector_TestCase" )
 import mcni
 import mccomponents.detector as md
 import mccomponents.homogeneous_scatterer as mh
+import mccomponents.detector.optional_extensions.Detector
 from mccomponents.detector.utils import getDetectorHierarchyDimensions, assignLocalGeometers
 import numpy as N
 
 
-import mccomposite.register_Copy
-import mccomposite.register_HollowCylinder
+import mccomposite.extensions.Copy
+import mccomposite.extensions.HollowCylinder
 
 
 outfilename = 'detector_xml-events.dat'

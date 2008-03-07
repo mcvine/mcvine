@@ -27,17 +27,22 @@ def scattererEngine(
     scatterer,
     binding = "BoostPythonBinding",
     orientation_convention = "McStasConvention",
-    coordinate_system = "McStas"):
+    coordinate_system = "McStas",
+    ComputationEngineRendererExtensions = [],
+    ):
     
     "render the c++ engine of the given scatterer"
 
-    #the renderer class
-    from mccomposite.ScattererComputationEngineRenderer import ScattererComputationEngineRenderer as Renderer1
-    from KernelComputationEngineRenderer import KernelComputationEngineRenderer as Renderer2
+    #the renderer classes
+    Bases = _rendererBases( )
+    
     from mccomposite.coordinate_systems import computationEngineRenderAdpator
     Adaptor = computationEngineRenderAdpator( coordinate_system )
 
-    class Renderer(Adaptor, Renderer1, Renderer2): pass
+    klasses = Bases + [Adaptor] + registeredRendererExtensions() + ComputationEngineRendererExtensions 
+    klasses.reverse()
+
+    Renderer = _inherit( klasses )
 
     #the factory class
     # 1. binding
@@ -70,7 +75,10 @@ def scattererEngine(
 
 
 def kernelEngine( kernel, binding = "BoostPythonBinding" ):
-    "render the c++ engine of the given kernel"
+    """render the c++ engine of the given kernel
+    
+    This factory method can only deal with kernels, but not scatterers.
+    """
     from bindings import classes as bindingClasses
     binding = bindingClasses() [ binding ] ()
     
@@ -80,6 +88,14 @@ def kernelEngine( kernel, binding = "BoostPythonBinding" ):
     return KernelComputationEngineRenderer( factory ).render( kernel )
 
 
+
+# for extending this package in a minimal effort way.
+# These methods should only be used for very simple extensions.
+# For more complex extensions, you should first create the extension
+# class, and then either register the extension,
+# or use the extension on the fly by putting them into the
+# "ComputationEngineRendererExtensions" parameter of method
+# "scattererEngine".
 def register( newtype, renderer_handler, binding_handlers):
     """register a new kernel type
 
@@ -104,7 +120,46 @@ def register_binding_handlers( newtype, binding_handlers ):
     import bindings
     bindings.register( newtype.__name__.lower(), binding_handlers )
     return
-    
+
+
+
+#computation engine renderer
+
+# bases
+def _rendererBases():
+    from mccomposite.ScattererComputationEngineRenderer import ScattererComputationEngineRenderer 
+    from KernelComputationEngineRenderer import KernelComputationEngineRenderer
+    return [ KernelComputationEngineRenderer, ScattererComputationEngineRenderer ]
+
+
+# renderer extension registry methods
+def registeredRendererExtensions():
+    global _registeredRendererExtensions
+    return _registeredRendererExtensions
+_registeredRendererExtensions = []
+
+def registerRendererExtension( extension_class ):
+    global _registeredRendererExtensions
+    _registeredRendererExtensions.append( extension_class )
+    return
+
+def removeRendererExtension( extension_class ):
+    global _registeredRendererExtensions
+    reg = _registeredRendererExtensions
+    if extension_class in reg:
+        del reg[ reg.index( extension_class ) ]
+    return
+
+
+#helpers
+def _inherit( klasses ):
+    #print klasses
+    P = klasses
+    code = "class _( %s ): pass" % ','.join( [ 'P[%s]' % i for i in range(len(P)) ] )
+    #print code
+    exec code in locals()
+    return _
+
 
 # version
 __id__ = "$Id$"
