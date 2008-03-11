@@ -12,14 +12,14 @@
 #
 
 
-import ComputationEngineRendererExtension
 
-#make bindings available
-def _import_bindings():
-    import bindings
+from mccomponents.homogeneous_scatterer.bindings import default, get
+
+def _import():
+    import BoostPythonBinding
     return
 
-_import_bindings()
+_import()
 
 
 # version

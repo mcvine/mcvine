@@ -25,7 +25,6 @@ PROJ_LIBRARIES = -L$(BLD_LIBDIR) -ljournal -lmcni
 # directory structure
 
 BUILD_DIRS = \
-	bindings \
 
 OTHER_DIRS = \
 

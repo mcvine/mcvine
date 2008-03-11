@@ -65,70 +65,12 @@ class New:
             sqe, Qmin, Qmax, Emin, Emax )
     
 
-    def linearlyinterpolateddos_bp(
-        e0, de, n, Z):
-        '''create boost python object of LinearlyInterpolatedDOS
-        
-        e0: minimum phonon energy. float
-        de: phonon energy step. float
-        n: number of points.
-        Z: values of DOS at the energy points defined by (e0, de, n)
-        '''
-        Z1 = b.vector_double( n )
-        for i in range(n): Z1[i] = Z[i]
-        
-        return b.LinearlyInterpolatedDOS_dbl( e0, de, n, Z1 )
-    
-
-    def ndarray( npyarr ):
-        '''create boost python instance of NdArray object
-    arguments:
-        npyarr: numpy array. it must be a contiguous array.
-        '''
-        import numpy
-        assert npyarr.dtype == numpy.double, "only work for double array for this time"
-        
-        import numpyext
-        ptr = numpyext.getdataptr( npyarr )
-        
-        import bpext
-        wp = bpext.wrap_native_ptr( ptr )
-        
-        shape = b.vector_uint( 0 )
-        for i in npyarr.shape: shape.append( i )
-
-        factory = 'new_NdArray_dblarr_%d' % len(shape)
-        a1 = getattr(binding,factory)( wp, shape )
-        a1.origin = npyarr # keep a reference to avoid seg fault
-        return a1
-
     pass # end of BoostPythonBinding
 
 
 extend( New )
 
 
-
-# method __getitem__ to replace the boost python generated __getitem__
-def bp_ndarray_getitem(self, indexes):
-    cindexes = b.vector_uint( 0 )
-    for ind in indexes: cindexes.append( ind )
-    return self._getitem_bp( cindexes )
-
-
-# go thru ndarray bp types and change interfaces
-def _fix_bp_ndarray_interface( ):
-    for i in range( 1,7 ):
-        clsname = 'NdArray_dblarr_%d' % i
-        cls = getattr( b, clsname )
-        cls._getitem_bp = cls.__getitem__
-        cls.__getitem__ = bp_ndarray_getitem
-        continue
-    return
-
-
-_fix_bp_ndarray_interface()
-        
 
 # version
 __id__ = "$Id$"

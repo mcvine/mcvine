@@ -70,6 +70,10 @@ class ComputationEngineRendererExtension:
 
 
     def onKernelContainer(self, kernelcontainer):
+        #each kernel needs to know its scatterer origin.
+        for kernel in kernelcontainer.elements():
+            kernel.scatterer_origin = kernel
+            continue
         return self.onCompositeKernel( kernelcontainer )
     
     

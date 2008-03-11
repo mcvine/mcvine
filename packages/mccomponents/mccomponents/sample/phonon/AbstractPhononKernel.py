@@ -12,14 +12,15 @@
 #
 
 
-import ComputationEngineRendererExtension
+class AbstractPhononKernel:
 
-#make bindings available
-def _import_bindings():
-    import bindings
-    return
+    def __init__(self, dispersion):
+        self.dispersion = dispersion
+        return
 
-_import_bindings()
+    def identify(self, visitor): raise NotImplementedError
+
+    pass # end of AbstractPhononKernel
 
 
 # version

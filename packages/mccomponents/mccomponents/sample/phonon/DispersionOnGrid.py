@@ -12,14 +12,20 @@
 #
 
 
-import ComputationEngineRendererExtension
+class DispersionOnGrid:
 
-#make bindings available
-def _import_bindings():
-    import bindings
-    return
+    def __init__(
+        self, axes,
+        polarization_npyarr, energy_npyarr):
 
-_import_bindings()
+        self.axes = axes
+        self.polarization_npyarr = polarization_npyarr
+        self.energy_npyarr = energy_npyarr
+        
+        return
+
+    pass # end of AbstractDispersion
+    
 
 
 # version

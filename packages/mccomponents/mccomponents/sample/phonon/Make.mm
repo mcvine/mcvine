@@ -14,6 +14,7 @@ PROJECT = mccomponents
 PACKAGE = sample/phonon
 
 BUILD_DIRS = \
+	bindings \
 
 RECURSE_DIRS = $(BUILD_DIRS)
 
@@ -33,12 +34,17 @@ tidy::
 
 EXPORT_PYTHON_MODULES = \
 	AbstractDOS.py \
-	__init__.py \
+	AbstractDispersion.py \
+	AbstractPhononKernel.py \
 	CoherentInelastic_PolyXtal_Kernel.py \
+	ComputationEngineRendererExtension.py \
 	DWFromDOS.py \
-	LinearlyInterpolatedDispersion_3D.py \
+	DispersionOnGrid.py \
 	LinearlyInterpolatedDOS.py \
+	LinearlyInterpolatedDispersionOnGrid.py \
 	NdArray.py \
+	__init__.py \
+	units.py \
 
 
 export:: export-package-python-modules 

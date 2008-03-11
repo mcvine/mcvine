@@ -16,16 +16,45 @@
 import unittestX as unittest
 import journal
 
-debug = journal.debug( "LinearlyInterpolatedDispersion_3D_TestCase" )
-warning = journal.warning( "LinearlyInterpolatedDispersion_3D_TestCase" )
+debug = journal.debug( "BoostPython_TestCase" )
+warning = journal.warning( "BoostPython_TestCase" )
+
+
+from mccomponents.sample.phonon.bindings import get
+bp = get('BoostPython')
 
 
 class TestCase(unittest.TestCase):
 
 
-    def test(self):
-        from mccomponents.sample.phonon.register_LinearlyInterpolatedDispersion_3D import linearlyinterpolateddispersion_3d_bp as factory
-        
+    def test1(self):
+        'linearlyinterpolateddos'
+        import numpy as N
+        Z = N.zeros( 50 )
+        area = 0
+        for i in range(50):
+            Z[i] = i*i
+            area += Z[i]
+            continue
+        dos = bp.linearlyinterpolateddos(0, 1., 50, Z )
+        self.assertAlmostEqual( dos( 3 ), 3.**2/area )
+        return
+
+
+    def test2(self):
+        'NdArray'
+        import numpy as N
+        a = N.arange(12, dtype = N.double)
+        a.shape = 3,4
+        a1 = bp.ndarray( a )
+        assert a1.origin is a
+        self.assertEqual( a[2,1], 9 )
+        self.assertEqual( a1[ 2,1 ], 9 )
+        return
+
+
+    def test3(self):
+        'LinearlyInterpolatedDispersion_3D'
         nQs = 21
         Q_axis = -10, 1., nQs
         Q_axes = [Q_axis, Q_axis, Q_axis]
@@ -40,11 +69,11 @@ class TestCase(unittest.TestCase):
             ( nQs, nQs, nQs, nBranches ),
             dtype = numpy.double)
 
-        disp = factory( nAtoms, Q_axes, eps_data, E_data )
+        disp = bp.linearlyinterpolateddispersion_3d( nAtoms, Q_axes, eps_data, E_data )
         return
-    
 
     pass  # end of TestCase
+
 
 
 def pysuite():

@@ -18,16 +18,6 @@ from mccomponents.homogeneous_scatterer.CompositeKernel import CompositeKernel
 KernelContainer = CompositeKernel
 
 
-# 2. the handler for renderer
-def onKernelContainer(self, kernelcontainer):
-    return self.onCompositeKernel( kernelcontainer )
-
-import mccomponents.homogeneous_scatterer as hs
-# 4. register the new class and handlers
-hs.register_engine_renderer_handler (
-    KernelContainer, onKernelContainer )
-
-
 # version
 __id__ = "$Id$"
 
