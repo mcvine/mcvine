@@ -6,26 +6,15 @@
 #                      California Institute of Technology
 #                      (C)   2007    All Rights Reserved
 #
-d# <LicenseText>
+# <LicenseText>
 #
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
 
-
-def updateDocument( new ):
-    global _Document
-    _Document = new
-    return
-
-
-def getDocument():
-    return _Document
-
-
-from Document import Document as _Document
-
+from mccomponents.sample.kernelxml.parser.AbstractNode \
+     import AbstractNode, debug
 
 # version
-__id__ = "$Id: __init__.py,v 1.1.1.1 2005/03/08 16:13:43 linjiao Exp $"
+__id__ = "$Id: AbstractNode.py,v 1.1.1.1 2005/03/08 16:13:43 linjiao Exp $"
 
 # End of file 

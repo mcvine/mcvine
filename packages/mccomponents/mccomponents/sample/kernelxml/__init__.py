@@ -13,7 +13,10 @@
 
 
 
-def parse( stream, *args ): return parser.parse( stream, *args )
+def parse( stream, *args ):
+    parser = create_parser()
+    return parser.parse( stream, *args )
+
 
 def parse_file( filename, *args ):
     return parse( open( filename ), *args )
@@ -75,8 +78,10 @@ def removeRendererExtension( extension_class ):
 
 
 
-from Parser import Parser
-parser = Parser()
+def create_parser():
+    from Parser import Parser
+    parser = Parser()
+    return
 
 
 renderer_extensions = []

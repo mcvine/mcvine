@@ -11,11 +11,10 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 PROJECT = mccomponents
-PACKAGE = sample/phonon
+PACKAGE = sample/phonon/xml/parser
+
 
 BUILD_DIRS = \
-	bindings \
-	xml \
 
 RECURSE_DIRS = $(BUILD_DIRS)
 
@@ -23,10 +22,10 @@ RECURSE_DIRS = $(BUILD_DIRS)
 #
 
 all: export
-	BLD_ACTION="all" $(MM) recurse
 
 tidy::
 	BLD_ACTION="tidy" $(MM) recurse
+
 
 
 #--------------------------------------------------------------------------
@@ -34,24 +33,19 @@ tidy::
 # export
 
 EXPORT_PYTHON_MODULES = \
-	AbstractDOS.py \
-	AbstractDispersion.py \
-	AbstractPhononKernel.py \
-	CoherentInelastic_PolyXtal_Kernel.py \
-	ComputationEngineRendererExtension.py \
-	DWFromDOS.py \
-	DispersionOnGrid.py \
-	LinearlyInterpolatedDOS.py \
-	LinearlyInterpolatedDispersionOnGrid.py \
-	NdArray.py \
+	Document.py \
 	__init__.py \
-	units.py \
 
 
 export:: export-package-python-modules 
+	BLD_ACTION="export" $(MM) recurse
+
+
+include doxygen/default.def
+docs: export-doxygen-docs
 
 
 # version
-# $Id: Make.mm 1234 2007-09-18 18:32:56Z linjiao $
+# $Id: Make.mm 1404 2007-08-29 15:43:42Z linjiao $
 
 # End of file
