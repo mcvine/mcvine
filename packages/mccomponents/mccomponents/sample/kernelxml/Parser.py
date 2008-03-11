@@ -18,8 +18,8 @@ from pyre.xml.Parser import Parser as ParserBase
 class Parser(ParserBase):
 
 
-    def parse(self, stream, parserFactory=None):
-        from parser.Document import Document
+    def parse(self, stream, Document = None, parserFactory=None):
+        if Document is None: from parser.Document import Document
         document = Document(stream.name)
         return ParserBase.parse(
             self, stream, document, parserFactory)

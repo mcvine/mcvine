@@ -12,27 +12,21 @@
 #
 
 
-from Parser import Parser
-default_parser = Parser()
 
-
-def parse( stream, *args ): return default_parser.parse( stream, *args )
+def parse( stream, *args ): return parser.parse( stream, *args )
 
 def parse_file( filename, *args ):
     return parse( open( filename ), *args )
 
 
-from Renderer import Renderer
-default_renderer = Renderer()
-def render( scatterer, renderer = None ):
+def render( scatterer ):
     '''render(scatterer) --> text of the xml file
 
   - Inputs:
     scatterer: scatterer hierarchy
   - return: a list of strings
   '''
-    if  renderer is None: renderer = default_renderer
-
+    renderer = create_renderer()
     class Options: pass
     options = Options()
     options.author = "Jiao Lin"
@@ -62,6 +56,48 @@ def weave( scatterer, stream = None ):
 
     print >> stream, '\n'.join( render(scatterer) )
     return
+
+
+
+def registerRendererExtension( extension_class ):
+    renderer_extensions.append( extension_class )
+    return
+
+
+def removeRendererExtension( extension_class ):
+    global renderer_extensions
+    reg = renderer_extensions
+    if extension_class in reg:
+        del reg[ reg.index( extension_class ) ]
+    return
+
+
+
+
+
+from Parser import Parser
+parser = Parser()
+
+
+renderer_extensions = []
+def create_renderer():
+    from Renderer import Renderer
+    klasses = [Renderer] + renderer_extensions
+    klasses.reverse()
+    klass = _inherit( klasses )
+    # need Renderer.__init__
+    klass.__init__ = Renderer.__init__
+    return klasses()
+
+#helpers
+def _inherit( klasses ):
+    #print klasses
+    P = klasses
+    code = "class _( %s ): pass" % ','.join( [ 'P[%s]' % i for i in range(len(P)) ] )
+    #print code
+    exec code in locals()
+    return _
+
 
 
 # version
