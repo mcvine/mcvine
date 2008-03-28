@@ -64,7 +64,9 @@ EXPORT_HEADERS = \
 	LinearlyInterpolatedPolarizationOnGrid_3D.h \
 	LinearlyInterpolatedPolarizationOnGrid_3D.icc \
 	exception.h \
+	generateQ.h generateQ.icc \
 	interpolate.h \
+	scattering_length.h scattering_length.icc \
 	utils.h \
 	vector3.h \
 

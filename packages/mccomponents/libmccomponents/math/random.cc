@@ -14,13 +14,25 @@
 #include <cstdlib>
 #include "mccomponents/math/random.h"
 
+#ifdef DEBUG
+#include "journal/debug.h"
+#endif
+
 
 struct mccomponents::random::Generator::Details{
+
+  static char jrnltag[] ;
 
   Details( ) 
   {
     using namespace std;
-    srand( (unsigned)time(0) );
+    unsigned seed = time(0);
+#ifdef DEBUG
+    journal::debug_t debug( jrnltag );
+    debug << journal::at(__HERE__)
+	  << "seed=" << seed << journal::endl;
+#endif
+    srand( seed );
   }
   
   Details( double seed )
@@ -37,6 +49,7 @@ struct mccomponents::random::Generator::Details{
 
 };
 
+char  mccomponents::random::Generator::Details::jrnltag[] = "random";
 
 mccomponents::random::Generator::Generator()
   : m_details( new Details() )

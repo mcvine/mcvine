@@ -1,0 +1,57 @@
+// -*- C++ -*-
+//
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//
+//                                   Jiao Lin
+//                      California Institute of Technology
+//                        (C) 2008 All Rights Reserved  
+//
+// {LicenseText}
+//
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//
+
+
+
+#ifndef PHONON_SCATTERINGLENGTH_H
+#error scattering_length.icc not meaningful outside scattering_length.h
+#else
+
+
+template <typename complex_t, typename K_t, typename epsilon_t,
+	  typename atom_t, typename atoms_t,
+	  typename dispersion_t>
+ complex_t
+ mccomponents::kernels::phonon::sum_of_scattering_length
+ ( const K_t & Q, 
+   int branch,
+   const atoms_t & atoms, 
+   const dispersion_t & dispersion )
+{
+  static const complex_t cI(0,1);
+
+  complex_t ret = 0;
+  
+  for ( size_t i=0; i<atoms.size(); i++){
+    // (eps.Q)
+    epsilon_t eps = dispersion.polarization(branch, i, Q);
+    complex_t qdote = (Q|eps);
+    
+    const atom_t & atom = atoms[i];
+    
+    complex_t qdotd = (Q|atom.position);
+    ret += atom.coherent_scattering_length/std::sqrt(atom.mass) \
+      * std::exp( cI * qdotd ) * qdote;
+  }
+
+  return ret;
+}
+
+#endif
+
+
+// version
+// $Id$
+
+// End of file 
+

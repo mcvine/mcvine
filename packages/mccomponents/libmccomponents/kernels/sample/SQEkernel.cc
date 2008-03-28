@@ -148,7 +148,7 @@ mccomponents::kernels::SQEkernel::scatter
   // if e1 is right on the z-direction, that means e1 = (0,0,1)
   // and we set e2 = (1,0,0) or whatever
   V3d e2;
-  if (abs(e1.x)>m_epsilon || abs(e1.y)>m_epsilon) { 
+  if (std::abs(e1.x)>m_epsilon || std::abs(e1.y)>m_epsilon) { 
     e2 = V3d(0,0,1) * e1; e2.normalize();
   } else {
     e2 = V3d(1,0,0);

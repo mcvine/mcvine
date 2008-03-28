@@ -33,7 +33,8 @@ namespace DANSE{
       // types:
       typedef double float_t;
       typedef mcni::Vector3<float_t> K_t;
-      typedef mcni::Vector3< std::complex<float_t> > epsilon_t;
+      typedef std::complex<float_t> complex_t;
+      typedef mcni::Vector3< complex_t > epsilon_t;
       typedef unsigned int n_t;
 
       // meta methods

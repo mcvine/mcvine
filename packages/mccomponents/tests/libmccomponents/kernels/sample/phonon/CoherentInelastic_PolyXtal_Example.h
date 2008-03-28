@@ -44,7 +44,8 @@ namespace test {
       atoms( create_atoms() ),
       DW_calculator_example(  ),
       kernel
-      ( dispersion_example.disp,
+      ( random_number_generator,
+	dispersion_example.disp,
 	atoms,
 	unitcell_vol,
 	DW_calculator_example.DW_calculator,
@@ -59,6 +60,7 @@ namespace test {
     w_t::atoms_t atoms;
     DWFromDOS_Example DW_calculator_example;
     CoherentInelastic_PolyXtal kernel;
+    mccomponents::random::Generator random_number_generator;
   };
 
 } // test::
