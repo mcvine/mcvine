@@ -38,6 +38,7 @@ namespace wrap_mccomponents{
   void wrap_LinearlyInterpolatedDispersionOnGrid_3D();
   void wrap_AtomicScatterer();
   void wrap_Phonon_CoherentInelastic_PolyXtal_kernel();
+  void wrap_RandomNumberGenerator();
 }
 
 
@@ -70,6 +71,7 @@ BOOST_PYTHON_MODULE(mccomponentsbp)
   
   wrap_AtomicScatterer();
   wrap_Phonon_CoherentInelastic_PolyXtal_kernel();
+  wrap_RandomNumberGenerator();
 
 }
 

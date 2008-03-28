@@ -32,6 +32,7 @@ namespace wrap_mccomponents {
     kernel_wrapper<w_t>::wrap
       ( "Phonon_CoherentInelastic_PolyXtal_kernel",
 	init<
+	mccomponents::random::Generator &,
 	const w_t::dispersion_t &,
 	const w_t::atoms_t &,
 	w_t::float_t,
@@ -42,7 +43,8 @@ namespace wrap_mccomponents {
 	size_t> ()
 	[with_custodian_and_ward<1,2,
 	 with_custodian_and_ward<1,3,
-	 with_custodian_and_ward<1,5> > > () ]
+	 with_custodian_and_ward<1,4,
+	 with_custodian_and_ward<1,6> > > > () ]
 	)
       ;
     

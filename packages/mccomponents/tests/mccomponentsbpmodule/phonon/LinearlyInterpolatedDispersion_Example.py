@@ -33,9 +33,10 @@ def example():
         ( nQs+1, nQs+1, nQs+1, nBranches ),
         dtype = numpy.double)
     
-    from mccomponents.sample.phonon.register_NdArray import ndarray_bp
-    eps_arr = ndarray_bp( eps_data )
-    E_arr = ndarray_bp( E_data )
+    from mccomponents.sample.phonon.bindings import get
+    binding = get('BoostPython')
+    eps_arr = binding.ndarray( eps_data )
+    E_arr = binding.ndarray( E_data )
     
     disp = mccomponentsbp.LinearlyInterpolatedDispersionOnGrid_3D_dblarrays(
         nAtoms, Qx_axis, Qy_axis, Qz_axis, eps_arr, E_arr )
