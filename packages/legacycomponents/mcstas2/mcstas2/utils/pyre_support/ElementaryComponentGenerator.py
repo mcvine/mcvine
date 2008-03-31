@@ -67,10 +67,23 @@ class Generator:
                 pass
 
             def __getattribute__(self, name):
-                if name in ['engine']: return base.__getattribute__(self, name)
-                try: return getattr(self.engine, name)
-                except AttributeError :
-                    return base.__getattribute__(self, name)
+                if name in [ 'process' ]:
+                    engine = self.__dict__.get( 'engine' )
+                    if engine is None:
+                        raise RuntimeError, "engine not established"
+                    return getattr(engine, name )
+                    
+                try: return base.__getattribute__(self, name)
+                except AttributeError:
+                    import traceback
+                    import journal
+                    jrnltag = 'ElementaryComponentGenerator'
+                    debug = journal.debug( jrnltag )
+                    debug.log( traceback.format_exc() )
+                    engine = self.__dict__.get( 'engine' )
+                    if engine is None:
+                        raise RuntimeError, "engine not established"
+                    return getattr( engine, name )
                 raise RuntimeError , "Should not reach here"
 
             def _init(self):
@@ -80,7 +93,8 @@ class Generator:
                 return
 
             def _fini(self):
-                del self.engine
+                engine = self.__dict__.get('engine')
+                if engine: del self.engine
                 base._fini(self)
                 return
 

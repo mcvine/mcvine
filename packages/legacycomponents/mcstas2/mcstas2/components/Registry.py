@@ -84,10 +84,12 @@ class Registry:
         if category in types:
             if type in types[category]: return
             types[category].append( type )
+            return
         else:
             types[category] = [type]
             return
-        raise "Should not reach here"
+        raise "Should not reach here. category=%s, type=%s" % (
+            category, type)
     
     pass # end of Registry
 

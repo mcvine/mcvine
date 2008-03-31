@@ -30,8 +30,10 @@ tidy::
 # export
 
 EXPORT_PYTHON_MODULES = \
+	IQE_monitor.py \
 	E_monitor.py \
 	__init__.py \
+	common.py \
 
 export:: export-package-python-modules
 

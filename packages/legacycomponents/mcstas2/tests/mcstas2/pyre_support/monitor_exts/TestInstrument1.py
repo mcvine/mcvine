@@ -38,6 +38,10 @@ class Instrument(base):
         self.inventory.sequence = ['source', 'monitor']
         geometer = self.inventory.geometer
         geometer.inventory.monitor = (0,0,1), (0,0,0)
+        return
+
+    def _init(self):
+        base._init(self)
         from mcstas2.pyre_support.monitor_exts import extend
         extend(self.inventory.monitor)
         return

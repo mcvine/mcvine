@@ -15,21 +15,31 @@
 def extend( component ):
     '''enrich the interfrace for the given pyre-mcstas component'''
     klass = component.__class__
+
+    # component specific extension
     kname = component.Engine.info.name
     exec 'import %s as m' % kname
-    for methodname in m.methods:
-        method = getattr( m, methodname )
+    _extend( klass, m, m.methods )
+
+    # common extension
+    #  !need to save _fini0 first!
+    klass._fini0 = klass._fini
+    import common
+    _extend( klass, common, common.methods )
+    
+    return
+
+
+
+def _extend( klass, depository, methods ):
+    for methodname in methods:
+        method = getattr(depository, methodname )
         setattr( klass, methodname, method )
         continue
-    klass._fini0 = klass._fini
-    klass._fini = _fini
     return
 
 
-def _fini(self):
-    self._save_histogram()
-    self._fini0()
-    return
+methods = [ '_fini', '_save_histogram' ]
 
 
 # version

@@ -16,13 +16,23 @@
 def _get_histogram( self ):
     from mcstas2.utils.carray import bpptr2npyarr
     core = self.core()
-    n = core.nchan
-    Iarr = bpptr2npyarr( core.getE_p( ), 'double', n ).copy()
-    E2arr = bpptr2npyarr( core.getE_p2( ), 'double', n ).copy()
+    
+    nQ = core.nQ; nE =core.nE
+    n = nQ * nE
+    shape = nQ, nE
+    
+    Iarr = bpptr2npyarr( core.getIQE_p( ), 'double', n ).copy()
+    E2arr = bpptr2npyarr( core.getIQE_p2( ), 'double', n ).copy()
+    Iarr.shape = E2arr.shape = shape
+
     from histogram import histogram, axis, arange
-    dE = (core.Emax-core.Emin)/core.nchan
+    dE = (core.Emax-core.Emin)/nE
     Eaxis = axis( 'energy', arange( core.Emin, core.Emax, dE ), unit = 'meV' )
-    h = histogram( 'I(E)', [Eaxis], data = Iarr, errors = E2arr )
+
+    dQ = (core.Qmax-core.Qmin)/nQ
+    Qaxis = axis( 'Q', arange( core.Qmin, core.Qmax, dQ ), unit = 'angstrom**-1' )
+
+    h = histogram( 'I(Q,E)', [Qaxis,Eaxis], data = Iarr, errors = E2arr )
     return h
 
 
