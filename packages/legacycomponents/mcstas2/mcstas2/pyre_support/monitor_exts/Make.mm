@@ -10,15 +10,11 @@
 #
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-
 PROJECT = mcstas2
-PACKAGE = utils
+PACKAGE = pyre_support/monitor_exts
 
 
 RECURSE_DIRS = \
-    mills \
-    parsers \
-    pyre_support \
 
 #--------------------------------------------------------------------------
 #
@@ -29,16 +25,13 @@ all: export
 tidy::
 	BLD_ACTION="tidy" $(MM) recurse
 
-
 #--------------------------------------------------------------------------
 #
 # export
 
 EXPORT_PYTHON_MODULES = \
+	E_monitor.py \
 	__init__.py \
-	carray.py \
-	io.py \
-	xos.py \
 
 export:: export-package-python-modules
 

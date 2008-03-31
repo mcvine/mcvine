@@ -26,7 +26,7 @@ namespace mcstas2{
     using namespace mcni;
 
 
-    class Component: public mcni::AbstractNeutronComponent {
+    struct Component: public mcni::AbstractNeutronComponent {
     public:
       
       // meta-methods
@@ -35,9 +35,8 @@ namespace mcstas2{
       // methods
       inline virtual void scatter(Neutron::Event & ev);
 
-    private:
       // data
-      mcstas2::Component & m_mcstas_component;
+      mcstas2::Component & mcstas_core;
     };
 
   }
@@ -48,7 +47,7 @@ namespace mcstas2{
 mcstas2::mcni_integration::Component::Component
 (mcstas2::Component & mcstas_component)
   : mcni::AbstractNeutronComponent( mcstas_component.name() ),
-    m_mcstas_component( mcstas_component )
+    mcstas_core( mcstas_component )
 {
 }
 
@@ -57,7 +56,7 @@ void mcstas2::mcni_integration::Component::scatter
 (Neutron::Event & ev)
 {
   const mcni::Neutron::State & state = ev.state;
-  m_mcstas_component.trace
+  mcstas_core.trace
     ( state.position.x, state.position.y, state.position.z,
       state.velocity.x, state.velocity.y, state.velocity.z,
       ev.time, 

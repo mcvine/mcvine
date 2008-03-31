@@ -35,7 +35,8 @@ def componentInfo2cppClass( compInfo ):
     ctor_args = _arguments(compInfo.input_parameters) 
     output_params = compInfo.output_parameters
     trace_method_args = compInfo.state_parameters
-    private_member_declaration = compInfo.declare[1:-1]
+    additional_member_declaration = compInfo.declare[1:-1]
+    additional_members = _parse( additional_member_declaration )
     ctor_body = compInfo.initialize
     trace_method_body = compInfo.trace
     save_method_body = compInfo.save
@@ -43,7 +44,7 @@ def componentInfo2cppClass( compInfo ):
 
     ##     print class_name
     ##     for arg in ctor_args: print arg
-    ##     print private_member_declaration
+    ##     print additional_member_declaration
     ##     print ctor_body
     ##     print finalize_body
 
@@ -55,7 +56,8 @@ def componentInfo2cppClass( compInfo ):
     return createCppClass( class_name,
                            namespace, baseclass,
                            ctor_args, ctor_body,
-                           private_member_declaration,
+                           #additional_member_declaration,
+                           additional_members,
                            trace_method_args,
                            trace_method_body,
                            save_method_body,
@@ -68,7 +70,8 @@ from mcstas2.utils.mills.cxx.Class import Argument, Method, Member, Class, argum
 def createCppClass( name,
                     namespace, baseclass,
                     ctor_args, ctor_body,
-                    private_member_declaration,
+                    #additional_member_declaration,
+                    additional_members,
                     trace_method_args,
                     trace_method_body,
                     save_method_body,
@@ -83,7 +86,7 @@ def createCppClass( name,
     assert name_arg.name == 'name'
     args = ctor_args[1:]
     # 
-    private_members = [ argument2Member(arg) for arg in args ]
+    members = [ argument2Member(arg) for arg in args ]
 
     # meta-methods
     #   argument "name" is necessary for the component c++ class.
@@ -97,7 +100,7 @@ def createCppClass( name,
     #
     #   transfer inputs to private members
     ctor_getInputs = [ "%s = %s;" % (member.name, arg.name) for member, arg in \
-                       zip( private_members, ctor_args ) ]
+                       zip( members, ctor_args ) ]
     #   ctor body
     ctor_body = ctor_body.split("\n")
     ctor_body = [ctor_body_name_assignment] + ctor_getInputs + ctor_body
@@ -124,15 +127,16 @@ def createCppClass( name,
     methods = [ctor, dtor, trace, save, finalize, ]
 
     # data
-    private = private_member_declaration.split("\n")
+    #private = additional_member_declaration.split("\n")
 
     # the class
     klass = Class(
         name,
         namespace = namespace,
         parents = [ baseclass ],
-        public_methods = methods, private = private,
-        private_members = private_members,
+        public_methods = methods,
+        #private = private,
+        public_members = members + additional_members,
         headers_dependent_on = headers_dependent_on,
         )
     
@@ -153,6 +157,37 @@ def _arguments( params ):
     return [ _argument(param) for param in params ]
 
 
+
+def _parse( declarations ):
+    declarations = declarations.split( ';' )
+    members = []
+    for declaration in declarations:
+        members += _parse_declaration( declaration.strip() )
+        continue
+    return members
+
+
+def _parse_declaration( declaration ):
+    if len(declaration) == 0: return []
+    n1 = declaration.find( ' ' )
+    if n1 == -1: raise RuntimeError , "%r is not a declaration" % declaration
+    typestr = declaration[:n1].strip();
+    vars = declaration[n1+1:].split( ',' )
+    members = []
+
+    from mcstas2.utils.mills.cxx.Member import Member
+    for var in vars:
+        var = var.strip()
+        if var.startswith( '*' ):
+            type = typestr + '*'
+            var = var[1:].strip()
+        else:
+            type = typestr
+            pass
+        member = Member( type, var )
+        members.append( member )
+        continue
+    return members
 
 # version
 __id__ = "$Id$"

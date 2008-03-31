@@ -28,9 +28,8 @@ def generate_binding_sources( bindingname, klass, path ):
     from module_cc import generate
     module_cc = generate( bindingname, path )
     
-    ctor = klass.constructors() [0]
     from wrap_cc import generate
-    wrap_cc = generate( klass.name, ctor.args, path )
+    wrap_cc = generate( klass, path )
 
     return {
         'c' : [module_cc, wrap_cc],

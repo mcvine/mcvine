@@ -55,6 +55,7 @@ class Generator:
         base = self.baseclass
         class _( base ):
 
+            Engine = klass
             __doc__ = klass.__doc__
             
             class Inventory(base.Inventory):

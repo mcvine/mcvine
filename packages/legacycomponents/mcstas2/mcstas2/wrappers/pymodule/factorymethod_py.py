@@ -24,6 +24,7 @@ def factory( %(ctor_kwds)s ):
 from mcstas2.utils.parsers.ComponentInfo import ComponentInfo, Parameter
 %(component_info)s
 
+factory.info = info
 factory.__doc__ = str(info)
 ''' 
 

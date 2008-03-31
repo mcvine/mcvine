@@ -16,37 +16,67 @@
 template = '''
 #include "mcstas2/boostpython_binding/wrap_component.h"
 #include "%(headername)s.h"
+#include "bpext/bpext.h"
+
+namespace mcstas2 {
+using namespace bpext;
+%(ptrmethods)s
+}
 
 void wrap() 
 {
+  using namespace mcstas2;
   using namespace mcstas2::boostpython_binding;
   using namespace boost::python;
+  
+  typedef mcstas2::%(classname)s w_t;
 
-  component_wrapper<mcstas2::%(classname)s>::wrap
+  component_wrapper<w_t>::wrap
     ("%(classname)s", init<%(ctor_args)s>()
     %(ctor_policies)s
-    );
+    )
+    %(expose_datamembers)s
+    %(expose_ptrmethods)s
+    ;
 }
 '''
 
-def generate( classname, ctor_args, path, headername = None ):
+def generate( klass, path, headername = None ):
+    classname = klass.name
+    
+    ctor = klass.constructors() [0]
+    ctor_args = ctor.args
+
     #default header name is the same as class name
     if not headername: headername = classname
 
     #convert args to a string
     ctor_args_str = _build_args_str( ctor_args )
     ctor_policies_str = _build_policies( ctor_args )
+    datamembers = filter( lambda m: not _ispointer(m), klass.public_members )
+    expose_datamembers_str = _build_expose_datamembers( datamembers )
+    ptr_members = _ptr_members( klass.public_members )
+    ptrmethods = _build_ptrmethods( ptr_members, klass )
+    expose_ptrmethods = _build_expose_ptrmethods( ptr_members )
     
     content = template % {
         'headername': headername,
         'classname': classname,
         'ctor_args': ctor_args_str,
         'ctor_policies': ctor_policies_str,
+        'expose_datamembers': expose_datamembers_str,
+        'ptrmethods': ptrmethods,
+        'expose_ptrmethods': expose_ptrmethods,
         }
     import os
     filename = os.path.join( path, "wrap.cc" )
     open(filename, 'w').write( content )
     return filename
+
+
+def _ispointer( argument ):
+    type = argument.type
+    return type[-1] == '*' and not type.startswith( 'char' )
 
 
 def _build_args_str( args ):
@@ -55,6 +85,16 @@ def _build_args_str( args ):
 
 def _arg_str( arg ):
     return "%s" % (arg.type,)
+
+
+def _build_expose_datamembers( args ):
+    '''return
+.def_readonly( name, &w_t::$name)
+...
+'''
+    return '\n'.join(
+        [ '    .def_readonly( "%s", &w_t::%s )' % (arg.name, arg.name)
+          for arg in args ] )
 
 
 def _build_policies( args ):
@@ -84,6 +124,28 @@ with_custodian_and_ward<1, 5,
         + '> ' * len(indexes_of_args_need_wards) \
         + '()'
     return '[' + policies + ']'
+
+
+def _ptr_members( members ):
+    return filter( _ispointer, members )
+
+
+def _build_ptrmethods( ptrs, klass ):
+    return '\n'.join( [ _build_ptrmethod( ptr, klass ) for ptr in ptrs ] )
+
+
+def _build_ptrmethod( ptr, klass ):
+    return 'WrappedPointer get%s( %s & obj ) { void *ptr = (void *)(obj.%s); WrappedPointer ret = {ptr}; return ret; }' % (
+        ptr.name, klass.name, ptr.name )
+
+
+def _build_expose_ptrmethods( ptrs ):
+    return '\n'.join( [ _build_expose_ptrmethod( ptr ) for ptr in ptrs ] )
+
+
+def _build_expose_ptrmethod( ptr ):
+    return '    .def( "get%s", get%s)' % (
+        ptr.name, ptr.name )
     
 
 # version
