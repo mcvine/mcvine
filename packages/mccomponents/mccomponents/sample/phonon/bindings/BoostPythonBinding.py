@@ -18,6 +18,7 @@ from mccomponents.homogeneous_scatterer.bindings.BoostPythonBinding \
 
 import mccomponents.mccomponentsbp as b
 import mccomposite.mccompositebp as b1
+import mcni.mcnibp as b2
 
 
 class New:
@@ -43,6 +44,15 @@ class New:
         a1 = getattr(b,factory)( wp, shape )
         a1.origin = npyarr # keep a reference to avoid seg fault
         return a1
+
+
+    def Q(self, *args):
+        return self.vector3( *args )
+
+
+    def randomnumbergenerator( self, seed ):
+        if seed is None: return b.RandomNumberGenerator()
+        return b.RandomNumberGenerator( seed )
 
 
     def atomicscatterer(
@@ -128,6 +138,19 @@ class New:
         return b.LinearlyInterpolatableAxis_dbl( min, step, n )
 
 
+    def periodicdispersion(self, dispersion, reciprocalcell):
+        """create a periodic dispersion given an existing dispersion
+
+        dispersion: input dispersion
+        reciprocalcell: a 3-tuple of b1, b2, b3 that describes a
+          reciprocal unit cell
+        """
+        rc = b.ReciprocalCell( )
+        bs = [ self.Q(bi) for bi in reciprocalcell ]
+        rc.b1, rc.b2, rc.b3 = bs
+        return b.PeriodicDispersion_3D( dispersion, rc )
+
+
     def linearlyinterpolateddispersion(
         self, 
         natoms, Qaxes, eps_npyarr, E_npyarr ):
@@ -151,6 +174,7 @@ class New:
         nQx, nQy, nQz, nBranches 
     '''
         #c++ engine require Qmax = Qmin + n * step, and that means n+1 Q points
+        Qaxes = list(Qaxes)
         for i,axis in enumerate(Qaxes):
             Qaxes[i] = axis[0], axis[1], axis[2]-1
             continue
@@ -172,15 +196,21 @@ class New:
         dispersion, dw_calctor,
         unitcell, 
         temperature, Ei,  max_omega, max_Q,
-        nMCsteps_to_calc_RARV):
+        nMCsteps_to_calc_RARV, seed = None):
 
         unitcell_vol = unitcell.getVolume()
+        unitcell_vol = float(unitcell_vol)
+
+        temperature = float(temperature)
         
         atoms = [ self.atomicscatterer_fromSite( site ) for site in unitcell ]
         atom_vector = b.vector_AtomicScatterer(0)
         for atom in atoms: atom_vector.append( atom )
+
+        random_number_generator = self.randomnumbergenerator( seed )
         
         return b.Phonon_CoherentInelastic_PolyXtal_kernel(
+            random_number_generator,
             dispersion, atom_vector, unitcell_vol, dw_calctor,
             temperature, Ei, max_omega, max_Q,
             nMCsteps_to_calc_RARV)

@@ -92,6 +92,31 @@ class TestCase(unittest.TestCase):
         disp = bp.linearlyinterpolateddispersion( nAtoms, Q_axes, eps_data, E_data )
         return
 
+
+    def test5(self):
+        'periodicdispersion'
+        nQs = 21
+        Q_axis = -10, 1., nQs
+        Q_axes = [Q_axis, Q_axis, Q_axis]
+        nAtoms = 5
+        nDims = 3
+        nBranches = nAtoms*nDims
+        import numpy
+        eps_data = numpy.zeros(
+            ( nQs, nQs, nQs, nBranches, nAtoms, nDims, 2 ),
+            dtype = numpy.double)
+        E_data = numpy.zeros(
+            ( nQs, nQs, nQs, nBranches ),
+            dtype = numpy.double)
+
+        disp0 = bp.linearlyinterpolateddispersion( nAtoms, Q_axes, eps_data, E_data )
+        disp = bp.periodicdispersion(
+            disp0,
+            ( (2,0,0), (0,3,0), (0,0,4) )
+            )
+        self.assertAlmostEqual( disp.energy(0, bp.Q(2,3,4)), disp.energy(0, bp.Q(0,0,0) ) )
+        return
+
     pass  # end of TestCase
 
 
