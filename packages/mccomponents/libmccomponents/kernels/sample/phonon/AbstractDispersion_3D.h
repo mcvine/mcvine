@@ -3,12 +3,14 @@
 // 
 //                                  Jiao Lin
 //                        California Institute of Technology
-//                        (C) 1998-2004  All Rights Reserved
+//                          (C) 2008  All Rights Reserved
 // 
 //  <LicenseText>
 // 
 //  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // 
+
+
 
 #ifndef PHONON_ABSTRACTDISPERSION_3D_H
 #define PHONON_ABSTRACTDISPERSION_3D_H
@@ -62,6 +64,7 @@ namespace DANSE{
 
 
 // version
-// $Id: AbstractDispersion_3D.h 178 2005-07-19 13:01:58Z linjiao $
+// $Id$
 
 // End of file
+

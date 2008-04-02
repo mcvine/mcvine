@@ -45,6 +45,7 @@ PROJ_SRCS = \
 	physics_statistics.cc \
 	DWFromDOS.cc \
 	CoherentInelastic_PolyXtal.cc \
+	PeriodicDispersion_3D.cc \
 
 
 PROJ_TIDY += $(PROJ_SRCS)
@@ -79,6 +80,9 @@ AtomicScatterer.cc: ../kernels/sample/phonon/AtomicScatterer.cc
 
 AbstractDispersion_3D.cc: ../kernels/sample/phonon/AbstractDispersion_3D.cc
 	cp ../kernels/sample/phonon/AbstractDispersion_3D.cc .
+
+PeriodicDispersion_3D.cc: ../kernels/sample/phonon/PeriodicDispersion_3D.cc
+	cp ../kernels/sample/phonon/PeriodicDispersion_3D.cc .
 
 LinearlyInterpolatedDispersionOnGrid_3D.cc: ../kernels/sample/phonon/LinearlyInterpolatedDispersionOnGrid_3D.cc
 	cp ../kernels/sample/phonon/LinearlyInterpolatedDispersionOnGrid_3D.cc .

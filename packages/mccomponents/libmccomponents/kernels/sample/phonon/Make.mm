@@ -45,6 +45,7 @@ export:: export-package-headers
 
 EXPORT_HEADERS = \
 	AbstractDispersion_3D.h \
+	PeriodicDispersion_3D.h \
 	AbstractDebyeWallerFactor.h \
 	AbstractDOS.h \
 	AbstractScatteringKernel.h \
