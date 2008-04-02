@@ -12,7 +12,8 @@
 #
 
 
-class AbstractPhononKernel:
+from mccomponents.homogeneous_scatterer.Kernel import Kernel
+class AbstractPhononKernel(Kernel):
 
     def __init__(self, dispersion):
         self.dispersion = dispersion

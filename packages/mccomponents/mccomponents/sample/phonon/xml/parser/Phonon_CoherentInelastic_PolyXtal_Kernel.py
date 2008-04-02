@@ -15,7 +15,7 @@
 from AbstractNode import AbstractNode, debug
 
 
-class SQEkernel(AbstractNode):
+class Phonon_CoherentInelastic_PolyXtal_Kernel(AbstractNode):
 
 
     tag = "Phonon_CoherentInelastic_PolyXtal_Kernel"
@@ -25,7 +25,7 @@ class SQEkernel(AbstractNode):
         Ei = self._parse( kwds['Ei'] )
         max_omega = self._parse( kwds['max-omega'] )
         max_Q = self._parse( kwds['max-Q'] )
-        nMCsteps_to_calc_RARV= = int( kwds['nMCsteps_to_calc_RARV'] )
+        nMCsteps_to_calc_RARV = int( kwds['nMCsteps_to_calc_RARV'] )
         
         from mccomponents.sample.phonon \
              import coherentinelastic_polyxtal_kernel as f
@@ -39,9 +39,13 @@ class SQEkernel(AbstractNode):
         return
 
 
-    onLinearlyInterpolatedDispersion = onDispersion
+    onPeriodicDispersion = onDispersion
 
     pass # end of SQEkernel
+
+
+from HomogeneousScatterer import HomogeneousScatterer
+HomogeneousScatterer.onPhonon_CoherentInelastic_PolyXtal_Kernel = HomogeneousScatterer.onKernel
 
 
 # version

@@ -38,6 +38,11 @@ class scattererxml_TestCase(unittest.TestCase):
 
     def test2(self):
         'mccomponents.sample.kernelxml.renderer'
+        
+        sqehisth5 = 'sqehist.h5'
+        outputs = [sqehisth5]
+        _remove( outputs )
+        
         from mccomponents.sample.kernelxml import parse_file, render
         scatterer = parse_file( scattererxml )
         
@@ -49,6 +54,18 @@ class scattererxml_TestCase(unittest.TestCase):
     
 
     pass  # end of scattererxml_TestCase
+
+
+def _remove( files ):
+    import os
+    for path in files:
+        if os.path.exists( path ):
+            if not os.path.isfile(path):
+                raise IOError , "%s is not a file" % path
+            os.remove( path )
+            pass
+        continue
+    return
 
 
 def isKernel(candidate):

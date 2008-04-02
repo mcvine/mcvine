@@ -56,8 +56,11 @@ class TestCase(unittest.TestCase):
     def test3(self):
         'LinearlyInterpolatedDispersion_3D'
         nQs = 21
-        Q_axis = -10, 1., nQs
-        Q_axes = [Q_axis, Q_axis, Q_axis]
+        Q_axes = [
+            ( (2,0,0), nQs ),
+            ( (0,2,0), nQs ),
+            ( (0,0,2), nQs ),
+            ]
         nAtoms = 5
         nDims = 3
         nBranches = nAtoms*nDims
@@ -76,8 +79,11 @@ class TestCase(unittest.TestCase):
     def test4(self):
         'LinearlyInterpolatedDispersion'
         nQs = 21
-        Q_axis = -10, 1., nQs
-        Q_axes = [Q_axis, Q_axis, Q_axis]
+        Q_axes = [
+            ( (2,0,0), nQs ),
+            ( (0,2,0), nQs ),
+            ( (0,0,2), nQs ),
+            ]
         nAtoms = 5
         nDims = 3
         nBranches = nAtoms*nDims
@@ -96,8 +102,11 @@ class TestCase(unittest.TestCase):
     def test5(self):
         'periodicdispersion'
         nQs = 21
-        Q_axis = -10, 1., nQs
-        Q_axes = [Q_axis, Q_axis, Q_axis]
+        Q_axes = [
+            ( (2,0,0), nQs ),
+            ( (0,2,0), nQs ),
+            ( (0,0,2), nQs ),
+            ]
         nAtoms = 5
         nDims = 3
         nBranches = nAtoms*nDims

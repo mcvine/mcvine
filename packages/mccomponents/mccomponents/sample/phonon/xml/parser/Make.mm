@@ -33,7 +33,11 @@ tidy::
 # export
 
 EXPORT_PYTHON_MODULES = \
+	AbstractNode.py \
 	Document.py \
+	HomogeneousScatterer.py \
+	LinearlyInterpolatedDispersion.py \
+	Phonon_CoherentInelastic_PolyXtal_Kernel.py \
 	__init__.py \
 
 

@@ -173,10 +173,18 @@ class New:
     E_npyarr: numpy array of phonon energy. shape  must be
         nQx, nQy, nQz, nBranches 
     '''
-        #c++ engine require Qmax = Qmin + n * step, and that means n+1 Q points
+        #c++ engine require three values for each Qaxis:
+        # Qmin, step, n
+        # Here, Qmax = Qmin + n * step is included, and that means n+1 Q points
         Qaxes = list(Qaxes)
         for i,axis in enumerate(Qaxes):
-            Qaxes[i] = axis[0], axis[1], axis[2]-1
+            Qvector, n = axis
+            # for now, it is required that axis0 point to x direction, axis1 y direction, axis2 z direction
+            for j in range(3):
+                if j != i: assert Qvector[j] == 0
+                continue
+            
+            Qaxes[i] = 0, 1.*Qvector[i]/(n-1), n-1
             continue
         
         Qx_axis = self.linearlyinterpolatableaxis( *(Qaxes[0]) )

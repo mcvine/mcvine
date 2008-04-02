@@ -12,6 +12,11 @@
 #
 
 
+import units
+meV = units.energy.meV
+angstrom = units.length.angstrom
+
+
 def coherentinelastic_polyxtal_kernel(
     dispersion,
     Ei = 70*meV, max_omega = 55 *meV, max_Q = 12 / angstrom,
@@ -22,13 +27,42 @@ def coherentinelastic_polyxtal_kernel(
 
 def linearlyinterpolateddispersion(
     nAtoms, dimension,
-    Qaxes, eps_npyarr, E_npyarr ):
+    Qaxes, eps_npyarr, E_npyarr,
+    **kwds
+    ):
     from LinearlyInterpolatedDispersionOnGrid \
          import LinearlyInterpolatedDispersionOnGrid
     return LinearlyInterpolatedDispersionOnGrid(
         nAtoms, dimension,
-        Qaxes, eps_npyarr, E_npyarr )
+        Qaxes, eps_npyarr, E_npyarr,
+        **kwds)
 
+
+def periodicdispersion( dispersion, reciprocalcell ):
+    from PeriodicDispersion import PeriodicDispersion
+    return PeriodicDispersion( dispersion, reciprocalcell )
+
+
+def dispersion_fromidf( datapath ):
+    from mccomponents.sample.idf import readDispersion
+    nAtoms, dimension, Qaxes, polarizations, energies, dos = readDispersion( datapath )
+        
+    dispersion = linearlyinterpolateddispersion(
+        nAtoms, dimension,
+        Qaxes, polarizations, energies, dos = dos )
+
+    return dispersion
+
+
+def periodicdispersion_fromidf( datapath ):
+    dispersion = dispersion_fromidf( datapath )
+    
+    from mccomponents.sample.idf import readDispersion
+    nAtoms, dimension, Qaxes, polarizations, energies, dos = readDispersion( datapath )
+    reciprocalcell = [ bi for bi,n in Qaxes ]
+    
+    return periodicdispersion(dispersion, reciprocalcell)
+    
 
 import ComputationEngineRendererExtension
 
@@ -38,6 +72,7 @@ def _import_bindings():
     return
 
 _import_bindings()
+
 
 
 # version

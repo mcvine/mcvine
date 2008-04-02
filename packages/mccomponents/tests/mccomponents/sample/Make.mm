@@ -27,6 +27,7 @@ PROJ_LIBRARIES = -L$(BLD_LIBDIR) -ljournal -lmcni
 BUILD_DIRS = \
 	sampleassembly \
 	phonon \
+	idf \
 
 OTHER_DIRS = \
 

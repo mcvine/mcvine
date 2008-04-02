@@ -11,18 +11,7 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
 
-
-def updateDocument( new ):
-    global _Document
-    _Document = new
-    return
-
-
-def getDocument():
-    return _Document
-
-
-from Document import Document as _Document
+from mccomponents.sample.kernelxml.parser.HomogeneousScatterer import HomogeneousScatterer
 
 
 # version

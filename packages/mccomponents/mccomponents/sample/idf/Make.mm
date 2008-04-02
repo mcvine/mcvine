@@ -33,6 +33,7 @@ tidy::
 # export
 
 EXPORT_PYTHON_MODULES = \
+	DOS.py \
 	E.py \
 	Q.py \
 	Sqe.py \

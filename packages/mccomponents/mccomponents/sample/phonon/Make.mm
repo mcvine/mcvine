@@ -36,6 +36,7 @@ tidy::
 EXPORT_PYTHON_MODULES = \
 	AbstractDOS.py \
 	AbstractDispersion.py \
+	PeriodicDispersion.py \
 	AbstractPhononKernel.py \
 	CoherentInelastic_PolyXtal_Kernel.py \
 	ComputationEngineRendererExtension.py \

@@ -44,8 +44,8 @@ namespace DANSE{
       virtual ~AbstractDispersion_3D();
 
       // methods
-      n_t nBranches() const;
-      n_t nAtoms() const;
+      virtual n_t nBranches() const;
+      virtual n_t nAtoms() const;
     
       virtual float_t energy(n_t branch_id, const K_t &k) const =0;
       virtual epsilon_t polarization(n_t branch_id, n_t atom_id, const K_t &k) const = 0;

@@ -12,19 +12,21 @@
 #
 
 
-'''
-Qgridinfo should contain python codes to give varaibles b1, b2, b3 and n1, n2, n3
+class PeriodicDispersion:
 
-b1, b2, b3 defines the reciprocal unit cell in which the grid is defined
-n1, n2, n3 are number of points along directions of b1, b2, b3 respectively
-'''
+    def __init__(self, dispersion, reciprocalcell):
+        self.dispersion = dispersion
+        self.reciprocalcell = reciprocalcell
+        self.dos = dispersion.dos
+        return
 
-def read( path ):
-    lines = open(path).readlines()
-    for line in lines:
-        exec line in locals()
-        continue
-    return (b1,b2,b3), (n1,n2,n3)
+
+    def identify(self, visitor):
+        return visitor.onPeriodicDispersion(self)
+    
+    
+    pass # end of PeriodicDispersion
+    
 
 
 # version

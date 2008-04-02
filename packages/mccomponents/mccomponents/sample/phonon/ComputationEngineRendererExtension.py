@@ -29,14 +29,15 @@ class ComputationEngineRendererExtension:
                 scatterer.__class__.__name__, scatterer.name )
 
         # environment temperature
-        environment = scatterer.environment
-        temperature = environment.temperature
+        #environment = scatterer.environment
+        #temperature = environment.temperature
+        temperature = 300
 
         # total mass of unitcell. for DW calculator. this might be reimplemented later.
         mass = sum( [ site.getAtom().mass for site in unitcell ] )
         # currently we need dos to calculate DW
         try:
-            dos = kernel.dos
+            dos = kernel.dispersion.dos
         except AttributeError:
             raise NotImplementedError, "Should implement a way to extract dos from dispersion"
         # c object of dos
@@ -51,12 +52,21 @@ class ComputationEngineRendererExtension:
         max_Q = kernel.max_Q
         nMCsteps_to_calc_RARV = kernel.nMCsteps_to_calc_RARV
         cdispersion = kernel.dispersion.identify(self)
+
+        meV= units.energy.meV
+        angstrom = units.length.angstrom
+        Ei = Ei/meV
+        max_omega = max_omega/meV
+        max_Q = max_Q * angstrom
+
+        seed = kernel.seed
         
         return self.factory.phonon_coherentinelastic_polyxtal_kernel(
-            cdispersion, cdw_calctor,
+            cdispersion, cdw_calculator,
             unitcell, 
             temperature, Ei,  max_omega, max_Q,
-            nMCsteps_to_calc_RARV)
+            nMCsteps_to_calc_RARV,
+            seed)
 
 
     def onLinearlyInterpolatedDispersionOnGrid(self, dispersion):
@@ -66,6 +76,13 @@ class ComputationEngineRendererExtension:
         E_npyarr = dispersion.E_npyarr
         return self.factory.linearlyinterpolateddispersion(
             natoms, Qaxes, eps_npyarr, E_npyarr )
+
+
+    def onPeriodicDispersion(self, dispersion):
+        core = dispersion.dispersion
+        ccore = core.identify(self)
+        rcell = dispersion.reciprocalcell
+        return self.factory.periodicdispersion( ccore, rcell )
     
 
     pass # end of ComputationEngineRendererExtension

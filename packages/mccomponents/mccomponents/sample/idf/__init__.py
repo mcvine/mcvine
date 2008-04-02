@@ -61,18 +61,31 @@ def writeSQE( sqehist, datapath = '.', Q='Q', E = 'E', Sqe = 'Sqe' ):
 
 def readDispersion(
     datapath, Omega2 = 'Omega2', Polarizations = 'Polarizations',
-    Qgridinfo = 'Qgridinfo'):
+    Qgridinfo = 'Qgridinfo', DOS = 'DOS'):
     "read dispersion in idf format"
 
     Qgridinfo = os.path.join( datapath, Qgridinfo )
     Omega2 = os.path.join( datapath, Omega2 )
     Polarizations = os.path.join( datapath, Polarizations )
+    DOS = os.path.join( datapath, DOS )
+
+    from DOS import read
+    dummy, v, Z = read( DOS )
+    # v is in terahertz, and it is not angular frequency
+    from math import pi
+    E = v * 2*pi * 1e12 * hertz2mev
+    dos = E,Z
 
     from Qgridinfo import read
-    nQ1, Qmax = read( Qgridinfo )
+    reciprocalcell, ngridpnts = read( Qgridinfo )
 
     from Omega2 import read as readOmega2
     omega2 = readOmega2( Omega2 )[1]
+    #!!!
+    # sometime omega2 has negative values. have to make sure all values are
+    # positive
+    omega2[ omega2<0 ] = 0
+    
     import numpy as N
     energies = N.sqrt(omega2) * hertz2mev
 
@@ -83,16 +96,28 @@ def readDispersion(
     assert temp == 2
     
     assert N_b_times_D == N_b*D
-    assert N_q == nQ1**D
-    polarizations.shape = nQ1, nQ1, nQ1, N_b_times_D, N_b, D, 2
+    assert D == len( ngridpnts )
+    assert D == len( reciprocalcell )
+    import operator
+    assert N_q == reduce( operator.mul, ngridpnts )
+
+    polarizations.shape = ngridpnts + (N_b_times_D, N_b, D, 2)
     
-    energies.shape = nQ1, nQ1, nQ1, N_b_times_D
+    energies.shape = ngridpnts + (N_b_times_D, )
 
     nAtoms = N_b
     dimension = D
-    Qaxis = -Qmax, 2.*Qmax/(nQ1-1), nQ1
-    Qaxes = Qaxis, Qaxis, Qaxis
-    return nAtoms, dimension, Qaxes, polarizations, energies
+    #Qaxes = [
+    #    (0, length(reciprocalcell[i]) / (ngridpnts[i] - 1), ngridpnts[i])
+    #    for i in range( D )
+    #    ]
+    Qaxes = zip(reciprocalcell, ngridpnts)
+    return nAtoms, dimension, Qaxes, polarizations, energies, dos
+
+
+def length( vector ):
+    import numpy.linalg as nl
+    return nl.norm( vector )
 
 
 def _hertz2meV():

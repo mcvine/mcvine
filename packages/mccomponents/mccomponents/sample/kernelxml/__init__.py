@@ -81,7 +81,7 @@ def removeRendererExtension( extension_class ):
 def create_parser():
     from Parser import Parser
     parser = Parser()
-    return
+    return parser
 
 
 renderer_extensions = []
@@ -92,7 +92,7 @@ def create_renderer():
     klass = _inherit( klasses )
     # need Renderer.__init__
     klass.__init__ = Renderer.__init__
-    return klasses()
+    return klass()
 
 #helpers
 def _inherit( klasses ):

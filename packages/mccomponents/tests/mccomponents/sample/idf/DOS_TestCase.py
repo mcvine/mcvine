@@ -16,22 +16,25 @@
 import unittestX as unittest
 import journal
 
-debug = journal.debug( "Dispersion_TestCase" )
-warning = journal.warning( "Dispersion_TestCase" )
+debug = journal.debug( "DOS_TestCase" )
+warning = journal.warning( "DOS_TestCase" )
 
 
 datapath = 'dispersion-example'
+filename = 'DOS'
+import os
+path = os.path.join( datapath, filename )
 
 class TestCase(unittest.TestCase):
 
+
     def test0(self):
-        from mccomponents.sample.idf import readDispersion
-        nAtoms, dimension, Qaxes, polarizations, energies, dos \
-                = readDispersion( datapath )
-        print nAtoms, dimension, Qaxes
-        print energies
+        from mccomponents.sample.idf.DOS import read
+        (filetype, version, comment), e, Z = read( path )
+        print filetype, version, comment
+        self.assertEqual( filetype, 'DOS' )
         import pylab
-        pylab.plot( dos[0], dos[1] )
+        pylab.plot( e, Z )
         pylab.show()
         raw_input('Press ENTER to continue...')
         return

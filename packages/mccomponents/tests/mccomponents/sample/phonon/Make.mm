@@ -26,6 +26,7 @@ PROJ_LIBRARIES = -L$(BLD_LIBDIR) -ljournal -lmcni
 
 BUILD_DIRS = \
 	bindings \
+	xml \
 
 OTHER_DIRS = \
 

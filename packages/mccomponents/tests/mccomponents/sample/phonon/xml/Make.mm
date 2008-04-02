@@ -13,7 +13,7 @@
 PROJECT = mccomponents
 PACKAGE = tests
 
-PROJ_TIDY += alltests.py $(PROJ_CPPTESTS) *.log
+PROJ_TIDY += alltests.py $(PROJ_CPPTESTS) *.rendered
 PROJ_CLEAN += alltests.py $(PROJ_CPPTESTS)
 
 PROJ_PYTESTS =  alltests.py
@@ -25,7 +25,7 @@ PROJ_LIBRARIES = -L$(BLD_LIBDIR) -ljournal -lmcni
 # directory structure
 
 BUILD_DIRS = \
-	reduction \
+	bindings \
 
 OTHER_DIRS = \
 

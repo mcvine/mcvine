@@ -12,6 +12,9 @@
 #
 
 
+from mccomponents.homogeneous_scatterer import scattererEngine
+
+
 def samplecomponent( name, sampleassembly_xml ):
     '''samplecomponent( name, xml ) -->  sample simulation component
 
