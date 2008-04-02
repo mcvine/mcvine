@@ -41,6 +41,7 @@ PROJ_SRCS = \
 	wrap_LinearlyInterpolatableAxis.cc \
 	wrap_epsilon_t.cc \
 	wrap_AbstractDispersion_3D.cc \
+	wrap_PeriodicDispersion_3D.cc \
 	wrap_LinearlyInterpolatedDispersionOnGrid_3D.cc \
 	wrap_Phonon_CoherentInelastic_PolyXtal_kernel.cc \
 	wrap_RandomNumberGenerator.cc \
