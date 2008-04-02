@@ -26,7 +26,10 @@ namespace wrap_mccomponents {
     typedef DANSE::phonon::PeriodicDispersion_3D w_t;
 
     class_<w_t, bases<base_t>, boost::noncopyable>
-      ("PeriodicDispersion_3D", init<const base_t &, const w_t::ReciprocalCell &>() )
+      ("PeriodicDispersion_3D",
+       init<const base_t &, const w_t::ReciprocalCell &>()
+       [with_custodian_and_ward<1,2>() ]
+       )
       ;
 
     class_<w_t::ReciprocalCell>
