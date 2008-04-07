@@ -62,6 +62,13 @@ class Binding:
         return cevents
 
 
+    def vector3(self, *args):
+        if len(args) == 1 and len(args[0]) == 3: v = args[0]
+        elif len(args) == 3: v = args
+        else: raise ValueError, "Need 3 elements: %r" % (args, )
+        return b.Vector3_double( *v )
+
+
     pass # end of Binding
     
 
