@@ -13,6 +13,7 @@
 
 
 #include <iostream>
+#include <cassert>
 #include "mcni/neutron.h"
 #include "mcni/AbstractNeutronComponent.h"
 #include "mcni/process_neutron_events.h"
