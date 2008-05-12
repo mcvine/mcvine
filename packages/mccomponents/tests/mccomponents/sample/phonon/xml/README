@@ -1,0 +1,5 @@
+Phonon_CoherentInelastic_PolyXtal_Kernel_TestCase has several tests.
+The most important one test is a full simulation of a monochromatic
+beam, a phonon scattering sample and a S(Q,E) monitor. 
+Use test-phonon_coherentinelastic_polyxtal_kernel.pml to configure
+that simulation.
