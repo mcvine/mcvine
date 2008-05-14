@@ -67,14 +67,32 @@ class Geometer(Component, base):
         try:
             return base.position( self, element )
         except:
-            return base.position( self, element.name )
+            try:
+                return base.position( self, element.name )
+            except:
+                #end to try out all aliases
+                for alias in element.aliases:
+                    try: return base.position( self, alias )
+                    except: pass
+                    continue
+                #still nothing
+                raise "Position of element %s not registered" % element.name
 
 
     def orientation(self, element):
         try:
             return base.orientation( self, element )
         except:
-            return base.orientation( self, element.name )
+            try:
+                return base.orientation( self, element.name )
+            except:
+                #end to try out all aliases
+                for alias in element.aliases:
+                    try: return base.orientation( self, alias )
+                    except: pass
+                    continue
+                #still nothing
+                raise "Orientation of element %s not registered" % element.name
 
 
     def _configure(self):
