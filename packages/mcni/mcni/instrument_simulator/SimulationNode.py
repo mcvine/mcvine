@@ -29,6 +29,10 @@ class SimulationNode(Connectable):
         return
 
 
+    def __str__(self):
+        return '%s(simulation node)' % self.component.name
+
+
     def _update(self):
         neutrons = self._inputs['neutrons']
         position = self._inputs['position']
