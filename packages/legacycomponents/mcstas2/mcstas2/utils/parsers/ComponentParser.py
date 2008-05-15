@@ -119,13 +119,18 @@ def save(): return Suppress("SAVE") + block.setResultsName("save")
 def finalize(): return Suppress("FINALLY") + block.setResultsName("finalize")
 
 
+def share(): return Suppress('SHARE') + block.setResultsName('share')
+
+
 def component():
     return header() \
+           + Optional( c_comment ) \
            + define() \
            + def_parms() \
            + set_parms() \
            + Optional(output_parms() ) \
            + state_parms() \
+           + Optional(share()) \
            + Optional(declare()) \
            + Optional(initialize()) \
            + trace() \

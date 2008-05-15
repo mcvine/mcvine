@@ -70,6 +70,4 @@ def createHHandCC( klass, pathToSave ):
 # version
 __id__ = "$Id$"
 
-# Generated automatically by PythonMill on Sun Jun 25 22:05:38 2006
-
 # End of file 

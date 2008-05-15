@@ -10,6 +10,7 @@ BUILD_DIRS = \
 
 
 OTHER_DIRS = \
+	share \
 	tests \
 
 
