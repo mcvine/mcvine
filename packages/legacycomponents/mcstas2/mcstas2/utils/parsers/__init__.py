@@ -69,6 +69,8 @@ def parseComponent( component_file ):
 def _format_share_str( share ):
     from ShareIncludeParser import include
     lines = share.split( '\n' )
+    if len(lines) == 0: return '', ''
+    if len(lines) == 1: return '', ''
     lines = lines[1:-1] # strip { and }
     
     start_of_header = 0
