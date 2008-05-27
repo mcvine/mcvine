@@ -30,6 +30,7 @@ def build( binding, site_package_path = None ):
     c_libs = binding.c_libs
     c_libdirs = binding.c_libdirs
     c_includes = binding.c_includes
+    c_defines = binding.c_defines
     
     from distutils.core import setup, Extension
     ext = Extension(
@@ -38,6 +39,7 @@ def build( binding, site_package_path = None ):
         include_dirs = c_includes,
         libraries = c_libs,
         library_dirs = c_libdirs,
+        define_macros = c_defines,
         )
 
     if len(python_sources):

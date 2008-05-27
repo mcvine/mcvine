@@ -48,6 +48,8 @@ def parseComponent( component_file ):
     # become the documentation.
     full_description = header.full_description.replace(
         name+'(', name+'(name, ')
+
+    share = _format_share_str( info.share )
     
     from ComponentInfo import ComponentInfo
     return ComponentInfo(
@@ -59,8 +61,42 @@ def parseComponent( component_file ):
         state_parameters,
         '%s' % info.declare,
         '%s' % info.initialize, '%s' % info.trace,
-        '%s' % info.save, '%s' % info.finalize
+        '%s' % info.save, '%s' % info.finalize,
+        share,
         )
+
+
+def _format_share_str( share ):
+    from ShareIncludeParser import include
+    lines = share.split( '\n' )
+    lines = lines[1:-1] # strip { and }
+    
+    start_of_header = 0
+    start_of_implementation = -1
+
+    # go through all lines and do the follinwg
+    # 1. find '%include' and replace that with correct c syntax
+    # 2. find section separators for header (.h) and implementation (.c) sections
+    token = '%include'
+    for i, line in enumerate(lines):
+        line = line.strip()
+        if line.startswith( token ):
+            header = include().parseString( line ).header
+            line = r'#include "mcstas2/share/%s.h"' % header
+            lines[ i ] = line
+            pass
+        if line == header_start_signature : start_of_header = i
+        elif line == implementation_start_signature: start_of_implementation = i
+        continue
+
+    if start_of_implementation == -1:
+        # did not find separator
+        raise RuntimeError, "invalid component share section. No separator to separate implementation code from header code: %s" % share
+
+    return ('\n'.join( lines[:start_of_implementation] ),
+            '\n'.join( lines[start_of_implementation:] ) )
+header_start_signature = '// ----------  header for SHARE ----------'
+implementation_start_signature = '// ----------  implementation for SHARE ----------'
 
 
 def _addDescription( parameters, descriptions ):

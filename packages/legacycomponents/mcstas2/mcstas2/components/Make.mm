@@ -15,8 +15,13 @@ PACKAGE = components
 
 
 RECURSE_DIRS = \
-    monitors \
-    sources \
+	contrib\
+	misc\
+	monitors\
+	obsolete\
+	optics\
+	samples\
+	sources\
 
 #--------------------------------------------------------------------------
 #

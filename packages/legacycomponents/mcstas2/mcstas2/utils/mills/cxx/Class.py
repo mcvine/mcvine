@@ -19,7 +19,10 @@ class Class:
                  parents = [],
                  public = [], private = [], 
                  public_methods = [], public_members = [],
-                 private_methods = [], private_members = []):
+                 private_methods = [], private_members = [],
+                 # this is not really a good structure. but we are in a hurry right now...
+                 helpers_header = [], helpers_implementation = [],
+                 ):
         self.name = name
         self.namespace = namespace
         self.headers_dependent_on = headers_dependent_on
@@ -30,6 +33,8 @@ class Class:
         self.public_members = public_members
         self.private_methods = private_methods
         self.private_members = private_members
+        self.helpers_header = helpers_header
+        self.helpers_implementation = helpers_implementation
         return
 
 

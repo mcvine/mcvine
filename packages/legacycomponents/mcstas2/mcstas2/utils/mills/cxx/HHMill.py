@@ -29,6 +29,8 @@ class HHMill(CxxClassMillBase):
             pass
 
         self._write('')
+        for line in klass.helpers_header: self._write( line )
+        self._write('')
 
         if klass.namespace:
             # DANSE::simulation --> DANSE, simulation

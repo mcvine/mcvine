@@ -42,6 +42,10 @@ def componentInfo2cppClass( compInfo ):
     save_method_body = compInfo.save
     finalize_method_body = compInfo.finalize
 
+    helpers_h, helpers_cc = compInfo.share
+    helpers_h = helpers_h.split( '\n' )
+    helpers_cc = helpers_cc.split( '\n' )
+
     ##     print class_name
     ##     for arg in ctor_args: print arg
     ##     print additional_member_declaration
@@ -62,7 +66,9 @@ def componentInfo2cppClass( compInfo ):
                            trace_method_body,
                            save_method_body,
                            finalize_method_body,
-                           headers_dependent_on)
+                           headers_dependent_on,
+                           helpers_h, helpers_cc,
+                           )
 
 
 from mcstas2.utils.mills.cxx.Class import Argument, Method, Member, Class, argument2Member
@@ -76,7 +82,8 @@ def createCppClass( name,
                     trace_method_body,
                     save_method_body,
                     finalize_body,
-                    headers_dependent_on):
+                    headers_dependent_on,
+                    helpers_h, helpers_cc):
 
     #ctor arguments become private members.
     # E_monitor( int nchan ) --> E_mointor( int in_nchan ) { nchan = in_nchan; }
@@ -138,6 +145,7 @@ def createCppClass( name,
         #private = private,
         public_members = members + additional_members,
         headers_dependent_on = headers_dependent_on,
+        helpers_header = helpers_h, helpers_implementation = helpers_cc,
         )
     
     return klass

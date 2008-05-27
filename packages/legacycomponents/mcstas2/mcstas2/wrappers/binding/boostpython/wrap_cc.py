@@ -28,14 +28,19 @@ void wrap()
   using namespace mcstas2;
   using namespace mcstas2::boostpython_binding;
   using namespace boost::python;
-  
+
+  // alias
   typedef mcstas2::%(classname)s w_t;
 
+  // wrap
   component_wrapper<w_t>::wrap
     ("%(classname)s", init<%(ctor_args)s>()
+    // ctor policies
     %(ctor_policies)s
     )
+    // expose data members
     %(expose_datamembers)s
+    // expose pointer methods
     %(expose_ptrmethods)s
     ;
 }
@@ -53,7 +58,8 @@ def generate( klass, path, headername = None ):
     #convert args to a string
     ctor_args_str = _build_args_str( ctor_args )
     ctor_policies_str = _build_policies( ctor_args )
-    datamembers = filter( lambda m: not _ispointer(m), klass.public_members )
+    datamembers = filter( lambda m: not _ispointer(m) and _isofbasictype(m),
+                          klass.public_members )
     expose_datamembers_str = _build_expose_datamembers( datamembers )
     ptr_members = _ptr_members( klass.public_members )
     ptrmethods = _build_ptrmethods( ptr_members, klass )
@@ -77,6 +83,11 @@ def generate( klass, path, headername = None ):
 def _ispointer( argument ):
     type = argument.type
     return type[-1] == '*' and not type.startswith( 'char' )
+
+
+def _isofbasictype( argument ):
+    type = argument.type
+    return type in [ 'double', 'int', 'float', 'char' ]
 
 
 def _build_args_str( args ):

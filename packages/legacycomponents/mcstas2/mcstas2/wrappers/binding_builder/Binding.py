@@ -18,7 +18,9 @@ class Binding:
 
     def __init__(self, python_package, binding_module,
                  c_headers, c_sources, python_sources,
-                 c_libs = [], c_libdirs = [], c_includes = []):
+                 c_libs = [], c_libdirs = [],
+                 c_includes = [], c_defines = [],
+                 ):
         self.python_package = python_package
         self.binding_module = binding_module
         self.c_headers = c_headers
@@ -27,6 +29,7 @@ class Binding:
         self.c_libs = c_libs
         self.c_libdirs = c_libdirs
         self.c_includes = c_includes
+        self.c_defines = c_defines
         return
 
 

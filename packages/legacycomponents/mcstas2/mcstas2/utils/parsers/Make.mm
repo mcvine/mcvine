@@ -35,7 +35,7 @@ EXPORT_PYTHON_MODULES = \
 	ComponentHeaderParser.py \
 	ComponentInfo.py \
 	ComponentParser.py \
-
+	ShareIncludeParser.py \
 
 
 export:: export-package-python-modules 

@@ -85,8 +85,9 @@ def wrap( componentfilename, componentcategory,
         c_headers = [ hh ],
         c_sources = bindingsources['c'] + [cc],
         python_sources = bindingsources['python'],
-        c_libs = ['mcstas2', 'mcni' ] + binding.libstolink,
+        c_libs = ['mcstas2', 'mcstas2_share', 'mcni' ] + binding.libstolink,
         c_includes = [ ],
+        c_defines = binding.define_macros,
         dependencies = [ bindingtype, 'caltech-config', 'mcstas2', 'mcni' ],
         )
     from binding_builder import builder

@@ -76,7 +76,8 @@ def build_binding(binding):
     makemm.generate( tmpdir )
 
     localdef = local_def.Generator(
-        includes = binding.c_includes )
+        includes = binding.c_includes,
+        defines = binding.c_defines )
     localdef.generate( tmpdir )
 
     #run mm

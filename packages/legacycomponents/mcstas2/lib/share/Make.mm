@@ -1,8 +1,8 @@
 
 include local.def
 
-PROJECT = mcstas2
-PACKAGE = libmcstas2
+PROJECT = mcstas2/share
+PACKAGE = libmcstas2_share
 
 PROJ_SAR = $(BLD_LIBDIR)/$(PACKAGE).$(EXT_SAR)
 PROJ_DLL = $(BLD_BINDIR)/$(PACKAGE).$(EXT_SO)
@@ -10,22 +10,11 @@ PROJ_TMPDIR = $(BLD_TMPDIR)/$(PROJECT)/$(PACKAGE)
 PROJ_CLEAN += $(PROJ_SAR) $(PROJ_DLL)
 
 PROJ_SRCS = \
-	Component.cc \
-	Gravity.cc \
-	assert.cc \
-	detector_outputs.cc \
-	exception.cc \
-	geometry.cc \
-	misc_macros.cc \
-	propagators.cc \
-	random_numbers.cc \
+	read_table-lib.cc \
 
 # directory structure
 
 BUILD_DIRS = \
-	mcni_integration \
-	boostpython_binding \
-	share \
 
 OTHER_DIRS = \
 
@@ -75,22 +64,7 @@ export:: export-headers export-libraries
 endif
 
 EXPORT_HEADERS = \
-	Component.h \
-	Gravity.h \
-	abs.h \
-	assert.h \
-	cross_ref_macros.h \
-	detector_output_macros.h \
-	detector_outputs.h \
-	exception.h \
-	geometry.h \
-	mcstas2.h \
-	misc_macros.h \
-	phys_constants.h \
-	propagator_macros.h \
-	propagators.h \
-	random_numbers.h \
-	tracing_macros.h \
+	read_table-lib.h \
 
 EXPORT_LIBS = $(PROJ_SAR)
 EXPORT_BINS = $(PROJ_DLL)

@@ -32,7 +32,8 @@ class ComponentInfo:
                  output_parameters = [],
                  state_parameters = [],
                  declare = '',
-                 initialize='', trace='', save='', finalize=''
+                 initialize='', trace='', save='', finalize='',
+                 share = ('', ''),
                  ):
         self.name = name
         self.copyright = copyright
@@ -46,6 +47,7 @@ class ComponentInfo:
         self.trace = trace
         self.save = save
         self.finalize = finalize
+        self.share = share
         return
 
     def __str__(self):

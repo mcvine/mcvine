@@ -27,6 +27,9 @@ class CCMill(CxxClassMillBase):
         self._write("#include \"%s.h\"" % klass.name)
         self._write('')
 
+        for line in klass.helpers_implementation: self._write( line )
+        self._write('')
+
         if klass.namespace :
             # DANSE::simulation --> DANSE, simulation
             namespaces = klass.namespace.split('::') 
