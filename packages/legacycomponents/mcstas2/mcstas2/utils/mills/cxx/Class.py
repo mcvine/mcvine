@@ -70,7 +70,9 @@ def example():
                    [Argument("double", "dummy"),
                     Argument("double", "x", 1.0),
                     Argument("int", "j", 1),
-                    Argument("char *", "name", "hee")],
+                    Argument("char *", "name", "hee"),
+                    Argument("char *", "password", 0),
+                    ],
                    ["std::cout << x << std::endl;",
                     "m_x = x;",
                     "m_arr = new double[10];"])
