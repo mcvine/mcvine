@@ -57,14 +57,22 @@
 *******************************************************************************/
 
 DEFINE COMPONENT Guide
-DEFINITION PARAMETERS (string reflect=0)
-SETTING PARAMETERS (w1, h1, w2, h2, l, R0=0.99, Qc=0.0219, alpha=6.07, m=2, W=0.003)
+DEFINITION PARAMETERS ()
+SETTING PARAMETERS (w1, h1, w2, h2, l, R0=0.99, Qc=0.0219, alpha=6.07, m=2, W=0.003, 
+		    char *reflect="")
 OUTPUT PARAMETERS (pTable)
 STATE PARAMETERS (x,y,z,vx,vy,vz,t,s1,s2,p)
 
 SHARE
 %{
+// ----------- added by Jiao Lin --------
+// ----------  header for SHARE ----------
+// ----------- added by Jiao Lin --------
 %include "read_table-lib"
+
+// ----------- added by Jiao Lin --------
+// ----------  implementation for SHARE ----------
+// ----------- added by Jiao Lin --------
 %}
 
 DECLARE
@@ -74,10 +82,12 @@ DECLARE
 
 INITIALIZE
 %{
+/*
   if (mcgravitation) fprintf(stderr,"WARNING: Guide: %s: "
     "This component produces wrong results with gravitation !\n"
     "Use Guide_gravity.\n",
     NAME_CURRENT_COMP);
+*/
 
   if (reflect && strlen(reflect)) {
     if (Table_Read(&pTable, reflect, 1) <= 0) /* read 1st block data from file into pTable */
