@@ -119,7 +119,7 @@
 
 // ----------- added by Jiao Lin --------
 #include <string.h>
-#include <math.H>
+#include <math.h>
 #include "mcstas2/misc_macros.h"
 // ----------- added by Jiao Lin --------
 
