@@ -61,12 +61,20 @@ class ComponentInfo:
     pass # end of ComponentInfo
 
 
+
+def _str( s ):
+    # 0 is NULL pointer. it is difficult to have a NULL pointer in python.
+    # so we just use an empty string.
+    if s == '0': return ''
+    return str(s)
 value_converters = {
     'float': float,
     'double': float,
     'int': int,
-    'char *': str,
+    'char *': _str,
     }
+
+
 
 
 class Parameter:
