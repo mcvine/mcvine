@@ -17,25 +17,21 @@ import unittestX as unittest
 import journal
 
 
-componentname = 'Single_crystal'
-category = 'samples'
+componentname = 'Arm'
+category = 'optics'
 
 class TestCase(unittest.TestCase):
 
     def test(self):
-        "wrap Single_crystal"
+        "wrap Arm"
+        
         from mcstas2 import componentfactory
         factory = componentfactory( category, componentname )
+        
         component = factory(
             'component',
-            xwidth=0.01, yheight=0.01, zthick=0.01,
-            delta_d_d=1e-4, mosaic = 5,
-            ax = 3.8186, ay = 0, az = 0,
-            bx = 0, by = 3.8843, bz = 0,
-            cx = 0, cy = 0, cz = 11.6777,
-            reflections="YBaCuO.lau"
             )
-
+        
         import mcni
         neutrons = mcni.neutron_buffer( 5 )
         for i in range(5):

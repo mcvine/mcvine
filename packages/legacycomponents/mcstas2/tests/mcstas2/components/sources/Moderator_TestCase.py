@@ -24,7 +24,7 @@ class TestCase(unittest.TestCase):
 
     def test(self):
         "wrap Moderator"
-        from mcstas2.components import componentfactory
+        from mcstas2 import componentfactory
         factory = componentfactory( category, componentname )
         component = factory(
             'component',

@@ -27,6 +27,7 @@ PROJ_LIBRARIES = -L$(BLD_LIBDIR) -ljournal -lmcstas2
 BUILD_DIRS = \
 	optics \
 	samples \
+	sources \
 
 OTHER_DIRS = \
 
