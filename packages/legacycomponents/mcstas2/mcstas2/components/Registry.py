@@ -72,7 +72,7 @@ class Registry:
         if module:
             self.register( category, type, module )
         else:
-            raise NotRegisteredError, "component %r of category %r "
+            raise NotRegisteredError, "component %r of category %r " % (type, category)
         
         return module
 
