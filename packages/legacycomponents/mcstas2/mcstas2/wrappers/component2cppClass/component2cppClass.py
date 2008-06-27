@@ -187,8 +187,10 @@ def _parse_declaration( declaration ):
     for var in vars:
         var = var.strip()
         if var.startswith( '*' ):
-            type = typestr + '*'
-            var = var[1:].strip()
+            stars = var[ : var.rfind( '*' ) + 1 ]
+            for star in stars: assert star == '*', "Don't know how to parse %r" % var
+            type = typestr + stars
+            var = var[len(stars):].strip()
         else:
             type = typestr
             pass

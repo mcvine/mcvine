@@ -142,6 +142,7 @@ def _ptr_members( members ):
 
 
 def _build_ptrmethods( ptrs, klass ):
+    ptrs = _ptrs_having_accessor_methods( ptrs )
     return '\n'.join( [ _build_ptrmethod( ptr, klass ) for ptr in ptrs ] )
 
 
@@ -151,13 +152,23 @@ def _build_ptrmethod( ptr, klass ):
 
 
 def _build_expose_ptrmethods( ptrs ):
+    ptrs = _ptrs_having_accessor_methods( ptrs )
     return '\n'.join( [ _build_expose_ptrmethod( ptr ) for ptr in ptrs ] )
 
 
 def _build_expose_ptrmethod( ptr ):
     return '    .def( "get%s", get%s)' % (
         ptr.name, ptr.name )
-    
+
+
+
+def _ptrs_having_accessor_methods( ptrs ):
+    """some pointers we don't know to build accessor methods, we need
+    to filter thme out. this method return a list of
+    pointers that can have accessor methods"""
+    # pointer to pointer (double **, for example) is not yet handled
+    return filter( lambda p: not p.type[-2:] == '**', ptrs)
+
 
 # version
 __id__ = "$Id$"
