@@ -70,7 +70,7 @@ def set_parms():
     parameter_declr = Group( parameter_type + parameter_name + Optional( Suppress('=') + parameter_value) ).setResultsName( "parameter" )
     parameter_list = delimitedList( parameter_declr ) 
     d = Suppress("SETTING") + Suppress("PARAMETERS") \
-        + Suppress("(") + parameter_list.setResultsName("setting_parameters") \
+        + Suppress("(") + Optional( parameter_list.setResultsName("setting_parameters") )\
         + Suppress(")")  + Optional(comment)
     return d
 
