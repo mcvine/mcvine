@@ -132,6 +132,7 @@ class Registry:
         if category in types:
             if type in types[category]: return
             types[category].append( type )
+            return
         else:
             types[category] = [type]
             return
