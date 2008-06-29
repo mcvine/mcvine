@@ -22,6 +22,10 @@ warning = journal.warning( "mcni.components.test" )
 
 
 neutron_storage_path = 'neutrons'
+ntotneutrons = 53
+packetsize = 10
+npackets = ntotneutrons/packetsize
+
 import mcni
 neutron = mcni.neutron( r = (0,0,0),
                         v = (1000,2000,3000),
@@ -31,6 +35,15 @@ neutron = mcni.neutron( r = (0,0,0),
 
 
 from mcni.AbstractComponent import AbstractComponent
+class Source( AbstractComponent ):
+
+    def process(self, neutrons):
+        for i in range(len(neutrons)):
+            neutrons[i] = mcni.neutron( r = (0,0,i), v = (1000, 2000, 3000) )
+            continue
+        return neutrons
+    
+    
 class Verifier( AbstractComponent ):
 
     def __init__(self, name, testFacility):
@@ -39,10 +52,14 @@ class Verifier( AbstractComponent ):
         return
 
     def process(self, neutrons):
+        for n in neutrons: print n
         for i in range(len(neutrons)):
             r = list( neutrons[i].state.position )
+
+            index = i % (npackets*packetsize)
+            
             self.testFacility.assertVectorAlmostEqual(
-                r, (0,0,-1) )
+                r, (0,0,index-1) )
             
             v = list( neutrons[i].state.velocity )
             self.testFacility.assertVectorAlmostEqual(
@@ -66,18 +83,19 @@ class TestCase(unittest.TestCase):
 
     def test1(self):
         'neutron --> storage'
-        from mcni.components.MonochromaticSource import MonochromaticSource
-        component1 = MonochromaticSource('source', neutron)
+        #from mcni.components.MonochromaticSource import MonochromaticSource
+        #component1 = MonochromaticSource('source', neutron)
+        component1 = Source( 'source' )
         
         from mcni.components.NeutronToStorage import NeutronToStorage
-        component2 = NeutronToStorage( 'storage', neutron_storage_path)
+        component2 = NeutronToStorage( 'storage', neutron_storage_path, packetsize = packetsize)
         instrument = mcni.instrument( [component1, component2] )
         
         geometer = mcni.geometer()
         geometer.register( component1, (0,0,0), (0,0,0) )
         geometer.register( component2, (0,0,1), (0,0,90) )
 
-        neutrons = mcni.neutron_buffer( 1 )
+        neutrons = mcni.neutron_buffer( ntotneutrons )
 
         mcni.simulate( instrument, geometer, neutrons )
         return
@@ -93,8 +111,8 @@ class TestCase(unittest.TestCase):
         geometer = mcni.geometer()
         geometer.register( component1, (0,0,0), (0,0,0) )
         geometer.register( component2, (0,0,0), (0,0,0) )
-
-        neutrons = mcni.neutron_buffer( 1 )
+        
+        neutrons = mcni.neutron_buffer( packetsize*(npackets+1) )
 
         mcni.simulate( instrument, geometer, neutrons )
         return
