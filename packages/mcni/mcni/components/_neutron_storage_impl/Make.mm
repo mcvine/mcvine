@@ -2,7 +2,7 @@
 #
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
-#                                Jiao Lin
+#                                 Jiao Lin
 #                        (C) 2008 All Rights Reserved
 #
 # <LicenseText>
@@ -10,11 +10,10 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 PROJECT = mcni
-PACKAGE = components
+PACKAGE = components/_neutron_storage_impl
 
 
 BUILD_DIRS = \
-	_neutron_storage_impl  \
 
 
 RECURSE_DIRS = $(BUILD_DIRS)
@@ -36,13 +35,8 @@ update: clean
 # export
 
 EXPORT_PYTHON_MODULES = \
-	MonochromaticSource.py \
-	NeutronFromStorage.py \
-	NeutronToStorage.py \
-	NeutronsOnCone_FixedQE.py \
-	Registry.py \
+	PacketSizeStore.py \
 	__init__.py \
-	repositories.py \
 
 
 export:: export-package-python-modules
@@ -50,6 +44,6 @@ export:: export-package-python-modules
 
 
 # version
-# $Id: Make.mm 1212 2006-11-21 21:59:44Z linjiao $
+# $Id$
 
 # End of file

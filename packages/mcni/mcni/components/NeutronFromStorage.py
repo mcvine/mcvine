@@ -86,10 +86,9 @@ class NeutronFromStorage( AbstractComponent ):
 
 
     def _packetsize(self):
-        path = self.path
-        packetsize = long(
-            open( os.path.join( path, packetsizefile ) ).read() )
-        return packetsize
+        from _neutron_storage_impl import packetsize_store
+        path = os.path.join( self.path, packetsizefile )
+        return packetsize_store(path).getsize()
 
 
     def _neutronfilesize(self):
