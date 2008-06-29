@@ -13,6 +13,20 @@
 
 
 
+'''
+Test of neutrons storage components
+
+The behavior to test:
+
+ - write neutrons to storage
+ - read neutrons from storage
+ - set packet size when write to storage
+ - when writing neutrons to storage, the last packet (if it is not a complete
+   packet) will be lost
+'''
+
+
+
 import unittestX as unittest
 import journal
 
