@@ -39,6 +39,26 @@ namespace mcni {
   
   inline void NEB_resize( Neutron::EventBuffer &neb, size_t n, const Neutron::Event & ne ) 
   { neb.resize( n, ne ); }
+
+  inline void NEB_clear( Neutron::EventBuffer &neb)
+  {
+    neb.clear();
+  }
+
+  inline void Evts_append_events_it
+  (Neutron::Events &evts, Neutron::Events::const_iterator eit1, Neutron::Events::const_iterator eit2 ) 
+  {
+    assert (eit2-eit1>=0);
+    size_t n = evts.size();
+    evts.resize( n+eit2-eit1 );
+    std::copy( eit1, eit2, evts.begin() + n );
+  }
+
+  inline void Evts_append_events
+  (Neutron::Events & evts, const Neutron::Events & newevts, size_t start_index, size_t end_index )
+  {
+    Evts_append_events_it( evts, newevts.begin()+start_index, newevts.begin()+end_index );
+  }
 }
 
 
@@ -86,6 +106,8 @@ void wrap_neutron()
      init< size_t > ()  )
     .def("snapshot", &Neutron::EventBuffer::snapshot)
     .def("resize", &NEB_resize)
+    .def("clear", &NEB_clear)
+    .def("append", &Evts_append_events)
     .def("fromCevents", &events_fromCevents)
     .def("toCevents", &events_toCevents)
     ;
