@@ -1,0 +1,5 @@
+
+def moderator():
+    from mcni.pyre_support import componentfactory as component
+    return component('sources', 'SNS_source_r1', supplier = 'mcstas2')\
+           ( 'sns_moderator_beamline18' )

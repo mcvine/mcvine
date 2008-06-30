@@ -1,0 +1,5 @@
+
+def energy_monitor1():
+    from mcni.pyre_support import componentfactory as component
+    f = component('monitors', 'E_monitor', supplier = 'mcstas2')
+    return f('energy_monitor1') 

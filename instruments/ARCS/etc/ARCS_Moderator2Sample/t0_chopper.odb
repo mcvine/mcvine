@@ -1,0 +1,5 @@
+
+def t0_chopper():
+    from mcni.pyre_support import componentfactory as component
+    f =  component('optics', 'Arm', supplier = 'mcstas2')
+    return f('t0_chopper') 

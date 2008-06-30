@@ -1,0 +1,6 @@
+
+def neutron_recorder():
+    from mcni.pyre_support import componentfactory as component
+    f = component('monitors', 'NeutronToStorage')
+    return  f('neutron_recorder')
+
