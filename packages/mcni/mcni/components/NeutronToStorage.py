@@ -59,11 +59,12 @@ class NeutronToStorage( AbstractComponent ):
 
         from _neutron_storage_impl import packetsize_store
         self._packetsize_store = packetsize_store( os.path.join( self.path, packetsizefile ) )
-        
+
         if packetsize:
             # if user supplied a packet size
             
             size = self._packetsize_store.getsize()
+
             if size:
                 #if there is also a predefined packet size, we should
                 #compare this predefined size to the user defined size
@@ -135,7 +136,7 @@ class NeutronToStorage( AbstractComponent ):
 
             # move the remained neutrons to buffer
             buffer.clear()
-            buffer.append( neutrons, start, len(neutrons) + 1 )
+            buffer.append( neutrons, start, len(neutrons) )
 
         return
 
@@ -150,7 +151,7 @@ class NeutronToStorage( AbstractComponent ):
                 self.path, packetsize, n )
 
         filename = self._uniquefilename()
-        
+
         from mcni.neutron_storage import dump
         dump( packet, os.path.join( self.path, filename ) )
 

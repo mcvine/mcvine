@@ -24,7 +24,11 @@ class PacketSizeStore:
 
     def __init__(self, path):
         self.path = path
-        self.handle = open(path, 'w+')
+        import os
+        if os.path.exists( path ):
+            self.handle = open(path, 'r')
+        else:
+            self.handle = open(path, 'w+')
         self.size = None
         return
 
@@ -34,7 +38,7 @@ class PacketSizeStore:
             text = self.handle.read()
             if len(text) == 0: return 
             size = long( text )
-            self.size = long( self.handle.read() )
+            self.size = size
         return self.size
 
 

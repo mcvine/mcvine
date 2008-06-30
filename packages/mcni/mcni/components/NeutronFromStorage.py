@@ -93,6 +93,7 @@ class NeutronFromStorage( AbstractComponent ):
 
     def _neutronfilesize(self):
         packetsize = self._packetsize()
+        if packetsize is None: raise RuntimeError, "neutron storage not established: %s"  % self.path
         neutronfilesize = filesize( packetsize )
         return neutronfilesize
 
