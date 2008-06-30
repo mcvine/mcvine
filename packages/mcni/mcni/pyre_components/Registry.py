@@ -19,7 +19,6 @@ class Registry(base):
     
     def setup_repos(self):
         import repositories
-        print repositories
         from repositories import all as repos
         repos = list(repos)
         repos.reverse()

@@ -24,23 +24,28 @@ class NeutronToStorage( AbstractComponent ):
         import pyre.inventory as pinv
         path = pinv.str( 'path', default = '' )
         append = pinv.bool( 'append', default = False )
+        packetsize = pinv.int( 'packetsize', default = 100 )
         pass
     
 
     def process(self, neutrons):
-        return self.engine.process( neutrons )
+        ret = self.engine.process( neutrons )
+        return ret
     
     
     def _configure(self):
         AbstractComponent._configure(self)
         self.path = self.inventory.path
         self.append = self.inventory.append
+        self.packetsize = self.inventory.packetsize
         return
 
 
     def _init(self):
         AbstractComponent._init(self)
-        self.engine = enginefactory( self.name, self.path, self.append )
+        if self._showHelpOnly: return
+        self.engine = enginefactory(
+            self.name, self.path, self.append, packetsize = self.packetsize )
         return
 
     pass # end of Source

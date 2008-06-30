@@ -21,7 +21,8 @@ warning = journal.warning( "mcni.pyre_components.test" )
 
 
 
-neutron_storage_path = 'neutrons' 
+neutron_storage_path = 'neutrons'
+neutron_storage_packetsize = 1
 
 from mcni.pyre_support.Instrument import Instrument as base
 class Instrument1(base):
@@ -53,6 +54,7 @@ class Instrument1(base):
 
         storage = self.inventory.storage
         storage.inventory.path = neutron_storage_path
+        storage.inventory.packetsize = neutron_storage_packetsize
         return
     
     pass # end of Instrument1

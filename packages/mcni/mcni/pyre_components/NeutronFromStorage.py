@@ -37,6 +37,7 @@ class NeutronFromStorage( AbstractComponent ):
 
     def _init(self):
         AbstractComponent._init(self)
+        if self._showHelpOnly: return
         self.engine = enginefactory( self.name, self.path )
         return
 
