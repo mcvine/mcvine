@@ -16,7 +16,7 @@
 
 <inventory>
 
-    <component name="tofMonitor1">
+    <component name="tof_monitor1">
       <property name="xmin"> -0.5 </property>
       <property name="xmax">  0.5 </property>
       <property name="ymin"> -0.5 </property>
