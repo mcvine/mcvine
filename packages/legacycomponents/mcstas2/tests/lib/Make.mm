@@ -17,7 +17,7 @@ PROJ_TIDY += $(PROJ_CPPTESTS)
 PROJ_CLEAN += $(PROJ_CPPTESTS)
 
 PROJ_PYTESTS =  
-PROJ_CPPTESTS = testGravity testComponent test_detector_output_macros
+PROJ_CPPTESTS = testGravity testComponent test_detector_output_macros test_random_numbers
 PROJ_TESTS = $(PROJ_PYTESTS) $(PROJ_CPPTESTS)
 PROJ_LIBRARIES = -L$(BLD_LIBDIR) -lmcstas2
 
@@ -50,6 +50,9 @@ testComponent: testComponent.cc
 
 test_detector_output_macros: test_detector_output_macros.cc 
 	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ test_detector_output_macros.cc $(PROJ_LIBRARIES)
+
+test_random_numbers: test_random_numbers.cc 
+	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ test_random_numbers.cc $(PROJ_LIBRARIES)
 
 
 # version
