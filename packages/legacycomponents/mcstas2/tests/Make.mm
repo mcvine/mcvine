@@ -17,7 +17,8 @@ PROJECT = mcstas2
 
 BUILD_DIRS = \
     lib \
-    python \
+    mcstas2bpmodule \
+    mcstas2 \
 
 OTHER_DIRS = \
 

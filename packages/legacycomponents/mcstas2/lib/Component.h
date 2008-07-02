@@ -25,6 +25,9 @@ namespace mcstas2{
 
   public:
 
+    // types
+    typedef unsigned int seed_t;
+
     // meta-methods
     Component( const char * name );
     Component( );
@@ -49,6 +52,9 @@ namespace mcstas2{
     virtual void save( );
     /// finalize everything. this is almost just dtor.
     virtual void finalize( );
+
+    /// change seed for random number generator
+    void changeSeedForRandomNumberGenerator( const seed_t & seed );
 
   protected:
 

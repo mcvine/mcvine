@@ -12,8 +12,10 @@
 //
 
 
-#include "Component.h"
 #include <iostream>
+
+#include "Component.h"
+#include "random_numbers.h"
 
 
 mcstas2::Component::Component( const char * name )
@@ -51,6 +53,14 @@ mcstas2::Component::gravity() const
 void 
 mcstas2::Component::setName( const char * name ) 
 { m_name = name; }
+
+
+void 
+mcstas2::Component::changeSeedForRandomNumberGenerator
+( const seed_t & seed ) 
+{
+  srandom( seed );
+}
 
 
 void mcstas2::Component::save()
