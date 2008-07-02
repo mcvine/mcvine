@@ -32,6 +32,7 @@ tidy::
 EXPORT_PYTHON_MODULES = \
 	IQE_monitor.py \
 	E_monitor.py \
+	TOF_monitor2.py \
 	__init__.py \
 	common.py \
 
