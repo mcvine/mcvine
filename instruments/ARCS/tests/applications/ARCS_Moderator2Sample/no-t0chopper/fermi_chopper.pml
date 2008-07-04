@@ -27,6 +27,7 @@
       <property name="bw"> 0.00035 </property>
       <property name="nchan"> 32 </property>
       <property name="blader"> 0.5801 </property>
+      <property name="max_iter"> 10000 </property>
     </component>
     
 </inventory>
