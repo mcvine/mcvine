@@ -16,7 +16,6 @@
 
 
 #include "mccomposite/mccomposite.h"
-#include "mccomponents/math/random.h"
 
 
 namespace mccomponents{
@@ -95,7 +94,6 @@ namespace mccomponents{
     // data
     AbstractScatteringKernel & m_kernel;
     Weights m_weights;
-    random::Generator m_randomnumbergenerator;
   };
 
 

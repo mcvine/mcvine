@@ -12,6 +12,7 @@
 //
 
 
+#include <cassert>
 #include <iostream>
 #include "mccomponents/kernels/sample/phonon/LinearlyInterpolatedGridData_1D.h"
 

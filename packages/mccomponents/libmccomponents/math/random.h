@@ -19,30 +19,12 @@
 
 namespace mccomponents {
 
-  namespace random {
+  namespace math {
 
-    /// random number generator
-    class Generator {
-    public:
-      
-      // meta methods
-      Generator();
-      Generator( double seed );
-      ~Generator();
+    double random( double min, double max );
+    double random01();
+    void srandom( unsigned int );
 
-      // methods
-      /// generate a random number between min and max 
-      double generate( double min, double max );
-      /// generate a random number between 0 and 1
-      double generate01();
-
-    private:
-
-      // hide implementation 
-      struct Details;
-      std::auto_ptr<Details> m_details;
-  
-    };
   }
 }
 

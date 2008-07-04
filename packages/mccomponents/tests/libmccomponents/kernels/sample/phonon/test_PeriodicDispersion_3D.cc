@@ -13,6 +13,7 @@
 
 
 #include <iostream>
+#include <cassert>
 #include "LinearlyInterpolatedDispersionOnGrid_3D_Example.h"
 #include "mccomponents/kernels/sample/phonon/PeriodicDispersion_3D.h"
 

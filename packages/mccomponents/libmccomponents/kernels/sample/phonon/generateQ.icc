@@ -21,15 +21,14 @@
 template <typename K_t, typename float_t>
 K_t
 mccomponents::kernels::phonon::Q_inCube
-(const float_t & Qcutoff, 
- mccomponents::random::Generator & random_number_generator)
+(const float_t & Qcutoff)
 {
   K_t Q;
     
   // == pick Q vector ==
-  Q[0] = random_number_generator.generate(-Qcutoff, Qcutoff ) ;
-  Q[1] = random_number_generator.generate(-Qcutoff, Qcutoff ) ;
-  Q[2] = random_number_generator.generate(-Qcutoff, Qcutoff ) ;
+  Q[0] = math::random(-Qcutoff, Qcutoff ) ;
+  Q[1] = math::random(-Qcutoff, Qcutoff ) ;
+  Q[2] = math::random(-Qcutoff, Qcutoff ) ;
     
   return Q;
 }

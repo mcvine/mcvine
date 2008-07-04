@@ -1,3 +1,5 @@
+#include <cassert>
+
 #include "journal/debug.h"
 
 #include "CoherentInelastic_PolyXtal_Example.h"

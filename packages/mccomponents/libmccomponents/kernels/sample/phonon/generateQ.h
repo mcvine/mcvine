@@ -32,8 +32,7 @@ namespace mccomponents{
       template <typename K_t, typename float_t>
       K_t
       Q_inCube
-      (const float_t & Qcutoff, 
-       mccomponents::random::Generator & random_number_generator);
+      (const float_t & Qcutoff);
 
     }
 

@@ -16,15 +16,16 @@
 #include "mccomponents/math/random.h"
 
 
+using namespace mccomponents;
+
 void test1()
 {
-  mccomponents::random::Generator generator;
   for (size_t i=0; i<10; i++)
-    std::cout << generator.generate01() << ", ";
+    std::cout << math::random01() << ", ";
   std::cout << std::endl;
 
   for (size_t i=0; i<10000000; i++) {
-    double t = generator.generate01() ;
+    double t = math::random01() ;
     assert( t>0.0 && t <1.0 );
   }
 }

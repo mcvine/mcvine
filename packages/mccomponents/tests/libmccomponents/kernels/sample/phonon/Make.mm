@@ -28,7 +28,7 @@ PROJ_CPPTESTS = test_LinearlyInterpolatedGridData_3D \
 
 
 PROJ_TESTS = $(PROJ_PYTESTS) $(PROJ_CPPTESTS)
-PROJ_LIBRARIES = -L$(BLD_LIBDIR) -ljournal -lmcni -lmccomposite -lmccomponents
+PROJ_LIBRARIES = -L$(BLD_LIBDIR) -ljournal -lmcni -lmccomposite -lmccomponents -lmcstas_compact
 PROJ_CXX_DEFINES += DEEPDEBUG
 
 

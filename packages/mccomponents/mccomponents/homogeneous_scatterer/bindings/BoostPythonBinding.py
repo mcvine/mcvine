@@ -27,6 +27,10 @@ class BoostPythonBinding(base, Interface):
     '''factory class of boost python computing engine of scatterers
     '''
 
+    def srandom(self, seed):
+        return binding.srandom( seed )
+    
+
     def compositekernel(self, kernels):
         return binding.CompositeScatteringKernel( kernels )
 

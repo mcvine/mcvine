@@ -25,7 +25,6 @@
 
 
 struct mccomponents::kernels::SQEkernel::Details {
-  random::Generator random_number_generator;
 
 #ifdef DEBUG
   const static char jrnltag[];
@@ -100,7 +99,7 @@ mccomponents::kernels::SQEkernel::scatter
   // randomly pick energy transfer
   double E;
   if (m_Emin > Ei) return; // if Ei is too small, won't scatter. nothing happen
-  E = m_details->random_number_generator.generate( m_Emin, std::min(Ei, m_Emax) );
+  E = math::random( m_Emin, std::min(Ei, m_Emax) );
 #ifdef DEBUG
   m_details->debug 
     << journal::at(__HERE__)
@@ -118,7 +117,7 @@ mccomponents::kernels::SQEkernel::scatter
   double Qmin = std::max(m_Qmin, std::abs(ki-kf)),
     Qmax = std::min(m_Qmax, ki+kf);
   if (Qmax<Qmin) return; // no scatter
-  double Q = m_details->random_number_generator.generate(Qmin, Qmax);
+  double Q = math::random(Qmin, Qmax);
 #ifdef DEBUG
   m_details->debug 
     << journal::at(__HERE__)
@@ -137,7 +136,7 @@ mccomponents::kernels::SQEkernel::scatter
 
   double sint = sqrt(1-cost*cost);
 
-  double phi = m_details->random_number_generator.generate(0, 2 * physics::pi);
+  double phi = math::random(0, 2 * physics::pi);
 
   double cosp = cos(phi), sinp = sin(phi);
 

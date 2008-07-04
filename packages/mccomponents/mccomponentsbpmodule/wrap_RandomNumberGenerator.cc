@@ -23,14 +23,8 @@ namespace wrap_mccomponents {
   {
     using namespace boost::python;
 
-    typedef mccomponents::random::Generator w_t;
-
-    class_<w_t, boost::noncopyable >
-      ("RandomNumberGenerator",
-       init<double>()
-       )
-      .def( init<>() )
-      ;
+    def( "srandom", &mccomponents::math::srandom );
+    def( "random", &mccomponents::math::random );
   }
 }
 

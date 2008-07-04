@@ -19,61 +19,21 @@
 #endif
 
 
-struct mccomponents::random::Generator::Details{
-
-  static char jrnltag[] ;
-
-  Details( ) 
-  {
-    using namespace std;
-    unsigned seed = time(0);
-#ifdef DEBUG
-    journal::debug_t debug( jrnltag );
-    debug << journal::at(__HERE__)
-	  << "seed=" << seed << journal::endl;
-#endif
-    srand( seed );
-  }
   
-  Details( double seed )
-  {
-    using namespace std;
-    srand( (unsigned)seed );
-  }
+void mccomponents::math::srandom( unsigned int seed )
+{
+  std::srand( seed );
+}
   
-  double generate( double min, double max ) const
-  {
-    using namespace std;
-    return rand()*1./RAND_MAX*(max-min) + min;
-  }
-
-};
-
-char  mccomponents::random::Generator::Details::jrnltag[] = "random";
-
-mccomponents::random::Generator::Generator()
-  : m_details( new Details() )
+double mccomponents::math::random( double min, double max ) 
 {
+  using namespace std;
+  return rand()*1./RAND_MAX*(max-min) + min;
 }
 
-mccomponents::random::Generator::Generator ( double seed )
-  : m_details( new Details( seed ) )
+double mccomponents::math::random01()
 {
-}
-
-mccomponents::random::Generator::~Generator()
-{
-}
-
-// methods
-double mccomponents::random::Generator::generate( double min, double max )
-{
-  return m_details->generate( min, max );
-}
-
-double mccomponents::random::Generator::generate01()
-{
-  return generate(0., 1.);
+  return random(0., 1.);
 }
 
 

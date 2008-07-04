@@ -12,6 +12,12 @@
 #
 
 
+def srandom( seed ):
+    from bindings import default
+    binding = default()
+    return binding.srandom( seed )
+
+
 def compositeKernel( *args, **kwds ):
     from CompositeKernel import CompositeKernel
     return CompositeKernel( *args, **kwds )

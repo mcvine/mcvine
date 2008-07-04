@@ -13,6 +13,7 @@
 
 
 #include <iostream>
+#include <cassert>
 #include "mccomponents/kernels/sample/phonon/LinearlyInterpolatedDispersionOnGrid_3D.h"
 #include "histogram/NdArray.h"
 

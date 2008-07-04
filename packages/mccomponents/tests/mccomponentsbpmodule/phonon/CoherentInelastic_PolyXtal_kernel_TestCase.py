@@ -42,10 +42,7 @@ class TestCase(unittest.TestCase):
         max_Q = 12
         nMCsteps_to_calc_RARV = 10000
 
-        random_number_generator = mccomponentsbp.RandomNumberGenerator()
-        
         kernel = mccomponentsbp.Phonon_CoherentInelastic_PolyXtal_kernel(
-            random_number_generator,
             disp, atoms,
             unitcell_vol,
             dw_calctor,

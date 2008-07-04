@@ -65,6 +65,37 @@ class homogeneous_scatterer_TestCase(unittest.TestCase):
             continue
         return
 
+
+    def testRandom(self):
+        'random, srandom'
+        binding = mccomponentsbp
+        
+        binding.srandom( 1 )
+        r11 = binding.random( 0, 1 )
+        r12 = binding.random( 0, 1 )
+        self.assert_( r11 != r12 )
+        self.assert_( r11 >=0 and r11 <=1 )
+        self.assert_( r12 >=0 and r12 <=1 )
+
+        binding.srandom( 2 )
+        r21 = binding.random( 0, 1 )
+        r22 = binding.random( 0, 1 )
+        self.assert_( r21 != r22 )
+        self.assert_( r21 >=0 and r21 <=1 )
+        self.assert_( r22 >=0 and r22 <=1 )
+        self.assert_( r21 != r11 )
+        self.assert_( r22 != r12 )
+        
+        binding.srandom( 1 )
+        r31 = binding.random( 0, 1 )
+        r32 = binding.random( 0, 1 )
+        self.assert_( r31 != r32 )
+        self.assert_( r31 >=0 and r31 <=1 )
+        self.assert_( r32 >=0 and r32 <=1 )
+        self.assert_( r31 == r11 )
+        self.assert_( r32 == r12 )
+        return
+
     pass  # end of homogeneous_scatterer_TestCase
 
     

@@ -15,6 +15,10 @@
 class AbstractBinding:
 
 
+    def srandom(self, seed):
+        raise NotImplementedError
+
+
     def homogeneousscatterer(self, shape, kernel, weights):
         raise NotImplementedError
     

@@ -17,7 +17,6 @@
 
 
 struct mccomponents::CompositeScatteringKernel::Details{
-  random::Generator random_number_generator;
 };
 
 
@@ -60,7 +59,7 @@ void mccomponents::CompositeScatteringKernel::scatter
 {
   size_t n = m_kernels.size();
 
-  size_t index = size_t( m_details->random_number_generator.generate(0,n) );
+  size_t index = size_t( math::random(0,n) );
   
   ev.probability *= n;
   ev.probability *= m_kernels[index]->scattering_coefficient( ev ) / scattering_coefficient(ev);
@@ -72,7 +71,7 @@ void mccomponents::CompositeScatteringKernel::absorb
 {
   size_t n = m_kernels.size();
 
-  size_t index = size_t( m_details->random_number_generator.generate(0,n) );
+  size_t index = size_t( math::random(0,n) );
   
   ev.probability *= n;
   ev.probability *= m_kernels[index]->absorption_coefficient( ev ) / absorption_coefficient(ev);

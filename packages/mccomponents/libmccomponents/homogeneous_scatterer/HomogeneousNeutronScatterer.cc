@@ -14,6 +14,7 @@
 #include "mccomponents/homogeneous_scatterer/HomogeneousNeutronScatterer.h"
 #include "mccomponents/homogeneous_scatterer/AbstractScatteringKernel.h"
 #include "mccomposite/neutron_propagation.h"
+#include "mccomponents/math/random.h"
 
 
 #ifdef DEBUG
@@ -53,8 +54,7 @@ mccomponents::HomogeneousNeutronScatterer::HomogeneousNeutronScatterer
   double seed)
   : base_t( shape ),
     m_kernel( kernel ),
-    m_weights( weights ),
-    m_randomnumbergenerator( seed )
+    m_weights( weights )
 {
 }
 
@@ -101,7 +101,7 @@ mccomponents::HomogeneousNeutronScatterer::interact_path1(mcni::Neutron::Event &
   double absorption_mark = transmission_mark + m_weights.absorption;
   double sum_of_weights = absorption_mark + m_weights.scattering;
 
-  double r = m_randomnumbergenerator.generate(0, sum_of_weights);
+  double r = math::random(0, sum_of_weights);
   
 #ifdef DEBUG
   debug << journal::at(__HERE__) 
@@ -121,7 +121,7 @@ mccomponents::HomogeneousNeutronScatterer::interact_path1(mcni::Neutron::Event &
   
   if (r >= transmission_mark && r < absorption_mark ) {
     // absorption
-    double x = m_randomnumbergenerator.generate(0, distance);
+    double x = math::random(0, distance);
     double prob = mu * distance * std::exp( -(mu+sigma) * x );
     ev.probability *= prob * (sum_of_weights/m_weights.absorption);
     propagate( ev, x/velocity );
@@ -133,7 +133,7 @@ mccomponents::HomogeneousNeutronScatterer::interact_path1(mcni::Neutron::Event &
 
   if (r >= absorption_mark) {
     // scattering
-    double x = m_randomnumbergenerator.generate(0, distance);
+    double x = math::random(0, distance);
     double prob = sigma * distance * std::exp( -(mu+sigma) * x );
     ev.probability *= prob * (sum_of_weights/m_weights.scattering);
     propagate( ev, x/velocity );
@@ -211,7 +211,7 @@ mccomponents::HomogeneousNeutronScatterer::_interactM1
 
   // scattering
   ev1 = original;
-  double x = m_randomnumbergenerator.generate(0, distance);
+  double x = math::random(0, distance);
   double prob = sigma * distance * std::exp( -(mu+sigma) * x );
   ev1.probability *= prob;
   propagate( ev1, x/velocity );

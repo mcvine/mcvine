@@ -118,7 +118,7 @@ const
   }
   float_t sin_theta = sqrt(1-cos_theta_sq);
   // == phi ==
-  float_t phi = kernel.m_random_number_generator.generate(0, 2*physics::pi);
+  float_t phi = math::random(0, 2*physics::pi);
 
   // == coordinate system ==
   K_t e1 = v_i; e1.normalize();
@@ -155,7 +155,7 @@ Details::pick_a_valid_Q_vector
   float_t omega;
   do {
     // pick Q
-    Q = Q_inCube<K_t, float_t>( Qcutoff, kernel.m_random_number_generator );
+    Q = Q_inCube<K_t, float_t>( Qcutoff );
     v_Q_l = conversion::k2v*Q.length();
     // == phonon energy  ==
     omega = kernel.m_disp.energy( branch, Q );
@@ -192,7 +192,7 @@ Details::pick_Ef
   float_t Ef;
     
   if (omega < Ei) {
-    if (kernel.m_random_number_generator.generate01()>=0.5) 
+    if (math::random01()>=0.5) 
       Ef = Ei + omega;
     else 
       Ef = Ei - omega;
@@ -247,7 +247,7 @@ Details::calc_relAccessibleReciVol_MC
   // the simulation loop
   for (size_t step = 0; step < numMCsteps; step++)  {
     // pick Q
-    Q = Q_inCube<K_t, float_t>( Qcutoff, kernel.m_random_number_generator );
+    Q = Q_inCube<K_t, float_t>( Qcutoff );
     v_Q_l = conversion::k2v*Q.length();
     // pick branch
     branch = pick_phonon_branch( n_brs );
@@ -301,8 +301,7 @@ Details::calc_relAccessibleReciVol_MC
 
 mccomponents::kernels::phonon::CoherentInelastic_PolyXtal::
 CoherentInelastic_PolyXtal
-( random::Generator &random_number_generator,
-  const dispersion_t &disp,
+( const dispersion_t &disp,
   const atoms_t &atoms,
   float_t unitcell_vol,
   dwcalculator_t & dw_calctor,
@@ -312,8 +311,7 @@ CoherentInelastic_PolyXtal
   size_t nMCsteps_to_calc_RARV,
   float_t epsilon) 
 
-  : m_random_number_generator( random_number_generator ),
-    m_disp( disp ),
+  : m_disp( disp ),
     m_atoms( atoms ),
     m_DW_calc( &dw_calctor ),
     m_Temperature( temperature ),

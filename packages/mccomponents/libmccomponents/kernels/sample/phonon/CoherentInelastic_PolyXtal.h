@@ -19,7 +19,6 @@
 #include "AbstractScatteringKernel.h"
 #include "AtomicScatterer.h"
 #include "vector3.h"
-#include "mccomponents/math/random.h"
 
 //forward declaration
 namespace DANSE{
@@ -65,8 +64,7 @@ namespace mccomponents{
 	   epsilon     small number to avoid divide by 0 error
 	*/
 	CoherentInelastic_PolyXtal
-	( random::Generator &random_number_generator,
-	  const dispersion_t &disp,
+	( const dispersion_t &disp,
 	  const atoms_t &atoms,
 	  float_t unitcell_vol,
 	  dwcalculator_t & dw_calctor,
@@ -84,7 +82,6 @@ namespace mccomponents{
       private:
 	
 	// data
-	random::Generator & m_random_number_generator;
 	const dispersion_t & m_disp;
 	atoms_t m_atoms;
 	dwcalculator_t *m_DW_calc;
