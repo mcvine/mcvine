@@ -11,6 +11,20 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
 
+
+
+def srandom( seed ):
+    '''change the seed for random number generator
+    '''
+    from bindings.boostpython import binding
+    return binding.srandom( seed )
+
+from mcni.seeder import register
+register( srandom )
+del register
+
+
+
 def componentfactory( category, type ):
     '''obtain component factory method of given category and type
 Examples:
