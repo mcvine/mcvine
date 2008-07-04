@@ -98,6 +98,8 @@ def pysuite():
 
 def main():
     #debug.activate()
+    import journal
+    journal.info('mpirun').activate()
     pytests = pysuite()
     alltests = unittest.TestSuite( (pytests, ) )
     unittest.TextTestRunner(verbosity=2).run(alltests)

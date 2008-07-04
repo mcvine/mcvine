@@ -31,7 +31,9 @@ EXPORT_PYTHON_MODULES = \
 	AbstractComponent.py \
 	Instrument.py \
 	Geometer.py \
+	LauncherMPICH2.py \
 	List.py \
+	MpiApplication.py \
 	NeutronComponentFacility.py \
 	__init__.py \
 	component_suppliers.py \

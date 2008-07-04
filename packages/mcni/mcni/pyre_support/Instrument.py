@@ -50,7 +50,7 @@ from NeutronComponentFacility import NeutronComponentFacility
             
 
 
-from pyre.applications.Script import Script as base
+from MpiApplication import Application as base    
 
 class Instrument( base ):
 
