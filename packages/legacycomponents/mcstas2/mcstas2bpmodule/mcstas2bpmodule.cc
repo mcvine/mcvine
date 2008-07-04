@@ -17,6 +17,7 @@
 namespace wrap_mcstas2{
   void wrap_mcni_integration_Component();
   void wrap_mcstas2_Component();
+  void wrap_random_numbers();
 }
 
 
@@ -27,6 +28,7 @@ BOOST_PYTHON_MODULE(mcstas2bp)
 
   wrap_mcni_integration_Component();
   wrap_mcstas2_Component();
+  wrap_random_numbers();
 }
 
 

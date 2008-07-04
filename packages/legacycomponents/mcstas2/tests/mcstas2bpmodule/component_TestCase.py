@@ -29,7 +29,6 @@ class TestCase(unittest.TestCase):
             'moderator',
             radius = 0.0707, dist = 9.035, xw = 0.021, yh = 0.021,
             E0 = 10, E1 = 15, Ec = 9.0, t0 = 37.15, gam = 39.1)
-        m.changeSeedForRandomNumberGenerator( 10 )
         return
     
     

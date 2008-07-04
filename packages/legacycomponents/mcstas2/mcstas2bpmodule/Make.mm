@@ -25,6 +25,7 @@ PROJ_CXX_SRCLIB = -lboost_python  -L$(BOOSTPYTHON_LIBDIR) -ljournal -lmcni -lmcs
 PROJ_SRCS = \
 	wrap_mcstas2_Component.cc \
 	wrap_mcni_integration_Component.cc \
+	wrap_random_numbers.cc \
 
 
 include doxygen/default.def

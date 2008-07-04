@@ -21,12 +21,6 @@ namespace wrap_mcstas2 {
     return c.mcstas_core;
   }
 
-  void changeSeed( mcstas2::mcni_integration::Component & c, 
-		   const mcstas2::Component::seed_t & seed)
-  {
-    c.mcstas_core.changeSeedForRandomNumberGenerator( seed );
-  }
-
   void wrap_mcni_integration_Component() 
   {
     using namespace mcni::boostpython_binding;
@@ -39,8 +33,7 @@ namespace wrap_mcstas2 {
        )
       .def( "core", &get_core, 
 	    return_internal_reference< 1 >() )
-      .def( "changeSeedForRandomNumberGenerator", &changeSeed )
-       ;
+      ;
   }
 
 }
