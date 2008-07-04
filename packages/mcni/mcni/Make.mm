@@ -47,6 +47,7 @@ EXPORT_PYTHON_MODULES = \
 	__init__.py \
 	component_suppliers.py \
 	rng_seed.py \
+	seeder.py \
 	units.py \
 	utils.py \
 	_component_listing.py \

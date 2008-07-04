@@ -24,6 +24,10 @@ class AbstractInstrumentSimulator:
 
     
     def run(self, neutrons, instrument, geometer):
+
+        # provide seeds to all random number generators
+        from mcni.seeder import feed
+        feed()
         
         components = instrument.components
 
