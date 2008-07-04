@@ -2,4 +2,7 @@
 def tof_monitor1():
     from mcni.pyre_support import componentfactory as component
     f = component('monitors', 'TOF_monitor2', supplier = 'mcstas2')
-    return  f('tof_monitor1')
+    ret =  f('tof_monitor1')
+    from mcstas2.pyre_support.monitor_exts import extend
+    extend( ret )
+    return ret
