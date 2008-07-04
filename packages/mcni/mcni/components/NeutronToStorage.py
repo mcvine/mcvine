@@ -41,6 +41,20 @@ class NeutronToStorage( AbstractComponent ):
     def __init__(self, name, path, append = False, packetsize = None):
         AbstractComponent.__init__(self, name)
 
+        #if mpi is used to do parallel simulatation
+        #we need to output neutrons to several directories
+        #to avoid problems.
+        # 1. check if mpi exists, and if it exists, get rank
+        try:
+            import mpi
+            from mcni.utils.mpiutil import rank as mpirank
+        except ImportError:
+            mpirank = None
+
+        # 2. if mpi does exist, add rank to path
+        if mpirank is not None:
+            path = '%s-%d' % (path, mpirank)
+            
         path = self.path = os.path.abspath( path )
 
         if os.path.exists( path ):

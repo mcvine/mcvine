@@ -20,6 +20,7 @@ BUILD_DIRS = \
     neutron_storage  \
     pyre_components  \
     pyre_support  \
+    utils  \
 
 RECURSE_DIRS = $(BUILD_DIRS)
 
@@ -49,7 +50,6 @@ EXPORT_PYTHON_MODULES = \
 	rng_seed.py \
 	seeder.py \
 	units.py \
-	utils.py \
 	_component_listing.py \
 	_component_factories.py \
 

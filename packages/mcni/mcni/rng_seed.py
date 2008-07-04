@@ -50,18 +50,7 @@ use('default')
 
 
 #mpi
-def _mpi():
-    global mpirank
-    try:
-        import mpi
-    except ImportError:
-        mpirank = 0
-        return
-    w = mpi.world()
-    mpirank = w.rank
-    return
-mpirank = None
-_mpi()
+from utils.mpiutil import rank as mpirank
 
 
 # version
