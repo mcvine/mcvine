@@ -32,7 +32,8 @@
 DEFINE COMPONENT Fermi_chop2
 DEFINITION PARAMETERS ()
 SETTING PARAMETERS (len=0.10, w=0.06, nu=600, delta=0.0, tc=0.0,
-    ymin=-0.03, ymax=0.03, nchan=32, bw=0.00035, blader=0.5801)
+    ymin=-0.03, ymax=0.03, nchan=32, bw=0.00035, blader=0.5801,
+    int max_iter=0)
 OUTPUT PARAMETERS (omega, r_blade, x_width, nn, tdr)
 STATE PARAMETERS (x, y, z, vx, vy, vz, t, s1, s2, p)
 SHARE
@@ -123,9 +124,12 @@ SHARE
 %}
 INITIALIZE
 %{
-   printf("w=%g, len=%g, ymax=%g, ymin=%g, nu=%g, delta=%g\n",
+   printf("* initialize Fermi_chop2\n");
+   printf(" + w=%g, len=%g, ymax=%g, ymin=%g, nu=%g, delta=%g\n",
           w, len, ymax, ymin, nu, delta);
-   printf("tc=%g,bw=%g,nchan=%g,blader=%g\n",tc,bw,nchan,blader);
+   printf(" + tc=%g,bw=%g,nchan=%g,blader=%g\n",tc,bw,nchan,blader);
+   if (max_iter ==0) max_iter = 10000;
+
    splen=len/2.0;
    omega=2.0*PI*nu;
    off=blader*(1-cos(asin(splen/fabs(blader))));// the additional width needed to accomodate the curvature of the blade
@@ -185,7 +189,14 @@ TRACE
    if (!checkabsorb(phivec[idx1],&chan_num,nrad,tw,sw,bw,c, blader, off))
       ABSORB;
    chan_num0=chan_num;
+
+   unsigned int i_iter1 = 0;
    while (idx1<129){
+     if (i_iter1 > max_iter) {
+       ABSORB;
+     }
+     i_iter1++;
+
      dphi=phivec[1]-phivec[idx1];
      idx1++;
      phivec[idx1]=phivec[0]+dphi/2.0;
@@ -194,7 +205,13 @@ TRACE
      if ((chan_num!=chan_num0) || (chan_num>nchan))
        ABSORB;
      if (dphi>0){
+       //unsigned int i_iter2 = 0;
        while ((phivec[idx1]<phivec[1])&&(idx1<129)){
+	 //if (i_iter2>max_iter) {
+	 //  ABSORB;
+	 //}
+	 //i_iter2 ++;
+
         /* printf("phivec[%i]: %g dphi: %g phivec[1]: %g\n", idx1,phivec[idx1],dphi,phivec[1]);*/
          idx1++;
          phivec[idx1]=phivec[idx1-1]+dphi;
@@ -206,13 +223,17 @@ TRACE
        }
      }
      else{
-         while ((phivec[idx1]>phivec[1])&&(idx1<129)){
-        /* printf("phivec[%i]: %g\n", idx1,phivec[idx1]);*/
+       //unsigned int i_iter2 = 0;
+       while ((phivec[idx1]>phivec[1])&&(idx1<129)){
+	 //if (i_iter2>max_iter) ABSORB;
+	 //i_iter2 ++;
+
+	 /* printf("phivec[%i]: %g\n", idx1,phivec[idx1]);*/
          idx1++;
          phivec[idx1]=phivec[idx1-1]+dphi;
          if (!checkabsorb(phivec[idx1],&chan_num,nrad,tw,sw,bw,c, blader, off))
            ABSORB;
-      //   printf("chan_num0: %i chan_num: %i\n",chan_num0,chan_num);
+	 //   printf("chan_num0: %i chan_num: %i\n",chan_num0,chan_num);
          if ((chan_num!=chan_num0) || (chan_num>nchan))
            ABSORB;     
        }
@@ -221,7 +242,8 @@ TRACE
    }      
   }
   else				/* The neutron failed to even hit the chopper */
-    ABSORB;
+    //ABSORB;
+    SCATTER;
 
 %}
 MCDISPLAY
