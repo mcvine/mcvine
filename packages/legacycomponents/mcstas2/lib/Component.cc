@@ -55,14 +55,6 @@ mcstas2::Component::setName( const char * name )
 { m_name = name; }
 
 
-void 
-mcstas2::Component::changeSeedForRandomNumberGenerator
-( const seed_t & seed ) 
-{
-  srandom( seed );
-}
-
-
 void mcstas2::Component::save()
 {
 }

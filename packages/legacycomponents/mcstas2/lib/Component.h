@@ -53,9 +53,6 @@ namespace mcstas2{
     /// finalize everything. this is almost just dtor.
     virtual void finalize( );
 
-    /// change seed for random number generator
-    void changeSeedForRandomNumberGenerator( const seed_t & seed );
-
   protected:
 
     /// set this component's name. only called by subclass
