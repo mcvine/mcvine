@@ -23,6 +23,9 @@ import time
 nbits_seedt = 16
 
 
+def usetimer_p():
+    return usetimer() + mpirank
+
 
 seed = None
 
@@ -36,11 +39,29 @@ def use( strategy ):
 
 _methods = {
     'timer': usetimer,
-    'default': usetimer,
+    'timer_p': usetimer_p,
+    #
+    'default': usetimer_p,
     }
 
 
 use('default')
+
+
+
+#mpi
+def _mpi():
+    global mpirank
+    try:
+        import mpi
+    except ImportError:
+        mpirank = 0
+        return
+    w = mpi.world()
+    mpirank = w.rank
+    return
+mpirank = None
+_mpi()
 
 
 # version
