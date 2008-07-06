@@ -112,18 +112,6 @@ class Instrument( base ):
                     name, self.sequence, neutron_components )
             continue
 
-        outputdir = self.outputdir
-        if not self.overwrite_datafiles and os.path.exists( outputdir ):
-            print "output directory %r exists. If you want to overwrite the output "\
-                  "directory, please specify option --overwrite-datafiles." % outputdir
-
-        if not os.path.exists( outputdir ):
-            os.makedirs( outputdir )
-            pass
-
-        curdir = os.path.abspath( '.' )
-        os.chdir( outputdir )
-
         import mcni
         components = [ neutron_components[ name ] for name in self.sequence ]
         instrument = mcni.instrument( components )
@@ -137,7 +125,33 @@ class Instrument( base ):
             mcni.simulate( instrument, geometer, neutrons )
             continue
 
-        os.chdir( curdir )
+        return
+
+
+    def _setup_ouputdir(self):
+        outputdir = self.outputdir
+        if not self.overwrite_datafiles and os.path.exists( outputdir ):
+            print "output directory %r exists. If you want to overwrite the output "\
+                  "directory, please specify option --overwrite-datafiles." % outputdir
+
+        if not os.path.exists( outputdir ):
+            os.makedirs( outputdir )
+            pass
+
+        self._save_curdir = os.path.abspath( '.' )
+        os.chdir( outputdir )
+        return
+    
+    
+    def init(self):
+        self._setup_ouputdir()
+        base.init(self)
+        return
+    
+    
+    def fini(self):
+        base.fini(self)
+        os.chdir( self._save_curdir )
         return
 
 
