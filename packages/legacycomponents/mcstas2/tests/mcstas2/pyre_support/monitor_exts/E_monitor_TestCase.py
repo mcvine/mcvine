@@ -16,29 +16,54 @@
 import unittestX as unittest
 import journal
 
+from TestInstrument1 import Instrument as base
+class Instrument(base):
+
+    def __init__(self, name='E_monitor_TestCase'):
+        base.__init__(self, name)
+        return
+    
+
+def _outdir():
+    try:
+        import mpi
+        nompi = False
+    except ImportError:
+        nompi = True
+    outputdir = 'E_monitor_TestCase-out'
+    if not nompi: outputdir = outputdir  +'-0'
+    return outputdir
+        
 
 class TestCase(unittest.TestCase):
 
     def test1(self):
-        from TestInstrument1 import Instrument
         instrument = Instrument()
-
-        import sys
-        save = sys.argv
-        sys.argv = [
-            '',
-            '--ncount=10',
-            '--buffer_size=5',
-            '--output-dir=pyre_support_test1_out',
-            '--overwrite-datafiles',
-            ]
-
         instrument.run()
-        sys.argv = save
+
+        import time
+        ctime = time.time()
+
+        #check output directory exists
+        outputdir = _outdir()
+        self.assert_( os.path.exists( outputdir ) )
+        
+        #make sure files were just created
+        for item in os.listdir( outputdir ):
+            path = os.path.join( outputdir, item )
+            self.assert_( os.path.exists( path ) )
+
+            mtime = os.path.getmtime( path )
+            self.assert_( ctime - mtime >= 0 )
+            self.assert_( ctime - mtime < 10 )
+            continue
+        
         return
     
     pass  # end of TestCase
 
+
+import os
 
 
 def pysuite():

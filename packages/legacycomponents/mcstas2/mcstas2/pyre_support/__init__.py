@@ -35,6 +35,9 @@ given mcstas component category and type.
     from mcni.pyre_support.AbstractComponent import AbstractComponent
     f = generator( ctor_takes_name = True, baseclass = AbstractComponent )( factory )
 
+    from _interface_extensions import extend
+    f = extend( f )
+    
     setattr( module, factoryattributename, f )
 
     return f

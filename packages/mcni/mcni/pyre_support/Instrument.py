@@ -138,28 +138,30 @@ class Instrument( base ):
             os.makedirs( outputdir )
             pass
 
-        self._save_curdir = os.path.abspath( '.' )
-        os.chdir( outputdir )
+        for component in self.neutron_components.itervalues():
+            component.setOutputDir( outputdir )
+            component.overwrite_datafiles = self.overwrite_datafiles
+            continue
+        
         return
     
     
-    def init(self):
-        self._setup_ouputdir()
-        base.init(self)
-        return
-    
-    
-    def fini(self):
-        base.fini(self)
-        os.chdir( self._save_curdir )
-        return
-
-
     def _configure(self):
         base._configure(self)
         self.geometer = self.inventory.geometer
         self.overwrite_datafiles = self.inventory.overwrite_datafiles
+
+        try:
+            import mpi
+            nompi = False
+        except ImportError:
+            nompi = True
+
         self.outputdir = self.inventory.outputdir
+        if not nompi:
+            from mcni.utils.mpiutil import rank as mpirank
+            self.outputdir = '%s-%s' % (self.outputdir, mpirank)
+            
         self.sequence = self.inventory.sequence
         self.ncount = self.inventory.ncount
         self.buffer_size = self.inventory.buffer_size
@@ -174,6 +176,7 @@ class Instrument( base ):
 
         self.neutron_components = neutron_components
         
+        if not self._showHelpOnly: self._setup_ouputdir()
         return
 
 

@@ -31,7 +31,9 @@ tidy::
 # export
 
 EXPORT_PYTHON_MODULES = \
-    __init__.py \
+	__init__.py \
+	_interface_extensions.py \
+
 
 export:: export-package-python-modules
 

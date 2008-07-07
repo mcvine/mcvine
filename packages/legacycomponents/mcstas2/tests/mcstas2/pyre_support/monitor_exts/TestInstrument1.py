@@ -28,7 +28,7 @@ class Instrument(base):
         pass # end of Inventory
 
 
-    def __init__(self, name = 'test1'):
+    def __init__(self, name):
         base.__init__(self, name)
         return
     

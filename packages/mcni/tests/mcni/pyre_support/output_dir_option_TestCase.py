@@ -21,7 +21,7 @@ warning = journal.warning( "mcni.pyre_support.test" )
 
 
 outdir = 'test-output-dir-option_out'
-import os,sys
+import os, sys
 
 
 class TestCase(unittest.TestCase):
@@ -34,20 +34,23 @@ class TestCase(unittest.TestCase):
             import shutil
             shutil.rmtree( outdir )
         
-        instrument = Instrument('test')
+        instrument = Instrument('output_dir_option_TestCase')
         instrument.testFacility = self
-
-        save = sys.argv
-        sys.argv = [
-            '',
-            '--ncount=10',
-            '--buffer_size=5',
-            '--output-dir=%s' % outdir,
-            '--overwrite-datafiles',
-            ]
-
         instrument.run()
-        sys.argv = save
+
+        try:
+            import mpi
+            hasmpi = True
+        except:
+            hasmpi = False
+        if hasmpi: outdir1 = '%s-0' % outdir
+        self.assert_( os.path.exists( outdir1 ) )
+        edat = os.path.join( outdir1, 'e.dat' )
+        self.assert_( os.path.exists( edat ) )
+        import time
+        ctime = time.time()
+        mtime = os.path.getmtime( edat )
+        self.assert_( ctime >= mtime and ctime < mtime + 10 )
         return
     
         

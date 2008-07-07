@@ -21,7 +21,15 @@ class AbstractComponent( base1, base2 ):
     def __init__(self, name, facility = 'neutron component'):
         base2.__init__(self, name)
         base1.__init__(self, name, facility)
+
+        self._outputdir = None
         return
+
+
+    def setOutputDir(self, outputdir):
+        self._outputdir = outputdir
+        return
+
 
     pass # end of AbstractComponent
 

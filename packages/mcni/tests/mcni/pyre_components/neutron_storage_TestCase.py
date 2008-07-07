@@ -15,11 +15,31 @@
 
 import unittestX as unittest
 import journal
+import os
 
 debug = journal.debug( "mcni.pyre_components.test" )
 warning = journal.warning( "mcni.pyre_components.test" )
 
 
+#input parameter for output directory for neutrontostorage component
+instrument1_outputdirinput = 'neutron_storage_TestCase-out'
+instrument2_outputdirinput = 'neutron_storage_TestCase-Instrument2-out'
+#the real output directory depends on
+# mpi is installed or not
+try:
+    import mpi
+    instrument1_outputdir = '%s-0' % instrument1_outputdirinput
+    instrument2_outputdir = '%s-0' % instrument2_outputdirinput
+except ImportError:
+    instrument1_outputdir = instrument1_outputdirinput
+    instrument2_outputdir = instrument2_outputdirinput
+    pass
+
+import  shutil
+if os.path.exists( instrument1_outputdir ):
+    shutil.rmtree( instrument1_outputdir )
+if os.path.exists( instrument2_outputdir ):
+    shutil.rmtree( instrument2_outputdir )
 
 neutron_storage_path = 'neutrons'
 neutron_storage_packetsize = 1
@@ -111,7 +131,10 @@ class Instrument2(base):
         self.inventory.geometer.inventory.verifier = (0,0,0), (0,0,0)
 
         storage = self.inventory.source
-        storage.inventory.path = neutron_storage_path
+        #the path where neutrons were saved in the simulation
+        #of Instrument1
+        path = os.path.join(instrument1_outputdir, neutron_storage_path )
+        storage.inventory.path = path
         return
     
     pass # end of Instrument1
@@ -138,7 +161,7 @@ class TestCase(unittest.TestCase):
             '',
             '--ncount=10',
             '--buffer_size=5',
-            '--output-dir=neutron_storage_test_out',
+            '--output-dir=%s' % instrument1_outputdirinput,
             '--overwrite-datafiles',
             ]
 
@@ -158,7 +181,7 @@ class TestCase(unittest.TestCase):
             '',
             '--ncount=10',
             '--buffer_size=5',
-            '--output-dir=neutron_storage_test_out',
+            '--output-dir=%s' % instrument2_outputdirinput,
             '--overwrite-datafiles',
             ]
 

@@ -26,10 +26,18 @@ class NeutronToStorage( AbstractComponent ):
         append = pinv.bool( 'append', default = False )
         packetsize = pinv.int( 'packetsize', default = 100 )
         pass
-    
+
+
+    def __init__(self, name):
+        AbstractComponent.__init__(self, name)
+        self.engine = None
+        return
+
 
     def process(self, neutrons):
-        ret = self.engine.process( neutrons )
+        engine = self.engine
+        if engine is None: engine = self.engine = self._create_engine()
+        ret = engine.process( neutrons )
         return ret
     
     
@@ -41,16 +49,23 @@ class NeutronToStorage( AbstractComponent ):
         return
 
 
-    def _init(self):
-        AbstractComponent._init(self)
-        if self._showHelpOnly: return
-        self.engine = enginefactory(
-            self.name, self.path, self.append, packetsize = self.packetsize )
-        return
+    def _create_engine(self):
+        path = self.path
+        if os.path.split( path )[0] != '':
+            raise ValueError, "path must be relative path: path=%s" % path
+        
+        if self._outputdir: path = os.path.join( self._outputdir, path )
+
+        append = self.append or self.overwrite_datafiles
+        packetsize = self.packetsize
+        return enginefactory(
+            self.name, path, append, packetsize = packetsize )
+    
 
     pass # end of Source
 
 
+import os
 
 # version
 __id__ = "$Id$"

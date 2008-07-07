@@ -133,7 +133,7 @@ SAVE
     if (S_p) printf("<E> : %g meV , E-width : %g meV \n",
      S_pE/S_p,sqrt(S_pE2/S_p - S_pE*S_pE/(S_p*S_p)) );
 
-    printf("E_monitor: saved data to file '%s'.\n", filename);    
+    printf("E_monitor: saved data to file '%s'.\n", filename);
   %}
 
 FINALLY

@@ -22,8 +22,8 @@ def extend( component ):
     _extend( klass, m, m.methods )
 
     # common extension
-    #  !need to save _fini0 first!
-    klass._fini0 = klass._fini
+    #  !need to save _fini0_in_outputdir first!
+    klass._fini0_in_outputdir = klass._fini_in_outputdir
     import common
     _extend( klass, common, common.methods )
     
