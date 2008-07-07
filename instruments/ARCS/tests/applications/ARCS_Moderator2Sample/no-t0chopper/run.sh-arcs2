@@ -1,11 +1,14 @@
 #!/usr/bin/env bash
-node=n04
 packetsize=100
-ncount=5e6
+#ncount=5
+ncount=4e8
+#buffersize=5
 buffersize=100000
+nodes=10
 
-outputs="energy_monitor1.h5 tof_monitor1.h5 neutrons.dat"
-
-rm -rf ${outputs}
-ARCS_Moderator2Sample.py -neutron_recorder.packetsize=${packetsize} -ncount=${ncount} -buffer_size=${buffersize} -overwrite-datafiles -journal.info.dsm.Runner
+#remove all outputs
+# rm -rf out-*
+#run simulation
+ARCS_Moderator2Sample.py -mpirun.nodes=${nodes} -neutron_recorder.packetsize=${packetsize} -ncount=${ncount} -buffer_size=${buffersize} -overwrite-datafiles -journal.info.dsm.Runner 
+#-journal.debug.ARCS_Moderator2Sample.py
 
