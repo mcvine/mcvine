@@ -39,6 +39,7 @@ class SampleAssemblyFromXml( AbstractComponent ):
 
     def _init(self):
         AbstractComponent._init(self)
+        if self._showHelpOnly: return
         self.engine = enginefactory(
             self.name, self.xml) 
         return

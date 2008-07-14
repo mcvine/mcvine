@@ -54,6 +54,7 @@ class DetectorSystemFromXml( AbstractComponent ):
 
     def _init(self):
         AbstractComponent._init(self)
+        if self._showHelpOnly: return
         instrumentxml = self.instrumentxml
         tofparams = self.tofparams
         eventsdat = self.eventsdat
@@ -63,7 +64,8 @@ class DetectorSystemFromXml( AbstractComponent ):
 
 
     def _fini(self):
-        del self.engine
+        if self.__dict__.has_key( 'engine' ):
+            del self.engine
         AbstractComponent._fini(self)
         return
 
