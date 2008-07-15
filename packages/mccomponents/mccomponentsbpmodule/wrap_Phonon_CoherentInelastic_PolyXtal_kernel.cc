@@ -42,8 +42,7 @@ namespace wrap_mccomponents {
 	size_t> ()
 	[with_custodian_and_ward<1,2,
 	 with_custodian_and_ward<1,3,
-	 with_custodian_and_ward<1,4,
-	 with_custodian_and_ward<1,6> > > > () ]
+	 with_custodian_and_ward<1,5 > > > () ]
 	)
       ;
     
