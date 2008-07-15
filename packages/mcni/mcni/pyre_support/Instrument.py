@@ -12,43 +12,6 @@
 #
 
 
-# meta class of instrument
-class InstrumentAuditor(type):
-
-    def __init__(cls, name, bases, dict):
-        type.__init__(name, bases, dict)
-
-        #find all components
-        componentnames = dir(cls.Inventory)
-        componentnames = filter(
-            lambda name: isinstance(getattr(cls.Inventory, name), NeutronComponentFacility ),
-            componentnames )
-
-        #build the Geometer component
-        declarations = [
-            8*' ' + '%s = Register("%s")' % (name, name) for name in componentnames ]
-        declarations = '\n'.join( declarations )
-        from Geometer import Geometer as base, Register
-        code = '''
-class Geometer(base):
-    class Inventory(base.Inventory):
-%s
-        pass
-    pass
-''' % declarations
-        exec code in locals()
-
-        #add geometer into inventory
-        import pyre.inventory
-        geometer = Geometer()
-        cls.Inventory.geometer = pyre.inventory.facility(
-            'geometer', default = geometer)
-        return
-
-    pass # end of InstrumentAuditor
-from NeutronComponentFacility import NeutronComponentFacility
-            
-
 
 from MpiApplication import Application as base    
 
@@ -128,6 +91,12 @@ class Instrument( base ):
         return
 
 
+    def _defaults(self):
+        base._defaults(self)
+        self.inventory.geometer = _build_geometer( self )
+        return
+
+
     def _setup_ouputdir(self):
         outputdir = self.outputdir
         if not self.overwrite_datafiles and os.path.exists( outputdir ):
@@ -180,9 +149,39 @@ class Instrument( base ):
         return
 
 
-    __metaclass__ = InstrumentAuditor
-
     pass # end of Instrument
+
+
+
+def _build_geometer( instrument ):
+    
+    #find all components
+    Inventory = instrument.Inventory
+    componentnames = dir(Inventory)
+
+    from NeutronComponentFacility import NeutronComponentFacility
+    componentnames = filter(
+        lambda name: isinstance(
+            getattr(Inventory, name), NeutronComponentFacility ),
+        componentnames )
+    
+    #build the Geometer component
+    declarations = [
+        8*' ' + '%s = Register("%s")' % (name, name) for name in componentnames ]
+    declarations = '\n'.join( declarations )
+    
+    from Geometer import Geometer as base, Register
+    code = '''
+class Geometer1(base):
+    class Inventory(base.Inventory):
+%s
+''' % declarations
+    
+    exec code in locals()
+    
+    return Geometer1()
+    
+
 
 
 from mcni.AbstractComponent import AbstractComponent as McniComponent
