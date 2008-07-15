@@ -50,11 +50,6 @@ class New:
         return self.vector3( *args )
 
 
-    def randomnumbergenerator( self, seed ):
-        if seed is None: return b.RandomNumberGenerator()
-        return b.RandomNumberGenerator( seed )
-
-
     def atomicscatterer(
         self, position, mass,
         coherent_scattering_length, coherent_cross_section):
@@ -215,10 +210,7 @@ class New:
         atom_vector = b.vector_AtomicScatterer(0)
         for atom in atoms: atom_vector.append( atom )
 
-        random_number_generator = self.randomnumbergenerator( seed )
-        
         return b.Phonon_CoherentInelastic_PolyXtal_kernel(
-            random_number_generator,
             dispersion, atom_vector, unitcell_vol, dw_calctor,
             temperature, Ei, max_omega, max_Q,
             nMCsteps_to_calc_RARV)
