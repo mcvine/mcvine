@@ -103,6 +103,12 @@ const
   namespace conversion = mcni::neutron_units_conversion;
 
   float_t v_i_l = v_i.length();
+#ifdef DEEPDEBUG
+  journal::debug_t debug(jrnltag);
+  debug << journal::at(__HERE__)
+	<< "vi length = " << v_i_l
+	<< journal::endl;
+#endif
 
   // == theta ==
   float_t cos_theta = (v_i_l*v_i_l+v_f_l*v_f_l - v_Q_l*v_Q_l)
@@ -435,6 +441,12 @@ mccomponents::kernels::phonon::CoherentInelastic_PolyXtal::scatter
   V_t v_f;
   m_details->pick_v_f( prob, v_f, v_i, v_f_l, v_Q_l);
 
+#ifdef DEEPDEBUG
+  debug << journal::at(__HERE__)
+	<< "vf =" << v_f
+	<< journal::endl;
+#endif
+
 
   // change the velocity of neutron. other things stay put
   ev.state.velocity = v_f;
@@ -446,12 +458,35 @@ mccomponents::kernels::phonon::CoherentInelastic_PolyXtal::scatter
   float_t k_i_l = v2k * v_i_l;
   float_t k_f_l = v2k * v_f_l;
   float_t Q_l = v2k * v_Q_l;
+#ifdef DEEPDEBUG
+  debug << journal::at(__HERE__)
+	<< "ki length = " << k_i_l << ", "
+	<< "kf length = " << k_f_l << ", "
+	<< "Q length = " << Q_l
+	<< journal::endl;
+#endif
 
   // thermal factor
   float_t therm_factor = phonon_bose_factor( omega, m_Temperature );
+#ifdef DEEPDEBUG
+  debug << journal::at(__HERE__)
+	<< "thermal factor = " << therm_factor
+	<< journal::endl;
+#endif
 
   // debye waller factor 
-  float_t DW = exp( -m_DW_calc->DW( Q_l ) );
+  float_t DW = m_DW_calc->DW( Q_l );
+#ifdef DEEPDEBUG
+  debug << journal::at(__HERE__)
+	<< "debye waller factor = " << DW
+	<< journal::endl;
+#endif
+  DW = std::exp( -DW );
+#ifdef DEEPDEBUG
+  debug << journal::at(__HERE__)
+	<< "debye waller factor = " << DW
+	<< journal::endl;
+#endif
 
   if (E_i > omega) prob *= 2.0; // two choices of E_f: E_f>E_i or E_f<E_i
 
