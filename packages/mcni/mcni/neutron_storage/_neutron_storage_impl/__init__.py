@@ -17,6 +17,12 @@ def packetsize_store( path ):
     return store( path )
 
 
+def merge_neutrons( directories, newdir ):
+    from _merge_neutrons import merge
+    merge( directories, newdir )
+    return
+
+
 # version
 __id__ = "$Id$"
 

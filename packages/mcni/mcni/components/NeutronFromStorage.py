@@ -39,32 +39,30 @@ class NeutronFromStorage( AbstractComponent ):
 
     def process(self, neutrons):
         n = len(neutrons)
-        packetsize = self.packetsize
+        packetsize = self._storage.packetsize()
+        
         if n%packetsize != 0:
-            raise 'neutron buffer size = %d, packet size = %d, %d \% %d != 0' % (
-                n, packetsize, n, packetsize )
+            raise 'neutron buffer size = %d, packet size = %d, %d %s %d != 0' % (
+                n, packetsize, n, '%', packetsize )
+        
         index = self.index
-        npackets = n/packetsize
+        npacketstoread = n/packetsize
+        npacketsinstorage = self._storage.npackets()
 
         # numpy array to store neutrons read from files
         npyarr = numpy.zeros( (n, ndblsperneutron), numpy.double )
         
-        from mcni.neutron_storage import readneutrons_asnpyarr
-
-        # all neutron files in the directory
-        neutronfiles = self.neutronfiles
-        # number of neutron files
-        nfiles = len(neutronfiles)
         # read and insert
-        for i in range(npackets):
-            npyarr[i*packetsize : (i+1)*packetsize] = readneutrons_asnpyarr(
-                neutronfiles[ index ] )
-            index = (index+1) % nfiles
+        for i in range(npacketstoread):
+            npyarr[i*packetsize : (i+1)*packetsize] = self._storage.read( index, asnpyarr = 1 )
+            index = (index+1) % npacketsinstorage
             continue
+        
         self.index = index
 
         from mcni.neutron_storage import neutrons_from_npyarr
         neutrons = neutrons_from_npyarr( npyarr, neutrons )
+        
         return neutrons
 
 
@@ -80,42 +78,11 @@ class NeutronFromStorage( AbstractComponent ):
             raise IOError , "path %r is not a directory" % path
 
         self.index = 0
-        self.packetsize = self._packetsize()
-        self.neutronfiles = self._neutronfiles()
+
+        from mcni.neutron_storage import storage
+        self._storage = storage( path, 'r' )
         return
 
-
-    def _packetsize(self):
-        from _neutron_storage_impl import packetsize_store
-        path = os.path.join( self.path, packetsizefile )
-        return packetsize_store(path).getsize()
-
-
-    def _neutronfilesize(self):
-        packetsize = self._packetsize()
-        if packetsize is None: raise RuntimeError, "neutron storage not established: %s"  % self.path
-        neutronfilesize = filesize( packetsize )
-        return neutronfilesize
-
-
-    def _neutronfiles(self):
-        path = self.path
-        entries = os.listdir( path )
-        neutronfilesize = self._neutronfilesize()
-        
-        neutronfiles = []
-        for entry in entries:
-            file = os.path.join( path, entry )
-            if not os.path.isfile( file ): continue
-            if open(file).read(7) != 'Neutron': continue
-            if os.path.getsize( file ) != neutronfilesize : continue
-            neutronfiles.append( file )
-            continue
-
-        if len(neutronfiles) == 0:
-            raise RuntimeError , "no neutron file in %r" % path
-
-        return neutronfiles
 
     pass # end of Source
 

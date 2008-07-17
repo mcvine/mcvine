@@ -16,9 +16,17 @@
 ## in svn://danse.us/inelastic/idf/Neutron.v1
 
 
-import numpy
 
-from idfneutron import ndblsperneutron
+def storage( *args, **kwds ):
+    from Storage import Storage
+    return Storage( *args, **kwds )
+
+
+def merge( *args, **kwds ):
+    from merge import merge
+    merge( *args, **kwds )
+    return
+
 
 def dump( neutrons, filename ):
     '''dump neutrons to the given file
@@ -92,6 +100,9 @@ def neutrons_as_npyarr( neutrons ):
     return ceventsnpyarr
 
 
+
+import numpy
+from idfneutron import ndblsperneutron
 
 from mcni.bindings import current as binding
 

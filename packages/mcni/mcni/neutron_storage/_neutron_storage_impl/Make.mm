@@ -10,7 +10,7 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 PROJECT = mcni
-PACKAGE = components/_neutron_storage_impl
+PACKAGE = neutron_storage/_neutron_storage_impl
 
 
 BUILD_DIRS = \

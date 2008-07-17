@@ -14,7 +14,6 @@ PACKAGE = components
 
 
 BUILD_DIRS = \
-	_neutron_storage_impl  \
 
 
 RECURSE_DIRS = $(BUILD_DIRS)

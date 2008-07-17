@@ -12,6 +12,13 @@
 PROJECT = mcni
 PACKAGE = neutron_storage
 
+
+BUILD_DIRS = \
+	_neutron_storage_impl  \
+
+
+RECURSE_DIRS = $(BUILD_DIRS)
+
 #--------------------------------------------------------------------------
 #
 
@@ -28,13 +35,16 @@ update: clean
 # export
 
 EXPORT_PYTHON_MODULES = \
+	Storage.py \
 	__init__.py \
 	idfneutron.py \
 	idf_usenumpy.py \
 	idf_usestruct.py \
+	merge.py \
 
 
 export:: export-package-python-modules
+	BLD_ACTION="export" $(MM) recurse
 
 
 

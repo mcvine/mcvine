@@ -24,7 +24,7 @@ class NeutronToStorage( AbstractComponent ):
         import pyre.inventory as pinv
         path = pinv.str( 'path', default = 'neutrons' )
         append = pinv.bool( 'append', default = False )
-        packetsize = pinv.int( 'packetsize', default = 100 )
+        packetsize = pinv.int( 'packetsize', default = 1000 )
         pass
 
 
