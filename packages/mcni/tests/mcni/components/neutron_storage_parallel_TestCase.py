@@ -30,7 +30,10 @@ debug = journal.debug( "mcni.components.test" )
 warning = journal.warning( "mcni.components.test" )
 
 
-neutron_storage_path = 'neutrons'
+import mpi
+rank = mpi.world().rank
+
+neutron_storage_path = 'neutrons-%d' % rank
 ntotneutrons = 53
 packetsize = 10
 npackets = ntotneutrons/packetsize
@@ -61,7 +64,7 @@ class TestCase(unittest.TestCase):
         'prepare'
         import os, shutil
         from mcni.utils.mpiutil import rank 
-        path = '%s-%s' % (neutron_storage_path, rank)
+        path = neutron_storage_path
         if os.path.exists( path ): shutil.rmtree( path )
         return
 
