@@ -11,7 +11,7 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
 
-PROJECT = mcvine/instruments/SSSD
+PROJECT = mcvine/instruments/generic
 PACKAGE = applications
 
 # directory structure
@@ -43,6 +43,7 @@ EXPORT_PYTHON_MODULES = \
 
 
 EXPORT_BINS = \
+	SD.py \
 	SSSD.py \
 
 

@@ -10,10 +10,11 @@
 #
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-PROJECT = mcvine/instruments/SSSD
+PROJECT = mcvine/instruments/generic
 
 BUILD_DIRS = \
     SSSD \
+    SD \
 
 OTHER_DIRS = \
 

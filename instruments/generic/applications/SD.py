@@ -25,14 +25,6 @@ class Instrument(base):
             'source',
             default = component('sources', 'MonochromaticSource')('source') )
 
-        sample = facility(
-            'sample',
-            default = component( 'samples', 'SampleAssemblyFromXml')('sample') )
-
-        neutron_storage = facility(
-            'neutron_storage',
-            default = component( 'monitors', 'NeutronToStorage' )('neutron_storage') )
-        
         detector = facility(
             'detector',
             default = component( 'detectors', 'DetectorSystemFromXml')('detector') )
@@ -40,15 +32,14 @@ class Instrument(base):
         pass # end of Inventory
 
 
-    def __init__(self, name = 'SSSD'):
+    def __init__(self, name = 'SD'):
         base.__init__(self, name)
         return
 
 
     def _defaults(self):
         base._defaults(self)
-        self.inventory.sequence = [
-            'source', 'sample', 'neutron_storage', 'detector']
+        self.inventory.sequence = ['source', 'detector']
         return
     
     pass # end of Instrument
