@@ -128,8 +128,9 @@ class Instrument( base ):
 
         self.outputdir = self.inventory.outputdir
         if not nompi:
+            mode = self.inventory.mode
             from mcni.utils.mpiutil import rank as mpirank
-            self.outputdir = '%s-%s' % (self.outputdir, mpirank)
+            self.outputdir = '%s-%s-%s' % (self.outputdir, mode, mpirank)
             
         self.sequence = self.inventory.sequence
         self.ncount = self.inventory.ncount
