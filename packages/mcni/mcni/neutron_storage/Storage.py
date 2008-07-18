@@ -59,8 +59,11 @@ class Storage:
         import mcni
         self._buffer = mcni.neutron_buffer(0)
 
+        packetsize_path = os.path.join( self.path, packetsizefile ) 
+        if self._readonly and not os.path.exists(packetsize_path):
+            raise RuntimeError, "neutron store at %r is not valid. %r missing" % (self.path, packetsize_path )
         from _neutron_storage_impl import packetsize_store
-        self._packetsize_store = packetsize_store( os.path.join( self.path, packetsizefile ) )
+        self._packetsize_store = packetsize_store( packetsize_path )
 
         if packetsize:
             # if user supplied a packet size
@@ -75,6 +78,7 @@ class Storage:
                     msg = "This neutron storage has a predefined size of %s, "\
                           "and you cannot change its size to %s." % (
                         size, packetsize )
+                    raise RuntimeError, msg
             else:
                 #if there is no predefined packet size, this store
                 #is fresh. we need to set its packet size.
