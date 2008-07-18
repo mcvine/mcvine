@@ -11,7 +11,7 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
 
-PROJECT = mcvine/SSSD
+PROJECT = mcvine/generic
 
 
 PROJ_TIDY += *.log *.tmp
