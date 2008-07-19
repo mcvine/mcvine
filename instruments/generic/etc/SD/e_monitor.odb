@@ -1,0 +1,8 @@
+def detector():
+    from mcni.pyre_support import componentfactory
+    f = componentfactory( 'monitors', 'E_monitor', supplier = 'mcstas2' )
+    ret = f( 'e_monitor' )
+    from mcstas2.pyre_support.monitor_exts import extend
+    extend( ret )
+    return ret
+

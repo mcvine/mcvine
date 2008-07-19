@@ -24,6 +24,9 @@ all: export
 # export
 
 EXPORT_ETC = \
+	SD.pml \
+	e_monitor.odb \
+	mono_source.odb \
 	__vault__.odb \
 
 

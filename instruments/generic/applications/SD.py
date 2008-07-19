@@ -23,11 +23,11 @@ class Instrument(base):
         
         source = facility(
             'source',
-            default = component('sources', 'MonochromaticSource')('source') )
+            default = component('optics', 'Dummy')('source') )
 
         detector = facility(
             'detector',
-            default = component( 'detectors', 'DetectorSystemFromXml')('detector') )
+            default = component( 'optics', 'Dummy')('detector') )
         
         pass # end of Inventory
 
