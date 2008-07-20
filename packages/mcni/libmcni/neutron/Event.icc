@@ -30,8 +30,8 @@ mcni::Neutron::Event::Event()
 
 void mcni::Neutron::Event::print( std::ostream &os) const 
 {
-  os << "Neutron state=" << state << ",time=" << time
-     << "probability="<< probability;
+  os << "Neutron( state=" << state << ", time=" << time
+     << ", probability="<< probability << " )";
 }
       
 #endif

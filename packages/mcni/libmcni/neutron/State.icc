@@ -27,9 +27,9 @@ mcni::Neutron::State::State()
 { }
       
 void mcni::Neutron::State::print( std::ostream &os ) const {
-  os << "position=" << position <<", "
+  os << "NeutronState( position=" << position <<", "
      << "velocity=" << velocity <<", "
-     << "spin=" << spin;
+     << "spin=" << spin << " )" ;
 } 
 
 
