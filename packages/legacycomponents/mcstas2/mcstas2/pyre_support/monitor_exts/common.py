@@ -19,7 +19,8 @@
 import os
 
 def _fini_in_outputdir(self):
-    self._save_histogram()
+    if not self._showHelpOnly:
+        self._save_histogram()
     self._fini0_in_outputdir()
     return
 
