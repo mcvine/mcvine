@@ -19,12 +19,13 @@
 
 try:
     from mpi.Application import Application as base
+    usempi = True
 except ImportError:
     import warnings
     msg = "mpi python module not available. parallel simulation is not supported"
     warnings.warn( msg )
     from pyre.applications.Script import Script as base
-
+    usempi = False
 
 
 class Application(base):
@@ -36,10 +37,12 @@ class Application(base):
         pass # end of Inventory
 
 
-    def _defaults(self):
-        from LauncherMPICH2 import LauncherMPICH2
-        self.inventory.launcher = LauncherMPICH2()
-        return
+    if usempi:
+        def _defaults(self):
+            base._defaults(self)
+            from LauncherMPICH2 import LauncherMPICH2
+            self.inventory.launcher = LauncherMPICH2()
+            return
 
 
     pass # end of Application
