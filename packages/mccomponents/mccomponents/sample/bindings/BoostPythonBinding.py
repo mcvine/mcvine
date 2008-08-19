@@ -33,8 +33,10 @@ class New:
         '''
         shape = s.shape
         assert len(shape) == 2
-        assert shape[0] == int( (qend-qbegin)/qstep )
-        assert shape[1] == int( (eend-ebegin)/estep )
+        assert shape[0] == int( (qend-qbegin)/qstep +0.5 ), (
+            'qend: %s, qbegin: %s, qstep: %s, shape0: %s' % (
+            qend, qbegin, qstep, shape[0]) )
+        assert shape[1] == int( (eend-ebegin)/estep +0.5 )
         size = shape[0] * shape[1]
         
         svector = b.vector_double( size )
