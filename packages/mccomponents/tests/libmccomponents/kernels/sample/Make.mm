@@ -20,6 +20,7 @@ PROJ_CLEAN += $(PROJ_CPPTESTS)
 PROJ_PYTESTS =  #alltests.py
 PROJ_CPPTESTS = \
 	test_SQkernel \
+	test_SQAdaptor \
 
 
 PROJ_TESTS = $(PROJ_PYTESTS) $(PROJ_CPPTESTS)
@@ -63,6 +64,9 @@ tidy::
 
 test_SQkernel: test_SQkernel.cc
 	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ test_SQkernel.cc $(PROJ_LIBRARIES)
+
+test_SQAdaptor: test_SQAdaptor.cc
+	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ test_SQAdaptor.cc $(PROJ_LIBRARIES)
 
 
 
