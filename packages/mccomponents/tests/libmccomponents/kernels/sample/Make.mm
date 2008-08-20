@@ -14,6 +14,21 @@ PROJECT = mccomponents/tests
 PACKAGE = libmccomponents/kernels
 
 
+# local tests
+PROJ_TIDY += $(PROJ_CPPTESTS)
+PROJ_CLEAN += $(PROJ_CPPTESTS)
+PROJ_PYTESTS =  #alltests.py
+PROJ_CPPTESTS = \
+	test_SQkernel \
+
+
+PROJ_TESTS = $(PROJ_PYTESTS) $(PROJ_CPPTESTS)
+PROJ_LIBRARIES = -L$(BLD_LIBDIR) -ljournal -lmcni -lmccomposite -lmccomponents -lmcstas_compact
+#PROJ_CXX_DEFINES += DEEPDEBUG
+
+
+
+# for recursion
 # directory structure
 
 BUILD_DIRS = \
@@ -26,7 +41,7 @@ RECURSE_DIRS = $(BUILD_DIRS) $(OTHER_DIRS)
 
 #--------------------------------------------------------------------------
 # build the library
-all: 
+all: $(PROJ_TESTS)
 	BLD_ACTION="all" $(MM) recurse
 
 test: 
@@ -42,6 +57,12 @@ tidy::
 	BLD_ACTION="tidy" $(MM) recurse
 
 #--------------------------------------------------------------------------
+
+
+
+
+test_SQkernel: test_SQkernel.cc
+	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ test_SQkernel.cc $(PROJ_LIBRARIES)
 
 
 

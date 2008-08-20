@@ -39,8 +39,8 @@ namespace mccomponents {
       // meta methods
       //! ctor
       SQkernel( double absorption_cross_section,
-		 double scattering_cross_section,
-		 const sample::AbstractSQ & sq, 
+		double scattering_cross_section,
+		const sample::AbstractSQ & sq, 
 		double Qmin, double Qmax);
       
       // methods
