@@ -47,7 +47,9 @@ export:: export-package-headers
 
 EXPORT_HEADERS = \
 	AbstractScatteringKernel.h \
+	AbstractSQ.h \
 	AbstractSQE.h \
+	SQkernel.h \
 	SQEkernel.h \
 
 

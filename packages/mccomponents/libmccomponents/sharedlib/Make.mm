@@ -36,6 +36,7 @@ PROJ_SRCS = \
 	EventModeMCA.cc \
 	He3.cc \
 	He3Tube.cc \
+	SQkernel.cc \
 	SQEkernel.cc \
 	GridSQE.cc \
 	AbstractDispersion_3D.cc \
@@ -71,6 +72,9 @@ EventModeMCA.cc: ../kernels/detector/EventModeMCA.cc
 
 SQEkernel.cc: ../kernels/sample/SQEkernel.cc
 	cp ../kernels/sample/SQEkernel.cc .
+
+SQkernel.cc: ../kernels/sample/SQkernel.cc
+	cp ../kernels/sample/SQkernel.cc .
 
 GridSQE.cc: ../kernels/sample/SQE/GridSQE.cc
 	cp ../kernels/sample/SQE/GridSQE.cc .
