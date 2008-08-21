@@ -1,3 +1,4 @@
+
 // -*- C++ -*-
 //
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -61,6 +62,7 @@ namespace wrap_models{
       (
        "SANSModel_Sphere_SQAdaptor",
        init< const w_t & >()
+       [with_custodian_and_ward<1,2>()]
        )
       ;
   }
