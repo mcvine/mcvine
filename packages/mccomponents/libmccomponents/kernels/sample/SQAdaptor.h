@@ -24,20 +24,17 @@ namespace mccomponents {
     // convert an object any class that has a operator()(Q) to an instance
     // acceptable by SQkernel
     template <typename SQ>
-    class SQAdaptor: public AbstractSQ
+    struct SQAdaptor: public AbstractSQ
     {
-    public:
-
-      SQAdaptor( const SQ & sq ): m_sq( sq ) 
+      SQAdaptor( const SQ & sq ): core( sq ) 
       {}
 
       inline virtual double operator () ( double Q ) const
       {
-	return m_sq(Q);
+	return core(Q);
       }
 
-    private:
-      const SQ & m_sq;
+      const SQ & core;
     } ;
     
     

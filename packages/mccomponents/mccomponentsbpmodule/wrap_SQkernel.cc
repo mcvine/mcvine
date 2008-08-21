@@ -15,6 +15,7 @@
 #include <sstream>
 #include <boost/python.hpp>
 #include "mccomponents/kernels/sample/AbstractSQ.h"
+#include "mccomponents/kernels/sample/SQAdaptor.h"
 #include "mccomponents/kernels/sample/SQkernel.h"
 #include "mccomponents/boostpython_binding/wrap_kernel.h"
 

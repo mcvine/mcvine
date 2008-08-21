@@ -25,6 +25,7 @@ namespace wrap_mccomponents{
   void wrap_He3TubeKernel();
   void wrap_EventModeMCA();
   void wrap_SQEkernel();
+  void wrap_SQkernel();
   void wrap_GridSQE();
 
   void wrap_NdArray();
@@ -57,7 +58,10 @@ BOOST_PYTHON_MODULE(mccomponentsbp)
 
   wrap_He3TubeKernel();
   wrap_EventModeMCA();
+
   wrap_SQEkernel();
+  wrap_SQkernel();
+
   wrap_GridSQE();
 
   wrap_NdArray();
