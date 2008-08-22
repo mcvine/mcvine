@@ -23,11 +23,18 @@ warning = journal.warning( "mcni.pyre_components.test" )
 
 class TestCase(unittest.TestCase):
 
-    def test(self):
+    def test1(self):
         from mcni.pyre_components import componentfactory
         f = componentfactory( 'sources', 'MonochromaticSource' )
         from mcni.pyre_components.MonochromaticSource import MonochromaticSource
         self.assertEqual( f, MonochromaticSource )
+        return
+
+    def test2(self):
+        from mcni.pyre_components import componentfactory
+        f = componentfactory( 'monitors', 'NeutronPrinter' )
+        from mcni.pyre_components.NeutronPrinter import NeutronPrinter
+        self.assertEqual( f, NeutronPrinter )
         return
 
     pass # end of TestCase
