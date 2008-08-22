@@ -23,14 +23,24 @@ class SANSSphereModelKernel(AbstractNode):
 
     def elementFactory( self, **kwds ):
         scale = kwds.get('scale')
-        background = kwds.get('background')
         radius = kwds.get('radius')
         contrast = kwds.get('contrast')
+        background = kwds.get('background')
+
+        scale = float(scale)
+        radius = float(radius)
+        contrast = float(contrast)
+        background = float(background)
         
         absorption_cross_section = kwds.get('absorption_cross_section')
         scattering_cross_section = kwds.get('scattering_cross_section')
         Qmin = kwds.get('Qmin')
         Qmax = kwds.get('Qmax')
+
+        absorption_cross_section = float( absorption_cross_section )
+        scattering_cross_section = float( scattering_cross_section )
+        Qmin = float( Qmin )
+        Qmax = float( Qmax )
         
         from mccomponents.sample.sansmodel import sansspheremodel_kernel
         return sansspheremodel_kernel(

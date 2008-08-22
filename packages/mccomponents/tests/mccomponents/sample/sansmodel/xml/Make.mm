@@ -11,41 +11,54 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 PROJECT = mccomponents
-PACKAGE = sample/sansmodel
+PACKAGE = tests
+
+PROJ_TIDY += alltests.py $(PROJ_CPPTESTS) *.rendered
+PROJ_CLEAN += alltests.py $(PROJ_CPPTESTS)
+
+PROJ_PYTESTS =  alltests.py
+PROJ_CPPTESTS = 
+PROJ_TESTS = $(PROJ_PYTESTS) $(PROJ_CPPTESTS)
+PROJ_LIBRARIES = -L$(BLD_LIBDIR) -ljournal -lmcni
+
+
+# directory structure
 
 BUILD_DIRS = \
 	bindings \
-	xml \
 
-RECURSE_DIRS = $(BUILD_DIRS)
+OTHER_DIRS = \
+
+RECURSE_DIRS = $(BUILD_DIRS) $(OTHER_DIRS)
+
 
 #--------------------------------------------------------------------------
 #
 
-all: export
+all: $(PROJ_TESTS)
 	BLD_ACTION="all" $(MM) recurse
 
 tidy::
 	BLD_ACTION="tidy" $(MM) recurse
 
+test: alltests.py
+	for test in $(PROJ_TESTS) ; do $${test}; done
+
+release: tidy
+	cvs release .
+
+update: clean
+	cvs update .
 
 #--------------------------------------------------------------------------
 #
-# export
-
-EXPORT_PYTHON_MODULES = \
-	AbstractSANSKernel.py \
-	ComputationEngineRendererExtension.py \
-	SANSSphereModelKernel.py \
-	units.py \
-	__init__.py \
 
 
-export:: export-package-python-modules 
+alltests.py: ../alltests.py
+	cp ../alltests.py .
 
 
 # version
-# $Id: Make.mm 1234 2007-09-18 18:32:56Z linjiao $
+# $Id: Make.mm 620 2007-07-11 23:24:50Z linjiao $
 
 # End of file
-

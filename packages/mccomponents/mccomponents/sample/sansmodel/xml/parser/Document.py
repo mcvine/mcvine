@@ -20,6 +20,8 @@ class Document(base):
 
 
     tags = [
+        'HomogeneousScatterer',
+        
         'SANSSphereModelKernel',
         ]
 

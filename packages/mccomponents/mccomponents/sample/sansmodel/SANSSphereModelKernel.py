@@ -12,7 +12,9 @@
 #
 
 
-class SANSSphereModelKernel:
+from AbstractSANSKernel import AbstractSANSKernel as base
+
+class SANSSphereModelKernel(base):
 
 
     def __init__(self, scale, radius, contrast, background,
@@ -28,8 +30,10 @@ class SANSSphereModelKernel:
         self.Qmin = Qmin
         self.Qmax = Qmax
         return
-    
 
+    
+    def identify(self, visitor):
+        return visitor.onSANSSphereModelKernel( self )
 
 
 # version

@@ -11,7 +11,11 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
 
-from mccomponents.sample.kernelxml.parser.HomogeneousScatterer import HomogeneousScatterer
+from mccomponents.sample.kernelxml.parser.HomogeneousScatterer import HomogeneousScatterer as base
+
+class HomogeneousScatterer(base):
+
+    onSANSSphereModelKernel = base.onKernel
 
 
 # version

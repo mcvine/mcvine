@@ -19,6 +19,7 @@ BUILD_DIRS = \
 	idf \
 	kernelxml \
 	phonon \
+	sansmodel \
 
 RECURSE_DIRS = $(BUILD_DIRS)
 
