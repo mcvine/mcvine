@@ -1,0 +1,8 @@
+
+def slit1():
+    from mcni.pyre_support import componentfactory as component
+    f = component('optics', 'Slit', supplier = 'mcstas2')
+    return f('slit1') 
+
+
+if __name__ == '__main__': slit1()
