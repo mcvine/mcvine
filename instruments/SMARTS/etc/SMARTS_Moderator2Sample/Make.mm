@@ -35,6 +35,7 @@ EXPORT_ETC = \
 	slit1.pml \
 	slit2.odb \
 	slit2.pml \
+	source.odb \
 	source.pml \
 
 

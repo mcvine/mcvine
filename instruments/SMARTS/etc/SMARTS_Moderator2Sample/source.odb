@@ -1,0 +1,8 @@
+
+def source():
+    from mcni.pyre_support import componentfactory as component
+    f = component('sources', 'Moderator', supplier = 'mcstas2')
+    return f('source') 
+
+
+if __name__ == '__main__': source()
