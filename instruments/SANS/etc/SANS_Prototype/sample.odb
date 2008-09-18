@@ -1,3 +1,4 @@
+import mccomponents.sample.sansmodel.xml
 
 def sample():
     from mcni.pyre_support import componentfactory as component

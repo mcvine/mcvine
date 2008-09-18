@@ -16,14 +16,18 @@ from SSSD import Instrument as base
 class SANS_Prototype(base):
 
     class Inventory(base.Inventory):
-        
+
+        from mcni.pyre_support import facility
+        source = facility('source', default = 'source')
+        sample = facility('sample', default = 'sample')
+        detector = facility('detector', default = 'detector')
         pass # end of Inventory
 
 
     def _defaults(self):
         
         base._defaults(self)
-        
+
         geometer = self.inventory.geometer
         geometer.inventory.source = (0,0,0), (0,0,0)
         geometer.inventory.sample = (0,0,16), (0,0,0)

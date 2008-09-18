@@ -1,7 +1,7 @@
 
 def source():
     from mcni.pyre_support import componentfactory as component
-    f = component('sources', 'MonochromaticSouce', supplier = 'mcni')
+    f = component('sources', 'MonochromaticSource', supplier = 'mcni')
     return f('source') 
 
 

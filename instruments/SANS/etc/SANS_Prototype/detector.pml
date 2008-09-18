@@ -16,11 +16,12 @@
 
 <inventory>
 
-    <component name="slit2">
-      <property name="xmin">-0.005</property>
-      <property name="ymin">-0.005</property>
-      <property name="ymax">0.005</property>
-      <property name="xmax">0.005</property>
+    <component name="detector">
+      <property name="xwidth">0.1</property>
+      <property name="yheight">0.1</property>
+      <property name="nx">100</property>
+      <property name="ny">100</property>
+      <property name="filename">Ixy.dat</property>
     </component>
 
 </inventory>

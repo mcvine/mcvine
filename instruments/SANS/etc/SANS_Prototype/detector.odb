@@ -1,8 +1,11 @@
 
-def slit2():
+def detector():
     from mcni.pyre_support import componentfactory as component
-    f = component('optics', 'Slit', supplier = 'mcstas2')
-    return f('slit2') 
+    f = component('monitors', 'PSD_monitor', supplier = 'mcstas2')
+    c = f('detector') 
+    from mcstas2.pyre_support.monitor_exts import extend
+    extend(c)
+    return c
 
 
-if __name__ == '__main__': slit2()
+if __name__ == '__main__': detector()
