@@ -13,15 +13,27 @@
 
 
 
-## This enrichment requires redefinition of _fini0_in_outputdir. see __init__.py for more details
+# This enrichment requires redefinition of several methods, such as _fini0_in_outputdir.
+# Please see __init__.py for more details
 
 
-import os
+def process(self, neutrons):
+    iterationcount = self.__dict__.get('iterationcount')
+    if iterationcount is None: iterationcount = 0
+    ret = self.engine.process(neutrons)
+    iterationcount += 1
+    self.iterationcount = iterationcount
+    
+    # save monitor data to a histogram
+    hout = self._histogram_output()
+    self._save_histogram(hout)
+    self._save_histogram('%s.%s' % (hout, iterationcount))
+    return ret
+
 
 def _fini_in_outputdir(self):
     if not self._showHelpOnly:
-        self._save_histogram()
-    self._fini0_in_outputdir()
+        self._save_histogram_in_outputdir(self._histogram_output())
     return
 
 
@@ -32,18 +44,39 @@ def _histogram_output(self):
     return f
 
 
-def _save_histogram( self ):
+def _save_histogram(self, filename):
+    def _():
+        return self._save_histogram_in_outputdir(filename)
+    return self._in_outputdir(_)
+
+
+def _save_histogram_in_outputdir(self, filename):
     engine = self.__dict__.get('engine')
+    # if engine has not been established, skip
     if engine is None: return
+
+    # get the histogram to output
     h = self._get_histogram( )
-    f = self._histogram_output( )
-    if self.overwrite_datafiles and os.path.exists( f ): os.remove( f )
+
+    # remove old file
+    if self.overwrite_datafiles and os.path.exists( filename ): os.remove( filename )
+
+    # dump
     from histogram.hdf import dump
-    dump( h, f, '/', 'c')
+    dump( h, filename, '/', 'c')
     return
 
 
-methods = [ '_fini_in_outputdir', '_save_histogram', '_histogram_output' ]
+methods = [
+    'process',
+    '_fini_in_outputdir',
+    '_save_histogram',
+    '_save_histogram_in_outputdir',
+    '_histogram_output',
+    ]
+
+
+import os
 
 
 # version

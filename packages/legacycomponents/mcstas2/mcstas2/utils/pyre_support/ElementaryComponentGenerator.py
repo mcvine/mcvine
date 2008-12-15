@@ -67,12 +67,6 @@ class Generator:
                 pass
 
             def __getattribute__(self, name):
-                if name in [ 'process' ]:
-                    engine = self.__dict__.get( 'engine' )
-                    if engine is None:
-                        raise RuntimeError, "engine not established"
-                    return getattr(engine, name )
-                    
                 try: return base.__getattribute__(self, name)
                 except AttributeError:
                     import traceback

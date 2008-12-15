@@ -20,14 +20,20 @@ def extend(klass):
     # is vulnerable.
     klass._fini_in_outputdir = klass._fini
     def _fini(self):
-        import os
-        curdir = os.path.abspath( os.curdir )
-        if self._outputdir: os.chdir( self._outputdir )
-        klass._fini_in_outputdir(self)
-        os.chdir( curdir )
+        def _(): return self._fini_in_outputdir()
+        self._in_outputdir(_)
         return
     klass._fini = _fini
     
+    def _in_outputdir(self, func):
+        import os
+        curdir = os.path.abspath( os.curdir )
+        if self._outputdir: os.chdir( self._outputdir )
+        ret = func()
+        os.chdir( curdir )
+        return ret
+    klass._in_outputdir = _in_outputdir
+
     return klass
 
 

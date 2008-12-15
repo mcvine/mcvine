@@ -26,8 +26,9 @@ def _get_histogram( self ):
     return h
 
 
-methods = [ '_get_histogram',
-            ]
+methods = [
+    '_get_histogram',
+    ]
 
 # version
 __id__ = "$Id$"
