@@ -34,6 +34,7 @@ def process(self, neutrons):
 def _fini_in_outputdir(self):
     if not self._showHelpOnly:
         self._save_histogram_in_outputdir(self._histogram_output())
+    self._fini0_in_outputdir()
     return
 
 

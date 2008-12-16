@@ -34,6 +34,10 @@ def extend(klass):
         return ret
     klass._in_outputdir = _in_outputdir
 
+    def process(self, neutrons):
+        return self.engine.process(neutrons)
+    klass.process = process
+
     return klass
 
 
