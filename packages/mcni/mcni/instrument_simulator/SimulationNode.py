@@ -42,8 +42,12 @@ class SimulationNode(Connectable):
             neutrons,
             position, orientation,
             self.position, self.orientation)
-        
-        self.component.process(neutrons)
+
+        try:
+            self.component.process(neutrons)
+        except NotImplementedError:
+            raise "component %s at %s rotated %s has not implemented method 'process'" % (
+                self.component.name, position, orientation)
         
         self._outputs['neutrons'] = neutrons
         self._outputs['position'] = self.position

@@ -60,6 +60,10 @@ class SimulationChain(Composite):
 
             now = component.name
 
+            if isabstract(component):
+                raise "component %s at %s, rotated %s is abstract" % (
+                    now, position, orientation)
+
             newconnetions = self._connections( previous, now )
             connections += newconnetions
 
@@ -81,6 +85,11 @@ class SimulationChain(Composite):
 
 
     pass # end of SimulationChain
+
+
+from mcni.AbstractComponent import AbstractComponent
+def isabstract(component):
+    return component.__class__ is AbstractComponent
         
 
 # version
