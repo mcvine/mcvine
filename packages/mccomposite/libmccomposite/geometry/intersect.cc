@@ -1,3 +1,4 @@
+#include <algorithm>
 #include "mccomposite/geometry/intersect.h"
 
 namespace mccomposite {

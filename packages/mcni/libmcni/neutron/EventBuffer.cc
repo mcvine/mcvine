@@ -13,6 +13,7 @@
 
 #include <iostream>
 #include <vector>
+#include <algorithm>
 #include "mcni/geometry/Vector3.h"
 #include "mcni/geometry/Position.h"
 #include "mcni/geometry/Velocity.h"
@@ -40,7 +41,7 @@ mcni::Neutron::EventBuffer::snapshot( size_t n )
 {
   EventBuffer valid_evts;
   
-  remove_copy_if( this->begin(), this->begin()+n,
+  std::remove_copy_if( this->begin(), this->begin()+n,
 		  back_inserter(valid_evts),
 		  isInValid);
   return valid_evts;

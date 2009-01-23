@@ -14,6 +14,7 @@
 #ifndef MCCOMPOSITE_ABSTRACTNEUTRONSCATTERER_H
 #define MCCOMPOSITE_ABSTRACTNEUTRONSCATTERER_H
 
+#include <memory>
 #include "mcni/neutron.h"
 #include "mcni/AbstractNeutronScatterer.h"
 #include "mccomposite/geometry/AbstractShape.h"

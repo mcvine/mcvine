@@ -12,6 +12,7 @@
 
 
 #include <vector>
+#include <algorithm>
 #include "mcni/geometry.h"
 #include "mcni/neutron/Event.h"
 #include "mcni/neutron/EventBuffer.h"

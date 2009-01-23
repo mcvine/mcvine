@@ -51,7 +51,7 @@ namespace test {
     }
     integrated*=de;
     
-    assert ( abs(integrated-1.) < 0.05 );
+    assert ( std::abs(integrated-1.) < 0.05 );
   }
   
 }

@@ -13,6 +13,7 @@
 
 
 #include <cassert>
+#include <cmath>
 #include <iostream>
 #include "mcni/neutron.h"
 #include "mccomposite/CompositeNeutronScatterer.h"
@@ -188,12 +189,12 @@ void test3()
   mcni::Neutron::Event save = ev;
 
   assert (cs.interact_path1( ev ) == AbstractNeutronScatterer::scattering);
-  assert (abs(ev.state.position.z-0.5) < 1.e-5 );
+  assert (std::abs(ev.state.position.z-0.5) < 1.e-5 );
   assert (ev.time == 5.5);
 
   ev = save;
   cs.scatter(ev);
-  assert (abs(ev.state.position.z-2.5) < 1.e-5 );
+  assert (std::abs(ev.state.position.z-2.5) < 1.e-5 );
   assert (ev.time == 7.5);
 }
 
@@ -236,7 +237,7 @@ void test4()
   ev = save;
   cs.scatter( ev ) ;
   std::cout << ev << std::endl;
-  assert (abs(ev.state.position.z-2.1) < 1.e-5 );
+  assert (std::abs(ev.state.position.z-2.1) < 1.e-5 );
   assert (ev.time == 7.1);
 }
 
@@ -273,7 +274,7 @@ void test4a()
 
   mcni::Neutron::Event save = ev;
   assert (cs.interact_path1( ev ) == AbstractNeutronScatterer::scattering);
-  assert (abs(ev.state.position.z-2.1) < 1.e-5 );
+  assert (std::abs(ev.state.position.z-2.1) < 1.e-5 );
   assert (ev.time == 7.1);
 }
 
@@ -321,7 +322,7 @@ void test5()
 
   ev = save;
   cs.scatter( ev ) ;
-  assert (abs(ev.state.position.z-2.1) < 1.e-5 );
+  assert (std::abs(ev.state.position.z-2.1) < 1.e-5 );
   assert (ev.time == 7.1);
 }
 
