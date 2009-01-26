@@ -19,7 +19,9 @@ PROJECT = mcstas2
 all: export
 #
 
-CP_RF = cp -rf
+#CP_RF = cp -rf
+CP_RF = rsync -a
+
 EXPORT_DATADIRS = \
     McStas-Components \
 
@@ -33,7 +35,7 @@ export-package-data:: $(EXPORT_DATADIRS)
 	mkdir -p $(SHARE_DEST); \
 	for x in $(EXPORT_DATADIRS); do { \
             if [ -d $$x ]; then { \
-	        $(CP_RF) $$x $(SHARE_DEST); \
+	        $(CP_RF) $$x/ $(SHARE_DEST)/$$x/; \
             } fi; \
         } done
 
