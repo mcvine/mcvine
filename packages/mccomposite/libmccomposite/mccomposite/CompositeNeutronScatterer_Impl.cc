@@ -512,31 +512,59 @@ void
 mccomposite::CompositeNeutronScatterer_Impl::scatter
 (mcni::Neutron::Event & ev)
 {
+  using namespace CompositeNeutronScatterer_ImplDetails;
+#ifdef DEBUG
+  journal::debug_t debug( jrnltag );
+#endif
+
   using namespace geometry;
 
   // if the neutron is not moving, we don't have a way to deal with it
-  if (! is_moving( ev ) ) {ev.probability = -1; return;}
+  if (! is_moving( ev ) ) {
+#ifdef DEBUG
+    debug << "neutron is not moving. exit." << journal::endl;
+#endif
+    ev.probability = -1; return;
+  }
       
   // event is exiting, nothing need to be done
-  if (is_exiting(ev, m_shape)) return;
-
+  if (is_exiting(ev, m_shape)) {
+#ifdef DEBUG
+    debug << "neutron is exiting the scatterer." << journal::endl;
+#endif
+    return;
+  }
   // event does not really hit me, return
   // this is necessarily because the given "frame shape" of this composite
   // might not be the union of all element shapes. 
   // so the event might hit the "frame shape", but not really any scatterer
   if (is_exiting(ev, m_union_of_all_shapes)) {
+#ifdef DEBUG
+    debug << "neutron is exiting all subcomponents." << journal::endl;
+#endif
     propagate_to_next_exiting_surface( ev, m_shape );
     return;
   }
 
   // otherwise, interacts once.
+#ifdef DEBUG
+  debug << "Let neutron interact with this scatterer once." << journal::endl;
+#endif
   scatterer_interface::InteractionType itype = interact_path1( ev );
   
   // if it is absorbed or it does not hit anything. we don't
   // need do more.
-  if (itype == scatterer_interface::absorption) return;
+  if (itype == scatterer_interface::absorption) {
+#ifdef DEBUG
+    debug << "neutron is absorbed." << journal::endl;
+#endif
+    return;
+  }
 
   if (itype == scatterer_interface::none) {
+#ifdef DEBUG
+    debug << "propagate to next incident surface and scatter" << journal::endl;
+#endif
     // need to call scatter again
     propagate_to_next_incident_surface( ev, m_union_of_all_shapes );
     scatter( ev );
@@ -546,14 +574,24 @@ mccomposite::CompositeNeutronScatterer_Impl::scatter
   // when we reach here, this means the event was scattered. 
   // we still need to attenuate the outgoing event
   // 1. find intersections
+#ifdef DEBUG
+  debug << "event was scatterred. need to figure out attenuations" << journal::endl;
+#endif
   tofs_t tofs = intersect(ev, m_shape);
   
   // 2. no intersection. nothing to do
-  if (tofs.size()==0) 
+  if (tofs.size()==0) {
+#ifdef DEBUG
+    debug << "no intersections, no attenuation. scatter done" << journal::endl;
+#endif
     return;
-  
+  }
+
   // 3. with intersection. propagate to the last intersection and 
   // attenuate the neutron.
+#ifdef DEBUG
+  debug << "has intersections. propagate to the next intersection and attenuate." << journal::endl;
+#endif
   // 3a. save the neutron
   mcni::Neutron::Event save = ev;
   // 2. propagate out
