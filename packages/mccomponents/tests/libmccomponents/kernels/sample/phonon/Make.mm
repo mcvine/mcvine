@@ -25,6 +25,7 @@ PROJ_CPPTESTS = test_LinearlyInterpolatedGridData_3D \
 	test_LinearlyInterpolatedDOS \
 	test_CoherentInelastic_PolyXtal \
 	test_PeriodicDispersion_3D \
+	test_ChangeCoordinateSystem_forDispersion_3D \
 
 
 PROJ_TESTS = $(PROJ_PYTESTS) $(PROJ_CPPTESTS)
@@ -62,6 +63,9 @@ tidy::
 #--------------------------------------------------------------------------
 
 
+
+test_ChangeCoordinateSystem_forDispersion_3D: test_ChangeCoordinateSystem_forDispersion_3D.cc LinearlyInterpolatedDispersionOnGrid_3D_Example.h
+	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ test_ChangeCoordinateSystem_forDispersion_3D.cc $(PROJ_LIBRARIES)
 
 test_LinearlyInterpolatedGridData_1D: test_LinearlyInterpolatedGridData_1D.cc
 	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ test_LinearlyInterpolatedGridData_1D.cc $(PROJ_LIBRARIES)
