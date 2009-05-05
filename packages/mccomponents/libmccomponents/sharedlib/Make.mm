@@ -41,6 +41,7 @@ PROJ_SRCS = \
 	GridSQE.cc \
 	AbstractDispersion_3D.cc \
 	AtomicScatterer.cc \
+	ChangeCoordinateSystem_forDispersion_3D.cc \
 	LinearlyInterpolatedDispersionOnGrid_3D.cc \
 	kernels_sample_phonon_utils.cc \
 	physics_statistics.cc \
@@ -87,6 +88,9 @@ AbstractDispersion_3D.cc: ../kernels/sample/phonon/AbstractDispersion_3D.cc
 
 PeriodicDispersion_3D.cc: ../kernels/sample/phonon/PeriodicDispersion_3D.cc
 	cp ../kernels/sample/phonon/PeriodicDispersion_3D.cc .
+
+ChangeCoordinateSystem_forDispersion_3D.cc: ../kernels/sample/phonon/ChangeCoordinateSystem_forDispersion_3D.cc
+	cp ../kernels/sample/phonon/ChangeCoordinateSystem_forDispersion_3D.cc .
 
 LinearlyInterpolatedDispersionOnGrid_3D.cc: ../kernels/sample/phonon/LinearlyInterpolatedDispersionOnGrid_3D.cc
 	cp ../kernels/sample/phonon/LinearlyInterpolatedDispersionOnGrid_3D.cc .

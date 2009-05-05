@@ -50,6 +50,7 @@ EXPORT_HEADERS = \
 	AbstractDOS.h \
 	AbstractScatteringKernel.h \
 	AtomicScatterer.h \
+	ChangeCoordinateSystem_forDispersion_3D.h \
 	CoherentInelastic_PolyXtal.h \
 	DWFromDOS.h \
 	DWFromDOS.icc \
