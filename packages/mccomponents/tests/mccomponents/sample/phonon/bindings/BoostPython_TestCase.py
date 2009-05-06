@@ -55,24 +55,43 @@ class TestCase(unittest.TestCase):
 
     def test3(self):
         'LinearlyInterpolatedDispersion_3D'
-        nQs = 21
-        Q_axes = [
-            ( (2,0,0), nQs ),
-            ( (0,2,0), nQs ),
-            ( (0,0,2), nQs ),
-            ]
-        nAtoms = 5
-        nDims = 3
-        nBranches = nAtoms*nDims
-        import numpy
-        eps_data = numpy.zeros(
-            ( nQs, nQs, nQs, nBranches, nAtoms, nDims, 2 ),
-            dtype = numpy.double)
-        E_data = numpy.zeros(
-            ( nQs, nQs, nQs, nBranches ),
-            dtype = numpy.double)
+        import mccomponents.sample.phonon.bindings as bindings
+        b = bindings.get('BoostPython')
+        
+        nAtoms = 2
+        nBranches = 3 * nAtoms
+        nQx = 10; nQy = 12; nQz = 14
+        Qaxes = [ ([1,1,0], nQx),
+                  ([1,0,1], nQy),
+                  ([0,1,1], nQz),
+                  ]
 
-        disp = bp.linearlyinterpolateddispersion_3d( nAtoms, Q_axes, eps_data, E_data )
+        import histogram as H
+        qx = H.axis('qx', H.arange(0, 1+1e-10, 1./(nQx-1)))
+        qy = H.axis('qy', H.arange(0, 1+1e-10, 1./(nQy-1)))
+        qz = H.axis('qz', H.arange(0, 1+1e-10, 1./(nQz-1)))
+        br = H.axis('branchId', range(nBranches))
+        atoms = H.axis('atomId', range(nAtoms))
+        pols = H.axis('polId', range(3))
+        realimags = H.axis('realimagId', range(2))
+        
+        eps = H.histogram(
+            'eps', [qx,qy,qz,br,atoms,pols,realimags],
+            fromfunction = lambda qx,qy,qz,br,atom,pol,realimag: qx+qy+qz+br+atom+pol+realimag)
+        e = H.histogram(
+            'e', [qx,qy,qz,br],
+            fromfunction = lambda qx,qy,qz,br: qx+qy+qz+br)
+
+        disp = b.linearlyinterpolateddispersion_3d(nAtoms, Qaxes, eps.I, e.I)
+
+        Q = b.vector3
+
+        self.assertAlmostEqual(disp.energy(0, Q(0,0,0)), 0)
+        self.assertAlmostEqual(disp.energy(0, Q(1-1e-5,1-1e-5,0)), 1-1e-5)
+        self.assertAlmostEqual(disp.energy(0, Q(0.5,0.5,0)), 0.5)
+        self.assertAlmostEqual(disp.energy(0, Q(0.5,0,0.5)), 0.5)
+        self.assertAlmostEqual(disp.energy(0, Q(0,0.5,0.5)), 0.5)
+        self.assertAlmostEqual(disp.energy(0, Q(0.5,0.5,1-1e-10)), 1)
         return
 
 

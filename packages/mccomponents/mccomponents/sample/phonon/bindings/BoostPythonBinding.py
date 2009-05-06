@@ -143,7 +143,12 @@ class New:
         rc = b.ReciprocalCell( )
         bs = [ self.Q(bi) for bi in reciprocalcell ]
         rc.b1, rc.b2, rc.b3 = bs
-        return b.PeriodicDispersion_3D( dispersion, rc )
+        return b.PeriodicDispersion_3D(dispersion, rc)
+
+
+    def changecoordssystemfordispersion(self, dispersion, matrix):
+        m = self.matrix3(matrix)
+        return b.ChangeCoordinateSystem_forDispersion_3D(dispersion, m)
 
 
     def linearlyinterpolateddispersion(
@@ -171,26 +176,20 @@ class New:
         #c++ engine require three values for each Qaxis:
         # Qmin, step, n
         # Here, Qmax = Qmin + n * step is included, and that means n+1 Q points
-        Qaxes = list(Qaxes)
-        for i,axis in enumerate(Qaxes):
-            Qvector, n = axis
-            # for now, it is required that axis0 point to x direction, axis1 y direction, axis2 z direction
-            for j in range(3):
-                if j != i: assert Qvector[j] == 0
-                continue
-            
-            Qaxes[i] = 0, 1.*Qvector[i]/(n-1), n-1
-            continue
-        
-        Qx_axis = self.linearlyinterpolatableaxis( *(Qaxes[0]) )
-        Qy_axis = self.linearlyinterpolatableaxis( *(Qaxes[1]) )
-        Qz_axis = self.linearlyinterpolatableaxis( *(Qaxes[2]) )
+        cQaxes = [
+            self.linearlyinterpolatableaxis(0, 1./(n-1), n-1)
+            for Qvector, n in Qaxes]
         
         eps_arr = self.ndarray( eps_npyarr )
         E_arr = self.ndarray( E_npyarr )
         
         disp = b.LinearlyInterpolatedDispersionOnGrid_3D_dblarrays(
-            natoms, Qx_axis, Qy_axis, Qz_axis, eps_arr, E_arr )
+            natoms, cQaxes[0], cQaxes[1], cQaxes[2], eps_arr, E_arr )
+
+        # need linear transformation
+        import numpy.linalg as nl
+        m = nl.inv( [Qvector for Qvector, n in Qaxes] )
+        disp = self.changecoordssystemfordispersion(disp, m)
         return disp
 
 
