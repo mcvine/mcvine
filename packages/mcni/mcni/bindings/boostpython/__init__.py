@@ -69,6 +69,22 @@ class Binding:
         return b.Vector3_double( *v )
 
 
+    def matrix3(self, *args):
+        if len(args) == 1: m = args[0]
+        elif len(args) == 3: m = args
+        elif len(args) == 9: m = args
+        import numpy
+        m = numpy.array(m)
+        try:
+            m.shape = 3,3
+        except:
+            raise RuntimeError, 'Cannot convert input %s to a 3X3 matrix' % (args,)
+
+        #m.shape = -1,
+        m = tuple(m[0])+tuple(m[1])+tuple(m[2])
+        return b.Matrix3_double( *m )
+
+
     pass # end of Binding
     
 
