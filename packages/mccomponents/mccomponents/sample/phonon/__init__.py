@@ -46,7 +46,7 @@ def periodicdispersion( dispersion, reciprocalcell ):
 def dispersion_fromidf( datapath ):
     from mccomponents.sample.idf import readDispersion
     nAtoms, dimension, Qaxes, polarizations, energies, dos = readDispersion( datapath )
-        
+    
     dispersion = linearlyinterpolateddispersion(
         nAtoms, dimension,
         Qaxes, polarizations, energies, dos = dos )

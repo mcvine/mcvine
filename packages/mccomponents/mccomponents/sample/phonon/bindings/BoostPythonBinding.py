@@ -178,7 +178,8 @@ class New:
         # Here, Qmax = Qmin + n * step is included, and that means n+1 Q points
         cQaxes = [
             self.linearlyinterpolatableaxis(0, 1./(n-1), n-1)
-            for Qvector, n in Qaxes]
+            for Qvector, n in Qaxes
+            ]
         
         eps_arr = self.ndarray( eps_npyarr )
         E_arr = self.ndarray( E_npyarr )
