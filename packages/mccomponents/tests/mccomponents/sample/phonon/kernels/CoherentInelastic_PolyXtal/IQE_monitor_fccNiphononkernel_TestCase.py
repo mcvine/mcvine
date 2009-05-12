@@ -28,6 +28,7 @@ componentname = 'IQE_monitor'
 category = 'monitors'
 
 class TestCase(unittest.TestCase):
+    interactive = False
 
     def test(self):
         "wrap IQE_monitor"
@@ -63,8 +64,9 @@ class TestCase(unittest.TestCase):
         
         hist = _get_histogram(component)
         
-        from histogram.plotter import defaultPlotter
-        defaultPlotter.plot(hist)
+        if self.interactive:
+            from histogram.plotter import defaultPlotter
+            defaultPlotter.plot(hist)
         return
 
     pass  # end of TestCase
@@ -113,7 +115,7 @@ def makeDW():
 
 def makeDispersion():
     from mccomponents.sample.phonon import periodicdispersion_fromidf
-    disp = periodicdispersion_fromidf('phonon-dispersion-fccNi-0')
+    disp = periodicdispersion_fromidf('phonon-dispersion-fccNi-2brecilattice')
     from mccomponents.homogeneous_scatterer import kernelEngine, scattererEngine
     disp = scattererEngine(disp)
     return disp
@@ -127,6 +129,7 @@ import numpy as N
 
 
 def pysuite():
+    TestCase.interactive = True
     suite1 = unittest.makeSuite(TestCase)
     return unittest.TestSuite( (suite1,) )
 
