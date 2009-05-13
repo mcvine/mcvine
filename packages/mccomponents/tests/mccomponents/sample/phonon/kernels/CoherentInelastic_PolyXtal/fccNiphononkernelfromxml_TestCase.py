@@ -13,6 +13,7 @@
 
 
 '''
+fcc Ni scatterer constructed from an xml file
 '''
 
 
@@ -20,17 +21,17 @@ import unittestX as unittest
 import journal
 
 
-componentname = 'IQE_monitor'
-category = 'monitors'
 
 class TestCase(unittest.TestCase):
 
     interactive = False
 
     def test(self):
-        "wrap IQE_monitor"
+        "fcc Ni scatterer constructed from an xml file"
         
         from mcstas2 import componentfactory
+        category = 'monitors'
+        componentname = 'IQE_monitor'
         factory = componentfactory( category, componentname )
 
         Qmin=0; Qmax=13.; nQ=130
@@ -60,6 +61,12 @@ class TestCase(unittest.TestCase):
         component.process( neutrons )
         
         hist = _get_histogram(component)
+        import os
+        f = os.path.basename(__file__)
+        filename = 'IQE-%s.h5' % f
+        if os.path.exists(filename): os.remove(filename)
+        import histogram.hdf as hh
+        hh.dump(hist, filename, '/', 'c')
         
         if self.interactive:
             from histogram.plotter import defaultPlotter
@@ -81,7 +88,7 @@ vi = C.e2v(Ei)
 def makeScatterer():
     import mccomponents.sample.phonon.xml
     from mccomponents.sample.kernelxml import parse_file
-    scatterer = parse_file('fccNi-plate-scatterer.xml')
+    scatterer = parse_file('fccNi-plate-scatterer-cubic-reciprocal-unitcell.xml')
     kernel = scatterer.kernel()
 
     from sampleassembly.predefined import shapes
