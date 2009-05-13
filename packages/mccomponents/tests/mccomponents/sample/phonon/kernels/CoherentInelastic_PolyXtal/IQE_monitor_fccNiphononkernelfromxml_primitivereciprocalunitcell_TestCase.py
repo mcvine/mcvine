@@ -13,10 +13,6 @@
 
 
 '''
-This is a test of the phonon coherent inelastic scattering kernel.
-This test constructs dispersion from a idf data directory, and
-the kernel engine is constructed from calling the engine renderer
-on the kernel python representation.
 '''
 
 
@@ -28,7 +24,7 @@ componentname = 'IQE_monitor'
 category = 'monitors'
 
 class TestCase(unittest.TestCase):
-    
+
     interactive = False
 
     def test(self):
@@ -49,14 +45,14 @@ class TestCase(unittest.TestCase):
             max_angle_in_plane=120, min_angle_in_plane=-30,
             )
 
-        kernel = makeKernel()
+        scatterer = makeScatterer()
         
         import mcni
-        N = 10000
+        N = 1000000
         neutrons = mcni.neutron_buffer( N )
         for i in range(N):
             neutron = mcni.neutron(r=(0,0,0), v=(0,0,vi), time=0, prob=1)
-            kernel.scatter(neutron)
+            scatterer.scatter(neutron)
             neutrons[i] = neutron
             #print neutrons[i]
             continue
@@ -64,6 +60,12 @@ class TestCase(unittest.TestCase):
         component.process( neutrons )
         
         hist = _get_histogram(component)
+        import os
+        f = os.path.basename(__file__)
+        filename = 'IQE-%s.h5' % f
+        if os.path.exists(filename): os.remove(filename)
+        import histogram.hdf as hh
+        hh.dump(hist, filename, '/', 'c')
         
         if self.interactive:
             from histogram.plotter import defaultPlotter
@@ -81,15 +83,27 @@ from mcni.utils import conversion as C
 vi = C.e2v(Ei)
 
 
-def makeKernel():
-    max_omega = 50
-    max_Q = 13
-    nMCsteps_to_calc_RARV = 1000
-    return b.phonon_coherentinelastic_polyxtal_kernel(
-        makeDispersion(), makeDW(),
-        makeUnitcell(),
-        temperature=temperature, Ei=Ei, max_omega=max_omega, max_Q=max_Q,
-        nMCsteps_to_calc_RARV=nMCsteps_to_calc_RARV)
+
+def makeScatterer():
+    import mccomponents.sample.phonon.xml
+    from mccomponents.sample.kernelxml import parse_file
+    scatterer = parse_file('fccNi-plate-scatterer-primitive-reciprocal-lattice.xml')
+    kernel = scatterer.kernel()
+
+    from sampleassembly.predefined import shapes
+    plate = shapes.plate(width=0.04, height=0.10, thickness=0.003)
+    scatterer._shape = plate
+
+    from sampleassembly import elements
+    sample = elements.powdersample('fccNi', shape=plate)
+
+    crystal = elements.crystal(unitcell=makeUnitcell())
+    sample.phase = crystal
+
+    kernel.scatterer_origin = sample
+    
+    from mccomponents.homogeneous_scatterer import scattererEngine
+    return scattererEngine(scatterer)
 
 
 def makeUnitcell():
@@ -101,29 +115,6 @@ def makeUnitcell():
     return create_unitcell(cellvectors, atoms, positions)
 
 
-def mkDOS():
-    e0 = 0
-    de = 0.5
-    n = 100
-    Z = N.arange(0,1,0.01)
-    return b.linearlyinterpolateddos(e0, de, n, Z)
-
-
-def makeDW():
-    nsampling = 100
-    return b.dwfromDOS(mkDOS(), mass, temperature, nsampling)
-    
-
-def makeDispersion():
-    from mccomponents.sample.phonon import periodicdispersion_fromidf
-    disp = periodicdispersion_fromidf('phonon-dispersion-fccNi-2brecilattice')
-    from mccomponents.homogeneous_scatterer import kernelEngine, scattererEngine
-    disp = scattererEngine(disp)
-    return disp
-
-
-import mccomponents.sample.phonon.bindings as bindings
-b = bindings.get('BoostPython')
 
 from mcstas2.pyre_support.monitor_exts.IQE_monitor import _get_histogram
 import numpy as N

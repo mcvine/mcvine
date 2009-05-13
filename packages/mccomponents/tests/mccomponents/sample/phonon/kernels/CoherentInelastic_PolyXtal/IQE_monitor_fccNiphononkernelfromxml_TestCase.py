@@ -25,6 +25,8 @@ category = 'monitors'
 
 class TestCase(unittest.TestCase):
 
+    interactive = False
+
     def test(self):
         "wrap IQE_monitor"
         
@@ -59,8 +61,9 @@ class TestCase(unittest.TestCase):
         
         hist = _get_histogram(component)
         
-        from histogram.plotter import defaultPlotter
-        defaultPlotter.plot(hist)
+        if self.interactive:
+            from histogram.plotter import defaultPlotter
+            defaultPlotter.plot(hist)
         return
 
     pass  # end of TestCase
@@ -112,6 +115,7 @@ import numpy as N
 
 
 def pysuite():
+    TestCase.interactive = True
     suite1 = unittest.makeSuite(TestCase)
     return unittest.TestSuite( (suite1,) )
 

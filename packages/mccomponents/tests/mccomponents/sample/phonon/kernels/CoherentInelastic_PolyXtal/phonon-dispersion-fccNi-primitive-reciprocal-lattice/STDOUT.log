@@ -1,0 +1,15 @@
+
+  you must also do a 
+
+    use gcc-4.2.4 
+
+  in order to pick up the correct dynamic gfortran lib libgfortran.so.2
+
+Ssee program? iss kap\"ut.
+QPoints: 8000 pts
+Ssee program? iss kap\"ut.
+QPoints: 8000 pts
+Eigenvalues: 24000 vals
+Polarizations: 24000 vecs each length 3
+Ssee program? iss kap\"ut.
+['python system.py', 'bvkregularQs 20', 'bvkdisps 1', 'bvkpartialdos 1 0.5']
