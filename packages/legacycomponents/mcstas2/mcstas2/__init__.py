@@ -12,6 +12,9 @@
 #
 
 
+DEBUG = False
+#DEBUG = True
+
 
 def srandom( seed ):
     '''change the seed for random number generator
