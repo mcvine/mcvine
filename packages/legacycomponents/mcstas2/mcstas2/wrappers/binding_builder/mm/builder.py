@@ -22,6 +22,7 @@ from temporaryfiles import temporarydir
 from shutil import rmtree
 
 
+
 def build( binding ):
     build_binding( binding )
     export_pythonmodules( binding )
@@ -53,7 +54,9 @@ def export_pythonmodules(binding):
     callmm( tmpdir )
 
     #clean up
-    rmtree( tmpdir )
+    from mcstas2 import DEBUG
+    if not DEBUG:
+        rmtree( tmpdir )
     return
     
 
@@ -84,7 +87,9 @@ def build_binding(binding):
     callmm( tmpdir )
 
     #clean up
-    rmtree( tmpdir )
+    from mcstas2 import DEBUG
+    if not DEBUG:
+        rmtree( tmpdir )
     return
     
 

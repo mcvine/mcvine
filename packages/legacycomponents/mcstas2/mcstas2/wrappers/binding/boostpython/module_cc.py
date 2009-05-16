@@ -17,20 +17,24 @@ template = '''
 #include <boost/python.hpp>
 
 
-void wrap();
+void %(wrapmethodname)s();
 
 
-BOOST_PYTHON_MODULE(%s)
+BOOST_PYTHON_MODULE(%(bindingname)s)
 {
   using namespace boost::python;
-  wrap();
+  %(wrapmethodname)s();
 }
 
 
 '''
 
-def generate( name, path ):
-    content = template % name
+def generate( name, wrapmethodname, path ):
+    subs = {
+        'bindingname': name,
+        'wrapmethodname': wrapmethodname,
+        }
+    content = template % subs
     import os
     filename = os.path.join( path, "%smodule.cc" % name )
     open(filename, 'w').write( content )

@@ -29,11 +29,13 @@ def generate_binding_sources( bindingname, klass, path ):
 
     return: paths to generated sources
     '''
+    wrapmethodname = 'wrap_' + klass.name
+    
     from module_cc import generate
-    module_cc = generate( bindingname, path )
+    module_cc = generate( bindingname, wrapmethodname, path )
     
     from wrap_cc import generate
-    wrap_cc = generate( klass, path )
+    wrap_cc = generate( klass, path, wrapmethodname )
 
     return {
         'c' : [module_cc, wrap_cc],

@@ -23,7 +23,7 @@ using namespace bpext;
 %(ptrmethods)s
 }
 
-void wrap() 
+void %(wrapmethodname)s() 
 {
   using namespace mcstas2;
   using namespace mcstas2::boostpython_binding;
@@ -46,7 +46,7 @@ void wrap()
 }
 '''
 
-def generate( klass, path, headername = None ):
+def generate( klass, path, wrapmethodname, headername = None ):
     classname = klass.name
     
     ctor = klass.constructors() [0]
@@ -73,6 +73,7 @@ def generate( klass, path, headername = None ):
         'expose_datamembers': expose_datamembers_str,
         'ptrmethods': ptrmethods,
         'expose_ptrmethods': expose_ptrmethods,
+        'wrapmethodname': wrapmethodname,
         }
     import os
     filename = os.path.join( path, "wrap.cc" )
