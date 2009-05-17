@@ -60,8 +60,10 @@ class ComponentInterface(base, ParallelComponent):
                     self._histogramOutputFilename(),
                     overwrite=self.overwrite_datafiles)
 
-            outputdir = self._master_outputdir
-            self._run_in_dir(func=_, dir=outputdir)
+            if self.mpiRank == 0:
+                outputdir = self._master_outputdir
+                self._debug.log('saving histogram to %s' % outputdir)
+                self._run_in_dir(func=_, dir=outputdir)
             
         super(ComponentInterface, self)._fini()
         return

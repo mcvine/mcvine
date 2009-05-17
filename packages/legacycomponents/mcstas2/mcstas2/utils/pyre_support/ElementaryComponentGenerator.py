@@ -87,9 +87,9 @@ class Generator:
                 return
 
             def _fini(self):
+                base._fini(self)
                 engine = self.__dict__.get('engine')
                 if engine: del self.engine
-                base._fini(self)
                 return
 
             pass # end of _
