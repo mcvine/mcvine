@@ -3,6 +3,4 @@ def energy_monitor1():
     from mcni.pyre_support import componentfactory as component
     f = component('monitors', 'E_monitor', supplier = 'mcstas2')
     ret = f('energy_monitor1')
-    from mcstas2.pyre_support.monitor_exts import extend
-    extend( ret )
     return ret

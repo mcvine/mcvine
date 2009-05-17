@@ -116,7 +116,7 @@ def makeUnitcell():
 
 
 
-from mcstas2.pyre_support.monitor_exts.IQE_monitor import _get_histogram
+from mcstas2.pyre_support._component_interfaces.monitors.IQE_monitor import _get_histogram
 import numpy as N
 
 

@@ -60,7 +60,7 @@ class TestCase(unittest.TestCase):
         
         component.process( neutrons )
         
-        hist = _get_histogram(component)
+        hist = get_histogram(component)
         import os
         f = os.path.basename(__file__)
         filename = 'IQE-%s.h5' % f
@@ -117,7 +117,7 @@ def makeUnitcell():
 
 
 
-from mcstas2.pyre_support.monitor_exts.IQE_monitor import _get_histogram
+from mcstas2.pyre_support._component_interfaces.monitors.IQE_monitor import get_histogram
 import numpy as N
 
 

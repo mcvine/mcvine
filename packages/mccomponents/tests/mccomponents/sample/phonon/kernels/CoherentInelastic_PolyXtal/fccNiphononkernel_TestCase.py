@@ -63,7 +63,7 @@ class TestCase(unittest.TestCase):
         
         component.process( neutrons )
         
-        hist = _get_histogram(component)
+        hist = get_histogram(component)
         
         if self.interactive:
             from histogram.plotter import defaultPlotter
@@ -126,7 +126,7 @@ def makeDispersion():
 import mccomponents.sample.phonon.bindings as bindings
 b = bindings.get('BoostPython')
 
-from mcstas2.pyre_support.monitor_exts.IQE_monitor import _get_histogram
+from mcstas2.pyre_support._component_interfaces.monitors.IQE_monitor import get_histogram
 import numpy as N
 
 
