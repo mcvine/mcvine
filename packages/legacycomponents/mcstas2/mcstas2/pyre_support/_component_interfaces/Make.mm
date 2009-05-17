@@ -11,11 +11,11 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 PROJECT = mcstas2
-PACKAGE = pyre_support
+PACKAGE = pyre_support/_component_interfaces
 
 
 RECURSE_DIRS = \
-	_component_interfaces \
+	monitors \
 
 #--------------------------------------------------------------------------
 #
@@ -31,6 +31,7 @@ tidy::
 # export
 
 EXPORT_PYTHON_MODULES = \
+	default.py \
 	__init__.py \
 
 

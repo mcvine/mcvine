@@ -11,7 +11,7 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 PROJECT = mcstas2
-PACKAGE = pyre_support/monitor_exts
+PACKAGE = pyre_support/_component_interfaces/monitors
 
 
 RECURSE_DIRS = \
@@ -30,13 +30,14 @@ tidy::
 # export
 
 EXPORT_PYTHON_MODULES = \
-	IQE_monitor.py \
 	E_monitor.py \
+	IQE_monitor.py \
 	PSD_monitor.py \
 	PSD_monitor_4PI.py \
 	TOF_monitor2.py \
 	__init__.py \
-	common.py \
+	default.py \
+
 
 export:: export-package-python-modules
 

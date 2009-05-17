@@ -13,9 +13,17 @@
 
 
 
-def _get_histogram( self ):
+from default import ComponentInterface as base
+
+class ComponentInterface(base):
+
+    def _get_histogram(self):
+        return get_histogram(self)
+    
+    
+def get_histogram( monitor ):
     from mcstas2.utils.carray import bpptr2npyarr
-    core = self.core()
+    core = monitor.core()
     n = core.nchan
     Iarr = bpptr2npyarr( core.getTOF_p( ), 'double', n ).copy()
     E2arr = bpptr2npyarr( core.getTOF_p2( ), 'double', n ).copy()
@@ -25,10 +33,6 @@ def _get_histogram( self ):
     h = histogram( 'I(tof)', [taxis], data = Iarr, errors = E2arr )
     return h
 
-
-methods = [
-    '_get_histogram',
-    ]
 
 # version
 __id__ = "$Id$"

@@ -32,14 +32,13 @@ given mcstas component category and type.
     info = module.info
     factory.arguments = info.input_parameters
     from mcstas2.utils.pyre_support import elementaryComponentClassGenerator as generator
-    from mcni.pyre_support.AbstractComponent import AbstractComponent
-    f = generator( ctor_takes_name = True, baseclass = AbstractComponent )( factory )
 
-    from _interface_extensions import extend
-    f = extend( f )
-    
+    from _component_interfaces import getInterface
+    interface = getInterface(category, type)
+
+    f = generator( ctor_takes_name = True, baseclass = interface )( factory )
+
     setattr( module, factoryattributename, f )
-
     return f
 
 
@@ -48,7 +47,8 @@ def facility( category, type, name ):
 the default to a mcstas component of given category and type.
 '''
     from mcni.pyre_support import facility
-    return facility( name, default = componentfactory( category, type )( name ) )
+    default = componentfactory( category, type )( name )
+    return facility( name, default = default)
 
 
 # version

@@ -13,14 +13,22 @@
 
 
 
-def _get_histogram( self ):
-    from mcstas2.utils.carray import bpptr2npyarr
-    core = self.core()
+from default import ComponentInterface as base
+
+class ComponentInterface(base):
+
+    def _get_histogram(self):
+        return get_histogram(self)
     
+    
+def get_histogram( monitor ):
+    from mcstas2.utils.carray import bpptr2npyarr
+    core = monitor.core()
+
     nQ = core.nQ; nE =core.nE
     n = nQ * nE
     shape = nQ, nE
-    
+
     Iarr = bpptr2npyarr( core.getIQE_p( ), 'double', n ).copy()
     E2arr = bpptr2npyarr( core.getIQE_p2( ), 'double', n ).copy()
     Iarr.shape = E2arr.shape = shape
@@ -35,9 +43,6 @@ def _get_histogram( self ):
     h = histogram( 'I(Q,E)', [Qaxis,Eaxis], data = Iarr, errors = E2arr )
     return h
 
-
-methods = [ '_get_histogram',
-            ]
 
 # version
 __id__ = "$Id$"
