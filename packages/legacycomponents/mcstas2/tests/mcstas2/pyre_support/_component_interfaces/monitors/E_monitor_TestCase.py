@@ -55,6 +55,7 @@ class TestCase(unittest.TestCase):
 
             mtime = os.path.getmtime( path )
             self.assert_( ctime - mtime >= 0 )
+            #print "path:", path, "timediff:", ctime - mtime 
             self.assert_( ctime - mtime < 10 )
             continue
         

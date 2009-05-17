@@ -25,6 +25,7 @@ PROJ_LIBRARIES = -L$(BLD_LIBDIR) -ljournal -lmcstas2
 # directory structure
 
 BUILD_DIRS = \
+	components \
 	wrappers \
 	utils \
 	pyre_support \

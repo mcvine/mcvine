@@ -51,7 +51,7 @@ class TestCase(unittest.TestCase):
         kernel = makeKernel()
         
         import mcni
-        N = 100000
+        N = 10000
         neutrons = mcni.neutron_buffer( N )
         for i in range(N):
             neutron = mcni.neutron(r=(0,0,0), v=(0,0,vi), time=0, prob=1)
@@ -62,7 +62,8 @@ class TestCase(unittest.TestCase):
         
         component.process( neutrons )
         
-        hist = _get_histogram(component)
+        from mcstas2.pyre_support._component_interfaces.monitors.IQE_monitor import get_histogram
+        hist = get_histogram(component)
         
         from histogram.plotter import defaultPlotter
         defaultPlotter.plot(hist)
@@ -144,7 +145,6 @@ def makeDispersion():
 import mccomponents.sample.phonon.bindings as bindings
 b = bindings.get('BoostPython')
 
-from mcstas2.pyre_support.monitor_exts.IQE_monitor import _get_histogram
 import numpy as N
 
 

@@ -45,6 +45,8 @@ class Instrument(base):
 
 
 def main():
+    import journal
+    journal.warning('mcstas2.parsers.ComponentInfo').deactivate()
     Instrument('test1').run()
     return    
     

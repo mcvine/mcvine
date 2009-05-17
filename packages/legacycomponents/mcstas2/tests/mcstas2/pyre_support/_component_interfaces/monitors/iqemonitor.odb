@@ -22,6 +22,4 @@ if __name__ == '__main__':
 # version
 __id__ = "$Id$"
 
-# Generated automatically by PythonMill on Mon Mar 31 08:17:12 2008
-
 # End of file 

@@ -42,8 +42,6 @@ class Instrument(base):
 
     def _init(self):
         base._init(self)
-        from mcstas2.pyre_support.monitor_exts import extend
-        extend(self.inventory.monitor)
         return
     
     pass # end of Instrument

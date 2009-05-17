@@ -21,7 +21,7 @@ class TestCase(unittest.TestCase):
 
     def test1(self):
         from TestInstrument1 import Instrument
-        instrument = Instrument('testiqem')
+        instrument = Instrument('IQE_monitor_TestCase')
 
         import sys
         save = sys.argv
@@ -29,7 +29,7 @@ class TestCase(unittest.TestCase):
             '',
             '--ncount=10',
             '--buffer_size=5',
-            '--output-dir=pyre_support_test1_out',
+            '--output-dir=IQE_monitor_TestCase-out',
             '--overwrite-datafiles',
             '--monitor=iqemonitor',
             ]

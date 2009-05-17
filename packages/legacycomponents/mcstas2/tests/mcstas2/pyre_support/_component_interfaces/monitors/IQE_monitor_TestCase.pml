@@ -19,11 +19,8 @@
         <property name="output-dir">out</property>
         <property name="sequence">['source', 'monitor']</property>
         <property name="ncount">10</property>
-        <facility name="source">source</facility>
         <property name="overwrite-datafiles">False</property>
-        <facility name="geometer">geometer</facility>
         <property name="buffer_size">10</property>
-        <facility name="monitor">monitor</facility>
 
         <component name="source">
             <property name="yh">0.1</property>

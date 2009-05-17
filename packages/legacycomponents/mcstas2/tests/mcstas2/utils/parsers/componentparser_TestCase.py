@@ -23,12 +23,13 @@ class TestCase(unittest.TestCase):
         "parse E_monitor component"
         from mcstas2.utils.parsers import parseComponent
         component = parseComponent( 'E_monitor.comp' )
+        print dir(component)
         print component.name 
         print component.copyright 
         print component.simple_description 
         print component.full_description 
-        print component.definition_parameters 
-        print component.setting_parameters 
+        print component.input_parameters 
+        print component.state_parameters 
         print component.output_parameters 
         print component.state_parameters 
         print component.declare 

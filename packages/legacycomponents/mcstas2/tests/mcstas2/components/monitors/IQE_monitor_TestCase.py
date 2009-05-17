@@ -64,7 +64,8 @@ class TestCase(unittest.TestCase):
                 continue
         component.process( neutrons )
         
-        hist = _get_histogram(component)
+        from mcstas2.pyre_support._component_interfaces.monitors.IQE_monitor import get_histogram
+        hist = get_histogram(component)
 
         from histogram.plotter import defaultPlotter
         defaultPlotter.plot(hist)
@@ -72,9 +73,6 @@ class TestCase(unittest.TestCase):
 
     pass  # end of TestCase
 
-
-
-from mcstas2.pyre_support.monitor_exts.IQE_monitor import _get_histogram
 
 
 
