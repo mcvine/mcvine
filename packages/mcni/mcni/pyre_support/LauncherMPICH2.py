@@ -78,7 +78,14 @@ class LauncherMPICH2(Launcher):
         sysargs = sys.argv
         args.append( sysargs[0] )
         args.append("--mode=worker")
-        args += sysargs[1:]
+        
+        for arg in sysargs[1:]:
+            index = arg.find('=')
+            if index == -1: args.append(arg)
+            k = arg[:index]
+            v = arg[index+1:]
+            args.append('%s="%s"' % (k,v))
+            continue
 
         return args
 
