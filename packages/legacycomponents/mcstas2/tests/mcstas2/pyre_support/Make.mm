@@ -25,7 +25,7 @@ PROJ_LIBRARIES = -L$(BLD_LIBDIR) -ljournal -lmcstas2
 # directory structure
 
 BUILD_DIRS = \
-	monitor_exts \
+	_component_interfaces \
 
 
 OTHER_DIRS = \
