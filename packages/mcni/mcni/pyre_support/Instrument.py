@@ -132,6 +132,11 @@ class Instrument( base, ParallelComponent ):
             
         self.sequence = self.inventory.sequence
         self.ncount = self.inventory.ncount
+        if self.parallel:
+            # every node only need to run a portion of the total counts
+            partitions = getPartitions(self.ncount, self.mpiSize)
+            self.ncount = partitions[self.mpiRank]
+
         self.buffer_size = self.inventory.buffer_size
 
         neutron_components = {}
@@ -188,6 +193,25 @@ class Geometer1(base):
     return Geometer1()
     
 
+def getPartitions(N, n):
+    return list(getPartitionIterator(N,n))
+
+def getPartitionIterator( N, n ):
+    '''create an iterator of n partitions where the sum of all partions is N
+    All partitions should be about the same size.
+    '''
+    from math import ceil
+    residual = N
+    nbins = n
+    while residual:
+        if nbins > 1:
+            size = int( ceil(residual*1./nbins) )
+        else:
+            size = residual
+        yield size
+        residual -= size
+        nbins -= 1
+    return 
 
 
 from mcni.AbstractComponent import AbstractComponent as McniComponent
