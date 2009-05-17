@@ -35,6 +35,7 @@ EXPORT_PYTHON_MODULES = \
 	List.py \
 	MpiApplication.py \
 	NeutronComponentFacility.py \
+	ParallelComponent.py \
 	__init__.py \
 	component_suppliers.py \
 

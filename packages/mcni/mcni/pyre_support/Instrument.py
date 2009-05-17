@@ -13,9 +13,10 @@
 
 
 
-from MpiApplication import Application as base    
+from MpiApplication import Application as base
+from ParallelComponent import ParallelComponent
 
-class Instrument( base ):
+class Instrument( base, ParallelComponent ):
 
     class Inventory( base.Inventory ):
 
@@ -109,6 +110,10 @@ class Instrument( base ):
 
         for component in self.neutron_components.itervalues():
             component.setOutputDir( outputdir )
+            if self.parallel:
+                # need to let the master node component know the "master" outputdir
+                if self.mpiRank == 0:
+                    component._master_outputdir = self.inventory.outputdir
             component.overwrite_datafiles = self.overwrite_datafiles
             continue
         
@@ -120,17 +125,10 @@ class Instrument( base ):
         self.geometer = self.inventory.geometer
         self.overwrite_datafiles = self.inventory.overwrite_datafiles
 
-        try:
-            import mpi
-            nompi = False
-        except ImportError:
-            nompi = True
-
         self.outputdir = self.inventory.outputdir
-        if not nompi:
-            mode = self.inventory.mode
-            from mcni.utils.mpiutil import rank as mpirank
-            self.outputdir = '%s-%s-%s' % (self.outputdir, mode, mpirank)
+        if self.parallel:
+            ext = self._outputdir_mpiext()
+            self.outputdir = '%s-%s' % (self.outputdir, ext)
             
         self.sequence = self.inventory.sequence
         self.ncount = self.inventory.ncount
@@ -148,6 +146,13 @@ class Instrument( base ):
         
         if not self._showHelpOnly: self._setup_ouputdir()
         return
+
+
+    def _outputdir_mpiext(self):
+        mode = self.inventory.mode
+        rank = self.mpiRank
+        return '%s-%s' % (mode, rank)
+        
 
 
     pass # end of Instrument
