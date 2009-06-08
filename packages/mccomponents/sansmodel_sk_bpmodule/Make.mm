@@ -24,6 +24,7 @@ PROJ_CXX_SRCLIB = -lboost_python  -L$(BOOSTPYTHON_LIBDIR) -ljournal -lmccomposit
 
 PROJ_SRCS = \
 	wrap_sphere.cc \
+	wrap_core_shell.cc \
 
 
 TOUCH=touch
