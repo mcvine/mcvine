@@ -23,8 +23,12 @@ PROJ_CXX_SRCLIB = -lboost_python  -L$(BOOSTPYTHON_LIBDIR) -ljournal -lmccomposit
 
 
 PROJ_SRCS = \
+	wrap_cylinder.cc \
+	wrap_ellipsoid.cc \
+	wrap_elliptical_cylinder.cc \
 	wrap_sphere.cc \
 	wrap_core_shell.cc \
+	wrap_core_shell_cylinder.cc \
 
 
 TOUCH=touch
