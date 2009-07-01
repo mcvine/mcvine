@@ -41,7 +41,9 @@ Details{
 };
 
 
+#ifdef DEBUG
 const char *DANSE::phonon::PeriodicDispersion_3D::Details::jrnltag = "periodicdispersion_3d";
+#endif
 
 // algorithm hint:
 // b1, b2, b3
