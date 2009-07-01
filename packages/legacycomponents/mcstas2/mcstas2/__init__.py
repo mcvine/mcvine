@@ -163,7 +163,7 @@ def defaultcategorypath( category ):
     import os
     path = os.path.join( libdir, category )
     if not os.path.exists( path ) or not os.path.isdir(path):
-        raise "default component category %s does not exist. Cannot find %s" % (
+        raise RuntimeError, "default component category %s does not exist. Cannot find %s" % (
             category, path )
     return path
 
@@ -173,7 +173,7 @@ def defaultcomponentpath( category, type ):
     import os
     path = os.path.join( libdir, category, '%s.comp' % type )
     if not os.path.exists( path ) or not os.path.isfile(path):
-        raise "default component (%s, %s) does not exist. Cannot find %s" % (
+        raise RuntimeError, "default component (%s, %s) does not exist. Cannot find %s" % (
             category, type, path )
     return path
 
@@ -183,7 +183,7 @@ def defaultcomponentlibrarypath( ):
     var = 'MCSTAS_COMPONENT_LIBDIR'
     path = getEnv( var, None )
     if path is None:
-        raise "Please specify the default path to mcstas component library "\
+        raise RuntimeError, "Please specify the default path to mcstas component library "\
               "as environment variable %r.\n"\
               "For example, in bash environment, do\n"\
               "  $ export %s=/.../mcstas/lib/mcstas\n"\
