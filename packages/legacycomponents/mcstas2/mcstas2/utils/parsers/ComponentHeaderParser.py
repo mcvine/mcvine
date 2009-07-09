@@ -8,9 +8,11 @@
 #
 # {LicenseText}
 #
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
+# modified by Alta Fang 7/7/09
 
+from pyparsing.pyparsing import *
 
 class Header:
 
@@ -29,118 +31,100 @@ class Header:
 
 
 def parse( header_text ):
-    ipos = header_text.find( '%I' )
-    h = header_text[: ipos].splitlines()
-    componentname = _parseHeaderOfHeader( h )
+    # first strip away the stars and put into string called starlesstext
+    starlesstext = ""
+    aline = Optional(Suppress("*") + restOfLine.setResultsName("restofline"))
+    for l in header_text.splitlines():
+        if l.find("*") != -1:
+            starlesstext += aline.parseString( l ).restofline + "\n"
+        else:
+            starlesstext += l + "\n"
     
-    dpos = header_text.find( '%D' )
-    i = header_text[ipos : dpos].splitlines()
-    copyright, simple_description = _parseInfo( i )
+    # Define what blocks of text are, for parsing later
+    words = ZeroOrMore(Word(alphanums + """\/_-()^[]<>@,.=$&+*":;\n'"""))
+    textFormat = Combine(words, joinString=" ", adjacent=False)
     
-    ppos = header_text.find( '%P' )
-    d = header_text[ dpos:ppos ].splitlines()
-    full_description = _parseFullDescription( d )
+    # Parse component name
+    componentInfo = "Component:" + Word(alphanums + "_").setResultsName("componentname") \
+                    + Optional("." + textFormat)
+    try:
+        component_name = componentInfo.searchString(starlesstext)[0].componentname
+    except:
+        #raise Exception("Cannot find component name in header")
+        component_name = None
+    
+    # Parse copyright and simple description  
+    copyrightAndDescripInfo = "%I" + SkipTo(lineEnd) \
+                               + textFormat.setResultsName("copyrightAndDescrip")
+    copyrightAndDescripList = copyrightAndDescripInfo.searchString(starlesstext)
+    copyrightAndDescrip = copyrightAndDescripList[0].copyrightAndDescrip
+        
+    # Parse full description
+    descriptionInfo = "%D" + SkipTo(lineEnd) + textFormat.setResultsName("full_description")
+    full_description = descriptionInfo.searchString(starlesstext)[0].full_description
 
-    epos = header_text.find( '%E' )
-    p = header_text[ ppos:epos ].splitlines()
-    input_parameters, output_parameters = _parseParameters( p )
-    return Header(
-        componentname, copyright, simple_description,
-        full_description, input_parameters, output_parameters,
-        )
+    # Parse parameters, separately
+    parameterInfo = "%P" + SkipTo(lineEnd) + textFormat.setResultsName("parameters")  
+    parsedParams = parameterInfo.searchString(starlesstext)[0]
+    parameterBlock = parsedParams.parameters 
+    
+    # Define way to split strings that are separated by extra newlines: 
+    def mustBeNonBlank(s,l,t):
+        if not t[0]:
+            raise ParseException(s,l,"line body can't be empty")
+    lineBody = SkipTo(lineEnd).setParseAction(mustBeNonBlank)
+    textLine = lineBody + Suppress(lineEnd).setParseAction(replaceWith("\n"))
+    para = OneOrMore(textLine) + Suppress(lineEnd)
 
-
-def _parseParameters( lines ):
-    #remove '%P'
-    lines = lines[1:]
-    #look for "INPUT" and "OUTPUT"
-    input_start = output_start = None
-    input_sig = '* INPUT'
-    output_sig = '* OUTPUT'
-    for no, line in enumerate(lines):
-        if line.startswith( input_sig ): input_start = no + 1
-        elif line.startswith( output_sig ): output_start = no + 1
-        else: pass
-        continue
-    if output_start is None:
-        output_start = len(lines)
-        if input_start is None:
-            input_start = 0
-            pass
+    # Split copyright and simple description, if applicable
+    splitPara = para.searchString(copyrightAndDescrip)
+    copyright = "".join(splitPara[0])
+    simple_description = None  
+    try:
+        simple_description = splitPara[1][0]
+    except:
         pass
 
-    if output_start is None or input_start is None:
-        raise "Parameter section should have two sections: inputs and outputs.\n%s" % (
-            '\n'.join(lines), )
+    # Split parameters into input and output, and make them into dictionaries
+    input_ident = CaselessLiteral("INPUT PARAMETERS") + Optional(":")
+    output_ident = CaselessLiteral("OUTPUT PARAMETERS") + Optional(":")
+    optional_ident = CaselessLiteral("OPTIONAL PARAMETERS") + Optional(":")
+    end_input = output_ident ^ optional_ident
+    paramWord = Word(alphanums + """ *\/_-()[]^<>@+,.=$&":'""")
+    param_block = Group(ZeroOrMore(~output_ident + paramWord))
+    total_params = Optional(input_ident) + Group(ZeroOrMore(~end_input \
+                  + paramWord)).setResultsName("input_parameters") + Optional(optional_ident + param_block) \
+              + Optional(output_ident + textFormat.setResultsName("output_parameters")) + StringEnd()
+    splitParams = total_params.searchString(parameterBlock)[0]    
+    input_parameters = makeDictionary("\n".join(splitParams.input_parameters))
+    if splitParams.output_parameters != None:
+        output_parameters = makeDictionary(splitParams.output_parameters)   
+    else:
+        output_parameters = None
 
-    #remove '* '
-    for no, line in enumerate(lines): lines[ no ] = line[ 2: ]
+    # Finally, return a Header object
+    return Header(component_name, copyright, simple_description,  \
+                 full_description, input_parameters, output_parameters)
 
-    #separate lines to different categories
-    inputs = lines[input_start: output_start]
-    outputs = lines[output_start: ]
-
-    input_parameters = _parseParameterList( inputs )
-    output_parameters = _parseParameterList( outputs )
-        
-    return input_parameters, output_parameters
-
-
-def _parseParameterList( params ):
+# Function to put parameters that are in a string into a dictionary
+def makeDictionary(text):
     d = {}
-    for p in params:
-        p = p.strip()
-        if p == '': continue
-        try:
-            name, description = p.split(':')
-        except:
-            #this means this line belongs to the previous parameter
-            d[name] += p
-            pass
-        name = name.strip()
-        description = description.strip()
-        d[name] = description
-        continue
+    okword = Word(alphanums + """\/_-()[]<>+@,.=:$&'"^ """)
+    okvar = Word(alphanums + """\/_-()[]<>+@,.=$&'"^ """)
+    block = Combine(ZeroOrMore(okword))
+    aline = Combine(ZeroOrMore(okvar)).setResultsName("first") + Literal(":") \
+            + block.setResultsName("second") + LineEnd()
+    aUnit = aline + Optional(Combine(Combine(ZeroOrMore(okvar), joinString=" ", \
+            adjacent=False).setResultsName("secondContinued") + LineEnd()))
+    parsedVars = aUnit.searchString(text)
+    for unit in parsedVars:
+        d[unit.first] = unit.second + " " + unit.secondContinued
     return d
-
-
-def _parseFullDescription( lines ):
-    #remove '%D'
-    lines = lines[1:]
-    #remove '* '
-    for no, line in enumerate(lines): lines[ no ] = line[ 2: ]
-    lines = filter( lambda x: len(x.strip()), lines )
-    return '\n'.join(lines)
-
-
-def _parseHeaderOfHeader( h ):
-    sig = '* Component:'
-    for l in h:
-        if l.startswith( sig ): return l[len(sig):].strip()
-        continue
-    raise "Cannot find component name in %s" % '\n'.join( h )
-
-
-def _parseInfo( info ):
-    #remove '%I'
-    info = info[1:]
-    #remove '* '
-    for no, line in enumerate(info): info[ no ] = line[ 2: ]
-    breaklineno = -1
-    for no, line in enumerate(info):
-        if line.strip() == '': breaklineno = no; break
-        continue
-    if breaklineno == -1:
-        raise "This info only contains one paragraph: \n%s" % (
-            '\n'.join( info ), ) 
-    copyright = info[: breaklineno]
-    simple_description = info[ breaklineno + 1: ]
-    simple_description = filter( lambda x: len(x.strip()), simple_description )
-    return '\n'.join(copyright), '\n'.join(simple_description)
-
 
 testtext = """
 /*******************************************************************************
+*
+*
 *
 * McStas, neutron ray-tracing package
 *         Copyright 1997-2002, All rights reserved
@@ -148,7 +132,7 @@ testtext = """
 *         Institut Laue Langevin, Grenoble, France
 *
 * Component: E_monitor
-*
+* 
 * %I
 * Written by: Kristian Nielsen and Kim Lefmann
 * Date: April 20, 1998
@@ -186,20 +170,13 @@ testtext = """
 *******************************************************************************/
 """
 
-def test():
-    header = parse( testtext )
-    print header.componentname
-    print header.copyright
-    print header.simple_description 
-    print header.full_description 
-    print header.input_parameters 
-    print header.output_parameters
-    return
-
-
-if __name__ == '__main__': test()
-
-# version
-__id__ = "$Id$"
-
-# End of file 
+# Test the parsing
+if __name__ == "__main__":
+    results = parse(testtext)
+    print "component:", results.componentname
+    print "copyright:", results.copyright
+    print "simple description:", results.simple_description
+    print "full description:", results.full_description
+    print "input parameters:", results.input_parameters
+    print "output parameters:", results.output_parameters
+    
