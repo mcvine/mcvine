@@ -3,9 +3,7 @@ parse original McStas instrument definition file
 """
 __author__="Jiao Lin"
 
-
 from pyparsing.pyparsing import *
-
 
 # numbers: 1, 30.0, 1e-5, -99
 number = Combine( Optional('-') + ( '0' | Word('123456789',nums) ) + \
@@ -20,16 +18,20 @@ def convertNumbers(s,l,toks):
 
 number.setParseAction( convertNumbers )
 
-
 # string
-string = quotedString
+string = Word(alphanums + "._") ^ quotedString
 
+# Edited to not give errors with polarisation parameters or when no quotes are around 
+# a parameter (such as function=funcname, as opposed to function="funcname").
 def convertString(s,l,toks):
     n = toks[0]
-    return eval(n)
+    try:
+        toreturn = eval(n)
+    except:
+        toreturn = str(n)
+    return toreturn
 
 string.setParseAction( convertString )
-
 
 identifier = Word( alphas, alphanums + "_" )   # a, b, chop_phase.  instrument parameter of declared variable
 global_var_name = identifier.setResultsName( "global_var_name")
@@ -84,7 +86,6 @@ def output_parms():
         + Suppress(")")  + Optional(comment)
     return d
 
-
 def state_parms():
     parameter_name = identifier
     parameter_list = delimitedList( parameter_name )
@@ -103,8 +104,15 @@ def convertBlock(s,l,toks):
     return b
 block.setParseAction( convertBlock )
 
+# Another way to parse block of text, so comments are stripped
+# (Provided there are no %'s in the block of text):
+words = Word(alphanums + """%#/*{}\_-()^[]<>@,.=$&+":;'""")
+noComments = Combine(ZeroOrMore(~Literal("%}") + Optional(cppStyleComment).suppress() + words + Optional(cppStyleComment).suppress()), joinString=" ", adjacent=False)
+startBlock = Literal("%{").setParseAction(replaceWith("{"))
+endBlock = Literal("%}").setParseAction(replaceWith("}"))
+textBlock = Combine(startBlock + noComments + endBlock, joinString=" ", adjacent=False)
 
-def declare(): return Suppress("DECLARE") + block.setResultsName( "declare" ) 
+def declare(): return Suppress("DECLARE") + textBlock.setResultsName("declare")
 
 
 def initialize(): return Suppress("INITIALIZE") + block.setResultsName( "initialize" ) 
@@ -122,7 +130,7 @@ def finalize(): return Suppress("FINALLY") + block.setResultsName("finalize")
 def share(): return Suppress('SHARE') + block.setResultsName('share')
 
 def polarisation_params():
-    return Literal("POLARISATION PARAMETERS") + "(" + OneOrMore(Word(alphanums + "=, ")) + ")"
+    return CaselessLiteral("POLARISATION PARAMETERS") + "(" + ZeroOrMore(Word(alphanums + "=, ")) + ")"
 
 def component():
     return header() \
@@ -152,7 +160,7 @@ def test_define():
 def test_def_parms():
     print "test parsing definition parmeters block...",
     d = def_parms()
-    s = """ DEFINITION PARAMETERS (int nchan=20, char *filename="e.dat", xmin=-0.2)"""
+    s = """ DEFINITION PARAMETERS (int nchan=20, char *filename=e.dat, xmin=-0.2)"""
     parsed = d.parseString( s )
     print parsed
     expected = [ ["int", "nchan", 20],
@@ -216,7 +224,7 @@ def test_state_parms():
     
 
 def test_component():
-    s = anothertest
+    s = E_monitor
     print "test component ... "
     parsed = component().parseString(s)
     print parsed.header
@@ -295,7 +303,7 @@ OUTPUT PARAMETERS (E_N, E_p, E_p2, S_p, S_pE, S_pE2)
 STATE PARAMETERS (x,y,z,vx,vy,vz,t,s1,s2,p)
 DECLARE
   %{
-    double *E_N, *E_p, *E_p2;
+    double *E_N, *E_p, *E_p2; 
   %}
 INITIALIZE
   %{
@@ -334,7 +342,7 @@ TRACE
 SAVE
   %{
     DETECTOR_OUT_1D(
-        "Energy monitor",
+        "Energy monitor",  
         "Energy [meV]",
         "Intensity",
         "E", Emin, Emax, nchan,
@@ -363,90 +371,6 @@ MCDISPLAY
 END
 """
 
-anothertest = """/*******************************************************************************
-*
-* McStas, neutron ray-tracing package
-*         Copyright (C) 1997-2007, All rights reserved
-*         Risoe National Laboratory, Roskilde, Denmark
-*         Institut Laue Langevin, Grenoble, France
-*
-* Component: Beamstop
-*
-* %ID
-*
-* Written by: Kristian Nielsen
-* Date: January 2000
-* Release: McStas 1.11
-* Origin: Risoe
-* Version: $Revision: 1.11 $
-*
-* Rectangular/circular beam stop.
-*
-* %D
-* A simple rectangular or circular beam stop.
-* Infinitely thin and infinitely absorbing.
-* The beam stop is by default rectangular. You may either
-* specify the radius (circular shape), or the rectangular bounds.
-*
-* Example: Beamstop(xmin=-0.05, xmax=0.05, ymin=-0.05, ymax=0.05)
-*          Beamstop(radius=0.1)
-*
-* %PAR
-*
-* INPUT PARAMETERS
-*
-* radius: radius of the beam stop in the z=0 plane, centered at Origo (m)
-* xmin:   Lower x bound (m)
-* xmax:   Upper x bound (m)
-* ymin:   Lower y bound (m)
-* ymax:   Upper y bound (m)
-*
-* %END
-*******************************************************************************/
-
-DEFINE COMPONENT Beamstop
-DEFINITION PARAMETERS ()
-SETTING PARAMETERS (xmin=0, xmax=0, ymin=0, ymax=0,radius=0)
-STATE PARAMETERS (x,y,z,vx,vy,vz,t,s1,s2,p)
-POLARISATION PARAMETERS(sx, sy, sz)
-
-INITIALIZE
-%{
-  if (xmin == 0 && xmax == 0 && ymin == 0 & ymax == 0 && radius == 0)
-    { fprintf(stderr,"Beamstop: %s: Error: give geometry\n", NAME_CURRENT_COMP);
- exit(-1); }
-
-%}
-
-TRACE
-%{
-    ALLOW_BACKPROP;
-    PROP_Z0;
-    if (((radius!=0) && (x*x + y*y <= radius*radius))
-    || ((radius==0) && (x>xmin && x<xmax && y>ymin && y<ymax)))
-      ABSORB;
-    else
-      RESTORE_NEUTRON(INDEX_CURRENT_COMP, x, y, z, vx, vy, vz, t, sx, sy, sz, p)
-;
-%}
-
-MCDISPLAY
-%{
-  magnify("xy");
-  if (radius != 0)
-    circle("xy", 0, 0, 0, radius);
-  else
-    multiline(5, (double)xmin, (double)ymin, 0.0,
-               (double)xmax, (double)ymin, 0.0,
-               (double)xmax, (double)ymax, 0.0,
-               (double)xmin, (double)ymax, 0.0,
-               (double)xmin, (double)ymin, 0.0);
-%}
-
-END
-
-"""
-
 def test():
     #test_define()
     #test_def_parms()
@@ -455,7 +379,5 @@ def test():
     #test_state_parms()
     test_component()
     return
-
-
 
 if __name__ == "__main__": test()
