@@ -3,7 +3,9 @@ parse original McStas instrument definition file
 """
 __author__="Jiao Lin"
 
+
 from pyparsing.pyparsing import *
+
 
 # numbers: 1, 30.0, 1e-5, -99
 number = Combine( Optional('-') + ( '0' | Word('123456789',nums) ) + \
@@ -19,17 +21,11 @@ def convertNumbers(s,l,toks):
 number.setParseAction( convertNumbers )
 
 # string
-string = Word(alphanums + "._") ^ quotedString
+string = quotedString
 
-# Edited to not give errors with polarisation parameters or when no quotes are around 
-# a parameter (such as function=funcname, as opposed to function="funcname").
 def convertString(s,l,toks):
     n = toks[0]
-    try:
-        toreturn = eval(n)
-    except:
-        toreturn = str(n)
-    return toreturn
+    return eval(n)
 
 string.setParseAction( convertString )
 
@@ -86,6 +82,7 @@ def output_parms():
         + Suppress(")")  + Optional(comment)
     return d
 
+
 def state_parms():
     parameter_name = identifier
     parameter_list = delimitedList( parameter_name )
@@ -106,7 +103,7 @@ block.setParseAction( convertBlock )
 
 # Another way to parse block of text, so comments are stripped
 # (Provided there are no %'s in the block of text):
-words = Word(alphanums + """%#/*{}\_-()^[]<>@,.=$&+":;'""")
+words = Word(alphanums + """%#/*{}\_-()^[]!?<>@,.=$&+":;'""")
 noComments = Combine(ZeroOrMore(~Literal("%}") + Optional(cppStyleComment).suppress() + words + Optional(cppStyleComment).suppress()), joinString=" ", adjacent=False)
 startBlock = Literal("%{").setParseAction(replaceWith("{"))
 endBlock = Literal("%}").setParseAction(replaceWith("}"))
@@ -130,7 +127,7 @@ def finalize(): return Suppress("FINALLY") + block.setResultsName("finalize")
 def share(): return Suppress('SHARE') + block.setResultsName('share')
 
 def polarisation_params():
-    return CaselessLiteral("POLARISATION PARAMETERS") + "(" + ZeroOrMore(Word(alphanums + "=, ")) + ")"
+    return Literal("POLARISATION PARAMETERS") + "(" + OneOrMore(Word(alphanums + "=, ")) + ")"
 
 def component():
     return header() \
@@ -160,7 +157,7 @@ def test_define():
 def test_def_parms():
     print "test parsing definition parmeters block...",
     d = def_parms()
-    s = """ DEFINITION PARAMETERS (int nchan=20, char *filename=e.dat, xmin=-0.2)"""
+    s = """ DEFINITION PARAMETERS (int nchan=20, char *filename="e.dat", xmin=-0.2)"""
     parsed = d.parseString( s )
     print parsed
     expected = [ ["int", "nchan", 20],
@@ -303,7 +300,7 @@ OUTPUT PARAMETERS (E_N, E_p, E_p2, S_p, S_pE, S_pE2)
 STATE PARAMETERS (x,y,z,vx,vy,vz,t,s1,s2,p)
 DECLARE
   %{
-    double *E_N, *E_p, *E_p2; 
+    double *E_N, *E_p, *E_p2;
   %}
 INITIALIZE
   %{
@@ -342,7 +339,7 @@ TRACE
 SAVE
   %{
     DETECTOR_OUT_1D(
-        "Energy monitor",  
+        "Energy monitor",
         "Energy [meV]",
         "Intensity",
         "E", Emin, Emax, nchan,
@@ -371,6 +368,7 @@ MCDISPLAY
 END
 """
 
+
 def test():
     #test_define()
     #test_def_parms()
@@ -379,5 +377,7 @@ def test():
     #test_state_parms()
     test_component()
     return
+
+
 
 if __name__ == "__main__": test()
