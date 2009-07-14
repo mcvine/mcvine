@@ -41,21 +41,26 @@
 *******************************************************************************/
 
 DEFINE COMPONENT TOF_monitor
-DEFINITION PARAMETERS (nchan=20, string filename)
+DEFINITION PARAMETERS (int nchan=20, string filename)
 SETTING PARAMETERS (xmin=0, xmax=0, ymin=0, ymax=0, xwidth=0, yheight=0, t0=0, t1=0, dt=1.0)
 OUTPUT PARAMETERS (TOF_N, TOF_p, TOF_p2, t_min, t_max, delta_t)
 STATE PARAMETERS (x,y,z,vx,vy,vz,t,s1,s2,p)
 
 DECLARE
   %{
-    double TOF_N[nchan];
-    double TOF_p[nchan];
-    double TOF_p2[nchan];
+    double *TOF_N;
+    double *TOF_p;
+    double *TOF_p2;
     double t_min, t_max, delta_t;
   %}
+
 INITIALIZE
   %{
     int i;
+
+    TOF_N = new double[nchan];
+    TOF_p = new double[nchan];
+    TOF_p2 = new double[nchan];
 
     if (xwidth  > 0) { xmax = xwidth/2;  xmin = -xmax; }
     if (yheight > 0) { ymax = yheight/2; ymin = -ymax; }
