@@ -10,12 +10,15 @@
 #
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
-# modified by Alta Fang 7/7/09
+# modified by Alta Fang 
+
+"""ComponentHeaderParser.py parses the header portion of mcstas component files."""
 
 from pyparsing.pyparsing import *
 
 class Header:
-
+    """class Header holds the parsed information from the headers of mcstas 
+       component files."""
     def __init__(self, componentname, copyright, simple_description,
                  full_description, input_parameters, output_parameters,
                  ):
@@ -29,98 +32,141 @@ class Header:
 
     pass # end of Header
 
-
-def parse( header_text ):
-    # first strip away the stars and put into string called starlesstext
+def removeStars( text ):
+    """Takes a string and returns it with the *'s removed from the beginning 
+       of each line."""
     starlesstext = ""
     aline = Optional(Suppress("*") + restOfLine.setResultsName("restofline"))
-    for l in header_text.splitlines():
+    for l in text.splitlines():
         if l.find("*") != -1:
             starlesstext += aline.parseString( l ).restofline + "\n"
-        else:
+        else: 
             starlesstext += l + "\n"
+    return starlesstext
+
+def parse( header_text ):
+    """Uses pyparsing to extract information from the header of a mcstas 
+    component file. Takes a string of the general form: 
+    
+    * Component: componentname
+    * 
+    * %I
+    * copyright information
+    *
+    * simple description
+    * 
+    * %D
+    * full description
+    * 
+    * %P
+    * INPUT PARAMETERS:
+    * input parameters
+    * 
+    * OUTPUT PARAMETERS: 
+    * output parameters
+    * %E
+
+    and returns a Header object with the parsed information."""
+
+    # First, remove the stars
+    starlesstext = removeStars( header_text )
     
     # Define what blocks of text are, for parsing later
-    words = ZeroOrMore(Word(alphanums + """\/_-()^[]<>@,.=$&+*":;\n'"""))
+    words = ZeroOrMore(Word(alphanums + """#!?\/_-()^[]<>@,.=$&+*":;\n'"""))
     textFormat = Combine(words, joinString=" ", adjacent=False)
     
     # Parse component name
-    componentInfo = "Component:" + Word(alphanums + "_").setResultsName("componentname") \
+    componentFormat = "Component:" + Word(alphanums + "_").setResultsName("componentname") \
                     + Optional("." + textFormat)
     try:
-        component_name = componentInfo.searchString(starlesstext)[0].componentname
+        component_name = componentFormat.searchString(starlesstext)[0].componentname
     except:
-        #raise Exception("Cannot find component name in header")
         component_name = None
     
-    # Parse copyright and simple description  
-    copyrightAndDescripInfo = "%I" + SkipTo(lineEnd) \
-                               + textFormat.setResultsName("copyrightAndDescrip")
-    copyrightAndDescripList = copyrightAndDescripInfo.searchString(starlesstext)
-    copyrightAndDescrip = copyrightAndDescripList[0].copyrightAndDescrip
+    # Parse copyright and simple description into a string containing both, temporarily 
+    copyrightDescriptionFormat = "%I" + SkipTo(lineEnd) \
+                               + textFormat.setResultsName("copyrightDescription")
+    copyrightDescriptionList = copyrightDescriptionFormat.searchString(starlesstext)
+    copyrightAndDescription = copyrightDescriptionList[0].copyrightDescription
         
-    # Parse full description
-    descriptionInfo = "%D" + SkipTo(lineEnd) + textFormat.setResultsName("full_description")
-    full_description = descriptionInfo.searchString(starlesstext)[0].full_description
-
-    # Parse parameters, separately
-    parameterInfo = "%P" + SkipTo(lineEnd) + textFormat.setResultsName("parameters")  
-    parsedParams = parameterInfo.searchString(starlesstext)[0]
-    parameterBlock = parsedParams.parameters 
-    
     # Define way to split strings that are separated by extra newlines: 
     def mustBeNonBlank(s,l,t):
         if not t[0]:
-            raise ParseException(s,l,"line body can't be empty")
+            raise ParseException(s,l,"empty line body")
     lineBody = SkipTo(lineEnd).setParseAction(mustBeNonBlank)
     textLine = lineBody + Suppress(lineEnd).setParseAction(replaceWith("\n"))
     para = OneOrMore(textLine) + Suppress(lineEnd)
 
     # Split copyright and simple description, if applicable
-    splitPara = para.searchString(copyrightAndDescrip)
-    copyright = "".join(splitPara[0])
+    split = para.searchString(copyrightAndDescription)
+    copyright = "".join(split[0])
     simple_description = None  
     try:
-        simple_description = splitPara[1][0]
+        simple_description = split[1][0]
     except:
         pass
 
-    # Split parameters into input and output, and make them into dictionaries
+    # Parse full description
+    descriptionInfo = "%D" + SkipTo(lineEnd) + textFormat.setResultsName("full_description")
+    full_description = descriptionInfo.searchString(starlesstext)[0].full_description
+
+    # Parse parameters
+    parameterInfo = "%P" + SkipTo(lineEnd) + textFormat.setResultsName("parameters")  
+    parsedParams = parameterInfo.searchString(starlesstext)[0]
+    parameterBlock = parsedParams.parameters 
+    
+    # Define way to split parameters into input and output
+    # parameterBlock is of the form:
+    # INPUT PARAMETERS:
+    # input parameters here
+    # OPTIONAL PARAMETERS: <-- optional
+    # optional parameters here <-- optional
+    # OUTPUT PARAMETERS:
+    # output parameters here
     input_ident = CaselessLiteral("INPUT PARAMETERS") + Optional(":")
     output_ident = CaselessLiteral("OUTPUT PARAMETERS") + Optional(":")
     optional_ident = CaselessLiteral("OPTIONAL PARAMETERS") + Optional(":")
-    end_input = output_ident ^ optional_ident
-    paramWord = Word(alphanums + """ *\/_-()[]^<>@+,.=$&":'""")
+    end_input = output_ident ^ optional_ident 
+    paramWord = Word(alphanums + """ #?!*\/_-()[]^<>@+,.=$&":'""")
     param_block = Group(ZeroOrMore(~output_ident + paramWord))
     total_params = Optional(input_ident) + Group(ZeroOrMore(~end_input \
-                  + paramWord)).setResultsName("input_parameters") + Optional(optional_ident + param_block) \
-              + Optional(output_ident + textFormat.setResultsName("output_parameters")) + StringEnd()
-    splitParams = total_params.searchString(parameterBlock)[0]    
+                  + paramWord)).setResultsName("input_parameters") + \
+                  Optional(optional_ident + param_block) + Optional(output_ident \
+                  + textFormat.setResultsName("output_parameters")) + StringEnd()
+    splitParams = total_params.searchString(parameterBlock)[0]  
+
+    # Put the input and output parameters into dictionaries.  
+    # parameters passed to makeDictionary() are strings of the form:
+    # name : value \n
     input_parameters = makeDictionary("\n".join(splitParams.input_parameters))
     if splitParams.output_parameters != None:
         output_parameters = makeDictionary(splitParams.output_parameters)   
     else:
         output_parameters = None
 
-    # Finally, return a Header object
+    # Finally, return a Header object containing the parsed information
     return Header(component_name, copyright, simple_description,  \
                  full_description, input_parameters, output_parameters)
 
-# Function to put parameters that are in a string into a dictionary
 def makeDictionary(text):
+    """ Takes a string of parameters of the form 'name: value\n'
+    and returns a dictionary where the names are keys to the values."""
     d = {}
-    okword = Word(alphanums + """\/_-()[]<>+@,.=:$&'"^ """)
-    okvar = Word(alphanums + """\/_-()[]<>+@,.=$&'"^ """)
-    block = Combine(ZeroOrMore(okword))
-    aline = Combine(ZeroOrMore(okvar)).setResultsName("first") + Literal(":") \
-            + block.setResultsName("second") + LineEnd()
-    aUnit = aline + Optional(Combine(Combine(ZeroOrMore(okvar), joinString=" ", \
-            adjacent=False).setResultsName("secondContinued") + LineEnd()))
-    parsedVars = aUnit.searchString(text)
-    for unit in parsedVars:
-        d[unit.first] = unit.second + " " + unit.secondContinued
+    valueFormat = Word(alphanums + """!?\/_-()[]<>+@,.=:$&'"^ """) # colons ok
+    nameFormat = Word(alphanums + """!?\/_-()[]<>+@,.=$&'"^ """) # no colons
+    valueBlock = Combine(ZeroOrMore(valueFormat))
+    nameBlock = Combine(ZeroOrMore(nameFormat))
+    aline = nameBlock.setResultsName("name") + Literal(":") \
+            + valueBlock.setResultsName("value") + LineEnd()
+    # The value may go on to the next line(s)
+    aUnit = aline + Optional(Combine(Combine(ZeroOrMore(), joinString=" ", \
+            adjacent=False).setResultsName("valueContinued") + LineEnd()))
+    parsedParams = aUnit.searchString(text)
+    for unit in parsedParams:
+        d[unit.name] = unit.value + " " + unit.valueContinued
     return d
 
+# Sample header to test the parse function
 testtext = """
 /*******************************************************************************
 *

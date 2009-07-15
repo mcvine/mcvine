@@ -1,13 +1,11 @@
 __doc__="""
-parse original McStas instrument definition file
+Parses original McStas instrument definition files. 
 """
 __author__="Jiao Lin"
 
-
 from pyparsing.pyparsing import *
 
-
-# numbers: 1, 30.0, 1e-5, -99
+# numbers: 1, 30.0, 1e-5, -99, for parsing parameter values
 number = Combine( Optional('-') + ( '0' | Word('123456789',nums) ) + \
                   Optional( '.' + Word(nums) ) + \
                   Optional( Word('eE',exact=1) + Word(nums+'+-',nums) ) )
@@ -20,7 +18,7 @@ def convertNumbers(s,l,toks):
 
 number.setParseAction( convertNumbers )
 
-# string
+# Define strings surrounded by quotation marks, for parsing parameter values
 string = quotedString
 
 def convertString(s,l,toks):
@@ -29,13 +27,12 @@ def convertString(s,l,toks):
 
 string.setParseAction( convertString )
 
-identifier = Word( alphas, alphanums + "_" )   # a, b, chop_phase.  instrument parameter of declared variable
+# a, b, chop_phase.  instrument parameter of declared variable
+identifier = Word( alphas, alphanums + "_" )   
 global_var_name = identifier.setResultsName( "global_var_name")
-
 
 comment = Suppress(ZeroOrMore( cppStyleComment ))
 c_comment = Suppress(ZeroOrMore( cStyleComment ))
-
 
 def header():
     return Optional(cStyleComment.setResultsName("header"))
@@ -43,15 +40,19 @@ def header():
 
 def define():
     comp_name = identifier
-    d = Suppress("DEFINE") + Suppress("COMPONENT") + comp_name.setResultsName("name") + Optional(comment)
+    d = Suppress("DEFINE") + Suppress("COMPONENT") + comp_name.setResultsName( \
+        "name") + Optional(comment)
     return d
 
 
+# Format for parameters is:
+#     PARAMETERS ( type name = value, type name = value, etc. )
+# where type and = value are optional.
 def def_parms():
     parameter_type = Optional(oneOf( ["double", "int", "char *", "string"] ))
     parameter_type = parameter_type.setResultsName( "type" )  # double, int
     parameter_name = identifier.setResultsName( "name" )
-    parameter_value = (number|string).setResultsName( "value" )
+    parameter_value = (number|string).setResultsName( "value" ) 
     parameter_declr = Group( parameter_type + parameter_name + Optional( Suppress('=') + parameter_value ) ).setResultsName( "parameter" ) 
     parameter_list = delimitedList( parameter_declr )
     d = Suppress("DEFINITION") + Suppress("PARAMETERS") \
@@ -62,7 +63,8 @@ def def_parms():
 
 
 def set_parms():
-    parameter_type = Optional(oneOf( ["double", "string", "int", "char *"] )).setResultsName( "type" )  # double, int
+    parameter_type = Optional(oneOf( ["double", "string", "int", "char *"] )).setResultsName( \
+                     "type" )  # double, int
     parameter_name = identifier.setResultsName( "name" )
     parameter_value = (number|string).setResultsName( "value" )
     parameter_declr = Group( parameter_type + parameter_name + Optional( Suppress('=') + parameter_value) ).setResultsName( "parameter" )
@@ -91,8 +93,13 @@ def state_parms():
         + Optional(parameter_list.setResultsName("state_parameters") ) \
         + Suppress(")")  + Optional(comment)
     return d
-    
 
+def polarisation_params():
+    return CaselessLiteral("POLARISATION PARAMETERS") + "(" + \
+           OneOrMore(Word(alphanums + "=, ")) + ")"
+    
+# Define that a block of text is anything between %{ and %}, and replace the
+# %{ with { and the %} with }
 block = Regex(r"%{[\s\S]*?%}")
 def convertBlock(s,l,toks):
     b = toks[0]
@@ -101,10 +108,12 @@ def convertBlock(s,l,toks):
     return b
 block.setParseAction( convertBlock )
 
-# Another way to parse block of text, so comments are stripped
-# (Provided there are no %'s in the block of text):
+# Define another way to parse a block of text, so comments are stripped. Replaces
+# %{ with { and %} with }
+# Used in the DECLARE block 
 words = Word(alphanums + """%#/*{}\_-()^[]!?<>@,.=$&+":;'""")
-noComments = Combine(ZeroOrMore(~Literal("%}") + Optional(cppStyleComment).suppress() + words + Optional(cppStyleComment).suppress()), joinString=" ", adjacent=False)
+noComments = Combine(ZeroOrMore(~Literal("%}") + Optional(cppStyleComment).suppress() \
+            + words + Optional(cppStyleComment).suppress()), joinString=" ", adjacent=False)
 startBlock = Literal("%{").setParseAction(replaceWith("{"))
 endBlock = Literal("%}").setParseAction(replaceWith("}"))
 textBlock = Combine(startBlock + noComments + endBlock, joinString=" ", adjacent=False)
@@ -125,9 +134,6 @@ def finalize(): return Suppress("FINALLY") + block.setResultsName("finalize")
 
 
 def share(): return Suppress('SHARE') + block.setResultsName('share')
-
-def polarisation_params():
-    return Literal("POLARISATION PARAMETERS") + "(" + OneOrMore(Word(alphanums + "=, ")) + ")"
 
 def component():
     return header() \
