@@ -18,12 +18,19 @@ def convertNumbers(s,l,toks):
 
 number.setParseAction( convertNumbers )
 
-# Define strings surrounded by quotation marks, for parsing parameter values
-string = quotedString
+# Define strings for parsing parameter values.
+# Evaluate the parsed parameter value into a string, and if the parameter value
+# is a quoted string, remove the quotes. For parsing parameters like:
+# string name = value, as well as string name="value"
+string = quotedString ^ Word(alphanums + "_-.")
 
 def convertString(s,l,toks):
     n = toks[0]
-    return eval(n)
+    try:
+        toreturn = eval(n)
+    except:
+        toreturn = str(n)
+    return toreturn
 
 string.setParseAction( convertString )
 
@@ -46,8 +53,11 @@ def define():
 
 
 # Format for parameters is:
-#     PARAMETERS ( type name = value, type name = value, etc. )
-# where type and = value are optional.
+#     PARAMETERS ( [type] [name] = [value], [type] [name] = [value], etc. )
+# where [type] and = [value] are optional.
+# [type] is either "double", "int", "char *", or "string"
+# [name] is any combination of alphabetic letters and _'s
+# value is either a number or a string (with or without quotes)
 def def_parms():
     parameter_type = Optional(oneOf( ["double", "int", "char *", "string"] ))
     parameter_type = parameter_type.setResultsName( "type" )  # double, int

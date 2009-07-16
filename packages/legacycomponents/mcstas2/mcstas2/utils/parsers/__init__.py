@@ -84,6 +84,9 @@ def _format_share_str( share ):
         line = line.strip()
         if line.startswith( token ):
             header = include().parseString( line ).header
+            # If header is a quoted string, remove the quotes
+            if header[0] == '"':
+                header = eval(header)
             line = r'#include "mcstas2/share/%s.h"' % header
             lines[ i ] = line
             pass
