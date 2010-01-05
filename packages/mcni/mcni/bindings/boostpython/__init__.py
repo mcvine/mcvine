@@ -12,7 +12,13 @@
 #
 
 
-import mcni.mcnibp as b
+try:
+    import mcni.mcnibp as b
+    binding_imported = True
+except ImportError:
+    import warnings
+    warnings.warn("Unable to load binding mcni.mcnibp")
+    binding_imported = False
 
 
 class Binding:
@@ -94,7 +100,8 @@ def _import():
     import bpext, mcni.mcni
     return
 
-_import()
+if binding_imported:
+    _import()
 
 
 
