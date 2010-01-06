@@ -128,7 +128,11 @@ def eventModeMCA( *args, **kwds ):
 import ComputationEngineRendererExtension
 
 def _import_bindings():
-    import bindings
+    try:
+        import bindings
+    except ImportError:
+        import warnings
+        warnings.warn('binding not imported')
     return
 
 _import_bindings()
