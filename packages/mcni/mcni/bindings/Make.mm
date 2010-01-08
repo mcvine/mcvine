@@ -41,7 +41,7 @@ export:: export-package-python-modules
 	BLD_ACTION="export" $(MM) recurse
 
 
-include doxygen/default.def
+#include doxygen/default.def
 docs: export-doxygen-docs
 
 
