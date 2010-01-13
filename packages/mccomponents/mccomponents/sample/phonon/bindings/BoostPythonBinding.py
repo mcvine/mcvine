@@ -21,6 +21,10 @@ import mccomposite.mccompositebp as b1
 import mcni.mcnibp as b2
 
 
+import numpy
+
+
+
 class New:
 
     def ndarray( self, npyarr ):
@@ -28,7 +32,6 @@ class New:
     arguments:
         npyarr: numpy array. it must be a contiguous array.
         '''
-        import numpy
         assert npyarr.dtype == numpy.double, "only work for double array for this time"
         
         import numpyext
@@ -188,8 +191,8 @@ class New:
             natoms, cQaxes[0], cQaxes[1], cQaxes[2], eps_arr, E_arr )
 
         # need linear transformation
-        import numpy.linalg as nl
-        m = nl.inv( [Qvector for Qvector, n in Qaxes] )
+        import numpy.linalg as nl; 
+        m = nl.inv( numpy.array([Qvector for Qvector, n in Qaxes]).T )
         disp = self.changecoordssystemfordispersion(disp, m)
         return disp
 
