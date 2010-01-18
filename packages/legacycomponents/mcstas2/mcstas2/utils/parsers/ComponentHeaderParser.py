@@ -159,7 +159,7 @@ def makeDictionary(text):
     aline = nameBlock.setResultsName("name") + Literal(":") \
             + valueBlock.setResultsName("value") + LineEnd()
     # The value may go on to the next line(s)
-    aUnit = aline + Optional(Combine(Combine(ZeroOrMore(), joinString=" ", \
+    aUnit = aline + Optional(Combine(Combine(ZeroOrMore(nameFormat), joinString=" ", \
             adjacent=False).setResultsName("valueContinued") + LineEnd()))
     parsedParams = aUnit.searchString(text)
     for unit in parsedParams:
