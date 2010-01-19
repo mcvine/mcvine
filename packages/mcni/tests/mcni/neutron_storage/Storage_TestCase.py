@@ -172,6 +172,43 @@ class TestCase(unittest.TestCase):
         return
 
         
+    def test5(self):
+        'neutron_storage.Storage: wrap-reading (nread>>ntotal)'
+
+        path = 'test-storage-4'
+        if os.path.exists(path):
+            os.remove( path )
+        
+        from mcni.neutron_storage.Storage import Storage
+
+        #open storage for writing
+        s = Storage( path, 'w' )
+
+        #create neutrons
+        import mcni
+        neutrons = mcni.neutron_buffer( 5 )
+        for i in range(5):
+            neutrons[i] = mcni.neutron( v = (i,0,0) )
+
+        #write 
+        s.write( neutrons )
+
+        # flush
+        del s
+        
+        #open the storage for reading
+        sr = Storage( path, 'r')
+
+        neutrons = sr.read(100)
+        self.assertEqual( len(neutrons), 100 )
+        self.assertAlmostEqual( neutrons[3].state.velocity[0] , 3 )
+        self.assertAlmostEqual( neutrons[4].state.velocity[0] , 4 )
+        self.assertAlmostEqual( neutrons[6].state.velocity[0] , 1 )
+        self.assertAlmostEqual( neutrons[7].state.velocity[0] , 2 )
+
+        return
+
+        
     pass  # end of TestCase
 
 

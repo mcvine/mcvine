@@ -54,8 +54,8 @@ def load( filename ):
 
 
 def readneutrons_asnpyarr( filename ):
-    from idf_usenumpy import read
-    filetype, version, comment, neutrons = read( filename )
+    from idf_usenumpy import readall
+    filetype, version, comment, neutrons = readall( filename )
     from idfneutron import version as ver, filetype as ft
     assert filetype == ft
     assert version == ver

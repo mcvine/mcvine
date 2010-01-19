@@ -48,7 +48,8 @@ def read(filename=None, stream=None, start=None, n=None):
     """
     if not stream: stream = open(filename, 'r')
     if start is None and n is None:
-        return readall(filename)
+        start = 0
+        n = count(stream=stream)
     assert start is not None and n is not None
     assert start >= 0 and n > 0
     stream.seek(headersize+neutronsize*start)
@@ -58,8 +59,13 @@ def read(filename=None, stream=None, start=None, n=None):
     return neutrons
 
 
-def readall(filename ):
-    f=open(filename,'r').read()
+def readall(filename=None, stream=None):
+    if stream is None:
+        stream = open(filename,'r')
+    # read everything
+    stream.seek(0)
+    f = stream.read()
+    #
     filetype, version, comment, N = unpack( headerfmtstr, f[ : headersize] )
 
     neutrons = numpy.fromstring( f[headersize:], numpy.double )

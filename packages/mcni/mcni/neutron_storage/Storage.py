@@ -118,33 +118,49 @@ class Storage:
         # n defaults to packetsize
         n = n or self._packetsize
 
+        # total number of neutrons in the file
+        ntotal = self._ntotal
+
         # no default, read all is left
         if n is None:
-            n = self._ntotal - position
+            n = ntotal - position
 
         # next position of cursor
         nextpostion = position + n
         
-        if nextpostion <= self._ntotal:
+        if nextpostion <= ntotal:
             # if it is not beyond the end of file, just read
             npyarr = idfio.read(stream=self.stream, start=position, n=n)
             self._position = nextpostion
 
         else:
             # if out of bound, read to the end of file
-            n1 = self._ntotal-position
+            n1 = ntotal-position
             npyarr = idfio.read(
                 stream=self.stream, start=position, n=n1)
             
             # if wrap, restart from the beginning
             if wrap:
                 n2 = n-n1
-                npyarr2 = idfio.read(
-                    stream=self.stream, start=0, n=n2)
-                npyarr = numpy.concatenate((npyarr, npyarr2))
+                # n2 may be still larger than ntotal 
+                # we may need to read the whole file several times
+                if n2 >= ntotal:
+                    ntimes = n2/ntotal
+                    allneutrons = idfio.read(stream=self.stream)
+                    for i in range(ntimes):
+                        npyarr = numpy.concatenate((npyarr, allneutrons))
+                        continue
+                    # now n2 is maller than ntotal
+                    n2 = n2 - ntimes * ntotal
+                    assert n2 < ntotal
+                    
+                if n2>0:
+                    npyarr2 = idfio.read(
+                        stream=self.stream, start=0, n=n2)
+                    npyarr = numpy.concatenate((npyarr, npyarr2))
                 self._position = n2
             else:
-                self._position = self._ntotal
+                self._position = ntotal
 
         # npy array?
         if asnpyarr: return npyarr
