@@ -28,110 +28,125 @@ class Storage:
     '''storage of neutrons
 
     Implementation:
-    Saves neutrons to data files in a directory.
-    The data files are in the idf/Neutron format
+    Saves neutrons to a data file.
+    The data file is in the idf/Neutron format
     (svn://danse.us/inelastic/idf/Neutron.v1).
     '''
 
+    
+    def __init__(self, path, mode = 'r', 
+                 packetsize = None, buffersize=10000):
+        """
+        path: path of the storage
+        mode: mode of operation
+          r: read
+          w: write
+          a: append
+        packetsize: used in "r" mode. The size of the neutron packet being read
+        buffersize: used in "w"/"a" mode. The size of writing buffer (unit: neutron)
+        """
 
-    def __init__(self, path, mode = 'r', packetsize = None):
-
-        self._readonly = self._writeonly = False
-        
         path = self.path = os.path.abspath( path )
 
+        # checking inputs
         if mode in ['w'] and os.path.exists( path ):
             msg = 'path %r already exists. if you want to append neutron event files to '\
                   'that directory, please use mode "a" to append' % path
             raise msg
         
-        if not os.path.exists( path ) and mode in ['w']: os.makedirs( path )
+        #if not os.path.exists( path ) and mode in ['w']: os.makedirs( path )
 
-        if not os.path.exists( path ) and mode in ['r']:
+        if not os.path.exists( path ) and mode in ['r', 'a']:
             raise "Neutron storage at %r has not been established" % path
 
-        if mode in ['r']: self._readonly = True
-        if mode in ['w']: self._writeonly = True
-        
-        if not os.path.isdir( path ):
-            raise IOError , "path %r is not a directory" % path
+        if os.path.isdir( path ):
+            raise IOError , "path %r is a directory" % path
 
+        
+        # init
+        self.mode = mode
+        self._readonly = mode in ['r']
+
+        # file stream
+        self.stream = open(path, mode)
+        self._closed = False
+
+        #
+        self._buffersize = buffersize
         import mcni
         self._buffer = mcni.neutron_buffer(0)
 
-        packetsize_path = os.path.join( self.path, packetsizefile ) 
-        if self._readonly and not os.path.exists(packetsize_path):
-            raise RuntimeError, "neutron store at %r is not valid. %r missing" % (self.path, packetsize_path )
-        from _neutron_storage_impl import packetsize_store
-        self._packetsize_store = packetsize_store( packetsize_path )
+        # in write mode, let us initialize the file by writing 
+        # an empty neutron buffer
+        if self.mode == 'w':
+            self._write_header(self.stream)
 
-        if packetsize:
-            # if user supplied a packet size
-            
-            size = self._packetsize_store.getsize()
-
-            if size:
-                #if there is also a predefined packet size, we should
-                #compare this predefined size to the user defined size
-                if  size != packetsize:
-                    # if they don't match, we cannot continue
-                    msg = "This neutron storage has a predefined size of %s, "\
-                          "and you cannot change its size to %s." % (
-                        size, packetsize )
-                    raise RuntimeError, msg
-            else:
-                #if there is no predefined packet size, this store
-                #is fresh. we need to set its packet size.
-                self._packetsize_store.setsize( packetsize )
-                
+        # read mode:
+        if self._readonly:
+            self._packetsize = packetsize
+            self._position = 0 # initial position to start reading
+            self._ntotal = idfio.count(stream=self.stream)
+        
         return
 
 
     def write(self, neutrons):
-        'write a packet of neutrons'
+        'write neutrons'
         path = self.path
         
         if self._readonly:
-            raise RuntimeError, "Neutron storage at %r was opened read-only" % path
+            raise RuntimeError, "Neutron storage at %r was opened read" % path
         
-        n = len(neutrons)
-
-        # check packet size. if packet size has not been
-        # set, use n as packet size
-        packetsize = self._getpacketsize()
-        if packetsize is None :
-            # packet size is not set.
-            msg = 'packet size is not set for this storage. '\
-                  'will use the size of the input neutron buffer '\
-                  'as the packet size.'
-            import warnings
-            warnings.warn( msg )
-            self._setpacketsize( n )
-            pass
-
         # now write the neutrons
         self._dump( neutrons )
         return neutrons
 
 
-    def npackets(self):
-        "number of packets"
-        files = self._neutronfiles()
-        return len(files)
+    def read(self, n=None, asnpyarr = False, wrap=True):
+        """read (n) neutrons from the current position.
 
+        n: optional. number of neutrons. if None, read all neutrons
+        wrap: if true, will wrap around to the start when reach the end of file. so you can read forever
+        asnpyarr: if true, returns numpy array instead of neutron array
+        """
+        path = self.path
+        if not self._readonly:
+            raise RuntimeError, "Neutron storage %r was opened for write" % path
 
-    def read(self, packetindex, asnpyarr = False):
-        if self._writeonly:
-            raise RuntimeError, "Neutron storage %r is opened for write only" % self.path
+        position = self._position
         
-        from mcni.neutron_storage import readneutrons_asnpyarr
+        # n defaults to packetsize
+        n = n or self._packetsize
 
-        if packetindex >= self.npackets():
-            raise RuntimeError, "Invalid packet index: %s. Should be in the range [0, %d]" % (packetindex, self.npackets()-1 )
+        # no default, read all is left
+        if n is None:
+            n = self._ntotal - position
+
+        # next position of cursor
+        nextpostion = position + n
         
-        neutronfiles = self._neutronfiles()
-        npyarr = readneutrons_asnpyarr( neutronfiles[ packetindex ] )
+        if nextpostion <= self._ntotal:
+            # if it is not beyond the end of file, just read
+            npyarr = idfio.read(stream=self.stream, start=position, n=n)
+            self._position = nextpostion
 
+        else:
+            # if out of bound, read to the end of file
+            n1 = self._ntotal-position
+            npyarr = idfio.read(
+                stream=self.stream, start=position, n=n1)
+            
+            # if wrap, restart from the beginning
+            if wrap:
+                n2 = n-n1
+                npyarr2 = idfio.read(
+                    stream=self.stream, start=0, n=n2)
+                npyarr = numpy.concatenate((npyarr, npyarr2))
+                self._position = n2
+            else:
+                self._position = self._ntotal
+
+        # npy array?
         if asnpyarr: return npyarr
         
         from mcni.neutron_storage import neutrons_from_npyarr
@@ -141,125 +156,77 @@ class Storage:
 
 
     def packetsize(self):
-        return self._getpacketsize()
+        return self._packetsize
+
+
+    def flush(self):
+        buffer = self._buffer
+        self._write_neutrons(self._buffer)
+        buffer.clear()
+        return
+
+
+    def close(self):
+        if not self._closed:
+            self.flush()
+            self.stream.close()
+            self._closed = True
+        return
+
+
+    def __del__(self): self.close()
 
 
     def _dump(self, neutrons):
         buffer = self._buffer
-
-        packetsize = self._getpacketsize()
-
-        # total number of neutrons
-        N = len(buffer) + len(neutrons)
+        # current size of buffer
+        currentbuffersize = len(buffer)
         
-        # if not overflow, just add neutron to buffer
-        if N < packetsize:
-            buffer.append( neutrons, 0, len(neutrons) )
-        else:
-            #overflow
-            npackets = N/packetsize
-            # write the first packet by
-            #  1. fill the buffer
-            npatch = packetsize - len(buffer)
-            buffer.append( neutrons, 0,  npatch)
-            #  2. write the buffer
-            self._write_packet( buffer )
+        # number of new neutrons 
+        nnew = len(neutrons)
+        
+        # total number of neutrons
+        N = currentbuffersize + nnew
 
-            # now write (npackets-1) packets
-            start = npatch
-            for i in range( npackets - 1 ):
-                buffer.clear()
-                buffer.append( neutrons, start, start + packetsize )
-                self._write_packet( buffer )
-                start += packetsize
-                continue
-
-            # move the remained neutrons to buffer
+        if N >= self._buffersize:
+            # if the total number of neutrons is larger than the
+            # buffer size, just dump all into the file
+            self._write_neutrons(self._buffer)
+            self._write_neutrons(neutrons)
+            # and clear the buffer
             buffer.clear()
-            buffer.append( neutrons, start, len(neutrons) )
+        else:
+            # otherwise, add the neutrons to the buffer
+            buffer.append(neutrons, 0, nnew)
 
         return
 
 
-    def _write_packet(self, packet):
-        n = len(packet)
-        packetsize = self._getpacketsize()
-        
-        if n != packetsize:
-            raise RuntimeError , "packet size for neutron store %r is %d, "\
-                  "but input neutron packet has size %d" % (
-                self.path, packetsize, n )
+    def _write_neutrons(self, neutrons):
+        # from mcni.neutron_storage import dump
+        # dump( packet, os.path.join( self.path, filename ) )
 
-        filename = self._uniquefilename()
-
-        from mcni.neutron_storage import dump
-        dump( packet, os.path.join( self.path, filename ) )
-
+        stream = self.stream
+        arr = neutrons_as_npyarr(neutrons)
+        idfio.append(arr, stream=stream)
         return 
+
+
+    def _write_header(self, stream):
+        # create header by writing empty neutron buffer
+        buffer = mcni.neutron_buffer(0)
+        arr = neutrons_as_npyarr( buffer )
+        idfio.write(arr, stream=stream)
+        return
     
     
-    def _getpacketsize(self):
-        return self._packetsize_store.getsize()
-
-
-    def _setpacketsize(self, n):
-        return self._packetsize_store.setsize( n )
-
-
-    def _uniquefilename(self):
-        entries = os.listdir( self.path )
-        numbers = []
-        for entry in entries:
-            try: n = int( entry )
-            except: continue
-            numbers.append( n )
-            continue
-        if len(numbers) == 0: return '0'
-        return str( max(numbers) + 1 )
-    
-
-    def _neutronfilesize(self):
-        packetsize = self._getpacketsize()
-        if packetsize is None: raise RuntimeError, "neutron storage not established: %s"  % self.path
-        neutronfilesize = filesize( packetsize )
-        return neutronfilesize
-
-
-
-    def _neutronfiles(self):
-        if not self._readonly: return self._list_neutronfiles()
-        key = '_neutronfiles_list'
-        ret = self.__dict__.get( key )
-        if ret is None:
-            ret = self._list_neutronfiles()
-            setattr( self, key, ret )
-        return ret
-            
-
-
-    def _list_neutronfiles(self):
-        path = self.path
-        entries = os.listdir( path )
-        neutronfilesize = self._neutronfilesize()
-        
-        neutronfiles = []
-        for entry in entries:
-            file = os.path.join( path, entry )
-            if not os.path.isfile( file ): continue
-            if open(file).read(7) != 'Neutron': continue
-            if os.path.getsize( file ) != neutronfilesize : continue
-            neutronfiles.append( file )
-            continue
-
-        if len(neutronfiles) == 0:
-            raise RuntimeError , "no neutron file in %r" % path
-
-        return neutronfiles
-
     pass # end of Source
 
 
 from idfneutron import filesize
+import idf_usenumpy as idfio
+from mcni.neutron_storage import neutrons_as_npyarr
+import mcni
 
 import os, math, numpy
 

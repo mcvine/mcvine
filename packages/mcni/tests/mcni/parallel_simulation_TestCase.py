@@ -34,8 +34,6 @@ import journal
 debug = journal.debug( "parallel_simulation_TestCase" )
 warning = journal.warning( "parallel_simulation_TestCase" )
 
-import mpi
-rank = mpi.world().rank
 
 
 import mcni
@@ -43,7 +41,22 @@ import mcni
 class TestCase(unittest.TestCase):
 
 
+    def __init__(self, *args, **kwds):
+        super(TestCase, self).__init__(*args, **kwds)
+        try:
+            import mpi
+        except ImportError:
+            import warnings
+            warnings.warn('no mpi. skip this test')
+            self.nompi = True
+        else:
+            self.nompi = False
+        return
+
+
     def test(self):
+        if self.nompi: return
+        
         component1 = Source('source')
         component2 = Printer('printer')
         instrument = mcni.instrument( [component1, component2] )
@@ -84,6 +97,9 @@ class Source( AbstractComponent ):
 class Printer( AbstractComponent ):
 
     def process(self, neutrons):
+        import mpi
+        rank = mpi.world().rank()
+        
         s = [ '%s'% n for n in neutrons ]
         print 'node %d: %s' % (rank, ', '.join(s) )
         return neutrons
@@ -91,7 +107,7 @@ class Printer( AbstractComponent ):
     pass # end of Verifier
 
 
-    
+
 def pysuite():
     suite1 = unittest.makeSuite(TestCase)
     return unittest.TestSuite( (suite1,) )

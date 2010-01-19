@@ -29,8 +29,7 @@ class TestCase(unittest.TestCase):
 
         path = 'test-storage'
         if os.path.exists(path):
-            import shutil
-            shutil.rmtree( path )
+            os.remove( path )
         
         from mcni.neutron_storage.Storage import Storage
 
@@ -45,10 +44,12 @@ class TestCase(unittest.TestCase):
         #write neutrons
         s.write( neutrons )
 
+        #delete the storage to make sure it flushes all neutrons
+        del s
+
         #open the storage for reading
         sr = Storage( path, 'r')
-        self.assertEqual( sr.npackets(), 1 )
-        neutrons = sr.read(0)
+        neutrons = sr.read()
         self.assertEqual( len(neutrons), 7 )
 
         self.assertAlmostEqual( neutrons[5].state.velocity[0] , 8 )
@@ -60,8 +61,7 @@ class TestCase(unittest.TestCase):
 
         path = 'test-storage-2'
         if os.path.exists(path):
-            import shutil
-            shutil.rmtree( path )
+            os.remove( path )
         
         from mcni.neutron_storage.Storage import Storage
 
@@ -78,19 +78,99 @@ class TestCase(unittest.TestCase):
 
         #write packet 2
         s.write( neutrons )
+
+        # flush
+        del s
         
         #open the storage for reading
-        sr = Storage( path, 'r')
-        self.assertEqual( sr.npackets(), 2 )
+        sr = Storage( path, 'r', packetsize=7)
 
-        neutrons = sr.read(0)
+        neutrons = sr.read()
         self.assertEqual( len(neutrons), 7 )
         self.assertAlmostEqual( neutrons[5].state.velocity[0] , 8 )
         
-        neutrons = sr.read(1)
+        neutrons = sr.read()
         self.assertEqual( len(neutrons), 7 )
         self.assertAlmostEqual( neutrons[5].state.velocity[0] , 8 )
         return
+        
+
+    def test3(self):
+        'neutron_storage.Storage: wrap-reading (nread>ntotal)'
+
+        path = 'test-storage-3'
+        if os.path.exists(path):
+            os.remove( path )
+        
+        from mcni.neutron_storage.Storage import Storage
+
+        #open storage for writing
+        s = Storage( path, 'w' )
+
+        #create neutrons
+        import mcni
+        neutrons = mcni.neutron_buffer( 7 )
+        for i in range(7):
+            neutrons[i] = mcni.neutron( v = (i,0,0) )
+
+        #write 
+        s.write( neutrons )
+
+        # flush
+        del s
+        
+        #open the storage for reading
+        sr = Storage( path, 'r', packetsize=10)
+
+        neutrons = sr.read()
+        self.assertEqual( len(neutrons), 10 )
+        self.assertAlmostEqual( neutrons[5].state.velocity[0] , 5 )
+        self.assertAlmostEqual( neutrons[9].state.velocity[0] , 2 )
+
+        neutrons = sr.read()
+        self.assertAlmostEqual( neutrons[0].state.velocity[0] , 3 )
+        return
+
+        
+    def test4(self):
+        'neutron_storage.Storage: wrap-reading (nread<ntotal)'
+
+        path = 'test-storage-4'
+        if os.path.exists(path):
+            os.remove( path )
+        
+        from mcni.neutron_storage.Storage import Storage
+
+        #open storage for writing
+        s = Storage( path, 'w' )
+
+        #create neutrons
+        import mcni
+        neutrons = mcni.neutron_buffer( 7 )
+        for i in range(7):
+            neutrons[i] = mcni.neutron( v = (i,0,0) )
+
+        #write 
+        s.write( neutrons )
+
+        # flush
+        del s
+        
+        #open the storage for reading
+        sr = Storage( path, 'r', packetsize=5)
+
+        neutrons = sr.read()
+        self.assertEqual( len(neutrons), 5 )
+        self.assertAlmostEqual( neutrons[3].state.velocity[0] , 3 )
+        self.assertAlmostEqual( neutrons[4].state.velocity[0] , 4 )
+
+        neutrons = sr.read()
+        self.assertEqual( len(neutrons), 5 )
+        self.assertAlmostEqual( neutrons[0].state.velocity[0] , 5 )
+        self.assertAlmostEqual( neutrons[4].state.velocity[0] , 2 )
+
+        return
+
         
     pass  # end of TestCase
 

@@ -16,30 +16,27 @@ import journal
 info = journal.info( 'neutron_storage' )
 
 
-def merge( directories, newdir, newpacketsize = None ):
+def merge(paths, newpath):
+    '''merge neutron files to one neutron file
+
+    it is assumed that the neutrons in the input files were
+    normalized correctly so that we can merge them directly.
+    '''
     
     from mcni.neutron_storage import storage
     
-    assert len(directories)>0
+    assert len(paths)>0
     
-    dir0 = directories[0]
-    packetsize = storage( dir0 ).packetsize()
+    out = storage(newpath, 'w')
 
-    if newpacketsize is None: newpacketsize = packetsize
-    out = storage( newdir, 'w', packetsize = newpacketsize )
+    for path in paths:
+        
+        info.log( ' * Working on %r' % path )
+        
+        s = storage(path, 'r')
+        neutrons = s.read()
 
-    for directory in directories:
-        
-        info.log( ' * Working on directory %r' % directory )
-        
-        s = storage( directory, 'r' )
-
-        for i in range( s.npackets() ):
-            info.log( '  - packet %d' % i )
-            neutrons = s.read( i )
-            out.write( neutrons )
-            continue
-        
+        out.write(neutrons)
         continue
     
     return

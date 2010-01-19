@@ -22,27 +22,28 @@ warning = journal.warning( "mcni.pyre_components.test" )
 
 
 #input parameter for output directory for neutrontostorage component
-instrument1_outputdirinput = 'neutron_storage_TestCase-out'
-instrument2_outputdirinput = 'neutron_storage_TestCase-Instrument2-out'
+instrument1_output = 'neutron_storage_TestCase-out'
+instrument2_output = 'neutron_storage_TestCase-Instrument2-out'
+
 #the real output directory depends on
 # mpi is installed or not
 try:
     import mpi
-    instrument1_outputdir = '%s-0' % instrument1_outputdirinput
-    instrument2_outputdir = '%s-0' % instrument2_outputdirinput
+    instrument1_outputpath = '%s-0' % instrument1_output
+    instrument2_outputpath = '%s-0' % instrument2_output
 except ImportError:
-    instrument1_outputdir = instrument1_outputdirinput
-    instrument2_outputdir = instrument2_outputdirinput
+    instrument1_outputpath = instrument1_output
+    instrument2_outputpath = instrument2_output
     pass
 
-import  shutil
-if os.path.exists( instrument1_outputdir ):
-    shutil.rmtree( instrument1_outputdir )
-if os.path.exists( instrument2_outputdir ):
-    shutil.rmtree( instrument2_outputdir )
+import shutil
+if os.path.exists( instrument1_outputpath ):
+    shutil.rmtree( instrument1_outputpath )
+if os.path.exists( instrument2_outputpath ):
+    shutil.rmtree( instrument2_outputpath )
 
 neutron_storage_path = 'neutrons'
-neutron_storage_packetsize = 1
+
 
 from mcni.pyre_support.Instrument import Instrument as base
 class Instrument1(base):
@@ -74,7 +75,6 @@ class Instrument1(base):
 
         storage = self.inventory.storage
         storage.inventory.path = neutron_storage_path
-        storage.inventory.packetsize = neutron_storage_packetsize
         return
     
     pass # end of Instrument1
@@ -101,6 +101,8 @@ class Verifier( AbstractComponent ):
         return neutrons
 
     pass # end of Verifier
+
+
 
 class Instrument2(base):
 
@@ -133,11 +135,11 @@ class Instrument2(base):
         storage = self.inventory.source
         #the path where neutrons were saved in the simulation
         #of Instrument1
-        path = os.path.join(instrument1_outputdir, neutron_storage_path )
+        path = os.path.join(instrument1_outputpath, neutron_storage_path )
         storage.inventory.path = path
         return
     
-    pass # end of Instrument1
+    pass # end of Instrument2
 
 
 
@@ -147,7 +149,8 @@ class TestCase(unittest.TestCase):
     def test0(self):
         'prepare'
         import os, shutil
-        if os.path.exists( neutron_storage_path ): shutil.rmtree( neutron_storage_path )
+        if os.path.exists( neutron_storage_path ): 
+            os.remove( neutron_storage_path )
         return
 
 
@@ -161,7 +164,7 @@ class TestCase(unittest.TestCase):
             '',
             '--ncount=10',
             '--buffer_size=5',
-            '--output-dir=%s' % instrument1_outputdirinput,
+            '--output-dir=%s' % instrument1_output,
             '--overwrite-datafiles',
             ]
 
@@ -181,7 +184,7 @@ class TestCase(unittest.TestCase):
             '',
             '--ncount=10',
             '--buffer_size=5',
-            '--output-dir=%s' % instrument2_outputdirinput,
+            '--output-dir=%s' % instrument2_output,
             '--overwrite-datafiles',
             ]
 

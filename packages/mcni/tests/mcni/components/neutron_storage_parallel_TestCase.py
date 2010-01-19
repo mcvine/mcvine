@@ -30,10 +30,12 @@ debug = journal.debug( "mcni.components.test" )
 warning = journal.warning( "mcni.components.test" )
 
 
-import mpi
-rank = mpi.world().rank
-
-neutron_storage_path = 'neutrons-%d' % rank
+try:
+    import mpi
+except:
+    pass
+else:
+    neutron_storage_path = 'neutrons-%d' % rank
 ntotneutrons = 53
 packetsize = 10
 npackets = ntotneutrons/packetsize
@@ -60,8 +62,24 @@ class Source( AbstractComponent ):
 class TestCase(unittest.TestCase):
 
 
+    def __init__(self, *args, **kwds):
+        super(TestCase, self).__init__(*args, **kwds)
+        try:
+            import mpi
+        except ImportError:
+            import warnings
+            warnings.warn('no mpi. skip this test')
+            self.nompi = True
+        else:
+            self.nompi = False
+        return
+
+
+
     def test0(self):
         'prepare'
+        if self.nompi: return
+
         import os, shutil
         from mcni.utils.mpiutil import rank 
         path = neutron_storage_path
@@ -71,6 +89,8 @@ class TestCase(unittest.TestCase):
 
     def test1(self):
         'neutron --> storage'
+        if self.nompi: return
+
         #from mcni.components.MonochromaticSource import MonochromaticSource
         #component1 = MonochromaticSource('source', neutron)
         component1 = Source( 'source' )

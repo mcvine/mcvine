@@ -24,7 +24,6 @@ class NeutronToStorage( AbstractComponent ):
         import pyre.inventory as pinv
         path = pinv.str( 'path', default = 'neutrons' )
         append = pinv.bool( 'append', default = False )
-        packetsize = pinv.int( 'packetsize', default = 1000 )
         pass
 
 
@@ -45,8 +44,14 @@ class NeutronToStorage( AbstractComponent ):
         AbstractComponent._configure(self)
         self.path = self.inventory.path
         self.append = self.inventory.append
-        self.packetsize = self.inventory.packetsize
         return
+
+
+    def _fini(self):
+        super(NeutronToStorage, self)._fini()
+        self.engine.close()
+        return
+    
 
 
     def _create_engine(self):
@@ -56,13 +61,16 @@ class NeutronToStorage( AbstractComponent ):
         
         if self._outputdir: path = os.path.join( self._outputdir, path )
 
-        append = self.append or self.overwrite_datafiles
-        packetsize = self.packetsize
+        if self.overwrite_datafiles:
+            append = False
+        if self.append:
+            append = True
+            
         return enginefactory(
-            self.name, path, append, packetsize = packetsize )
+            self.name, path, append=append)
     
 
-    pass # end of Source
+    pass # end of NeutronToStorage
 
 
 import os

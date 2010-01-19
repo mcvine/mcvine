@@ -33,8 +33,7 @@ class TestCase(unittest.TestCase):
 
         for path in [ oldstorage_path, newstorage_path ]:
             if os.path.exists( path ):
-                import shutil
-                shutil.rmtree( path )
+                os.remove( path )
             continue
         
         from mcni.neutron_storage import storage, merge
@@ -51,18 +50,18 @@ class TestCase(unittest.TestCase):
         s.write( neutrons )
         s.write( neutrons )
         s.write( neutrons )
+        #important!!! flush the storage
+        del s
 
         #merge
-        merge( [oldstorage_path], newstorage_path,
-               newpacketsize = newpacketsize)
+        merge([oldstorage_path], newstorage_path)
 
         #open the merged storage for reading
         sr = storage( newstorage_path, 'r')
-        self.assertEqual( sr.npackets(), 2 )
-        neutrons = sr.read(1)
-        self.assertEqual( len(neutrons), newpacketsize )
+        neutrons = sr.read()
+        self.assertEqual( len(neutrons), 7*3 )
 
-        self.assertAlmostEqual( neutrons[2].state.velocity[0] , 8 )
+        self.assertAlmostEqual( neutrons[5].state.velocity[0] , 8 )
         return
     
         

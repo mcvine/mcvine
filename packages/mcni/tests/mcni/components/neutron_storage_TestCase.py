@@ -70,10 +70,8 @@ class Verifier( AbstractComponent ):
         for i in range(len(neutrons)):
             r = list( neutrons[i].state.position )
 
-            index = i % (npackets*packetsize)
-            
             self.testFacility.assertVectorAlmostEqual(
-                r, (0,0,index-1) )
+                r, (0,0,i%ntotneutrons-1 ))
             
             v = list( neutrons[i].state.velocity )
             self.testFacility.assertVectorAlmostEqual(
@@ -90,8 +88,9 @@ class TestCase(unittest.TestCase):
 
     def test0(self):
         'prepare'
-        import os, shutil
-        if os.path.exists( neutron_storage_path ): shutil.rmtree( neutron_storage_path )
+        import os
+        if os.path.exists( neutron_storage_path ): 
+            os.remove( neutron_storage_path )
         return
 
 
@@ -102,7 +101,7 @@ class TestCase(unittest.TestCase):
         component1 = Source( 'source' )
         
         from mcni.components.NeutronToStorage import NeutronToStorage
-        component2 = NeutronToStorage( 'storage', neutron_storage_path, packetsize = packetsize)
+        component2 = NeutronToStorage( 'storage', neutron_storage_path)
         instrument = mcni.instrument( [component1, component2] )
         
         geometer = mcni.geometer()
