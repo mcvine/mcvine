@@ -31,7 +31,7 @@ EXPORT_PYTHON_MODULES = \
 	__init__.py \
 
 
-include doxygen/default.def
+#include doxygen/default.def
 
 export:: export-package-python-modules 
 
