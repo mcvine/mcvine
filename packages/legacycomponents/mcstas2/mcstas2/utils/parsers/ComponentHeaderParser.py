@@ -108,7 +108,15 @@ def parse( header_text ):
 
     # Parse full description
     descriptionInfo = "%D" + SkipTo(lineEnd) + textFormat.setResultsName("full_description")
-    full_description = descriptionInfo.searchString(starlesstext)[0].full_description
+    tmp_tokens = descriptionInfo.searchString(starlesstext)
+    try:
+        tmp_token0 = tmp_tokens[0]
+    except IndexError:
+        raise RuntimeError, ' '.join([
+                'failed to find description. please add \%D section ',
+                'to header of component %s' % component_name
+                ])
+    full_description = tmp_token0.full_description
 
     # Parse parameters
     parameterInfo = "%P" + SkipTo(lineEnd) + textFormat.setResultsName("parameters")  
