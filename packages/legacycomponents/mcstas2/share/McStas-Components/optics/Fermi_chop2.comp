@@ -11,6 +11,12 @@
 * Date: 6 Feb 2005
 * Origin: SNS Oak Ridge,TN
 * Version: 0.5
+*
+* Fermi Chopper with rotating frame.
+*
+* %D
+* Models a fermi chopper with optional supermirror coated blades.
+*
 * %Parameters
 *  Input Parameters:
 *  

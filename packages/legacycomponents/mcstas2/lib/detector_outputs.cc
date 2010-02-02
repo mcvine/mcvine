@@ -18,6 +18,7 @@
 #include <time.h>
 #include <math.h>
 #include <ctype.h>
+#include <cstring>
 #include "detector_outputs.h"
 #include "misc_macros.h"
 

@@ -29,7 +29,7 @@ def get_histogram( monitor ):
     E2arr = bpptr2npyarr( core.getTOF_p2( ), 'double', n ).copy()
     from histogram import histogram, axis, arange
     dt = (core.tmax-core.tmin)/core.nchan
-    taxis = axis( 'tof', arange( core.tmin, core.tmax, dt ), unit = 's' )
+    taxis = axis( 'tof', arange( core.tmin, core.tmax-0.1*dt, dt ), unit = 's' )
     h = histogram( 'I(tof)', [taxis], data = Iarr, errors = E2arr )
     return h
 

@@ -30,7 +30,9 @@ class ComponentInterface(base, ParallelComponent):
         # save monitor data to a histogram in each round so that users
         # can see intermediate results
         hout = self._histogramOutputFilename()
-        self._saveHistogramInMyoutputdir(filename=hout)
+        # this outputfile will be overwritten each round
+        self._saveHistogramInMyoutputdir(filename=hout, overwrite=True)
+        # also save a copy that mark the interation number
         self._saveHistogramInMyoutputdir(filename='%s.%s' % (hout, iterationcount))
 
         #
@@ -80,11 +82,12 @@ class ComponentInterface(base, ParallelComponent):
         return f
 
 
-    def _saveHistogramInMyoutputdir(self, filename):
+    def _saveHistogramInMyoutputdir(self, filename, overwrite=False):
+        overwrite = self.overwrite_datafiles or overwrite
         def _():
             return saveHistogram(
                 self._get_histogram(), filename,
-                overwrite=self.overwrite_datafiles)
+                overwrite=overwrite)
         return self._run_in_myoutputdir(_)
 
 

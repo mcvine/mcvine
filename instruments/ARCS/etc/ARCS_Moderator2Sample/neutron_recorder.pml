@@ -19,7 +19,6 @@
     <component name="neutron_recorder">
       <property name="path">neutrons.dat</property>
       <property name="append">False</property>
-      <property name="packetsize">10</property>
     </component>
 
 </inventory>

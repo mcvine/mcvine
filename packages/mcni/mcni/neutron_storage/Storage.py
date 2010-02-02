@@ -57,7 +57,7 @@ class Storage:
         #if not os.path.exists( path ) and mode in ['w']: os.makedirs( path )
 
         if not os.path.exists( path ) and mode in ['r', 'a']:
-            raise "Neutron storage at %r has not been established" % path
+            raise RuntimeError, "Neutron storage at %r has not been established" % path
 
         if os.path.isdir( path ):
             raise IOError , "path %r is a directory" % path

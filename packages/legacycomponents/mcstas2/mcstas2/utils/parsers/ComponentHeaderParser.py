@@ -100,11 +100,14 @@ def parse( header_text ):
     # Split copyright and simple description, if applicable
     split = para.searchString(copyrightAndDescription)
     copyright = "".join(split[0])
-    simple_description = None  
     try:
-        simple_description = split[1][0]
-    except:
-        pass
+        part2 = split[1]
+    except IndexError:
+        msg = "mal-formed 'simple description' for component %r" % \
+            component_name
+        msg += 'removing trailing white spaces may solve the problem'
+        raise RuntimeError, msg
+    simple_description = part2[0]
 
     # Parse full description
     descriptionInfo = "%D" + SkipTo(lineEnd) + textFormat.setResultsName("full_description")
