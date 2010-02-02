@@ -74,6 +74,4 @@ namespace mcstas2{
 // version
 // $Id$
 
-// Generated automatically by CxxMill on Tue Jun 27 12:57:31 2006
-
 // End of file 

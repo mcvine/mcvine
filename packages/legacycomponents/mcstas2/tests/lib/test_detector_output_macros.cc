@@ -98,7 +98,7 @@ int test_1D()
 
   delete detector;
 
-  std::cout << ">> Test of 'DETECTOR_OUT_0D' passed" << std::endl;
+  std::cout << ">> Test of 'DETECTOR_OUT_1D' passed" << std::endl;
   return 0;
 }
 
