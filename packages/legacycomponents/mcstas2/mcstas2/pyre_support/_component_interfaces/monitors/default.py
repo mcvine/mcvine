@@ -40,34 +40,58 @@ class ComponentInterface(base, ParallelComponent):
 
 
     def _fini(self):
-        if not self._showHelpOnly and self._hasEngine() and self.parallel:
-            # save histogram to <out> instead of <out>-worker-0
-            # get histogram to master node
-            channel = 100
-            histogram = self._get_histogram()
-            if self.mpiRank != 0:
-                I = histogram.I
-                self.mpiSend(I, 0, channel)
+        if not self._showHelpOnly and self._hasEngine():
+            if self.parallel:
+                self._save_histogram_in_masternode_outdir()
             else:
-                histogram = histogram.copy()
-                I = histogram.I
-                for rank in range(1, self.mpiSize):
-                    I1 = self.mpiReceive(rank, channel)
-                    I+=I1
-                    continue
-                
-            def _():
-                saveHistogram(
-                    histogram,
-                    self._histogramOutputFilename(),
-                    overwrite=self.overwrite_datafiles)
-
-            if self.mpiRank == 0:
-                outputdir = self._master_outputdir
-                self._debug.log('saving histogram to %s' % outputdir)
-                self._run_in_dir(func=_, dir=outputdir)
-            
+                self._setFinalHistogram(self._get_histogram())
         super(ComponentInterface, self)._fini()
+        return
+
+
+    def _save_histogram_in_masternode_outdir(self):
+        # save histogram to <out> instead of <out>-worker-0
+        # get histogram to master node
+        channel = 100
+        histogram = self._get_histogram()
+        if self.mpiRank != 0:
+            I = histogram.I
+            self.mpiSend(I, 0, channel)
+        else:
+            histogram = histogram.copy()
+            I = histogram.I
+            for rank in range(1, self.mpiSize):
+                I1 = self.mpiReceive(rank, channel)
+                I+=I1
+                continue
+
+        # save the histogram in the component
+        self._setFinalHistogram(histogram)
+
+        def _():
+            saveHistogram(
+                histogram,
+                self._histogramOutputFilename(),
+                overwrite=self.overwrite_datafiles)
+
+        if self.mpiRank == 0:
+            outputdir = self._master_outputdir
+            self._debug.log('saving histogram to %s' % outputdir)
+            self._run_in_dir(func=_, dir=outputdir)
+        
+        return
+
+    
+    def getFinalHistogram(self):
+        k = '_final_histogram'
+        if hasattr(self, k):
+            return getattr(self, k)
+        return
+
+
+    def _setFinalHistogram(self, h):
+        k = '_final_histogram'
+        setattr(self, k, h)
         return
 
 
