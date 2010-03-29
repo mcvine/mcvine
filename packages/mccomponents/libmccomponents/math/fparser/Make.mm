@@ -13,7 +13,7 @@
 
 include local.def
 
-PROJECT = mccomponents
+PROJECT = fparser
 PACKAGE = libfparser
 
 
