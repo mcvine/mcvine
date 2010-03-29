@@ -25,10 +25,12 @@ int test1()
   fparser.AddConstant("pi", 3.1415926535897932);
 
   int res = fparser.Parse(function, "x");
-  if (res<0) return 1;
+  if (res>=0) {
+    return 1;
+  }
   
   double vals[] = {0};
-  for (double x=0; x<1; x+=0.2) {
+  for (double x=0; x<1; x+=0.25) {
     vals[0] = x;
     double y = fparser.Eval(vals);
     std::cout << "f(" << x << ") = " << y << std::endl;

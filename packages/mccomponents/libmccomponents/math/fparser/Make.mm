@@ -68,6 +68,11 @@ EXPORT_HEADERS = \
 	fpconfig.hh \
 	fptypes.hh \
 
+
+EXPORT_LIBS = $(PROJ_SAR)
+EXPORT_BINS = $(PROJ_DLL)
+
+
 # version
 # $Id: Make.mm,v 1.1.1.1 2005/03/08 16:13:51 aivazis Exp $
 
