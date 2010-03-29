@@ -26,11 +26,6 @@
  */
 
 
-// add by Jiao Lin
-// add mm machinery so we know on which platform we are
-#include "config_platform.h"
-
-
 #include "fpconfig.hh"
 #ifdef FP_SUPPORT_OPTIMIZER
 
@@ -6593,8 +6588,7 @@ using namespace FPoptimizer_CodeTree;
 #define FP_MUL_COMBINE_EXPONENTS
 
 // added by Jiao Lin. on darwin, we need to define isinf
-#if defined(__config_platform_darwin)
-#include <math.h>
+#if defined(__APPLE__) && defined(__MACH__)
 using std::isinf;
 #endif
 
