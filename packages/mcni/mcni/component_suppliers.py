@@ -18,6 +18,11 @@ def register( name, supplier ):
     return
 
 
+def get(name):
+    global _all
+    return _all.get(name)
+
+
 def all():
     global _all
     return _all
