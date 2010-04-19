@@ -4,7 +4,7 @@
 # 
 #                               Michael A.G. Aivazis
 #                        California Institute of Technology
-#                        (C) 1998-2005  All Rights Reserved
+#                        (C) 2006-2010  All Rights Reserved
 # 
 #  <LicenseText>
 # 
@@ -16,7 +16,7 @@
 ##   1. This package depends on dsm
 
 def copyright():
-    return "mcni.instrument_simulators module: Copyright (c) 2007 Jiao Lin";
+    return "mcni.instrument_simulators module: Copyright (c) 2006-2010 Jiao Lin";
 
 
 def simulator( neutron_coordinates_transformer ):

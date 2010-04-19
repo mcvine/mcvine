@@ -34,6 +34,7 @@ tidy::
 # export
 
 EXPORT_PYTHON_MODULES = \
+	component_suppliers.py \
 	__init__.py \
 
 

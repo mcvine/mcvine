@@ -2,9 +2,9 @@
 # 
 #  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # 
-#                               Michael A.G. Aivazis
+#                                 Jiao Lin
 #                        California Institute of Technology
-#                        (C) 1998-2005  All Rights Reserved
+#                        (C) 2006-2010  All Rights Reserved
 # 
 #  <LicenseText>
 # 
@@ -54,7 +54,7 @@ class PyModuleAsSupplier(Supplier):
 _all = {}
 
 _all['mcni'] = PyModuleAsSupplier( 'mcni.pyre_components' )
-_all['mcstas2'] = PyModuleAsSupplier( 'mcstas2.pyre_support' )
+# _all['mcstas2'] = PyModuleAsSupplier( 'mcstas2.pyre_support' )
 
 
 # version

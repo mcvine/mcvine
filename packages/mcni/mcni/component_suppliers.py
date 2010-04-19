@@ -59,7 +59,7 @@ class PyModuleAsSupplier(Supplier):
 _all = {}
 
 _all['mcni'] = PyModuleAsSupplier( 'mcni.components' )
-_all['mcstas2'] = PyModuleAsSupplier( 'mcstas2' )
+# _all['mcstas2'] = PyModuleAsSupplier( 'mcstas2' )
 
 
 # version
