@@ -43,8 +43,8 @@ EXPORT_PYTHON_MODULES = \
 
 
 EXPORT_BINS = \
-	mcvine-list-components.py \
-	mcvine-component-info.py \
+	mcvine-list-components \
+	mcvine-component-info \
 
 
 export:: export-binaries release-binaries export-package-python-modules #export-docs

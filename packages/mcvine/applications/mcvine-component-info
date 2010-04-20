@@ -28,11 +28,31 @@ class App(Script):
         type = pyre.inventory.str('type')
         type.meta['tip'] = 'type of mcvine component. eg. Source_simple'
 
+
+    def help(self):
+        print
+        print 'Display information about a mcvine component type'
+        print
+        print ' mcvine-component-info --supplier=<supplier> --category=<category> --type=<type>'
+        print 
+        print 'Examples:'
+        print 
+        print ' mcvine-component-info --supplier=mcstas2 --category=sources --type=Source_simple'
+        print
+        print 'See also:'
+        print
+        print ' mcvine-list-components'
+        return
+
     
     def main(self, *args, **kwds):
         supplier = self.supplier
         category = self.category
         type = self.type
+        
+        if not supplier or not category or not type:
+            self.help()
+            return
         
         import mcvine
         print mcvine.componentinfo(category=category, type=type, supplier=supplier)
