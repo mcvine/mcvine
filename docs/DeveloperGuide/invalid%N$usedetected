@@ -1,0 +1,56 @@
+problem:
+ 
+*** invalid %N$ use detected ***
+
+
+answer:
+from https://wiki.ubuntu.com/CompilerFlags
+
+-D_FORTIFY_SOURCE=2
+
+First enabled in Ubuntu 8.10. Provides compile-time best-practices errors for certain libc functions, and provides run-time checks of buffer lengths and memory regions. Only activated when compiled with -O2 or higher. Most problems are related to common unsafe uses of certain libc functions. (For implementation details, see [http://gcc.gnu.org/ml/gcc-patches/2004-09/msg02055.html]. Starting with Jaunty, fwrite was removed from the list of functions that are marked with "warn_unused_result".) For a list of all the checked functions, see the output of readelf -s /lib/libc.so.6  | grep _chk@@
+
+Failure examples:
+
+    *
+
+      error: ignoring return value of 'int system(const char*)', declared with attribute warn_unused_result
+
+          o
+
+            The return value from system(), write(), and similar functions should be evaluated and handled appropriately. In cases where one absolutely must throw away the return value, it can be discarded with an empty test: if (system("...")) { } , though this is not recommended. 
+
+      error: call to '__open_missing_mode' declared with attribute error: open with O_CREAT in second argument needs 3 arguments
+
+          o
+
+            When using open() with O_CREAT, best-practice is to define a valid mode argument. For the least modes, try using (S_IRUSR|S_IWUSR) first. If that doesn't work as expected in the program, then start adding back perms. For example, user and group: (S_IRUSR|S_IWUSR|S_IRGRP|S_IWGRP); user, group, and other: (S_IRUSR|S_IWUSR|S_IRGRP|S_IWGRP|S_IROTH|S_IWOTH). 
+
+      warning: call to ‘__read_chk_warn’ declared with attribute warning: read called with bigger length than size of the destination buffer
+
+          o
+
+            The call to read() was done into a buffer with the wrong size. Double-check the size argument and the buffer size. 
+
+      *** %n in writable segment detected ***
+      Aborted
+
+          o
+
+            On x86, use of "%n" in a format string is limited to read-only memory (not stack or heap allocated strings). 
+
+      *** buffer overflow detected ***
+      Aborted
+
+          o
+
+            A call to sprintf should be changed to use snprintf, or a too-small buffer was read into (see read() warnings above, or realpath and getwd notes below). 
+
+      *** invalid %N$ use detected ***
+      Aborted (core dumped)
+
+          o
+
+            Format string positional values are being skipped, which means their type (and size on the stack) cannot be checked. This could cause unexpected results including stack content leaks, especially when using %n. This is invalid, for example: printf("%2$s\n", 0, "Test"); because position 1 is skipped. 
+
+Reduced checking via -D_FORTIFY_SOURCE=1 in CPPFLAGS. Disabled with -U_FORTIFY_SOURCE or -D_FORTIFY_SOURCE=0 in CPPFLAGS. 
