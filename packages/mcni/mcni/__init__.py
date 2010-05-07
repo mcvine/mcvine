@@ -24,7 +24,7 @@ def copyright():
     return "mcni pyre module: Copyright (c) 2006-2010 Jiao Lin";
 
 
-def simulate( instrument, geometer, neutrons, simulator = None ):
+def simulate( instrument, geometer, neutrons, simulator = None, multiple_scattering=False):
     '''run a simulation of the given instrument
 
     instrument: a neutron instrument
@@ -36,7 +36,7 @@ def simulate( instrument, geometer, neutrons, simulator = None ):
         from instrument_simulator import default_simulator
         simulator = default_simulator
         pass
-    return simulator.run( neutrons, instrument, geometer )
+    return simulator.run( neutrons, instrument, geometer, multiple_scattering=multiple_scattering)
 
 
 def geometer( *args, **kwds ):

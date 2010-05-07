@@ -19,7 +19,7 @@ def copyright():
     return "mcni.instrument_simulators module: Copyright (c) 2006-2010 Jiao Lin";
 
 
-def simulator( neutron_coordinates_transformer ):
+def simulator(neutron_coordinates_transformer):
     t = neutron_coordinates_transformer
     from AbstractInstrumentSimulator import AbstractInstrumentSimulator as base
     class Simulator(base):

@@ -20,12 +20,13 @@ class SimulationChain(Composite):
         'out': ['neutrons', 'position', 'orientation'],
         }
 
-    def __init__(self, components, geometer, neutron_coords_transformer):
+    def __init__(self, components, geometer, neutron_coords_transformer, multiple_scattering=False):
 
         components, geometer = self._enclosure( components, geometer )
         
         nodes, connections = self._create(
-            components, geometer, neutron_coords_transformer)
+            components, geometer, neutron_coords_transformer, 
+            multiple_scattering=multiple_scattering)
         
         Composite.__init__(self, nodes, connections)
 
@@ -44,7 +45,8 @@ class SimulationChain(Composite):
         return components, geometer
 
 
-    def _create(self, components, geometer, neutron_coords_transformer):
+    def _create(self, components, geometer, neutron_coords_transformer, 
+                multiple_scattering=False):
         from SimulationNode import SimulationNode
 
         nodes = {}
@@ -56,7 +58,8 @@ class SimulationChain(Composite):
             position = geometer.position( component )
             orientation = geometer.orientation( component )
             nodes[component.name] = SimulationNode(
-                position, orientation, component, neutron_coords_transformer )
+                position, orientation, component, neutron_coords_transformer,
+                multiple_scattering = multiple_scattering)
 
             now = component.name
 

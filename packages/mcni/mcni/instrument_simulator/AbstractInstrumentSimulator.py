@@ -22,8 +22,7 @@ class AbstractInstrumentSimulator:
     # take a look at mcni.AbstractNeutronCoordinatesTransformer for interface
     neutron_coordinates_transformer = None 
 
-    
-    def run(self, neutrons, instrument, geometer):
+    def run(self, neutrons, instrument, geometer, multiple_scattering=False):
 
         # provide seeds to all random number generators
         from mcni.seeder import feed
@@ -31,7 +30,7 @@ class AbstractInstrumentSimulator:
         
         components = instrument.components
 
-        runnable = self.makeRunnable( components, geometer )
+        runnable = self.makeRunnable( components, geometer, multiple_scattering=multiple_scattering)
 
         runnable.setInput('neutrons', neutrons)
         runnable.getOutput( 'neutrons' )
@@ -39,12 +38,14 @@ class AbstractInstrumentSimulator:
         return
 
 
-    def makeRunnable(self, components, geometer):
+    def makeRunnable(self, components, geometer, multiple_scattering=False):
 
         neutron_coordinates_transformer = self.neutron_coordinates_transformer
         
         from SimulationChain import SimulationChain
-        chain = SimulationChain( components, geometer, neutron_coordinates_transformer )
+        chain = SimulationChain( 
+            components, geometer, neutron_coordinates_transformer, 
+            multiple_scattering=multiple_scattering)
         
         return chain
     
