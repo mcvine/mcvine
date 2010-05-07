@@ -33,6 +33,7 @@ PROJ_SRCS = \
 	wrap_SQEkernel.cc \
 	wrap_SQkernel.cc \
 	wrap_GridSQE.cc \
+	wrap_IsotropicKernel.cc \
 	wrap_AtomicScatterer.cc \
 	wrap_NdArray.cc \
 	wrap_AbstractDOS.cc \

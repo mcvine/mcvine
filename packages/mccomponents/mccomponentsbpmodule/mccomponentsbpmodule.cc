@@ -22,6 +22,8 @@ namespace wrap_mccomponents{
   void wrap_CompositeScatteringKernel();
   void wrap_kernelcontainer();
 
+  void wrap_IsotropicKernel();
+
   void wrap_He3TubeKernel();
   void wrap_EventModeMCA();
   void wrap_SQEkernel();
@@ -56,6 +58,8 @@ BOOST_PYTHON_MODULE(mccomponentsbp)
   wrap_AbstractScatteringKernel();
   wrap_CompositeScatteringKernel();
   wrap_kernelcontainer();
+
+  wrap_IsotropicKernel();
 
   wrap_He3TubeKernel();
   wrap_EventModeMCA();
