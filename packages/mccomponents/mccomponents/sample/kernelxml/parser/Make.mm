@@ -28,6 +28,7 @@ EXPORT_PYTHON_MODULES = \
 	Document.py \
 	GridSQE.py \
 	HomogeneousScatterer.py \
+	IsotropicKernel.py \
 	KernelContainer.py \
 	ScatteringKernel.py \
 	SQEkernel.py \

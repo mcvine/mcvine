@@ -41,7 +41,7 @@ class Phonon_CoherentInelastic_PolyXtal_Kernel(AbstractNode):
 
     onPeriodicDispersion = onDispersion
 
-    pass # end of SQEkernel
+    pass # end of Phonon_CoherentInelastic_PolyXtal_Kernel
 
 
 from HomogeneousScatterer import HomogeneousScatterer

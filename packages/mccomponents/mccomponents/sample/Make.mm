@@ -42,6 +42,7 @@ EXPORT_PYTHON_MODULES = \
 	AbstractSQE.py \
 	ComputationEngineRendererExtension.py \
 	GridSQE.py \
+	IsotropicKernel.py \
 	KernelContainer.py \
 	SQEkernel.py \
 	__init__.py \

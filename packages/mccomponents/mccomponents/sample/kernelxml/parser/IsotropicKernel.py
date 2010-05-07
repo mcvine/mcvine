@@ -12,26 +12,23 @@
 #
 
 
-from mccomponents.homogeneous_scatterer.hsxml.parser.Document import Document as base
+from AbstractNode import AbstractNode, debug
 
 
-class Document(base):
+class IsotropicKernel(AbstractNode):
 
 
-    tags = [
-        'HomogeneousScatterer',
-        'KernelContainer',
+    tag = "IsotropicKernel"
 
-        'SQEkernel',
-        'GridSQE',
-
-        'IsotropicKernel',
-        ]
+    def elementFactory( self, **kwds ):
+        from mccomponents.sample import isotropickernel
+        return isotropickernel()
 
 
-    pass # end of Document
+    pass # end of IsotropicKernel
+
 
 # version
-__id__ = "$Id: Document.py,v 1.1.1.1 2005/03/08 16:13:43 linjiao Exp $"
+__id__ = "$Id$"
 
 # End of file 

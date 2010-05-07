@@ -54,6 +54,12 @@ class Renderer(base):
         return
 
 
+    def onIsotropicKernel(self, kernel):
+        self._write('<IsotropicKernel>')
+        self._write('</IsotropicKernel>')
+        return
+
+
     def onGridSQE(self, gridsqe):
         sqehist = gridsqe.sqehist
         from histogram.hdf import dump

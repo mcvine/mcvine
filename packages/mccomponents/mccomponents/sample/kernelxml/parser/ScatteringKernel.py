@@ -38,7 +38,7 @@ class ScatteringKernel(Node):
         self._kernel = sth
         return
 
-    onKernelContainer = onSQEkernel = on_
+    onKernelContainer = onSQEkernel = onIsotropicKernel = on_
 
     pass # end of ScatteringKernel
     

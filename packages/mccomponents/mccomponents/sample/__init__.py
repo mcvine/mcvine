@@ -56,6 +56,11 @@ def sqekernel(*args, **kwds):
     return SQEkernel( *args, **kwds )
 
 
+def isotropickernel(*args, **kwds):
+    from IsotropicKernel import IsotropicKernel
+    return IsotropicKernel(*args, **kwds)
+
+
 def kernelcontainer(*args, **kwds):
     from KernelContainer import KernelContainer
     return KernelContainer( *args, **kwds )

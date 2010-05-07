@@ -67,6 +67,15 @@ class New:
             sqe, Qmin, Qmax, Emin, Emax )
     
 
+    def isotropickernel(self, absorption_cross_section, scattering_cross_section):
+        '''isotropickernel: a kernel scatters isotropically and elastically
+
+        absorption_cross_section: absorption cross section
+        scattering_cross_section: scattering cross section
+        '''
+        return b.IsotropicKernel(absorption_cross_section, scattering_cross_section)
+
+
     pass # end of BoostPythonBinding
 
 
