@@ -59,6 +59,10 @@ class TestCase(unittest.TestCase):
 
 
 def main():
+    import journal
+    journal.debug('CompositeNeutronScatterer_Impl').activate()
+    journal.debug('HomogeneousNeutronScatterer').activate()
+    journal.debug('IsotropicKernel').activate()
     unittest.main()
     return
     

@@ -18,6 +18,7 @@
 
 
 #ifdef DEBUG
+#include "portinfo"
 #include "journal/debug.h"
 #endif
 
@@ -74,9 +75,23 @@ mccomponents::HomogeneousNeutronScatterer::interact_path1(mcni::Neutron::Event &
   // if the neutron is already in this shape, we are good
   // but if it is outside, we need to propagate to the front surface 
   // of the shape.
-  if (location != geometry::Locator::inside ) 
+  if (location != geometry::Locator::inside ) {
+#ifdef DEBUG
+    debug << journal::at(__HERE__) 
+	  << "event " << ev << " is outsid of the shape " << shape() << journal::newline;
+    debug << "need propagation" << journal::endl;
+#endif
     propagate_to_next_incident_surface(ev, shape());
-
+#ifdef DEBUG
+    debug << journal::at(__HERE__) 
+	  << "event propagated. new position" << ev.state.position << journal::endl;
+#endif
+  } else {
+#ifdef DEBUG
+    debug << journal::at(__HERE__)
+	  << "event " << ev << " is inside the shape " << shape() << journal::endl;
+#endif
+  }
   // tof before exiting the shape for the first time
   double tof = tof_before_exit( ev, shape() );
 
@@ -171,8 +186,23 @@ mccomponents::HomogeneousNeutronScatterer::_interactM1
   // if the neutron is already in this shape, we are good
   // but if it is outside, we need to propagate to the front surface 
   // of the shape.
-  if (location != geometry::Locator::inside ) 
+  if (location != geometry::Locator::inside ) {
+#ifdef DEBUG
+    debug << journal::at(__HERE__)
+	  << "event " << original << " is outsid of the shape " << shape() << journal::newline;
+    debug << "need propagation" << journal::endl;
+#endif
     propagate_to_next_incident_surface(original, shape());
+#ifdef DEBUG
+    debug << journal::at(__HERE__)
+	  << "event propagated. new position" << original.state.position << journal::endl;
+#endif
+  } else {
+#ifdef DEBUG
+    debug << journal::at(__HERE__)
+	  << "event " << original << " is inside the shape " << shape() << journal::endl;
+#endif
+  }
 
   // tof before exiting the shape for the first time
   double tof = tof_before_exit( original, shape() );
@@ -196,8 +226,18 @@ mccomponents::HomogeneousNeutronScatterer::_interactM1
   
   // transmission
   ev1 = original;
+#ifdef DEBUG
+  debug << journal::at(__HERE__)
+	<< "* Transmission: propagate" << original << " out of " << shape()
+	<< journal::endl;
+#endif
   propagate_to_next_exiting_surface( ev1, shape() );
   ev1.probability *= transmission_prob;
+#ifdef DEBUG
+  debug << journal::at(__HERE__)
+	<< "* Transmission continue 1: propagated event: " << ev1
+	<< journal::endl;
+#endif
   evts.push_back( ev1 );
 
 //   std::cout << "1. evts = " << evts << std::endl;
@@ -205,9 +245,12 @@ mccomponents::HomogeneousNeutronScatterer::_interactM1
   // absorption
   ev1 = original;
   ev1.probability *= absorption_prob;
+#ifdef DEBUG
+    debug << journal::at(__HERE__)
+	  << "* Absorption: absorbed event " << ev1
+	  << journal::endl;
+#endif
   m_kernel.absorb( ev1 );
-
-//   std::cout << "2. evts = " << evts << std::endl;
 
   // scattering
   ev1 = original;
@@ -215,10 +258,19 @@ mccomponents::HomogeneousNeutronScatterer::_interactM1
   double prob = sigma * distance * std::exp( -(mu+sigma) * x );
   ev1.probability *= prob;
   propagate( ev1, x/velocity );
+#ifdef DEBUG
+    debug << journal::at(__HERE__)
+	  << "* Scattering: event propagated to " << ev1
+	  << " to be scattered"
+	  << journal::endl;
+#endif
   m_kernel.scatter( ev1 );
+#ifdef DEBUG
+    debug << journal::at(__HERE__)
+	  << "* Scattering continue 1: event scattered " << ev1
+	  << journal::endl;
+#endif
   evts.push_back( ev1 );
-
-//   std::cout << "3. evts = " << evts << std::endl;
 
 //   std::cout << "_interactM1: " 
 // 	    << "outputs neutrons = " << evts
