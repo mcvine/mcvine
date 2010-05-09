@@ -40,6 +40,9 @@ class Instrument( base, ParallelComponent ):
         sequence = List( 'sequence', default = '' )
         sequence.meta['tip'] = 'sequence of neutron components in this instrument'
 
+        multiple_scattering = pyre.inventory.bool('multiple-scattering', default=False)
+        multiple_scattering.meta['tip'] = 'if true, enable multiple scattering'
+
         #facilities
 
         #geometer. this is a place holder. should derive from Geometer
@@ -82,11 +85,13 @@ class Instrument( base, ParallelComponent ):
 
         geometer = self.geometer
 
+        multiple_scattering = self.inventory.multiple_scattering
         n = int(self.ncount / self.buffer_size)
         assert n>0
         for i in range(n):
             neutrons = mcni.neutron_buffer( self.buffer_size )
-            mcni.simulate( instrument, geometer, neutrons )
+            mcni.simulate( instrument, geometer, neutrons, 
+                           multiple_scattering=multiple_scattering)
             continue
 
         return
