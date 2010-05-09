@@ -16,11 +16,13 @@ PROJECT = mcvine
 # directory structure
 
 BUILD_DIRS = \
-    mcvine \
+	mcvine \
+	bin \
 
 OTHER_DIRS = \
-    tests \
-    examples
+	tests \
+	examples
+
 
 RECURSE_DIRS = $(BUILD_DIRS) $(OTHER_DIRS)
 

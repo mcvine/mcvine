@@ -12,7 +12,7 @@
 #
 
 PROJECT = mcvine
-PACKAGE = applications
+PACKAGE = bin
 
 # directory structure
 

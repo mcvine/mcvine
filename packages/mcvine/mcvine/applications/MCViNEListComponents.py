@@ -13,7 +13,7 @@
 
 from pyre.applications.Script import Script
 
-class App(Script):
+class Application(Script):
 
     class Inventory(Script.Inventory):
 
@@ -68,25 +68,11 @@ class App(Script):
         return
 
 
-    def __init__(self, name='mcvine-list-components'):
-        super(App, self).__init__(name)
-        return
-
-
     def _configure(self):
-        super(App, self)._configure()
+        super(Application, self)._configure()
         self.supplier = self.inventory.supplier
         self.category = self.inventory.category
         return
-
-
-def main():
-    app = App()
-    app.run()
-    return
-
-
-if __name__ == '__main__': main()
 
 
 # version

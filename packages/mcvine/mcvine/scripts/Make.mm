@@ -10,7 +10,7 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 PROJECT = mcvine
-PACKAGE = applications
+PACKAGE = scripts
 
 
 BUILD_DIRS = \
@@ -35,8 +35,8 @@ update: clean
 # export
 
 EXPORT_PYTHON_MODULES = \
-	MCViNEComponentInfo.py \
-	MCViNEListComponents.py \
+	mcvine_component_info.py \
+	mcvine_list_components.py \
 	__init__.py \
 
 
