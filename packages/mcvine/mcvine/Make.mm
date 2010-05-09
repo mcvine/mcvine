@@ -14,6 +14,8 @@ PROJECT = mcvine
 
 BUILD_DIRS = \
 	instruments \
+	applications \
+
 
 RECURSE_DIRS = $(BUILD_DIRS)
 
