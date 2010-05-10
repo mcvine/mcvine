@@ -34,6 +34,10 @@ class TestCase(unittest.TestCase):
         source.inventory.velocity = [10,0,0.]
         source._configure()
         self.assertAlmostEqual(source.velocity[0], 10)
+
+        source.inventory.velocity = "10,0,0."
+        self.assertAlmostEqual(source.inventory.velocity[0], 10)
+
         return
 
     pass # end of TestCase

@@ -31,8 +31,8 @@ class MonochromaticSource( AbstractComponent ):
             'the energy of the neutron will be the given value of energy,'
             'and the moving direction will be determined by the "velocity" vector'
             )
-        velocity = pinv.list( 'velocity', default = '0,0,3000' ) # m/s
-        position = pinv.list( 'position', default = '0,0,0' )
+        velocity = pinv.array( 'velocity', default = '0,0,3000' ) # m/s
+        position = pinv.array( 'position', default = '0,0,0' )
         time = pinv.float( 'time', default = 0 )
         probability = pinv.float( 'probability', default = 1. )
         pass
