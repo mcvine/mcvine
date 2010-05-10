@@ -12,6 +12,12 @@
 #
 
 
+ncount = 10
+n_multiple_scattering = 1
+
+
+import mcvine
+
 
 import unittestX as unittest
 
@@ -23,6 +29,8 @@ class TestCase(unittest.TestCase):
         instrument = Instrument('multiple_scattering_Instrument_TestCase')
         instrument.testFacility = self
         instrument.run()
+
+        self.assertEqual(instrument.inventory.counter.ntot, ncount+n_multiple_scattering)
         return
     
         
@@ -32,16 +40,31 @@ class TestCase(unittest.TestCase):
 
 from mcni.pyre_support.AbstractComponent import AbstractComponent
 
-class Component( AbstractComponent ):
+class Source( AbstractComponent ):
     
     def process(self, neutrons):
         raise RuntimeError, "this method should not be called"
 
 
     def processM(self, neutrons):
+        # append neutrons[0] to array "neutrons"
+        neutrons.append(neutrons, 0, n_multiple_scattering)
         return neutrons
 
     pass # end of Source
+
+
+class Counter(AbstractComponent):
+
+    def _init(self):
+        super(Counter, self)._init()
+        self.ntot = 0
+        return
+    
+    
+    def processM(self, neutrons):
+        self.ntot += len(neutrons)
+        return neutrons
 
 
 from mcni.pyre_support.Instrument import Instrument as base
@@ -51,18 +74,21 @@ class Instrument(base):
 
         import pyre.inventory
         from mcni.pyre_support import facility
-        source = facility('source', default = Component('source') )
+        source = facility('source', default = Source('source') )
+        counter = facility('counter', default = Counter('counter') )
 
         pass # end of Inventory
 
 
     def _defaults(self):
         base._defaults(self)
-        self.inventory.sequence = ['source']
+        self.inventory.sequence = ['source', 'counter']
         geometer = self.inventory.geometer
         self.inventory.geometer.inventory.source = (0,0,0), (0,0,0)
         
         self.inventory.multiple_scattering = 1
+        self.inventory.buffer_size = ncount
+        self.inventory.ncount = ncount
         return
     
     
