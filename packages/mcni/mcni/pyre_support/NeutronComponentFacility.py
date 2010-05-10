@@ -36,7 +36,7 @@ class NeutronComponentFacility( Facility ):
         if not factory:
             import journal
             journal.error("mcvine.component").log(
-                "could not bind facility '%s': component factory %s not found." % (
+                "could not bind facility '%s': component factory '%s' not found." % (
                 self.name, componentName)
                 )
             return None, None

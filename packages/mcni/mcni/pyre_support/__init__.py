@@ -38,20 +38,19 @@ def findcomponentfactory(type, category=None, supplier=None):
     else:
         suppliernames = [supplier]
     
-    found = []
+    found = []; categoryin = category
     for suppliername in suppliernames:
         supplier = suppliers[suppliername]
-        if category is None:
+        if categoryin is None:
             categories = supplier.listallcomponentcategories()
         else:
-            categories = [category]
+            categories = [categoryin]
         for category in categories:
             types = supplier.listcomponentsincategory(category)
             if type in types:
                 found.append((category, suppliername))
             continue
         continue
-    
     if not found: return
 
     if len(found) > 1:
