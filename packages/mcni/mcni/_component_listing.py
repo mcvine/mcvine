@@ -28,6 +28,8 @@ def listallcomponentcategories( ):
 def listcomponentsincategory( category ):
     ret = []
     for name, supplier in getsuppliers().iteritems():
+        if category not in supplier.listallcomponentcategories(): 
+            continue
         l = supplier.listcomponentsincategory( category )
         l = [ (i, name) for i in l ]
         ret += l
