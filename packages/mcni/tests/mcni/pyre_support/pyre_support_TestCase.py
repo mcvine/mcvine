@@ -13,6 +13,7 @@
 
 
 
+import mcvine
 import unittestX as unittest
 import journal
 
@@ -32,6 +33,20 @@ class TestCase(unittest.TestCase):
         self.assertEqual( f, MonochromaticSource )
 
         f1 = componentfactory( 'sources', 'Source_simple', 'mcstas2' )
+        import mcstas2.pyre_support 
+        f1a = mcstas2.pyre_support.componentfactory( 'sources', 'Source_simple' )
+        self.assertEqual( f1, f1a )
+        return
+
+
+    def test2(self):
+        'mcni.pyre_support: findcomponentfactory'
+        from mcni.pyre_support import findcomponentfactory
+        f = findcomponentfactory('MonochromaticSource' )
+        from mcni.pyre_components.MonochromaticSource import MonochromaticSource
+        self.assertEqual( f, MonochromaticSource )
+
+        f1 = findcomponentfactory('Source_simple')
         import mcstas2.pyre_support 
         f1a = mcstas2.pyre_support.componentfactory( 'sources', 'Source_simple' )
         self.assertEqual( f1, f1a )
