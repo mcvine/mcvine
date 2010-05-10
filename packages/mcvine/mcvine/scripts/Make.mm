@@ -37,6 +37,7 @@ update: clean
 EXPORT_PYTHON_MODULES = \
 	mcvine_component_info.py \
 	mcvine_list_components.py \
+	mcvine_simulate.py \
 	__init__.py \
 
 

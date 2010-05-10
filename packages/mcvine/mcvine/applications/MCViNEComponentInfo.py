@@ -59,11 +59,6 @@ class Application(Script):
         return
 
 
-    def __init__(self, name='mcvine-component-info'):
-        super(Application, self).__init__(name)
-        return
-
-
     def _configure(self):
         super(Application, self)._configure()
         self.supplier = self.inventory.supplier

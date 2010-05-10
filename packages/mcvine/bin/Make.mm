@@ -45,6 +45,7 @@ EXPORT_PYTHON_MODULES = \
 EXPORT_BINS = \
 	mcvine-list-components \
 	mcvine-component-info \
+	mcvine-simulate \
 
 
 export:: export-binaries release-binaries export-package-python-modules #export-docs

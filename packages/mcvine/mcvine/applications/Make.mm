@@ -35,8 +35,11 @@ update: clean
 # export
 
 EXPORT_PYTHON_MODULES = \
+	InstrumentBuilder.py \
 	MCViNEComponentInfo.py \
 	MCViNEListComponents.py \
+	MCViNESimulate.py \
+	SuperAppBase.py \
 	__init__.py \
 
 
