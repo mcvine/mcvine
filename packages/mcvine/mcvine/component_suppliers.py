@@ -16,6 +16,10 @@ from mcni import component_suppliers
 
 from mcni.pyre_support import component_suppliers as pyre_component_suppliers
 
+# include components provided by mccomponents
+# XXX: maybe should have a new module for just pyre_support
+import mccomponents.pyre_support
+
 
 try: 
     import mcstas2
