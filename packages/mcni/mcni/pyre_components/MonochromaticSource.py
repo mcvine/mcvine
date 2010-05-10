@@ -23,8 +23,16 @@ class MonochromaticSource( AbstractComponent ):
 
     class Inventory( AbstractComponent.Inventory ):
         import pyre.inventory as pinv
-        velocity = pinv.str( 'velocity', default = '0,0,3000' )
-        position = pinv.str( 'position', default = '0,0,0' )
+        
+        energy = pinv.float( 'energy', default = 0) # meV
+        energy.meta['tip'] = (
+            'energy of the neutron. if "energy" is given, '
+            'the neutron velocity will be computed so that '
+            'the energy of the neutron will be the given value of energy,'
+            'and the moving direction will be determined by the "velocity" vector'
+            )
+        velocity = pinv.list( 'velocity', default = '0,0,3000' ) # m/s
+        position = pinv.list( 'position', default = '0,0,0' )
         time = pinv.float( 'time', default = 0 )
         probability = pinv.float( 'probability', default = 1. )
         pass
@@ -36,11 +44,21 @@ class MonochromaticSource( AbstractComponent ):
 
     def _configure(self):
         AbstractComponent._configure(self)
-        velocity = eval( self.inventory.velocity )
+        velocity =  self.inventory.velocity
         assert len(velocity)==3
         self.velocity = velocity
 
-        position = eval( self.inventory.position )
+        energy = self.inventory.energy
+        if energy:
+            from mcni.utils.conversion import e2v
+            v = e2v(energy)
+            import numpy.linalg as nl, numpy as np
+            norm = nl.norm(velocity)
+            velocity = np.array(velocity)
+            velocity *= v/norm
+            self.velocity = velocity
+            
+        position = self.inventory.position
         assert len(position)==3
         self.position = position
 
@@ -52,8 +70,10 @@ class MonochromaticSource( AbstractComponent ):
     def _init(self):
         AbstractComponent._init(self)
         from mcni import neutron
-        self.neutron = neutron( r = self.position, v = self.velocity,
-                                time = self.time, prob = self.probability )
+        self.neutron = neutron(
+            r = self.position, v = self.velocity,
+            time = self.time, prob = self.probability,
+            )
         self.engine = enginefactory( self.name, self.neutron )
         return
 
