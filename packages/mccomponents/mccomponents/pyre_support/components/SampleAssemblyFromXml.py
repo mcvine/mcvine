@@ -23,11 +23,14 @@ class SampleAssemblyFromXml( AbstractComponent ):
 
     class Inventory( AbstractComponent.Inventory ):
         import pyre.inventory as pinv
-        xml = pinv.str( 'xml', default = 'sampleassembly.xml' )
+        xml = pinv.str( 'xml', default = '' )
         pass
     
 
     def process(self, neutrons):
+        engine = self.engine
+        if not engine:
+            raise RuntimeError, "engine not initialized"
         return self.engine.process( neutrons )
 
 
@@ -40,8 +43,11 @@ class SampleAssemblyFromXml( AbstractComponent ):
     def _init(self):
         AbstractComponent._init(self)
         if self._showHelpOnly: return
-        self.engine = enginefactory(
-            self.name, self.xml) 
+        if self.xml:
+            self.engine = enginefactory(
+                self.name, self.xml)
+        else:
+            self.engine = None
         return
 
     pass # end of Source
