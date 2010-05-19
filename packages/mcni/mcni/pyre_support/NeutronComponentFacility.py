@@ -26,6 +26,18 @@ class NeutronComponentFacility( Facility ):
 
             
     def _createNeutronComponent(self, componentName):
+        '''create a pyre neutron component from the given name
+        
+        the name could be
+         * <componentname>
+           eg. MonochromaticSource
+         * <componentname>.<componentcategory>
+           eg. MonochromaticSource.sources
+         * <componentname>@<supplier>
+           eg. MonochromaticSource@mcni
+         * <componentname>.<componentcategory>@<supplier>
+           eg. MonochromaticSource.sources@mcni
+        '''
         category, type, supplier = _decode(componentName)
         
         # component factory
