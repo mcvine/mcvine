@@ -42,13 +42,40 @@ class Application(SuperAppBase):
         print
         print ' mcvine-simulate --components=<list-of-components> --- <configrations of components>'
         print 
-        print 'Examples:'
+        print 'Example:'
         print 
-        print ' mcvine-simulate --components=source,sample,monitor --- --source=monochromatic --source.Ei=...'
+        print ' mcvine-simulate --components=source,sample,monitor --- --source=MonochromaticSource --source.Ei=...'
+        print
+        print ' * The first option "--components=..." must be followed with the option splitter "---"'
+        print ' * The option "---components" specify the names of neutron components in the instrument'
+        print ' * The options after the option splitter "---" provides details of neutron components'
+        print 
+        print 'How to specify details of neutron components'
+        print 'First you need to specify what type of component each component is.'
+        print 'And this is done in the form of: '
+        print 
+        print ' --<componentname>=<componentspecifier>'
+        print 
+        print 'For example'
+        print ' --source=MonochromaticSource'
+        print
+        print 'The component specifier can be supplied in several different forms:'
+        print
+        print '''
+         * <componentname>
+           eg. MonochromaticSource
+         * <componentname>.<componentcategory>
+           eg. MonochromaticSource.sources
+         * <componentname>@<supplier>
+           eg. MonochromaticSource@mcni
+         * <componentname>.<componentcategory>@<supplier>
+           eg. MonochromaticSource.sources@mcni
+'''
         print
         print 'See also:'
         print
         print ' mcvine-list-components, mcvine-component-info'
+        print 
         return
 
     
