@@ -8,9 +8,9 @@ mcvine-simulate \
     --monitor=E_monitor \
     \
     --source.energy=60 \
-    --monitor.Emin=50 \
-    --monitor.Emax=70 \
-    --monitor.nchan=100 \
+    --monitor.Emin=50.5 \
+    --monitor.Emax=69.5 \
+    --monitor.nchan=19 \
     
 
 # help
@@ -25,4 +25,4 @@ mcvine-simulate \
 #    --monitor.help-properties \
  
 
-PlotHist.py out/e.h5
+PlotHist.py out/IE.h5
