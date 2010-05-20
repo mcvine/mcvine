@@ -46,13 +46,13 @@ class Application(Script):
 
     
     def main(self, *args, **kwds):
-        supplier = self.supplier
-        category = self.category
+        supplier = self.supplier or None
+        category = self.category or None
         type = self.type
         
-        if not supplier or not category or not type:
-            self.help()
-            return
+        #if not supplier or not category or not type:
+        #    self.help()
+        #    return
         
         import mcvine
         print mcvine.componentinfo(category=category, type=type, supplier=supplier)

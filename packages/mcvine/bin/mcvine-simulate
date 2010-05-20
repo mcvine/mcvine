@@ -11,7 +11,11 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
 
+import warnings
+
+warnings.simplefilter('ignore')
 from mcvine.scripts.mcvine_simulate import main
+warnings.simplefilter('default')
 
 if __name__ == '__main__': main()
 

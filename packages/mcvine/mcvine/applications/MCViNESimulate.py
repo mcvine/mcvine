@@ -28,8 +28,10 @@ class Application(SuperAppBase):
         from InstrumentBuilder import build
         components = self.component_list
         if not components:
-            print "* Error: component list is empty"
             self.help()
+            print
+            print "** Error: component list is empty"
+            print
             return
         Instrument = build(components)
         instrument = Instrument('mcvine-instrument')

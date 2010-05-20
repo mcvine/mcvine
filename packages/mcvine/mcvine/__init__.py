@@ -39,8 +39,15 @@ Example 2: find out the types of components in 'sources' category
 
 
 from mcni import simulate, geometer, instrument, neutron_buffer, neutron, \
-    componentinfo, componentfactory, \
+    componentfactory, \
     listallcomponentcategories, listcomponentsincategory
+
+
+def componentinfo(type, category=None, supplier=None):
+    from mcni._find_component import find
+    type, category, supplier = find(type, category=category, supplier=supplier)
+    from mcni import componentinfo
+    return  componentinfo(type=type, category=category, supplier=supplier)
 
 
 import component_suppliers
