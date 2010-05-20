@@ -99,7 +99,8 @@ mccomponents::kernels::SQEkernel::scatter
   // randomly pick energy transfer
   double E;
   if (m_Emin > Ei) return; // if Ei is too small, won't scatter. nothing happen
-  E = math::random( m_Emin, std::min(Ei, m_Emax) );
+  double Emin = m_Emin, Emax = std::min(Ei, m_Emax);
+  E = math::random( Emin, Emax );
 #ifdef DEBUG
   m_details->debug 
     << journal::at(__HERE__)
@@ -129,7 +130,8 @@ mccomponents::kernels::SQEkernel::scatter
   // adjust probability of neutron event
   // !!!!!!!!!
   // need normalization factor here
-  ev.probability *= m_sqe(Q,E);
+  // XXX: Qmin Qmax???
+  ev.probability *= m_sqe(Q,E) * Q * (Qmax-Qmin) * (Emax-Emin);
 
   // figure out the direction of the out-going neutron
   double cost = (kf*kf + ki*ki - Q*Q)/2/kf/ki;
