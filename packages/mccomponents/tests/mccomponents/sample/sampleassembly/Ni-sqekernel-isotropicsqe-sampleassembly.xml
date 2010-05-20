@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!--
+    sample assembly
+      * Ni
+        * sqekernel
+	  * sqe is isotropic
+-->
+<!DOCTYPE SampleAssembly>
+
+<SampleAssembly name="Ni">
+  
+  <PowderSample name='Ni-plate-sqekernel-isotropicsqe' type='sample'>
+    <Shape>
+<!--
+      <block width="6*cm" height="10*cm" thickness="0.1*cm" />
+-->
+      <block width="1e-3*cm" height="1e-3*cm" thickness="1e-3*cm" />
+    </Shape>
+    <Phase type="crystal">
+      <ChemicalFormula>Ni</ChemicalFormula>
+      <xyzfile>Ni.xyz</xyzfile>
+    </Phase>
+  </PowderSample>
+  
+  <LocalGeometer registry-coordinate-system="InstrumentScientist">
+    <Register name="Ni-plate-sqekernel-isotropicsqe" position="(0,0,0)" orientation="(0,0,0)"/>
+  </LocalGeometer>
+<!--
+  <environment>
+    <temperature>300*K</temperature>
+    <pressure>1.*atm</pressure>
+  </environment>
+-->
+
+</SampleAssembly>
