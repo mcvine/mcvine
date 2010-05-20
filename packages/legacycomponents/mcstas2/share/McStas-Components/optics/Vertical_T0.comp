@@ -4,13 +4,19 @@
 *          Maintained by Kristian Nielsen and Kim Lefmann,
 *          Risoe National Laboratory, Roskilde, Denmark
 *
-* Component: Vertical_T0 
+* Component: Vertical_T0
 *
 * %Identification
 * Written by: Garrett Granroth
 * Date: 2 NOV 2004
 * Origin: SNS Oak Ridge,TN
 * Version: 0.4
+*
+* Vertical T0 chopper
+*
+* %D
+* Models a vertical T0 chopper.
+*
 * %Parameters
 *  Input Parameters:
 *  
