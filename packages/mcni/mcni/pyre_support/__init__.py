@@ -27,38 +27,13 @@ def componentfactory( category, type, supplier = 'mcni'):
 
 
 def findcomponentfactory(type, category=None, supplier=None):
-    if category and supplier:
-        return componentfactory(category, type, supplier)
-
-    from mcni.component_suppliers import all as getsuppliers
-    suppliers = getsuppliers()
-    
-    if supplier is None:
-        suppliernames = suppliers.iterkeys()
-    else:
-        suppliernames = [supplier]
-    
-    found = []; categoryin = category
-    for suppliername in suppliernames:
-        supplier = suppliers[suppliername]
-        if categoryin is None:
-            categories = supplier.listallcomponentcategories()
-        else:
-            categories = [categoryin]
-        for category in categories:
-            types = supplier.listcomponentsincategory(category)
-            if type in types:
-                found.append((category, suppliername))
-            continue
-        continue
-    if not found: return
-
-    if len(found) > 1:
-        raise RuntimeError, 'found more than 1 component factories for type %s: %s' % (
-            type, found)
-    
-    category, suppliername = found[0]
-    return componentfactory(category, type, suppliername)
+    from mcni._find_component import find
+    found = find(type, category=category, supplier=supplier)
+    if not found: 
+        raise RuntimeError, "cannot find component (type=%s, category=%s, supplier=%s)" % (
+            type, category, supplier)
+    type, category, supplier = found
+    return componentfactory(category, type, supplier)
         
 
 # version

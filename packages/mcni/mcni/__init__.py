@@ -51,6 +51,19 @@ def instrument( *args, **kwds ):
     return Instrument( *args, **kwds )
 
 
+def findcomponentfactory(*args, **kwds):
+    '''find a component factory given its type name, category name, and/or supplier name
+    
+    findcomponentfactory(type="MonochromaticSource")
+    findcomponentfactory(type="MonochromaticSource", category="sources")
+    findcomponentfactory(type="MonochromaticSource", supplier="mcni")
+    findcomponentfactory(type="MonochromaticSource", category="sources", supplier="mcni")
+    '''
+    from _find_component import find
+    type, category, supplier = find(*args, **kwds)
+    return componentfactory(type=type, category=category, supplier=supplier)
+
+
 __all__ = [
     'simulate',
     'geometer',

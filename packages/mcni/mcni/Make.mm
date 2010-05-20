@@ -52,6 +52,7 @@ EXPORT_PYTHON_MODULES = \
 	units.py \
 	_component_listing.py \
 	_component_factories.py \
+	_find_component.py \
 
 
 export:: export-python-modules 
