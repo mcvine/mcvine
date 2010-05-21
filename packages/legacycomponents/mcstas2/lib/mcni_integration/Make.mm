@@ -15,7 +15,7 @@ RECURSE_DIRS = $(BUILD_DIRS) $(OTHER_DIRS)
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # build the library
 
-all: export
+all: export release-package-headers
 	BLD_ACTION="all" $(MM) recurse
 
 
