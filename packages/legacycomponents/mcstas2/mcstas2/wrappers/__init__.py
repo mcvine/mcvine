@@ -16,6 +16,9 @@ import journal
 debug = journal.debug('mcstas2.wrappers' )
 
 
+import os
+
+
 
 def wrap( componentfilename, componentcategory,
           pythonpackage = None,
@@ -48,7 +51,6 @@ def wrap( componentfilename, componentcategory,
         pass
 
     if not componentname:
-        import os
         componentname = os.path.splitext( os.path.basename( componentfilename ) )[0]
         pass
 
@@ -79,6 +81,10 @@ def wrap( componentfilename, componentcategory,
         bindingsources['python'] += pysources
 
     # build binding
+    # XXX need better way to find export_root
+    export_root = os.environ['EXPORT_ROOT']
+    export_include = os.path.join(export_root, 'include')
+    export_lib = os.path.join(export_root, 'lib')
     from binding_builder import binding as bindingdataobject
     bindingobj = bindingdataobject(
         python_package = pythonpackage, binding_module = bindingname,
@@ -86,7 +92,8 @@ def wrap( componentfilename, componentcategory,
         c_sources = bindingsources['c'] + [cc],
         python_sources = bindingsources['python'],
         c_libs = ['mcstas2', 'mcstas2_share', 'mcni' ] + binding.libstolink,
-        c_includes = [ ],
+        c_libdirs = [export_lib],
+        c_includes = [export_include],
         c_defines = binding.define_macros,
         dependencies = [ bindingtype, 'caltech-config', 'mcstas2', 'mcni' ],
         )
