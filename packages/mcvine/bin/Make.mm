@@ -43,9 +43,10 @@ EXPORT_PYTHON_MODULES = \
 
 
 EXPORT_BINS = \
-	mcvine-list-components \
+	mcvine-create-instrument-simulation-application \
 	mcvine-compile-mcstas-component \
 	mcvine-component-info \
+	mcvine-list-components \
 	mcvine-simulate \
 
 

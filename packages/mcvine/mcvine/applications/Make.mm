@@ -38,6 +38,7 @@ EXPORT_PYTHON_MODULES = \
 	InstrumentBuilder.py \
 	MCViNECompileMcStasComponent.py \
 	MCViNEComponentInfo.py \
+	MCViNECreateInstrumentSimulationApplication.py \
 	MCViNEListComponents.py \
 	MCViNESimulate.py \
 	SuperAppBase.py \

@@ -22,8 +22,8 @@ class Application(SuperAppBase):
 
         component_list = pyre.inventory.list('components')
         component_list.meta[SuperAppBase.inventory_item_signature] = True
-
-
+        
+        
     def runApp(self, components=None, **kwds):
         from InstrumentBuilder import build
         components = self.component_list

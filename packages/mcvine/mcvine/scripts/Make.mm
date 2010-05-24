@@ -35,6 +35,7 @@ update: clean
 # export
 
 EXPORT_PYTHON_MODULES = \
+	mcvine_create_instrument_simulation_application.py \
 	mcvine_compile_mcstas_component.py \
 	mcvine_component_info.py \
 	mcvine_list_components.py \
