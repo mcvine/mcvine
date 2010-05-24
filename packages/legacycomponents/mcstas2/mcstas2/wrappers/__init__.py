@@ -81,8 +81,7 @@ def wrap( componentfilename, componentcategory,
         bindingsources['python'] += pysources
 
     # build binding
-    # XXX need better way to find export_root
-    export_root = os.environ['EXPORT_ROOT']
+    from mcstas2.release import mcvinedir as export_root
     export_include = os.path.join(export_root, 'include')
     export_lib = os.path.join(export_root, 'lib')
     from binding_builder import binding as bindingdataobject

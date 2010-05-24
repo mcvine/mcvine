@@ -112,6 +112,7 @@ TRACE
       S_pE2 += p*E*E;
       
       i = floor((E-Emin)*nchan/(Emax-Emin));
+      // printf("E=%g, Emin=%g, Emax=%g, nchan=%d, i=%d\n", E, Emin, Emax, nchan, i);
       if(i >= 0 && i < nchan)
       {
         E_N[i]++;
