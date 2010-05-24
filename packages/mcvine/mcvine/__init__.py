@@ -39,7 +39,7 @@ Example 2: find out the types of components in 'sources' category
 
 
 from mcni import simulate, geometer, instrument, neutron_buffer, neutron, \
-    componentfactory, \
+    componentfactory, findcomponentfactory, \
     listallcomponentcategories, listcomponentsincategory
 
 
