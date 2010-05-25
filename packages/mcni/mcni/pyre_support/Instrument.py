@@ -189,6 +189,9 @@ class Instrument( base, ParallelComponent ):
         for comp in self.inventory.sequence:
             opts.append( ('geometer.%s' % comp, '<position>,<orientation>') )
             continue
+        for name in self.inventory.sequence:
+            opts.append( (name, '<component type>') )
+            continue
         components = self.neutron_components
         for name in self.inventory.sequence:
             comp = components[name]
