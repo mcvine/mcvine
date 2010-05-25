@@ -31,17 +31,20 @@ class Application(Script):
 
     def help(self):
         print
-        print 'Display information about a mcvine component type'
-        print
-        print ' mcvine-component-info --supplier=<supplier> --category=<category> --type=<type>'
+        print 70*'='
+        print '%s - Display information about a mcvine component type' % self.name
+        print 70*'-'
+        print '* Synopsis:'
+        print ' $ %s --supplier=<supplier> --category=<category> --type=<type>' % self.name
         print 
-        print 'Examples:'
-        print 
-        print ' mcvine-component-info --supplier=mcstas2 --category=sources --type=Source_simple'
+        print '* Examples:'
+        print ' $ %s --type=Source_simple' % self.name
+        print ' $ %s --supplier=mcstas2 --category=sources --type=Source_simple' % self.name
+        print 70 * '-'
+        print '* See also:'
+        print '   mcvine-list-components'
+        print 70*'='
         print
-        print 'See also:'
-        print
-        print ' mcvine-list-components'
         return
 
     
@@ -54,8 +57,8 @@ class Application(Script):
         #    self.help()
         #    return
         
-        import mcvine
-        print mcvine.componentinfo(category=category, type=type, supplier=supplier)
+        from mcvine.pyre_support import componentinfo
+        print componentinfo(category=category, type=type, supplier=supplier)
         return
 
 

@@ -26,13 +26,16 @@ class Application(Script):
 
     def help(self):
         print
-        print 'Compile a mcstas component to be usable in mcvine'
-        print
-        print '%s --filename=<path> --category=<category>' % self.name
+        print 70*'='
+        print '%s - compile a mcstas component to be usable in mcvine' % self.name
+        print 70*'-'
+        print '* Synopsis:'
+        print ' $ %s --filename=<path> --category=<category>' % self.name
         print 
-        print 'Examples:'
+        print '* Examples:'
         print 
         print ' $ %s --filename=E_monitor.comp --category=monitors' % self.name
+        print 70*'='
         print 
         return
 

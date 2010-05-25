@@ -33,13 +33,16 @@ class Application(base):
         
     def help(self):
         print
-        print "Create a mcvine instrument simulation application"
-        print
+        print 70*'='
+        print "%s - Create a mcvine instrument simulation application" % self.name
+        print 70*'-'
+        print '* Synopsis:'
         print " $ %s --name=<application name> --components=<list of components>" % self.name
         print " $ %s --name=<application name> --components=<list of components> --filename=<application filename>" % self.name
         print 
-        print "Examples:"
+        print "* Examples:"
         print " $ %s --name='test' --components=source,monitor" % self.name
+        print 70*'='
         print
         return
 
