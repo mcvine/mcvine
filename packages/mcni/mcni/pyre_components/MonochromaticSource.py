@@ -20,6 +20,8 @@ from mcni.pyre_support.AbstractComponent import AbstractComponent
 class MonochromaticSource( AbstractComponent ):
 
     __doc__ = enginefactory.__doc__
+    simple_description = enginefactory.simple_description
+    full_description = enginefactory.full_description
 
     class Inventory( AbstractComponent.Inventory ):
         import pyre.inventory as pinv
@@ -31,10 +33,18 @@ class MonochromaticSource( AbstractComponent ):
             'the energy of the neutron will be the given value of energy,'
             'and the moving direction will be determined by the "velocity" vector'
             )
+        
         velocity = pinv.array( 'velocity', default = '0,0,3000' ) # m/s
+        velocity.meta['tip'] = 'velocity of neutrons. unit: m/s. Note: if energy is nonzero, the magnitude of the velocity is set by energy'
+
         position = pinv.array( 'position', default = '0,0,0' )
+        position.meta['tip'] = 'position of neutrons. unit: m'
+
         time = pinv.float( 'time', default = 0 )
+        time.meta['tip'] = 'time of flight for neutrons. unit: s'
+
         probability = pinv.float( 'probability', default = 1. )
+        probability.meta['tip'] = 'probabliity of neutrons. unit: 1'
         pass
     
 
