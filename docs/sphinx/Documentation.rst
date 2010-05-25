@@ -13,7 +13,6 @@ Contents:
    :maxdepth: 3
 
    Introduction
-   Philosophy
    Installation
    Demos
    Tutorials

@@ -14,6 +14,10 @@ PROJECT = mcvine
 PACKAGE = sphinx
 
 
+EXPORT_DATADIRS = \
+	tutorials \
+
+
 RECURSE_DIRS = \
 
 
@@ -35,19 +39,12 @@ distclean::
 tidy::
 	BLD_ACTION="tidy" $(MM) recurse
 
-docs: export-tutorials sphinx-build 
+docs: sphinx-build export-sphinx-data
 
 
 include std-docs.def
+include sphinx/default.def
 
-RSYNC_A = rsync -a
-sphinx-build: Makefile $(EXPORT_DOCDIR)
-	make html
-	$(RSYNC_A) _build/html/ $(EXPORT_DOCDIR)/
-
-
-export-tutorials: tutorials $(EXPORT_DOCDIR)
-	$(RSYNC_A) tutorials/ $(EXPORT_DOCDIR)/tutorials/
 
 # version
 # $Id: Make.mm,v 1.2 2008-04-13 03:55:58 aivazis Exp $
