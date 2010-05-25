@@ -65,10 +65,12 @@ class NeutronComponentFacility( Facility ):
         
         # instantiate
         if not name: name = self.name
-        specifier = _encode(factory.supplier, factory.category, factory.type, name)
-        specifier = factory.type
-        specifier = '%s(%s)' % (factory.type, name)
-        component = factory(specifier)
+        uri = _encode(factory.supplier, factory.category, factory.type, name)
+        # XXX: the above does not work. pyre does not like abc://d.e/...
+        # XXX: for now, just <category>/<type>
+        uri = '%s/%s' % (factory.category, factory.type)
+        component = factory(name)
+        component.uri = uri
         # locator
         locator = '<mcvine.componentfactory>'
         #
