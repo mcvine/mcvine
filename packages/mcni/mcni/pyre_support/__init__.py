@@ -22,8 +22,12 @@ def componentfactory( category, type, supplier = 'mcni'):
     suppliers = getsuppliers()
     suppliername = supplier
     supplier = suppliers[ suppliername ]
-    f = getattr(supplier, 'componentfactory')
-    return f(category, type)
+    get = getattr(supplier, 'componentfactory')
+    f = get(category, type)
+    f.category = category
+    f.type = type
+    f.supplier = suppliername
+    return f
 
 
 def findcomponentfactory(type, category=None, supplier=None):
