@@ -119,6 +119,8 @@ class Generator:
         _._argumentsFromInventory = _argumentsFromInventory
 
         _.arguments = arguments
+        _.full_description = klass.info.full_description
+        _.simple_description = klass.info.simple_description
         
         return _
 
