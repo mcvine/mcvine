@@ -34,7 +34,7 @@ class Instrument( base, ParallelComponent ):
         overwrite_datafiles.meta['tip'] = 'overwrite data files?'
         
         buffer_size = pyre.inventory.int  ('buffer_size', default = 1000)
-        buffer_size.meta['tip']= 'size of neutron buffer'
+        buffer_size.meta['tip']= 'size of neutron buffer. This is for optimizing the preformance of the simulation. When it is too large, it will occupy too much memory. When it is too small, the simulation will be slow. So try to find a balance.'
 
         from List import List
         sequence = List( 'sequence', default = '' )
@@ -58,6 +58,19 @@ class Instrument( base, ParallelComponent ):
     def __init__(self, name):
         base.__init__(self, name)
         self._warning = journal.warning( name )
+        return
+
+
+    def help(self):
+        print '------------------------------------------------------------'
+        print '* Instrument simulation application %r' % self.name
+        print '------------------------------------------------------------'
+        print '* Sequence of components:'
+        print '  ', ' --> '.join(['[%s]' % c for c in self.inventory.sequence])
+        print '------------------------------------------------------------'
+        print '* Command:'
+        print self._cmdlineDemo()
+        print '------------------------------------------------------------'
         return
 
 
@@ -164,9 +177,48 @@ class Instrument( base, ParallelComponent ):
         return '%s-%s' % (mode, rank)
         
 
+    def _cmdlineDemo(self):
+        s = ' $ %s ' % self.name
+        opts = []
+        skipappprops=['name', 'typos', 'journal', 'geometer', 'sequence', 'weaver']+\
+            self.inventory.sequence
+        appopts = _getComponentPropertyNameTipPairs(self, skipappprops)
+        opts += [(n, '<%s>'%tip) for n, tip in appopts]
+        for comp in self.inventory.sequence:
+            opts.append( ('geometer.%s' % comp, '<position>,<orientation>') )
+            continue
+        components = self.neutron_components
+        for name in self.inventory.sequence:
+            comp = components[name]
+            pairs = _getComponentPropertyNameTipPairs(comp)
+            pairs = [ ('%s.%s' % (name, n), '<%s>' % tip) for n, tip in pairs]
+            opts += pairs
+            continue
+        l = [s] + ['  --%s=%s' % (k,v) for k, v in opts]
+        return ' \\\n'.join(l) 
+
+
 
     pass # end of Instrument
 
+
+
+def _getComponentPropertyTraits(comp, skipprops=[]):
+    if not skipprops:
+        skipprops = ['name', 'typos']
+    r = []
+    for prop in comp.inventory.propertyNames():
+        if prop.startswith('help'): continue
+        if prop in skipprops: continue
+        trait = comp.inventory.getTrait(prop)
+        r.append(trait)
+        continue
+    return r
+
+
+def _getComponentPropertyNameTipPairs(comp, skipprops=[]):
+    traits = _getComponentPropertyTraits(comp, skipprops=skipprops)
+    return [(t.name, t.meta.get('tip') or t.name) for t in traits]
 
 
 def _build_geometer( instrument ):
