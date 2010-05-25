@@ -50,6 +50,18 @@ class Application(base):
     def main(self):
         name = self.inventory.name
         component_list = self.inventory.component_list
+
+        if not name:
+            self.help()
+            print '** Error: application name is not specified'
+            print
+            return
+        if not component_list:
+            self.help()
+            print '** Error: component list is not specified'
+            print
+            return
+
         d = {'name': name,
              'components': component_list}
         code = template % d
