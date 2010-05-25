@@ -29,8 +29,8 @@ def build(components):
             import mccomponents.pyre_support
 
             for name in components:
-                code = '%s = facility("%s", default=component("optics", "Dummy")("%s") )' % (
-                    name, name, name)
+                code = '%s = facility("%s", default="mcni://optics/Dummy" )' % (
+                    name, name)
                 exec code in locals()
                 continue
             del code, name

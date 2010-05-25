@@ -25,36 +25,50 @@ class NeutronComponentFacility( Facility ):
         return component, locator
 
             
-    def _createNeutronComponent(self, componentName):
+    def _createNeutronComponent(self, component_specifier):
         '''create a pyre neutron component from the given name
         
         the name could be
-         * <componentname>
+         * <componenttype>
            eg. MonochromaticSource
-         * <componentname>.<componentcategory>
-           eg. MonochromaticSource.sources
-         * <componentname>@<supplier>
-           eg. MonochromaticSource@mcni
-         * <componentname>.<componentcategory>@<supplier>
-           eg. MonochromaticSource.sources@mcni
+         * <componentcategory>/<componenttype>
+           eg. sources/MonochromaticSource
+         * <supplier>://<componenttype>
+           eg. mcni://MonochromaticSource
+         * <supplier>://<componentcategory>/<componenttype>
+           eg. mcni://sources/MonochromaticSource
+         * <supplier>://<componentcategory>/<componenttype>(<componentname>)
+           eg. mcni://sources/MonochromaticSource(source)
         '''
-        category, type, supplier = _decode(componentName)
+        component_specifier = str(component_specifier)
+        supplier, category, type, name = _decode(component_specifier)
         
         # component factory
         from mcni.pyre_support import findcomponentfactory
-        factory = findcomponentfactory(type, category, supplier)
+        try:
+            factory = findcomponentfactory(type, category, supplier)
+        except:
+            import journal, traceback
+            tb = traceback.format_exc()
+            journal.error('pyre.inventory').log('failed to find component factory %r. \n%s' % (
+                    component_specifier, tb))
+            return None, None
         
         # error handling
         if not factory:
             import journal
             journal.error("mcvine.component").log(
                 "could not bind facility '%s': component factory '%s' not found." % (
-                self.name, componentName)
+                self.name, component_specifier)
                 )
             return None, None
         
         # instantiate
-        component = factory(self.name)
+        if not name: name = self.name
+        specifier = _encode(factory.supplier, factory.category, factory.type, name)
+        specifier = factory.type
+        specifier = '%s(%s)' % (factory.type, name)
+        component = factory(specifier)
         # locator
         locator = '<mcvine.componentfactory>'
         #
@@ -63,19 +77,46 @@ class NeutronComponentFacility( Facility ):
     pass # end of NeutronComponentFacility
 
 
-def _decode(name):
-    if name.find('@') == -1:
-        supplier = None
-        t1 = name
-    else:
-        t1, supplier = name.split('@')
+def _encode(supplier, category, type, name):
+    return '%s://%s/%s(%s)' % (supplier, category, type, name)
 
-    if t1.find('.') == -1:
-        type = t1
+
+def _decode(specifier):
+    if specifier.find('://') == -1:
+        supplier = None
+        t1 = specifier
+    else:
+        supplier, t1 = specifier.split('://')
+
+    if t1.find('/') == -1:
+        t2 = t1
         category = None
     else:
-        type, category = t1.split('.')
-    return category, type, supplier
+        category, t2 = t1.split('/')
+    
+    if t2.find('(') == -1:
+        type = t2
+        name = None
+    else:
+        type, name = t2.strip()[:-1].split('(')
+    return supplier, category, type, name
+
+
+def test_decode():
+    assert _decode('MonochromaticSource') == (None, None, 'MonochromaticSource', None)
+    assert _decode('sources/MonochromaticSource') == (None, 'sources', 'MonochromaticSource', None)
+    assert _decode('mcni://MonochromaticSource') == ('mcni', None, 'MonochromaticSource', None)
+    assert _decode('mcni://sources/MonochromaticSource') == ('mcni', 'sources', 'MonochromaticSource', None)
+    assert _decode('mcni://sources/MonochromaticSource(source)') == ('mcni', 'sources', 'MonochromaticSource', 'source')
+    return
+
+
+def main():
+    test_decode()
+    return
+
+
+if __name__ == '__main__': main()
 
 
 # version
