@@ -21,7 +21,8 @@ body {
     /* background-image:url('bg.png'); */
     background-repeat:no-repeat;
     background-position:bottom right;
-    background-color:#eddaa8;
+    /* background-color:#eddaa8; */
+    background-color:#111e25;
 }
 
 a {
@@ -164,8 +165,8 @@ div.header {
 
 div.document {
     background-color: white;
-    opacity: 0.8;
-    filter:alpha(opacity=80);
+    opacity: 0.98;
+    filter:alpha(opacity=98);
     text-align: left;
     background-image: url(contents.png);
     background-repeat: repeat-x;
