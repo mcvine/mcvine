@@ -37,6 +37,7 @@ EXPORT_PYTHON_MODULES = \
 	NeutronComponentFacility.py \
 	ParallelComponent.py \
 	__init__.py \
+	_invutils.py \
 	component_suppliers.py \
 
 
