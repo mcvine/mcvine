@@ -61,6 +61,11 @@ def isotropickernel(*args, **kwds):
     return IsotropicKernel(*args, **kwds)
 
 
+def constantEnergyTransferKernel(*args, **kwds):
+    from ConstantEnergyTransferKernel import ConstantEnergyTransferKernel
+    return ConstantEnergyTransferKernel(*args, **kwds)
+
+
 def kernelcontainer(*args, **kwds):
     from KernelContainer import KernelContainer
     return KernelContainer( *args, **kwds )

@@ -25,6 +25,7 @@ all: export
 
 EXPORT_PYTHON_MODULES = \
 	AbstractNode.py \
+	ConstantEnergyTransferKernel.py \
 	Document.py \
 	GridSQE.py \
 	HomogeneousScatterer.py \

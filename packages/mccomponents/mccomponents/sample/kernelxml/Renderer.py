@@ -60,6 +60,13 @@ class Renderer(base):
         return
 
 
+    def onConstantEnergyTransferKernel(self, kernel):
+        E = kernel.E
+        self._write('<ConstantEnergyTransferKernel energy-transfer="%s">' % E)
+        self._write('</ConstantEnergyTransferKernel>')
+        return
+
+
     def onGridSQE(self, gridsqe):
         sqehist = gridsqe.sqehist
         from histogram.hdf import dump

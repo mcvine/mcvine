@@ -76,7 +76,7 @@ class New:
         return b.IsotropicKernel(absorption_cross_section, scattering_cross_section)
 
 
-    def constantenergytransferkernel(self, E, absorption_cross_section, scattering_cross_section):
+    def constantEnergyTransferKernel(self, E, absorption_cross_section, scattering_cross_section):
         '''constantenergytransferkernel: a kernel scatters isotropically with fixed energy transfer
 
         E: energy transfer

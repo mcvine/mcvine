@@ -20,7 +20,8 @@ class KernelContainer(AbstractNode):
 
     tag = "KernelContainer"
     
-    onIsotropicKernel = onSQEkernel = onKernelContainer = AbstractNode.onElement
+    onIsotropicKernel = onConstantEnergyTransferKernel = onSQEkernel \
+        = onKernelContainer = AbstractNode.onElement
 
     def elementFactory(self, *args, **kwds):
         from mccomponents.sample import kernelcontainer

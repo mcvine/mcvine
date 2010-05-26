@@ -41,6 +41,7 @@ tidy::
 EXPORT_PYTHON_MODULES = \
 	AbstractSQE.py \
 	ComputationEngineRendererExtension.py \
+	ConstantEnergyTransferKernel.py \
 	GridSQE.py \
 	IsotropicKernel.py \
 	KernelContainer.py \
