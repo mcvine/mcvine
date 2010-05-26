@@ -40,7 +40,7 @@ namespace mccomponents {
       //! ctor
       SQEkernel( double absorption_cross_section,
 		 double scattering_cross_section,
-		 const sample::AbstractSQE & sqe, 
+		 sample::AbstractSQE & sqe, 
 		 double Qmin, double Qmax,
 		 double Emin, double Emax) ;
       
@@ -56,7 +56,7 @@ namespace mccomponents {
       double m_epsilon;
       double m_Qmin, m_Qmax, m_DQ;
       double m_Emin, m_Emax, m_DE;
-      const sample::AbstractSQE & m_sqe;
+      sample::AbstractSQE & m_sqe;
       // impl details
       struct Details;
       std::auto_ptr<Details> m_details;

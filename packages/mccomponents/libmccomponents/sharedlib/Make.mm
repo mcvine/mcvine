@@ -41,6 +41,7 @@ PROJ_SRCS = \
 	SQkernel.cc \
 	SQEkernel.cc \
 	GridSQE.cc \
+	SQE_fromexpression.cc \
 	AbstractDispersion_3D.cc \
 	AtomicScatterer.cc \
 	ChangeCoordinateSystem_forDispersion_3D.cc \
@@ -87,6 +88,9 @@ SQkernel.cc: ../kernels/sample/SQkernel.cc
 
 GridSQE.cc: ../kernels/sample/SQE/GridSQE.cc
 	cp ../kernels/sample/SQE/GridSQE.cc .
+
+SQE_fromexpression.cc: ../kernels/sample/SQE/SQE_fromexpression.cc
+	cp ../kernels/sample/SQE/SQE_fromexpression.cc .
 
 AtomicScatterer.cc: ../kernels/sample/phonon/AtomicScatterer.cc
 	cp ../kernels/sample/phonon/AtomicScatterer.cc .

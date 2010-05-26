@@ -21,10 +21,11 @@ PROJ_PYTESTS =  #alltests.py
 PROJ_CPPTESTS = \
 	test_SQkernel \
 	test_SQAdaptor \
+	test_SQE_fromexpression \
 
 
 PROJ_TESTS = $(PROJ_PYTESTS) $(PROJ_CPPTESTS)
-PROJ_LIBRARIES = -L$(BLD_LIBDIR) -ljournal -lmcni -lmccomposite -lmccomponents -lmcstas_compact
+PROJ_LIBRARIES = -L$(BLD_LIBDIR) -ljournal -lmcni -lmccomposite -lmccomponents -lmcstas_compact -lfparser
 #PROJ_CXX_DEFINES += DEEPDEBUG
 
 
@@ -67,6 +68,9 @@ test_SQkernel: test_SQkernel.cc
 
 test_SQAdaptor: test_SQAdaptor.cc
 	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ test_SQAdaptor.cc $(PROJ_LIBRARIES)
+
+test_SQE_fromexpression: test_SQE_fromexpression.cc
+	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ test_SQE_fromexpression.cc $(PROJ_LIBRARIES)
 
 
 

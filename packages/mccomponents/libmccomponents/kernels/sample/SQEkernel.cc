@@ -42,7 +42,7 @@ const char mccomponents::kernels::SQEkernel::Details::jrnltag[] = "SQEkernel";
 mccomponents::kernels::SQEkernel::SQEkernel
 ( double absorption_cross_section,
   double scattering_cross_section,
-  const sample::AbstractSQE & sqe, 
+  sample::AbstractSQE & sqe, 
   double Qmin, double Qmax,
   double Emin, double Emax) 
   : m_absorption_cross_section( absorption_cross_section ),

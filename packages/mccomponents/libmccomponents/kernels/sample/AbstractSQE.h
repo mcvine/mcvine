@@ -25,7 +25,7 @@ namespace mccomponents {
     {
     public:
       
-      virtual double operator () ( double Q, double E ) const = 0;
+      virtual double operator () ( double Q, double E ) = 0;
       virtual ~AbstractSQE() {}
     } ;
     

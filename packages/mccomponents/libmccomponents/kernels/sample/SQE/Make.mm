@@ -46,6 +46,7 @@ export:: export-package-headers
 EXPORT_HEADERS = \
 	AbstractSQE.h \
 	GridSQE.h \
+	SQE_fromexpression.h \
 	fxy.h \
 
 
