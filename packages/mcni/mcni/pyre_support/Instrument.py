@@ -66,10 +66,10 @@ class Instrument( base, ParallelComponent ):
         print '* Instrument simulation application %r' % self.name
         print '------------------------------------------------------------'
         print '* Sequence of components:'
-        print '  ', ' --> '.join(['[%s]' % c for c in self.inventory.sequence])
+        print '  ', self._componentListStr()
         print '------------------------------------------------------------'
         print '* Command:'
-        print self._cmdlineDemo()
+        print self._cmdlineDemoStr()
         print '------------------------------------------------------------'
         return
 
@@ -177,9 +177,21 @@ class Instrument( base, ParallelComponent ):
         mode = self.inventory.mode
         rank = self.mpiRank
         return '%s-%s' % (mode, rank)
+
+
+    def _componentListStr(self):
+        comps = self.neutron_components
+        l = []
+        for name in self.inventory.sequence:
+            comp = comps[name]
+            if hasattr(comp, 'uri'): uri = comp.uri
+            else: uri = comp.name
+            l.append( (name, uri) )
+            continue
+        return ' --> '.join(['[%s(%s)]' % (n, u) for n,u in l])
         
 
-    def _cmdlineDemo(self):
+    def _cmdlineDemoStr(self):
         s = ' $ %s ' % self.name
         opts = []
         skipappprops=['name', 'typos', 'journal', 'geometer', 'sequence', 'weaver']+\
