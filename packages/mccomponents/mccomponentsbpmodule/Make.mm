@@ -30,6 +30,7 @@ PROJ_SRCS = \
 	wrap_kernelcontainer.cc \
 	wrap_He3TubeKernel.cc \
 	wrap_EventModeMCA.cc \
+	wrap_ConstantEnergyTransferKernel.cc \
 	wrap_SQEkernel.cc \
 	wrap_SQkernel.cc \
 	wrap_GridSQE.cc \
