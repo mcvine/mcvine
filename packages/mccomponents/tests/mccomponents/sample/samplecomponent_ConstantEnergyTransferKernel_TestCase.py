@@ -55,7 +55,7 @@ class TestCase(unittest.TestCase):
             vf = nl.norm(neutron.state.velocity)
             ef = conversion.v2e(vf)
             E = ei-ef
-            self.assertAlmostEqual(E, E0, 4)
+            self.assertAlmostEqual(E, E0, 7)
             continue
 
         return

@@ -41,7 +41,8 @@ class ConstantEnergyTransferKernel_TestCase(unittest.TestCase):
             vf = event.state.velocity
             vf = nl.norm(vf)
             ef = conversion.v2e(vf)
-            self.assertAlmostEqual(ei-ef, E, 3)
+            # print ef
+            self.assertAlmostEqual(ei-ef, E, 5)
             continue
 
         return

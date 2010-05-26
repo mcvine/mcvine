@@ -89,6 +89,7 @@ mccomponents::kernels::ConstantEnergyTransferKernel::scatter
   double Ei = conversion::v2E( vi );
   // final energy
   double Ef = Ei-m_E;
+  //std::cout << "E=" << m_E << ", Ei=" << Ei << ", Ef=" << Ef << std::endl;
   // final velocity magnitude
   double vf = conversion::E2v( Ef );
 
