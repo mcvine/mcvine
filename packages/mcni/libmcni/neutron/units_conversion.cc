@@ -13,15 +13,15 @@ namespace mcni{
     
     //! neutron energy (meV) to velocity (m/s)
     double E2v( double energy ) {
-      return sqrt(energy)*437.3949;
+      return sqrt(energy)*sqrte2v;
     }
     //! neutron velocity to energy 
     double v2E( double velocity) {
-      return velocity*velocity*5.227e-6;
+      return velocity*velocity*vsq2e;
     }
     //! square of neutron velocity to energy
     double vsquare2E( double vsquare) {
-      return vsquare*5.227e-6;
+      return vsquare*vsq2e;
     }
     //! square of neutron k vector to energy
     double ksquare2E( double ksquare) {

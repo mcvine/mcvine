@@ -11,11 +11,27 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
 
+from math import sqrt
 
-V2K = 1.58801E-3 # Convert v[m/s] to k[1/AA]
-K2V = 1./V2K
-SE2V = 437.3949	   #/* Convert sqrt(E)[meV] to v[m/s] */
-VS2E = 5.227e-6	   #/* Convert (v[m/s])**2 to E[meV] */
+
+neutron_mass = 1.6749286e-27;
+mN = neutron_mass;
+
+electron_charge = 1.60217733e-19;
+e = electron_charge;
+
+boltzman_constant = 1.3806504e-23;
+kB = boltzman_constant;
+
+hbar = 1.054571628e-34;
+
+K2V = hbar/mN*1e10
+V2K = 1./K2V
+#V2K = 1.58801E-3 # Convert v[m/s] to k[1/AA]
+SE2V = sqrt(2e-3*e/mN)
+# SE2V = 437.3949	   #/* Convert sqrt(E)[meV] to v[m/s] */
+VS2E = mN/(2e-3*e)
+#VS2E = 5.227e-6	   #/* Convert (v[m/s])**2 to E[meV] */
 def v2k(vel):
     return V2K * vel
 def e2v(energy):
