@@ -160,6 +160,8 @@ class Instrument( base, ParallelComponent ):
         neutron_components = {}
         for name in self.inventory.facilityNames():
             comp = self.inventory.getTraitValue( name )
+            if self._showHelpOnly:
+                comp._showHelpOnly = True
             if isinstance(comp, McniComponent):
                 neutron_components[ name ] = comp
                 pass
@@ -203,6 +205,15 @@ class Instrument( base, ParallelComponent ):
         return ' \\\n'.join(l) 
 
 
+    # overwrite processCommandline so that we know
+    # user is requesting for help and avoid unecessary
+    # initialization and finalization of components
+    def processCommandline(self, registry):
+        ret = super(Instrument, self).processCommandline(registry)
+        help = ret[0]
+        if help: self._showHelpOnly = True
+        return ret
+    
 
     pass # end of Instrument
 

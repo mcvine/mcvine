@@ -48,8 +48,9 @@ class NeutronToStorage( AbstractComponent ):
 
 
     def _fini(self):
+        if self.engine:
+            self.engine.close()
         super(NeutronToStorage, self)._fini()
-        self.engine.close()
         return
     
 

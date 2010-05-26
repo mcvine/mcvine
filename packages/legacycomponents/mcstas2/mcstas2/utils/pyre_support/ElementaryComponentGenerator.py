@@ -82,6 +82,7 @@ class Generator:
 
             def _init(self):
                 base._init(self)
+                if self._showHelpOnly: return
                 kwds = self._argumentsFromInventory()
                 self.engine = klass( **kwds )
                 return
