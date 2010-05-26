@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE scatterer>
+
+<!-- weights: absorption, scattering, transmission -->
+<homogeneous_scatterer mcweights="0, 1, 0">
+  
+  <ConstantEnergyTransferKernel energy-transfer="10*meV">
+  </ConstantEnergyTransferKernel>
+  
+</homogeneous_scatterer>
+

@@ -115,8 +115,8 @@ class ComputationEngineRendererExtension:
             pass
         
         abs, sctt = self._unitsRemover.remove_unit( (abs, sctt), 1./units.length.meter )
-        
-        return self.factory.isotropickernel(kernel.E, abs, sctt)
+        E = self._unitsRemover.remove_unit(kernel.E, units.energy.meV)
+        return self.factory.constantEnergyTransferKernel(E, abs, sctt)
 
 
     def onKernelContainer(self, kernelcontainer):
