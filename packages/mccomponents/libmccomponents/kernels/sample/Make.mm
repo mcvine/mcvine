@@ -49,6 +49,7 @@ EXPORT_HEADERS = \
 	AbstractScatteringKernel.h \
 	AbstractSQ.h \
 	AbstractSQE.h \
+	ConstantEnergyTransferKernel.h \
 	SQAdaptor.h \
 	SQkernel.h \
 	SQEkernel.h \
