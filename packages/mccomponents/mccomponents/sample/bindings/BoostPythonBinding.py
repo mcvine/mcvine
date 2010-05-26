@@ -51,6 +51,13 @@ class New:
         return b.GridSQE( fxy )
 
     
+    def sqeFromExpression(self, expr):
+        '''sqeFromExpression: S(Q,E) from analystic expreession
+        '''
+        expr = str(expr)
+        return b.SQE_fromexpression(expr)
+
+    
     def sqekernel(self, absorption_cross_section, scattering_cross_section,
                   sqe, Qrange, Erange):
         '''sqekernel: a kernel takes S(Q,E) a functor

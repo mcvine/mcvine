@@ -34,6 +34,11 @@ class ComputationEngineRendererExtension:
             s )
 
 
+    def onSQE_fromexpression(self, sqe_fromexpression):
+        expr = sqe_fromexpression.expression
+        return self.factory.sqeFromExpression(expr)
+
+
     def onSQEkernel(self, sqekernel):
         
         t = sqekernel

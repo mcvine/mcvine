@@ -79,6 +79,14 @@ class Renderer(base):
         return
 
 
+    def onSQE_fromexpression(self, sqe_fromexpression):
+        expr = sqe_fromexpression.expression
+        self._write(
+            '<SQE_fromexpression expression="%s"/>' % expr
+            )
+        return
+
+
     def __init__(self):
         base.__init__(self)
         return

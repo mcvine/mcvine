@@ -51,6 +51,11 @@ def gridsqe(*args, **kwds):
     return GridSQE( *args, **kwds )
 
 
+def sqeFromExpression(*args, **kwds):
+    from SQE_fromexpression import SQE_fromexpression
+    return SQE_fromexpression( *args, **kwds )
+
+
 def sqekernel(*args, **kwds):
     from SQEkernel import SQEkernel
     return SQEkernel( *args, **kwds )

@@ -24,6 +24,7 @@ class Document(base):
 
         'SQEkernel',
         'GridSQE',
+        'SQE_fromexpression',
         'ConstantEnergyTransferKernel',
 
         'IsotropicKernel',

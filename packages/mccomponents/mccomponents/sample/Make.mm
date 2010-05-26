@@ -43,6 +43,7 @@ EXPORT_PYTHON_MODULES = \
 	ComputationEngineRendererExtension.py \
 	ConstantEnergyTransferKernel.py \
 	GridSQE.py \
+	SQE_fromexpression.py \
 	IsotropicKernel.py \
 	KernelContainer.py \
 	SQEkernel.py \

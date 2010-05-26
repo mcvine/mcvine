@@ -37,6 +37,8 @@ namespace mccomponents {
       virtual inline double operator () ( double Q, double E ) const
       {return m_fxy( Q, E );}
 
+      virtual inline double operator () ( double Q, double E ) 
+      {return (*this)(Q,E);}
 
     private:
       const fxy & m_fxy;

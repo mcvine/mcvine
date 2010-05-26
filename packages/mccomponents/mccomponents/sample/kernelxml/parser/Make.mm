@@ -28,6 +28,7 @@ EXPORT_PYTHON_MODULES = \
 	ConstantEnergyTransferKernel.py \
 	Document.py \
 	GridSQE.py \
+	SQE_fromexpression.py \
 	HomogeneousScatterer.py \
 	IsotropicKernel.py \
 	KernelContainer.py \

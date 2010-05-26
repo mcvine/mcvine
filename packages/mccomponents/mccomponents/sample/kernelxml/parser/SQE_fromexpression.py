@@ -15,29 +15,17 @@
 from AbstractNode import AbstractNode, debug
 
 
-class SQEkernel(AbstractNode):
+class SQE_fromexpression(AbstractNode):
 
 
-    tag = "SQEkernel"
+    tag = "SQE_fromexpression"
 
     def elementFactory( self, **kwds ):
-        Qrange = self._parse( kwds['Q-range'] )
-        Erange = self._parse( kwds['energy-range'] )
+        expression = kwds.get('expression')
+        from mccomponents.sample import sqeFromExpression
+        return sqeFromExpression(expression) 
 
-        from mccomponents.sample import sqekernel
-        return sqekernel(
-            Qrange = Qrange, Erange = Erange)
-
-
-    def onSQE(self, sqe):
-        self.element.SQE = sqe
-        return
-
-    
-    onSQE_fromexpression = onGridSQE = onSQE
-
-
-    pass # end of SQEkernel
+    pass # end of SQE_fromexpression
 
 
 # version

@@ -19,7 +19,7 @@ include std-pythonmodule.def
 include local.def
 
 
-PROJ_CXX_SRCLIB = -lboost_python  -L$(BOOSTPYTHON_LIBDIR) -ljournal -lmccomposite -lmcni -lmcstas_compact -lmccomponents
+PROJ_CXX_SRCLIB = -lboost_python  -L$(BOOSTPYTHON_LIBDIR) -ljournal -lmccomposite -lmcni -lmcstas_compact -lmccomponents -lfparser
 
 
 PROJ_SRCS = \
@@ -34,6 +34,7 @@ PROJ_SRCS = \
 	wrap_SQEkernel.cc \
 	wrap_SQkernel.cc \
 	wrap_GridSQE.cc \
+	wrap_SQE_fromexpression.cc \
 	wrap_IsotropicKernel.cc \
 	wrap_AtomicScatterer.cc \
 	wrap_NdArray.cc \
