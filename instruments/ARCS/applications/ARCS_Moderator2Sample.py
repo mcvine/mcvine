@@ -16,6 +16,8 @@ __author__ = 'Jiao Lin'
 
 
 
+import mcvine
+
 from mcni.pyre_support.Instrument import Instrument as base
 class Moderator2Sample(base):
 
