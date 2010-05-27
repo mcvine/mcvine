@@ -44,9 +44,25 @@ class ComponentInterface(base, ParallelComponent):
             if self.parallel:
                 self._save_histogram_in_masternode_outdir()
             else:
-                self._setFinalHistogram(self._get_histogram())
+                h = self._setFinalHistogram(self._getNormalizedHistogram())
+                # save the final histogram (normalized)
+                def _():
+                    hout = self._histogramOutputFilename()
+                    saveHistogram(h, hout, overwrite=True)
+                self._run_in_myoutputdir(_)
         super(ComponentInterface, self)._fini()
         return
+
+
+    def _getNormalizedHistogram(self):
+        h = self._get_histogram()
+        return self._normalizeHistogram(h)
+
+    
+    def _normalizeHistogram(self, histogram):
+        # by default do nothing
+        # override this method to do normalization correctly
+        return histogram
 
 
     def _save_histogram_in_masternode_outdir(self):
@@ -65,6 +81,9 @@ class ComponentInterface(base, ParallelComponent):
                 I+=I1
                 continue
 
+        # normalize the histogram
+        histogram = self._normalizeHistogram(histogram)
+        
         # save the histogram in the component
         self._setFinalHistogram(histogram)
 
@@ -92,7 +111,7 @@ class ComponentInterface(base, ParallelComponent):
     def _setFinalHistogram(self, h):
         k = '_final_histogram'
         setattr(self, k, h)
-        return
+        return h
 
 
     def _hasEngine(self):

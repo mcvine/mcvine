@@ -20,14 +20,13 @@ class ComponentInterface(base):
     def _get_histogram(self):
         return get_histogram(self)
 
-
-def get_histogram(monitor):
-    rh = get_raw_histogram(monitor)
-    norm = getNormalization(monitor, N=1000000)
-    return rh/norm
+    
+    def _normalizeHistogram(self, histogram):
+        norm = getNormalization(self, N=1000000)
+        return histogram/norm
     
 
-def get_raw_histogram( monitor ):
+def get_histogram( monitor ):
     from mcstas2.utils.carray import bpptr2npyarr
     core = monitor.core()
 
@@ -98,7 +97,7 @@ def getNormalization(monitor, N=100000):
     
     # 3. send neutrons to monitor copy
     monitorcopy.process(neutrons)
-    h = get_raw_histogram(monitorcopy)
+    h = get_histogram(monitorcopy)
     # for debug
     # import histogram.hdf as hh
     # hh.dump(h, 'tmp.h5', '/', 'c')
