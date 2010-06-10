@@ -65,6 +65,10 @@ class Application(base):
         d = {'name': name,
              'components': component_list}
         code = template % d
+
+        cmd = _getCmdStr()
+        code += '\n# This application was created by the following command:\n# $ %s\n' % cmd
+        code += '\n'
         
         filename = self.inventory.filename
         if not filename:
@@ -77,6 +81,13 @@ class Application(base):
         print 'application %r created at %r' % (name, path)
         return
 
+
+
+def _getCmdStr():
+    import sys, os
+    argv = list(sys.argv)
+    argv[0] = os.path.basename(argv[0])
+    return ' '.join(argv)
 
 
 template = """#!/usr/bin/env python
