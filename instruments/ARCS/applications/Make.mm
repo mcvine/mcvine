@@ -43,7 +43,8 @@ EXPORT_PYTHON_MODULES = \
 
 
 EXPORT_BINS = \
-	ARCS_Moderator2Sample.py \
+	arcs_moderator2sample \
+	arcs-m2s \
 
 
 export:: export-binaries release-binaries export-package-python-modules #export-docs

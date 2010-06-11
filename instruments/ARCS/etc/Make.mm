@@ -13,7 +13,7 @@
 PROJECT = mcvine/instruments/ARCS
 
 BUILD_DIRS = \
-    ARCS_Moderator2Sample \
+	arcs_moderator2sample \
 
 OTHER_DIRS = \
 
