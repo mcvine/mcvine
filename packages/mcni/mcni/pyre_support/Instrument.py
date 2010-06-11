@@ -52,6 +52,11 @@ class Instrument( base, ParallelComponent ):
             'geometer', default = Geometer() )
         geometer.meta['tip'] = 'geometer of instrument'
 
+        # this option overrides "dumpconfiguration" to provide an iinterface
+        # easier to use
+        dumppml = pyre.inventory.str('dump-pml', default='')
+        dumppml.meta['tip'] = "filename of output configuration (pml) file. if empty, ignored. if the given value is 'yes' or 'on', a default filename will be used."
+        
         pass # end of Inventory
 
 
@@ -139,6 +144,13 @@ class Instrument( base, ParallelComponent ):
     
     
     def _configure(self):
+        # handle dumppml
+        # this overrides the option dumpconfiguration in order to
+        # provide a simpler interface for users.
+        dumppml = self.inventory.dumppml
+        if dumppml:
+            self.inventory.dumpconfiguration = True
+            
         base._configure(self)
         self.geometer = self.inventory.geometer
         self.overwrite_datafiles = self.inventory.overwrite_datafiles
@@ -173,6 +185,58 @@ class Instrument( base, ParallelComponent ):
         return
 
 
+    def _saveConfiguration(self):
+        # the default configuration filename
+        default_filename = '%s.pml' % self.name
+        
+        # the given filename
+        dumppml = self.inventory.dumppml
+        if dumppml in ['yes', 'on']:
+            outfile = default_filename
+        else:
+            outfile = dumppml
+
+        # make sure the output path does not exist
+        import os
+        if os.path.exists(outfile):
+            raise RuntimeError, "output file %r already exists" % outfile
+
+        # get registry
+        registry = self.createRegistry()
+        exclude_props = [
+            'weaver',
+            'typos',
+            'dumpconfiguration', 'dumpconfiguration-output',
+            'help-properties', 'help', 'help-persistence', 'help-components',
+            'dump-pml',
+            ]
+        from pyre.applications.Application import retrieveConfiguration
+        registry = retrieveConfiguration( 
+            self.inventory, registry, excludes=exclude_props)
+        
+        # the output stream
+        stream = open(outfile, 'w')
+
+        # weave
+        self.weaver.weave( registry, stream )
+
+        # footer
+        stream.write('<!-- \n automatically created by the following command:\n')
+        cmd = _getCmdStr()
+        stream.write(' $ %s\n' % cmd)
+        stream.write('-->\n\n')
+
+        # give a warning when use non-default config filename
+        import os, sys
+        base = os.path.basename(outfile)
+        if base != default_filename:
+            print '*'*70
+            print "Warning: you will need to rename file %s to %s, otherwise this file won't be used by the simulation application %s" % (
+                outfile, default_filename, os.path.basename(sys.argv[0]))
+            print '*'*70
+        return
+    
+    
     def _outputdir_mpiext(self):
         mode = self.inventory.mode
         rank = self.mpiRank
@@ -229,6 +293,16 @@ class Instrument( base, ParallelComponent ):
 
     pass # end of Instrument
 
+
+
+def _getCmdStr():
+    import sys, os
+    argv = list(sys.argv)
+    argv[0] = os.path.basename(argv[0])
+    for i,t in enumerate(argv):
+        if t.startswith('--'): argv[i] = '-'+t[2:]
+        continue
+    return ' '.join(argv)
 
 
 def _build_geometer( instrument ):
