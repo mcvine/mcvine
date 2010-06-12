@@ -56,6 +56,15 @@ Now, you could specify the position and orientation of a component by referring 
 
  --geometer.monitor=[0,0,1],[0,0,0]
 
+The syntax is actually ::
+
+ --geometer.monitor=<position>,<orientation>
+
+Position is a 3-vector, and the unit is meter.
+Orientation is a 3-vector that denotes three consecutive rotations along
+x, y, and z axes. 
+The unit is degrees.
+
 
 Configurations of components
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
