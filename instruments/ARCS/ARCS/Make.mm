@@ -34,10 +34,12 @@ tidy::
 # export
 
 EXPORT_PYTHON_MODULES = \
+	Instrument.py \
 	_utils.py \
 	__init__.py \
 	fermichopper.py \
 	moderator.py \
+	t0chopper.py \
 
 
 export:: export-package-python-modules 

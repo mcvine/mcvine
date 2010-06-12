@@ -398,8 +398,8 @@
             <property name="ymin">-0.035</property>
             <property name="ymax">0.035</property>
             <property name="tmin">0.0</property>
-            <property name="tmax">0.017</property>
-            <property name="nchan">170</property>
+            <property name="tmax">0.02</property>
+            <property name="nchan">20000</property>
             <property name="filename">mon1-tof.dat</property>
         </component>
 
