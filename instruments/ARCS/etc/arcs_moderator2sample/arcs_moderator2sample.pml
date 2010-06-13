@@ -506,7 +506,7 @@
             <property name="guide214">((0, 0, 10.68131), (0, 0, 0))</property>
             <property name="guide215">((0, 0, 11.08340), (0, 0, 0))</property>
             <property name="fermichopper">((0, 0, 11.61), (0, 0, 0))</property>
-            <property name="monitor1">((0, 0, 11.82), (0, 0, 0))</property>
+            <property name="monitor1">((0, 0, 11.831), (0, 0, 0))</property>
             <property name="guide311">((0, 0, 11.84975), (0, 0, 0))</property>
             <property name="guide411">((0, 0, 12.08825), (0, 0, 0))</property>
             <property name="guide412">((0, 0, 12.55105), (0, 0, 0))</property>
