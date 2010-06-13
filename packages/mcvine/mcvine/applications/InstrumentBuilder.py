@@ -18,7 +18,7 @@ from a list of component names.
 '''
 
 
-def build(components):
+def build(neutron_components):
     
     from mcni.pyre_support.Instrument import Instrument as base
     class Instrument(base):
@@ -28,7 +28,7 @@ def build(components):
             from mcni.pyre_support import facility, componentfactory as component
             import mccomponents.pyre_support
 
-            for name in components:
+            for name in neutron_components:
                 code = '%s = facility("%s", default="mcni://optics/Dummy" )' % (
                     name, name)
                 exec code in locals()
@@ -40,7 +40,7 @@ def build(components):
 
         def _defaults(self):
             base._defaults(self)
-            self.inventory.sequence = components
+            self.inventory.sequence = neutron_components
             return
 
         pass # end of Instrument
