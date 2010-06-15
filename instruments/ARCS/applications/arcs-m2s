@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-'''
+"""
 This script wraps arcs_moderator2sample.
 The 'arcs_moderator2sample' is a instrument simulation script 
 with a list of components from moderator to sample (just before sample).
@@ -10,7 +10,7 @@ This script is a wrapper. Its interface is simpler: there are less
 than ten parameters to set. And this script computes parameters
 of some components such as phase of fermi chopper based on user's
 inputs here.
-'''
+"""
 
 
 from mcvine.applications.SuperAppBase import SuperAppBase as base
@@ -21,35 +21,46 @@ class App(base):
 
         import pyre.inventory
         
-        fermi_nu = pyre.inventory.float('fermi-nu', default=600)
+        fermi_nu = pyre.inventory.float('fermi_nu', default=600)
         fermi_nu.meta['tip'] = 'Spinning frequency of fermi chopper'
+        fermi_nu.meta[base.inventory_item_signature] = True
         
-        fermi_bladeradius = pyre.inventory.float('fermi-bladeradius', default=0.5801)
+        fermi_bladeradius = pyre.inventory.float('fermi_bladeradius', default=0.5801)
         fermi_bladeradius.meta['tip'] = 'blad radius of fermi chopper'
+        fermi_bladeradius.meta[base.inventory_item_signature] = True
         
-        T0_nu = pyre.inventory.float('T0-nu', default=60)
+        T0_nu = pyre.inventory.float('T0_nu', default=60)
         T0_nu.meta['tip'] = 'Spinning frequency of T0 chopper'
+        T0_nu.meta[base.inventory_item_signature] = True
         
         E = pyre.inventory.float('E', default=70)
         E.meta['tip'] = 'desired incident beam energy. unit: meV'
+        E.meta[base.inventory_item_signature] = True
+
+        emission_time = pyre.inventory.float('emission_time', default=-1)
+        emission_time.meta['tip'] = 'emission time for moderator unit (microsecond)'
+        emission_time.meta[base.inventory_item_signature] = True
 
         pass # end of Inventory
     
     
-    def runApp(self):
-        fermi_nu = self.inventory.fermi_nu
-        fermi_bladeradius = self.inventory.fermi_bladeradius
+    def runApp(self, fermi_nu=None, fermi_bladeradius=None, T0_nu=None, E=None, emission_time=None):
+        # fermi_nu = self.inventory.fermi_nu
+        # fermi_bladeradius = self.inventory.fermi_bladeradius
         # T0
-        T0_nu = self.inventory.T0_nu
+        # T0_nu = self.inventory.T0_nu
         #
-        E = self.inventory.E
+        # E = self.inventory.E
         Emin = E*0.8
         Emax = E*1.2
         
         #
+        # emission_time = self.inventory.emission_time
+        if emission_time < 0: emission_time = None
+        else:emission_time *= 1.e-6
         from mcvine.instruments.ARCS import t0chopper, fermichopper
-        t0phase = t0chopper.phase(E, 8.77)
-        fermiphase = fermichopper.phase(E, 11.61)
+        t0phase = t0chopper.phase(E, 8.77, emission_time=emission_time)
+        fermiphase = fermichopper.phase(E, 11.61, emission_time=emission_time)
         
         opts = {
             'fermichopper.nu': fermi_nu,

@@ -5,7 +5,7 @@ import mcvine
 warnings.simplefilter('default')
 
 def main():
-    from mcvine.instruments.ARCS import Instrument
+    from mcvine.instruments.ARCS.Instrument import Instrument
     app = Instrument('arcs_moderator2sample')
     app.run()
     return
