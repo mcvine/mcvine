@@ -117,6 +117,9 @@ def listallcomponentcategories( ):
 
 
 def listcomponentsincategory( category ):
+    categories = listalldefaultcomponentcategories()
+    if category not in categories: return []
+    
     defaultcomponents = listdefaultcomponentsincategory( category )
     import components 
     registered = components.registeredComponentsInCategory( category )
