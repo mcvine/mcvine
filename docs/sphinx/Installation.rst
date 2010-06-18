@@ -11,14 +11,17 @@ At this moment, mcvine can only be installed from source.
 Build mcvine from svn source
 ----------------------------
 
+.. note::
+  You may want to read :ref:`platform specific instructions <platform-specific-instructions>`
+  first before you move on.
 
 
 Before you install
 ^^^^^^^^^^^^^^^^^^
-This installation requires that you have installed subversion and have
-a  c++ compiler. It is also necessary for your system admin to allow
+This installation requires that you have installed subversion.
+It is also necessary for your system admin to allow
 you to check out svn repository of danse anonymously  (At some places,
-this is blocked.); you can try the following command to see if it works::
+this is blocked due to firewall); you can try the following command to see if it works::
 
  $ svn co -N svn://danse.us/buildInelast/mcvine
 
@@ -26,6 +29,13 @@ Also you will need a c++ compiler. You may try this command if you use
 a typical linux environment ::
 
  $ g++
+
+Numpy is required, you could test whether it exists in your system by ::
+
+ $ python
+ >>> import numpy
+
+The HDF5 library is required for storing histograms generated from monitors and detectors.
 
 
 Build and Install
@@ -51,7 +61,25 @@ under directory "EXPORT"::
 
 will output something like::
 
- bin  deps  docs  etc  include  lib  modules  share
+ bin  docs  etc  include  lib  modules  share
+
+
+.. _platform-specific-instructions:
+
+Platform specific instructions
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+ubuntu 9.10
+"""""""""""
+
+Before install mcvine, please install following packages:
+
+* g++
+* python-dev
+* libboost-python1.38
+* python-numpy
+* libhdf5-serial-1.6.6-0, libhdf5-serial-dev
+
 
 
 .. _deployments:
