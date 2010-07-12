@@ -1,0 +1,28 @@
+#!/usr/bin/env python
+
+from pyre.applications.Script import Script
+
+
+class App(Script):
+
+
+    class Inventory(Script.Inventory):
+        pass
+
+    
+    def main(self, *args, **kwds):
+        from mcni.neutron_storage.idf_usenumpy import count
+        import sys
+        f = sys.argv[-1]
+        print count(f)
+        return
+
+
+def main():
+    app = App('mcvine-neutron-storage-count-neutrons')
+    app.run()
+    return
+
+
+if __name__ == '__main__': main()
+
