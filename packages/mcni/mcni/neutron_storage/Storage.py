@@ -102,6 +102,33 @@ class Storage:
         return neutrons
 
 
+    def seek(self, offset, whence, wrap=True):
+        if not self._readonly:
+            raise RuntimeError, "seek only works for read operation"
+
+        ntotal = self._ntotal
+        
+        if whence in ['start', 0]:
+            self._position = offset
+        elif whence in ['current', 1]:
+            self._position += offset
+        elif whence in ['end', 2]:
+            self._position = self._ntotal + offset
+        else:
+            raise ValueError, "whence=%s: not supported" % whence
+
+        if wrap:
+            self._position %= ntotal
+        else:
+            if self._position >= ntotal or self._position < 0:
+                raise RuntimeError, "new position %s out of bound" % self._position
+        return
+
+
+    def tell(self):
+        return self._position
+
+
     def read(self, n=None, asnpyarr = False, wrap=True):
         """read (n) neutrons from the current position.
 
@@ -128,7 +155,7 @@ class Storage:
         # next position of cursor
         nextpostion = position + n
         
-        if nextpostion <= ntotal:
+        if nextpostion < ntotal:
             # if it is not beyond the end of file, just read
             npyarr = idfio.read(stream=self.stream, start=position, n=n)
             self._position = nextpostion
