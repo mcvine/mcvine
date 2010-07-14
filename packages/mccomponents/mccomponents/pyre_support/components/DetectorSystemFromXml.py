@@ -57,7 +57,11 @@ class DetectorSystemFromXml( AbstractComponent ):
         if self._showHelpOnly: return
         instrumentxml = self.instrumentxml
         tofparams = self.tofparams
+
         eventsdat = self.eventsdat
+        import os
+        eventsdat = os.path.join(self._outputdir, eventsdat)
+        
         self.engine = enginefactory(
             self.name, instrumentxml, coordinate_system, tofparams, eventsdat )
         return
