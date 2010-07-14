@@ -1,0 +1,64 @@
+#!/usr/bin/env python
+
+
+from pyre.applications.Script import Script
+
+
+class App(Script):
+
+
+    class Inventory(Script.Inventory):
+
+        import pyre.inventory
+
+        eventdat = pyre.inventory.str('eventdat', default='events.dat')
+        
+        npixel = pyre.inventory.int('npixel', default=0)
+        ntof = pyre.inventory.int('ntof', default=1000)
+
+        outpkl = pyre.inventory.str('out-pkl', default='ipixtof.pkl')
+        
+        pass
+
+    
+    def main(self, *args, **kwds):
+        # filename of eventdata
+        eventdat = self.inventory.eventdat
+        # number of pixels
+        npixel = self.inventory.npixel
+        # number of tof bins
+        ntof = self.inventory.ntof
+        # I(pix) histogram
+        ipixtof = reduce(eventdat, npixel, ntof)
+        # generate output
+        import pickle
+        outpkl = self.inventory.outpkl
+        pickle.dump(ipixtof,  open(outpkl, 'w'))
+        return
+
+
+
+
+def reduce(filename, npixel, ntof):
+    from mccomponents.detector import reduction_utils as ru
+    evts = ru.readevents(filename)
+
+    import numpy
+    hist = numpy.zeros((npixel, ntof), float)
+
+    for pix, tof, n in evts:
+        hist[pix, tof] += n
+        continue
+
+    return hist
+
+
+
+def main():
+    app = App('mcvine=reduce-eventdata-to-ipixtof')
+    app.run()
+    return
+
+
+if __name__ == '__main__': main()
+
