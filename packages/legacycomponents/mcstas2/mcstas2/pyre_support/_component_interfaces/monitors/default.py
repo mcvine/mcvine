@@ -94,7 +94,9 @@ class ComponentInterface(base, ParallelComponent):
                 overwrite=self.overwrite_datafiles)
 
         if self.mpiRank == 0:
-            outputdir = self._master_outputdir
+            outputdir = '%s-all' % self._master_outputdir
+            if not os.path.exists(outputdir):
+                os.makedirs(outputdir)
             self._debug.log('saving histogram to %s' % outputdir)
             self._run_in_dir(func=_, dir=outputdir)
         
