@@ -30,10 +30,11 @@ class App(Script):
         ntof = self.inventory.ntof
         # I(pix) histogram
         ipixtof = reduce(eventdat, npixel, ntof)
+        print 'finished to reduction, saving...'
         # generate output
         import pickle
         outpkl = self.inventory.outpkl
-        pickle.dump(ipixtof,  open(outpkl, 'w'))
+        pickle.dump(ipixtof,  open(outpkl, 'wb'), pickle.HIGHEST_PROTOCOL)
         return
 
 
