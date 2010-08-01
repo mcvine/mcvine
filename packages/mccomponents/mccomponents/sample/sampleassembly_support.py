@@ -105,7 +105,7 @@ class FindKernelsFromXMLs:
         scatterer.setKernel( kernel )
 
         # remember origin
-        kernel.scatterer_origin = origin
+        kernel.setScattererOrigin(origin)
         return
 
 

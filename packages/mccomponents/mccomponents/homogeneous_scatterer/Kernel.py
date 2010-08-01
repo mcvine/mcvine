@@ -16,6 +16,11 @@ class Kernel:
     def identify(self, visitor):
         raise NotImplementedError
 
+
+    def setScattererOrigin(self, origin):
+        self.scatterer_origin = origin
+        return
+        
     pass # end of Kernel
     
 

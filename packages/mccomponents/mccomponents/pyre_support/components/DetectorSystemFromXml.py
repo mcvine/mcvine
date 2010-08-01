@@ -61,6 +61,7 @@ class DetectorSystemFromXml( AbstractComponent ):
         eventsdat = self.eventsdat
         import os
         eventsdat = os.path.join(self._outputdir, eventsdat)
+
         
         self.engine = enginefactory(
             self.name, instrumentxml, coordinate_system, tofparams, eventsdat )

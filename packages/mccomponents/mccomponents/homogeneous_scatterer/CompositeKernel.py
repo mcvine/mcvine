@@ -33,6 +33,13 @@ class CompositeKernel(Kernel):
     def identify(self, visitor): return visitor.onCompositeKernel(self)
 
 
+    def setScattererOrigin(self, origin):
+        for e in self._elements:
+            e.setScattererOrigin(origin)
+            continue
+        return
+
+
     pass # end of CompositeKernel
 
 
