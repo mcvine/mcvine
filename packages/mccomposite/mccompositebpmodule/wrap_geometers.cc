@@ -12,6 +12,7 @@
 //
 
 
+#include "mccomposite/mccomposite.h"
 #include "wrap_Geometer.h"
 
 
@@ -24,7 +25,7 @@ namespace wrap_mccomposite {
     wrap_Geometer<AbstractNeutronScatterer>( "NeutronScatterer" );
     
     typedef Geometer<AbstractNeutronScatterer>::position_t position_t;
-    class_<position_t>("Position", init<double, double, double>());
+    class_<position_t, bases<mccomposite::geometry::Vector> >("Position", init<double, double, double>());
 
     typedef Geometer<AbstractNeutronScatterer>::orientation_t orientation_t;
     class_<orientation_t>
