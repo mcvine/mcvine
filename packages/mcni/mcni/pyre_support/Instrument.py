@@ -80,27 +80,8 @@ class Instrument( base, ParallelComponent ):
 
 
     def main(self, *args, **kwds):
-        neutron_components = self.neutron_components
-        for comp in neutron_components:
-            if comp not in self.sequence:  
-                self._warning.log(
-                    'component %s was not included in component sequence %s' % (
-                    comp, self.sequence )
-                    )
-                pass
-            continue
-
-        for name in self.sequence:
-            if name not in neutron_components:
-                raise RuntimeError , "Neutron component %s specified in sequence %s does not " \
-                      "correspond to any known simulation components: %s" % (
-                    name, self.sequence, neutron_components )
-            continue
-
         import mcni
-        components = [ neutron_components[ name ] for name in self.sequence ]
-        instrument = mcni.instrument( components )
-
+        instrument = self._createInstrument()
         geometer = self.geometer
 
         multiple_scattering = self.inventory.multiple_scattering
@@ -112,15 +93,41 @@ class Instrument( base, ParallelComponent ):
                            multiple_scattering=multiple_scattering)
             continue
 
+        import os
+        print os.times()
         return
 
 
+    def _createInstrument(self):
+        neutron_components = self.neutron_components
+        for comp in neutron_components:
+            if comp not in self.sequence:  
+                self._warning.log(
+                    'component %s was not included in component sequence %s' % (
+                    comp, self.sequence )
+                    )
+                pass
+            continue
+        
+        for name in self.sequence:
+            if name not in neutron_components:
+                raise RuntimeError , "Neutron component %s specified in sequence %s does not " \
+                      "correspond to any known simulation components: %s" % (
+                    name, self.sequence, neutron_components )
+            continue
+
+        import mcni
+        components = [ neutron_components[ name ] for name in self.sequence ]
+        instrument = mcni.instrument( components )
+        return instrument
+    
+    
     def _defaults(self):
         base._defaults(self)
         self.inventory.geometer = _build_geometer( self )
         return
-
-
+    
+    
     def _setup_ouputdir(self):
         outputdir = self.outputdir
         if not self.overwrite_datafiles and os.path.exists( outputdir ):
