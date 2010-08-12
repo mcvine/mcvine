@@ -57,6 +57,8 @@ class Instrument( base, ParallelComponent ):
         dumppml = pyre.inventory.str('dump-pml', default='')
         dumppml.meta['tip'] = "filename of output configuration (pml) file. if empty, ignored. if the given value is 'yes' or 'on', a default filename will be used."
         
+        dumpregistry = pyre.inventory.bool('dump-registry', default=False)
+        dumpregistry.meta['tip'] = 'if true, dump the pyre registry to a pkl file'
         pass # end of Inventory
 
 
@@ -80,6 +82,10 @@ class Instrument( base, ParallelComponent ):
 
 
     def main(self, *args, **kwds):
+        if self.inventory.dumpregistry:
+            self._dumpRegsitry()
+            return
+        
         import mcni
         instrument = self._createInstrument()
         geometer = self.geometer
@@ -95,6 +101,24 @@ class Instrument( base, ParallelComponent ):
 
         import os
         print os.times()
+        return
+
+
+    def _dumpRegsitry(self):
+        out = '%s-reg.pkl' % self.name
+        import os
+        if os.path.exists(out):
+            raise RuntimeError, 'dump registry: path %s already exists' % out
+
+        from pyre.applications.Application import retrieveConfiguration
+        reg = self.createRegistry()
+        retrieveConfiguration(self.inventory, reg)
+        from RegistryToDict import Renderer
+        renderer = Renderer()
+        reg = renderer.render(reg)
+        
+        import pickle
+        pickle.dump(reg, open(out, 'w'))
         return
 
 
