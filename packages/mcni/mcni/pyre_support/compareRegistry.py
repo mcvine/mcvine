@@ -17,6 +17,13 @@ created by RegstryToDict.Renderer
 '''
 
 def compare(reg1, reg2):
+    if not reg1 and not reg2:
+        return 
+    if not reg1:
+        return None, reg2['name']
+    if not reg2:
+        return reg1['name'], None
+
     diff = {}
     diff['name'] = reg1['name']
     for k, v1 in reg1.iteritems():
@@ -33,24 +40,50 @@ def compare(reg1, reg2):
         if v1 != v2:
             diff[k] = v1, v2
     
-    components1 = reg1.get('components')
-    components2 = reg2.get('components')
-    if not components1 or not components2:
-        if components1 or components2:
-            diff['components'] = components1, components2
-            return
+    components1 = reg1.get('components') or {}
+    components2 = reg2.get('components') or {}
+    if not components1 and not components2:
+        return diff
         
     cdiff = diff['components'] = {}
     for name, comp1 in components1.iteritems():
         comp2 = components2.get(name)
         cdiff[name] = compare(comp1, comp2)
         continue
+
+    for name, comp2 in components2.iteritems():
+        if name in components1.keys(): continue
+        cdiff[name] = compare(None, comp2)
     
     return diff
 
 
-def report(diff):
-    return
+def report(diff, indent=0):
+    ret = []
+    pre = ' ' * indent
+    ret.append(pre + '[%s]' % diff['name'])
+    for k, v in diff.iteritems():
+        if k in ['name', 'components']: continue
+        v1, v2 = v
+        ret.append(pre + ' - %s' % k)
+        ret.append(pre + '  < %s' % v1)
+        ret.append(pre + '  > %s' % v2)
+        continue
+    
+    comps = diff.get('components')
+    if comps:
+        ret.append(pre + ' - components:')
+        for name, c in comps.iteritems():
+            if isinstance(c, tuple):
+                v1, v2 = c
+                ret.append(pre + '  [%s]' % name)
+                ret.append(pre + '   < %s' % v1)
+                ret.append(pre + '   > %s' % v2)
+                continue
+            
+            ret += report(c, indent+2)
+            
+    return ret
 
 
 def test():
@@ -67,8 +100,48 @@ def test():
     return
 
 
+def test2():
+    reg1 = {'name': 'a', 
+            'k1': 3,
+            'k2': 'a',
+            'components': {
+                'integrator': {
+                  'name': 'montecarlo',
+                  'p1': 1e10
+                  },
+                'optimizer': {
+                  'name': 'abc',
+                  },
+                }
+            }
+    reg2 = {'name': 'a', 
+            'k1': 5,
+            'k2': 'a',
+            'components': {
+                'integrator': {
+                  'name': 'montecarlo',
+                  'p1': 2e10
+                  }
+                }
+            }
+    diff = compare(reg1, reg2)
+    print '\n'.join(report(diff))
+    assert diff == {
+        'name': 'a', 'k1': (3,5),
+        'components': {
+            'integrator': {
+                'p1': (1e10, 2e10), 
+                'name': 'montecarlo'
+                },
+            'optimizer': ('abc', None),
+            }
+        }
+    return
+
+
 def main():
     test()
+    test2()
     return 
 
 
