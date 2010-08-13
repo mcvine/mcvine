@@ -52,7 +52,7 @@ class Renderer(object):
                 newd = {}
                 self.cd = newd
                 component.identify(self)
-                cd['components'][newd['name']] = newd
+                cd['components'][facility] = newd
 
         if not cd['components']:
             del cd['components']

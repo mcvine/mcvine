@@ -39,6 +39,7 @@ EXPORT_PYTHON_MODULES = \
 	RegistryToDict.py \
 	__init__.py \
 	_invutils.py \
+	compareRegistry.py \
 	component_suppliers.py \
 
 

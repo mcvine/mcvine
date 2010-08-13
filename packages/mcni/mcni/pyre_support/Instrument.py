@@ -88,6 +88,7 @@ class Instrument( base, ParallelComponent ):
         
         import mcni
         instrument = self._createInstrument()
+        
         geometer = self.geometer
 
         multiple_scattering = self.inventory.multiple_scattering
