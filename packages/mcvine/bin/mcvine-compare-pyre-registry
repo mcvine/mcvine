@@ -1,0 +1,47 @@
+#!/usr/bin/env python
+
+
+from pyre.applications.Script import Script
+
+
+class App(Script):
+
+
+    class Inventory(Script.Inventory):
+
+        import pyre.inventory
+
+        left = pyre.inventory.str('left')
+        right = pyre.inventory.str('right')
+        
+        pass
+
+    
+    def main(self, *args, **kwds):
+        left = self.inventory.left
+        right = self.inventory.right
+
+        left = self._load(left)
+        right = self._load(right)
+
+        from mcni.pyre_support.compareRegistry import compare, createReport
+        diff = compare(left, right)
+        report = createReport(diff)
+        print '\n'.join(report)
+        return
+
+
+    def _load(self, filename):
+        import pickle
+        return pickle.load(open(filename))
+
+
+
+def main():
+    app = App('mcvine=compare-pyre-registry')
+    app.run()
+    return
+
+
+if __name__ == '__main__': main()
+
