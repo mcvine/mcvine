@@ -17,36 +17,39 @@
 
     <component name="arcs_moderator2sample">
         <property name="sequence">['moderator', 'core_vessel_insert', 'shutter_guide', 'guide111', 'guide112', 'guide113', 'guide121', 'guide122', 'guide123', 'guide131', 'guide132', 'guide133', 't0chopper', 'guide211', 'guide212', 'guide213', 'guide214', 'guide215', 'fermichopper', 'monitor1', 'guide311', 'guide411', 'guide412', 'guide511', 'monitor']</property>
-        <facility name="guide411">optics/Guide_channeled</facility>
-        <facility name="guide511">optics/Guide_channeled</facility>
-        <facility name="shutter_guide">optics/Guide_channeled</facility>
+
         <facility name="moderator">sources/SNS_source_r1</facility>
-        <facility name="guide122">optics/Guide_channeled</facility>
+        <facility name="core_vessel_insert">optics/Guide_channeled</facility>
+        <facility name="shutter_guide">optics/Guide_channeled</facility>
+        <facility name="guide111">optics/Guide_channeled</facility>
+        <facility name="guide112">optics/Guide_channeled</facility>
+        <facility name="guide113">optics/Guide_channeled</facility>
         <facility name="guide121">optics/Guide_channeled</facility>
-        <facility name="guide412">optics/Guide_channeled</facility>
-        <facility name="fermichopper">optics/Fermi_chop2</facility>
-        <facility name="guide311">optics/Guide_channeled</facility>
-        <facility name="t0chopper">optics/Vertical_T0</facility>
-        <facility name="monitor">monitors/NeutronToStorage</facility>
-        <property name="output-dir">out</property>
-        <property name="ncount">10000.0</property>
+        <facility name="guide122">optics/Guide_channeled</facility>
         <facility name="guide123">optics/Guide_channeled</facility>
-        <facility name="guide215">optics/Guide_channeled</facility>
-        <facility name="guide214">optics/Guide_channeled</facility>
-        <facility name="guide211">optics/Guide_channeled</facility>
-        <facility name="guide213">optics/Guide_channeled</facility>
-        <facility name="guide212">optics/Guide_channeled</facility>
-        <property name="multiple-scattering">False</property>
         <facility name="guide131">optics/Guide_channeled</facility>
         <facility name="guide132">optics/Guide_channeled</facility>
         <facility name="guide133">optics/Guide_channeled</facility>
-        <facility name="guide112">optics/Guide_channeled</facility>
-        <facility name="guide113">optics/Guide_channeled</facility>
-        <facility name="geometer">geometer</facility>
-        <facility name="guide111">optics/Guide_channeled</facility>
-        <property name="buffer_size">1000</property>
+        <facility name="t0chopper">optics/Vertical_T0</facility>
+        <facility name="guide211">optics/Guide_channeled</facility>
+        <facility name="guide212">optics/Guide_channeled</facility>
+        <facility name="guide213">optics/Guide_channeled</facility>
+        <facility name="guide214">optics/Guide_channeled</facility>
+        <facility name="guide215">optics/Guide_channeled</facility>
+        <facility name="fermichopper">optics/Fermi_chop2</facility>
         <facility name="monitor1">monitors/TOF_monitor2</facility>
-        <facility name="core_vessel_insert">optics/Guide_channeled</facility>
+        <facility name="guide311">optics/Guide_channeled</facility>
+        <facility name="guide411">optics/Guide_channeled</facility>
+        <facility name="guide412">optics/Guide_channeled</facility>
+        <facility name="guide511">dummy</facility>
+        <facility name="monitor">monitors/NeutronToStorage</facility>
+
+        <property name="multiple-scattering">False</property>
+
+        <property name="ncount">10000.0</property>
+        <property name="buffer_size">1000</property>
+
+        <property name="output-dir">out</property>
         <property name="overwrite-datafiles">False</property>
 
         <component name="moderator">
@@ -56,8 +59,8 @@
             <property name="dist">2.5</property>
             <property name="xw">0.1</property>
             <property name="yh">0.12</property>
-            <property name="Emin">50.0</property>
-            <property name="Emax">70.0</property>
+            <property name="Emin">0.0</property>
+            <property name="Emax">200.0</property>
         </component>
 
 
@@ -274,7 +277,7 @@
             <property name="len"> 0.474 </property>
             <property name="w1"> 0.08 </property>
             <property name="w2"> 0.101 </property>
-            <property name="nu"> 60 </property>
+            <property name="nu"> 120 </property>
             <property name="delta"> 0.0 </property>
             <property name="tc"> 0. </property>
             <property name="ymin"> -0.045 </property>
@@ -379,14 +382,14 @@
 
         <component name="fermichopper">
             <property name="len">0.1</property>
-            <property name="w">0.06</property>
+            <property name="w">0.060364</property>
             <property name="ymin">-0.0325</property>
             <property name="ymax">0.0325</property>
             <property name="nu">600.0</property>
             <property name="delta">0.0</property>
             <property name="tc">0.0</property>
-            <property name="nchan">32.0</property>
-            <property name="bw">0.0005</property>
+            <property name="nchan">31.0</property>
+            <property name="bw">0.00041</property>
             <property name="blader">0.5801</property>
             <property name="max_iter">10000</property>
         </component>
@@ -448,25 +451,6 @@
             <property name="w2"> 0.05187 </property>
             <property name="h2"> 0.05408 </property>
             <property name="l"> 0.46275 </property>
-            <property name="R0"> 0.98 </property>
-            <property name="mx"> 3.6 </property>
-            <property name="my"> 3.6 </property>
-            <property name="Qcy"> 0.02 </property>
-            <property name="Qcx"> 0.02 </property>
-            <property name="W"> 0.002 </property>
-            <property name="k"> 1.0 </property>
-            <property name="d"> 0.0 </property>
-            <property name="alphax">5.5</property>
-            <property name="alphay">5.5</property>
-        </component>
-
-
-        <component name="guide511">
-            <property name="w1"> 0.05186 </property>
-            <property name="h1"> 0.05405 </property>
-            <property name="w2"> 0.05062 </property>
-            <property name="h2"> 0.05172 </property>
-            <property name="l"> 0.37920 </property>
             <property name="R0"> 0.98 </property>
             <property name="mx"> 3.6 </property>
             <property name="my"> 3.6 </property>

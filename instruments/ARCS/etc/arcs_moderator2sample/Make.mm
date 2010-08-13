@@ -25,6 +25,7 @@ all: export
 
 EXPORT_ETC = \
 	arcs_moderator2sample.pml \
+	guide511.pml.example \
 
 
 export:: export-etc
