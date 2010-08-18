@@ -1,0 +1,7 @@
+ToDo list for VULCAN
+--------------------
+
+- Write converter from McStas to McVine components
+- Run vulcan simulation from command line
+- Run ARCS simulation from command line
+- Run ARCS from VNF
