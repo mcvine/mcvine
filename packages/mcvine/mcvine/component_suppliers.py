@@ -26,6 +26,9 @@ try:
 except ImportError:
     import warnings
     warnings.warn('mcstas2 not available')
+except OSError:
+    import warnings
+    warnings.warn('mcstas2 not available due to OSError')
 else:
     component_suppliers.register(
         'mcstas2', component_suppliers.PyModuleAsSupplier('mcstas2'))
