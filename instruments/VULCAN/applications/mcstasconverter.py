@@ -37,20 +37,23 @@ is converted to:
 		"Lmin": "0.0",
 		"Lmax": "14.0",
 		"restore_neutron": "1"}
+}
 
 Issues:
     - Check if name is case sensitive (like COMPONENT)
     - Extract properties from "extra" to separate properties
+    - Components should at least be separated by "\n\n"
+    - Assumption is made that new line is "\n"
 """
-
-# XXX: Figure out what other metadata to extract from "extra" properties
 
 tempText = """COMPONENT L_monitor9 = L_monitor(
     nchan = 140, filename = "Vulcan_asbuilt_L_monitor9.txt",
     xwidth = 0.15, yheight = 0.15, Lmin = 0.0, Lmax = 14.0,
     restore_neutron = 1)
-  AT (0, 0, 0.971)  RELATIVE  FU_Out"""
+  AT (0, 0, 0.971)  RELATIVE  FU_Out
+  AT (0, 0, 0.971)  RELATIVE  FU_Out
 
+  """
 
 
 # Regular expressions
@@ -58,36 +61,92 @@ SPACES          = '[ \t]*'              # Spaces and tabs
 NAME            = '%s([^ ()=]*)%s' % (SPACES, SPACES)  # Extracts name
 NO_BRACKETS     = '[^()]*'              # No brackets
 PARAMETERS      = '(%s)' % NO_BRACKETS  # Component parameters
-COMPONENT       = "COMPONENT%s=%s\(%s\)" %(NAME, NAME, PARAMETERS)  # Component
+
+COMPONENT       = "COMPONENT%s=%s\(%s\)(.*)\n\n" %(NAME, NAME, PARAMETERS)  # Component
 
 import re
 
 class McStasConverter:
 
-    def __init__(self, filename):
+    def __init__(self, filename, parse=False):
         self._filename      = filename
         self._components    = []    # list of dictionaries
 
+
     def parse(self):
-        str = "COMPONENT L_monitor9 = L_monitor(\nhello)"
-        p   = re.compile(COMPONENT)
-        matches     = p.findall(tempText)        # Finds all components
+        "Parses file content and appends component to self._components"
+        str     = "COMPONENT L_monitor9 = L_monitor(\nhello)"
+        str2    = "restore_neutron = 1)\n  AT (0, 0, 0.971)  RELATIVE  FU_Out\n\n"
+        str3    = """COMPONENT L_monitor9 = L_monitor(restore_neutron = 1)
+  AT (0, 0, 0.971)  RELATIVE  FU_Out
+  AT (0, 0, 0.971)  RELATIVE  FU_Out
 
-        print matches
+"""
+        # Remove comments
+        p   = re.compile(COMPONENT, re.DOTALL)
+        matches     = p.findall(tempText)       # Finds all components
+
+        for m in matches:
+            comp    = {}
+            comp["name"]        = m[0]
+            comp["type"]        = m[1]
+            comp["position"]    = self._position(m[3])
+            comp["parameters"]  = self._params(m[2])
+
+            self._components.append(comp)
+
+
+    def _params(self, text):
+        "Returns dictionary of parameters"
+        if not text:
+            return {}   # Empty dictionary
+
+        text    = """\n    nchan = 140, filename = "Vulcan_asbuilt_L_monitor9.txt",\n    xwidth = 0.15, yheight = 0.15, Lmin = 0.0, Lmax = 14.0,\n    restore_neutron = 1"""
+        plist   = text.split(",")
+        params  = {}
+        for pp in plist:
+            keyval  = pp.split("=")
+            assert len(keyval) == 2
+            name            = keyval[0].strip()
+            value           = keyval[1].strip()
+            params[name]    = value
+
+        return params
+
+
+    def _position(self, text):
+        "Extracts position from text"
+        if not text:
+            return ""
+
+        ilist       = text.split("\n")
+        position    = ""
+        for i in ilist:
+            str = i.strip("\n")
+            if str == "":   # get rid of empty line
+                continue
+
+            if len(str.split("AT")) != 1:   # 'AT' is in the string
+                position    = str.strip()   # If more than one 'AT' is set, take the last
+
+        return position
+
+
+    def components(self):
+        "Returns list of components"
+        return self._components
+
         
-#        for m in matches:
-#            name    = m[0].lower()
-#            print name
-
-
     # XXX: Fix
-    def toString(self):
+    def toString(self, indent=4, br="\n"):
+        #print self._params("hi")
         print self._components
 
 
 if __name__ == "__main__":
     conv    = McStasConverter("hi")
     conv.parse()
+    conv.toString()
 
 __date__ = "$Aug 19, 2010 10:25:18 AM$"
 
