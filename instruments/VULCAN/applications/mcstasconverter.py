@@ -54,7 +54,17 @@ tempText = """COMPONENT L_monitor9 = L_monitor(
     restore_neutron = 1)
   AT (0, 0, 0.971)  RELATIVE  FU_Out
   ROTATED (0,ROT,0) relative arm
-  hello world
+
+COMPONENT arm2 = Arm()
+  AT (0,0,0) RELATIVE target
+  ROTATED (0,ROT,0) relative arm
+
+FINALLY
+%{
+%}
+/* The END token marks the instrument definition end */
+END
+
 
   """
 
@@ -66,10 +76,12 @@ SPACES          = '[ \t]*'              # Spaces and tabs
 NAME            = '%s([^ ()=]*)%s' % (SPACES, SPACES)  # Extracts name
 NO_BRACKETS     = '[^()]*'              # No brackets
 PARAMETERS      = '(%s)' % NO_BRACKETS  # Component parameters
-COMPONENT       = "COMPONENT%s=%s\(%s\)(.*)\n\n" %(NAME, NAME, PARAMETERS)  # Component
+COMPONENT       = "%s=%s\(%s\)(.*)" %(NAME, NAME, PARAMETERS)  # Component
 
 # Constants
 PROPERTIES      = ["AT", "ROTATED"]     # Standard properties
+TERMINATORS     = ["FINALLY", "END"]
+
 
 # Utils
 ifelse  = lambda a,b,c: (b,c)[not a]    # C ternary operator '?:'
@@ -85,19 +97,25 @@ class McStasConverter:
         "Parses file content and appends component to self._components"
 
         # Remove comments
-        p   = re.compile(COMPONENT, re.DOTALL)
-        matches     = p.findall(tempText)       # Finds all components
+        text        = self._removeComments(tempText)
 
-        for m in matches:
-            comp    = {}
-            comp["name"]        = m[0]
-            comp["type"]        = m[1]
-            comp["parameters"]  = self._params(m[2])
-            comp["position"]    = self._position(m[3])
-            comp["rotation"]    = self._rotation(m[3])
-            comp["extra"]       = self._extra(m[3])
+        compSplits   = text.split("COMPONENT")   # Split by component parts
+        compSplits   = compSplits[1:]             # Skip 0 part (should not have components)
+        
+        for compText in compSplits:
+            p   = re.compile(COMPONENT, re.DOTALL)
+            matches     = p.findall(compText)       # Finds all components
 
-            self._components.append(comp)
+            for m in matches:
+                comp    = {}
+                comp["name"]        = m[0]
+                comp["type"]        = m[1]
+                comp["parameters"]  = self._params(m[2])
+                comp["position"]    = self._position(m[3])
+                comp["rotation"]    = self._rotation(m[3])
+                comp["extra"]       = self._extra(m[3])
+
+                self._components.append(comp)
 
 
     def components(self):
@@ -110,7 +128,6 @@ class McStasConverter:
         if not text:
             return {}   # Empty dictionary
 
-        text    = self._removeComments(text)
         plist   = text.split(",")
         params  = {}
         for pp in plist:
@@ -172,12 +189,15 @@ class McStasConverter:
         if not text:
             return prop
         
-        tl    = text.split("\n")    # Split properies by empty line
+        tl    = text.split("\n")        # Split properies by empty line
         for t in tl:
             kv  = self._propKeyValue(t)
             if not kv:
                 continue    # No key-value tuple
 
+            if kv[0] in TERMINATORS:    # Terminators found return properties
+                return prop
+                
             prop[kv[0]]    = kv[1]
 
         return prop
