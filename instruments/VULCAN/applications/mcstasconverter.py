@@ -54,9 +54,12 @@ tempText = """COMPONENT L_monitor9 = L_monitor(
     restore_neutron = 1)
   AT (0, 0, 0.971)  RELATIVE  FU_Out
   ROTATED (0,ROT,0) relative arm
+  hello world
 
   """
 
+# Imports
+import re
 
 # Regular expressions
 SPACES          = '[ \t]*'              # Spaces and tabs
@@ -65,9 +68,11 @@ NO_BRACKETS     = '[^()]*'              # No brackets
 PARAMETERS      = '(%s)' % NO_BRACKETS  # Component parameters
 COMPONENT       = "COMPONENT%s=%s\(%s\)(.*)\n\n" %(NAME, NAME, PARAMETERS)  # Component
 
-PROPERTIES      = ["AT", "ROTATED"]
+# Constants
+PROPERTIES      = ["AT", "ROTATED"]     # Standard properties
 
-import re
+# Utils
+ifelse  = lambda a,b,c: (b,c)[not a]    # C ternary operator '?:'
 
 class McStasConverter:
 
@@ -95,12 +100,17 @@ class McStasConverter:
             self._components.append(comp)
 
 
+    def components(self):
+        "Returns list of components"
+        return self._components
+
+
     def _params(self, text):
         "Returns dictionary of parameters"
         if not text:
             return {}   # Empty dictionary
 
-        #text    = """\n    nchan = 140, filename = "Vulcan_asbuilt_L_monitor9.txt",\n    xwidth = 0.15, yheight = 0.15, Lmin = 0.0, Lmax = 14.0,\n    restore_neutron = 1"""
+        text    = self._removeComments(text)
         plist   = text.split(",")
         params  = {}
         for pp in plist:
@@ -113,9 +123,10 @@ class McStasConverter:
         return params
 
 
-    def components(self):
-        "Returns list of components"
-        return self._components
+    # XXX
+    def _removeComments(self, text):
+        "Removes comments from the text"
+        return text
 
 
     def _position(self, text):
@@ -129,38 +140,62 @@ class McStasConverter:
 
 
     def _extra(self, text):
-        pass
+        "Return list of extra properies that are not in property list"
+        extra   = []
+        if not text:
+            return extra
+
+        props   = self._properties(text)
+        for key in props.keys():
+            if not key in PROPERTIES:
+                extra.append(props[key])
+                
+        return extra
+
 
     def _property(self, key, text):
-        "Takes key and extracts pproperty from text"
+        "Takes key and returns property from text as a string"
+        # Example: 'AT (0, 0, 0.971)  RELATIVE  FU_Out'
         if not key or not text:
             return ""
 
-        plist       = self._propsList(text) #text.split("\n")
-        property    = ""
-        for p in plist:
-            if p.startswith("%s " % key.upper()): # E.g. starts with "AT "
-                property    = p                   # If more than one key is set, take the last one
-
-        return property
+        props   = self._properties(text)
+        value   = props.get(key.upper())
+        return ifelse(value, value, "")
 
 
-    def _propsList(self, text):
-        "Returns non-empty list of properties"
-        plist   = []
+    def _properties(self, text):
+        "Returns dictionary of properties with the first word as the key"
+        # Example: {'AT': 'AT (0, 0, 0.971)  RELATIVE  FU_Out',}
+        prop   = {}
 
         if not text:
-            return plist
+            return prop
         
         tl    = text.split("\n")    # Split properies by empty line
         for t in tl:
-            str = t.strip()
-            if str == "":           # get rid of empty line
-                continue
+            kv  = self._propKeyValue(t)
+            if not kv:
+                continue    # No key-value tuple
 
-            plist.append(str)
+            prop[kv[0]]    = kv[1]
 
-        return plist
+        return prop
+
+
+    def _propKeyValue(self, line):
+        "Takes line, tries to extract the first word and returns (key, value) or None - otherwise"
+        if not line:
+            return None
+
+        line    = line.strip()
+        parts   = line.split(" ")
+        first   = parts[0]      # First word
+        if first == "":
+            return None
+
+        key     = first.upper()
+        return (key, line)
 
 
     # XXX: Fix
