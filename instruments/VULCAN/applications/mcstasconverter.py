@@ -63,8 +63,9 @@ SPACES          = '[ \t]*'              # Spaces and tabs
 NAME            = '%s([^ ()=]*)%s' % (SPACES, SPACES)  # Extracts name
 NO_BRACKETS     = '[^()]*'              # No brackets
 PARAMETERS      = '(%s)' % NO_BRACKETS  # Component parameters
-
 COMPONENT       = "COMPONENT%s=%s\(%s\)(.*)\n\n" %(NAME, NAME, PARAMETERS)  # Component
+
+PROPERTIES      = ["AT", "ROTATED"]
 
 import re
 
@@ -77,16 +78,10 @@ class McStasConverter:
 
     def parse(self):
         "Parses file content and appends component to self._components"
-        str     = "COMPONENT L_monitor9 = L_monitor(\nhello)"
-        str2    = "restore_neutron = 1)\n  AT (0, 0, 0.971)  RELATIVE  FU_Out\n\n"
-        str3    = """COMPONENT L_monitor9 = L_monitor(restore_neutron = 1)
-  AT (0, 0, 0.971)  RELATIVE  FU_Out
-  ROTATED (0,ROT,0) relative arm
 
-"""
         # Remove comments
         p   = re.compile(COMPONENT, re.DOTALL)
-        matches     = p.findall(str3)   #tempText)       # Finds all components
+        matches     = p.findall(tempText)       # Finds all components
 
         for m in matches:
             comp    = {}
@@ -95,6 +90,7 @@ class McStasConverter:
             comp["parameters"]  = self._params(m[2])
             comp["position"]    = self._position(m[3])
             comp["rotation"]    = self._rotation(m[3])
+            comp["extra"]       = self._extra(m[3])
 
             self._components.append(comp)
 
@@ -132,23 +128,39 @@ class McStasConverter:
         return self._property("ROTATED", text)
 
 
+    def _extra(self, text):
+        pass
 
     def _property(self, key, text):
         "Takes key and extracts pproperty from text"
         if not key or not text:
             return ""
 
-        ilist       = text.split("\n")
+        plist       = self._propsList(text) #text.split("\n")
         property    = ""
-        for i in ilist:
-            str = i.strip("\n ")
-            if str == "":   # get rid of empty line
-                continue
-
-            if str.startswith("%s " % key.upper()): # E.g. starts with "AT "
-                property    = str                   # If more than one key is set, take the last one
+        for p in plist:
+            if p.startswith("%s " % key.upper()): # E.g. starts with "AT "
+                property    = p                   # If more than one key is set, take the last one
 
         return property
+
+
+    def _propsList(self, text):
+        "Returns non-empty list of properties"
+        plist   = []
+
+        if not text:
+            return plist
+        
+        tl    = text.split("\n")    # Split properies by empty line
+        for t in tl:
+            str = t.strip()
+            if str == "":           # get rid of empty line
+                continue
+
+            plist.append(str)
+
+        return plist
 
 
     # XXX: Fix
