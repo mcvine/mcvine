@@ -48,7 +48,11 @@ Issues:
     - Assumption is made that new line is "\n"
 """
 
-tempText = """COMPONENT L_monitor9 = L_monitor(
+tempText = """
+/* Here, a secondary arm - or reference point, placed  */
+/* on the sample position. The ROT parameter above     */
+
+COMPONENT L_monitor9 = L_monitor(
     nchan = 140, filename = "Vulcan_asbuilt_L_monitor9.txt",
     xwidth = 0.15, yheight = 0.15, Lmin = 0.0, Lmax = 14.0,
     restore_neutron = 1)
@@ -72,6 +76,7 @@ END
 import re
 
 # Regular expressions
+COMMENT         = '(/\*.*?\*/)' # Non-greedy comment
 SPACES          = '[ \t]*'              # Spaces and tabs
 NAME            = '%s([^ ()=]*)%s' % (SPACES, SPACES)  # Extracts name
 NO_BRACKETS     = '[^()]*'              # No brackets
@@ -97,8 +102,7 @@ class McStasConverter:
         "Parses file content and appends component to self._components"
 
         # Remove comments
-        text        = self._removeComments(tempText)
-
+        text         = self._removeComments(tempText)
         compSplits   = text.split("COMPONENT")   # Split by component parts
         compSplits   = compSplits[1:]             # Skip 0 part (should not have components)
         
@@ -140,10 +144,12 @@ class McStasConverter:
         return params
 
 
-    # XXX
     def _removeComments(self, text):
         "Removes comments from the text"
-        return text
+        p   = re.compile(COMMENT, re.DOTALL)
+        s   = re.sub(p, '', text)
+
+        return s
 
 
     def _position(self, text):
