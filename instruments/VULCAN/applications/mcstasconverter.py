@@ -184,14 +184,15 @@ class McStasConverter:
         if not text:
             return {}   # Empty dictionary
 
-        plist   = text.split(",")
+        ctext   = text.strip()      # Can have unnecessary white spaces
+        plist   = ctext.split(",")
         params  = {}
         for pp in plist:
             keyval  = pp.split("=")
-            assert len(keyval) == 2
-            name            = keyval[0].strip()
-            value           = keyval[1].strip()
-            params[name]    = value
+            if len(keyval) == 2:
+                name            = keyval[0].strip()
+                value           = keyval[1].strip()
+                params[name]    = value
 
         return params
 
