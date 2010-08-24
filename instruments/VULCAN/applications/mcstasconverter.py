@@ -155,7 +155,7 @@ class McStasConverter:
     def toString(self, indent=16, br="\n"):
         "Dumps component metadata and parameters in a pretty form"
         str     = ""
-        for comp in self._components:
+        for comp in self.components():
             str += "name:%s%s%s"     % (self._resIndent("name:", indent), comp["name"], br)
             str += "type:%s%s%s"     % (self._resIndent("type:", indent), comp["type"], br)
             str += "position:%s%s%s" % (self._resIndent("position:", indent), comp["position"], br)
@@ -167,7 +167,7 @@ class McStasConverter:
             keys    = params.keys()
             if len(keys) <= 1:      # One parameter exist only
                 str += br
-                return str
+                continue
 
             for key in keys[1:]:    # More than one parameter exists
                 strInd  = self._resIndent("", indent)
@@ -318,7 +318,7 @@ class McStasConverter:
             return str
 
         key     = keys[0]
-        str     += "%s%s%s%s%s" % ( self._resIndent("parameters:", indent),
+        str     += "%s%s:%s%s%s" % ( self._resIndent("parameters:", indent),
                                     key,
                                     self._resIndent(key, indent),
                                     params[key],
@@ -326,7 +326,6 @@ class McStasConverter:
         return str
 
 def main():
-    #print ARGS
     for arg in sys.argv:
         parts   = arg.split("=")
         key     = parts[0]
