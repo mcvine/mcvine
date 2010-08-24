@@ -12,9 +12,9 @@
 #
 
 """
-McStasConverter - converts McStas componentes in .instr file to dictionary.
-                  This can later be used to create other data structures
-                  (e.g. McVine component)
+McStasConverter - converter for McStas componentes to dictionary.
+                  This a convenient form to create other data structures
+                  (e.g. McVine components)
 
 Example:
 
@@ -49,6 +49,8 @@ Issues:
     - Assumption is made that new line is "\n"
 """
 
+
+
 tempText = """
 /* Here, a secondary arm - or reference point, placed  */
 /* on the sample position. The ROT parameter above     */
@@ -75,6 +77,8 @@ END
 
 # Imports
 import re
+import sys
+import os.path
 
 # Regular expressions
 COMMENT         = '(/\*.*?\*/)'         # Non-greedy comment (.*?)
@@ -87,24 +91,41 @@ COMPONENT       = "%s=%s\(%s\)(.*)" %(NAME, NAME, PARAMETERS)  # Component
 # Constants
 PROPERTIES      = ["AT", "ROTATED"]     # Standard properties
 TERMINATORS     = ["FINALLY", "END"]
+FILE            = ["--filename", "-f"]
+CONFIG          = ["--config", "-c"]
+ARGS            = FILE + CONFIG
+USAGE_MESSAGE   = """NAME:
+    McStasConverter - converter for McStas componentes 
+
+SYNOPSIS:
+    python mcstasconverter.py [--filename|-f file_name] [--config|-c config_string]
+
+DESCIRPTION:
+    McStasConverter - class that performs convertion from McStas componentes to dictionary.
+                      This a convenient form to create other data structures
+                      (e.g. McVine components)
+"""
 
 # Utils
 ifelse  = lambda a,b,c: (b,c)[not a]    # C ternary operator '?:'
 
 class McStasConverter:
 
-    def __init__(self, filename, parse=True):
+    def __init__(self, filename=None, config=None, parse=True):
         self._filename      = filename
+        self._config        = config
         self._components    = []    # list of dictionaries
 
-        if parse:
+        if parse and (self._fileExists() or config):
             self.parse()
 
 
     def parse(self):
         "Parses file content and appends component to self._components"
+        configText   = self._configText()
+        
         # Remove comments
-        text         = self._removeComments(tempText)
+        text         = self._removeComments(configText)
         compSplits   = text.split("COMPONENT")   # Split by component parts
         compSplits   = compSplits[1:]             # Skip 0 part (should not have components)
 
@@ -129,6 +150,56 @@ class McStasConverter:
     def components(self):
         "Returns list of components"
         return self._components
+
+
+    def toString(self, indent=16, br="\n"):
+        "Dumps component metadata and parameters in a pretty form"
+        str     = ""
+        for comp in self._components:
+            str += "name:%s%s%s"     % (self._resIndent("name:", indent), comp["name"], br)
+            str += "type:%s%s%s"     % (self._resIndent("type:", indent), comp["type"], br)
+            str += "position:%s%s%s" % (self._resIndent("position:", indent), comp["position"], br)
+            str += "rotation:%s%s%s" % (self._resIndent("rotation:", indent), comp["rotation"], br)
+            str += "extra:%s%s%s"    % (self._resIndent("extra:", indent), comp["extra"], br)
+
+            params  = comp["parameters"]
+            str     += self._firstParam(params, indent, br)
+            keys    = params.keys()
+            if len(keys) <= 1:      # One parameter exist only
+                str += br
+                return str
+
+            for key in keys[1:]:    # More than one parameter exists
+                strInd  = self._resIndent("", indent)
+                str     += "%s%s:%s%s%s" % (strInd, key, self._resIndent(key, indent), params[key], br)
+
+            str += br
+
+        return str
+
+
+    def _fileExists(self):
+        "Checks if file exists"
+        if self._filename and os.path.exists(self._filename):
+            return True
+
+        return False
+
+
+    def _configText(self):
+        "Take config from file if it exist and readable, or use from config - otherwise"
+        configText  = ""
+        if self._fileExists():
+            try:    # Try to read it
+                configText  = open(self._filename).read()
+            except:
+                pass    # No exception
+            return configText
+
+        if self._config:
+            configText  = self._config
+
+        return configText   # Empty string
 
 
     def _params(self, text):
@@ -254,36 +325,26 @@ class McStasConverter:
                                     br)
         return str
 
+def main():
+    #print ARGS
+    for arg in sys.argv:
+        parts   = arg.split("=")
+        key     = parts[0]
+        if key in ARGS:
+            if parts[0] in FILE:
+                conv    = McStasConverter(filename=parts[1])
+            elif parts[0] in CONFIG:
+                conv    = McStasConverter(config=parts[1])
+                
+            print conv.toString()
+            return
 
-    def toString(self, indent=16, br="\n"):
-        "Dumps component metadata and parameters in a pretty form"
-        str     = ""
-        for comp in self._components:
-            str += "name:%s%s%s"     % (self._resIndent("name:", indent), comp["name"], br)
-            str += "type:%s%s%s"     % (self._resIndent("type:", indent), comp["type"], br)
-            str += "position:%s%s%s" % (self._resIndent("position:", indent), comp["position"], br)
-            str += "rotation:%s%s%s" % (self._resIndent("rotation:", indent), comp["rotation"], br)
-            str += "extra:%s%s%s"    % (self._resIndent("extra:", indent), comp["extra"], br)
-            
-            params  = comp["parameters"]
-            str     += self._firstParam(params, indent, br)
-            keys    = params.keys()
-            if len(keys) <= 1:      # One parameter exist only
-                str += br
-                return str
-            
-            for key in keys[1:]:    # More than one parameter exists
-                strInd  = self._resIndent("", indent)
-                str     += "%s%s:%s%s%s" % (strInd, key, self._resIndent(key, indent), params[key], br)
-
-            str += br
-
-        return str
+    print USAGE_MESSAGE
+    return
 
 
 if __name__ == "__main__":
-    conv    = McStasConverter("hi")
-    print conv.toString()
+    main()
 
 __date__ = "$Aug 19, 2010 10:25:18 AM$"
 
