@@ -12,7 +12,7 @@
 #
 
 """
-McStasConverter - converter for McStas componentes to dictionary.
+McStasConverter - converter for McStas components to list of dictionaries.
                   This a convenient form to create other data structures
                   (e.g. McVine components)
 
@@ -72,10 +72,10 @@ FILE            = ["--filename", "-f"]
 CONFIG          = ["--config", "-c"]
 ARGS            = FILE + CONFIG
 USAGE_MESSAGE   = """NAME:
-    McStasConverter - converter for McStas componentes 
+    McStasConverter - converter for McStas components 
 
 SYNOPSIS:
-    python mcstasconverter.py [--filename|-f file_name] [--config|-c config_string]
+    python mcstasconverter.py [--filename|-f=file_name] [--config|-c=config_string]
 
 DESCIRPTION:
     McStasConverter - class that performs convertion from McStas componentes to dictionary.
@@ -301,6 +301,7 @@ class McStasConverter:
                                     params[key],
                                     br)
         return str
+
 
 def main():
     for arg in sys.argv:
