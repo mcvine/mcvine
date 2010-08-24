@@ -81,7 +81,10 @@ class mcstas_converter_config_TestCase(unittest.TestCase):
 
 
 if __name__ == "__main__":
+    conv    = McStasConverter(config=fixtures.textExample)
+    print conv.toString()
     unittest.main()
+
 
 __date__ = "$Aug 22, 2010 8:45:09 PM$"
 

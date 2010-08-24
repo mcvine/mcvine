@@ -16,6 +16,7 @@ McStasConverter - converter for McStas componentes to dictionary.
                   This a convenient form to create other data structures
                   (e.g. McVine components)
 
+
 Example:
 
 McStas component:
@@ -29,18 +30,19 @@ COMPONENT L_monitor9 = L_monitor(
 
 is converted to dictionary:
 
-{"name":        "L_monitor9",
-"type":         "L_monitor",
-"position":     "AT (0, 0, 0.971)  RELATIVE  FU_Out",
-"rotation":     "ROTATED (0,ROT,0) relative arm",
-"extra":        [], # properties that are not "AT" or "ROTATED"
-"parameters": {	"nchan": "140",
-		"filename": "'Vulcan_asbuilt_L_monitor9.txt'",
-		"xwidth": "0.15",
-		"yheight": "0.15",
-		"Lmin": "0.0",
-		"Lmax": "14.0",
-		"restore_neutron": "1"}
+{"name":        "L_monitor9"
+"type":         "L_monitor"
+"position":     "AT (0, 0, 0.971)  RELATIVE  FU_Out"
+"rotation":     "ROTATED (0,ROT,0) relative arm"
+"extra":        []
+"parameters":  {"nchan":          "140"
+                "yheight":         "0.15"
+                "restore_neutron": "1"
+                "filename":        "\"Vulcan_asbuilt_L_monitor9.txt\""
+                "Lmax":            "14.0"
+                "xwidth":          "0.15"
+                "Lmin":            "0.0"
+                }
 }
 
 Issues:
@@ -48,7 +50,6 @@ Issues:
     - Extract properties from "extra" to separate properties
     - Assumption is made that new line is "\n"
 """
-
 
 
 # Imports
