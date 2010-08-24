@@ -2,9 +2,9 @@
 # 
 #  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # 
-#                               Michael A.G. Aivazis
+#                                  Jiao Lin
 #                        California Institute of Technology
-#                        (C) 1998-2005  All Rights Reserved
+#                        (C) 2005-2010  All Rights Reserved
 # 
 #  <LicenseText>
 # 

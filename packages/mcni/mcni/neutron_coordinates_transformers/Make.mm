@@ -33,6 +33,8 @@ EXPORT_PYTHON_MODULES = \
 	_transformers.py \
 	mcstas.py \
 	mcstasRotations.py \
+	mcstas_bpbinding_transformer.py \
+	transformer_generator.py \
 	utils.py \
 
 
