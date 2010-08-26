@@ -67,6 +67,10 @@ rotation angles phx, phy, phz as
     
 this is actually a piece of c-code in mcstas.
 
+Please note that after rotation 1 (rotate around x axis)
+the y axis already rotated. So the second rotation is around 
+the new y axis.
+
 Please be very careful and read the following texts to
 understand the meaning of the matrix returned by this function.
 
@@ -185,6 +189,9 @@ def toAngles(m, unit='degree'):
 
 
 from utils import *
+
+
+if __name__ == '__main__': main()
 
 
 # version

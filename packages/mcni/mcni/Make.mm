@@ -13,14 +13,15 @@
 PROJECT = mcni
 
 BUILD_DIRS = \
-    bindings  \
-    components  \
-    instrument_simulator  \
-    neutron_coordinates_transformers  \
-    neutron_storage  \
-    pyre_components  \
-    pyre_support  \
-    utils  \
+	bindings  \
+	components  \
+	coordinate_system_transformers \
+	instrument_simulator  \
+	neutron_coordinates_transformers  \
+	neutron_storage  \
+	pyre_components  \
+	pyre_support  \
+	utils  \
 
 RECURSE_DIRS = $(BUILD_DIRS)
 

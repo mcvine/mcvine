@@ -12,6 +12,58 @@
 #
 
 
+I = ( (1.,0,0),
+      (0,1.,0),
+      (0,0,1.), )
+    
+
+class Coord(object): 
+
+    def __init__(self, value):
+        self.value = value
+
+
+class RelativeCoord(Coord):
+    
+    def __init__(self, value, to=None):
+        if to is None:
+            raise ValueError, "relative coord must specify the reference"
+        super(RelativeCoord, self).__init__(value)
+        self.reference = to
+        self.isabsolute = False
+        self.isrelative = True
+        return
+
+
+    def __str__(self):
+        return '%s relative to %s' % (self.value, self.reference)
+
+
+class AbsoluteCoord(Coord):
+    
+    def __init__(self, value):
+        super(AbsoluteCoord, self).__init__(value)
+        self.isabsolute = True
+        self.isrelative = False
+        return
+
+
+    def __str__(self):
+        return '%s' % (self.value, )
+
+
+from pyre.components.Component import Component
+class DefaultTransformer(Component):
+
+    def __init__(self, name='coordinate-system-transformer', facility='transformer'):
+        super(DefaultTransformer, self).__init__(name, facility)
+        return
+    
+    def __call__(self, *args, **kwds):
+        from mcni.coordinate_system_transformers.mcstas import transformCoordinateSystem
+        return transformCoordinateSystem(*args, **kwds)
+
+
 
 from pyre.inventory.Property import Property
 
@@ -27,31 +79,57 @@ class Register(Property):
 
 
     def _cast(self, value):
+        # examples of good values:
         if isinstance(value, basestring):
-            value = eval(value)
+            env = {'relative': RelativeCoord}
+            value = eval(value, env)
             pass
         
-        if not isinstance(value, tuple) and not isinstance(value, list): invalid = True
-        elif len(value) != 2: invalid = True
-        elif len(value[0]) != 3 or len(value[1]) !=3: invalid = True
-        else: invalid = False
+        try:
+            n = len(value)
+        except:
+            raise ValueError, "%s. Should be a 2-tuple. Good examples: %s" % (
+                value, good_records)
 
-        if invalid:
-            raise ValueError , "%s. Good example: (0,0,3), (0,0,90)" % (
-                value, )
+        if n != 2:
+            raise ValueError, "%s. Should be a 2-tuple. Good examples: %s" % (
+                value, good_records)
+
+        pos, ori = value
+        pos = _toCoord(pos)
+        ori = _toCoord(ori)
         
-        return value
+        return pos, ori
+
+
+good_records = """
+  * (0,0,3), (0,0,0)
+  * (0,0,3), relative((0,0,90), to='previous')
+  * relative((0,0,3), to='sample'), (0,0,0)
+"""
+
+default_record = AbsoluteCoord((0,0,0)), AbsoluteCoord((0,0,0))
 
 
 
-default_record = (0,0,0), (0,0,0)
-
-
+def _toCoord(candidate):
+    if isinstance(candidate, Coord): return candidate
+    assert len(candidate) == 3, "coord must be a 3-vector"
+    return AbsoluteCoord(candidate)
+    
 
 from mcni.Geometer import Geometer as base
-from pyre.components.Component import Component
 
 class Geometer(Component, base):
+
+    
+    class Inventory(Component.Inventory):
+
+        import pyre.inventory
+        transformer = pyre.inventory.facility('transformer', factory=DefaultTransformer)
+        transformer.meta['tip'] = 'coordinate system transformer'
+
+        dump = pyre.inventory.bool('dump')
 
 
     def __init__(self, name = 'geometer'):
@@ -64,6 +142,43 @@ class Geometer(Component, base):
 
 
     def position(self, element):
+        if element in self._abspos:
+            return self._abspos[element]
+        ret = self._abspos[element] = self._calcAbsPosition(element)
+        return ret
+
+
+    def orientation(self, element):
+        if element in self._absori:
+            return self._absori[element]
+        ret = self._calcAbsOrientation(element)
+        ret = np.array(ret)
+        self._absori[element] = ret
+        return ret
+    
+    
+    def _calcAbsPosition(self, element):
+        rec = self._positionRecord(element)
+        rec = _toCoord(rec)
+        if rec.isabsolute: return rec.value
+        ref = rec.reference
+        refpos = self.position(ref)
+        refori = self.orientation(ref)
+        return self.transformer(refpos, refori, rec.value, I)[0]
+
+
+    def _calcAbsOrientation(self, element):
+        rec = self._orientationRecord(element)
+        rec = _toCoord(rec)
+        if rec.isabsolute: return rec.value
+        ref = rec.reference
+        refpos = (0,0,0)
+        refori = self.orientation(ref)
+        ret = self.transformer(refpos, refori, (0,0,0), rec.value)[1]
+        return ret
+
+
+    def _positionRecord(self, element):
         try:
             return base.position( self, element )
         except:
@@ -79,7 +194,7 @@ class Geometer(Component, base):
                 raise "Position of element %s not registered" % element.name
 
 
-    def orientation(self, element):
+    def _orientationRecord(self, element):
         try:
             return base.orientation( self, element )
         except:
@@ -104,10 +219,41 @@ class Geometer(Component, base):
                 self.register( prop, position, orientation )
                 pass
             continue
+
+        self.transformer = self.inventory.transformer
+
+        self._abspos = {}
+        self._absori = {}
         return
 
 
+    def _init(self):
+        Component._init(self)
+        if self.inventory.dump: self._dump()
+        return
+
+
+    def _dump(self):
+        lines = []
+        lines.append('Report of geometrical info of components:')
+        for prop in self.inventory.propertyNames():
+            v = self.inventory.getTrait( prop )
+            if isinstance( v, Register ):
+                posr = self._positionRecord(prop)
+                orir = self._orientationRecord(prop)
+                pos = self.position(prop)
+                ori = self.orientation(prop)
+                lines.append('%s: %s, %s\n   abs. coords: %s, %s\n' % (
+                        prop, posr, orir, pos, ori))
+                continue
+            continue
+        
+        print '\n'.join(lines)
+        return
+
     pass # end of Geometer
+
+import numpy as np
 
 
 def test():

@@ -1,6 +1,6 @@
 
 from mcstasRotations import toMatrix
-from numpy import array, dot
+from numpy import array, dot, mat
 
 def relativePositionOrientation(
     position1, orientation1,
@@ -9,7 +9,8 @@ def relativePositionOrientation(
     rotmat2 = toMatrix( orientation2, unit = 'degree' )
     rotmat1 = toMatrix( orientation1, unit = 'degree' )
     
-    m = dot(rotmat2, rotmat1.T)
+    m = mat(rotmat2) * mat(rotmat1.T)
+    m = array(m)
 
     position1 = array(position1)
     position2 = array(position2)
