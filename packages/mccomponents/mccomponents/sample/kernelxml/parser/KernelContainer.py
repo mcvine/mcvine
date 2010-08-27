@@ -20,7 +20,8 @@ class KernelContainer(AbstractNode):
 
     tag = "KernelContainer"
     
-    onIsotropicKernel = onConstantEnergyTransferKernel = onSQEkernel \
+    onIsotropicKernel = onConstantQEKernel = onConstantEnergyTransferKernel \
+        = onSQEkernel \
         = onKernelContainer = AbstractNode.onElement
 
     def elementFactory(self, *args, **kwds):

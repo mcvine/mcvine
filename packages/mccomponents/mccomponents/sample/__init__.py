@@ -71,6 +71,11 @@ def constantEnergyTransferKernel(*args, **kwds):
     return ConstantEnergyTransferKernel(*args, **kwds)
 
 
+def constantQEKernel(*args, **kwds):
+    from ConstantQEKernel import ConstantQEKernel
+    return ConstantQEKernel(*args, **kwds)
+
+
 def kernelcontainer(*args, **kwds):
     from KernelContainer import KernelContainer
     return KernelContainer( *args, **kwds )

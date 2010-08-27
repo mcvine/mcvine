@@ -93,6 +93,16 @@ class New:
         return b.ConstantEnergyTransferKernel(E, absorption_cross_section, scattering_cross_section)
 
 
+    def constantQEKernel(self, Q, E, absorption_cross_section, scattering_cross_section):
+        '''constantqekernel: a kernel scatters isotropically with fixed momentum and energy transfer
+
+        Q: momentum transfer
+        E: energy transfer
+        absorption_cross_section: absorption cross section
+        scattering_cross_section: scattering cross section
+        '''
+        return b.ConstantQEKernel(Q, E, absorption_cross_section, scattering_cross_section)
+    
     pass # end of BoostPythonBinding
 
 

@@ -15,7 +15,8 @@ from mccomponents.homogeneous_scatterer.hsxml.parser.HomogeneousScatterer import
 
 class HomogeneousScatterer( base ):
 
-    onConstantEnergyTransferKernel = onSQEkernel = base.onKernel
+    onConstantQEKernel = onConstantEnergyTransferKernel = base.onKernel
+    onSQEkernel = base.onKernel
     onIsotropicKernel = base.onKernel
 
 

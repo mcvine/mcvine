@@ -26,6 +26,7 @@ all: export
 EXPORT_PYTHON_MODULES = \
 	AbstractNode.py \
 	ConstantEnergyTransferKernel.py \
+	ConstantQEKernel.py \
 	Document.py \
 	GridSQE.py \
 	SQE_fromexpression.py \

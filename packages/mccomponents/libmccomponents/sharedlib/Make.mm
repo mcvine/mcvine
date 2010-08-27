@@ -38,6 +38,7 @@ PROJ_SRCS = \
 	He3.cc \
 	He3Tube.cc \
 	ConstantEnergyTransferKernel.cc \
+	ConstantQEKernel.cc \
 	SQkernel.cc \
 	SQEkernel.cc \
 	GridSQE.cc \
@@ -79,6 +80,9 @@ EventModeMCA.cc: ../kernels/detector/EventModeMCA.cc
 
 ConstantEnergyTransferKernel.cc: ../kernels/sample/ConstantEnergyTransferKernel.cc
 	cp ../kernels/sample/ConstantEnergyTransferKernel.cc .
+
+ConstantQEKernel.cc: ../kernels/sample/ConstantQEKernel.cc
+	cp ../kernels/sample/ConstantQEKernel.cc .
 
 SQEkernel.cc: ../kernels/sample/SQEkernel.cc
 	cp ../kernels/sample/SQEkernel.cc .
