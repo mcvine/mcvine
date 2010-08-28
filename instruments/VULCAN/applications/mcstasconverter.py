@@ -51,6 +51,7 @@ Issues:
     - Assumption is made that new line is "\n"
 """
 
+# XXX: Fix options issue (see fixtures.textOptions)
 
 # Imports
 import re

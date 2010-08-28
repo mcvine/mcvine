@@ -31,3 +31,12 @@ textExample = """COMPONENT L_monitor9 = L_monitor(
   AT (0, 0, 0.971)  RELATIVE  FU_Out
   ROTATED (0,ROT,0) relative arm
 """
+
+# Parameter "options" has equal character ('=')
+textOptions = """COMPONENT psd_yscan_L = Monitor_nD(
+    options = "square, wavelength limits=[0.875 3.025] bins=21 y limits=[-0.05 0.05] bins=100, file=Vulcan_asbuilt_yscan.txt",
+    xwidth = 0.1, yheight = 0.1)
+  AT (0, 0, 0.975) RELATIVE FU_Out
+
+"""
+
