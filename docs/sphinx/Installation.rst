@@ -3,7 +3,7 @@
 Installation
 ============
 
-For a list of systems deployed with MCViNE, please go to
+For a list of systems already deployed with MCViNE, please go to
 :ref:`deployments <deployments>`.
 
 At this moment, mcvine can only be installed from source.

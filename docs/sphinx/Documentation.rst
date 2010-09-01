@@ -16,6 +16,7 @@ Contents:
    Installation
    Demos
    Tutorials
+   Components
    API
    Extend
    Problems
