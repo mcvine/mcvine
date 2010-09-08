@@ -5,6 +5,7 @@ ToDo list for VULCAN
 - Fix warning messages: 
     /BoostPythonBinding.py:103: RuntimeWarning
     mcstas2/utils/parsers/ComponentInfo.py:98:__init__; ValueError: empty string for float()
+- [IN PROGRESS] Compile SNS_source4 component
 - Compile PSD_TEW_monitor component
 
 
