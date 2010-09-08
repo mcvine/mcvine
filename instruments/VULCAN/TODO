@@ -1,7 +1,20 @@
 ToDo list for VULCAN
 --------------------
 
-- Write converter from McStas to McVine components
+- [DONE] Install VNF related packages correctly!
+- Fix warning messages: 
+    /BoostPythonBinding.py:103: RuntimeWarning
+    mcstas2/utils/parsers/ComponentInfo.py:98:__init__; ValueError: empty string for float()
+- Compile PSD_TEW_monitor component
+
+
+- Create McVine components for Vulcan
+- Test McVine components for Vulcan from the command line
+- Add Vulcan instrument to VNF
+
+- [DONE] Write converter from McStas to McVine components
 - Run vulcan simulation from command line
-- Run ARCS simulation from command line
-- Run ARCS from VNF
+- [DONE] Run virtual experiment simulation from command line
+- [DONE] Run virtual experiment from VNF
+
+
