@@ -93,6 +93,8 @@ class Parameter:
         value_converter = value_converters[type]
         try:
             default = value_converter( default )
+        except ValueError:
+            default = 0
         except Exception, err:
             warning.log( 'parameter %s: %s: %s' % (
                 name, err.__class__.__name__, err) )
