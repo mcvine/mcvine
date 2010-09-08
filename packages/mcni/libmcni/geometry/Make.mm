@@ -33,6 +33,7 @@ EXPORT_HEADERS = \
 	Velocity.h Velocity.icc \
 	RotationMatrix.h RotationMatrix.icc \
 	coords_transform.h coords_transform.icc \
+	utils.h utils.icc \
 
 
 # version

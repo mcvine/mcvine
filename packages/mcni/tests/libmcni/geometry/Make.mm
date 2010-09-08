@@ -17,7 +17,7 @@ PROJ_TIDY += $(PROJ_CPPTESTS)
 PROJ_CLEAN += $(PROJ_CPPTESTS)
 
 PROJ_PYTESTS =  alltests.py
-PROJ_CPPTESTS = testVector3 testMatrix3 testcoords_transform
+PROJ_CPPTESTS = testVector3 testMatrix3 testcoords_transform testutils
 PROJ_TESTS = $(PROJ_PYTESTS) $(PROJ_CPPTESTS)
 PROJ_LIBRARIES = -L$(BLD_LIBDIR) -ljournal -lmcni
 
@@ -47,6 +47,9 @@ testMatrix3: testMatrix3.cc
 
 testcoords_transform: testcoords_transform.cc 
 	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ testcoords_transform.cc $(PROJ_LIBRARIES)
+
+testutils: testutils.cc 
+	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ testutils.cc $(PROJ_LIBRARIES)
 
 
 # version

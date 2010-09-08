@@ -1,0 +1,55 @@
+#ifndef MCNI_GEOMETRY_UTILS_H
+#error utils.icc not meaningful outside utils.h
+#endif
+
+
+#include <iostream>
+
+
+#include "mcni/test/exception.h"
+
+
+namespace mcni {
+  
+  template <typename Number>
+  void rotate(Vector3<Number> &v, const Vector3<Number> &c, const Number &angle, Number epsilon) 
+  {
+    /*
+    normalize c
+    v_pl = (v dot c) * c      (parallel)
+    v_pp = v - v_pl           (perpendicular)
+    e_pp = v_pp / |v_pp|
+    t = (e_pp * c)     (cross product of c * v)
+    v_pp_r = (e_pp * cos(theta) - t * sin(theta))*|v_pp| (rotated v_pp)
+    v_r = v_pp_r + v_pl  (rotated v)
+    */
+
+    typedef Vector3<Number> V3;
+    V3 c1 = c;
+    c1.normalize();
+
+    V3 v_pl = (v|c1)*c1;
+    if (std::abs(1-v_pl.length()/v.length())<epsilon) 
+      return;
+
+    V3 v_pp = v-v_pl;
+    V3 e_pp = v_pp; e_pp.normalize();
+    V3 t= e_pp * c1;
+    
+    using namespace std;
+    V3 v_pp_r = (e_pp * cos (angle)-t*sin(angle))*v_pp.length();
+    
+    v = v_pp_r + v_pl;
+  }
+
+  template <typename Number>
+  Vector3<Number> rotated(const Vector3<Number> &v, const Vector3<Number> &by, const Number &angle, Number epsilon=1e-7)
+  {
+    Vector3<Number> v1(v);
+    
+    rotate(v1, by, angle, epsilon);
+    return v1;
+  }
+  
+} // mcni:
+

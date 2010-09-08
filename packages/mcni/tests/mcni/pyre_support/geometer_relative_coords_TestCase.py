@@ -29,16 +29,16 @@ class TestCase(unittest.TestCase):
             
             def main(self):
                 geometer = self.inventory.geometer
-
+                
                 comp2pos = geometer.position('comp2')
                 nt.assert_array_almost_equal(comp2pos, (1,0,0))
-
+                
                 comp2ori = geometer.orientation('comp2')
                 nt.assert_array_almost_equal(comp2ori, (0,0,0))
                 
                 comp3pos = geometer.position('comp3')
                 nt.assert_array_almost_equal(comp3pos, (1,0,0))
-
+                
                 comp3ori = geometer.orientation('comp3')
                 nt.assert_array_almost_equal(comp3ori, toMatrix((3,4,5)))
                 
