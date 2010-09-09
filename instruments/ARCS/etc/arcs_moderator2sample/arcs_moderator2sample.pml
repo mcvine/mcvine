@@ -16,7 +16,7 @@
 <inventory>
 
     <component name="arcs_moderator2sample">
-        <property name="sequence">['moderator', 'core_vessel_insert', 'shutter_guide', 'guide111', 'guide112', 'guide113', 'guide121', 'guide122', 'guide123', 'guide131', 'guide132', 'guide133', 't0chopper', 'guide211', 'guide212', 'guide213', 'guide214', 'guide215', 'fermichopper', 'monitor1', 'guide311', 'guide411', 'guide412', 'guide511', 'monitor']</property>
+        <property name="sequence">['moderator', 'core_vessel_insert', 'shutter_guide', 'guide111', 'guide112', 'guide113', 'guide121', 'guide122', 'guide123', 'guide131', 'guide132', 'guide133', 't0chopper', 'guide211', 'guide212', 'guide213', 'guide214', 'guide215', 'fermichopper', 'monitor1', 'guide311', 'guide411', 'guide412', 'guide511', 'monitor', 'monitor2']</property>
 
         <facility name="moderator">sources/SNS_source_r1</facility>
         <facility name="core_vessel_insert">optics/Guide_channeled</facility>
@@ -41,8 +41,9 @@
         <facility name="guide311">optics/Guide_channeled</facility>
         <facility name="guide411">optics/Guide_channeled</facility>
         <facility name="guide412">optics/Guide_channeled</facility>
-        <facility name="guide511">dummy</facility>
+        <facility name="guide511">optics/Dummy</facility>
         <facility name="monitor">monitors/NeutronToStorage</facility>
+	<facility name="monitor2">monitors/TOF_monitor2</facility>
 
         <property name="multiple-scattering">False</property>
 
@@ -470,6 +471,18 @@
         </component>
 
 
+        <component name="monitor2">
+            <property name="xmin">-0.035</property>
+            <property name="xmax">0.035</property>
+            <property name="ymin">-0.035</property>
+            <property name="ymax">0.035</property>
+            <property name="tmin">0.0</property>
+            <property name="tmax">0.02</property>
+            <property name="nchan">20000</property>
+            <property name="filename">mon2-tof.dat</property>
+        </component>
+
+
         <component name="geometer">
             <property name="moderator">((0, 0, 0), (0, 0, 0))</property>
             <property name="core_vessel_insert">((0, 0, 1.0106), (0, 0, 0))</property>
@@ -496,6 +509,7 @@
             <property name="guide412">((0, 0, 12.55105), (0, 0, 0))</property>
             <property name="guide511">((0, 0, 13.01830), (0, 0, 0))</property>
             <property name="monitor">((0, 0, 13.45), (0, 0, 0))</property>
+            <property name="monitor2">((0, 0, 18.5), (0, 0, 0))</property>
         </component>
 
 
