@@ -94,7 +94,9 @@ class Parameter:
         try:
             default = value_converter( default )
         except ValueError:
-            default = 0
+            # float(''), XXX: General case?
+            # Case when type is float and default is a string
+            default = 0     
         except Exception, err:
             warning.log( 'parameter %s: %s: %s' % (
                 name, err.__class__.__name__, err) )

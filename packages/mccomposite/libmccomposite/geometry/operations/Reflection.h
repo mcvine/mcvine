@@ -22,7 +22,7 @@
 namespace mccomposite {
   
   namespace geometry {
-    
+      
     struct Reflection: public Transformation {
       
       //meta methods

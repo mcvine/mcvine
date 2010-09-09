@@ -12,9 +12,8 @@
 #
 
 
-
+import mccomposite.mccompositebp as binding
 from AbstractBinding import AbstractBinding as Interface
-
 from mcni.bindings.boostpython import Binding as base
 
 class BoostPythonBinding(base, Interface):
@@ -96,11 +95,6 @@ def register( methodname, method, override = False ):
     setattr( BoostPythonBinding, methodname, method )
 
     return
-
-
-
-import mcni.bindings.boostpython
-import mccomposite.mccompositebp as binding
 
 
 _location = None
