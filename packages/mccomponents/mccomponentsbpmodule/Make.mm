@@ -51,6 +51,7 @@ PROJ_SRCS = \
 	wrap_LinearlyInterpolatedDispersionOnGrid_3D.cc \
 	wrap_Phonon_CoherentInelastic_PolyXtal_kernel.cc \
 	wrap_RandomNumberGenerator.cc \
+	wrap_SimplePowderDiffractionKernel.cc \
 
 
 TOUCH=touch

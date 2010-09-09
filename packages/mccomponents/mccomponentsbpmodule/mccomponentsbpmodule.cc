@@ -47,6 +47,7 @@ namespace wrap_mccomponents{
   void wrap_AtomicScatterer();
   void wrap_Phonon_CoherentInelastic_PolyXtal_kernel();
   void wrap_RandomNumberGenerator();
+  void wrap_SimplePowderDiffractionKernel();
 }
 
 
@@ -91,6 +92,7 @@ BOOST_PYTHON_MODULE(mccomponentsbp)
   wrap_Phonon_CoherentInelastic_PolyXtal_kernel();
   wrap_RandomNumberGenerator();
 
+  wrap_SimplePowderDiffractionKernel();
 }
 
 
