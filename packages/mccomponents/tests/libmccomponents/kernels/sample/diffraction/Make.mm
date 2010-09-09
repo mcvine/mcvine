@@ -14,28 +14,21 @@ PROJECT = mccomponents/tests
 PACKAGE = libmccomponents/kernels
 
 
-# local tests
 PROJ_TIDY += $(PROJ_CPPTESTS)
 PROJ_CLEAN += $(PROJ_CPPTESTS)
+
 PROJ_PYTESTS =  #alltests.py
-PROJ_CPPTESTS = \
-	test_SQkernel \
-	test_SQAdaptor \
-	test_SQE_fromexpression \
+PROJ_CPPTESTS = test_SimplePowderDiffractionKernel \
 
 
 PROJ_TESTS = $(PROJ_PYTESTS) $(PROJ_CPPTESTS)
 PROJ_LIBRARIES = -L$(BLD_LIBDIR) -ljournal -lmcni -lmccomposite -lmccomponents -lmcstas_compact -lfparser
-#PROJ_CXX_DEFINES += DEEPDEBUG
+PROJ_CXX_DEFINES += DEEPDEBUG
 
 
-
-# for recursion
 # directory structure
 
 BUILD_DIRS = \
-	diffraction \
-	phonon \
 
 OTHER_DIRS = \
 
@@ -47,7 +40,8 @@ RECURSE_DIRS = $(BUILD_DIRS) $(OTHER_DIRS)
 all: $(PROJ_TESTS)
 	BLD_ACTION="all" $(MM) recurse
 
-test: 
+test: $(PROJ_TESTS)
+	for test in $(PROJ_TESTS) ; do $${test}; done
 	BLD_ACTION="test" $(MM) recurse
 
 distclean::
@@ -62,17 +56,8 @@ tidy::
 #--------------------------------------------------------------------------
 
 
-
-
-test_SQkernel: test_SQkernel.cc
-	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ test_SQkernel.cc $(PROJ_LIBRARIES)
-
-test_SQAdaptor: test_SQAdaptor.cc
-	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ test_SQAdaptor.cc $(PROJ_LIBRARIES)
-
-test_SQE_fromexpression: test_SQE_fromexpression.cc
-	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ test_SQE_fromexpression.cc $(PROJ_LIBRARIES)
-
+test_SimplePowderDiffractionKernel: test_SimplePowderDiffractionKernel.cc
+	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ test_SimplePowderDiffractionKernel.cc $(PROJ_LIBRARIES)
 
 
 # version

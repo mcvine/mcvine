@@ -39,6 +39,7 @@ PROJ_SRCS = \
 	He3Tube.cc \
 	ConstantEnergyTransferKernel.cc \
 	ConstantQEKernel.cc \
+	SimplePowderDiffractionKernel.cc \
 	SQkernel.cc \
 	SQEkernel.cc \
 	GridSQE.cc \
@@ -83,6 +84,9 @@ ConstantEnergyTransferKernel.cc: ../kernels/sample/ConstantEnergyTransferKernel.
 
 ConstantQEKernel.cc: ../kernels/sample/ConstantQEKernel.cc
 	cp ../kernels/sample/ConstantQEKernel.cc .
+
+SimplePowderDiffractionKernel.cc: ../kernels/sample/diffraction/SimplePowderDiffractionKernel.cc
+	cp ../kernels/sample/diffraction/SimplePowderDiffractionKernel.cc .
 
 SQEkernel.cc: ../kernels/sample/SQEkernel.cc
 	cp ../kernels/sample/SQEkernel.cc .

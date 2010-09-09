@@ -14,7 +14,7 @@
 include local.def
 
 PROJECT = mccomponents
-PACKAGE = kernels/sample
+PACKAGE = kernels/sample/diffraction
 
 
 PROJ_TMPDIR = $(BLD_TMPDIR)/$(PROJECT)/$(PACKAGE)
@@ -23,9 +23,6 @@ PROJ_TMPDIR = $(BLD_TMPDIR)/$(PROJECT)/$(PACKAGE)
 # directory structure
 
 BUILD_DIRS = \
-	SQE \
-	diffraction \
-	phonon \
 
 OTHER_DIRS = \
 
@@ -47,14 +44,8 @@ clean::
 export:: export-package-headers
 
 EXPORT_HEADERS = \
-	AbstractScatteringKernel.h \
-	AbstractSQ.h \
-	AbstractSQE.h \
-	ConstantEnergyTransferKernel.h \
-	ConstantQEKernel.h \
-	SQAdaptor.h \
-	SQkernel.h \
-	SQEkernel.h \
+	SimplePowderDiffractionData.h \
+	SimplePowderDiffractionKernel.h \
 
 
 # version
