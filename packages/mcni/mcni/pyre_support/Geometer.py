@@ -39,6 +39,14 @@ class RelativeCoord(Coord):
         return '%s relative to %s' % (self.value, self.reference)
 
 
+    def __repr__(self):
+        v = self.value
+        if not isinstance(v, basestring):
+            v = str(tuple(v))
+        ref = self.reference
+        return "relative(%s, to='%s')" % (v, ref)
+
+
 class AbsoluteCoord(Coord):
     
     def __init__(self, value):
@@ -50,6 +58,12 @@ class AbsoluteCoord(Coord):
 
     def __str__(self):
         return '%s' % (self.value, )
+
+
+    def __repr__(self):
+        v = self.value
+        if isinstance(v, basestring): return v
+        return str(tuple(self.value))
 
 
 from pyre.components.Component import Component
