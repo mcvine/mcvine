@@ -81,15 +81,18 @@ class Registry:
         '''
         ret = []
         for repo in self.repos:
+            debug.log('working on repo %s' % (repo,))
             package = __import__( repo, {}, {}, [''] )
             path = os.path.dirname( package.__file__ )
             
             files = os.listdir( path )
+            debug.log('files:: %s' % (files,))
             for f in files:
                 modulename = os.path.splitext( f )[0]
                 m = __import__( '%s.%s' % (repo, modulename), {}, {}, ['']  )
                 try: category = getattr(m, 'category')
-                except: continue
+                except:
+                    continue
                 type = modulename
                 signature = category, modulename
                 if signature not in ret: ret.append( signature )
@@ -143,6 +146,9 @@ class Registry:
 
 from mcni.utils import uniquelist
 import os
+
+import journal
+debug = journal.debug('mcni.components.Registry')
 
 
 # version
