@@ -11,16 +11,11 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 PROJECT = mccomponents
-PACKAGE = sample
+PACKAGE = sample/diffraction/xml
 
 
 BUILD_DIRS = \
-	bindings \
-	diffraction \
-	idf \
-	kernelxml \
-	phonon \
-	sansmodel \
+	parser \
 
 RECURSE_DIRS = $(BUILD_DIRS)
 
@@ -28,7 +23,6 @@ RECURSE_DIRS = $(BUILD_DIRS)
 #
 
 all: export
-	BLD_ACTION="all" $(MM) recurse
 
 tidy::
 	BLD_ACTION="tidy" $(MM) recurse
@@ -40,18 +34,8 @@ tidy::
 # export
 
 EXPORT_PYTHON_MODULES = \
-	AbstractSQE.py \
-	ComputationEngineRendererExtension.py \
-	ConstantEnergyTransferKernel.py \
-	ConstantQEKernel.py \
-	GridSQE.py \
-	SQE_fromexpression.py \
-	IsotropicKernel.py \
-	KernelContainer.py \
-	SQEkernel.py \
+	RendererExtension.py \
 	__init__.py \
-	sampleassembly_support.py \
-	units.py \
 
 
 export:: export-package-python-modules 

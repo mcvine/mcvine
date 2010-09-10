@@ -2,25 +2,20 @@
 #
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
-#                               Michael A.G. Aivazis
+#                                 Jiao Lin
 #                        California Institute of Technology
-#                        (C) 1998-2004  All Rights Reserved
+#                        (C) 2006-2010  All Rights Reserved
 #
 # <LicenseText>
 #
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 PROJECT = mccomponents
-PACKAGE = sample
-
+PACKAGE = sample/diffraction
 
 BUILD_DIRS = \
 	bindings \
-	diffraction \
-	idf \
-	kernelxml \
-	phonon \
-	sansmodel \
+	xml \
 
 RECURSE_DIRS = $(BUILD_DIRS)
 
@@ -34,35 +29,21 @@ tidy::
 	BLD_ACTION="tidy" $(MM) recurse
 
 
-
 #--------------------------------------------------------------------------
 #
 # export
 
 EXPORT_PYTHON_MODULES = \
-	AbstractSQE.py \
 	ComputationEngineRendererExtension.py \
-	ConstantEnergyTransferKernel.py \
-	ConstantQEKernel.py \
-	GridSQE.py \
-	SQE_fromexpression.py \
-	IsotropicKernel.py \
-	KernelContainer.py \
-	SQEkernel.py \
+	SimplePowderDiffractionKernel.py \
 	__init__.py \
-	sampleassembly_support.py \
 	units.py \
 
 
 export:: export-package-python-modules 
-	BLD_ACTION="export" $(MM) recurse
-
-
-#include doxygen/default.def
-#docs: export-doxygen-docs
 
 
 # version
-# $Id: Make.mm 1404 2007-08-29 15:43:42Z linjiao $
+# $Id: Make.mm 1234 2007-09-18 18:32:56Z linjiao $
 
 # End of file

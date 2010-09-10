@@ -2,25 +2,19 @@
 #
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
-#                               Michael A.G. Aivazis
+#                                    Jiao Lin
 #                        California Institute of Technology
-#                        (C) 1998-2004  All Rights Reserved
+#                        (C) 2006-2010  All Rights Reserved
 #
 # <LicenseText>
 #
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 PROJECT = mccomponents
-PACKAGE = sample
+PACKAGE = sample/diffraction/bindings
 
 
 BUILD_DIRS = \
-	bindings \
-	diffraction \
-	idf \
-	kernelxml \
-	phonon \
-	sansmodel \
 
 RECURSE_DIRS = $(BUILD_DIRS)
 
@@ -28,7 +22,6 @@ RECURSE_DIRS = $(BUILD_DIRS)
 #
 
 all: export
-	BLD_ACTION="all" $(MM) recurse
 
 tidy::
 	BLD_ACTION="tidy" $(MM) recurse
@@ -40,18 +33,8 @@ tidy::
 # export
 
 EXPORT_PYTHON_MODULES = \
-	AbstractSQE.py \
-	ComputationEngineRendererExtension.py \
-	ConstantEnergyTransferKernel.py \
-	ConstantQEKernel.py \
-	GridSQE.py \
-	SQE_fromexpression.py \
-	IsotropicKernel.py \
-	KernelContainer.py \
-	SQEkernel.py \
+	BoostPythonBinding.py \
 	__init__.py \
-	sampleassembly_support.py \
-	units.py \
 
 
 export:: export-package-python-modules 
@@ -63,6 +46,6 @@ export:: export-package-python-modules
 
 
 # version
-# $Id: Make.mm 1404 2007-08-29 15:43:42Z linjiao $
+# $Id$
 
 # End of file

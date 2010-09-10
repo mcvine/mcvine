@@ -102,6 +102,7 @@ class New:
         scattering_cross_section: scattering cross section
         '''
         return b.ConstantQEKernel(Q, E, absorption_cross_section, scattering_cross_section)
+
     
     pass # end of BoostPythonBinding
 
