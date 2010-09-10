@@ -11,6 +11,7 @@
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //
 
+#include <sstream>
 #include "mccomposite/exception.h"
 #include "mccomposite/neutron_propagation.h"
 
@@ -30,7 +31,13 @@ namespace mccomposite {
     if (location == geometry::Locator::inside) {
 
       tofs = forward_intersect( ev, shape );
-      if (tofs.size() == 0) throw Exception("not intersections");
+      if (tofs.size() == 0) {
+	std::ostringstream oss;
+	oss << "event " << ev
+	    << " is already inside shape " << shape
+	    << ", but we cannot find intersections in the forward direction.";
+	throw Exception(oss.str());
+      }
       t = tofs[0];
 
     } else {
