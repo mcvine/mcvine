@@ -112,3 +112,7 @@ Create python handlers
  - parser.<kernel-name> (new module)
  - parser/Make.mm (new entry for the new kernel module)
 * test case: new module in mccomponents/tests/sample
+
+The steps presented here are good for more-or-less generic sample kernels.
+It is desirable in many cases to group kernels into subpackages of
+mccomponents.sample, for example, mccomponents.sample.phonons.

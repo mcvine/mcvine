@@ -41,3 +41,74 @@ in the storage::
 
  neutron-from-storage -> monitor
 
+Error propagation when using neutron storage
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+When we use neutron storage, we need to make sure the
+neutrons saved in the storage have enough statistics
+for the simulations that use the storage to be successful.
+
+As discussed in :ref:`fundamentals-errorbar-errorprop`, 
+the error bar of simulated intensity of a simulation using neutron storage
+is given by
+
+.. math::
+   Err^2(I) = \Delta^2_{intrinsic} \times I^2  + \sum{p_i^2}
+
+and the instrinsic error induced by using the neutron
+storage is computed from the data of the simulation
+that generated the neutron storage:
+
+.. math::
+   \Delta^2_{instrinsic} = \sum p_{ns, i}^2 / (\sum p_{ns, i})^2
+
+where the subscript ":math:`ns`" denotes the simulation that generates
+the neutron storage.
+
+You can see that the errobar of a simulation involves a neutron
+source that replays neutrons in a neutron storage is limited by
+the error bar of the simulation that leads to the neutron storage.
+So you need to make sure to have a reasonably good statistics 
+for the simulation of the neutron storage before using it for
+other simulations.
+
+
+Tools
+^^^^^
+
+Count neutrons in a storage -- "mcvine-neutron-storage-count-neutrons"
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+Signature::
+
+ $ mcvine-neutron-storage-count-neutrons <neutron-file>
+
+- Input: a neutron file
+- Output: Number of neutrons in the given storage
+
+
+Compute total intensity in a storage -- "mcvine-neutron-storage-total-intensity"
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+Signature::
+
+ $ mcvine-neutron-storage-total-intensity <neutron-file>
+
+- Input: a neutron file
+- Output: Total neutron intensity in the given storage
+
+
+Merge neutron storages -- "mcvine-neutron-storage-merge"
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+Signature::
+ 
+ $ mcvine-neutron-storage-merge \ \
+     -files=<neutron-files-to-merge> \
+     -output=<output-neutron-file>
+
+- Input: neutron file(s)
+- Output: merged neutron file
+
+
+
