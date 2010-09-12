@@ -6,9 +6,11 @@ ToDo list for VULCAN
     [IN PROGRESS] /BoostPythonBinding.py:103: RuntimeWarning
     [DONE] mcstas2/utils/parsers/ComponentInfo.py:98:__init__; ValueError: empty string for float()
 - [DONE] Run chain of two components [SNS_source_r1] -> [L_monitor] from the command line
-- [IN PROGRESS] Run test simulation for [MonochromaticSource] -> [EMonitor]/[TofMonitor]
-- Create Vulcan instrument consisting of just two components:
-    [SNS_source_r1] -> [L_monitor]
+- [DONE] Run test simulation for [MonochromaticSource] -> [EMonitor]/[TofMonitor]
+- [DONE] Create Vulcan instrument consisting of just two components:
+    [SNS_source_r1] -> [TofMonitor]
+- Implement L_monitor component
+- [DONE] Fix installation of HDF5FS (needed to use with_doxygen_... config)
 - Compile SNS_source4 component
 - Compile PSD_TEW_monitor component
 
