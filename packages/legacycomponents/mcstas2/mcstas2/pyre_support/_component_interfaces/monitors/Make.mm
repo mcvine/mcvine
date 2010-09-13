@@ -31,6 +31,7 @@ tidy::
 
 EXPORT_PYTHON_MODULES = \
 	E_monitor.py \
+	L_monitor.py \
 	IQE_monitor.py \
 	PSD_monitor.py \
 	PSD_monitor_4PI.py \
