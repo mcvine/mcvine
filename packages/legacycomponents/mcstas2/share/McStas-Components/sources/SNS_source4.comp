@@ -4,7 +4,7 @@
 *         Maintained by Kristian Nielsen and Kim Lefmann,
 *         Copyright 1997-2000 Risoe National Laboratory, Roskilde, Denmark
 *
-*Component: SNS_source4
+* Component: SNS_source4
 *
 * %I
 * Written by: F. Gallmeier
@@ -28,21 +28,22 @@
 * (3) the proton pulse length T determines short- and long-pulse mode 
 *
 * %P
-* Input parameters:
+* INPUT PARAMETERS:
+*
 * S_filename:   Filename of source data 
-* width:  (m)   width of moderator
-* height: (m)   height of moderator
-* dist:   (m)   Distance from source to the focusing rectangle
-* xw:     (m)   Width of focusing rectangle
-* yh:     (m)   Height of focusing rectangle
-* Emin: (meV)   minimum energy of neutron to generate
-* Emax: (meV)   maximum energy of neutron to generate
-* tinmin:(us)   minimum time of neutron to generate
-* tinmax:(us)   maximum time of neutron to generate
+* width:        width of moderator (m)
+* height:       height of moderator (m)
+* dist:         Distance from source to the focusing rectangle (m)
+* xw:           Width of focusing rectangle (m)
+* yh:           Height of focusing rectangle (m)
+* Emin:         minimum energy of neutron to generate (meV)
+* Emax:         maximum energy of neutron to generate (meV)
+* tinmin:       minimum time of neutron to generate (us)
+* tinmax:       maximum time of neutron to generate (us)
 * sample_E:     sample energy uniformly over: 0="energy", 1="lambda", 2="lethary"
 * sample_t:     0="sample t uniformly over t-range; 
 *               1= determine t from picking probability and determine t from cumulative distribution
-* proton_T:(us) proton pulse length
+* proton_T:     proton pulse length (us)
 *
 * %E
 *******************************************************************************/
