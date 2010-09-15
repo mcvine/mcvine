@@ -14,6 +14,22 @@ ToDo list for VULCAN
 - Compile SNS_source4 component
 - Compile PSD_TEW_monitor component
 
+Components: 
+    <Name>:             [McVine]    [VNF]
+    SNS_source4:        Some        Some
+    Collimator_linear:  Yes         No
+    Slit:               Yes         No
+    L_monitor:          Yes         Yes
+    Guide:              Yes         No
+    DiskChopper:        No          No
+    Guide_gravity:      No          No
+    PSD_monitor:        Yes         No
+    Monitor_nD:         No          No
+    Sample KErnel:      Some        Some
+    PSD_TEW_monitor:    No          No
+    Monitor:            Yes         No
+
+
 
 - Create McVine components for Vulcan
 - Test McVine components for Vulcan from the command line
