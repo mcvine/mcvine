@@ -17,7 +17,7 @@ warning = journal.warning( 'mcstas2.parsers.ComponentInfo' )
 
 
 formatstr = '''
-Compoennt %(name)r: %(simple_description)s
+Component %(name)r: %(simple_description)s
 
 %(full_description)s
 
