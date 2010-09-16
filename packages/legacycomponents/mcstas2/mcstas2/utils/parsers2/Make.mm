@@ -36,6 +36,7 @@ EXPORT_PYTHON_MODULES = \
 	ComponentInfo.py \
 	ComponentParser.py \
 	ShareIncludeParser.py \
+	McStasComponentParser.py \
 
 
 export:: export-package-python-modules 

@@ -8,8 +8,8 @@ ToDo list for VULCAN
 - [DONE] Run chain of two components [SNS_source_r1] -> [L_monitor] from the command line
 - [DONE] Run test simulation for [MonochromaticSource] -> [EMonitor]/[TofMonitor]
 - [DONE] Create Vulcan instrument consisting of just two components:
-    [SNS_source_r1] -> [TofMonitor]
-- Implement L_monitor component
+    [MonochromaticSource] -> [TofMonitor]
+- [DONE] Implement L_monitor component
 - [DONE] Fix installation of HDF5FS (needed to use with_doxygen_... config)
 - Compile SNS_source4 component
 - Compile PSD_TEW_monitor component
