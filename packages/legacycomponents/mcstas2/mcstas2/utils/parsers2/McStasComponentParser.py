@@ -24,6 +24,8 @@ Declarations:
       decsription by semicolumn with format: <name>:{spaces}<description>
         Example: "xmin:     Lower x bound of detector opening (m)"
     - Sections can be in arbitrary order
+    - Parameters cannot separated by empty line (no "\n\n")
+    - Descriptions can have ':' character
 
 Notes:
     -
@@ -33,7 +35,7 @@ import re
 
 # Functions
 def paramRegex(name):
-    return "^%s:([^\n]*)\n" % name
+    return "^(%s):([^\n]*)" % name
 
 # Constants
 INFO        = "%I"
@@ -48,7 +50,7 @@ COMMENT         = '(/\*.*?\*/)'         # Non-greedy comment (.*?)
 SPACES          = '[ \t]*'              # Spaces and tabs
 WINCR           = '\r'                  # Window's CR
 STAR            = "^%s[\*]*%s" % (SPACES, SPACES)   # Starting stars
-PARAM           = "^[^\:]*?:([^\n]*)\n"  # Parameter
+PARAM           = "^([^\:]*?):([^\n]*)"  # Parameter
 COMP_NAME       = "Component:([^\n]*)\n\n"          # Component name
 COPYRIGHT       = paramRegex("Written by")
 DATE            = paramRegex("Date")
@@ -63,7 +65,8 @@ INFO_SEC        = "%s(.*?)(?=%s|%s|%s)" % (INFO, DESCRIPTION, PARAMS, END)  # In
 DESC_SEC        = "%s(.*?)(?=%s|%s|%s)" % (DESCRIPTION, INFO, PARAMS, END)  # Description section
 PARAM_SEC       = "%s(.*?)(?=%s|%s|%s)" % (PARAMS, INFO, DESCRIPTION, END)  # Parameters section
 
-
+# Allowed info parameters
+INFO_PARAMS     = (COPYRIGHT, DATE, VERSION, ORIGIN, RELEASE)
 
 class McStasComponentParser:
 
@@ -101,8 +104,8 @@ class McStasComponentParser:
         if len(matches) < 1: # No header
             return
 
-        m           = matches[0]                # First comment is the header
-        text        = self._strip(WINCR, m)     # Strip carriage return
+        text        = matches[0]                # First comment is the header
+        text        = self._strip(WINCR, text)     # Strip carriage return
         headertext  = self._strip(STAR, text)   # Strip stars
         compname    = self._compName(headertext)
 
@@ -110,6 +113,9 @@ class McStasComponentParser:
         desc        = self._sectionText(DESC_SEC, headertext)
         param       = self._sectionText(PARAM_SEC, headertext)
 
+        self._parseInfoSection(info)
+        self._parseDescSection(desc)
+        self._parseParamSection(param)
         
         # Names are kept for backward compatibility
         self._header["componentname"]    = compname
@@ -175,7 +181,54 @@ class McStasComponentParser:
         "Returns section string that matches secregex pattern"
         p           = re.compile(secregex, re.DOTALL)
         matches     = p.findall(text)
-        return matches[0]   # XXX
+        if len(matches) < 1: # No section found, return empty string
+            return ""
+        
+        return matches[0]   # Return the first found match
+
+
+    def _parseInfoSection(self, text):
+        "Parses info section and populates part of header parameters"
+        lines       = text.split("\n")
+        numbr       = 0
+        afterparam  = False
+
+        for l in lines:
+            l   = l.strip()
+            if l == '':
+#                numbr   += 1
+                continue
+
+            p   = re.compile(PARAM)
+            m   = p.match(l)
+            # Check if numbr == 2 and afterparam = True
+            if m:
+                
+
+            
+                
+
+                #groups  =
+                print m.group(1), m.group(2)
+
+
+#        double  = text.split("\n\n")
+#
+#        print double
+#        lines   = text.split("\n")
+#        for l in lines:
+#            print l
+
+
+    def _parseDescSection(self, text):
+        "Parses description section and populates part of header parameters"
+        pass
+
+
+    def _parseParamSection(self, text):
+        "Parses parameter section and populates input and output parameters of header"
+        pass
+
 
 
 testtext = """
