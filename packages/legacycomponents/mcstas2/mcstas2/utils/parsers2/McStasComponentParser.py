@@ -36,21 +36,36 @@ INFO        = "%I"
 DESCRIPTION = "%D"
 PARAMS      = "%P"
 END         = "%E"
-DIRECTIVES  = (INFO, DESCRIPTION, PARAMS, END)
+SECTIONS    = [INFO, DESCRIPTION, PARAMS]
+DIRECTIVES  = SECTIONS + [END,]
 
 # Regular expressions
+COMMENT         = '(/\*.*?\*/)'         # Non-greedy comment (.*?)
+SPACES          = '[ \t]*'              # Spaces and tabs
+WINCR           = '\r'                  # Window's CR
+STAR            = "%s\*%s" % (SPACES, SPACES)   # Starting star
+
 
 class McStasComponentParser:
 
-    def __init__(self):
+    def __init__(self, filename=None, config=None, parse=True):
+        self._filename      = filename
+        self._config        = config
         # OrderedDict?
-        self._header    = {}
-        self._inputparams     = {}
-        self._outputparams    = {}
+        self._header        = {}
+        self._inputparams   = {}
+        self._outputparams  = {}
+
+        if parse and (self._fileExists() or config):
+            self.parse()
+        
 
 
     def parse(self):
         """
+        Parses config string or file and appends component to self._components
+
+        Algorithm steps:
         - Extract header (first /*...*/ comment)
         - Remove stars and spaces after them ('*{spaces}' -> '')
         - Remove '\r' for Windows files
@@ -60,6 +75,19 @@ class McStasComponentParser:
         - Find first occurence of pattern: "Example: ...{no DIRECTIVES}" and cut the part above it
           and replace by empty string ""
         """
+
+        configText   = self._configText()
+
+        p           = re.compile(COMMENT, re.DOTALL)
+        matches     = p.findall(configText)
+        if len(matches) < 1: # No header
+            return
+
+        m           = matches[0]    # First comment is the header
+        text        = self._strip(WINCR, m)
+        text        = self._strip(STAR, text)
+        print text
+
         # Names are kept for backward compatibility
         self._header["componentname"]    = ""
         self._header["copyright"]    = ""
@@ -75,8 +103,39 @@ class McStasComponentParser:
         return self._header
 
 
-    def toString(self):
+    def toString(self, br="\n"):
         return ""
+
+
+    def _configText(self):
+        "Take config from file if it exist and readable, or use from config - otherwise"
+        configText  = ""
+        if self._fileExists():
+            try:    # Try to read it
+                configText  = open(self._filename).read()
+            except:
+                pass    # No exception
+            return configText
+
+        if self._config:
+            configText  = self._config
+
+        return configText   # Empty string
+
+
+    def _fileExists(self):
+        "Checks if file exists"
+        if self._filename and os.path.exists(self._filename):
+            return True
+
+        return False
+
+
+    def _strip(self, regex, text):
+        "Strips piece of text that matches regex pattern"
+        p   = re.compile(regex, re.DOTALL)
+        s   = re.sub(p, '', text)
+        return s
 
 testtext = """
 /*******************************************************************************
@@ -125,11 +184,12 @@ testtext = """
 *
 * %E
 *******************************************************************************/
+the rest of text
 """
 
 if __name__ == "__main__":
-    parser  = McStasComponentParser()
-    parser.parse()
+    parser  = McStasComponentParser(config=testtext)
+
 
 __date__ = "$Sep 15, 2010 3:05:52 PM$"
 
