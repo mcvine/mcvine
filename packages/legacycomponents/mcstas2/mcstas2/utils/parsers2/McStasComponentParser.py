@@ -23,7 +23,7 @@ Declarations:
     - Input and output parameters are separated from the corresponding
       decsription by semicolumn with format: <name>:{spaces}<description>
         Example: "xmin:     Lower x bound of detector opening (m)"
-    -
+    - Component name comes first after the header
 
 Notes:
     -
@@ -43,8 +43,8 @@ DIRECTIVES  = SECTIONS + [END,]
 COMMENT         = '(/\*.*?\*/)'         # Non-greedy comment (.*?)
 SPACES          = '[ \t]*'              # Spaces and tabs
 WINCR           = '\r'                  # Window's CR
-STAR            = "%s\*%s" % (SPACES, SPACES)   # Starting star
-
+STAR            = "^%s[\*]*%s" % (SPACES, SPACES)   # Starting stars
+COMP_NAME       = "Component:([^\n]*)\n\n" # Component name
 
 class McStasComponentParser:
 
@@ -83,10 +83,12 @@ class McStasComponentParser:
         if len(matches) < 1: # No header
             return
 
-        m           = matches[0]    # First comment is the header
-        text        = self._strip(WINCR, m)
-        text        = self._strip(STAR, text)
-        print text
+        m           = matches[0]                # First comment is the header
+        text        = self._strip(WINCR, m)     # Strip carriage return
+        text        = self._strip(STAR, text)   # Strip stars
+        name        = self._compName(text)
+
+        print name
 
         # Names are kept for backward compatibility
         self._header["componentname"]    = ""
@@ -133,9 +135,21 @@ class McStasComponentParser:
 
     def _strip(self, regex, text):
         "Strips piece of text that matches regex pattern"
-        p   = re.compile(regex, re.DOTALL)
+        p   = re.compile(regex, re.DOTALL|re.MULTILINE)
         s   = re.sub(p, '', text)
         return s
+
+
+    def _compName(self, text):
+        p           = re.compile(COMP_NAME, re.IGNORECASE)
+        namefinds   = p.findall(text)
+        if not namefinds:
+            return ""    # Empty name
+        
+        name    = namefinds[0].strip()
+        return name
+
+
 
 testtext = """
 /*******************************************************************************
