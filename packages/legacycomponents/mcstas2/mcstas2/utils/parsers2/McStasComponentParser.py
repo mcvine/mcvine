@@ -131,26 +131,9 @@ class McStasComponentParser(object):
         """
         Parses data from config string or file and populates header structure
         """
-        configText   = self._configText()
-
-        p           = re.compile(COMMENT, re.DOTALL)
-        matches     = p.findall(configText)
-        if len(matches) < 1: # No header
-            return
-
-        text        = matches[0]                # First comment is the header
-        text        = self._strip(WINCR, text)     # Strip carriage return
-        headertext  = self._strip(STAR, text)   # Strip stars
-
-        # Extract sections from headertext (hide them?)
-        info        = self._sectionText(INFO_SEC, headertext)
-        desc        = self._sectionText(DESC_SEC, headertext)
-        param       = self._sectionText(PARAM_SEC, headertext)
-
-        self._parseCompName(headertext)
-        self._parseInfoSection(info)
-        self._parseDescSection(desc)
-        self._parseParamSection(param)
+        configText  = self._configText()
+        bodyText    = self._parseHeader(configText) # Parse header
+        print bodyText
 
 
     def header(self):
@@ -175,6 +158,33 @@ class McStasComponentParser(object):
 
         return str
 
+
+    def _parseHeader(self, origText):
+        "Parses header and populates header dictionary"
+        p           = re.compile(COMMENT, re.DOTALL)
+        matches     = p.findall(origText)
+        if len(matches) < 1: # No header found
+            return origText
+
+        m           = matches[0]                # First comment is the header
+        text        = self._strip(WINCR, m)     # Strip carriage return
+        headertext  = self._strip(STAR, text)   # Strip stars
+
+        # Extract sections from headertext (hide them?)
+        info        = self._sectionText(INFO_SEC, headertext)
+        desc        = self._sectionText(DESC_SEC, headertext)
+        param       = self._sectionText(PARAM_SEC, headertext)
+
+        self._parseCompName(headertext)
+        self._parseInfoSection(info)
+        self._parseDescSection(desc)
+        self._parseParamSection(param)
+
+        # Find end position of the header
+        end     = self._headerEnd(origText)
+
+        return origText[end:]
+        
 
     def _configText(self):
         "Take config from file if it exist and readable, or use from config - otherwise"
@@ -347,6 +357,13 @@ class McStasComponentParser(object):
                 params[param]   = value
 
         return params
+
+
+    def _headerEnd(self, origText):
+        "Returns end position of the header"
+        p           = re.compile(COMMENT, re.DOTALL)
+        ss          = p.search(origText)
+        return ss.end()
 
 
 def main():
