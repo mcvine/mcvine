@@ -131,6 +131,7 @@ def _toMatrix(phx,phy,phz, unit='degree'):
     cz = cos(phz);
     sz = sin(phz);
     t=zeros((3,3), float )
+    # t=zeros((3,3), numpy.double )
     t[0][0] = cy*cz;
     t[0][1] = sx*sy*cz + cx*sz;
     t[0][2] = sx*sz - cx*sy*cz;
@@ -181,7 +182,7 @@ def toAngles(m, unit='degree'):
     except:
         print 'original matrix:',m
         print 'converted matrix:',m1
-        raise 'conversion failed %s' % m
+        raise RuntimeError, 'conversion failed %s' % m
     if unit.lower() == 'deg' or unit.lower() == 'degree':
         return map(todegree, (x,y,z))
     else:
