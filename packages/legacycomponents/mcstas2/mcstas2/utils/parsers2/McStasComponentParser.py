@@ -51,7 +51,7 @@ Notes:
 
 
 TODO:
-    - Improve populateParams() to be used in _parseInfoSection()
+    - Improve _populateParams() to be used in _parseInfoSection()
 """
 
 # Imports
