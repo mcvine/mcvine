@@ -113,14 +113,16 @@ def paramRegex(name):
 
 def sectionRegex(name):
     "Returns section regular expression specified by name"
-    return "(%s)[ \n\t]*\%{(.*?)(?=\%})" % name
+    return "("+name+")[ \n\t]*\%\{(.*?)(?=\%\})"
 
 
 def defRegex(namelist):
-    "Returns regular expression for definitions"
+    "Returns regular expression for definitions, not for sections"
     sep     = "%s" % SPACES_MORE_ONE
-    defname = sep.join(namelist)        # Example: "DEFINE COMPONENT"
-    return "%s([^\n]*)\n" % defname
+    defname = namelist
+    if type(namelist) is list:
+        defname = sep.join(namelist)        # Example: "DEFINE COMPONENT"
+    return "%s:([^\n]*)\n" % defname
 
 
 # Regular expressions (Regex)
@@ -147,7 +149,7 @@ OUTPUT_PARAMS   = "OUTPUT PARAMETERS:(.*)"  # Might not be exist
 DEF_COMP        = defRegex(["DEFINE", "COMPONENT"])
 DEF_PARAM       = defRegex(["DEFINITION", "PARAMETERS"])
 SET_PARAMS      = defRegex(["SETTING", "PARAMETERS"])
-OUTPUT_PARAMS   = defRegex(["OUTPUT", "PARAMETERS"])
+OUT_PARAMS      = defRegex(["OUTPUT", "PARAMETERS"])
 STATE_PARAMS    = defRegex(["STATE", "PARAMETERS"])
 
 
@@ -157,10 +159,13 @@ class McStasComponentParser(object):
         self._filename      = filename
         self._config        = config
         # OrderedDict?
+        # Header stuff
         self._headerstr     = ""    # Non-parsed header
         self._header        = {}    # Parsed header
         self._inputparams   = {}    # Dictionary of input parameters
         self._outputparams  = {}    # Dictionary of output parameters
+
+
 
         if parse and (self._fileExists() or config):
             self.parse()        
@@ -172,7 +177,7 @@ class McStasComponentParser(object):
         """
         configText  = self._configText()
         bodyText    = self._parseHeader(configText) # Parse header
-        print bodyText
+        self._parseBody(bodyText)
 
 
     def header(self):
@@ -224,7 +229,25 @@ class McStasComponentParser(object):
         end     = self._headerEnd(origText)
 
         return origText[end:]
+
+
+    def _parseBody(self, bodyText):
+        "Parses body and populates body dictionary"
+        text        = self._strip(WINCR, bodyText)  # Strip carriage return
+
+        #self._parse
+        # Declare
+        p           = re.compile(sectionRegex(DECLARE), re.DOTALL)
+        matches     = p.findall(text)
+        print matches
+        if len(matches) < 1: # No header found
+            return 
+
+        m           = matches[0]                # First comment is the header
+        print m
         
+
+
 
     def _configText(self):
         "Take config from file if it exist and readable, or use from config - otherwise"
@@ -353,7 +376,7 @@ class McStasComponentParser(object):
     def _parseParamSection(self, text):
         "Parses parameter section and populates input and output parameters of header"
         # Get output parameters first!
-        outputtext      = self._sectionText(OUTPUT_PARAMS, text)
+        outputtext      = self._sectionText(OUTPUT_PARAMS, text)        
         filteredtext    = self._strip(OUTPUT_PARAMS, text)
 
         # ... and then input parameters
@@ -416,7 +439,7 @@ def main():
             elif parts[0] in CONFIG:
                 conv    = McStasComponentParser(config=parts[1])
 
-            print conv.toString()
+            #print conv.toString()
             return
 
     print USAGE_MESSAGE
