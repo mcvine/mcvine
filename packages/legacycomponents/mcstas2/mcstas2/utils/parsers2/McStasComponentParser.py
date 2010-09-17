@@ -11,24 +11,38 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
 
-# McStas component format: http://neutron.risoe.dk/documentation/mcdoc/
-
 """
 McStasComponentParser - parser for McStas components
 
-Declarations:
-    - First comment is considered to be a header!
+Flexibility:
     - Stars in the header might not need to start from the very beginning
       starting spaces allowed: '*' and ' *' have the same effect
+    - Sections can be in arbitrary order.
+
+Restrictions:
+    - First comment is considered to be a header!
     - Input and output parameters are separated from the corresponding
       decsription by semicolumn with format: <name>:{spaces}<description>
         Example: "xmin:     Lower x bound of detector opening (m)"
-    - Sections can be in arbitrary order
     - Descriptions (short and full) CANNOT have ':' character!
+    - Header must be finished by '%E' directive
     - Example parameter should be in Description section
+    - Input subsection should go before output subsection
+    - Input and output subsections should have parameters only!
+
+Algorithm steps:
+    - Extract header (first /*...*/ comment)
+    - Remove stars and spaces after them ('*{spaces}' -> '')
+    - Remove '\r' for Windows files
+    - Find first occurence of pattern: "Component: ...\n" and cut the part above it
+      and replace by empty string ""
+    - Split by lines and go over them to populate header dict
+    - Find first occurence of pattern: "Example: ...{no DIRECTIVES}" and cut the part above it
+      and replace by empty string ""
 
 Notes:
-    -
+    - McStas component format: http://neutron.risoe.dk/documentation/mcdoc/
+    - Names for header and input/output parameters are kept for backward compatibility
 """
 
 import re
@@ -55,9 +69,6 @@ RELEASE_N       = "Release"
 STD_PARAMS      = [DATE_N, VERSION_N, ORIGIN_N, RELEASE_N]
 INFO_PARAMS     = STD_PARAMS + [COPYRIGHT_N,]
 
-INPUT_PARAMS    = "INPUT PARAMETERS"
-OUTPUT_PARAMS   = "OUTPUT PARAMETERS"
-
 # Regular expressions
 COMMENT         = '(/\*.*?\*/)'             # Non-greedy comment (.*?)
 SPACES          = '[ \t]*'                  # Spaces and tabs
@@ -65,15 +76,17 @@ WINCR           = '\r'                      # Window's CR
 STAR            = "^%s[\*]*%s" % (SPACES, SPACES)   # Starting stars
 PARAM           = "^([^\:]*?):([^\n]*)"     # Parameter
 COMP_NAME       = "Component:([^\n]*)\n\n"  # Component name
-EXAMPLE         = "Example:(.*?)\n\n"    # Example
+EXAMPLE         = "Example:(.*?)\n\n"       # Example
 
 INFO_SEC        = "%s(.*?)(?=%s|%s|%s)" % (INFO, DESCRIPTION, PARAMS, END)  # Info section
 DESC_SEC        = "%s(.*?)(?=%s|%s|%s)" % (DESCRIPTION, INFO, PARAMS, END)  # Description section
 PARAM_SEC       = "%s(.*?)(?=%s|%s|%s)" % (PARAMS, INFO, DESCRIPTION, END)  # Parameters section
 
+INPUT_PARAMS    = "INPUT PARAMETERS:(.*)"   # Should exist?
+OUTPUT_PARAMS   = "OUTPUT PARAMETERS:(.*)"  # Might not be exist
 
 
-class McStasComponentParser:
+class McStasComponentParser(object):
 
     def __init__(self, filename=None, config=None, parse=True):
         self._filename      = filename
@@ -83,25 +96,17 @@ class McStasComponentParser:
         self._inputparams   = {}
         self._outputparams  = {}
 
+        self._header["input_parameters"]    = self._inputparams
+        self._header["output_parameters"]   = self._outputparams
+
         if parse and (self._fileExists() or config):
             self.parse()        
 
 
     def parse(self):
         """
-        Parses config string or file and appends component to self._components
-
-        Algorithm steps:
-        - Extract header (first /*...*/ comment)
-        - Remove stars and spaces after them ('*{spaces}' -> '')
-        - Remove '\r' for Windows files
-        - Find first occurence of pattern: "Component: ...\n" and cut the part above it
-          and replace by empty string ""
-        - Split by lines and go over them to populate header dict
-        - Find first occurence of pattern: "Example: ...{no DIRECTIVES}" and cut the part above it
-          and replace by empty string ""
+        Parses data from config string or file and populates header structure
         """
-
         configText   = self._configText()
 
         p           = re.compile(COMMENT, re.DOTALL)
@@ -112,28 +117,31 @@ class McStasComponentParser:
         text        = matches[0]                # First comment is the header
         text        = self._strip(WINCR, text)     # Strip carriage return
         headertext  = self._strip(STAR, text)   # Strip stars
-        compname    = self._compName(headertext)
 
+        # Extract sections from headertext (hide them?)
         info        = self._sectionText(INFO_SEC, headertext)
         desc        = self._sectionText(DESC_SEC, headertext)
         param       = self._sectionText(PARAM_SEC, headertext)
 
+        self._parseCompName(headertext)
         self._parseInfoSection(info)
         self._parseDescSection(desc)
         self._parseParamSection(param)
-        
-        # Names are kept for backward compatibility
-        self._header["componentname"]    = compname
-
-#        self._header["full_description"]    = ""
-
-#        self._header["input_parameters"]    = self._inputparams
-#        self._header["output_parameters"]    = self._outputparams
-
 
 
     def header(self):
+        "Returns header"
         return self._header
+
+
+    def inputparams(self):
+        "Returns input parameters"
+        return self._inputparams
+
+        
+    def outputparams(self):
+        "Returns output parameters"
+        return self._outputparams
 
 
     def toString(self, br="\n"):
@@ -175,14 +183,14 @@ class McStasComponentParser:
         return s
 
 
-    def _compName(self, text):
+    def _parseCompName(self, text):
         p           = re.compile(COMP_NAME, re.IGNORECASE)
         namefinds   = p.findall(text)
         if not namefinds:
             return ""    # Empty name
         
-        name    = namefinds[0].strip()
-        return name
+        compname    = namefinds[0].strip()
+        self._header["componentname"]    = compname        
 
 
     def _sectionText(self, secregex, text):
@@ -234,7 +242,6 @@ class McStasComponentParser:
             if self._isMatch(regex, param):
                 return param
 
-
         return None
 
 
@@ -255,17 +262,25 @@ class McStasComponentParser:
         matches     = p.findall(text)
         example     = ""        # Default value
         if len(matches) >= 1:   # No section found, return empty string
-            mstr = matches[0]      # Take first match!
+            mstr = matches[0]   # Take first match!
             if mstr:
                 example  = " ".join(mstr.strip(" \n").split("\n"))
 
         self._header["example"]    = example
 
+        # Get full description: strip example and take whatever is left
+        text        = self._strip(EXAMPLE, text)
+        self._header["full_description"]    = text.strip()
+
 
     def _parseParamSection(self, text):
         "Parses parameter section and populates input and output parameters of header"
-        pass
+        # Get output parameters first!
+        outputtext      = self._sectionText(OUTPUT_PARAMS, text)
+        filteredtext    = self._strip(OUTPUT_PARAMS, text)
 
+        # ... and then input parameters
+        inputtext       = self._sectionText(INPUT_PARAMS, filteredtext)
 
 
 testtext = """
