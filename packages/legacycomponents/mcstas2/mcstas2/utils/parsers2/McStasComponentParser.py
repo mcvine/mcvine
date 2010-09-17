@@ -85,7 +85,7 @@ TRACE           = "TRACE"
 SAVE            = "SAVE"
 FINALLY         = "FINALLY"
 MCDISPLAY       = "MCDISPLAY"
-
+BODY_SECTIONS   = [DECLARE, INITIALIZE, TRACE, SAVE, FINALLY, MCDISPLAY]
 
 # Allowed info parameters
 STD_PARAMS      = [DATE_N, VERSION_N, ORIGIN_N, RELEASE_N]
@@ -159,13 +159,15 @@ class McStasComponentParser(object):
         self._filename      = filename
         self._config        = config
         # OrderedDict?
-        # Header stuff
+        # Header 
         self._headerstr     = ""    # Non-parsed header
         self._header        = {}    # Parsed header
         self._inputparams   = {}    # Dictionary of input parameters
         self._outputparams  = {}    # Dictionary of output parameters
 
-
+        # Body
+        self._sections      = {}    # Sections
+        self._defs          = {}    # Definitions
 
         if parse and (self._fileExists() or config):
             self.parse()        
@@ -198,6 +200,10 @@ class McStasComponentParser(object):
     def toString(self, br="\n"):
         str     = ""
         for (key, value) in self._header.iteritems():
+            str += "%s: %s%s" % (key, value, br)
+
+        str += br
+        for (key, value) in self._sections.iteritems():
             str += "%s: %s%s" % (key, value, br)
 
         return str
@@ -235,19 +241,27 @@ class McStasComponentParser(object):
         "Parses body and populates body dictionary"
         text        = self._strip(WINCR, bodyText)  # Strip carriage return
 
-        #self._parse
-        # Declare
-        p           = re.compile(sectionRegex(DECLARE), re.DOTALL)
-        matches     = p.findall(text)
-        print matches
-        if len(matches) < 1: # No header found
-            return 
-
-        m           = matches[0]                # First comment is the header
-        print m
+        self._parseBodySections(text)
         
 
+    def _parseBodySections(self, text):
+        "Parse body sections"
+        for regex in BODY_SECTIONS:
+            p           = re.compile(sectionRegex(regex), re.DOTALL|re.IGNORECASE)
+            matches     = p.findall(text)
+            if len(matches) < 1: # No header found
+                continue
 
+            mm      = matches[0]
+            if len(mm) != 2:
+                continue
+
+            secname = mm[0].lower()
+            if secname == FINALLY.lower():
+                secname = "finalize"
+
+            self._sections[secname]  = mm[1]
+            
 
     def _configText(self):
         "Take config from file if it exist and readable, or use from config - otherwise"
@@ -439,7 +453,7 @@ def main():
             elif parts[0] in CONFIG:
                 conv    = McStasComponentParser(config=parts[1])
 
-            #print conv.toString()
+            print conv.toString()
             return
 
     print USAGE_MESSAGE
