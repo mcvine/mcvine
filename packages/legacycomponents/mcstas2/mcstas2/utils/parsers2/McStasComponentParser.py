@@ -19,16 +19,20 @@ Flexibility:
       starting spaces allowed: '*' and ' *' have the same effect
     - Sections can be in arbitrary order.
 
+
 Restrictions:
     - First comment is considered to be a header!
-    - Input and output parameters are separated from the corresponding
-      decsription by semicolumn with format: <name>:{spaces}<description>
-        Example: "xmin:     Lower x bound of detector opening (m)"
     - Descriptions (short and full) CANNOT have ':' character!
     - Header must be finished by '%E' directive
     - Example parameter should be in Description section
     - Input subsection should go before output subsection
     - Input and output subsections should have parameters only!
+    - Input and output parameters are separated from the corresponding
+      decsription by semicolumn with format: <name>:{spaces}<description>
+        Example: "xmin:     Lower x bound of detector opening (m)"
+    - Values (description) of input and output parameters can have new line ('\n')
+        but should not have ':' character
+
 
 Algorithm steps:
     - Extract header (first /*...*/ comment)
@@ -40,6 +44,7 @@ Algorithm steps:
     - Find first occurence of pattern: "Example: ...{no DIRECTIVES}" and cut the part above it
       and replace by empty string ""
 
+
 Notes:
     - McStas component format: http://neutron.risoe.dk/documentation/mcdoc/
     - Names for header and input/output parameters are kept for backward compatibility
@@ -47,7 +52,7 @@ Notes:
 
 import re
 
-# Utils
+# Utils (?)
 def paramRegex(name):
     "Returns parameter regex specified by name"
     return "^(%s):([^\n]*)" % name
@@ -75,6 +80,7 @@ SPACES          = '[ \t]*'                  # Spaces and tabs
 WINCR           = '\r'                      # Window's CR
 STAR            = "^%s[\*]*%s" % (SPACES, SPACES)   # Starting stars
 PARAM           = "^([^\:]*?):([^\n]*)"     # Parameter
+IOPARAM         = "^([^\:]*?):([^\:]*)"     # Input/Output parameters
 COMP_NAME       = "Component:([^\n]*)\n\n"  # Component name
 EXAMPLE         = "Example:(.*?)\n\n"       # Example
 
@@ -95,9 +101,6 @@ class McStasComponentParser(object):
         self._header        = {}
         self._inputparams   = {}
         self._outputparams  = {}
-
-        self._header["input_parameters"]    = self._inputparams
-        self._header["output_parameters"]   = self._outputparams
 
         if parse and (self._fileExists() or config):
             self.parse()        
@@ -203,6 +206,7 @@ class McStasComponentParser(object):
         return matches[0]   # Return the first found match
 
 
+    # XXX: Merge with _populateParams()
     def _parseInfoSection(self, text):
         "Parses info section and populates part of header parameters"
         # XXX: There might be problems that description has ':' character
@@ -221,9 +225,11 @@ class McStasComponentParser(object):
                 param       = m.group(1).strip()
                 value       = m.group(2).strip()
                 paramname   = self._paramName(param)
-                if paramname:
-                    paramname   = paramname.lower()
-                    self._header[paramname] = value
+                if not paramname:
+                    continue
+                    
+                paramname   = paramname.lower()
+                self._header[paramname] = value
             else:
                 self._header["simple_description"]    = l                
             
@@ -281,6 +287,44 @@ class McStasComponentParser(object):
 
         # ... and then input parameters
         inputtext       = self._sectionText(INPUT_PARAMS, filteredtext)
+
+        self._parseInputSubsection(inputtext)
+        self._parseOutputSubsection(outputtext)
+
+
+    def _parseInputSubsection(self, text):
+        "Parses input text and populates input parameters"
+        self._inputparams  = self._populateParams(IOPARAM, text)
+        self._header["input_parameters"]    = self._inputparams
+
+
+    def _parseOutputSubsection(self, text):
+        "Parses output text and populates output parameters"
+        self._outputparams  = self._populateParams(IOPARAM, text)
+        self._header["output_parameters"]   = self._outputparams
+
+
+    def _populateParams(self, paramregex, text):
+        "Populates dictionary of parameters"
+        params      = {}
+        lines       = text.split("\n")
+
+        for l in lines:
+            l   = l.strip()
+            if l == '':
+                continue    # Skip empty line
+
+            p   = re.compile(paramregex)
+            m   = p.match(l)
+
+            if m:
+                (param, value)  = (m.group(1).strip(), m.group(2).strip())
+                if not param:
+                    continue
+                    
+                params[param]   = value
+
+        return params
 
 
 testtext = """
