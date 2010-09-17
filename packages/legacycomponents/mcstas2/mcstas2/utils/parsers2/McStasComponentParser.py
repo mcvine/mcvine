@@ -24,8 +24,7 @@ Declarations:
       decsription by semicolumn with format: <name>:{spaces}<description>
         Example: "xmin:     Lower x bound of detector opening (m)"
     - Sections can be in arbitrary order
-    - Parameters cannot separated by empty line (no "\n\n")
-    - Descriptions can have ':' character
+    - Descriptions CANNOT have ':' character
 
 Notes:
     -
@@ -33,17 +32,30 @@ Notes:
 
 import re
 
-# Functions
+# Utils
 def paramRegex(name):
+    "Returns parameter regex specified by name"
     return "^(%s):([^\n]*)" % name
 
 # Constants
-INFO        = "%I"
-DESCRIPTION = "%D"
-PARAMS      = "%P"
-END         = "%E"
-SECTIONS    = [INFO, DESCRIPTION, PARAMS] # Standard order
-DIRECTIVES  = SECTIONS + [END,]
+INFO            = "%I"
+DESCRIPTION     = "%D"
+PARAMS          = "%P"
+END             = "%E"
+SECTIONS        = [INFO, DESCRIPTION, PARAMS] # Standard order
+DIRECTIVES      = SECTIONS + [END,]
+COPYRIGHT_N     = "Written by"
+DATE_N          = "Date"
+VERSION_N       = "Version"
+ORIGIN_N        = "Origin"
+RELEASE_N       = "Release"
+
+# Allowed info parameters
+STD_PARAMS      = [DATE_N, VERSION_N, ORIGIN_N, RELEASE_N]
+INFO_PARAMS     = STD_PARAMS + [COPYRIGHT_N,]
+
+INPUT_PARAMS    = "INPUT PARAMETERS"
+OUTPUT_PARAMS   = "OUTPUT PARAMETERS"
 
 # Regular expressions
 COMMENT         = '(/\*.*?\*/)'         # Non-greedy comment (.*?)
@@ -52,21 +64,13 @@ WINCR           = '\r'                  # Window's CR
 STAR            = "^%s[\*]*%s" % (SPACES, SPACES)   # Starting stars
 PARAM           = "^([^\:]*?):([^\n]*)"  # Parameter
 COMP_NAME       = "Component:([^\n]*)\n\n"          # Component name
-COPYRIGHT       = paramRegex("Written by")
-DATE            = paramRegex("Date")
-VERSION         = paramRegex("Version")
-ORIGIN          = paramRegex("Origin")
-RELEASE         = paramRegex("Release")
 
-INPUT_PARAMS    = "INPUT PARAMETERS"
-OUTPUT_PARAMS   = "OUTPUT PARAMETERS"
 
 INFO_SEC        = "%s(.*?)(?=%s|%s|%s)" % (INFO, DESCRIPTION, PARAMS, END)  # Info section
 DESC_SEC        = "%s(.*?)(?=%s|%s|%s)" % (DESCRIPTION, INFO, PARAMS, END)  # Description section
 PARAM_SEC       = "%s(.*?)(?=%s|%s|%s)" % (PARAMS, INFO, DESCRIPTION, END)  # Parameters section
 
-# Allowed info parameters
-INFO_PARAMS     = (COPYRIGHT, DATE, VERSION, ORIGIN, RELEASE)
+
 
 class McStasComponentParser:
 
@@ -119,12 +123,12 @@ class McStasComponentParser:
         
         # Names are kept for backward compatibility
         self._header["componentname"]    = compname
-        self._header["copyright"]    = ""
-        self._header["simple_description"]    = ""
-        self._header["full_description"]    = ""
-        self._header["example"]     = ""
-        self._header["input_parameters"]    = self._inputparams
-        self._header["output_parameters"]    = self._outputparams
+#        self._header["copyright"]    = ""
+#
+#        self._header["full_description"]    = ""
+#        self._header["example"]     = ""
+#        self._header["input_parameters"]    = self._inputparams
+#        self._header["output_parameters"]    = self._outputparams
 
 
 
@@ -133,14 +137,18 @@ class McStasComponentParser:
 
 
     def toString(self, br="\n"):
-        return ""
+        str     = ""
+        for (key, value) in self._header.iteritems():
+            str += "%s: %s%s" % (key, value, br)
+
+        return str
 
 
     def _configText(self):
         "Take config from file if it exist and readable, or use from config - otherwise"
         configText  = ""
         if self._fileExists():
-            try:    # Try to read it
+            try:        # Try to read it
                 configText  = open(self._filename).read()
             except:
                 pass    # No exception
@@ -189,28 +197,46 @@ class McStasComponentParser:
 
     def _parseInfoSection(self, text):
         "Parses info section and populates part of header parameters"
+        # XXX: There might be problems that description has ':' character
+        #           In this case check if numbr == 2 and afterparam = True
         lines       = text.split("\n")
-        numbr       = 0
-        afterparam  = False
 
         for l in lines:
             l   = l.strip()
             if l == '':
-#                numbr   += 1
-                continue
+                continue    # Skip empty line
 
             p   = re.compile(PARAM)
             m   = p.match(l)
-            # Check if numbr == 2 and afterparam = True
-            if m:
-                
-
             
-                
+            if m:
+                param       = m.group(1).strip()
+                value       = m.group(2).strip()
+                paramname   = self._paramName(param)
+                if paramname:
+                    paramname   = paramname.lower()
+                    self._header[paramname] = value
+            else:
+                self._header["simple_description"]    = l                
+            
 
-                #groups  =
-                print m.group(1), m.group(2)
+    def _paramName(self, param):
+        """
+        Returns parameter name.
+        
+        Note: Only those parameter which are in INFO_PARAMS will be returned
+        """
+        # Non standard parameter
+        if self._isMatch(COPYRIGHT_N, param):
+            return "copyright"
 
+        # Standard parameters
+        for regex in STD_PARAMS:
+            if self._isMatch(regex, param):
+                return param
+
+
+        return None
 
 #        double  = text.split("\n\n")
 #
@@ -218,6 +244,15 @@ class McStasComponentParser:
 #        lines   = text.split("\n")
 #        for l in lines:
 #            print l
+
+    def _isMatch(self, regex, text):
+        "Returns True if matches and False - otherwise"
+        p       = re.compile(regex, re.IGNORECASE)
+        m       = p.match(text)
+        if m:
+            return True # There is the match
+
+        return False
 
 
     def _parseDescSection(self, text):
@@ -283,6 +318,7 @@ the rest of text
 
 if __name__ == "__main__":
     parser  = McStasComponentParser(config=testtext)
+    print parser.toString()
 
 
 __date__ = "$Sep 15, 2010 3:05:52 PM$"
