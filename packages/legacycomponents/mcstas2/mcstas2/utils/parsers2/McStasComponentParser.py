@@ -32,6 +32,7 @@ Restrictions:
         Example: "xmin:     Lower x bound of detector opening (m)"
     - Values (description) of input and output parameters can have new line ('\n')
         but should not have ':' character
+    - Section names are case insensitive ('DECLARE' == 'declare')
 
 
 Algorithm steps:
@@ -60,23 +61,31 @@ import sys
 import os.path
 from time import localtime, strftime
 
-# Utils (?)
-def paramRegex(name):
-    "Returns parameter regex specified by name"
-    return "^(%s):([^\n]*)" % name
 
-# Constants
+# Constants:
+# Directives
 INFO            = "%I"
 DESCRIPTION     = "%D"
 PARAMS          = "%P"
 END             = "%E"
 SECTIONS        = [INFO, DESCRIPTION, PARAMS] # Standard order
 DIRECTIVES      = SECTIONS + [END,]
+
+# Header parameters
 COPYRIGHT_N     = "Written by"
 DATE_N          = "Date"
 VERSION_N       = "Version"
 ORIGIN_N        = "Origin"
 RELEASE_N       = "Release"
+
+# Body sections
+DECLARE         = "DECLARE"
+INITIALIZE      = "INITIALIZE"
+TRACE           = "TRACE"
+SAVE            = "SAVE"
+FINALLY         = "FINALLY"
+MCDISPLAY       = "MCDISPLAY"
+
 
 # Allowed info parameters
 STD_PARAMS      = [DATE_N, VERSION_N, ORIGIN_N, RELEASE_N]
@@ -95,22 +104,51 @@ DESCIRPTION:
     McStasComponentParser - class that performs parsing of McStas components.
 """
 
-# Regular expressions
+
+# Utils
+def paramRegex(name):
+    "Returns parameter regular expression specified by name"
+    return "^(%s):([^\n]*)" % name
+
+
+def sectionRegex(name):
+    "Returns section regular expression specified by name"
+    return "(%s)[ \n\t]*\%{(.*?)(?=\%})" % name
+
+
+def defRegex(namelist):
+    "Returns regular expression for definitions"
+    sep     = "%s" % SPACES_MORE_ONE
+    defname = sep.join(namelist)        # Example: "DEFINE COMPONENT"
+    return "%s([^\n]*)\n" % defname
+
+
+# Regular expressions (Regex)
 COMMENT         = '(/\*.*?\*/)'             # Non-greedy comment (.*?)
 SPACES          = '[ \t]*'                  # Spaces and tabs
+SPACES_MORE_ONE = '[ ]+'                    # One and more spaces
 WINCR           = '\r'                      # Window's CR
 STAR            = "^%s[\*]*%s" % (SPACES, SPACES)   # Starting stars
-PARAM           = "^([^\:]*?):([^\n]*)"     # Parameter
-IOPARAM         = "^([^\:]*?):([^\:]*)"     # Input/Output parameters
+PARAM           = "^([^\:]*?):([^\n]*)"     # Parameter (new line not allowed)
+IOPARAM         = "^([^\:]*?):([^\:]*)"     # Input/Output parameters (colon not allowed)
 COMP_NAME       = "Component:([^\n]*)\n\n"  # Component name
 EXAMPLE         = "Example:(.*?)\n\n"       # Example
 
+# Regex for sections
 INFO_SEC        = "%s(.*?)(?=%s|%s|%s)" % (INFO, DESCRIPTION, PARAMS, END)  # Info section
 DESC_SEC        = "%s(.*?)(?=%s|%s|%s)" % (DESCRIPTION, INFO, PARAMS, END)  # Description section
 PARAM_SEC       = "%s(.*?)(?=%s|%s|%s)" % (PARAMS, INFO, DESCRIPTION, END)  # Parameters section
 
+# Regex for input/output parameters
 INPUT_PARAMS    = "INPUT PARAMETERS:(.*)"   # Should exist?
 OUTPUT_PARAMS   = "OUTPUT PARAMETERS:(.*)"  # Might not be exist
+
+# Regex for body
+DEF_COMP        = defRegex(["DEFINE", "COMPONENT"])
+DEF_PARAM       = defRegex(["DEFINITION", "PARAMETERS"])
+SET_PARAMS      = defRegex(["SETTING", "PARAMETERS"])
+OUTPUT_PARAMS   = defRegex(["OUTPUT", "PARAMETERS"])
+STATE_PARAMS    = defRegex(["STATE", "PARAMETERS"])
 
 
 class McStasComponentParser(object):
@@ -119,9 +157,10 @@ class McStasComponentParser(object):
         self._filename      = filename
         self._config        = config
         # OrderedDict?
-        self._header        = {}
-        self._inputparams   = {}
-        self._outputparams  = {}
+        self._headerstr     = ""    # Non-parsed header
+        self._header        = {}    # Parsed header
+        self._inputparams   = {}    # Dictionary of input parameters
+        self._outputparams  = {}    # Dictionary of output parameters
 
         if parse and (self._fileExists() or config):
             self.parse()        
@@ -167,6 +206,7 @@ class McStasComponentParser(object):
             return origText
 
         m           = matches[0]                # First comment is the header
+        self._headerstr = m
         text        = self._strip(WINCR, m)     # Strip carriage return
         headertext  = self._strip(STAR, text)   # Strip stars
 
