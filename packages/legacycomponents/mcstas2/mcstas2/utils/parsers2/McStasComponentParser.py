@@ -36,7 +36,7 @@ Restrictions:
 
 Algorithm steps:
     - Extract header (first /*...*/ comment)
-    - Remove stars and spaces after them ('*{spaces}' -> '')
+    - Remove stars and spaces after them ('{spaces}*{spaces}' -> '')
     - Remove '\r' for Windows files
     - Find first occurence of pattern: "Component: ...\n" and cut the part above it
       and replace by empty string ""
@@ -48,9 +48,17 @@ Algorithm steps:
 Notes:
     - McStas component format: http://neutron.risoe.dk/documentation/mcdoc/
     - Names for header and input/output parameters are kept for backward compatibility
+
+
+TODO:
+    - Improve populateParams() to be used in _parseInfoSection()
 """
 
+# Imports
 import re
+import sys
+import os.path
+from time import localtime, strftime
 
 # Utils (?)
 def paramRegex(name):
@@ -73,6 +81,19 @@ RELEASE_N       = "Release"
 # Allowed info parameters
 STD_PARAMS      = [DATE_N, VERSION_N, ORIGIN_N, RELEASE_N]
 INFO_PARAMS     = STD_PARAMS + [COPYRIGHT_N,]
+
+FILE            = ["--filename", "-f"]
+CONFIG          = ["--config", "-c"]
+ARGS            = FILE + CONFIG
+USAGE_MESSAGE   = """NAME:
+    McStasComponentParser - parser for McStas components
+
+SYNOPSIS:
+    python McStasComponentParser.py [--filename|-f=file_name] [--config|-c=config_string]
+
+DESCIRPTION:
+    McStasComponentParser - class that performs parsing of McStas components.
+"""
 
 # Regular expressions
 COMMENT         = '(/\*.*?\*/)'             # Non-greedy comment (.*?)
@@ -319,6 +340,7 @@ class McStasComponentParser(object):
 
             if m:
                 (param, value)  = (m.group(1).strip(), m.group(2).strip())
+                # XXX: What if value has '\n'?
                 if not param:
                     continue
                     
@@ -327,59 +349,25 @@ class McStasComponentParser(object):
         return params
 
 
-testtext = """
-/*******************************************************************************
-*
-*
-*
-* McStas, neutron ray-tracing package
-*         Copyright 1997-2002, All rights reserved
-*         Risoe National Laboratory, Roskilde, Denmark
-*         Institut Laue Langevin, Grenoble, France
-*
-* Component: E_monitor
-*
-* %I
-* Written by: Kristian Nielsen and Kim Lefmann
-* Date: April 20, 1998
-* Version: $Revision: 438 $
-* Origin: Risoe
-* Release: McStas 1.6
-*
-* Energy-sensitive monitor.
-*
-* %D
-* A square single monitor that measures the energy of the incoming neutrons.
-*
-* Example: E_monitor(xmin=-0.1, xmax=0.1, ymin=-0.1, ymax=0.1,
-*                 Emin=1, Emax=50, nchan=20, filename="Output.nrj")
-*
-* %P
-* INPUT PARAMETERS:
-*
-* xmin:     Lower x bound of detector opening (m)
-* xmax:     Upper x bound of detector opening (m)
-* ymin:     Lower y bound of detector opening (m)
-* ymax:     Upper y bound of detector opening (m)
-* Emin:     Minimum energy to detect (meV)
-* Emax:     Maximum energy to detect (meV)
-* nchan:    Number of energy channels (1)
-* filename: Name of file in which to store the detector image (text)
-*
-* OUTPUT PARAMETERS:
-*
-* E_N:      Array of neutron counts
-* E_p:      Array of neutron weight counts
-* E_p2:     Array of second moments
-*
-* %E
-*******************************************************************************/
-the rest of text
-"""
+def main():
+    for arg in sys.argv:
+        parts   = arg.split("=")
+        key     = parts[0]
+        if key in ARGS:
+            if parts[0] in FILE:
+                conv    = McStasComponentParser(filename=parts[1])
+            elif parts[0] in CONFIG:
+                conv    = McStasComponentParser(config=parts[1])
+
+            print conv.toString()
+            return
+
+    print USAGE_MESSAGE
+    return
+
 
 if __name__ == "__main__":
-    parser  = McStasComponentParser(config=testtext)
-    print parser.toString()
+    main()
 
 
 __date__ = "$Sep 15, 2010 3:05:52 PM$"

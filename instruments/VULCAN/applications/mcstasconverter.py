@@ -80,7 +80,7 @@ SYNOPSIS:
     python mcstasconverter.py [--filename|-f=file_name] [--config|-c=config_string]
 
 DESCIRPTION:
-    McStasConverter - class that performs convertion from McStas componentes to dictionary.
+    McStasConverter - class that performs convertion from McStas components to dictionary.
                       This a convenient form to create other data structures
                       (e.g. McVine components)
 """
