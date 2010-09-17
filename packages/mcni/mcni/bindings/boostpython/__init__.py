@@ -12,15 +12,6 @@
 #
 
 
-try:
-    import mcni.mcnibp as b
-    binding_imported = True
-except ImportError:
-    import warnings
-    warnings.warn("Unable to load binding mcni.mcnibp")
-    binding_imported = False
-
-
 class Binding:
     
     def neutron_buffer( self, n ):
@@ -100,9 +91,14 @@ def _import():
     import bpext, mcni.mcni
     return
 
-if binding_imported:
+try:
     _import()
-
+except ImportError:
+    import warnings
+    warnings.warn("Unable to load boost python binding of mcni")
+    binding_imported = False
+else:
+    import mcni.mcnibp as b
 
 
 # version
