@@ -24,7 +24,8 @@ Declarations:
       decsription by semicolumn with format: <name>:{spaces}<description>
         Example: "xmin:     Lower x bound of detector opening (m)"
     - Sections can be in arbitrary order
-    - Descriptions CANNOT have ':' character
+    - Descriptions (short and full) CANNOT have ':' character!
+    - Example parameter should be in Description section
 
 Notes:
     -
@@ -58,13 +59,13 @@ INPUT_PARAMS    = "INPUT PARAMETERS"
 OUTPUT_PARAMS   = "OUTPUT PARAMETERS"
 
 # Regular expressions
-COMMENT         = '(/\*.*?\*/)'         # Non-greedy comment (.*?)
-SPACES          = '[ \t]*'              # Spaces and tabs
-WINCR           = '\r'                  # Window's CR
+COMMENT         = '(/\*.*?\*/)'             # Non-greedy comment (.*?)
+SPACES          = '[ \t]*'                  # Spaces and tabs
+WINCR           = '\r'                      # Window's CR
 STAR            = "^%s[\*]*%s" % (SPACES, SPACES)   # Starting stars
-PARAM           = "^([^\:]*?):([^\n]*)"  # Parameter
-COMP_NAME       = "Component:([^\n]*)\n\n"          # Component name
-
+PARAM           = "^([^\:]*?):([^\n]*)"     # Parameter
+COMP_NAME       = "Component:([^\n]*)\n\n"  # Component name
+EXAMPLE         = "Example:(.*?)\n\n"    # Example
 
 INFO_SEC        = "%s(.*?)(?=%s|%s|%s)" % (INFO, DESCRIPTION, PARAMS, END)  # Info section
 DESC_SEC        = "%s(.*?)(?=%s|%s|%s)" % (DESCRIPTION, INFO, PARAMS, END)  # Description section
@@ -123,10 +124,9 @@ class McStasComponentParser:
         
         # Names are kept for backward compatibility
         self._header["componentname"]    = compname
-#        self._header["copyright"]    = ""
-#
+
 #        self._header["full_description"]    = ""
-#        self._header["example"]     = ""
+
 #        self._header["input_parameters"]    = self._inputparams
 #        self._header["output_parameters"]    = self._outputparams
 
@@ -223,7 +223,6 @@ class McStasComponentParser:
     def _paramName(self, param):
         """
         Returns parameter name.
-        
         Note: Only those parameter which are in INFO_PARAMS will be returned
         """
         # Non standard parameter
@@ -238,15 +237,9 @@ class McStasComponentParser:
 
         return None
 
-#        double  = text.split("\n\n")
-#
-#        print double
-#        lines   = text.split("\n")
-#        for l in lines:
-#            print l
 
     def _isMatch(self, regex, text):
-        "Returns True if matches and False - otherwise"
+        "Returns True if matches, False - otherwise"
         p       = re.compile(regex, re.IGNORECASE)
         m       = p.match(text)
         if m:
@@ -257,7 +250,16 @@ class McStasComponentParser:
 
     def _parseDescSection(self, text):
         "Parses description section and populates part of header parameters"
-        pass
+        # Find example
+        p           = re.compile(EXAMPLE, re.DOTALL|re.IGNORECASE)
+        matches     = p.findall(text)
+        example     = ""        # Default value
+        if len(matches) >= 1:   # No section found, return empty string
+            mstr = matches[0]      # Take first match!
+            if mstr:
+                example  = " ".join(mstr.strip(" \n").split("\n"))
+
+        self._header["example"]    = example
 
 
     def _parseParamSection(self, text):
