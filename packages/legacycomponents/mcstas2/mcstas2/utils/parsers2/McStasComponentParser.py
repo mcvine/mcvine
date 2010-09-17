@@ -122,13 +122,14 @@ def defRegex(namelist):
     defname = namelist
     if type(namelist) is list:
         defname = sep.join(namelist)        # Example: "DEFINE COMPONENT"
-    return "%s:([^\n]*)\n" % defname
+    return "^[ \t]*%s([^\n]*)\n" % defname # Spaces are allowed before the definition names
 
 
 # Regular expressions (Regex)
 COMMENT         = '(/\*.*?\*/)'             # Non-greedy comment (.*?)
 SPACES          = '[ \t]*'                  # Spaces and tabs
 SPACES_MORE_ONE = '[ ]+'                    # One and more spaces
+_SPACES         = '^[ \t]*'                  # Starting spaces and tabs
 WINCR           = '\r'                      # Window's CR
 STAR            = "^%s[\*]*%s" % (SPACES, SPACES)   # Starting stars
 PARAM           = "^([^\:]*?):([^\n]*)"     # Parameter (new line not allowed)
@@ -206,6 +207,10 @@ class McStasComponentParser(object):
         for (key, value) in self._sections.iteritems():
             str += "%s: %s%s" % (key, value, br)
 
+        str += br
+        for (key, value) in self._defs.iteritems():
+            str += "%s: %s%s" % (key, value, br)
+
         return str
 
 
@@ -239,10 +244,32 @@ class McStasComponentParser(object):
 
     def _parseBody(self, bodyText):
         "Parses body and populates body dictionary"
-        text        = self._strip(WINCR, bodyText)  # Strip carriage return
+        bodytext        = self._strip(WINCR, bodyText)  # Strip carriage return
 
-        self._parseBodySections(text)
+        self._parseDefComp(bodytext)
+        self._parseBodySections(bodytext)
         
+
+    def _parseDefComp(self, text):
+        "Parses Definition"
+        name        = ""
+        value       = self._defValues(DEF_COMP, text)
+        if value:
+            name    = value
+
+        self._defs["name"]  = name
+
+
+    def _defValues(self, regex, text):
+        "Returns matches for regex pattern. Used mostly for definitions"
+        p           = re.compile(regex, re.DOTALL|re.IGNORECASE|re.MULTILINE )
+        matches     = p.findall(text)
+        if len(matches) < 1: # No value found
+            return None
+
+        return matches[0].strip()
+        
+
 
     def _parseBodySections(self, text):
         "Parse body sections"
