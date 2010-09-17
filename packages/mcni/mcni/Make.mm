@@ -45,6 +45,7 @@ EXPORT_PYTHON_MODULES = \
 	AbstractComponent.py \
 	DummyComponent.py \
 	Geometer.py \
+	Geometer2.py \
 	Instrument.py \
 	__init__.py \
 	component_suppliers.py \

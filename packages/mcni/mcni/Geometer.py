@@ -12,7 +12,7 @@
 #
 
 
-class Geometer:
+class Geometer(object):
 
     '''Geometer holds geometrical info of elements relative to host'''
 
