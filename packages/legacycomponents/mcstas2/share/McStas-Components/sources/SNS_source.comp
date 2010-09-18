@@ -4,7 +4,7 @@
 *         Maintained by Kristian Nielsen and Kim Lefmann,
 *         Copyright 1997-2000 Risoe National Laboratory, Roskilde, Denmark
 *
-* Component: SNS_source_r1
+* Component: SNS_source
 *
 * %I
 * Written by: G. Granroth
@@ -12,7 +12,7 @@
 * Version: $Revision: 494 $
 * Origin: SNS Project Oak Ridge National Laboratory
 *
-* A source that produces a time and energy distribution from the SNS moderator files.
+* A source that produces a time and energy distribution from the SNS moderator files
 *
 * %D
 * Produces a time-of-flight spectrum from SNS moderator files
@@ -41,7 +41,7 @@
 * %E
 *******************************************************************************/
 
-DEFINE COMPONENT SNS_source_r1
+DEFINE COMPONENT SNS_source
 DEFINITION PARAMETERS ()
 SETTING PARAMETERS (char *S_filename="SNS_moderator_data_file",width=0.1, height=0.12, dist=2.5, xw=0.1, yh=0.12, Emin=50, Emax=70)
 OUTPUT PARAMETERS (hdiv,vdiv,p_in)
@@ -54,7 +54,6 @@ SHARE
 // ----------- added by Jiao Lin --------
 
 #include <functional>
-#include <cstring>
 
 // functor
   struct F1: public std::unary_function<double, double> {
