@@ -33,6 +33,8 @@ Restrictions:
     - Values (description) of input and output parameters can have new line ('\n')
         but should not have ':' character
     - Section names are case insensitive ('DECLARE' == 'declare')
+    - Parameter variable has the following format: 
+        [<type>]{spaces}<variable>{spaces}[={spaces}<value>]
 
 
 Algorithm steps:
@@ -129,7 +131,8 @@ def defRegex(namelist):
 COMMENT         = '(/\*.*?\*/)'             # Non-greedy comment (.*?)
 SPACES          = '[ \t]*'                  # Spaces and tabs
 SPACES_MORE_ONE = '[ ]+'                    # One and more spaces
-_SPACES         = '^[ \t]*'                  # Starting spaces and tabs
+_SPACES         = '^[ \t]*'                 # Starting spaces and tabs
+SPACES_ONLY     = '[ ]*'                    # Spaces only
 WINCR           = '\r'                      # Window's CR
 STAR            = "^%s[\*]*%s" % (SPACES, SPACES)   # Starting stars
 PARAM           = "^([^\:]*?):([^\n]*)"     # Parameter (new line not allowed)
@@ -152,6 +155,9 @@ DEF_PARAMS      = defRegex(["DEFINITION", "PARAMETERS"])
 SET_PARAMS      = defRegex(["SETTING", "PARAMETERS"])
 OUT_PARAMS      = defRegex(["OUTPUT", "PARAMETERS"])
 STATE_PARAMS    = defRegex(["STATE", "PARAMETERS"])
+VAR             = '[\w\-]*'     # Variable (alphanumeric character)
+VAR_REQ         = '[\w\-]+'     # Required variable
+PARAM_VAR       = '(%s)%s(%s)%s=?%s(%s)' % (VAR, SPACES_ONLY, VAR_REQ, SPACES_ONLY, SPACES_ONLY, VAR)
 
 testtext = """
 DEFINE COMPONENT E_monitor
@@ -286,20 +292,39 @@ class McStasComponentParser(object):
 
 
     def _defparams(self, line):
-        lines   = line.strip("()").split(",")
-        #print lines
-        return
+        "Returns definition parameters as dictionary"
+        # Format: [<type>]{spaces}<variable>{spaces}[={spaces}<value>]
+        # Example: line = "string X, string  Y =1, Z , W= 2"
+        params  = []
+        line    = "string X, string  Y =1, Z , W= 2" # To unit tests
+        items   = line.strip(" ()").split(",")
+        for it in items:
+            var     = it.strip()
+            match   = self._defValues(PARAM_VAR, var, None)
+            assert len(match) == 3
+            param           = {}
+            param["type"]   = match[0]
+            param["name"]   = match[1]
+            param["value"]  = match[2]
+            params.append(param)        
+        
+        return params
 
 
 
     def _parseSetParams(self, text):
         "Parses Setting Parameters"
-        pass
+        setparams = []
+
+        self._defs["setting_parameters"]  = setparams
+
 
 
     def _parseOutParams(self, text):
         "Parses Output Parameters"
-        pass
+        outparams = []
+
+        self._defs["output_parameters"]  = outparams
 
 
     def _parseStateParams(self, text):
@@ -315,16 +340,21 @@ class McStasComponentParser(object):
 
 
 
-    def _defValues(self, regex, text):
+    def _defValues(self, regex, text, flags=re.DOTALL|re.IGNORECASE|re.MULTILINE):
         "Returns matches for regex pattern. Used mostly for definitions"
-        p           = re.compile(regex, re.DOTALL|re.IGNORECASE|re.MULTILINE )
+        p           = re.compile(regex)
+        if flags:
+            p       = re.compile(regex, flags)
         matches     = p.findall(text)
         if len(matches) < 1: # No value found
             return None
 
-        return matches[0].strip()
-        
+        m           = matches[0]
+        if type(m) is str:
+            return m.strip()    # If value is string, strip spaces
 
+        return m    # otherwise return as they are
+        
 
     def _parseBodySections(self, text):
         "Parse body sections"
