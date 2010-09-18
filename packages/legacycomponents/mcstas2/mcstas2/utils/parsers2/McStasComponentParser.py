@@ -57,6 +57,8 @@ TODO:
     - Improve _populateParams() to be used in _parseInfoSection()
 """
 
+# XXX: Consider issue with 'char *' in definition parameters
+
 # Imports
 import re
 import sys
@@ -87,7 +89,8 @@ TRACE           = "TRACE"
 SAVE            = "SAVE"
 FINALLY         = "FINALLY"
 MCDISPLAY       = "MCDISPLAY"
-BODY_SECTIONS   = [DECLARE, INITIALIZE, TRACE, SAVE, FINALLY, MCDISPLAY]
+SHARE           = "SHARE"
+BODY_SECTIONS   = [DECLARE, INITIALIZE, TRACE, SAVE, FINALLY, MCDISPLAY, SHARE]
 
 # Allowed info parameters
 STD_PARAMS      = [DATE_N, VERSION_N, ORIGIN_N, RELEASE_N]
@@ -194,6 +197,16 @@ class McStasComponentParser(object):
     def header(self):
         "Returns header"
         return self._header
+
+
+    def sections(self):
+        "Returns sections"
+        return self._sections
+
+
+    def definitions(self):
+        "Returns definitions"
+        return self._defs
 
 
     def inputparams(self):
@@ -381,7 +394,7 @@ class McStasComponentParser(object):
                 continue
 
             secname = mm[0].lower()
-            if secname == FINALLY.lower():
+            if secname == FINALLY.lower():  # Special case
                 secname = "finalize"
 
             self._sections[secname]  = mm[1]
