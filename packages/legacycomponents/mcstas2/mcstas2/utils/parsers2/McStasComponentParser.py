@@ -161,15 +161,6 @@ VAR_REQ         = '[\w\-]+'     # Required variable
 # Works well for strings with format: <type> <variable> = <value>!
 PARAM_VAR       = '(%s)%s(%s)%s=?%s(%s)' % (VAR, SPACES_ONLY, VAR_REQ, SPACES_ONLY, SPACES_ONLY, VAR)
 
-testtext = """
-DEFINE COMPONENT E_monitor
-DEFINITION PARAMETERS (nchan=20, string filename)
-SETTING PARAMETERS (xmin=0, xmax=0, ymin=0, ymax=0, xwidth=0, yheight=0, Emin, Emax)
-OUTPUT PARAMETERS (E_N, E_p, E_p2, S_p, S_pE, S_pE2)
-STATE PARAMETERS (x,y,z,vx,vy,vz,t,s1,s2,p)
-DECLARE
-"""
-
 
 class McStasComponentParser(object):
 
@@ -263,8 +254,6 @@ class McStasComponentParser(object):
         "Parses body and populates body dictionary"
         bodytext        = self._strip(WINCR, bodyText)  # Strip carriage return
 
-        bodytext        = testtext
-
         self._parseDefComp(bodytext)
         self._parseDefParams(bodytext)
         self._parseSetParams(bodytext)
@@ -290,7 +279,7 @@ class McStasComponentParser(object):
 
     def _setDefParams(self, regex, text, paramname):
         "Parses and parameters and"
-        params   = {}
+        params   = []
         value       = self._defValues(regex, text)
         if value:
             params    = self._defParams(value)
@@ -310,6 +299,8 @@ class McStasComponentParser(object):
             #match   = self._defValues(PARAM_VAR, var, None)
             match   = self._paramMatch(var)
             assert len(match) == 3
+            if match[1] == "":  # If name is empty, return empty list
+                return []
             param           = {}
             param["type"]   = match[0]
             param["name"]   = match[1]
@@ -332,7 +323,7 @@ class McStasComponentParser(object):
         if len(varparts) == 2:
             type    = varparts[0].strip()
             name    = varparts[1].strip()
-        else:
+        elif len(varparts) == 1:
             name    = varparts[0].strip()
 
         return (type, name, value)
@@ -346,9 +337,6 @@ class McStasComponentParser(object):
     def _parseOutParams(self, text):
         "Parses Output Parameters"
         self._setDefParams(OUT_PARAMS, text, "output_parameters")
-
-
-        print self._defs["output_parameters"]
 
 
     def _parseStateParams(self, text):
@@ -589,7 +577,7 @@ def main():
             elif parts[0] in CONFIG:
                 conv    = McStasComponentParser(config=parts[1])
 
-#            print conv.toString()
+            print conv.toString()
             return
 
     print USAGE_MESSAGE
