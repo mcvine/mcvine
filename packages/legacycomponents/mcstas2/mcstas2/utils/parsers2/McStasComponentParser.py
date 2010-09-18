@@ -287,15 +287,6 @@ class McStasComponentParser(object):
         "Parses and sets arameters"
         self._setDefParams(DEF_PARAMS, text, "definition_parameters")
 
-        print self._defs["definition_parameters"]
-
-#        defparams   = {}
-#        value       = self._defValues(DEF_PARAMS, text)
-#        if value:
-#            defparams    = self._defParams(value)
-#
-#        self._defs["definition_parameters"]  = defparams
-
 
     def _setDefParams(self, regex, text, paramname):
         "Parses and parameters and"
@@ -310,8 +301,7 @@ class McStasComponentParser(object):
     def _defParams(self, line):
         "Returns definition parameters as dictionary"
         # Format: [<type>]{spaces}<variable>{spaces}[={spaces}<value>]
-        # Example: line = "string X, string  Y =1, Z , W= 2"
-        line    = "string XX, string  YY =1, ZZ , WW= 2"
+        # Example: line    = "string XX, string  YY =1, ZZ , WW= 2"
         params  = []
         items   = line.strip(" ()").split(",")
         for it in items:
@@ -350,17 +340,15 @@ class McStasComponentParser(object):
 
     def _parseSetParams(self, text):
         "Parses Setting Parameters"
-        setparams = []
-
-        self._defs["setting_parameters"]  = setparams
-
+        self._setDefParams(SET_PARAMS, text, "setting_parameters")
 
 
     def _parseOutParams(self, text):
         "Parses Output Parameters"
-        outparams = []
+        self._setDefParams(OUT_PARAMS, text, "output_parameters")
 
-        self._defs["output_parameters"]  = outparams
+
+        print self._defs["output_parameters"]
 
 
     def _parseStateParams(self, text):
