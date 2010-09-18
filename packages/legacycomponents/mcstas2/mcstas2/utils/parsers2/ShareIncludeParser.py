@@ -1,10 +1,10 @@
-# -*- Python -*-
+#!/usr/bin/env python
 #
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
-#                               Alex Dementsov
+#                                   Jiao Lin
 #                      California Institute of Technology
-#                        (C) 2010  All Rights Reserved
+#                        (C) 2008 All Rights Reserved
 #
 # {LicenseText}
 #
@@ -12,6 +12,25 @@
 #
 
 
-__date__ = "$Sep 15, 2010 3:07:15 PM$"
+from pyparsing.pyparsing import *
 
+def include():
+    return Suppress( '%include') + quotedString.setResultsName( 'header' )
+
+
+def test():
+    text = '''
+%include "read_table-lib"
+'''
+    print '%r' % include().parseString( text ).header
+    return
+
+
+if __name__ == "__main__": test()
+
+
+# version
+__id__ = "$Id$"
+
+# End of file
 

@@ -45,18 +45,19 @@ def parseComponent( component_file ):
     share               = _format_share_str(defs["share"])
 
     return ComponentInfo(
-        name,
-        header.copyright,
-        header.simple_description,
-        full_description,
-        input_parameters,
-        output_parameters,
-        state_parameters,
-        '%s' % info.declare,
-        '%s' % info.initialize, '%s' % info.trace,
-        '%s' % info.save, '%s' % info.finalize,
-        share,
-        )
+                        name,
+                        header["copyright"],
+                        header["simple_description"],
+                        full_description,
+                        input_parameters,
+                        output_parameters,
+                        state_parameters,
+                        '%s' % sections["declare"],
+                        '%s' % sections["initialize"],
+                        '%s' % sections["trace"],
+                        '%s' % sections["save"],
+                        '%s' % sections["finalize"],
+                        share)
 
 
 def _format_share_str( share ):
@@ -108,25 +109,6 @@ def _addDescription( parameters, descriptions ):
         ret.append( p )
 
     return ret
-
-
-#-----------------DEAD CODE-----------------------
-    #from ComponentParser import component as componentParser
-    #parser = componentParser()
-    #s = open(component_file).read()
-    #info = parser.parseString( s )
-
-    #from ComponentHeaderParser import parse
-    #header = parse( info.header )
-
-    #name = '%s' % info.name
-    #assert header.componentname == info.name
-
-#    inputParamDescs = header.input_parameters
-#    outputParamDescs = header.output_parameters
-#
-#    definition_parameters = _addDescription( info.definition_parameters, inputParamDescs )
-#    setting_parameters = _addDescription( info.setting_parameters, inputParamDescs )
 
 
 # version
