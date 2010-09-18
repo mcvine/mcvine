@@ -113,18 +113,89 @@ void test3()
 }
 
 
+void test4()
+{
+  Cylinder cyl1(0.5,1);
+  Cylinder cyl2(0.1,1);
+  Difference hc(cyl1, cyl2);
+  
+  std::vector<const AbstractShape *> shapes;
+  shapes.push_back( &hc );
+
+  Position start(-2,0,0);
+  Direction direction(1,0,0);
+  assert (find_1st_hit< int >( start, direction, shapes )==0);
+}
+
+
+void test5()
+{
+  Cylinder cyl1(0.002,0.1);
+  Cylinder cyl2(0.,0.1);
+  Difference hc(cyl1, cyl2);
+  
+  std::vector<const AbstractShape *> shapes;
+  shapes.push_back( &hc );
+
+  Position start(-1,0,0);
+  Direction direction(1000,0,0);
+  assert (find_1st_hit< int >( start, direction, shapes )==0);
+}
+
+
+void test6()
+{
+  Cylinder cyl1(0.002,0.1);
+  Cylinder cyl2(0.,0.1);
+  RotationMatrix m(1,-0,0, 0,0,1, 0,-1,0);
+  Rotation r1(cyl1, m), r2(cyl2, m);
+  Difference hc(r1, r2);
+  
+  std::vector<const AbstractShape *> shapes;
+  shapes.push_back( &hc );
+
+  Position start(-1,0,0);
+  Direction direction(1000,0,0);
+  assert (find_1st_hit< int >( start, direction, shapes )==0);
+}
+
+
+void test7()
+{
+  Cylinder cyl1(0.002,0.1);
+  Cylinder cyl2(0.,0.1);
+  RotationMatrix m(1,-0,0, 0,6.12323e-17,1, 0,-1,6.12323e-17);
+  Rotation r1(cyl1, m), r2(cyl2, m);
+  Difference hc(r1, r2);
+  RotationMatrix mI(1,0,0, 0,1,0, 0,0,1);
+  Rotation hcr(hc, mI);
+  Vector t(0,0,0);
+  Translation hcrt(hcr, t);
+  
+  std::vector<const AbstractShape *> shapes;
+  shapes.push_back( &hcrt );
+
+  Position start(0,0,-3);
+  Direction direction(0,0,3659.51);
+  assert (find_1st_hit< int >( start, direction, shapes )==0);
+}
+
 
 int main()
 {
 #ifdef DEBUG
 //   journal::debug_t("mccomposite.geometry.ArrowIntersector").activate();
-//    journal::debug_t("mccomposite.geometry.Locator").activate();
-//    journal::debug_t("mccomposite.geometry.intersect").activate();
+//   journal::debug_t("mccomposite.geometry.Locator").activate();
+//   journal::debug_t("mccomposite.geometry.intersect").activate();
 //   journal::debug_t(jrnltag).activate();
 #endif
   test1();
   test2();
   test3();
+  test4();
+  test5();
+  test6();
+  test7();
 }
 
 // version

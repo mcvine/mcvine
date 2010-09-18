@@ -31,8 +31,16 @@ def onHollowCylinder(self, hollowCylinder):
     from mccomposite.geometry.operations import subtract
     r1 = hollowCylinder.in_radius
     r2 = hollowCylinder.out_radius
+    if r1 >= r2:
+        msg = 'inner radius (%s) should be smaller than outer radius (%s)' %(
+            r1, r2)
+        raise RuntimeError, msg
+
     h = hollowCylinder.height
-    shape = subtract( cylinder( r2, h ), cylinder(r1,h) )
+    if r1 == 0:
+        shape = cylinder(r2, h)
+    else:
+        shape = subtract( cylinder( r2, h ), cylinder(r1,h) )
     return shape.identify(self)
 
 
