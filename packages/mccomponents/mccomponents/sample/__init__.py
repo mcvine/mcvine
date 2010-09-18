@@ -21,6 +21,9 @@ def samplecomponent( name, sampleassembly_xml ):
     name: name of the sample
     xml: xml file describing the sample assembly
     '''
+    
+    import mccomposite.extensions.HollowCylinder
+
     import os
     filename = os.path.realpath( sampleassembly_xml )
     dir, filename = os.path.split( os.path.abspath( filename ) )
