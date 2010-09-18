@@ -156,7 +156,9 @@ SET_PARAMS      = defRegex(["SETTING", "PARAMETERS"])
 OUT_PARAMS      = defRegex(["OUTPUT", "PARAMETERS"])
 STATE_PARAMS    = defRegex(["STATE", "PARAMETERS"])
 VAR             = '[\w\-]*'     # Variable (alphanumeric character)
+_VAR            = '[\w\-]*?'    # Non-greedy variable
 VAR_REQ         = '[\w\-]+'     # Required variable
+# Works well for strings with format: <type> <variable> = <value>!
 PARAM_VAR       = '(%s)%s(%s)%s=?%s(%s)' % (VAR, SPACES_ONLY, VAR_REQ, SPACES_ONLY, SPACES_ONLY, VAR)
 
 testtext = """
@@ -282,21 +284,35 @@ class McStasComponentParser(object):
 
 
     def _parseDefParams(self, text):
-        "Parses Definition Parameters"
-        defparams   = {}
-        value       = self._defValues(DEF_PARAMS, text)
+        "Parses and sets arameters"
+        self._setDefParams(DEF_PARAMS, text, "definition_parameters")
+
+        print self._defs["definition_parameters"]
+
+#        defparams   = {}
+#        value       = self._defValues(DEF_PARAMS, text)
+#        if value:
+#            defparams    = self._defParams(value)
+#
+#        self._defs["definition_parameters"]  = defparams
+
+
+    def _setDefParams(self, regex, text, paramname):
+        "Parses and parameters and"
+        params   = {}
+        value       = self._defValues(regex, text)
         if value:
-            defparams    = self._defparams(value)
+            params    = self._defParams(value)
 
-        self._defs["definition_parameters"]  = defparams
+        self._defs[paramname]  = params
 
 
-    def _defparams(self, line):
+    def _defParams(self, line):
         "Returns definition parameters as dictionary"
         # Format: [<type>]{spaces}<variable>{spaces}[={spaces}<value>]
         # Example: line = "string X, string  Y =1, Z , W= 2"
+        line    = "string XX, string  YY =1, ZZ , WW= 2"
         params  = []
-        line    = "string X, string  Y =1, Z , W= 2" # To unit tests
         items   = line.strip(" ()").split(",")
         for it in items:
             var     = it.strip()
