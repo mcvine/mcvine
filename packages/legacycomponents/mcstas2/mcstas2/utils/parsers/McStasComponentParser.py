@@ -57,6 +57,8 @@ TODO:
     - Improve _populateParams() to be used in _parseInfoSection()
 """
 
+# XXX: Fix settings_parameters for SNS_source
+
 # Imports
 import re
 import sys
@@ -443,9 +445,12 @@ class McStasComponentParser(object):
         self._header["componentname"]    = compname        
 
 
-    def _sectionText(self, secregex, text):
+    # XXX: integrate with _defValue()
+    def _sectionText(self, secregex, text, flags=re.DOTALL):
         "Returns section string that matches secregex pattern"
-        p           = re.compile(secregex, re.DOTALL)
+        p       = re.compile(secregex)
+        if flags:
+            p       = re.compile(secregex, flags)
         matches     = p.findall(text)
         if len(matches) < 1: # No section found, return empty string
             return ""
@@ -529,11 +534,11 @@ class McStasComponentParser(object):
     def _parseParamSection(self, text):
         "Parses parameter section and populates input and output parameters of header"
         # Get output parameters first!
-        outputtext      = self._sectionText(OUTPUT_PARAMS, text)        
+        outputtext      = self._sectionText(OUTPUT_PARAMS, text, flags=re.DOTALL|re.IGNORECASE)
         filteredtext    = self._strip(OUTPUT_PARAMS, text)
 
         # ... and then input parameters
-        inputtext       = self._sectionText(INPUT_PARAMS, filteredtext)
+        inputtext       = self._sectionText(INPUT_PARAMS, filteredtext, flags=re.DOTALL|re.IGNORECASE)
 
         self._parseInputSubsection(inputtext)
         self._parseOutputSubsection(outputtext)
