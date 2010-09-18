@@ -316,16 +316,36 @@ class McStasComponentParser(object):
         items   = line.strip(" ()").split(",")
         for it in items:
             var     = it.strip()
-            match   = self._defValues(PARAM_VAR, var, None)
+            # Doesn't work well
+            #match   = self._defValues(PARAM_VAR, var, None)
+            match   = self._paramMatch(var)
             assert len(match) == 3
             param           = {}
             param["type"]   = match[0]
             param["name"]   = match[1]
             param["value"]  = match[2]
-            params.append(param)        
+            params.append(param)
         
         return params
 
+
+    def _paramMatch(self, var):
+        "Returns tuple: (<type>, <name>, <value>)"
+        type    = ""
+        name    = ""
+        value   = ""
+        parts   = var.split("=")
+        if len(parts) == 2:
+            value   = parts[1].strip()
+
+        varparts    = parts[0].split()
+        if len(varparts) == 2:
+            type    = varparts[0].strip()
+            name    = varparts[1].strip()
+        else:
+            name    = varparts[0].strip()
+
+        return (type, name, value)
 
 
     def _parseSetParams(self, text):
