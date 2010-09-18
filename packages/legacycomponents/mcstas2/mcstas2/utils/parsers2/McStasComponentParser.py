@@ -57,8 +57,6 @@ TODO:
     - Improve _populateParams() to be used in _parseInfoSection()
 """
 
-# XXX: Consider issue with 'char *' in definition parameters
-
 # Imports
 import re
 import sys
@@ -163,7 +161,8 @@ _VAR            = '[\w\-]*?'    # Non-greedy variable
 VAR_REQ         = '[\w\-]+'     # Required variable
 # Works well for strings with format: <type> <variable> = <value>!
 PARAM_VAR       = '(%s)%s(%s)%s=?%s(%s)' % (VAR, SPACES_ONLY, VAR_REQ, SPACES_ONLY, SPACES_ONLY, VAR)
-
+VAR_CHAR        = '(%s%s\*)%s(%s)%s=?%s(%s)' % (VAR, SPACES_ONLY, SPACES_ONLY,      # Example: char *filename
+                                                VAR_REQ, SPACES_ONLY, SPACES_ONLY, VAR)
 
 class McStasComponentParser(object):
 
@@ -310,7 +309,10 @@ class McStasComponentParser(object):
             var     = it.strip()
             # Doesn't work well
             #match   = self._defValues(PARAM_VAR, var, None)
-            match   = self._paramMatch(var)
+
+            match   = self._defValues(VAR_CHAR, var, None)
+            if not match:   # Not special case
+                match   = self._paramMatch(var)
             assert len(match) == 3
             if match[1] == "":  # If name is empty, return empty list
                 return []
