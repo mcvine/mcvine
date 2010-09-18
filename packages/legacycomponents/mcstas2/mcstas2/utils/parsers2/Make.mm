@@ -32,9 +32,6 @@ tidy::
 
 EXPORT_PYTHON_MODULES = \
 	__init__.py \
-	ComponentHeaderParser.py \
-	ComponentInfo.py \
-	ComponentParser.py \
 	ShareIncludeParser.py \
 	McStasComponentParser.py \
 

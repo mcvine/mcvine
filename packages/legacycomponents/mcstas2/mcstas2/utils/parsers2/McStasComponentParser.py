@@ -156,13 +156,13 @@ DEF_PARAMS      = defRegex(["DEFINITION", "PARAMETERS"])
 SET_PARAMS      = defRegex(["SETTING", "PARAMETERS"])
 OUT_PARAMS      = defRegex(["OUTPUT", "PARAMETERS"])
 STATE_PARAMS    = defRegex(["STATE", "PARAMETERS"])
-VAR             = '[\w\-]*'     # Variable (alphanumeric character)
-_VAR            = '[\w\-]*?'    # Non-greedy variable
-VAR_REQ         = '[\w\-]+'     # Required variable
+VAR             = '[^ \t]*'     # Variable (alphanumeric character),    old: '[\w\-.]*'
+_VAR            = '[^ \t]*?'    # Non-greedy variable,                  old: '[\w\-.]*?'
+VAR_REQ         = '[^ \t]+'     # Required variable,                    old: '[\w\-.]+'
 # Works well for strings with format: <type> <variable> = <value>!
-PARAM_VAR       = '(%s)%s(%s)%s=?%s(%s)' % (VAR, SPACES_ONLY, VAR_REQ, SPACES_ONLY, SPACES_ONLY, VAR)
-VAR_CHAR        = '(%s%s\*)%s(%s)%s=?%s(%s)' % (VAR, SPACES_ONLY, SPACES_ONLY,      # Example: char *filename
-                                                VAR_REQ, SPACES_ONLY, SPACES_ONLY, VAR)
+PARAM_VAR       = '(%s)%s(%s)%s=?%s([^ \t]*)' % (VAR, SPACES_ONLY, VAR_REQ, SPACES_ONLY, SPACES_ONLY)
+VAR_CHAR        = '(%s%s\*)%s(%s)%s=?%s([^ \t]*)' % (VAR, SPACES_ONLY, SPACES_ONLY,      # Example: char *filename
+                                                VAR_REQ, SPACES_ONLY, SPACES_ONLY)
 
 class McStasComponentParser(object):
 
