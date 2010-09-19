@@ -61,6 +61,13 @@ testtext = """
 the rest of text
 """
 
+snstext = """
+DEFINE COMPONENT SNS_source
+DEFINITION PARAMETERS ()
+SETTING PARAMETERS (char *S_filename="SNS_moderator_data_file",width=0.1, height=0.12, dist=2.5, xw=0.1, yh=0.12, Emin=50, Emax=70)
+OUTPUT PARAMETERS (hdiv,vdiv,p_in)
+STATE PARAMETERS (x,y,z,vx,vy,vz,t,s1,s2,p)
+"""
 __date__ = "$Sep 15, 2010 3:17:26 PM$"
 
 

@@ -160,11 +160,10 @@ OUT_PARAMS      = defRegex(["OUTPUT", "PARAMETERS"])
 STATE_PARAMS    = defRegex(["STATE", "PARAMETERS"])
 VAR             = '[^ \t]*'     # Variable (alphanumeric character),    old: '[\w\-.]*'
 _VAR            = '[^ \t]*?'    # Non-greedy variable,                  old: '[\w\-.]*?'
-VAR_REQ         = '[^ \t]+'     # Required variable,                    old: '[\w\-.]+'
+VAR_REQ         = '[^ \t]*+'     # Required variable,                    old: '[\w\-.]+'
 # Works well for strings with format: <type> <variable> = <value>!
 PARAM_VAR       = '(%s)%s(%s)%s=?%s([^ \t]*)' % (VAR, SPACES_ONLY, VAR_REQ, SPACES_ONLY, SPACES_ONLY)
-VAR_CHAR        = '(%s%s\*)%s(%s)%s=?%s([^ \t]*)' % (VAR, SPACES_ONLY, SPACES_ONLY,      # Example: char *filename
-                                                VAR_REQ, SPACES_ONLY, SPACES_ONLY)
+VAR_POINTER     = '(%s%s\*)%s(%s)' % (VAR, SPACES_ONLY, SPACES_ONLY, VAR_REQ) # Example: char *filename                                                
 
 class McStasComponentParser(object):
 
@@ -312,9 +311,7 @@ class McStasComponentParser(object):
             # Doesn't work well
             #match   = self._defValues(PARAM_VAR, var, None)
 
-            match   = self._defValues(VAR_CHAR, var, None)
-            if not match:   # Not special case
-                match   = self._paramMatch(var)
+            match   = self._paramMatch(var)
             assert len(match) == 3
             if match[1] == "":  # If name is empty, return empty list
                 return []
@@ -328,14 +325,27 @@ class McStasComponentParser(object):
 
 
     def _paramMatch(self, var):
-        "Returns tuple: (<type>, <name>, <value>)"
+        """
+        Returns tuple: (<type>, <name>, <value>).
+        Example: ("string", "filename", "'IE.dat'")
+        """
         type    = ""
         name    = ""
         value   = ""
+        if not var:
+            return (type, name, value)
         parts   = var.split("=")
         if len(parts) == 2:
-            value   = parts[1].strip()
+            value   = parts[1].strip()  # Get value if it exists
 
+        # Catching pointer variable
+        parts2  = parts[0].split("*")   
+        if len(parts2) == 2:    
+            type    = "%s *" % parts2[0].strip()
+            name    = parts2[1].strip()
+            return (type, name, value)
+
+        # Catching non-pointer variable
         varparts    = parts[0].split()
         if len(varparts) == 2:
             type    = varparts[0].strip()
