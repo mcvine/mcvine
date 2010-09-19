@@ -95,16 +95,30 @@ INITIALIZE
 
 TRACE
 %{
+// #define DEBUG
+
   double t0, t1, phi, theta;
   int i,j;
+
+#ifdef DEBUG
+  std::cout 
+      << "r=(" 
+      << x << ","
+      << y << ","
+      << z << "), "
+      << "v=("
+      << vx << ","
+      << vy << ","
+      << vz << ")"
+      << std::endl
+      ;
+#endif
 
   if(sphere_intersect(&t0, &t1, x, y, z, vx, vy, vz, radius) && t1 > 0)
   {
     save_vx = vx; save_vy = vy; save_vz = vz;
     save_x = x; save_y = y; save_z = z;
     save_t = t;
-
-    //printf( "r=%g,%g,%g,v=%g,%g,%g,p=%g\n", x,y,z, vx,vy,vz, p);
 
     if(t0 < 0)
       t0 = t1;
@@ -122,6 +136,21 @@ TRACE
       j = ny-1;                      /* Special case for y = radius. */
     else if(j < 0)
       j = 0;
+
+#ifdef DEBUG
+    std::cout 
+      << "propagated r=(" 
+      << x << ","
+      << y << ","
+      << z << "), "
+      << "theta=" << theta << ", "
+      << "phi=" << phi 
+      << std::endl;
+    std::cout
+      << "i=" << i <<", "
+      << "j=" << j 
+      << std::endl;
+#endif
     PSD_N(i,j)++;
     PSD_p(i,j) += p;
     PSD_p2(i,j) += p*p;
