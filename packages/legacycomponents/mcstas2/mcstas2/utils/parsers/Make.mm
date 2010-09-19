@@ -32,6 +32,7 @@ tidy::
 
 EXPORT_PYTHON_MODULES = \
 	ComponentInfo.py \
+	orderedDict.py \
 	__init__.py \
 	ShareIncludeParser.py \
 	McStasComponentParser.py \

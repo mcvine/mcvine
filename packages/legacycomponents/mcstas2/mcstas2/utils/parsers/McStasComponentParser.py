@@ -64,7 +64,7 @@ import re
 import sys
 import os.path
 from time import localtime, strftime
-
+from orderedDict import OrderedDict
 
 # Constants:
 # Directives
@@ -173,9 +173,9 @@ class McStasComponentParser(object):
         # OrderedDict?
         # Header 
         self._headerstr     = ""    # Non-parsed header
-        self._header        = {}    # Parsed header
-        self._inputparams   = {}    # Dictionary of input parameters
-        self._outputparams  = {}    # Dictionary of output parameters
+        self._header        = OrderedDict()    # Parsed header
+        self._inputparams   = OrderedDict()    # Dictionary of input parameters
+        self._outputparams  = OrderedDict()    # Dictionary of output parameters
 
         # Body
         self._sections      = {}    # Sections
@@ -336,7 +336,8 @@ class McStasComponentParser(object):
             return (type, name, value)
         parts   = var.split("=")
         if len(parts) == 2:
-            value   = parts[1].strip()  # Get value if it exists
+            value   = parts[1].strip()      # Get value if it exists
+            value   = value.strip("\"'")    # Strip quotation marks?
 
         # Catching pointer variable
         parts2  = parts[0].split("*")   
