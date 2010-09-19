@@ -10,22 +10,17 @@
 #
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-PROJECT = mcni
-PACKAGE = bindings/boostpython
+PROJECT = mcstas2/utils
+PACKAGE = parsers/pyparsing
 
-BUILD_DIRS = \
-
-RECURSE_DIRS = $(BUILD_DIRS)
+RECURSE_DIRS = \
 
 
 #--------------------------------------------------------------------------
 #
 
 all: export
-
-tidy::
-	BLD_ACTION="tidy" $(MM) recurse
-
+	BLD_ACTION="all" $(MM) recurse
 
 
 #--------------------------------------------------------------------------
@@ -34,18 +29,16 @@ tidy::
 
 EXPORT_PYTHON_MODULES = \
 	__init__.py \
-	_patch_neutronevents_bp_interface.py \
+	pyparsing.py \
+
+
+EXPORT_BINS = \
+
 
 
 export:: export-package-python-modules 
-	BLD_ACTION="export" $(MM) recurse
-
-
-#include doxygen/default.def
-docs: export-doxygen-docs
-
 
 # version
-# $Id: Make.mm 1404 2007-08-29 15:43:42Z linjiao $
+# $Id: Make.mm 312 2005-06-02 20:25:25Z linjiao $
 
 # End of file

@@ -11,6 +11,7 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
 
+# XXX: Get rid of pyparsing dependency!
 
 from pyparsing.pyparsing import *
 

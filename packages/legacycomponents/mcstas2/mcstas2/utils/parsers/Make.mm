@@ -14,7 +14,7 @@ PROJECT = mcstas2/utils
 PACKAGE = parsers
 
 RECURSE_DIRS = \
-	pyparsing \
+    pyparsing \
 
 #--------------------------------------------------------------------------
 #
@@ -31,6 +31,7 @@ tidy::
 # export
 
 EXPORT_PYTHON_MODULES = \
+	ComponentInfo.py \
 	__init__.py \
 	ShareIncludeParser.py \
 	McStasComponentParser.py \
