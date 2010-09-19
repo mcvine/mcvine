@@ -42,7 +42,7 @@ def parseComponent( component_file ):
     # argument. So we better add this to the description, which will
     # become the documentation.
     full_description    = header["full_description"].replace(name+'(', name+'(name, ')
-    share               = _format_share_str(defs["share"])
+    share               = _format_share_str(sections["share"])
 
     return ComponentInfo(
                         name,
@@ -65,7 +65,7 @@ def _format_share_str( share ):
     lines = share.split( '\n' )
     if len(lines) == 0: return '', ''
     if len(lines) == 1: return '', ''
-    lines = lines[1:-1] # strip { and }
+    #lines = lines[1:-1] # strip { and } # Don't need it
 
     start_of_header = 0
     start_of_implementation = -1

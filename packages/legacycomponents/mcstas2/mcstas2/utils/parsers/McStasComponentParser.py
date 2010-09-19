@@ -397,22 +397,24 @@ class McStasComponentParser(object):
 
     def _parseBodySections(self, text):
         "Parse body sections"
-        for regex in BODY_SECTIONS:
-            p           = re.compile(sectionRegex(regex), re.DOTALL|re.IGNORECASE)
+        for secname in BODY_SECTIONS:
+            p           = re.compile(sectionRegex(secname), re.DOTALL|re.IGNORECASE)
             matches     = p.findall(text)
-            if len(matches) < 1: # No header found
+            secname     = secname.lower()   # Turn section name lower case
+            if secname == FINALLY.lower():  # Special case for "FINALLY" section
+                secname = "finalize"
+
+            if len(matches) < 1:            # No section found
+                self._sections[secname] = ""
                 continue
 
             mm      = matches[0]
-            if len(mm) != 2:
+            if len(mm) != 2:                # Section content is empty
+                self._sections[secname] = ""
                 continue
 
-            secname = mm[0].lower()
-            if secname == FINALLY.lower():  # Special case
-                secname = "finalize"
-
             self._sections[secname]  = mm[1]
-            
+
 
     def _configText(self):
         "Take config from file if it exist and readable, or use from config - otherwise"
