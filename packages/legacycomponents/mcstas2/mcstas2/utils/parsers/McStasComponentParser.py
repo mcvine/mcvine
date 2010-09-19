@@ -158,9 +158,10 @@ DEF_PARAMS      = defRegex(["DEFINITION", "PARAMETERS"])
 SET_PARAMS      = defRegex(["SETTING", "PARAMETERS"])
 OUT_PARAMS      = defRegex(["OUTPUT", "PARAMETERS"])
 STATE_PARAMS    = defRegex(["STATE", "PARAMETERS"])
+POL_PARAMS      = defRegex(["POLARISATION", "PARAMETERS"])
 VAR             = '[^ \t]*'     # Variable (alphanumeric character),    old: '[\w\-.]*'
 _VAR            = '[^ \t]*?'    # Non-greedy variable,                  old: '[\w\-.]*?'
-VAR_REQ         = '[^ \t]*+'     # Required variable,                    old: '[\w\-.]+'
+VAR_REQ         = '[^ \t]*+'    # Required variable,                    old: '[\w\-.]+'
 # Works well for strings with format: <type> <variable> = <value>!
 PARAM_VAR       = '(%s)%s(%s)%s=?%s([^ \t]*)' % (VAR, SPACES_ONLY, VAR_REQ, SPACES_ONLY, SPACES_ONLY)
 VAR_POINTER     = '(%s%s\*)%s(%s)' % (VAR, SPACES_ONLY, SPACES_ONLY, VAR_REQ) # Example: char *filename                                                
@@ -272,6 +273,7 @@ class McStasComponentParser(object):
         self._parseSetParams(bodytext)
         self._parseOutParams(bodytext)
         self._parseStateParams(bodytext)
+        self._parsePolParams(bodytext)
         self._parseBodySections(bodytext)
         
 
@@ -288,6 +290,7 @@ class McStasComponentParser(object):
     def _parseDefParams(self, text):
         "Parses and sets arameters"
         self._setDefParams(DEF_PARAMS, text, "definition_parameters")
+        
 
 
     def _setDefParams(self, regex, text, paramname):
@@ -305,7 +308,7 @@ class McStasComponentParser(object):
         # Format: [<type>]{spaces}<variable>{spaces}[={spaces}<value>]
         # Example: line    = "string XX, string  YY =1, ZZ , WW= 2"
         params  = []
-        items   = line.strip(" ()").split(",")
+        items   = line.strip(" ()\n").split(",")
         for it in items:
             var     = it.strip()
             # Doesn't work well
@@ -369,15 +372,24 @@ class McStasComponentParser(object):
 
     def _parseStateParams(self, text):
         "Parses State Parameters"
-        stateparams = []
-        value       = self._defValues(STATE_PARAMS, text)
+        self._setListParams(STATE_PARAMS, text, "state_parameters")
+
+
+    def _parsePolParams(self, text):
+        "Parses Polarization Parameters"
+        self._setListParams(POL_PARAMS, text, "polarization_parameters")
+
+
+    def _setListParams(self, regex, text, paramname):
+        "Parses text and populates list parameters in defintion part"
+        params   = []
+        value       = self._defValues(regex, text)
         if value:
             items   = value.strip(" ()").split(",")
             for it in items:    # clean up params
-                stateparams.append(it.strip())
+                params.append(it.strip())
 
-        self._defs["state_parameters"]  = stateparams
-
+        self._defs[paramname]  = params
 
 
     def _defValues(self, regex, text, flags=re.DOTALL|re.IGNORECASE|re.MULTILINE):

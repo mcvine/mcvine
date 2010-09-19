@@ -22,8 +22,8 @@ def parseComponent( component_file ):
     "Parses component"
     parser      = McStasComponentParser(filename=component_file)
     header      = parser.header()
-    sections    = parser.sections()
     defs        = parser.definitions()
+    sections    = parser.sections()
 
     name        = defs["name"]
     assert header["componentname"] == defs["name"]
@@ -111,8 +111,6 @@ def _addDescription( parameters, descriptions ):
     return ret
 
 
-# version
-__id__ = "$Id$"
 __date__ = "$Sep 15, 2010 3:07:32 PM$"
 
 

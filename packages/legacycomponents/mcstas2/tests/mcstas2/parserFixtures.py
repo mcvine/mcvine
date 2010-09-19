@@ -68,6 +68,18 @@ SETTING PARAMETERS (char *S_filename="SNS_moderator_data_file",width=0.1, height
 OUTPUT PARAMETERS (hdiv,vdiv,p_in)
 STATE PARAMETERS (x,y,z,vx,vy,vz,t,s1,s2,p)
 """
+
+
+# XXX: Check if split by lines for definitions is legal
+psd_tew = """
+DEFINE COMPONENT PSD_TEW_monitor
+DEFINITION PARAMETERS (nxchan=20, nychan=20, nbchan=20, string type="time", string filename, string format="table")
+SETTING PARAMETERS (xwidth=0, yheight=0, bmin=0, bmax=0, deltab=0,
+                    restore_neutron=0)
+OUTPUT PARAMETERS (TOF_N, TOF_p, TOF_p2, b_min, b_max, delta_b, x_min, x_max, delta_x, y_min, y_max, delta_y)
+STATE PARAMETERS (x,y,z,vx,vy,vz,t,s1,s2,p)
+POLARISATION PARAMETERS (sx,sy,sz)
+"""
 __date__ = "$Sep 15, 2010 3:17:26 PM$"
 
 
