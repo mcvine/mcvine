@@ -80,6 +80,17 @@ OUTPUT PARAMETERS (TOF_N, TOF_p, TOF_p2, b_min, b_max, delta_b, x_min, x_max, de
 STATE PARAMETERS (x,y,z,vx,vy,vz,t,s1,s2,p)
 POLARISATION PARAMETERS (sx,sy,sz)
 """
+
+iqetext = """
+DEFINE COMPONENT IQE_monitor
+DEFINITION PARAMETERS ()
+SETTING PARAMETERS (Ei=60, Qmin=0, Qmax=10, Emin=-45, Emax=45, int nQ=100,
+int nE=90, max_angle_in_plane = 120, min_angle_in_plane = 0,
+max_angle_out_of_plane = 30, min_angle_out_of_plane = -30, char *filename = "iqe_monitor.dat")
+OUTPUT PARAMETERS () //(IQE_N, IQE_p, IQE_p2)
+STATE PARAMETERS (x,y,z,vx,vy,vz,t,s1,s2,p)
+"""
+
 __date__ = "$Sep 15, 2010 3:17:26 PM$"
 
 
