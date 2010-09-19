@@ -11,7 +11,6 @@
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //
 
-
 #include <cmath>
 #include "mccomponents/kernels/IsotropicKernel.h"
 #include "mccomponents/exception.h"
@@ -77,6 +76,10 @@ void
 mccomponents::kernels::IsotropicKernel::scatter
 ( mcni::Neutron::Event & ev )
 {
+#ifdef DEBUG
+  m_details->debug << "in" << ev << journal::endl;
+#endif
+
   // input neutron state
   mcni::Neutron::State & state = ev.state;
   // incident neutron velocity
@@ -85,6 +88,13 @@ mccomponents::kernels::IsotropicKernel::scatter
   // theta, phi
   double theta = math::random(0, mcni::PI);
   double phi = math::random(0, mcni::PI*2);
+
+#ifdef DEBUG
+  m_details->debug
+    << "theta: " << theta << ", "
+    << "phi: " << phi << ", "
+    << journal::endl;
+#endif
 
   // scattered neutron velocity vector
   double vx = vi*sin(theta)*cos(phi);
@@ -98,6 +108,13 @@ mccomponents::kernels::IsotropicKernel::scatter
   typedef mcni::Vector3<double> V3d;
   V3d vf(vx,vy,vz);
   state.velocity = vf;
+
+#ifdef DEBUG
+  m_details->debug 
+    << "out" << ev 
+    << journal::endl;
+#endif
+
 }
 
 
