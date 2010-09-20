@@ -42,7 +42,7 @@
 DEFINE COMPONENT TOF_monitor2
 DEFINITION PARAMETERS () 
 SETTING PARAMETERS (int nchan=100, xmin=-0.1, xmax=0.1, ymin=-0.1, ymax=0.1, tmin=0.0, tmax=0.00005,char *filename="tof.dat")
-OUTPUT PARAMETERS () // (TOF_N, TOF_p, TOF_p2)
+OUTPUT PARAMETERS ()
 STATE PARAMETERS (x,y,z,vx,vy,vz,t,s1,s2,p)
 DECLARE
   %{
@@ -116,5 +116,3 @@ MCDISPLAY
 %}
 
 END
-
-//pointer=[{'type':'double *', 'size_expr':'self.nchan', 'name':'TOF_p'},{'type':'double *', 'size_expr':'self.nchan', 'name':'TOF_p2'},{'type':'double *','size_expr':'self.nchan', 'name':'TOF_N'}]
