@@ -61,8 +61,7 @@
 
 DEFINE COMPONENT Guide_channeled
 DEFINITION PARAMETERS ()
-SETTING PARAMETERS (w1, h1, w2, h2, l,
-  R0=0.99, Qcx=0.021, Qcy=0.021, alphax=6.07, alphay=6.07, W=0.003, k=1, d=0.0005, mx=1, my=1)
+SETTING PARAMETERS (w1, h1, w2, h2, l, R0=0.99, Qcx=0.021, Qcy=0.021, alphax=6.07, alphay=6.07, W=0.003, k=1, d=0.0005, mx=1, my=1)
 OUTPUT PARAMETERS (w1c,w2c,ww,hh,whalf,hhalf,lwhalf,lhhalf)
 STATE PARAMETERS (x,y,z,vx,vy,vz,t,s1,s2,p)
 
