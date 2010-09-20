@@ -121,13 +121,13 @@ def sectionRegex(name):
     return "("+name+")[ \n\t]*\%\{(.*?)(?=\%\})"
 
 
-def defRegex(namelist):
+def defRegex(namelist, pattern):
     "Returns regular expression for definitions, not for sections"
     sep     = "%s" % SPACES_MORE_ONE
     defname = namelist
     if type(namelist) is list:
         defname = sep.join(namelist)        # Example: "DEFINE COMPONENT"
-    return "^[ \t]*%s([^\n]*)\n" % defname # Spaces are allowed before the definition names
+    return pattern % defname # Spaces are allowed before the definition names
 
 
 # Regular expressions (Regex)
@@ -153,12 +153,14 @@ INPUT_PARAMS    = "INPUT PARAMETERS:(.*)"   # Should exist?
 OUTPUT_PARAMS   = "OUTPUT PARAMETERS:(.*)"  # Might not be exist
 
 # Regex for body
-DEF_COMP        = defRegex(["DEFINE", "COMPONENT"])
-DEF_PARAMS      = defRegex(["DEFINITION", "PARAMETERS"])
-SET_PARAMS      = defRegex(["SETTING", "PARAMETERS"])
-OUT_PARAMS      = defRegex(["OUTPUT", "PARAMETERS"])
-STATE_PARAMS    = defRegex(["STATE", "PARAMETERS"])
-POL_PARAMS      = defRegex(["POLARISATION", "PARAMETERS"])
+DEF_PATTERN     = "^[ \t]*%s([^\n]*)\n"
+PARAM_PATTERN   = "^[ \t]*%s[^(]*\(([^)]*)\)"
+DEF_COMP        = defRegex(["DEFINE", "COMPONENT"], DEF_PATTERN)
+DEF_PARAMS      = defRegex(["DEFINITION", "PARAMETERS"], PARAM_PATTERN)
+SET_PARAMS      = defRegex(["SETTING", "PARAMETERS"], PARAM_PATTERN)
+OUT_PARAMS      = defRegex(["OUTPUT", "PARAMETERS"], PARAM_PATTERN)
+STATE_PARAMS    = defRegex(["STATE", "PARAMETERS"], PARAM_PATTERN)
+POL_PARAMS      = defRegex(["POLARISATION", "PARAMETERS"], PARAM_PATTERN)
 VAR             = '[^ \t]*'     # Variable (alphanumeric character),    old: '[\w\-.]*'
 _VAR            = '[^ \t]*?'    # Non-greedy variable,                  old: '[\w\-.]*?'
 VAR_REQ         = '[^ \t]*+'    # Required variable,                    old: '[\w\-.]+'
@@ -385,7 +387,7 @@ class McStasComponentParser(object):
         params   = []
         value       = self._defValues(regex, text)
         if value:
-            items   = value.strip(" ()").split(",")
+            items   = value.strip(" ()").split(",") # Strip brackets just in case
             for it in items:    # clean up params
                 params.append(it.strip())
 

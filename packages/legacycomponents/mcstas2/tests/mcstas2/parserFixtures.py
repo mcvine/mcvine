@@ -91,6 +91,17 @@ OUTPUT PARAMETERS () //(IQE_N, IQE_p, IQE_p2)
 STATE PARAMETERS (x,y,z,vx,vy,vz,t,s1,s2,p)
 """
 
+sourcegen = """
+DEFINE COMPONENT Source_gen
+DEFINITION PARAMETERS (string flux_file=0, string xdiv_file=0, string ydiv_file=0)
+SETTING PARAMETERS (radius=0.0, dist=0, xw=0, yh=0, E0=0, dE=0, Lambda0=0, dLambda=0, I1=0,
+                    h=0, w=0, verbose=0, T1=0,
+                    flux_file_perAA=0, flux_file_log=0,
+                    Lmin=0,Lmax=0,Emin=0,Emax=0,T2=0,I2=0,T3=0,I3=0,length=0)
+OUTPUT PARAMETERS (p_in, lambda0, lambda02, L2P, lambda0b, lambda02b, L2Pb,lambda0c, lambda02c, L2Pc, pTable, pTable_x, pTable_y,pTable_xmin, pTable_xmax, pTable_xsum, pTable_ymin, pTable_ymax, pTable_ysum, pTable_dxmin, pTable_dxmax, pTable_dymin, pTable_dymax)
+STATE PARAMETERS (x,y,z,vx,vy,vz,t,s1,s2,p)
+"""
+
 __date__ = "$Sep 15, 2010 3:17:26 PM$"
 
 
