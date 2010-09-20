@@ -35,8 +35,25 @@ def componentInfo2cppClass( compInfo ):
     ctor_args = _arguments(compInfo.input_parameters) 
     output_params = compInfo.output_parameters
     trace_method_args = compInfo.state_parameters
+
+    # additional member declaration is declared in DECLARE section
     additional_member_declaration = compInfo.declare[1:-1]
     additional_members = _parse( additional_member_declaration )
+    # some of them are in the "output parameters" section
+    # and should be declared as public
+    output_parameter_names = [p.name for p in output_params]
+    additional_public_members = [
+        t for t in additional_members 
+        if t.name in output_parameter_names
+        ]
+    # and others should be declared as private
+    additional_public_member_names = [t.name for t in additional_public_members]
+    additional_private_members = [
+        m for m in additional_members 
+        if m.name not in additional_public_member_names
+        ]
+
+    #
     ctor_body = compInfo.initialize
     trace_method_body = compInfo.trace
     save_method_body = compInfo.save
@@ -61,7 +78,8 @@ def componentInfo2cppClass( compInfo ):
                            namespace, baseclass,
                            ctor_args, ctor_body,
                            #additional_member_declaration,
-                           additional_members,
+                           additional_public_members,
+                           additional_private_members,
                            trace_method_args,
                            trace_method_body,
                            save_method_body,
@@ -77,7 +95,8 @@ def createCppClass( name,
                     namespace, baseclass,
                     ctor_args, ctor_body,
                     #additional_member_declaration,
-                    additional_members,
+                    additional_public_members,
+                    additional_private_members,
                     trace_method_args,
                     trace_method_body,
                     save_method_body,
@@ -143,7 +162,8 @@ def createCppClass( name,
         parents = [ baseclass ],
         public_methods = methods,
         #private = private,
-        public_members = members + additional_members,
+        public_members = members + additional_public_members,
+        private_members = additional_private_members,
         headers_dependent_on = headers_dependent_on,
         helpers_header = helpers_h, helpers_implementation = helpers_cc,
         )
@@ -178,7 +198,8 @@ def _parse( declarations ):
 def _parse_declaration( declaration ):
     if len(declaration) == 0: return []
     n1 = declaration.find( ' ' )
-    if n1 == -1: raise RuntimeError , "%r is not a declaration" % declaration
+    if n1 == -1: 
+        raise RuntimeError , "%r is not a declaration" % declaration
     typestr = declaration[:n1].strip();
     vars = declaration[n1+1:].split( ',' )
     members = []
