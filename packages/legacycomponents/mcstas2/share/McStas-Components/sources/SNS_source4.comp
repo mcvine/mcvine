@@ -64,7 +64,24 @@ DECLARE
   double para_b[10];
   double para_R[10];
   double para_to[10];
+%}
 
+
+SHARE
+%{
+// ----------- added by Jiao Lin --------
+// ----------  header for SHARE ----------
+// ----------- added by Jiao Lin --------
+double spectral_function( double para[14], double E );
+double ikeda_carpenter_function_sp (double para[4], double t) ;
+double ikeda_carpenter_function_sp_find_t (double para[4], double tmin, double tmax, double randd);
+double ikeda_carpenter_function_lp (double para[4], double t, double T);
+double ikeda_carpenter_function_lp_find_t (double para[4], double tmin, double tmax, double T, double randd);
+double pade_function (double para[10], double E);
+
+// ----------- added by Jiao Lin --------
+// ----------  implementation for SHARE ----------
+// ----------- added by Jiao Lin --------
 /*############################################################################################
 #
 #      slowing-down spectrum and two Maxwellians joined by a modified Wescott function
