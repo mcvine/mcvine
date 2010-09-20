@@ -58,6 +58,10 @@ TODO:
 """
 
 # XXX: Fix settings_parameters for SNS_source
+# XXX: Fix issue when parameters in comment header span several lines
+# XXX: Fix "Optional parameters" in comment header (see Source_Maxwell_3.comp)
+# XXX: Fix "Modified by" in comment header (see Source_gen.comp)
+# XXX: Source_gen.comp seems has mulfunction format (no "Input parameters")
 
 # Imports
 import re
@@ -140,7 +144,7 @@ WINCR           = '\r'                      # Window's CR
 STAR            = "^%s[\*]*%s" % (SPACES, SPACES)   # Starting stars
 PARAM           = "^([^\:]*?):([^\n]*)"     # Parameter (new line not allowed)
 IOPARAM         = "^([^\:]*?):([^\:]*)"     # Input/Output parameters (colon not allowed)
-COMP_NAME       = "Component:([^\n]*)\n\n"  # Component name
+COMP_NAME       = "Component:([^\n]*)\n"  # Component name
 EXAMPLE         = "Example:(.*?)\n\n"       # Example
 
 # Regex for sections
