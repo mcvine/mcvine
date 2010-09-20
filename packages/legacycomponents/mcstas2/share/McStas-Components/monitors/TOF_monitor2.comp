@@ -42,7 +42,7 @@
 DEFINE COMPONENT TOF_monitor2
 DEFINITION PARAMETERS () 
 SETTING PARAMETERS (int nchan=100, xmin=-0.1, xmax=0.1, ymin=-0.1, ymax=0.1, tmin=0.0, tmax=0.00005,char *filename="tof.dat")
-OUTPUT PARAMETERS ()
+OUTPUT PARAMETERS (TOF_N, TOF_p, TOF_p2) 
 STATE PARAMETERS (x,y,z,vx,vy,vz,t,s1,s2,p)
 DECLARE
   %{

@@ -49,8 +49,8 @@
 *******************************************************************************/
 
 DEFINE COMPONENT SNS_source4
-DEFINITION PARAMETERS (S_filename)
-SETTING PARAMETERS (width, height, dist, xw, yh, Emin, Emax, tinmin, tinmax, sample_E, sample_t, proton_T)
+DEFINITION PARAMETERS ()
+SETTING PARAMETERS (char * S_filename, width, height, dist, xw, yh, Emin, Emax, tinmin, tinmax, sample_E, sample_t, proton_T)
 OUTPUT PARAMETERS (hdiv,vdiv,p_in)
 STATE PARAMETERS (x,y,z,vx,vy,vz,t,s1,s2,p)
 POLARISATION PARAMETERS (sx,sy,sz)
@@ -72,6 +72,7 @@ SHARE
 // ----------- added by Jiao Lin --------
 // ----------  header for SHARE ----------
 // ----------- added by Jiao Lin --------
+#include <cstring>
 double spectral_function( double para[14], double E );
 double ikeda_carpenter_function_sp (double para[4], double t) ;
 double ikeda_carpenter_function_sp_find_t (double para[4], double tmin, double tmax, double randd);
@@ -660,7 +661,7 @@ INITIALIZE
   int linelength=1000;
   int k, kk;
 
-  FILE *fp, *fopen();
+  FILE *fp;//, *fopen();
 
   fp = fopen(S_filename,"r");
   if (fp==NULL){
