@@ -16,7 +16,7 @@
 *
 * Models a curved neutron guide.
 *
-* %Description
+* %D
 * Models a curved neutron guide with cylindrical walls.
 *
 * Bender radius, entrance width and height are necessary input data. To define
@@ -51,7 +51,7 @@
 * Some users have reported potentially strange behaviours with this component.
 * This component does not work with gravitation on.
 *
-* %Parameters
+* %P
 * INPUT PARAMETERS:
 *
 * w:       (m)          Width at the bender entry and exit
@@ -92,7 +92,7 @@
 *******************************************************************************/
 
 DEFINE COMPONENT Bender
-rewjioDEFINITION PARAMETERS
+DEFINITION PARAMETERS
 (w,h,r,Win=0.04,k=1,d=0.001,R0a=0.99,Qca=0.021,alphaa=6.07,ma=2,Wa=0.003,R0i=0.99,Qci=0.021,alphai=6.07,mi=2,Wi=0.003,R0s=0.99,Qcs=0.021,alphas=6.07,ms=2,Ws=0.003,l=0)
 
 SETTING PARAMETERS ()
@@ -101,18 +101,28 @@ STATE PARAMETERS (x, y, z, vx, vy, vz, t, s1, s2, p)
 
 SHARE
  %{
-// ----------  header for SHARE ----------
 
-// ----------  implementation for SHARE ----------
+// ----------- added by Jiao Lin --------
+// ----------  header for SHARE ----------
+// ----------- added by Jiao Lin --------
 
 #ifndef BENDER_DECLARE
 #define BENDER_DECLARE
-    double bd_sgn(double x) {
-      if (x>=0)
-         return 1.0;
-      else
-         return -1.0; }
+double bd_sgn(double x);
 #endif
+
+// ----------- added by Jiao Lin --------
+// ----------  implementation for SHARE ----------
+// ----------- added by Jiao Lin --------
+
+double bd_sgn(double x)
+{
+  if (x>=0)
+     return 1.0;
+  else
+     return -1.0;
+}
+
  %}
 
 DECLARE
