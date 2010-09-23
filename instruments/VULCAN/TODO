@@ -12,6 +12,7 @@ ToDo list for VULCAN
 - [DONE] Implement L_monitor component
 - [DONE] Fix installation of HDF5FS (needed to use with_doxygen_... config)
 - Test new mcstas component parser
+- Write unit tests for parser
 - Write script for creation of McVine components (similar for Instruments)
 - Compile SNS_source4 component
 - Compile PSD_TEW_monitor component

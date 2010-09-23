@@ -101,7 +101,6 @@ STATE PARAMETERS (x, y, z, vx, vy, vz, t, s1, s2, p)
 
 SHARE
  %{
-
 // ----------- added by Jiao Lin --------
 // ----------  header for SHARE ----------
 // ----------- added by Jiao Lin --------
@@ -110,6 +109,7 @@ SHARE
 #define BENDER_DECLARE
 double bd_sgn(double x);
 #endif
+
 
 // ----------- added by Jiao Lin --------
 // ----------  implementation for SHARE ----------
