@@ -25,7 +25,8 @@ Components:
     Guide_gravity:      No          No
     PSD_monitor:        Yes         No
     Monitor_nD:         No          No
-    Sample KErnel:      Some        Some
+    Sample Kernel:      Some        Some
+    Collimator_radial   ?           ?
     PSD_TEW_monitor:    No          No
     Monitor:            Yes         No
 
@@ -40,6 +41,24 @@ Components:
 - [DONE] Run virtual experiment simulation from command line
 - [DONE] Run virtual experiment from VNF
 
+Milestones
+----------------
+1.  Intensity(TOF)       (simulation == experiment)
+1.1 Ideal Powder Sample  (simulation != experiment)
+    - McStas [DONE?]
+    - parallelization (MPI?)
+    - in McVine
+    - in VNF
+
+2. Size Broadening
+    - C++ code (Li)
+    - in McVine?
+    - in VNF
+
+3. EPSC model: Size + Broadening
+    - C++ code (Li)
+    - in McVine
+    - in VNF
 
 BUGS
 -----------------------
