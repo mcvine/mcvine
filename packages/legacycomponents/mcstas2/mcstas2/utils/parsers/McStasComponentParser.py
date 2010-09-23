@@ -58,9 +58,10 @@ TODO:
 """
 
 # XXX: Fix settings_parameters for SNS_source
-# XXX: Fix issue when parameters in comment header span several lines
-# XXX: Fix "Optional parameters" in comment header (see Source_Maxwell_3.comp)
-# XXX: Fix "Modified by" in comment header (see Source_gen.comp)
+# XXX: Fix issue when parameters in header span several lines (see ESS_moderator_long.comp)
+# XXX: Fix "Optional parameters" in header (see Source_Maxwell_3.comp)
+# XXX: Fix "Modified by" in header (see Source_gen.comp)
+# XXX: Fix "%VALIDATION" directive in header (see ESS_moderator_long.comp)
 # XXX: Source_gen.comp seems has mulfunction format (no "Input parameters")
 
 # Imports
@@ -136,6 +137,7 @@ def defRegex(namelist, pattern):
 
 # Regular expressions (Regex)
 COMMENT         = '(/\*.*?\*/)'             # Non-greedy comment (.*?)
+CPP_COMMENT     = '(//.*?)\n'               # C++ comment
 SPACES          = '[ \t]*'                  # Spaces and tabs
 SPACES_MORE_ONE = '[ ]+'                    # One and more spaces
 _SPACES         = '^[ \t]*'                 # Starting spaces and tabs
@@ -272,7 +274,7 @@ class McStasComponentParser(object):
 
     def _parseBody(self, bodyText):
         "Parses body and populates body dictionary"
-        bodytext        = self._strip(WINCR, bodyText)  # Strip carriage return
+        bodytext        = self._cleanupText(bodyText)
 
         self._parseDefComp(bodytext)
         self._parseDefParams(bodytext)
@@ -281,7 +283,16 @@ class McStasComponentParser(object):
         self._parseStateParams(bodytext)
         self._parsePolParams(bodytext)
         self._parseBodySections(bodytext)
-        
+
+
+    def _cleanupText(self, text):
+        "Cleans up text"
+        temptext    = self._strip(WINCR, text)          # Strip carriage return
+        temptext    = self._strip(COMMENT, temptext)    # Strip C comment (/*...*/)
+        temptext    = self._strip(CPP_COMMENT, temptext)# Strip C++ comment (//...)
+
+        return temptext
+
 
     def _parseDefComp(self, text):
         "Parses Define Component"
