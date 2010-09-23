@@ -59,6 +59,7 @@ TODO:
 
 # XXX: Fix settings_parameters for SNS_source
 # XXX: Fix issue when parameters in header span several lines (see ESS_moderator_long.comp)
+#       improve _parseInfoSection()
 # XXX: Fix "Optional parameters" in header (see Source_Maxwell_3.comp)
 # XXX: Fix "Modified by" in header (see Source_gen.comp)
 # XXX: Fix "%VALIDATION" directive in header (see ESS_moderator_long.comp)
@@ -76,8 +77,9 @@ from orderedDict import OrderedDict
 INFO            = "%I"
 DESCRIPTION     = "%D"
 PARAMS          = "%P"
+LINK            = "%L"
 END             = "%E"
-SECTIONS        = [INFO, DESCRIPTION, PARAMS] # Standard order
+SECTIONS        = [INFO, DESCRIPTION, PARAMS, LINK] # Standard order
 DIRECTIVES      = SECTIONS + [END,]
 
 # Header parameters
@@ -144,15 +146,18 @@ _SPACES         = '^[ \t]*'                 # Starting spaces and tabs
 SPACES_ONLY     = '[ ]*'                    # Spaces only
 WINCR           = '\r'                      # Window's CR
 STAR            = "^%s[\*]*%s" % (SPACES, SPACES)   # Starting stars
-PARAM           = "^([^\:]*?):([^\n]*)"     # Parameter (new line not allowed)
-IOPARAM         = "^([^\:]*?):([^\:]*)"     # Input/Output parameters (colon not allowed)
+PARAM_NAME      = "^([^\:]*?)"              # Parameter's name
+PARAM           = "%s:([^\n]*)" % PARAM_NAME    # Parameter (last one should end by double new line)
+IOPARAM         = "%s:([^\:]*)" % PARAM_NAME    # Input/Output parameters (colon not allowed)
 COMP_NAME       = "Component:([^\n]*)\n"  # Component name
 EXAMPLE         = "Example:(.*?)\n\n"       # Example
+
+# PARAM = "%s:(.*?)(?=%s|\n\n)" % (PARAM_NAME, PARAM_NAME)
 
 # Regex for sections
 INFO_SEC        = "%s(.*?)(?=%s|%s|%s)" % (INFO, DESCRIPTION, PARAMS, END)  # Info section
 DESC_SEC        = "%s(.*?)(?=%s|%s|%s)" % (DESCRIPTION, INFO, PARAMS, END)  # Description section
-PARAM_SEC       = "%s(.*?)(?=%s|%s|%s)" % (PARAMS, INFO, DESCRIPTION, END)  # Parameters section
+PARAM_SEC       = "%s(.*?)(?=%s|%s|%s|%s)" % (PARAMS, INFO, DESCRIPTION, LINK, END)  # Parameters section
 
 # Regex for input/output parameters
 INPUT_PARAMS    = "INPUT PARAMETERS:(.*)"   # Should exist?
@@ -173,6 +178,7 @@ VAR_REQ         = '[^ \t]*+'    # Required variable,                    old: '[\
 # Works well for strings with format: <type> <variable> = <value>!
 PARAM_VAR       = '(%s)%s(%s)%s=?%s([^ \t]*)' % (VAR, SPACES_ONLY, VAR_REQ, SPACES_ONLY, SPACES_ONLY)
 VAR_POINTER     = '(%s%s\*)%s(%s)' % (VAR, SPACES_ONLY, SPACES_ONLY, VAR_REQ) # Example: char *filename                                                
+
 
 class McStasComponentParser(object):
 

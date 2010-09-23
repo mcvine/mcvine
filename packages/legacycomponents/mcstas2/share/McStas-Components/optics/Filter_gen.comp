@@ -51,6 +51,8 @@
 * in the component instance parameters.
 *
 *%P
+* Input parameters:
+*
 * file:    [str] name of the file to look at (first two columns data)
 *           data D should rather be sorted (ascending order) and monotonic
 *           file may contain options (see below) as comment

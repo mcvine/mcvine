@@ -101,8 +101,7 @@ STATE PARAMETERS (x,y,z,vx,vy,vz,t,s1,s2,p)
 DECLARE
 %{
   double l_range, w_mult;
-// Something
-// One more
+
  /* double M(double l, double temp)
     {
       double a=949.0/temp;
