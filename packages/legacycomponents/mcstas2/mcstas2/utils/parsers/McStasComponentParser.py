@@ -295,7 +295,7 @@ class McStasComponentParser(object):
         "Cleans up text"
         temptext    = self._strip(WINCR, text)          # Strip carriage return
         temptext    = self._strip(COMMENT, temptext)    # Strip C comments (/*...*/)
-        # Don't strip C++ comments as it removes Jiao's hack :)
+        # Don't strip C++ comments as it make Jiao's hack die :)
         #temptext    = self._strip(CPP_COMMENT, temptext)# Strip C++ comments (//...)
 
         return temptext
