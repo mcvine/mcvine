@@ -11,6 +11,7 @@ PROJ_CLEAN += $(PROJ_SAR) $(PROJ_DLL)
 
 PROJ_SRCS = \
 	read_table-lib.cc \
+	monitor_nd-lib.cc \
 
 # directory structure
 
@@ -65,6 +66,7 @@ endif
 
 EXPORT_HEADERS = \
 	read_table-lib.h \
+	monitor_nd-lib.h \
 
 EXPORT_LIBS = $(PROJ_SAR)
 EXPORT_BINS = $(PROJ_DLL)
