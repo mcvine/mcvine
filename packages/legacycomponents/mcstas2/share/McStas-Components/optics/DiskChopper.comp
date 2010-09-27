@@ -28,6 +28,8 @@
 *
 * If the chopper is the 1st chopper of the instrument, it sets t time with phase
 * - Only relevant for when using continuous source modules.
+* 
+* Example values: theta_0=10 h=0.2 R=0.5 omega=2500 n=3 t_0=0 n_pulse=1 j=0 wc=0
 *
 * Example: DiskChopper(R=0.2, theta_0=10, omega=2500.0, n=3, t_0=0, IsFirst=1) First chopper
 *          DiskChopper(R=0.2, theta_0=10, omega=2500.0, n=3, t_0=0, IsFirst=0)
@@ -55,8 +57,6 @@
 * wc:      (m)      'width' of beamstops for compatibility with Chopper.comp
 * compat:  (1)      Chopper placement compatible with original Chopper.comp
 *
-* %D
-* Example values: theta_0=10 h=0.2 R=0.5 omega=2500 n=3 t_0=0 n_pulse=1 j=0 wc=0
 *
 * %E
 *******************************************************************************/

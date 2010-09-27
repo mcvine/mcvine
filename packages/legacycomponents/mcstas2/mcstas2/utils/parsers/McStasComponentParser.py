@@ -37,7 +37,7 @@ Restrictions:
         [<type>]{spaces}<variable>{spaces}[={spaces}<value>]
 
 
-Algorithm steps:
+Some algorithm steps (outdated):
     - Extract header (first /*...*/ comment)
     - Remove stars and spaces after them ('{spaces}*{spaces}' -> '')
     - Remove '\r' for Windows files
@@ -61,7 +61,7 @@ TODO:
 # XXX: Fix issue when parameters in header span several lines (see ESS_moderator_long.comp)
 #       improve _parseInfoSection()
 # XXX: Fix "Optional parameters" in header (see Source_Maxwell_3.comp)
-# XXX: Fix "Modified by" in header (see Source_gen.comp)
+# XXX: Fix "Modified by" in header (see Source_gen.comp, Guide_gravity.comp)
 # XXX: Fix "%VALIDATION" directive in header (see ESS_moderator_long.comp)
 # XXX: Source_gen.comp seems has mulfunction format (no "Input parameters")
 

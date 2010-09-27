@@ -26,7 +26,7 @@
 *          Slit(radius=0.01, cut=1e-10)
 *
 * %P
-* INPUT PARAMETERS
+* INPUT PARAMETERS:
 *
 * radius: Radius of slit in the z=0 plane, centered at Origo (m)
 * xmin: Lower x bound (m)

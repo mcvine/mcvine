@@ -35,6 +35,8 @@
 * %BUGS
 * This component does not work with gravitation on. Use component Guide_gravity then.
 *
+* Example values: m=4 Qc=0.0219 W=1/300 alpha=6.49 R0=1
+*
 * %P
 * INPUT PARAMETERS:
 *
@@ -50,8 +52,7 @@
 * W:       (AA-1) Width of supermirror cut-off
 * reflect: (str)  Reflectivity file name. Format [q(Angs-1) R(0-1)]
 *
-* %D
-* Example values: m=4 Qc=0.0219 W=1/300 alpha=6.49 R0=1
+* 
 *
 * %E
 *******************************************************************************/
