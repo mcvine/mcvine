@@ -145,7 +145,8 @@
 *******************************************************************************/
 
 #ifndef MONITOR_ND_LIB_H
-#error McStas : please import this library with %include "monitor_nd-lib"
+#include "monitor_nd-lib.h"
+
 #endif
 
 /* ========================================================================= */
@@ -183,7 +184,7 @@ void Monitor_nD_Init(MonitornD_Defines_type *mc_mn_DEFS,
     long mc_mn_t;
 
 
-    mc_mn_t = (long)time(NULL);
+    mc_mn_t = (long)time(0);
 
     mc_mn_DEFS->COORD_NONE   =0;
     mc_mn_DEFS->COORD_X      =1;

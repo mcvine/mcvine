@@ -16,6 +16,7 @@ PROJ_SRCS = \
 	detector_outputs.cc \
 	exception.cc \
 	geometry.cc \
+	mcstas-r.cc \
 	misc_macros.cc \
 	propagators.cc \
 	random_numbers.cc \
@@ -84,6 +85,7 @@ EXPORT_HEADERS = \
 	detector_outputs.h \
 	exception.h \
 	geometry.h \
+	mcstas-r.h \
 	mcstas2.h \
 	misc_macros.h \
 	phys_constants.h \

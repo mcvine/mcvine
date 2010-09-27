@@ -78,6 +78,17 @@
 #define MONITOR_ND_LIB_H "1.1.1"
 #define MONnD_COORD_NMAX  30  /* max number of variables to record */
 
+#include <string.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <time.h>
+#include <math.h>
+#include "../phys_constants.h"
+#include "../mcstas-r.h"
+#include "../misc_macros.h"
+#include "../geometry.h"
+#include "stdarg.h"
+
   typedef struct MonitornD_Defines
   {
     char COORD_NONE  ;
