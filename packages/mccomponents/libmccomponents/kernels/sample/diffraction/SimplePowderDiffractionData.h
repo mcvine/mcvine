@@ -28,14 +28,14 @@ namespace mccomponents {
 	double intrinsic_line_width; 
 	// Debye-Waller factor 
 	double DebyeWaller_factor; 
-
+	
 	bool operator== (const Peak &rhs) {
 	  return q == rhs.q				      \
 	  && F_squared == rhs.F_squared			      \
 	  && multiplicity == rhs.multiplicity		      \
 	  && intrinsic_line_width == rhs.intrinsic_line_width \
 	  && DebyeWaller_factor == rhs.DebyeWaller_factor     \
-	  ;
+	    ;
 	}
       };
       

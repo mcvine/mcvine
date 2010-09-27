@@ -21,10 +21,10 @@ namespace mccomponents {
   namespace kernels {
 
     class SimplePowderDiffractionData;
-
+    
     class SimplePowderDiffractionKernel : public AbstractScatteringKernel {
     public:
-
+      
       // typedefs
       typedef double float_t;
       typedef mcni::Vector3<float_t> R_t;

@@ -18,6 +18,8 @@
 #include "journal/debug.h"
 #endif
 
+using namespace std;
+
 
 struct mccomponents::kernels::SimplePowderDiffractionKernel::Details {
 
@@ -26,13 +28,14 @@ struct mccomponents::kernels::SimplePowderDiffractionKernel::Details {
   const static char jrnltag[];
   journal::debug_t debug;
 #endif
-
-  double total_scattering_cross_section;
+  
   double absorption_cross_section;
-  double total_scattering_coeff;
+  double incoherent_cross_section;
+  
   double absorption_coeff;
   double *q_v, *w_v, *my_s_v2;
   size_t Npeaks;
+  double unitcell_volume;
 
   // ???
   double pack;
@@ -60,14 +63,15 @@ mccomponents::kernels::SimplePowderDiffractionKernel::Details::Details
 {
   using mcni::PI;
   using namespace mcni::neutron_units_conversion;
-
+  
   const std::vector<SimplePowderDiffractionData::Peak>& peaks = data.peaks;
 
   Npeaks  = peaks.size();
   q_v = new double[Npeaks];
   w_v = new double[Npeaks];
   my_s_v2 = new double[Npeaks];
-  double unitcell_volume = data.unitcell_volume;
+  
+  unitcell_volume = data.unitcell_volume;
   
   for(int i=0; i<Npeaks; i++)
     {
@@ -79,22 +83,28 @@ mccomponents::kernels::SimplePowderDiffractionKernel::Details::Details
       /* Is not yet divided by v^2 */
       /* Squires [3.103] */
       q_v[i] = peaks[i].q*k2v;
-      w_v[i] = peaks[i].intrinsic_line_width;
+      /*to be updated for size broadening*/
+      w_v[i] = peaks[i].intrinsic_line_width;  
     }
   
-  // !!!
-  // need better implementation
-  total_scattering_cross_section = pack * data.incoherent_cross_section; // barn
-  total_scattering_coeff = total_scattering_cross_section/unitcell_volume * 100; // converted to 1/meter
+  //coherent_cross_section = scattering_coefficient(const mcni::Neutron::Event& ev );
+  
+  /*coherent cross section is calculated under scattering_coefficient function, as it
+    depends on the incident neutron velocity. */
+
+  //total_scattering_cross_section = pack*( coherent_cross_section + data.incoherent_cross_section); // barn
+  //total_scattering_coeff = total_scattering_cross_section/unitcell_volume * 100; // converted to 1/meter
   absorption_cross_section = pack * data.absorption_cross_section; // barn
   absorption_coeff = absorption_cross_section/unitcell_volume * 100; // converted to 1/meter
-
+  
+  incoherent_cross_section = data.incoherent_cross_section;
   /*
   // Is not yet divided by v 
   double my_a_v = pack*sigma_a/unitcell_volume*2200*100;   // Factor 100 to convert from barns to fm^2
   double my_inc = pack*sigma_i/unitcell_volume*100;   // Factor 100 to convert from barns to fm^2
   */
 }
+
 
 mccomponents::kernels::SimplePowderDiffractionKernel::Details::~Details()
 {
@@ -114,18 +124,39 @@ mccomponents::kernels::SimplePowderDiffractionKernel::SimplePowderDiffractionKer
 double
 mccomponents::kernels::SimplePowderDiffractionKernel::absorption_coefficient(const mcni::Neutron::Event & ev )
 {
-  // !!!!!!!!!!!!!!!!
-  // we need better implementation here
-  return m_details->absorption_coeff;
+  const mcni::Neutron::State &state = ev.state;
+  double v_l = state.velocity.length();
+
+  return m_details->absorption_coeff*2200/v_l;  //inversely proportional to velocity
 }
 
 
 double
 mccomponents::kernels::SimplePowderDiffractionKernel::scattering_coefficient(const mcni::Neutron::Event & ev )
 {
-  // !!!!!!!!!!!!!!!!
-  // we need better implementation here
-  return m_details->total_scattering_coeff;
+  //add all the available scattering crossing together
+  
+  const mcni::Neutron::State &state = ev.state;
+  double v_l = state.velocity.length();
+  double total_scattering_cross_v = 0.0;
+  double total_scattering_coeff;
+  
+  cout << "magnitude of v: " << v_l << endl;
+  
+  for (int i=0; i<m_details->Npeaks; i++)
+    {
+      if (v_l >= m_details->q_v[i]/2)
+	{
+	  //find out the one which can be diffracted
+	  total_scattering_cross_v += m_details->my_s_v2[i];
+	  cout << "to velocity: " << m_details->q_v[i] << endl;
+	}
+    } 
+  total_scattering_cross_v /= (v_l*v_l); //devided by v**2 at this step
+  total_scattering_cross_v += m_details->incoherent_cross_section;
+  total_scattering_coeff = total_scattering_cross_v/m_details->unitcell_volume*100; // Factor 100 to convert from barns to fm^2
+  
+  return total_scattering_coeff;
 }
 
 
