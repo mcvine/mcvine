@@ -61,8 +61,14 @@ TODO:
 # XXX: Fix issue when parameters in header span several lines (see ESS_moderator_long.comp)
 #       improve _parseInfoSection()
 # XXX: Fix "Optional parameters" in header (see Source_Maxwell_3.comp)
-# XXX: Fix "Modified by" in header (see Source_gen.comp, Guide_gravity.comp)
+# XXX: Fix "Modified by" in header (see Source_gen.comp, Guide_gravity.comp):
+#           There might be several fields "Modified by"! (see Monitor_nD.comp)
 # XXX: Fix "%VALIDATION" directive in header (see ESS_moderator_long.comp)
+# XXX: Sections in the header can have at least two names.
+#       %D - %Description,
+#       %I - %Identification
+#       %L - %Link
+#       %P - %Parameters
 # XXX: Source_gen.comp seems has mulfunction format (no "Input parameters")
 
 # Imports
