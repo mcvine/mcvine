@@ -23,7 +23,6 @@ def samplecomponent( name, sampleassembly_xml ):
     '''
     
     import mccomposite.extensions.HollowCylinder
-
     import os
     filename = os.path.realpath( sampleassembly_xml )
     dir, filename = os.path.split( os.path.abspath( filename ) )

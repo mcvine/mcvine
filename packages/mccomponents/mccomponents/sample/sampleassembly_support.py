@@ -38,6 +38,12 @@ class SampleAssembly2CompositeScatterer:
     def onSampleAssembly(self, sampleassembly ):
         #
         lg = sampleassembly.local_geometer
+        
+        # XXXX
+        # here we need to use the mcstas coordinate system in constructing
+        # the computation engine
+        from sampleassembly.geometers.CoordinateSystem import McStasCS
+        lg.changeRequestCoordinateSystem(McStasCS)
 
         # the container
         import mccomposite
