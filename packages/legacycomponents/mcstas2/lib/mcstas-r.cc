@@ -1661,7 +1661,7 @@ char *mcfull_file(char *name, char *ext)
   int dirlen;
   char *mem;
   dirlen = mcdirname ? strlen(mcdirname) : 0;
-  mem = malloc(dirlen + strlen(name) + 256);
+  mem = (char *)malloc(dirlen + strlen(name) + 256);
   if(!mem)
   {
     exit(fprintf(stderr, "Error: Out of memory %li (mcfull_file)\n", (long)(dirlen + strlen(name) + 256)));
@@ -1703,9 +1703,9 @@ FILE *mcnew_file(char *name, char *ext, char *mode)
         (mcopenedfiles && mcopenedfiles_size <= strlen(mcopenedfiles)+strlen(mem))) {
       mcopenedfiles_size+=CHAR_BUF_LENGTH;
       if (!mcopenedfiles || !strlen(mcopenedfiles))
-        mcopenedfiles = calloc(1, mcopenedfiles_size);
+        mcopenedfiles = (char *)calloc(1, mcopenedfiles_size);
       else
-        mcopenedfiles = realloc(mcopenedfiles, mcopenedfiles_size);
+        mcopenedfiles = (char *)realloc(mcopenedfiles, mcopenedfiles_size);
     } 
     strcat(mcopenedfiles, " ");
     strcat(mcopenedfiles, mem);
@@ -2107,6 +2107,7 @@ static int mcfile_section(FILE *f, struct mcformats_struct format, char *part, c
   return(ret);
 } /* mcfile_section */
 
+
 /*******************************************************************************
 * mcinfo_instrument: output instrument info
 *******************************************************************************/
@@ -2128,10 +2129,11 @@ static void mcinfo_instrument(FILE *f, struct mcformats_struct format,
     strcat(Value, ThisParam);
     if (strlen(Value) > CHAR_BUF_LENGTH) break;
   }
+
   mcfile_tag(f, format, pre, name, "Parameters", Value);
   mcfile_tag(f, format, pre, name, "Source", mcinstrument_source);
-  mcfile_tag(f, format, pre, name, "Trace_enabled", mctraceenabled ? "yes" : "no");
-  mcfile_tag(f, format, pre, name, "Default_main", mcdefaultmain ? "yes" : "no");
+  mcfile_tag(f, format, pre, name, "Trace_enabled", (char *)(mctraceenabled ? "yes" : "no"));
+  mcfile_tag(f, format, pre, name, "Default_main", (char *)(mcdefaultmain ? "yes" : "no"));
   mcfile_tag(f, format, pre, name, "Embedded_runtime",
 #ifdef MC_EMBEDDED_RUNTIME
          "yes"
@@ -2163,8 +2165,8 @@ void mcinfo_simulation(FILE *f, struct mcformats_struct format,
   if (run_num == 0 || run_num == ncount) sprintf(Value, "%g", ncount);
   else sprintf(Value, "%g/%g", run_num, ncount);
   mcfile_tag(f, format, pre, name, "Ncount", Value);
-  mcfile_tag(f, format, pre, name, "Trace", mcdotrace ? "yes" : "no");
-  mcfile_tag(f, format, pre, name, "Gravitation", mcgravitation ? "yes" : "no");
+  mcfile_tag(f, format, pre, name, "Trace", (char *)(mcdotrace ? "yes" : "no"));
+  mcfile_tag(f, format, pre, name, "Gravitation", (char *)(mcgravitation ? "yes" : "no"));
   if(mcseed)
   {
     sprintf(Value, "%ld", mcseed);
@@ -2311,7 +2313,7 @@ static void mcinfo_data(FILE *f, struct mcformats_struct format,
 
   mcfile_tag(f, format, pre, parent, "type", type);
   mcfile_tag(f, format, pre, parent, "Source", mcinstrument_source);
-  if (parent) mcfile_tag(f, format, pre, parent, (strstr(format.Name,"McStas") ? "component" : "parent"), parent);
+  if (parent) mcfile_tag(f, format, pre, parent, (char *)(strstr(format.Name,"McStas") ? "component" : "parent"), parent);
   sprintf(pos, "%g %g %g", posa.x, posa.y, posa.z);
   mcfile_tag(f, format, pre, parent, "position", pos);
 
@@ -2333,7 +2335,7 @@ static void mcinfo_data(FILE *f, struct mcformats_struct format,
 
     mcfile_tag(f, format, pre, parent, "statistics", stats);
     mcfile_tag(f, format, pre, parent,
-      strstr(format.Name, "NeXus") ? "Signal" : "signal", signal);
+      (char *)(strstr(format.Name, "NeXus") ? "Signal" : "signal"), signal);
 
     sprintf(values, "%g %g %g", sum_z, mcestimate_error(Nsum, sum_z, P2sum), Nsum);
     mcfile_tag(f, format, pre, parent, "values", values);
@@ -2341,8 +2343,8 @@ static void mcinfo_data(FILE *f, struct mcformats_struct format,
   strcpy(lim_field, "xylimits");
   if (n*m > 1)
   {
-    mcfile_tag(f, format, pre, parent, (strstr(format.Name," scan ") ? "xvars" : "xvar"), xvar);
-    mcfile_tag(f, format, pre, parent, (strstr(format.Name," scan ") ? "yvars" : "yvar"), yvar);
+    mcfile_tag(f, format, pre, parent, (char *)(strstr(format.Name," scan ") ? "xvars" : "xvar"), xvar);
+    mcfile_tag(f, format, pre, parent, (char *)(strstr(format.Name," scan ") ? "yvars" : "yvar"), yvar);
     mcfile_tag(f, format, pre, parent, "xlabel", xlabel);
     mcfile_tag(f, format, pre, parent, "ylabel", ylabel);
     if ((n == 1 || m == 1 || strstr(format.Name," scan ")) && strstr(format.Name, "McStas"))
@@ -2405,10 +2407,9 @@ void mcsiminfo_init(FILE *f)
   } else
 #endif
   if (!f) mcsiminfo_file = mcnew_file(mcsiminfo_name, mcformat.Extension,
-    strstr(mcformat.Name, "append") 
+    (char *)(strstr(mcformat.Name, "append")
       || strstr(mcformat.Name, "catenate")  
-      || strstr(mcopenedfiles, mcsiminfo_name) 
-    ? "a":"w");
+      || (char *)(strstr(mcopenedfiles, mcsiminfo_name) ? "a":"w")));
   else mcsiminfo_file = f;
   if(!mcsiminfo_file)
     fprintf(stderr,
@@ -2423,8 +2424,8 @@ void mcsiminfo_init(FILE *f)
 
     pre = (char *)malloc(20);
     if (!pre) exit(fprintf(stderr, "Error: insufficient memory (mcsiminfo_init)\n"));
-    strcpy(pre, strstr(mcformat.Name, "VRML")
-               || strstr(mcformat.Name, "OpenGENIE") ? "# " : "  ");
+    strcpy(pre, (char *)(strstr(mcformat.Name, "VRML")
+               || (char *)(strstr(mcformat.Name, "OpenGENIE") ? "# " : "  ")));
 
 
     ismcstas_nx = (strstr(mcformat.Name, "McStas") || strstr(mcformat.Name, "NeXus"));
@@ -3151,7 +3152,7 @@ double mcdetector_out_0D(char *t, double p0, double p1, double p2,
                          char *c, Coords posa)
 {
   return(mcdetector_out_012D(mcformat,
-    (c ? c : "McStas component"), (t ? t : "McStas data"),
+    (char *)(c ? c : "McStas component"), (char *)(t ? t : "McStas data"),
     1, 1, 1,
     "I", "", "",
     "I", "", "",
@@ -3168,10 +3169,10 @@ double mcdetector_out_1D(char *t, char *xl, char *yl,
                   char *c, Coords posa)
 {
   return(mcdetector_out_012D(mcformat,
-    (c ? c : "McStas component"), (t ? t : "McStas 1D data"),
+    (char *)(c ? c : "McStas component"), (char *)(t ? t : "McStas 1D data"),
     n, 1, 1,
-    (xl ? xl : "X"), (yl ? yl : "Y"), (n > 1 ? "Signal per bin" : " Signal"),
-    (xvar ? xvar : "x"), "(I,I_err)", "I",
+    (char *)(xl ? xl : "X"), (char *)(yl ? yl : "Y"), (char *)(n > 1 ? "Signal per bin" : " Signal"),
+    (char *)(xvar ? xvar : "x"), "(I,I_err)", "I",
     x1, x2, 0, 0, 0, 0, f,
     p0, p1, p2, posa));
 }
@@ -3198,9 +3199,9 @@ double mcdetector_out_2D(char *t, char *xl, char *yl,
                     t, xl, "I", xvar, x1, x2, m, p0, p1, p2, f, c, posa));
 
   return(mcdetector_out_012D(mcformat,
-    (c ? c : "McStas component"), (t ? t : "McStas 2D data"),
+    (char *)(c ? c : "McStas component"), (char *)(t ? t : "McStas 2D data"),
     m, n, 1,
-    (xl ? xl : "X"), (yl ? yl : "Y"), (n*m > 1 ? "Signal per bin" : " Signal"),
+    (char *)(xl ? xl : "X"), (char *)(yl ? yl : "Y"), (char *)(n*m > 1 ? "Signal per bin" : " Signal"),
     xvar, yvar, "I",
     x1, x2, y1, y2, 0, 0, f,
     p0, p1, p2, posa));
@@ -3217,10 +3218,10 @@ double mcdetector_out_3D(char *t, char *xl, char *yl, char *zl,
                   char *c, Coords posa)
 {
   return(mcdetector_out_012D(mcformat,
-    (c ? c : "McStas component"), (t ? t : "McStas 3D data"),
+    (char *)(c ? c : "McStas component"), (char *)(t ? t : "McStas 3D data"),
     m, n, p,
-    (xl ? xl : "X"), (yl ? yl : "Y"), (zl ? zl : "Z"),
-    (xvar ? xvar : "x"), (yvar ? yvar : "y"), (zvar ? zvar : "z"),
+    (char *)(xl ? xl : "X"), (char *)(yl ? yl : "Y"), (char *)(zl ? zl : "Z"),
+    (char *)(xvar ? xvar : "x"), (char *)(yvar ? yvar : "y"), (char *)(zvar ? zvar : "z"),
     x1, x2, y1, y2, z1, z2, f,
     p0, p1, p2, posa));
 }
@@ -4183,9 +4184,10 @@ void mt_srandom(unsigned long s)
 /* initialize by an array with array-length */
 /* init_key is the array for initializing keys */
 /* key_length is its length */
-void init_by_array(init_key, key_length)
-unsigned long init_key[], key_length;
+void init_by_array(unsigned long init_key[], unsigned long key_length)
 {
+    //unsigned long init_key[], key_length;
+
     int i, j, k;
     mt_srandom(19650218UL);
     i=1; j=0;
@@ -5041,7 +5043,7 @@ mcparseoptions(int argc, char *argv[])
   int paramset = 0, *paramsetarray;
 
   /* Add one to mcnumipar to avoid allocating zero size memory block. */
-  paramsetarray = malloc((mcnumipar + 1)*sizeof(*paramsetarray));
+  paramsetarray = (int *)malloc((mcnumipar + 1)*sizeof(*paramsetarray));
   if(paramsetarray == NULL)
   {
     fprintf(stderr, "Error: insufficient memory (mcparseoptions)\n");
@@ -5378,7 +5380,7 @@ int mcstas_main(int argc, char *argv[])
 
 /* *** parse options ******************************************************* */
   SIG_MESSAGE("main (Start)");
-  mcformat=mcuse_format(getenv("MCSTAS_FORMAT") ? getenv("MCSTAS_FORMAT") : MCSTAS_FORMAT);
+  mcformat=mcuse_format((char *)(getenv("MCSTAS_FORMAT") ? getenv("MCSTAS_FORMAT") : MCSTAS_FORMAT));
   /* default is to output as McStas format */
   mcformat_data.Name=NULL;
   /* read simulation parameters and options */

@@ -325,6 +325,9 @@
 #include <errno.h>
 #include <time.h>
 #include <float.h>
+#include <ctype.h>
+#include <sys/stat.h>
+#include <unistd.h>
 
 /* If the runtime is embedded in the simulation program, some definitions can
    be made static. */
