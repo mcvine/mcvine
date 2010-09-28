@@ -199,12 +199,12 @@
 * %End
 ******************************************************************************/
 DEFINE COMPONENT Monitor_nD
-DEFINITION PARAMETERS (string options=0, string filename=0, user1=FLT_MAX, user2=FLT_MAX, username1=0, username2=0)
+DEFINITION PARAMETERS (string options=0, string filename=0, user1=FLT_MAX, user2=FLT_MAX, string username1=0, string username2=0)
 SETTING PARAMETERS (xwidth=0.1, yheight=0.1, zthick=0, xmin=0, xmax=0, ymin=0, ymax=0, zmin=0, zmax=0, bins=0, min=-1e40, max=1e40)
 /* these are protected C variables */
 OUTPUT PARAMETERS (DEFS, Vars)
 STATE PARAMETERS (x,y,z,vx,vy,vz,t,s1,s2,p)
-POLARISATION PARAMETERS (sx,sy,sz)
+// POLARISATION PARAMETERS (sx,sy,sz)
 
 SHARE
 %{
@@ -217,6 +217,7 @@ SHARE
 // ----------- added by Alex Dementsov --------
 // ----------  implementation for SHARE ----------
 // ----------- added by Alex Dementsov --------
+#include <string.h>
 
 %}
 
@@ -236,7 +237,9 @@ INITIALIZE
     strcpy(Vars.option, "x y");
     printf("Monitor_nD: %s has no option specified. Setting to PSD ('x y') monitor.\n", NAME_CURRENT_COMP);
   }
-  Vars.compcurpos = POS_A_CURRENT_COMP;
+  //  Vars.compcurpos = POS_A_CURRENT_COMP;
+  Coords o = {0,0,0};
+  Vars.compcurpos = o;
 
   if (strstr(Vars.option, "source"))
     strcat(Vars.option, " list, x y z vx vy vz t sx sy sz ");
@@ -322,13 +325,15 @@ TRACE
       Vars.cp = p;
       Vars.cx = x;
       Vars.cvx = vx;
-      Vars.csx = sx;
       Vars.cy = y;
       Vars.cvy = vy;
-      Vars.csy = sy;
       Vars.cz = z;
       Vars.cvz = vz;
+      /*
+      Vars.csx = sx;
+      Vars.csy = sy;
       Vars.csz = sz;
+      */
       Vars.ct = t;
     }
 
@@ -361,12 +366,14 @@ TRACE
     }
 
     /* now handles intermediate results saving */
+    /*
     if ((Vars.Intermediate > 0) && (mcget_run_num() > Vars.IntermediateCnts))
     {
       Vars.IntermediateCnts += Vars.Intermediate*mcget_ncount();
-      /* save results for all monitors in the simulation */
+      // save results for all monitors in the simulation 
       mcsave(NULL);
     }
+    */
     if (Vars.Flag_parallel) /* back to neutron state before detection */
       Flag_Restore = 1;
   } /* end if intersection */
@@ -377,7 +384,7 @@ TRACE
 
   if (Flag_Restore)
   {
-    RESTORE_NEUTRON(INDEX_CURRENT_COMP, x, y, z, vx, vy, vz, t, sx, sy, sz, p);
+    // RESTORE_NEUTRON(INDEX_CURRENT_COMP, x, y, z, vx, vy, vz, t, sx, sy, sz, p);
   }
 %}
 
