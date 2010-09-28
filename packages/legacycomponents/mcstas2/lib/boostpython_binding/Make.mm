@@ -13,12 +13,12 @@
 
 include local.def
 
-PROJECT = mcstas2
-PACKAGE = boostpython_binding
+PROJECT = mcstas2/boostpython_binding
+PACKAGE = 
 
 PROJ_TMPDIR = $(BLD_TMPDIR)/$(PROJECT)/$(PACKAGE)
 
-all: export release-package-headers
+all: export release-headers
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #

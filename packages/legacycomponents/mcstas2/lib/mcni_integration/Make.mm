@@ -1,3 +1,5 @@
+# -*- Makefile -*-
+#
 
 include local.def
 
@@ -15,7 +17,7 @@ RECURSE_DIRS = $(BUILD_DIRS) $(OTHER_DIRS)
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # build the library
 
-all: export release-package-headers
+all: export release-headers
 	BLD_ACTION="all" $(MM) recurse
 
 
@@ -40,7 +42,7 @@ export:: export-headers
 
 
 # version
-# $Id: Make.mm 334 2005-07-25 15:58:49Z linjiao $
+# $Id$
 
 #
 # End of file
