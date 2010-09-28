@@ -14,9 +14,9 @@ PROJ_SRCS = \
 	Gravity.cc \
 	assert.cc \
 	detector_outputs.cc \
+	display.cc \
 	exception.cc \
 	geometry.cc \
-	mcstas-r.cc \
 	misc_macros.cc \
 	propagators.cc \
 	random_numbers.cc \
@@ -83,9 +83,9 @@ EXPORT_HEADERS = \
 	cross_ref_macros.h \
 	detector_output_macros.h \
 	detector_outputs.h \
+	display.h \
 	exception.h \
 	geometry.h \
-	mcstas-r.h \
 	mcstas2.h \
 	misc_macros.h \
 	phys_constants.h \

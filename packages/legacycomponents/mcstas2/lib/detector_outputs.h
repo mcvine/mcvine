@@ -81,6 +81,10 @@ void mcsiminfo_init(FILE *f);
 void mcsiminfo_close(void);
 
 
+//
+extern bool mcascii_only;
+extern struct mcformats_struct mcformat;
+
 
 #endif// H_MCSTAS2_DETECTOR_OUTPUTS
 

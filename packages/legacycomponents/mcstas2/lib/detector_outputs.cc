@@ -93,7 +93,7 @@ static char *mcsiminfo_name= "mcstas";
 static bool mcsingle_file = 0;
 
 //
-static bool mcascii_only = 0;
+bool mcascii_only = 0;
 
 //
 FILE *mcsiminfo_file=NULL;
@@ -120,7 +120,7 @@ FILE *mcsiminfo_file=NULL;
 #ifndef MCSTAS_FORMAT
 #define MCSTAS_FORMAT "McStas"  /* default format */
 #endif
-static struct mcformats_struct mcformat;
+struct mcformats_struct mcformat;
 
 static struct mcformats_struct mcformats[mcNUMFORMATS] = {
   { "McStas", "sim",
