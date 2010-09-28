@@ -71,7 +71,7 @@ class AbsoluteCoord(Coord):
         return str(tuple(self.value))
 
 
-from mcni.coordinate_system_transformers.mcstas import transformCoordinateSystem as defaultCoordTransformer
+from coordinate_system_transformers.mcstas import transformCoordinateSystem as defaultCoordTransformer
 
 
 def _toCoord(candidate):
