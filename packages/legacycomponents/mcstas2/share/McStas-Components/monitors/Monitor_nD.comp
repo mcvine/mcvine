@@ -204,6 +204,8 @@ SETTING PARAMETERS (xwidth=0.1, yheight=0.1, zthick=0, xmin=0, xmax=0, ymin=0, y
 /* these are protected C variables */
 OUTPUT PARAMETERS (DEFS, Vars)
 STATE PARAMETERS (x,y,z,vx,vy,vz,t,s1,s2,p)
+// MCVINE:
+// spin vector is not yet supported
 // POLARISATION PARAMETERS (sx,sy,sz)
 
 SHARE
@@ -329,6 +331,8 @@ TRACE
       Vars.cvy = vy;
       Vars.cz = z;
       Vars.cvz = vz;
+      // MCVINE:
+      // spin vector is not yet supported
       /*
       Vars.csx = sx;
       Vars.csy = sy;
@@ -366,6 +370,8 @@ TRACE
     }
 
     /* now handles intermediate results saving */
+    // MCVINE
+    // intermediate results are handled by mcvine
     /*
     if ((Vars.Intermediate > 0) && (mcget_run_num() > Vars.IntermediateCnts))
     {
@@ -384,6 +390,8 @@ TRACE
 
   if (Flag_Restore)
   {
+    // MCVINE
+    // spin vector is not yet supported
     // RESTORE_NEUTRON(INDEX_CURRENT_COMP, x, y, z, vx, vy, vz, t, sx, sy, sz, p);
   }
 %}
