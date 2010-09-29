@@ -29,7 +29,7 @@
 * nbchan:   Number of tow bins (1)
 * type:     detector type "time"/"energy"/"wavelength" (string)
 * filename: Name of file in which to store the detector image (string)
-* format:   "table": binned values on ascii file; "detector_out": McStas format ascii 
+* format:   "table"- binned values on ascii file; "detector_out"- McStas format ascii
 * restore_neutron: If set >0, the monitor does not influence the neutron state
 *
 * OUTPUT PARAMETERS:
@@ -44,15 +44,34 @@
 DEFINE COMPONENT PSD_TEW_monitor
 DEFINITION PARAMETERS (nxchan=20, nychan=20, nbchan=20, string type="time", string filename, string format="table")
 SETTING PARAMETERS (xwidth=0, yheight=0, bmin=0, bmax=0, deltab=0, restore_neutron=0)
-OUTPUT PARAMETERS (TOF_N, TOF_p, TOF_p2, b_min, b_max, delta_b, x_min, x_max, delta_x, y_min, y_max, delta_y)
+OUTPUT PARAMETERS (TOF_N_00, TOF_p_00, TOF_p2_00, b_min, b_max, delta_b, x_min, x_max, delta_x, y_min, y_max, delta_y)
 STATE PARAMETERS (x,y,z,vx,vy,vz,t,s1,s2,p)
 POLARISATION PARAMETERS (sx,sy,sz)
 
+SHARE
+%{
+// ----------- added by Alex Dementsov --------
+// ----------  header for SHARE ----------
+// ----------- added by Alex Dementsov --------
+inline double & element_3Darr(double *array3D, int dim_y, int dim_z, int i, int j, int k)
+  {
+    return *(array3D + i*dim_y*dim_z + j*dim_z + k );
+  }
+#define TOF_N(i,j,k)  element_3Darr(TOF_N_00, nychan, nbchan, i, j, k)
+#define TOF_p(i,j,k)  element_3Darr(TOF_p_00, nychan, nbchan, i, j, k)
+#define TOF_p2(i,j,k)  element_3Darr(TOF_p2_00, nychan, nbchan, i, j, k)
+
+// ----------- added by Alex Dementsov --------
+// ----------  implementation for SHARE ----------
+// ----------- added by Alex Dementsov --------
+#include <string.h>
+
+%}
+
+
 DECLARE
   %{
-    double TOF_N[nxchan][nychan][nbchan];
-    double TOF_p[nxchan][nychan][nbchan];
-    double TOF_p2[nxchan][nychan][nbchan];
+    double *TOF_N_00, *TOF_p_00, *TOF_p2_00;
     double b_min, b_max, delta_b;
     double x_min, x_max, delta_x;
     double y_min, y_max, delta_y;
@@ -60,6 +79,10 @@ DECLARE
 INITIALIZE
   %{
     int i, j, k;
+
+    TOF_N_00    = (double *)malloc(nxchan*nychan*nbchan*sizeof(double));
+    TOF_p_00    = (double *)malloc(nxchan*nychan*nbchan*sizeof(double));
+    TOF_p2_00   = (double *)malloc(nxchan*nychan*nbchan*sizeof(double));
 
     if(!(strcmp(type,"time")==0) && !(strcmp(type,"energy")==0) && !(strcmp(type,"wavelength")==0)) {
        printf("PSD_TEW: error in type keyword\n stop\n");
@@ -110,9 +133,9 @@ INITIALIZE
     for (i=0; i<nxchan; i++) {
 	for (j=0; j<nychan; j++) {
 	    for (k=0; k<nbchan; k++) {
-	        TOF_N[i][j][k] = 0;
-      	        TOF_p[i][j][k] = 0;
-                TOF_p2[i][j][k] = 0;
+                TOF_N(i,j,k) = 0;
+                TOF_p(i,j,k) = 0;
+                TOF_p2(i,j,k) = 0;
 	    }
 	}
     }
@@ -155,12 +178,12 @@ TRACE
        if(k >= nbchan) {k = nbchan - 1;}
        if(k < 0) {i=0;}
 
-       TOF_N[i][j][k]++;
-       TOF_p[i][j][k] += p;
-       TOF_p2[i][j][k] += p*p;
+       TOF_N(i,j,k)++;
+       TOF_p(i,j,k) += p;
+       TOF_p2(i,j,k) += p*p;
        SCATTER;
 
-       if (restore_neutron) RESTORE_NEUTRON(INDEX_CURRENT_COMP, x, y, z, vx, vy, vz, t, sx, sy, sz, p);
+       //if (restore_neutron) RESTORE_NEUTRON(INDEX_CURRENT_COMP, x, y, z, vx, vy, vz, t, sx, sy, sz, p);
     }
   %}
 SAVE
@@ -188,7 +211,7 @@ SAVE
             "x", "y", type, 
              x_min, x_max, y_min, y_max, b_min, b_max, 
              nxchan, nychan, nbchan,
-             &TOF_N[0][0][0],&TOF_p[0][0][0],&TOF_p2[0][0][0],
+             TOF_N_00,TOF_p_00,TOF_p2_00,
              filename);
        }
        else if(strcmp(type,"energy")==0) {
@@ -200,7 +223,7 @@ SAVE
             "x", "y", type, 
              x_min, x_max, y_min, y_max, b_min, b_max, 
              nxchan, nychan, nbchan,
-             &TOF_N[0][0][0],&TOF_p[0][0][0],&TOF_p2[0][0][0],
+             TOF_N_00,TOF_p_00,TOF_p2_00,
              filename);
        }
        else if(strcmp(type,"wavelength")==0) {
@@ -212,7 +235,7 @@ SAVE
             "x", "y", type, 
              x_min, x_max, y_min, y_max, b_min, b_max, 
              nxchan, nychan, nbchan,
-             &TOF_N[0][0][0],&TOF_p[0][0][0],&TOF_p2[0][0][0],
+             TOF_N_00, TOF_p_00, TOF_p2_00,
              filename);
        }
     }
@@ -227,9 +250,9 @@ SAVE
        for(i=0; i<nxchan; i++){
           for(j=0; j<nychan; j++){
              for(k=0;k<nbchan;k++) {
-                N += TOF_N[i][j][k];
-                I += TOF_p[i][j][k];
-                ERR += TOF_p2[i][j][k];
+                N += TOF_N(i,j,k);
+                I += TOF_p(i,j,k);
+                ERR += TOF_p2(i,j,k);
              }
           }
        }
@@ -270,13 +293,13 @@ SAVE
              fprintf(fp,"  %10.4f  %10.4f", x_min+delta_x*(i+0.5), y_min+delta_y*(j+0.5));
              for(k=0;k<nbchan;k++) {
                 stdv =0.0;
-                if(TOF_p2[i][j][k]>0) {
-                   stdv = TOF_p2[i][j][k]/TOF_p[i][j][k]/TOF_p[i][j][k]-one_over_counts;
+                if(TOF_p2(i,j,k)>0) {
+                   stdv = TOF_p2(i,j,k)/TOF_p(i,j,k)/TOF_p(i,j,k)-one_over_counts;
                 }
                 if(stdv>1){stdv=1.0;}
                 else if(stdv<0){stdv=0.0;}
                 else{stdv=sqrt(stdv);}
-                fprintf(fp,"  %10.4e  %7.5f",TOF_p[i][j][k]/delta_x/delta_y/delta_b*b_multiplier,stdv);
+                fprintf(fp,"  %10.4e  %7.5f",TOF_p(i,j,k)/delta_x/delta_y/delta_b*b_multiplier,stdv);
              }
              fprintf(fp,"\n");
           }	  
@@ -290,6 +313,12 @@ SAVE
        exit(0);
     }
   %}
+
+FINALLY
+%{
+  free(TOF_N_00); free(TOF_p_00); free(TOF_p2_00);
+%}
+
 
 MCDISPLAY
 %{
