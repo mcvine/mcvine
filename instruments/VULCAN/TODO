@@ -11,9 +11,11 @@ ToDo list for VULCAN
     [MonochromaticSource] -> [TofMonitor]
 - [DONE] Implement L_monitor component
 - [DONE] Fix installation of HDF5FS (needed to use with_doxygen_... config)
+- Implement script for autogeneration of instrument: toInstrString()
+- Finish with mcstas parser implementation
 - Test new mcstas component parser
 - Write unit tests for parser
-- Write script for creation of McVine components (similar for Instruments)
+- Write script for creation of McVine components database tables (similar for Instruments)
 - Compile SNS_source4 component
 - Compile PSD_TEW_monitor component
 
