@@ -19,6 +19,7 @@ PROJ_PYTESTS =  alltests.py
 PROJ_CPPTESTS = \
 	test_fparser \
 	test_random \
+	test_rootfinding \
 
 PROJ_TESTS = $(PROJ_PYTESTS) $(PROJ_CPPTESTS)
 PROJ_LIBRARIES = -L$(BLD_LIBDIR) -ljournal -lmcni -lmccomposite -lmcstas_compact -lmccomponents -lfparser
@@ -43,6 +44,9 @@ update: clean
 
 test_random: test_random.cc
 	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ test_random.cc $(PROJ_LIBRARIES)
+
+test_rootfinding: test_rootfinding.cc
+	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ test_rootfinding.cc $(PROJ_LIBRARIES)
 
 test_fparser: test_fparser.cc
 	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ test_fparser.cc $(PROJ_LIBRARIES)

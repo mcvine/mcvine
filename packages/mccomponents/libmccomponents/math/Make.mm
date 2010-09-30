@@ -23,6 +23,7 @@ PROJ_TMPDIR = $(BLD_TMPDIR)/$(PROJECT)/$(PACKAGE)
 
 BUILD_DIRS = \
 	fparser \
+	random \
 
 OTHER_DIRS = \
 
@@ -45,7 +46,11 @@ clean::
 export:: export-package-headers
 
 EXPORT_HEADERS = \
+	Functor.h \
+	misc.h \
 	random.h \
+	rootfinding.h \
+
 
 # version
 # $Id: Make.mm,v 1.1.1.1 2005/03/08 16:13:51 aivazis Exp $
