@@ -66,6 +66,9 @@ NAME            = '%s([^ ()=]*)%s' % (SPACES, SPACES)  # Extracts name
 NO_BRACKETS     = '[^()]*'              # No brackets
 PARAMETERS      = '(%s)' % NO_BRACKETS  # Component parameters
 COMPONENT       = "%s=%s\(%s\)(.*)" %(NAME, NAME, PARAMETERS)  # Component
+VECVAL          = "([^,\)]+)"             # Vector's value
+VECTOR          = '\(%s,%s,%s\)' % (VECVAL, VECVAL, VECVAL) # Vector
+VECTOR_F        = '(\([^\)]*\))'
 
 # Constants
 PROPERTIES      = ["AT", "ROTATED"]     # Standard properties
@@ -119,8 +122,10 @@ class McStasConverter:
                 comp["name"]        = m[0]
                 comp["type"]        = m[1]
                 comp["parameters"]  = self._params(m[2])
-                comp["position"]    = self._position(m[3])
-                comp["rotation"]    = self._rotation(m[3])
+                comp["position"]    = self._position(m[3], format=False)
+                comp["position_string"]    = self._position(m[3])
+                comp["rotation"]    = self._rotation(m[3], format=False)
+                comp["rotation_string"]    = self._rotation(m[3])
                 comp["extra"]       = self._extra(m[3])
 
                 self._components.append(comp)
@@ -152,8 +157,8 @@ class McStasConverter:
         for comp in self.components():
             str += "name:%s%s%s"     % (self._resIndent("name:", indent), comp["name"], br)
             str += "type:%s%s%s"     % (self._resIndent("type:", indent), comp["type"], br)
-            str += "position:%s%s%s" % (self._resIndent("position:", indent), comp["position"], br)
-            str += "rotation:%s%s%s" % (self._resIndent("rotation:", indent), comp["rotation"], br)
+            str += "position:%s%s%s" % (self._resIndent("position:", indent), comp["position_string"], br)
+            str += "rotation:%s%s%s" % (self._resIndent("rotation:", indent), comp["rotation_string"], br)
             str += "extra:%s%s%s"    % (self._resIndent("extra:", indent), comp["extra"], br)
 
             params  = comp["parameters"]
@@ -266,8 +271,8 @@ class McStasConverter:
         str     += "    components = [\n"
         comps   = self.components()
         for comp in comps:
-            str     += "%sccomp(\"%s\", %s, ((0,0,%s), (0,0,0), '')),\n" % (ind,
-                        comp["name"], comp["name"], comp["position"])
+            str     += "%sccomp(\"%s\", %s(), (%s, %s, '')),\n" % (ind,
+                        comp["name"], comp["name"], comp["position_string"], comp["rotation_string"])
 
         str     += "%s]\n\n" % ind
         return str
@@ -339,14 +344,38 @@ class McStasConverter:
         return s
 
 
-    def _position(self, text):
+    def _vector(self, type, text, format):
+        "Returns vector formatted or not"
+        prop    = self._property(type, text)
+
+        if format:      # Return string
+            p       = re.compile(VECTOR_F)
+            m       = p.findall(prop)
+            pos     = "(0, 0, 0)"
+            if not m or not m[0]:
+                return pos
+
+            return m[0].strip()
+
+        pos     = (0, 0, 0) # default position
+        p       = re.compile(VECTOR)
+        m       = p.findall(prop)
+        if not m or not m[0] or not len(m[0]) == 3:
+            return pos
+
+        return (float(m[0][0]), float(m[0][1]), float(m[0][2])) # Return tuple
+
+
+    def _position(self, text, format=True):
         "Extracts position from text"
-        return self._property("AT", text)
+        # Example of text: AT (0, 0, 0.39855)  RELATIVE  PREVIOUS
+        return self._vector("AT", text, format)
+    
 
-
-    def _rotation(self, text):
+    def _rotation(self, text, format=True):
         "Extracts rotation from text"
-        return self._property("ROTATED", text)
+        # Example of text: ROTATED (11.6, 0, 0) RELATIVE Detector_Position_t
+        return self._vector("ROTATED", text, format)
 
 
     def _extra(self, text):
