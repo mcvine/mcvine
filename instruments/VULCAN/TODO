@@ -3,7 +3,7 @@ ToDo list for VULCAN
 
 - [DONE] Install VNF related packages correctly!
 - Fix warning messages: 
-    [IN PROGRESS] /BoostPythonBinding.py:103: RuntimeWarning
+    [POSTPONED] /BoostPythonBinding.py:103: RuntimeWarning
     [DONE] mcstas2/utils/parsers/ComponentInfo.py:98:__init__; ValueError: empty string for float()
 - [DONE] Run chain of two components [SNS_source_r1] -> [L_monitor] from the command line
 - [DONE] Run test simulation for [MonochromaticSource] -> [EMonitor]/[TofMonitor]
@@ -11,11 +11,11 @@ ToDo list for VULCAN
     [MonochromaticSource] -> [TofMonitor]
 - [DONE] Implement L_monitor component
 - [DONE] Fix installation of HDF5FS (needed to use with_doxygen_... config)
-- Implement script for autogeneration of instrument: toInstrString()
+- [IN PROGRESS] Implement script for autogeneration of instrument: toInstrString()
 - Finish with mcstas parser implementation
 - Test new mcstas component parser
 - Write unit tests for parser
-- Write script for creation of McVine components database tables (similar for Instruments)
+- [IN PROGRESS] Write script for creation of McVine components database tables (similar for Instruments)
 - Compile SNS_source4 component
 - Compile PSD_TEW_monitor component
 
