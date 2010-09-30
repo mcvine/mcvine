@@ -14,7 +14,7 @@
 include local.def
 
 PROJECT = mccomponents
-PACKAGE = kernels/sample/phonon
+PACKAGE = math/random
 
 
 PROJ_TMPDIR = $(BLD_TMPDIR)/$(PROJECT)/$(PACKAGE)
@@ -44,34 +44,7 @@ clean::
 export:: export-package-headers
 
 EXPORT_HEADERS = \
-	AbstractDispersion_3D.h \
-	PeriodicDispersion_3D.h \
-	AbstractDebyeWallerFactor.h \
-	AbstractDOS.h \
-	AbstractScatteringKernel.h \
-	AtomicScatterer.h \
-	ChangeCoordinateSystem_forDispersion_3D.h \
-	CoherentInelastic_PolyXtal.h \
-	DWFromDOS.h \
-	DWFromDOS.icc \
-	LinearlyInterpolatableAxis.h \
-	LinearlyInterpolatedDOS.h \
-	LinearlyInterpolatedDOS.icc \
-	LinearlyInterpolatedGridData_1D.h \
-	LinearlyInterpolatedGridData_1D.icc \
-	LinearlyInterpolatedGridData_3D.h \
-	LinearlyInterpolatedGridData_3D.icc \
-	LinearlyInterpolatedDispersionOnGrid_3D.h \
-	LinearlyInterpolatedDispersionOnGrid_3D.icc \
-	LinearlyInterpolatedPolarizationOnGrid_3D.h \
-	LinearlyInterpolatedPolarizationOnGrid_3D.icc \
-	Omega_minus_deltaE.h \
-	exception.h \
-	generateQ.h generateQ.icc \
-	interpolate.h \
-	scattering_length.h scattering_length.icc \
-	utils.h \
-	vector3.h \
+	geometry.h \
 
 
 # version

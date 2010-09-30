@@ -32,6 +32,10 @@ all: $(PROJ_SAR) export
 PROJ_SRCS = \
 	HomogeneousNeutronScatterer.cc \
 	random.cc \
+	rootfinding.cc \
+	Functor.cc \
+	math_misc.cc \
+	random_geometry.cc \
 	CompositeScatteringKernel.cc \
 	IsotropicKernel.cc \
 	EventModeMCA.cc \
@@ -53,6 +57,7 @@ PROJ_SRCS = \
 	DWFromDOS.cc \
 	CoherentInelastic_PolyXtal.cc \
 	PeriodicDispersion_3D.cc \
+	Omega_minus_deltaE.cc \
 
 
 PROJ_TIDY += $(PROJ_SRCS)
@@ -63,6 +68,18 @@ HomogeneousNeutronScatterer.cc: ../homogeneous_scatterer/HomogeneousNeutronScatt
 
 random.cc: ../math/random.cc
 	cp ../math/random.cc .
+
+math_misc.cc: ../math/misc.cc
+	cp ../math/misc.cc ./math_misc.cc
+
+rootfinding.cc: ../math/rootfinding.cc
+	cp ../math/rootfinding.cc .
+
+Functor.cc: ../math/Functor.cc
+	cp ../math/Functor.cc .
+
+random_geometry.cc: ../math/random/geometry.cc
+	cp ../math/random/geometry.cc ./random_geometry.cc
 
 CompositeScatteringKernel.cc: ../homogeneous_scatterer/CompositeScatteringKernel.cc
 	cp ../homogeneous_scatterer/CompositeScatteringKernel.cc .
@@ -126,6 +143,9 @@ CoherentInelastic_PolyXtal.cc: ../kernels/sample/phonon/CoherentInelastic_PolyXt
 
 DWFromDOS.cc: ../kernels/sample/phonon/DWFromDOS.cc
 	cp ../kernels/sample/phonon/DWFromDOS.cc DWFromDOS.cc
+
+Omega_minus_deltaE.cc: ../kernels/sample/phonon/Omega_minus_deltaE.cc
+	cp ../kernels/sample/phonon/Omega_minus_deltaE.cc Omega_minus_deltaE.cc
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
