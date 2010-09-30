@@ -193,7 +193,7 @@ class McStasConverter:
 
         # Generate component functions
         for comp in self.components():
-            str += self._instrComps(comp)
+            str += self._instrCompFunc(comp)
 
         # Special case: "neutron_recorder"
         str     += "\n"
@@ -202,14 +202,8 @@ class McStasConverter:
         str     += "    c.short_description = \"Neutron recorder at sample position\"\n"
         str     += "    return c\n\n"
 
-        # Generate components list
-        str     += self._instrComp()
-
-        # Generate instrument dictionary
-
-
-
-        # Generate createInstrument() function
+        # Generate instrument
+        str     += self._instrCreate()
         return str
 
 
@@ -236,7 +230,7 @@ class McStasConverter:
         return str
 
         
-    def _instrComps(self, comp):
+    def _instrCompFunc(self, comp):
         "Returns string of generated instrument component"
         str     = "\n"
         if not comp:
@@ -253,36 +247,46 @@ class McStasConverter:
         return str
 
 
-    # XXX: Fix absolute position and rotation
-    def _instrComp(self):
-        "Returns string of components"
+    def _instrCreate(self):
+        "Returns string of 'createInstrument()' function"
         str     = "\n"
-        str     += "components = [\n"
-        comps   = self.components()
-        for comp in comps:
-            str     += "    ccomp(\"%s\", %s, ((0,0,%s), (0,0,0), '')),\n" % (comp["name"],
-                        comp["name"], comp["position"])
+        str     += "def createInstrument(director):"
+        # Generate components list
+        str     += self._instrComp()
 
-        str     += "]\n\n"
+        # Generate instrument dictionary
+        str     += self._instrMeta()
         return str
 
 
-    def _instrMeta(self):
+    # XXX: Fix absolute position and rotation
+    def _instrComp(self, ind=" "*8):
+        "Returns string of components"
+        str     = "\n"
+        str     += "    components = [\n"
+        comps   = self.components()
+        for comp in comps:
+            str     += "%sccomp(\"%s\", %s, ((0,0,%s), (0,0,0), '')),\n" % (ind,
+                        comp["name"], comp["name"], comp["position"])
+
+        str     += "%s]\n\n" % ind
+        return str
+
+
+    def _instrMeta(self, ind=" "*8):
         "Returns string of instrument metadata"
         str     = "\n"
         
-#    instrument = cinstr(
-#        director,
-#        name = 'ARCS_beam',
-#        short_description = 'ARCS instrument down to the sample position',
-#        long_description = '''ARCS is a wide Angular-Range, direct-geometry, time-of-flight Chopper Spectrometer at the Spallation Neutron Source. It is optimized to provide a high neutron flux at the sample, and a large solid angle of detector coverage.
-#        This virtual instrument simulates neutrons being emitted from moderator and going through neutron optics of ARCS until they reach the sample position. Those neutrons are then saved and can be used to study inelastic neutron scattering of samples later.
-#        ''',
-#        category = 'ins',
-#        creator = 'vnf',
-#        date = '08/09/2008',
-#        components = components
-#        )
+        str     += "    instrument = cinstr(\n"
+        str     += "%sdirector,\n" % ind
+        str     += "%sname = \"\",\n" % ind
+        str     += "%sshort_description = \"\",\n" % ind
+        str     += "%slong_description = \"\",\n" % ind
+        str     += "%scategory = \"\",\n" % ind
+        str     += "%screator = \"VNF\",\n" % ind
+        str     += "%sdate = \"%s\",\n" % (ind, strftime("%d %b %Y %H:%M", localtime()))
+        str     += "%scomponents = components\n" % ind
+        str     += "%s)\n\n" % ind
         return str
 
 
