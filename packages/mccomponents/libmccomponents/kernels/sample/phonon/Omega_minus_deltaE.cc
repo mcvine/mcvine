@@ -12,6 +12,8 @@
 //
 
 #include <cmath>
+#include <portinfo>
+#include "journal/debug.h"
 #include "mcni/neutron/units_conversion.h"
 #include "mccomponents/kernels/sample/phonon/vector3.h"
 #include "mccomponents/kernels/sample/phonon/AbstractDispersion_3D.h"
@@ -20,28 +22,50 @@
 
 namespace mccomponents{ namespace kernels { namespace phonon{
 
+
+static char Omega_minus_deltaE_debug_channel[] = "Omega_minus_deltaE";
+
 Omega_q_minus_deltaE::Omega_q_minus_deltaE
 (int branch,
  const V_t &vf_dir, const V_t &vi,
  float_t abs_vi, const dispersion_t &disp)
   :_branch(branch),
-   _vf_direction(&vf_dir), _vi(&vi),
+   _vf_direction(vf_dir), _vi(vi),
    _abs_vi(abs_vi), _disp(&disp) 
 {
-  //  cout << "branch: " << _branch << endl;
-  //  cout << "vf_direction: " << *_vf_direction << endl;
-  //  cout << "vi: " << *_vi << endl;
-  //  cout << "abs_vi: " << _abs_vi << endl;
+#ifdef DEBUG
+  journal::debug_t debug("Omega_minus_deltaE ctor");
+#endif
+
+#ifdef DEBUG
+  debug << journal::at(__HERE__)
+	<< "vf direction=" << vf_dir 
+	<< journal::endl;
+#endif
 }
 
 
 //! w(q)-abs(Ei-Ef)
 Omega_q_minus_deltaE::float_t mccomponents::kernels::phonon::Omega_q_minus_deltaE::evaluate( float_t vf ) const
 {
-  const float_t &vv_x = _vf_direction->x, 
-    &vv_y = _vf_direction->y, &vv_z = _vf_direction->z;
+#ifdef DEBUG
+  journal::debug_t debug(Omega_minus_deltaE_debug_channel);
+#endif
 
-  const float_t &vi_x = _vi->x, &vi_y = _vi->y, &vi_z = _vi->z;
+  const float_t &vv_x = _vf_direction.x, 
+    &vv_y = _vf_direction.y, &vv_z = _vf_direction.z;
+
+  const float_t &vi_x = _vi.x, &vi_y = _vi.y, &vi_z = _vi.z;
+
+#ifdef DEBUG
+  debug << journal::at(__HERE__)
+	<< "vi=" << vi_x << ", " << vi_y << ", " << vi_z
+	<< journal::newline
+	<< "vf_direction" << _vf_direction
+	<< journal::newline
+	<< "vf length" << vf
+	<< journal::endl;
+#endif
 
   float_t qx, qy, qz, res_phonon, res_neutron;  
   
@@ -50,8 +74,14 @@ Omega_q_minus_deltaE::float_t mccomponents::kernels::phonon::Omega_q_minus_delta
   qx=v2k*(vi_x-vf*vv_x);
   qy=v2k*(vi_y-vf*vv_y);
   qz=v2k*(vi_z-vf*vv_z);
+  
+#ifdef DEBUG
+  debug << journal::at(__HERE__)
+	<< "q=" << qx << ", " << qy << ", " << qz 
+	<< journal::endl;
+#endif
 
-  res_phonon = _disp->energy(_branch, K_t(qx, qy, qz) );
+  res_phonon = _disp->energy(_branch, K_t(qx, qy, qz));
   //cout << "vf" << vf << endl;
   //cout << "qx,qy,qz" << qx <<"," << qy <<"," << qz << endl;
   //cout << "res_phonon = " << res_phonon << endl;

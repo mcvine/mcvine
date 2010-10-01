@@ -73,7 +73,8 @@ namespace test {
 		  for (iri = 0; iri<2; iri++) {
 		    eps_array[ indexes ] = (iri?1/std::sqrt(3):0);
 		  }
-	      E_array[indexes] = std::abs( (x*x+y*y+z*z)/15/15/3 ) * 50;
+	      // E_array[indexes] = std::abs( (x*x+y*y+z*z)/15/15/3 ) * 50;
+	      E_array[indexes] = std::abs(std::sin( (x*x+y*y+z*z)/15/15/3*2*3.14*10 )) * 50;
 	    }
 	  }
 

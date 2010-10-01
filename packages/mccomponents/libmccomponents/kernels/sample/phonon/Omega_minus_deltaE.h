@@ -57,7 +57,7 @@ namespace mccomponents{ namespace kernels{ namespace phonon{
     /// vi...........neutron initial velocity vector
     /// abs_vi.......neutron initial velocity
     /// disp.........phonon dispersion
-    inline Omega_q_minus_deltaE
+    Omega_q_minus_deltaE
     (int branch,
      const V_t &vf_dir, const V_t &vi,
      float_t abs_vi, const dispersion_t &disp);
@@ -65,8 +65,8 @@ namespace mccomponents{ namespace kernels{ namespace phonon{
 
   private:
     int _branch;
-    const V_t *_vf_direction;
-    const V_t *_vi;
+    V_t _vf_direction;
+    V_t _vi;
     float_t _abs_vi;
     const dispersion_t *_disp;
   };
@@ -78,6 +78,6 @@ namespace mccomponents{ namespace kernels{ namespace phonon{
 
 
 // version
-// $Id: Omega_minus_deltaE.h 270 2005-09-22 05:31:19Z linjiao $
+// 	$Id$	
 
 // End of file 

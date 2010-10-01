@@ -40,7 +40,7 @@
 
 
 namespace{
-  const char * phonon_cohinel_sc_journal_channel = "pcis_sk";
+  const char * phonon_cohinel_sc_journal_channel = "CoherentInelastic_SingleXtal";
 }
 
 mccomponents::kernels::phonon::CoherentInelastic_SingleXtal::CoherentInelastic_SingleXtal
@@ -97,38 +97,88 @@ const
   /// v_i..........neutron initial velocity
   /// v_i_l........magnitude of neutron initial velocity
 {
+#ifdef DEBUG
+  journal::debug_t debug(phonon_cohinel_sc_journal_channel);
+  debug << journal::at(__HERE__)
+	<< "entering pick_v_f" 
+	<< journal::endl;
+#endif
+
+#ifdef DEBUG
+  debug << journal::at(__HERE__)
+	<< "create function omega(q)-dE" 
+	<< journal::endl;
+#endif
   // function omega(Q)-dE
   Omega_q_minus_deltaE omq_m_dE(branch, v_f, v_i, v_i_l, m_disp);
 
+#ifdef DEBUG
+  debug << journal::at(__HERE__)
+	<< "find roots of function omega(Q)-dE" 
+	<< journal::endl;
+#endif
   // find roots of function omega(Q)-dE
   std::vector<float_t> vf_list = m_roots_finder.solve( 0, v_i_l*2, omq_m_dE );
 
   // number of roots
   size_t nf = vf_list.size(); 
+#ifdef DEBUG
+  debug << journal::at(__HERE__)
+	<< "found " << nf << "roots." 
+	<< journal::endl;
+#endif
+
   if (nf<1) mcni::throw_fatal_path_error
 	      ( phonon_cohinel_sc_journal_channel,
 		journal::at(__HERE__),
 		"Unable to find solution for function omega(Q)-dE");
   
   
+#ifdef DEBUG
+  debug << journal::at(__HERE__)
+	<< "choose a root from the roots" 
+	<< journal::endl;
+#endif
   // choose a root (length of vf)
   int index=(int)mccomponents::math::random(0, nf);
   float_t v_f_l = vf_list[index];
+#ifdef DEBUG
+  debug << journal::at(__HERE__)
+	<< "chose root #" << index
+	<< ": " << v_f_l
+	<< journal::endl;
+#endif
   // adjust v_f
   v_f.normalize(); v_f = v_f * v_f_l;
   // adjust prob
   prob_factors.push_back(nf);
 
   // calculate Jacobi factor
+#ifdef DEBUG
+  debug << journal::at(__HERE__)
+	<< "calculate Jacobi factor near " << v_f_l
+	<< journal::endl;
+#endif
   float_t f1, f2;
   f1 = omq_m_dE.evaluate( v_f_l-m_DV );
   f2 = omq_m_dE.evaluate( v_f_l+m_DV );
+#ifdef DEBUG
+  debug << journal::at(__HERE__)
+	<< "f1=" << f1
+	<< ", f2=" << f2
+	<< journal::endl;
+#endif
   using namespace mcni::neutron_units_conversion;
   // adjust prob
   float_t Jacobi = std::abs(f2-f1)/(2*m_DV*k2v);
   prob_factors.push_back(2*vsquare2E( v_f_l/Jacobi ));
-}
 
+#ifdef DEBUG
+  debug << journal::at(__HERE__)
+	<< "probability factors" << prob_factors
+	<< journal::endl;
+#endif
+}
 
 
 void
@@ -258,6 +308,32 @@ mccomponents::kernels::phonon::CoherentInelastic_SingleXtal::pick_a_final_state
   }
 #endif
   prob *= prob_factor;
+}
+
+
+void
+mccomponents::kernels::phonon::CoherentInelastic_SingleXtal::absorb
+( neutron_t & ev )
+{
+}
+
+
+mccomponents::kernels::phonon::CoherentInelastic_SingleXtal::float_t
+mccomponents::kernels::phonon::CoherentInelastic_SingleXtal::absorption_coefficient
+( const neutron_t & ev )
+{
+  //!!!!!! must reimplement this !!!!
+  return scattering_coefficient( ev );
+}
+
+
+mccomponents::kernels::phonon::CoherentInelastic_SingleXtal::float_t
+mccomponents::kernels::phonon::CoherentInelastic_SingleXtal::scattering_coefficient
+( const neutron_t & ev )
+{
+  float_t ret = m_tot_scattering_cross_section/m_uc_vol;
+  // convert to m**-1
+  return ret * 1.e2;
 }
 
 

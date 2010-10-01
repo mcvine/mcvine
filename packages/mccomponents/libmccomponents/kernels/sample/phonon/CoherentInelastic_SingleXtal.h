@@ -84,12 +84,13 @@ namespace mccomponents{
 
 	virtual float_t absorption_coefficient( const neutron_t & ev );
 	virtual float_t scattering_coefficient( const neutron_t & ev );
-	virtual void scatter( neutron_t & ev );
+	virtual void scatter( neutron_t & ev ) {pick_a_final_state(ev);}
 	virtual void absorb( neutron_t & ev );
 	
       private:
 
-	virtual void pick_a_final_state( neutron_t & ) const;
+	// actual implementation of method "scatter"
+	void pick_a_final_state( neutron_t & ev ) const;
 
 	void   pick_v_f
 	(std::vector<float_t> & prob, V_t & v_f, int branch, 

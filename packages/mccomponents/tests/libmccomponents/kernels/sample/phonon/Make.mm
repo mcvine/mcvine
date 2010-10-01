@@ -24,13 +24,14 @@ PROJ_CPPTESTS = test_LinearlyInterpolatedGridData_3D \
 	test_LinearlyInterpolatedGridData_1D \
 	test_LinearlyInterpolatedDOS \
 	test_CoherentInelastic_PolyXtal \
+	test_CoherentInelastic_SingleXtal \
 	test_PeriodicDispersion_3D \
 	test_ChangeCoordinateSystem_forDispersion_3D \
 	test_interpolation \
 
 
 PROJ_TESTS = $(PROJ_PYTESTS) $(PROJ_CPPTESTS)
-PROJ_LIBRARIES = -L$(BLD_LIBDIR) -ljournal -lmcni -lmccomposite -lmccomponents -lmcstas_compact
+PROJ_LIBRARIES = -L$(BLD_LIBDIR) -ljournal -lmcni -lmccomposite -lmccomponents -lmcstas_compact -lfparser
 PROJ_CXX_DEFINES += DEEPDEBUG
 
 
@@ -85,6 +86,9 @@ test_LinearlyInterpolatedDispersionOnGrid_3D: test_LinearlyInterpolatedDispersio
 
 test_CoherentInelastic_PolyXtal: test_CoherentInelastic_PolyXtal.cc CoherentInelastic_PolyXtal_Example.h LinearlyInterpolatedDispersionOnGrid_3D_Example.h
 	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ test_CoherentInelastic_PolyXtal.cc $(PROJ_LIBRARIES)
+
+test_CoherentInelastic_SingleXtal: test_CoherentInelastic_SingleXtal.cc CoherentInelastic_SingleXtal_Example.h LinearlyInterpolatedDispersionOnGrid_3D_Example.h
+	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ test_CoherentInelastic_SingleXtal.cc $(PROJ_LIBRARIES)
 
 test_PeriodicDispersion_3D: test_PeriodicDispersion_3D.cc LinearlyInterpolatedDispersionOnGrid_3D_Example.h
 	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ test_PeriodicDispersion_3D.cc $(PROJ_LIBRARIES)
