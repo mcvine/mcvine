@@ -131,7 +131,7 @@ class McStasConverter:
         compSplits   = text.split("COMPONENT")   # Split by component parts
         compSplits   = compSplits[1:]             # Skip 0 part (should not have components)
 
-        # Go over the component strings and populate component
+        # Go over the component strings and populate components
         order       = 0
         for compText in compSplits:
             p   = re.compile(COMPONENT, re.DOTALL)
@@ -147,10 +147,8 @@ class McStasConverter:
             comp["name"]        = m[0]
             comp["type"]        = m[1]
             comp["parameters"]  = self._params(m[2])
-            comp["position"]    = self._position(m[3], order, format=False)
-            comp["rotation"]    = self._rotation(m[3], order, format=False)
-#            comp["position_string"]    = self._position(m[3])
-#            comp["rotation_string"]    = self._rotation(m[3])
+            comp["position"]    = self._position(m[3], order)
+            comp["rotation"]    = self._rotation(m[3], order)
             comp["extra"]       = self._extra(m[3])
 
             self._components.append(comp)
@@ -168,7 +166,7 @@ class McStasConverter:
 
         complist   = []
         for c in self._components:
-            if c and not (c["type"] in COMP_IGNORE):
+            if c and not (c["type"] in filter):
                 complist.append(c)
 
         return complist
@@ -195,8 +193,8 @@ class McStasConverter:
         for comp in self.components():
             str += "name:%s%s%s"     % (self._resIndent("name:", indent), comp["name"], br)
             str += "type:%s%s%s"     % (self._resIndent("type:", indent), comp["type"], br)
-            str += "position:%s%s%s" % (self._resIndent("position:", indent), comp["position_string"], br)
-            str += "rotation:%s%s%s" % (self._resIndent("rotation:", indent), comp["rotation_string"], br)
+            str += "position:%s%s%s" % (self._resIndent("position:", indent), self._formatVector(comp["position"]), br)
+            str += "rotation:%s%s%s" % (self._resIndent("rotation:", indent), comp["rotation"], br) # self._formatVector(comp["rotation"])
             str += "extra:%s%s%s"    % (self._resIndent("extra:", indent), comp["extra"], br)
 
             params  = comp["parameters"]
@@ -310,7 +308,7 @@ class McStasConverter:
         comps   = self.components()
         for comp in comps:
             str     += "%sccomp(\"%s\", %s(), (%s, %s, '')),\n" % (ind,
-                        comp["name"], comp["name"], comp["position_string"], comp["rotation_string"])
+                        comp["name"], comp["name"], self._formatVector(comp["position"]), comp["rotation"]) # self._formatVector(comp["rotation"])
 
         str     += "%s]\n\n" % ind
         return str
@@ -404,7 +402,32 @@ class McStasConverter:
         return (float(m[0][0]), float(m[0][1]), float(m[0][2])) # Return tuple
 
 
-    def _position(self, text, order, format=True):
+    def _compNames(self, filter=COMP_IGNORE):
+        "Returns list of component names in self._components!"
+        names   = []
+        for c in self.components(filter):
+            names.append(c["name"])
+            
+        return names
+
+
+    def _relComp(self, order, name):
+        "Returns relative component specified by name starting from order-1 to the source"
+        for i in range(order-1, -1, -1):
+            comp    = self._components[i]
+            if comp["name"] == name:
+                return comp
+
+        return None     # Not found
+
+
+    def _formatVector(self, vector):
+        "Formats the vector to string"
+        assert len(vector) == 3
+        return "(%.5f, %.5f, %.5f)" % vector
+
+
+    def _position(self, text, order):
         """
         Extracts position from text"
 
@@ -427,26 +450,37 @@ class McStasConverter:
         if not relation in RELATION: 
             raise Exception("Error: Wrong component relation")
 
-        if relation == "ABSOLUTE":
+        # ABSOLUTE relation
+        if relation == "ABSOLUTE":  # Easy: just return what you have
             return (x, y, z)
 
-        # Relative relation is implied
-        relcomp = m[4]
+        # RELATIVE relation is implied
+        assert relation == "RELATIVE"
+        comp    = None
+        
+        relcomp = mm[4]     # Name of relative component
         if relcomp.upper() == "PREVIOUS":
             assert order > 0   # positive order
             comp    = self._components[order-1]
+            
+        elif relcomp != "ABSOLUTE" and relcomp in self._compNames(filter=None):
+            comp    = self._relComp(order, relcomp)
+
+        if comp:    # Relative component if found
             pos     = comp["position"]  # Position of the previous component
             return (x + pos[0], y + pos[1], z + pos[2])
-        
-        return "(0, 0, 0)"
+
+        # Default relation (if everything breaks)
+        return (x, y, z)    
+    
         # DEFAULT
         #return self._vector("AT", text, format)
     
 
-    def _rotation(self, text, order, format=True):
+    def _rotation(self, text, order):
         "Extracts rotation from text"
         # Example of text: ROTATED (11.6, 0, 0) RELATIVE Detector_Position_t
-        return self._vector("ROTATED", text, format)
+        return self._vector("ROTATED", text, True)
 
 
     def _extra(self, text):
@@ -550,8 +584,8 @@ def main():
                 conv    = McStasConverter(config=parts[1])
                 
             #print conv.toString()
-            #print conv.toInstrString()
-            #print conv.components(filter=None)
+            print conv.toInstrString()
+            #print conv.components(filter=None):
             return
 
     print USAGE_MESSAGE
