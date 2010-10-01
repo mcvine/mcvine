@@ -52,6 +52,7 @@ EXPORT_HEADERS = \
 	AtomicScatterer.h \
 	ChangeCoordinateSystem_forDispersion_3D.h \
 	CoherentInelastic_PolyXtal.h \
+	CoherentInelastic_SingleXtal.h \
 	DWFromDOS.h \
 	DWFromDOS.icc \
 	LinearlyInterpolatableAxis.h \
@@ -66,6 +67,7 @@ EXPORT_HEADERS = \
 	LinearlyInterpolatedPolarizationOnGrid_3D.h \
 	LinearlyInterpolatedPolarizationOnGrid_3D.icc \
 	Omega_minus_deltaE.h \
+	TargetCone.h \
 	exception.h \
 	generateQ.h generateQ.icc \
 	interpolate.h \

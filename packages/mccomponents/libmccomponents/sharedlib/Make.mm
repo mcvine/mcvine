@@ -56,8 +56,10 @@ PROJ_SRCS = \
 	physics_statistics.cc \
 	DWFromDOS.cc \
 	CoherentInelastic_PolyXtal.cc \
+	CoherentInelastic_SingleXtal.cc \
 	PeriodicDispersion_3D.cc \
 	Omega_minus_deltaE.cc \
+	TargetCone.cc \
 
 
 PROJ_TIDY += $(PROJ_SRCS)
@@ -141,11 +143,17 @@ physics_statistics.cc: ../physics/statistics.cc
 CoherentInelastic_PolyXtal.cc: ../kernels/sample/phonon/CoherentInelastic_PolyXtal.cc
 	cp ../kernels/sample/phonon/CoherentInelastic_PolyXtal.cc CoherentInelastic_PolyXtal.cc
 
+CoherentInelastic_SingleXtal.cc: ../kernels/sample/phonon/CoherentInelastic_SingleXtal.cc
+	cp ../kernels/sample/phonon/CoherentInelastic_SingleXtal.cc CoherentInelastic_SingleXtal.cc
+
 DWFromDOS.cc: ../kernels/sample/phonon/DWFromDOS.cc
 	cp ../kernels/sample/phonon/DWFromDOS.cc DWFromDOS.cc
 
 Omega_minus_deltaE.cc: ../kernels/sample/phonon/Omega_minus_deltaE.cc
 	cp ../kernels/sample/phonon/Omega_minus_deltaE.cc Omega_minus_deltaE.cc
+
+TargetCone.cc: ../kernels/sample/phonon/TargetCone.cc
+	cp ../kernels/sample/phonon/TargetCone.cc TargetCone.cc
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

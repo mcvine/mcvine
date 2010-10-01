@@ -496,15 +496,16 @@ mccomponents::kernels::phonon::CoherentInelastic_PolyXtal::scatter
 	<< "prob = " << prob 
 	<< journal::endl;
 #endif
-  //prob *= m_sigma_coh/m_Mass; //should be \sum{sigma_inc/M}
-  
+  // prob *= m_sigma_coh/m_Mass; //should be \sum{sigma_inc/M}
+  //
   // This term is the term of |\sum\frac{b_d}{M_d} exp(i\kappa\dot d) (\kappa \dot e) |^2 of page 46 of Squires.
   // It should include the debye-waller factor
   // but for now, we will consider dw factor to be constant
   // and put it in later.
   float_t norm_of_slsum = std::norm
     (sum_of_scattering_length<complex_t, K_t, epsilon_t, atom_t, atoms_t, dispersion_t>
-    ( Q, branch, m_atoms, m_disp ) );
+     (Q, branch, m_atoms, m_disp)
+     );
   // convert unit of scattering length to meter from fm
   norm_of_slsum /= 1e30;
   // divide this quautity by \sigma_coh because we want a normalized
