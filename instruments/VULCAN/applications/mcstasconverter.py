@@ -51,7 +51,24 @@ Issues:
     - Assumption is made that new line is "\n"
 """
 
-# XXX: Fix options issue (see fixtures.textOptions)
+"""
+XXX: Fix options issue (see fixtures.textOptions)
+XXX: Fix absolute position and rotation
+- Learn format position and rotation options
+- Options are case non-sensitive
+- "Relative <COMP>" means relative to the nearest to source component
+- Position format:
+    AT (x, y, z) RELATIVE <Name>
+    AT (x, y, z) ABSOLUTE
+    AT (x, y, z) RELATIVE PREVIOUS
+
+- Rotation format:
+    ROTATED (Ax, Ay, Az) RELATIVE name
+    ROTATED (Ax, Ay, Az) ABSOLUTE
+    AT (x, y, z) RELATIVE PREVIOUS ROTATED (Ax, Ay, Az) RELATIVE PREVIOUS(2) # Not supported
+- 
+
+"""
 
 # Imports
 import re
@@ -67,12 +84,15 @@ NO_BRACKETS     = '[^()]*'              # No brackets
 PARAMETERS      = '(%s)' % NO_BRACKETS  # Component parameters
 COMPONENT       = "%s=%s\(%s\)(.*)" %(NAME, NAME, PARAMETERS)  # Component
 VECVAL          = "([^,\)]+)"             # Vector's value
-VECTOR          = '\(%s,%s,%s\)' % (VECVAL, VECVAL, VECVAL) # Vector
-VECTOR_F        = '(\([^\)]*\))'
+VECTOR          = "\(%s,%s,%s\)" % (VECVAL, VECVAL, VECVAL) # Vector
+VECTOR_F        = "(\([^\)]*\))"
+POSITION        = "AT%s%s%s(RELATIVE|ABSOLUTE)%s([^ ]*)" % (SPACES, VECTOR, SPACES, SPACES)
 
 # Constants
 PROPERTIES      = ["AT", "ROTATED"]     # Standard properties
+RELATION        = ["RELATIVE", "ABSOLUTE"]
 TERMINATORS     = ["FINALLY", "END"]
+COMP_IGNORE     = ["Progress_bar", "Arm"]
 FILE            = ["--filename", "-f"]
 CONFIG          = ["--config", "-c"]
 ARGS            = FILE + CONFIG
@@ -112,28 +132,46 @@ class McStasConverter:
         compSplits   = compSplits[1:]             # Skip 0 part (should not have components)
 
         # Go over the component strings and populate component
+        order       = 0
         for compText in compSplits:
             p   = re.compile(COMPONENT, re.DOTALL)
             # Finds all components (well, there should be one component)
-            matches     = p.findall(compText)       
+            matches     = p.findall(compText)
 
-            for m in matches:
-                comp    = {}
-                comp["name"]        = m[0]
-                comp["type"]        = m[1]
-                comp["parameters"]  = self._params(m[2])
-                comp["position"]    = self._position(m[3], format=False)
-                comp["position_string"]    = self._position(m[3])
-                comp["rotation"]    = self._rotation(m[3], format=False)
-                comp["rotation_string"]    = self._rotation(m[3])
-                comp["extra"]       = self._extra(m[3])
+            if not matches or not matches[0]: # No match, procede to the next candidate
+                continue
 
-                self._components.append(comp)
+            # Populate component
+            m = matches[0]
+            comp    = {}
+            comp["name"]        = m[0]
+            comp["type"]        = m[1]
+            comp["parameters"]  = self._params(m[2])
+            comp["position"]    = self._position(m[3], order, format=False)
+            comp["rotation"]    = self._rotation(m[3], order, format=False)
+#            comp["position_string"]    = self._position(m[3])
+#            comp["rotation_string"]    = self._rotation(m[3])
+            comp["extra"]       = self._extra(m[3])
+
+            self._components.append(comp)
+            order   += 1
 
 
-    def components(self):
-        "Returns list of components"
-        return self._components
+    def components(self, filter=COMP_IGNORE):
+        """
+        Returns list of components
+        
+        filter -- list of component types to filter out
+        """
+        if not filter:  # No filter applied - return all of the components
+            return self._components
+
+        complist   = []
+        for c in self._components:
+            if c and not (c["type"] in COMP_IGNORE):
+                complist.append(c)
+
+        return complist
 
 
     def toString(self, indent=16, br="\n"):
@@ -366,13 +404,46 @@ class McStasConverter:
         return (float(m[0][0]), float(m[0][1]), float(m[0][2])) # Return tuple
 
 
-    def _position(self, text, format=True):
-        "Extracts position from text"
-        # Example of text: AT (0, 0, 0.39855)  RELATIVE  PREVIOUS
-        return self._vector("AT", text, format)
+    def _position(self, text, order, format=True):
+        """
+        Extracts position from text"
+
+        Notes:
+            - Position order is specified from non-filtered components
+            - Example of text: AT (0, 0, 0.39855)  RELATIVE  PREVIOUS
+        """
+
+        prop    = self._property("AT", text)
+        p       = re.compile(POSITION, re.IGNORECASE)
+        m       = p.findall(prop)
+        # Expected format: (X, Y, Z, <Relation>, <Component>)
+        if not m or not m[0] or len(m[0]) != 5:
+            return pos
+
+        mm          = m[0]
+        (x, y, z)   = (float(mm[0]), float(mm[1]), float(mm[2]))
+
+        relation    = mm[3].upper()
+        if not relation in RELATION: 
+            raise Exception("Error: Wrong component relation")
+
+        if relation == "ABSOLUTE":
+            return (x, y, z)
+
+        # Relative relation is implied
+        relcomp = m[4]
+        if relcomp.upper() == "PREVIOUS":
+            assert order > 0   # positive order
+            comp    = self._components[order-1]
+            pos     = comp["position"]  # Position of the previous component
+            return (x + pos[0], y + pos[1], z + pos[2])
+        
+        return "(0, 0, 0)"
+        # DEFAULT
+        #return self._vector("AT", text, format)
     
 
-    def _rotation(self, text, format=True):
+    def _rotation(self, text, order, format=True):
         "Extracts rotation from text"
         # Example of text: ROTATED (11.6, 0, 0) RELATIVE Detector_Position_t
         return self._vector("ROTATED", text, format)
@@ -479,7 +550,8 @@ def main():
                 conv    = McStasConverter(config=parts[1])
                 
             #print conv.toString()
-            print conv.toInstrString()
+            #print conv.toInstrString()
+            #print conv.components(filter=None)
             return
 
     print USAGE_MESSAGE
