@@ -380,26 +380,61 @@ class McStasConverter:
         return s
 
 
-    def _vector(self, type, text, format):
+    def _vector(self, property, type, regex, order, text):
         "Returns vector formatted or not"
-        prop    = self._property(type, text)
-
-        if format:      # Return string
-            p       = re.compile(VECTOR_F)
-            m       = p.findall(prop)
-            pos     = "(0, 0, 0)"
-            if not m or not m[0]:
-                return pos
-
-            return m[0].strip()
-
-        pos     = (0, 0, 0) # default position
-        p       = re.compile(VECTOR)
+        # Default vector is taken from previous component
+        pos     = self._prevVector(order, type)
+        prop    = self._property(property, text)
+        p       = re.compile(regex, re.IGNORECASE)
         m       = p.findall(prop)
-        if not m or not m[0] or not len(m[0]) == 3:
+        # Expected format: (X, Y, Z, <Relation>, <Component>)
+        if not m or not m[0] or len(m[0]) != 5:
             return pos
 
-        return (float(m[0][0]), float(m[0][1]), float(m[0][2])) # Return tuple
+        mm          = m[0]
+        (x, y, z)   = (float(mm[0]), float(mm[1]), float(mm[2]))
+
+        relation    = mm[3].upper()
+        if not relation in RELATION:
+            raise Exception("Error: Wrong component relation")
+
+        # ABSOLUTE relation
+        if relation == "ABSOLUTE":  # Easy: just return what you have
+            return (x, y, z)
+
+        # RELATIVE relation is implied
+        assert relation == "RELATIVE"
+
+        relcomp = mm[4]     # Name of relative component
+        if relcomp != "ABSOLUTE" and relcomp in self._compNames(filter=None):
+            pos = self._prevVector(order, type, relcomp)
+
+        return (x + pos[0], y + pos[1], z + pos[2])
+
+#        if relcomp.upper() == "PREVIOUS":
+#            pos = self._prevVector(order, "position")
+
+
+#    def _vector(self, type, text, format):
+#        "Returns vector formatted or not"
+#        prop    = self._property(type, text)
+#
+#        if format:      # Return string
+#            p       = re.compile(VECTOR_F)
+#            m       = p.findall(prop)
+#            pos     = "(0, 0, 0)"
+#            if not m or not m[0]:
+#                return pos
+#
+#            return m[0].strip()
+#
+#        pos     = (0, 0, 0) # default position
+#        p       = re.compile(VECTOR)
+#        m       = p.findall(prop)
+#        if not m or not m[0] or not len(m[0]) == 3:
+#            return pos
+#
+#        return (float(m[0][0]), float(m[0][1]), float(m[0][2])) # Return tuple
 
 
     def _compNames(self, filter=COMP_IGNORE):
@@ -427,61 +462,81 @@ class McStasConverter:
         return "(%.5f, %.5f, %.5f)" % vector
 
 
+    def _prevVector(self, order, type, name=None):
+        """
+        Returns vector (position or rotation) of the previous component,
+            OR of the component specified by name if it is set
+
+        Note:
+            - "type" can be either "position" or "rotation"
+            - Vector of the first component is set to (0, 0, 0)
+        """
+        # Set position of the previous component
+        if len(self._components) < 2:
+            return (0.0, 0.0, 0.0) # Default vector
+
+        # General case
+        assert order > 0
+        if name:
+            comp    = self._relComp(order, name)
+        else:
+            comp    = self._components[order-1]
+
+        return comp[type]
+        
+
     def _position(self, text, order):
         """
-        Extracts position from text"
+        Returns absolute position of component with respect to source
 
         Notes:
             - Position order is specified from non-filtered components
             - Example of text: AT (0, 0, 0.39855)  RELATIVE  PREVIOUS
+            - Position is a required parameter
+            - Rotation is optional
+            - When rotation (or position) is not specified, take value from the previous one
+              or (0, 0, 0) as default
         """
+        return self._vector("AT", "position", POSITION, order, text)
 
-        prop    = self._property("AT", text)
-        p       = re.compile(POSITION, re.IGNORECASE)
-        m       = p.findall(prop)
-        # Expected format: (X, Y, Z, <Relation>, <Component>)
-        if not m or not m[0] or len(m[0]) != 5:
-            return pos
-
-        mm          = m[0]
-        (x, y, z)   = (float(mm[0]), float(mm[1]), float(mm[2]))
-
-        relation    = mm[3].upper()
-        if not relation in RELATION: 
-            raise Exception("Error: Wrong component relation")
-
-        # ABSOLUTE relation
-        if relation == "ABSOLUTE":  # Easy: just return what you have
-            return (x, y, z)
-
-        # RELATIVE relation is implied
-        assert relation == "RELATIVE"
-        comp    = None
+#        # Default vector is taken from previous component
+#        pos     = self._prevVector(order, "position")
+#        prop    = self._property("AT", text)
+#        p       = re.compile(POSITION, re.IGNORECASE)
+#        m       = p.findall(prop)
+#        # Expected format: (X, Y, Z, <Relation>, <Component>)
+#        if not m or not m[0] or len(m[0]) != 5:
+#            return pos
+#
+#        mm          = m[0]
+#        (x, y, z)   = (float(mm[0]), float(mm[1]), float(mm[2]))
+#
+#        relation    = mm[3].upper()
+#        if not relation in RELATION:
+#            raise Exception("Error: Wrong component relation")
+#
+#        # ABSOLUTE relation
+#        if relation == "ABSOLUTE":  # Easy: just return what you have
+#            return (x, y, z)
+#
+#        # RELATIVE relation is implied
+#        assert relation == "RELATIVE"
+#
+#        relcomp = mm[4]     # Name of relative component
+##        if relcomp.upper() == "PREVIOUS":
+##            pos = self._prevVector(order, "position")
+#
+#        if relcomp != "ABSOLUTE" and relcomp in self._compNames(filter=None):
+#            pos = self._prevVector(order, "position", relcomp)
+#
+#        return (x + pos[0], y + pos[1], z + pos[2])
         
-        relcomp = mm[4]     # Name of relative component
-        if relcomp.upper() == "PREVIOUS":
-            assert order > 0   # positive order
-            comp    = self._components[order-1]
-            
-        elif relcomp != "ABSOLUTE" and relcomp in self._compNames(filter=None):
-            comp    = self._relComp(order, relcomp)
-
-        if comp:    # Relative component if found
-            pos     = comp["position"]  # Position of the previous component
-            return (x + pos[0], y + pos[1], z + pos[2])
-
-        # Default relation (if everything breaks)
-        return (x, y, z)    
-    
-        # DEFAULT
-        #return self._vector("AT", text, format)
-    
 
     def _rotation(self, text, order):
         "Extracts rotation from text"
         # Example of text: ROTATED (11.6, 0, 0) RELATIVE Detector_Position_t
-        return self._vector("ROTATED", text, True)
-
+        #return self._vector("ROTATED", text, True)
+        return "(0, 0, 0)"
 
     def _extra(self, text):
         "Return list of extra properies that are not in property list"
@@ -597,4 +652,30 @@ if __name__ == "__main__":
 
 __date__ = "$Aug 19, 2010 10:25:18 AM$"
 
+
+
+#"relative" - relative vector (x, y, z)
+#        # Set position of the previous component
+#        if len(self._components) > 0:
+#            assert order > 0
+#            comp    = self._components[order-1]
+#            pos     = comp["position"]
+#        else:
+#            pos     = (0.0, 0.0, 0.0)
+
+        #comp    = None
+#            assert order > 0   # positive order
+#            comp    = self._components[order-1]
+            
+            #comp    = self._relComp(order, relcomp)
+
+#        if comp:    # Relative component, if found
+#            pos     = comp["position"]  # Position of the previous component
+#            return (x + pos[0], y + pos[1], z + pos[2])
+
+        # Default relation (if everything breaks)
+#        return (x, y, z)
+
+        # DEFAULT
+        #return self._vector("AT", text, format)
 
