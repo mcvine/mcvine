@@ -72,6 +72,7 @@ import re
 import sys
 import os.path
 from time import localtime, strftime
+from compmodules import IMPORT_DICT
 
 # Regular expressions
 COMMENT         = '(/\*.*?\*/)'         # Non-greedy comment (.*?)
@@ -94,6 +95,8 @@ COMP_IGNORE     = ["Progress_bar", "Arm"]
 FILE            = ["--filename", "-f"]
 CONFIG          = ["--config", "-c"]
 ARGS            = FILE + CONFIG
+
+
 USAGE_MESSAGE   = """NAME:
     McStasConverter - converter for McStas components 
 
@@ -600,31 +603,4 @@ if __name__ == "__main__":
     main()
 
 __date__ = "$Aug 19, 2010 10:25:18 AM$"
-
-
-
-#"relative" - relative vector (x, y, z)
-#        # Set position of the previous component
-#        if len(self._components) > 0:
-#            assert order > 0
-#            comp    = self._components[order-1]
-#            pos     = comp["position"]
-#        else:
-#            pos     = (0.0, 0.0, 0.0)
-
-        #comp    = None
-#            assert order > 0   # positive order
-#            comp    = self._components[order-1]
-            
-            #comp    = self._relComp(order, relcomp)
-
-#        if comp:    # Relative component, if found
-#            pos     = comp["position"]  # Position of the previous component
-#            return (x + pos[0], y + pos[1], z + pos[2])
-
-        # Default relation (if everything breaks)
-#        return (x, y, z)
-
-        # DEFAULT
-        #return self._vector("AT", text, format)
 
