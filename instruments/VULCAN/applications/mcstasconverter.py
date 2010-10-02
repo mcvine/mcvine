@@ -13,9 +13,10 @@
 
 """
 McStasConverter - converter for McStas components to list of dictionaries.
-                  This a convenient form to create other data structures
-                  (e.g. McVine components)
+                  This is a convenient form to create other data structures
+                  and scripts (e.g. McVine components).
 
+.toInstrString() generates script for instrument creation
 
 Example:
 
@@ -45,30 +46,26 @@ is converted to dictionary:
                 }
 }
 
+Notes:
+    - Options are case non-sensitive
+    - "Relative <COMP>" means relative to the nearest to source component
+    - Position format:
+        AT (x, y, z) RELATIVE <Name>
+        AT (x, y, z) ABSOLUTE
+        AT (x, y, z) RELATIVE PREVIOUS
+
+    - Rotation format:
+        ROTATED (Ax, Ay, Az) RELATIVE <Name>
+        ROTATED (Ax, Ay, Az) ABSOLUTE
+        AT (x, y, z) RELATIVE PREVIOUS ROTATED (Ax, Ay, Az) RELATIVE PREVIOUS(2) # Not supported
+
 Issues:
     - Check if name is case sensitive (like COMPONENT)
     - Extract properties from "extra" to separate properties
     - Assumption is made that new line is "\n"
 """
 
-"""
-XXX: Fix options issue (see fixtures.textOptions)
-XXX: Fix absolute position and rotation
-- Learn format position and rotation options
-- Options are case non-sensitive
-- "Relative <COMP>" means relative to the nearest to source component
-- Position format:
-    AT (x, y, z) RELATIVE <Name>
-    AT (x, y, z) ABSOLUTE
-    AT (x, y, z) RELATIVE PREVIOUS
-
-- Rotation format:
-    ROTATED (Ax, Ay, Az) RELATIVE <Name>
-    ROTATED (Ax, Ay, Az) ABSOLUTE
-    AT (x, y, z) RELATIVE PREVIOUS ROTATED (Ax, Ay, Az) RELATIVE PREVIOUS(2) # Not supported
-- 
-
-"""
+# XXX: Fix options issue (see fixtures.textOptions)
 
 # Imports
 import re
@@ -195,7 +192,7 @@ class McStasConverter:
             str += "name:%s%s%s"     % (self._resIndent("name:", indent), comp["name"], br)
             str += "type:%s%s%s"     % (self._resIndent("type:", indent), comp["type"], br)
             str += "position:%s%s%s" % (self._resIndent("position:", indent), self._formatVector(comp["position"]), br)
-            str += "rotation:%s%s%s" % (self._resIndent("rotation:", indent), comp["rotation"], br) # self._formatVector(comp["rotation"])
+            str += "rotation:%s%s%s" % (self._resIndent("rotation:", indent), self._formatVector(comp["rotation"]), br)
             str += "extra:%s%s%s"    % (self._resIndent("extra:", indent), comp["extra"], br)
 
             params  = comp["parameters"]
@@ -214,7 +211,6 @@ class McStasConverter:
         return str
 
 
-    # XXX: Fix position and rotation for generated component!
     def toInstrString(self, br="\n"):
         """Returns script string for instrument generation
 
