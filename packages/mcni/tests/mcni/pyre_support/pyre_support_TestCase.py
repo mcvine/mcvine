@@ -99,7 +99,8 @@ class Verifier( AbstractComponent ):
 
     def process(self, neutrons):
         for i in range(len(neutrons)):
-            r = list( neutrons[i].state.position )
+            p = neutrons[i].state.position
+            r = list( p )
             self.testFacility.assertVectorAlmostEqual(
                 r, (2,-1,2) )
             

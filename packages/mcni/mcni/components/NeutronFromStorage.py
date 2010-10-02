@@ -14,6 +14,9 @@
 
 category = 'sources'
 
+import journal
+debug = journal.debug('NeutronStorage')
+
 
 from mcni.neutron_storage.idfneutron import ndblsperneutron, filesize
 
@@ -38,34 +41,52 @@ class NeutronFromStorage( AbstractComponent ):
         if hasmpi:
             from mcni.utils import mpiutil
             mpisize = mpiutil.world.size
-            # each node reads a chunk of neutrons of size n
-            # increment cursor at the master node and send
-            # cursors to each node.
-            channel = 100
-            if mpiutil.rank == 0:
-                cursor = self._cursor
-                for i in range(1, mpisize):
-                    mpiutil.send(self._cursor+i*n, i, channel)
-                    continue
-            else:
-                cursor = mpiutil.receive(0, channel)
-            # increment my cursor to jump over all neutrons
-            # read by all nodes
-            if mpiutil.rank == 0:
-                self._cursor += mpisize*n
-            # at each node, jump to the position specified by cursor
-            self._storage.seek(cursor, 'start')
+            debug.log('mpi world size: %s' % mpisize)
+            if mpisize:
+                self._setCursor(mpisize, n)
 
         # read as numpy array
         npyarr = self._storage.read(n, asnpyarr=True)
+        if len(npyarr):
+            debug.log(npyarr[0])
+        else:
+            debug.log("no neutrons")
         
         # convert to neutron buffer 
         from mcni.neutron_storage import neutrons_from_npyarr
         neutrons = neutrons_from_npyarr( npyarr, neutrons )
+
+        if len(neutrons):
+            debug.log(neutrons[0])
         
         return neutrons
 
 
+    def _setCursor(self, mpisize, n):
+        # each node reads a chunk of neutrons of size n
+        # increment cursor at the master node and send
+        # cursors to each node.
+        channel = 100
+        from mcni.utils import mpiutil
+        if mpiutil.rank == 0:
+            cursor = self._cursor
+            for i in range(1, mpisize):
+                mpiutil.send(self._cursor+i*n, i, channel)
+                continue
+        else:
+            cursor = mpiutil.receive(0, channel)
+
+        # at each node, seek to the position specified by cursor
+        self._storage.seek(cursor, 'start')
+        
+        # increment my cursor to jump over all neutrons
+        # read by all nodes
+        if mpiutil.rank == 0:
+            self._cursor += mpisize*n
+            
+        return
+
+    
     def __init__(self, name, path):
         AbstractComponent.__init__(self, name)
         

@@ -12,6 +12,10 @@
 #
 
 
+import journal
+debug = journal.debug('NeutronStorage')
+
+
 # Every directory containing neutron data files must have a
 # text file stating the number of neutrons in each neutron data
 # file.
@@ -47,6 +51,7 @@ class Storage:
         """
 
         path = self.path = os.path.abspath( path )
+        debug.log('storage path: %s' % path)
 
         # checking inputs
         if mode in ['w'] and os.path.exists( path ):
@@ -73,6 +78,8 @@ class Storage:
 
         #
         self._buffersize = buffersize
+        debug.log("buffer size: %s" % buffersize)
+        
         import mcni
         self._buffer = mcni.neutron_buffer(0)
 
@@ -86,7 +93,8 @@ class Storage:
             self._packetsize = packetsize
             self._position = 0 # initial position to start reading
             self._ntotal = idfio.count(stream=self.stream)
-        
+            debug.log('packet size: %s' % packetsize)
+            debug.log('total size: %s' % self._ntotal)
         return
 
 
@@ -110,15 +118,19 @@ class Storage:
         
         if whence in ['start', 0]:
             self._position = offset
+            debug.log('seek from start: position is now %s' % self._position)
         elif whence in ['current', 1]:
             self._position += offset
+            debug.log('seek from current position: position is now %s' % self._position)
         elif whence in ['end', 2]:
             self._position = self._ntotal + offset
+            debug.log('seek from end: position is now %s' % self._position)
         else:
             raise ValueError, "whence=%s: not supported" % whence
 
         if wrap:
             self._position %= ntotal
+            debug.log('wrap position: position is now %s' % self._position)
         else:
             if self._position >= ntotal or self._position < 0:
                 raise RuntimeError, "new position %s out of bound" % self._position
@@ -141,24 +153,32 @@ class Storage:
             raise RuntimeError, "Neutron storage %r was opened for write" % path
 
         position = self._position
+        debug.log('my current position: %s' % position)
         
         # n defaults to packetsize
         n = n or self._packetsize
+        debug.log('number of neutrons to read: %s' % n)
 
         # total number of neutrons in the file
         ntotal = self._ntotal
+        debug.log('total number of neutrons in the storage: %s' % ntotal)
 
         # no default, read all is left
         if n is None:
             n = ntotal - position
-
+            debug.log('n was given as None, now set to %s' % n)
+            
         # next position of cursor
         nextpostion = position + n
+        debug.log('next cursor position: %s' % nextpostion)
         
         if nextpostion < ntotal:
             # if it is not beyond the end of file, just read
+            debug.log('no wrapping needed because next-cursor-position<ntotal')
             npyarr = idfio.read(stream=self.stream, start=position, n=n)
+            debug.log('read %s neutrons start from %s' % (n, position))
             self._position = nextpostion
+            debug.log('set my position to %s' % self._position)
 
         else:
             # if out of bound, read to the end of file
