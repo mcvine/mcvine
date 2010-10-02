@@ -11,9 +11,15 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
 
-# Sets name relations between McStas component and VNF neutron component
-#   Names that coincide are not included in this dictionary
-# Example: "SNS_source4" -> "./vnfb/vnfb/dom/neutron_experiment_simulations/neutron_components/SNSModerator"
+"""
+Sets name relations between McStas component and VNF neutron component
+
+Example: "SNS_source4" -> "./vnfb/vnfb/dom/neutron_experiment_simulations/neutron_components/SNSModerator"
+
+Notes:
+    - Names that coincide are not included in this dictionary
+"""
+
 IMPORT_DICT     = {
     "SNS_source4":          "SNSModerator",
     "Collimator_linear":    "CollimatorLinear",     # not exist
