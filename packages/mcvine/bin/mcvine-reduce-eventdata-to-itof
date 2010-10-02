@@ -1,0 +1,61 @@
+#!/usr/bin/env python
+
+
+from pyre.applications.Script import Script
+
+
+class App(Script):
+
+
+    class Inventory(Script.Inventory):
+
+        import pyre.inventory
+
+        eventdat = pyre.inventory.str('eventdat', default='events.dat')
+        
+        ntof = pyre.inventory.int('ntof', default=0)
+
+        outpkl = pyre.inventory.str('out-pkl', default='itof.pkl')
+        
+        pass
+
+    
+    def main(self, *args, **kwds):
+        # filename of eventdata
+        eventdat = self.inventory.eventdat
+        # number of tofs
+        ntof = self.inventory.ntof
+        # I(tof) histogram
+        itof = reduce(eventdat, ntof)
+        # generate output
+        import pickle
+        outpkl = self.inventory.outpkl
+        pickle.dump(itof,  open(outpkl, 'w'))
+        return
+
+
+
+
+def reduce(filename, ntof):
+    from mccomponents.detector import reduction_utils as ru
+    evts = ru.readevents(filename)
+
+    import numpy
+    itof = numpy.zeros(ntof, float)
+
+    for pix, tof, n in evts:
+        itof[tof] += n
+        continue
+
+    return itof
+
+
+
+def main():
+    app = App('mcvine=reduce-eventdata-to-itof')
+    app.run()
+    return
+
+
+if __name__ == '__main__': main()
+

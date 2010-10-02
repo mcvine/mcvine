@@ -51,9 +51,11 @@ EXPORT_BINS = \
 	mcvine-simulate \
 	mcvine-neutron-storage-count-neutrons \
 	mcvine-neutron-storage-merge \
+	mcvine-neutron-storage-print-neutrons \
 	mcvine-neutron-storage-total-intensity \
 	mcvine-reduce-eventdata-to-ipix \
 	mcvine-reduce-eventdata-to-ipixtof \
+	mcvine-reduce-eventdata-to-itof \
 
 
 export:: export-binaries release-binaries export-package-python-modules #export-docs

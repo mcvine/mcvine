@@ -15,32 +15,47 @@ class App(Script):
         
         npixel = pyre.inventory.int('npixel', default=0)
         ntof = pyre.inventory.int('ntof', default=1000)
+        ntof.meta['tip'] = 'number of tof bins'
+        tofbinsize = pyre.inventory.int('tofbinsize', default=1)
+        tofbinsize.meta['tip'] = 'bin size of coarse graining of tof axis'
 
-        outpkl = pyre.inventory.str('out-pkl', default='ipixtof.pkl')
+        outhist = pyre.inventory.str('out-hist', default='ipixtof.h5')
         
         pass
 
     
     def main(self, *args, **kwds):
+        # check output
+        outhist = self.inventory.outhist
+        import os
+        if os.path.exists(outhist):
+            raise RuntimeError, "output file %s already exists" % outhist
         # filename of eventdata
         eventdat = self.inventory.eventdat
         # number of pixels
         npixel = self.inventory.npixel
         # number of tof bins
         ntof = self.inventory.ntof
+        # coarse graining
+        tofbinsize = self.inventory.tofbinsize
         # I(pix) histogram
-        ipixtof = reduce(eventdat, npixel, ntof)
+        ipixtof = reduce(eventdat, npixel, ntof, tofbinsize=tofbinsize)
         print 'finished to reduction, saving...'
         # generate output
-        import pickle
-        outpkl = self.inventory.outpkl
-        pickle.dump(ipixtof,  open(outpkl, 'wb'), pickle.HIGHEST_PROTOCOL)
+        import histogram.hdf as hh
+        import histogram as H
+        pixaxis = H.axis('pixel', range(npixel))
+        tofaxis = H.axis('tof', range(ntof))
+        h = H.histogram('I(pix,tof)', [pixaxis, tofaxis])
+        h.I = ipixtof
+        del ipixtof
+        hh.dump(h, outhist, '/', 'c')
         return
 
 
 
 
-def reduce(filename, npixel, ntof):
+def reduce(filename, npixel, ntof, tofbinsize=1):
     from mccomponents.detector import reduction_utils as ru
     evts = ru.readevents(filename)
 
@@ -48,7 +63,7 @@ def reduce(filename, npixel, ntof):
     hist = numpy.zeros((npixel, ntof), float)
 
     for pix, tof, n in evts:
-        hist[pix, tof] += n
+        hist[pix, tof/tofbinsize] += n
         continue
 
     return hist

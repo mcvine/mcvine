@@ -1,0 +1,45 @@
+#!/usr/bin/env python
+
+from pyre.applications.Script import Script
+
+
+class App(Script):
+
+
+    class Inventory(Script.Inventory):
+
+        import pyre.inventory
+        
+        filename = pyre.inventory.str('filename')
+
+        start = pyre.inventory.int('start', default=0)
+        n = pyre.inventory.int('n', default=1)
+        
+        pass
+
+    
+    def main(self, *args, **kwds):
+        from mcni.neutron_storage.Storage import Storage
+        
+        filename = self.inventory.filename
+        storage = Storage(filename)
+
+        start = self.inventory.start
+        storage.seek(start, 'start')
+
+        n = self.inventory.n
+        neutrons = storage.read(n)
+
+        for e in neutrons:
+            print e
+        return
+
+
+def main():
+    app = App('mcvine-neutron-storage-print-neutrons')
+    app.run()
+    return
+
+
+if __name__ == '__main__': main()
+
