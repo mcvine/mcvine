@@ -49,7 +49,7 @@ def get_histogram( monitor ):
     return h
 
 
-def getNormalization(monitor, N=100000):
+def getNormalization(monitor, N=1000000, epsilon=1e-7):
     # randomly shoot neutrons to monitor in 4pi solid angle
     
     core = monitor.core()
@@ -101,7 +101,7 @@ def getNormalization(monitor, N=100000):
     # for debug
     # import histogram.hdf as hh
     # hh.dump(h, 'tmp.h5', '/', 'c')
-    h.I[h.I==0] = 1
+    h.I[h.I<epsilon] = 1
     return h
 
 
