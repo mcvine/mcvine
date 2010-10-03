@@ -50,6 +50,6 @@ mcni::Neutron::EventBuffer::snapshot( size_t n )
 
 
 // version
-// $Id: neutron_buffer.h 598 2007-01-21 19:48:06Z linjiao $
+// $Id$
 
 // End of file

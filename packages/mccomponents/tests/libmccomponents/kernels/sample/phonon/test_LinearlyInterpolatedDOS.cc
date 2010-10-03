@@ -66,6 +66,6 @@ int main()
 
 
 // version
-// $Id: test_DW.cc 610 2007-05-12 00:58:57Z linjiao $
+// $Id$
 
 // End of file

@@ -58,7 +58,7 @@ EXPORT_BINS = $(PROJ_DLL)
 
 
 # version
-# $Id: Make.mm 54 2005-06-20 16:39:23Z linjiao $
+# $Id$
 
 #
 # End of file

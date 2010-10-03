@@ -80,6 +80,6 @@ namespace mcni{ namespace Neutron {
 #endif // MCNI_NEUTRON_EVENT_H
 
 // version
-// $Id: neutron_buffer.h 598 2007-01-21 19:48:06Z linjiao $
+// $Id$
 
 // End of file

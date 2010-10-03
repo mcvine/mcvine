@@ -119,6 +119,6 @@ DANSE::phonon::DWFromDOS<FloatType>::DW
 #endif // DANSE_PHONON_DWFROMDOS_H
 
 // version
-// $Id: DWFromDOS.icc 635 2007-08-02 20:12:47Z linjiao $
+// $Id$
 
 // End of file

@@ -41,7 +41,7 @@ namespace mcni {
 
 
 // version
-// $Id: Exceptions.h 41 2005-06-13 07:29:25Z linjiao $
+// $Id$
 
 // Generated automatically by CxxMill on Thu Apr  7 15:02:19 2005
 

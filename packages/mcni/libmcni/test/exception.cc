@@ -31,6 +31,6 @@
 
 
 // version
-// $Id: exception.cc 2 2005-06-08 18:28:09Z linjiao $
+// $Id$
 
 // End of file 

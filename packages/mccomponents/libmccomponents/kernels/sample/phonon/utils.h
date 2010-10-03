@@ -30,6 +30,6 @@ namespace mccomponents { namespace kernels { namespace phonon {
 
 
 // version
-// $Id: phonon.h 250 2005-09-21 22:12:36Z linjiao $
+// $Id$
 
 // End of file 

@@ -67,6 +67,6 @@ namespace DANSE{
 
 
 // version
-// $Id: PeriodicDispersion_3D.h 178 2005-07-19 13:01:58Z linjiao $
+// $Id$
 
 // End of file

@@ -91,6 +91,6 @@ class LauncherMPICH2(Launcher):
 
 
 # version
-__id__ = "$Id: LauncherMPICH2.py,v 1.1.1.1 2005/03/08 16:13:30 aivazis Exp $"
+__id__ = "$Id$"
 
 # End of file 

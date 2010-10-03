@@ -23,7 +23,7 @@
 
 
 // version
-// $Id: testvector3.cc 310 2005-11-27 04:11:41Z linjiao $
+// $Id$
 
 // End of file 
 

@@ -34,7 +34,7 @@ void mccomposite::geometry::Cylinder::identify( AbstractShapeVisitor & visitor )
 
 
 // version
-// $Id: Cylinder.cc 176 2005-07-19 12:50:03Z linjiao $
+// $Id$
 
 // Generated automatically by CxxMill on Sat Apr  9 19:21:43 2005
 

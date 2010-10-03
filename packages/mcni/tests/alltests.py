@@ -49,6 +49,6 @@ if __name__ == "__main__": main()
 
 
 # version
-__id__ = "$Id: alltests.py 947 2006-05-31 01:51:51Z jiao $"
+__id__ = "$Id$"
 
 # End of file 

@@ -31,6 +31,6 @@ class Document(base):
 
 
 # version
-__id__ = "$Id: Document.py,v 1.1.1.1 2005/03/08 16:13:43 linjiao Exp $"
+__id__ = "$Id$"
 
 # End of file 

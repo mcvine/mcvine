@@ -53,6 +53,6 @@ namespace wrap {
 }
 
 // version
-// $Id: wrap_vector3.h 658 2007-10-24 21:33:08Z linjiao $
+// $Id$
 
 // End of file 

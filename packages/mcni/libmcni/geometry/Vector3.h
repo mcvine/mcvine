@@ -120,7 +120,7 @@ std::ostream & operator<<(std::ostream & os, const mcni::Vector3 <T> &v);
 
 
 // version
-// $Id: vector3.h 100 2005-07-03 02:08:03Z linjiao $
+// $Id$
 
 // End of file
 

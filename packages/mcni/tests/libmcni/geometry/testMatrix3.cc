@@ -52,7 +52,7 @@ int main()
 }
 
 // version
-// $Id: testmatrix3.cc 12 2005-06-11 01:35:36Z linjiao $
+// $Id$
 
 // Generated automatically by CxxMill on Mon May 16 21:46:11 2005
 

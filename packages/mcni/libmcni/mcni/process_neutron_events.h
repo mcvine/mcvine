@@ -31,6 +31,6 @@ namespace mcni{
 
 
 // version
-// $Id: process_neutron_events.h 591 2006-09-25 07:17:26Z linjiao $
+// $Id$
 
 // End of file 

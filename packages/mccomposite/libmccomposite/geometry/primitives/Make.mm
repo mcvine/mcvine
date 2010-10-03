@@ -47,7 +47,7 @@ EXPORT_HEADERS = \
 
 
 # version
-# $Id: Make.mm 300 2005-11-23 10:37:18Z linjiao $
+# $Id$
 
 #
 # End of file

@@ -604,6 +604,6 @@ mccomposite::CompositeNeutronScatterer_Impl::scatter
 }
 
 // version
-// $Id: CompositeNeutronScatterer_Impl.cc 591 2006-09-25 07:17:26Z linjiao $
+// $Id$
 
 // End of file 

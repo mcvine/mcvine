@@ -44,7 +44,7 @@ namespace mccomposite{
 #endif //MCCOMPOSITE_GEOMETRY_PRIMITIVES_SPHERE_H
 
 // version
-// $Id: Sphere.h 505 2006-04-10 06:13:56Z jiao $
+// $Id$
 
 // End of file 
 

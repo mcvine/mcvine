@@ -53,6 +53,6 @@ testutils: testutils.cc
 
 
 # version
-# $Id: Make.mm 620 2007-07-11 23:24:50Z linjiao $
+# $Id$
 
 # End of file

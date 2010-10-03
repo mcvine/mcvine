@@ -36,7 +36,7 @@ namespace mcni{
 
 
 // version
-// $Id: matrix3.icc 2 2005-06-08 18:28:09Z linjiao $
+// $Id$
 
 // End of file
 

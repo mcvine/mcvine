@@ -38,6 +38,6 @@ export::
 
 
 # version
-# $Id: Make.mm 1436 2007-11-08 19:16:38Z linjiao $
+# $Id$
 
 # End of file

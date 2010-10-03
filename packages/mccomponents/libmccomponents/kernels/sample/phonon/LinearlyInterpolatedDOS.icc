@@ -134,6 +134,6 @@ DANSE::phonon::LinearlyInterpolatedDOS<FloatType, Array_1D>::value
 #endif // DANSE_PHONON_LINEARLYINTERPOLATEDDOS_H
 
 // version
-// $Id: DOS.icc 634 2007-08-02 12:49:16Z linjiao $
+// $Id$
 
 // End of file

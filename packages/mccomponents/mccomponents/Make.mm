@@ -51,6 +51,6 @@ export:: export-python-modules
 
 
 # version
-# $Id: Make.mm 1404 2007-08-29 15:43:42Z linjiao $
+# $Id$
 
 # End of file

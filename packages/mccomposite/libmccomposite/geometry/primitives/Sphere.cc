@@ -34,6 +34,6 @@ void mccomposite::geometry::Sphere::identify( AbstractShapeVisitor & visitor ) c
 
 
 // version
-// $Id: Sphere.cc 176 2005-07-19 12:50:03Z linjiao $
+// $Id$
 
 // End of file 

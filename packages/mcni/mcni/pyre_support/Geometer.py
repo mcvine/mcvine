@@ -184,6 +184,6 @@ def test():
 if __name__ == '__main__': test()
 
 # version
-__id__ = "$Id: Channel.py,v 1.1.1.1 2005/03/08 16:13:53 aivazis Exp $"
+__id__ = "$Id$"
 
 # End of file 

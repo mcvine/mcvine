@@ -31,6 +31,6 @@ void mccomposite::geometry::Box::identify( AbstractShapeVisitor & visitor ) cons
 }
 
 // version
-// $Id: Box.cc 225 2005-08-02 15:56:48Z linjiao $
+// $Id$
 
 // End of file 

@@ -79,6 +79,6 @@ namespace DANSE{ namespace phonon {
 #endif // DANSE_PHONON_ABSTRACTDOS_H
 
 // version
-// $Id: DOS.h 588 2006-09-25 05:31:54Z linjiao $
+// $Id$
 
 // End of file

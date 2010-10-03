@@ -55,6 +55,6 @@ def length( v ):
 
 
 # version
-__id__ = "$Id: mcstasRotations.py 1208 2007-01-12 17:11:01Z linjiao $"
+__id__ = "$Id$"
 
 # End of file 

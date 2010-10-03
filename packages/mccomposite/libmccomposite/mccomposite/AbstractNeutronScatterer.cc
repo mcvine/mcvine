@@ -85,6 +85,6 @@ mccomposite::AbstractNeutronScatterer::interactM_path1
 
 
 // version
-// $Id: AbstractNeutronScatterer.cc 591 2006-09-25 07:17:26Z linjiao $
+// $Id$
 
 // End of file 

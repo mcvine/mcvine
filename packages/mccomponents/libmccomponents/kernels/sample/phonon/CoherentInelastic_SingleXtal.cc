@@ -110,6 +110,7 @@ const
 	<< journal::endl;
 #endif
   // function omega(Q)-dE
+  
   Omega_q_minus_deltaE omq_m_dE(branch, v_f, v_i, v_i_l, m_disp);
 
 #ifdef DEBUG

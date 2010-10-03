@@ -55,6 +55,6 @@ namespace mcni{
 #endif // MCNI_GEOMETRY_MATRIX3_H
 
 // version
-// $Id: matrix3.h 2 2005-06-08 18:28:09Z linjiao $
+// $Id$
 
 // End of file

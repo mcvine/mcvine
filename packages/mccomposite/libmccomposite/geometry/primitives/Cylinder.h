@@ -41,7 +41,7 @@ namespace mccomposite{ namespace geometry {
 #endif //MCCOMPOSITE_GEOMETRY_PRIMITIVES_CYLINDER_H
 
 // version
-// $Id: Cylinder.h 505 2006-04-10 06:13:56Z jiao $
+// $Id$
 
 // End of file 
 

@@ -84,6 +84,6 @@ int main()
 
 
 // version
-// $Id: test_DW.cc 635 2007-08-02 20:12:47Z linjiao $
+// $Id$
 
 // End of file

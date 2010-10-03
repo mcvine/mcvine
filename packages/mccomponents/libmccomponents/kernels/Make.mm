@@ -50,7 +50,7 @@ EXPORT_HEADERS = \
 
 
 # version
-# $Id: Make.mm,v 1.1.1.1 2005/03/08 16:13:51 aivazis Exp $
+# $Id$
 
 #
 # End of file

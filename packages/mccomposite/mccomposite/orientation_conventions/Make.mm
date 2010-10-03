@@ -38,6 +38,6 @@ export:: export-package-python-modules
 
 
 # version
-# $Id: Make.mm 1212 2006-11-21 21:59:44Z linjiao $
+# $Id$
 
 # End of file

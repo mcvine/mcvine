@@ -69,6 +69,6 @@ namespace mcni{
 
 
 // version
-// $Id: coords_transform.h 7 2005-06-09 21:36:49Z linjiao $
+// $Id$
 
 // End of file

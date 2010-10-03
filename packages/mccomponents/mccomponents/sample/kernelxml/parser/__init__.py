@@ -26,6 +26,6 @@ from Document import Document as _Document
 
 
 # version
-__id__ = "$Id: __init__.py,v 1.1.1.1 2005/03/08 16:13:43 linjiao Exp $"
+__id__ = "$Id$"
 
 # End of file 

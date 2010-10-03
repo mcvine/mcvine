@@ -133,7 +133,7 @@ void wrap_neutron()
 
 
 // version
-// $Id: wrap_neutron_buffer.cc 598 2007-01-21 19:48:06Z linjiao $
+// $Id$
 
 // Generated automatically by CxxMill on Mon Apr 11 17:40:33 2005
 

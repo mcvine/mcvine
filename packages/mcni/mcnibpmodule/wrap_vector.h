@@ -90,6 +90,6 @@ namespace wrap {
 
 
 // version
-// $Id: wrap_vector.h 680 2007-11-21 16:22:12Z linjiao $
+// $Id$
 
 // End of file 

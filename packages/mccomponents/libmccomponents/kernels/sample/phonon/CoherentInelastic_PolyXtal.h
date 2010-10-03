@@ -112,6 +112,6 @@ namespace mccomponents{
 
 
 // version
-// $Id: Phonon_CoherentInelastic_Poly.h 327 2005-11-27 05:40:42Z linjiao $
+// $Id$
 
 // End of file 

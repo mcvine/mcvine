@@ -31,6 +31,6 @@ EXPORT_ETC = \
 export:: export-etc
 
 # version
-# $Id: Make.mm 818 2006-03-01 06:06:22Z linjiao $
+# $Id$
 
 # End of file

@@ -72,6 +72,6 @@ class Renderer(base):
 
 
 # version
-__id__ = "$Id: Renderer.py,v 1.1.1.1 2005/03/08 16:13:43 aivazis Exp $"
+__id__ = "$Id$"
 
 # End of file 

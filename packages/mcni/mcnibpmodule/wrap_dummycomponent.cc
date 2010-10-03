@@ -28,6 +28,6 @@ void wrap_dummycomponent()
 
 
 // version
-// $Id: wrap_neutron_buffer.cc 598 2007-01-21 19:48:06Z linjiao $
+// $Id$
 
 // End of file 

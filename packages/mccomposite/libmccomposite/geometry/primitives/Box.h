@@ -44,6 +44,6 @@ namespace mccomposite{
 #endif //MCCOMPOSITE_GEOMETRY_PRIMITIVES_BOX_H
 
 // version
-// $Id: Box.h 7 2005-06-09 21:36:49Z linjiao $
+// $Id$
 
 // End of file 

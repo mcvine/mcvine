@@ -26,6 +26,6 @@ BOOST_PYTHON_MODULE(neutron_printer3bp)
 
 
 // version
-// $Id: module.cc 658 2007-10-24 21:33:08Z linjiao $
+// $Id$
 
 // End of file 

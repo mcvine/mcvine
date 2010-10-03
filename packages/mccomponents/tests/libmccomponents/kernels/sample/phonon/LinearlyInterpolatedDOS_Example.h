@@ -43,6 +43,6 @@ namespace test{
 }
 
 // version
-// $Id: test_DW.cc 430 2006-03-30 17:16:55Z linjiao $
+// $Id$
 
 // End of file

@@ -61,6 +61,6 @@ namespace DANSE{ namespace phonon {
 #endif // DANSE_PHONON_DWFROMDOS_H
 
 // version
-// $Id: DWFromDOS.h 635 2007-08-02 20:12:47Z linjiao $
+// $Id$
 
 // End of file

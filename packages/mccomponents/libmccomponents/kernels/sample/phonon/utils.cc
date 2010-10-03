@@ -40,6 +40,6 @@ double mccomponents::kernels::phonon::phonon_bose_factor(double omega, double T)
 }
 
 // version
-// $Id: phonon.cc 250 2005-09-21 22:12:36Z linjiao $
+// $Id$
 
 // End of file 

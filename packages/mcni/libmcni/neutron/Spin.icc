@@ -35,6 +35,6 @@ void mcni::Neutron::Spin::print( std::ostream &os ) const
 
 
 // version
-// $Id: neutron_buffer.h 598 2007-01-21 19:48:06Z linjiao $
+// $Id$
 
 // End of file

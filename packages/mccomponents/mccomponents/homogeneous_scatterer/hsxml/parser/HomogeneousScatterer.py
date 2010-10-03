@@ -70,6 +70,6 @@ class HomogeneousScatterer(base):
 
 
 # version
-__id__ = "$Id: HomogeneousScatterer.py,v 1.1.1.1 2005/03/08 16:13:43 linjiao Exp $"
+__id__ = "$Id$"
 
 # End of file 

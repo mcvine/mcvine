@@ -55,7 +55,7 @@ docs: export-doxygen-docs
 
 
 # version
-# $Id: Make.mm 1105 2006-08-15 06:02:02Z linjiao $
+# $Id$
 
 # End of file
 

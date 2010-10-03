@@ -70,7 +70,7 @@ namespace wrap_models{
 
 
 // version
-// $Id: mccompositebpmodule.cc 658 2007-10-24 21:33:08Z linjiao $
+// $Id$
 
 // End of file 
 

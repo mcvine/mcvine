@@ -41,6 +41,6 @@ class TestCase(TCBase):
     pass # end of TestCaae
 
 # version
-__id__ = "$Id: unittestX.py 742 2006-01-16 08:32:56Z linjiao $"
+__id__ = "$Id$"
 
 # End of file 

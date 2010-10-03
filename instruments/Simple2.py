@@ -71,6 +71,6 @@ if __name__ == '__main__' : main()
         
 
 # version
-__id__ = "$Id: Simple2.py 578 2006-08-06 19:42:55Z linjiao $"
+__id__ = "$Id$"
 
 #  End of file 
