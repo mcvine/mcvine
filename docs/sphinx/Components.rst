@@ -56,7 +56,7 @@ is given by
    Err^2(I) = \Delta^2_{intrinsic} \times I^2  + \sum{p_i^2}
 
 and the instrinsic error induced by using the neutron
-storage is computed from the data of the simulation
+storage could be approximated from the data of the simulation
 that generated the neutron storage:
 
 .. math::
@@ -68,7 +68,8 @@ the neutron storage.
 You can see that the errobar of a simulation involves a neutron
 source that replays neutrons in a neutron storage is limited by
 the error bar of the simulation that leads to the neutron storage.
-So you need to make sure to have a reasonably good statistics 
+So the rule of thumb of using neutron storage is that
+it is necessary to make sure to have a reasonably good statistics 
 for the simulation of the neutron storage before using it for
 other simulations.
 

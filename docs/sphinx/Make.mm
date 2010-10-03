@@ -47,6 +47,6 @@ include sphinx/default.def
 
 
 # version
-# $Id: Make.mm,v 1.2 2008-04-13 03:55:58 aivazis Exp $
+# $Id$
 
 # End of file
