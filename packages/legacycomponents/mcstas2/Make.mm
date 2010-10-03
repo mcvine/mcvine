@@ -35,5 +35,5 @@ export::
 	BLD_ACTION="export" $(MM) recurse
 
 # version
-# $Id: Make.mm 410 2006-04-17 06:11:45Z jiao $
+# $Id$
 

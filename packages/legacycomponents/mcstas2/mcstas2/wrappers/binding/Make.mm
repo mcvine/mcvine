@@ -33,4 +33,4 @@ EXPORT_PYTHON_MODULES = \
 export:: export-package-python-modules
 
 # version
-# $Id: Make.mm 115 2004-09-22 22:29:06Z linjiao $
+# $Id$

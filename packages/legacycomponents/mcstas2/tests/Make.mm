@@ -46,6 +46,6 @@ test::
 	BLD_ACTION="test" $(MM) recurse
 
 # version
-# $Id: Make.mm 475 2006-04-07 08:07:06Z jiao $
+# $Id$
 
 # End of file

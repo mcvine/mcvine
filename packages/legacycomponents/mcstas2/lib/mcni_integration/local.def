@@ -27,6 +27,6 @@ ifeq (Win32, ${findstring Win32, $(PLATFORM_ID)})
 endif
 
 # version
-# $Id: local.def 334 2005-07-25 15:58:49Z linjiao $
+# $Id$
 
 # End of file

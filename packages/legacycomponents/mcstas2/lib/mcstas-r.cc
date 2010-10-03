@@ -18,7 +18,7 @@
 *
 * Usage: Automatically embbeded in the c code whenever required.
 *
-* $Id: mcstas-r.c,v 1.194 2009-04-02 09:47:46 pkwi Exp $
+* $Id$
 *
 * $Log: mcstas-r.c,v $
 * Revision 1.194  2009-04-02 09:47:46  pkwi

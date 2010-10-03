@@ -20,7 +20,7 @@
 * Usage: within SHARE
 * %include "monitor_nd-lib"
 *
-* $Id: monitor_nd-lib.h,v 1.17 2008-04-01 09:15:04 farhi Exp $
+* $Id$
 *
 * $Log: monitor_nd-lib.h,v $
 * Revision 1.17  2008-04-01 09:15:04  farhi

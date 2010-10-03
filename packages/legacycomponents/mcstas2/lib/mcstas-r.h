@@ -29,7 +29,7 @@
 *
 * Usage: Automatically embbeded in the c code.
 *
-* $Id: mcstas-r.h,v 1.101 2009-04-02 09:47:46 pkwi Exp $
+* $Id$
 *
 *       $Log: mcstas-r.h,v $
 *       Revision 1.101  2009-04-02 09:47:46  pkwi

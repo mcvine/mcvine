@@ -30,7 +30,7 @@
 *
 * Usage: Automatically embbeded in the c code.
 *
-* $Id: Channeled_guide_py.c 494 2007-07-26 19:21:01Z linjiao $
+* $Id$
 *
 *	$Log$
 *	Revision 1.3  2004/08/26 17:26:52  linjiao
@@ -569,7 +569,7 @@ void mcsiminfo_close(void);
 *
 * Usage: Automatically embbeded in the c code whenever required.
 *
-* $Id: Channeled_guide_py.c 494 2007-07-26 19:21:01Z linjiao $
+* $Id$
 *
 * $Log$
 * Revision 1.3  2004/08/26 17:26:52  linjiao

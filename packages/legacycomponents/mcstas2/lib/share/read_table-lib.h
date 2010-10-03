@@ -23,7 +23,7 @@
 * %include "read_table-lib"
 *
 *
-* $Id: read_table-lib.h,v 1.21 2006/11/27 15:29:39 farhi Exp $
+* $Id$
 *
 * $Log: read_table-lib.h,v $
 * Revision 1.21  2006/11/27 15:29:39  farhi

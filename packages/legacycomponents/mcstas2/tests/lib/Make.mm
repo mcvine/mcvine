@@ -56,6 +56,6 @@ test_random_numbers: test_random_numbers.cc
 
 
 # version
-# $Id: Make.mm 114 2005-07-03 04:06:18Z linjiao $
+# $Id$
 
 # End of file

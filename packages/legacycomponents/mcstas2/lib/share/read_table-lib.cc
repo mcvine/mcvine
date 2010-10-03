@@ -21,7 +21,7 @@
 * Usage: within SHARE
 * %include "read_table-lib"
 *
-* $Id: read_table-lib.c,v 1.37 2006/12/01 16:17:10 farhi Exp $
+* $Id$
 *
 * $Log: read_table-lib.c,v $
 * Revision 1.37  2006/12/01 16:17:10  farhi

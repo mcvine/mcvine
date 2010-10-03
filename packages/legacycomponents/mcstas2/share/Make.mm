@@ -41,6 +41,6 @@ export-package-data:: $(EXPORT_DATADIRS)
 
 
 # version
-# $Id: Make.mm 788 2006-02-22 05:33:34Z linjiao $
+# $Id$
 
 # End of file

@@ -21,7 +21,7 @@
 * Usage: within SHARE
 * %include "monitor_nd-lib"
 *
-* $Id: monitor_nd-lib.c,v 1.41 2008-07-01 20:28:13 farhi Exp $
+* $Id$
 *
 * $Log: monitor_nd-lib.c,v $
 * Revision 1.41  2008-07-01 20:28:13  farhi
