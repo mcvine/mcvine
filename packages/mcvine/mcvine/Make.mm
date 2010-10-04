@@ -23,6 +23,8 @@ RECURSE_DIRS = $(BUILD_DIRS)
 
 PACKAGE = mcvine
 
+PROJ_TIDY += svn-commit*.tmp
+
 #--------------------------------------------------------------------------
 #
 
