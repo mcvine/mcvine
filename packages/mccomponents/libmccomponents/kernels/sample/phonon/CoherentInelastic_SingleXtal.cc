@@ -17,6 +17,10 @@
 #include <portinfo>
 #include "journal/warning.h"
 
+#ifdef DEEPDEBUG
+#define DEBUG
+#endif
+
 #ifdef DEBUG
 #include "journal/debug.h"
 #endif

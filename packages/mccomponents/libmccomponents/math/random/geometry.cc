@@ -19,9 +19,14 @@
 #include "mcstas_compact/randvec.h"
 
 
+#ifdef DEEPDEBUG
+#define DEBUG
+#endif
+
 #ifdef DEBUG
 #include "journal/debug.h"
 #endif
+
 
 double 
 mccomponents::math::choose_direction
