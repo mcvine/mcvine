@@ -39,7 +39,8 @@ namespace wrap_mccomponents {
 	w_t::float_t,
 	w_t::float_t, w_t::float_t, 
 	w_t::float_t,
-	size_t> ()
+	size_t
+	> ()
 	[with_custodian_and_ward<1,2,
 	 with_custodian_and_ward<1,3,
 	 with_custodian_and_ward<1,5 > > > () ]

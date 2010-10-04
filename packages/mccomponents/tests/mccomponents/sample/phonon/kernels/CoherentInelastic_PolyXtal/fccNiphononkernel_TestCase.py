@@ -52,6 +52,7 @@ class TestCase(unittest.TestCase):
         kernel = makeKernel()
         
         import mcni
+        # N = 500000 # needs about 20 minutes on a Intel Core2 Duo 2.53GHz virtual machine, ubuntu 10.04LTS on a 2.53GHz Intel Core 2 Duo Macbook
         N = 10000
         neutrons = mcni.neutron_buffer( N )
         for i in range(N):
@@ -97,7 +98,7 @@ def makeUnitcell():
     from crystal.UnitCell import create_unitcell
     from crystal.Atom import atom
     atoms = [atom('Ni')]
-    positions = [(0,0,0)]
+    positions = [(0.,0.,0.)]
     cellvectors = [ (3.57,0,0), (0,3.57,0), (0,0,3.57) ]
     return create_unitcell(cellvectors, atoms, positions)
 

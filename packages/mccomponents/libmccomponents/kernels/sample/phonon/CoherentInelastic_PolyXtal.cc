@@ -165,6 +165,8 @@ Details::pick_a_valid_Q_vector
     v_Q_l = conversion::k2v*Q.length();
     // == phonon energy  ==
     omega = kernel.m_disp.energy( branch, Q );
+    // if phonon energy too small, it is too close to singularity
+    if (omega<kernel.m_min_omega) continue;
     // == gain energy or lose energy ==
     E_f = pick_Ef( E_i, omega);
 
@@ -315,6 +317,7 @@ CoherentInelastic_PolyXtal
   float_t Ei, float_t max_omega, 
   float_t max_Q,
   size_t nMCsteps_to_calc_RARV,
+  float_t min_omega,
   float_t epsilon) 
 
   : m_disp( disp ),
@@ -324,6 +327,7 @@ CoherentInelastic_PolyXtal
     m_uc_vol( unitcell_vol ),
     m_Ei(Ei),
     m_nMCsteps_to_calc_RARV(nMCsteps_to_calc_RARV),
+    m_min_omega(min_omega),
     m_epsilon( epsilon ),
     m_details( new Details(*this) )
 {

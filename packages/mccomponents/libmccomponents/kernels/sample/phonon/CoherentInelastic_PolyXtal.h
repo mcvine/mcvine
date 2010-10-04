@@ -72,6 +72,7 @@ namespace mccomponents{
 	  float_t Ei, float_t max_omega, 
 	  float_t max_Q,
 	  size_t nMCsteps_to_calc_RARV,
+	  float_t min_omega = 0.01,
 	  float_t epsilon = 1.e-10 ) ;
 	
 	virtual float_t absorption_coefficient( const neutron_t & ev );
@@ -88,7 +89,7 @@ namespace mccomponents{
 	float_t m_Temperature;
 	float_t m_uc_vol;
 	
-	float_t m_Ei, m_max_omega;
+	float_t m_Ei, m_max_omega, m_min_omega;
 	std::vector <float_t> m_relAccessibleReciVol_arr;
 	float_t m_Qcutoff;
 
