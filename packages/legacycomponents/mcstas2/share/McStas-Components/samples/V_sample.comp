@@ -48,7 +48,7 @@
 * target_y: position of target to focus at [m]
 * target_z:
 *
-* Optional parameters
+* Optional parameters:
 * xwidth:   horiz. dimension of sample, as a width [m]
 * yheight:  vert.  dimension of sample, as a height [m]
 * zthick:   thickness of sample [m]

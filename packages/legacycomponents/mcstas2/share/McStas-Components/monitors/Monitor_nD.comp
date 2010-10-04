@@ -181,10 +181,10 @@
 *                Use 'min' or 'limits' keyword in 'options' for other limits
 * max:    [u]    Maximum range value to force for all variables
 *                Use 'max' or 'limits' keyword in 'options' for other limits
-* user1 [variable] Variable assigned to User1
-* user2 [variable] Variable assigned to User2
-* username1  [str] Name assigned to User1
-* username2  [str] Name assigned to User2
+* user1: [variable] Variable assigned to User1
+* user2: [variable] Variable assigned to User2
+* username1:  [str] Name assigned to User1
+* username2:  [str] Name assigned to User2
 *
 * OUTPUT PARAMETERS:
 *
