@@ -126,7 +126,6 @@ mccomponents::kernels::SimplePowderDiffractionKernel::absorption_coefficient(con
 {
   const mcni::Neutron::State &state = ev.state;
   double v_l = state.velocity.length();
-
   return m_details->absorption_coeff*2200/v_l;  //inversely proportional to velocity
 }
 
@@ -147,7 +146,7 @@ mccomponents::kernels::SimplePowderDiffractionKernel::scattering_coefficient(con
     {
       if (v_l >= m_details->q_v[i]/2)
 	{
-	  //find out the one which can be diffracted
+	  //find out the one to be diffracted
 	  total_scattering_cross_v += m_details->my_s_v2[i];
 	  cout << "to velocity: " << m_details->q_v[i] << endl;
 	}
@@ -199,7 +198,7 @@ mccomponents::kernels::SimplePowderDiffractionKernel::scatter
   if (Npeaks > 0) {
     if (Npeaks > 1) 
       {
-	peakindex=floor(math::random(0,Npeaks));  /* select a peak */
+	peakindex=floor(math::random(0,Npeaks));  /* select a diffraction order */
       }
     else peakindex = 0;
     if (w_v[peakindex])
