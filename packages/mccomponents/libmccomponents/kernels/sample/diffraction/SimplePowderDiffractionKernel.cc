@@ -79,8 +79,8 @@ mccomponents::kernels::SimplePowderDiffractionKernel::Details::Details
 	*(peaks[i].DebyeWaller_factor ? peaks[i].DebyeWaller_factor : 1)
 	/(unitcell_volume*unitcell_volume*v2k*v2k)
 	*(peaks[i].multiplicity * peaks[i].F_squared / peaks[i].q)
-	*XsectionFactor;
-      /* Is not yet divided by v^2 */
+	*XsectionFactor;      /* Is not yet divided by v^2 */
+
       /* Squires [3.103] */
       q_v[i] = peaks[i].q*k2v;
       /*to be updated for size broadening*/
@@ -98,6 +98,7 @@ mccomponents::kernels::SimplePowderDiffractionKernel::Details::Details
   absorption_coeff = absorption_cross_section/unitcell_volume * 100; // converted to 1/meter
   
   incoherent_cross_section = data.incoherent_cross_section;
+  
   /*
   // Is not yet divided by v 
   double my_a_v = pack*sigma_a/unitcell_volume*2200*100;   // Factor 100 to convert from barns to fm^2
