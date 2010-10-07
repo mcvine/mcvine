@@ -12,8 +12,9 @@ ToDo list for VULCAN
 - [DONE] Implement L_monitor component
 - [DONE] Fix installation of HDF5FS (needed to use with_doxygen_... config)
 - [MOSTLY DONE] Implement script for generation of instrument for dom: toInstrString()
-- Display VULCAN components in the drop down menu
-- Create VULCAN instrument in VNF
+- [DONE] Display VULCAN components in the drop down menu
+- [DONE] Create VULCAN instrument in VNF
+- Fix non-functional monitors in VNF
 - Create VULCAN instrument in McVine script and run experiment
 - Integrate Sample Kernel to McVine script
 - Implement script for generation of instrument in .pml file: toInstrPML()
