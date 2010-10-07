@@ -39,6 +39,7 @@ EXPORT_PYTHON_MODULES = \
 	PeriodicDispersion.py \
 	AbstractPhononKernel.py \
 	CoherentInelastic_PolyXtal_Kernel.py \
+	CoherentInelastic_SingleXtal_Kernel.py \
 	ComputationEngineRendererExtension.py \
 	DWFromDOS.py \
 	DispersionOnGrid.py \

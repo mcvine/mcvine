@@ -16,15 +16,16 @@
 
 <inventory>
 
-  <component name="test-phonon_coherentinelastic_polyxtal_kernel">
+  <component name="test-phonon_coherentinelastic_singlextal_kernel">
 
     <facility name="source">sources/MonochromaticSource</facility>
     <facility name="sample">samples/SampleAssemblyFromXml</facility>
     <facility name="detector">monitors/IQE_monitor</facility>
 
     <property name="overwrite-datafiles">yes</property>
-    <property name="ncount">1e4</property>
-    <property name="buffer_size">10000</property>
+    <property name="ncount">1000</property>
+    <property name="buffer_size">1000</property>
+    <property name="output-dir">out-phonon_coherentinelastic_singlextal_kernel</property>
 
     <component name="source">
       <property name="position">[0.0, 0.0, 0.0]</property>
@@ -35,7 +36,7 @@
     </component>
 
     <component name="sample">
-      <property name="xml">sampleassemblies/coh-inel-polyxtal/sampleassembly.xml</property>
+      <property name="xml">sampleassemblies/coh-inel-singlextal/sampleassembly.xml</property>
     </component>
 
     <component name="detector">
@@ -62,12 +63,23 @@
       <property name="detector">((0, 0, 10), (0, 0, 0))</property>
     </component>
 
+
+    <component name="journal">
+      <component name="debug">
+	<!--
+	<property name="CoherentInelastic_SingleXtal">on</property>
+	<property name="Omega_minus_deltaE ctor">on</property>
+	<property name="Omega_minus_deltaE">on</property>
+	-->
+      </component>
+    </component>
+
   </component>
 
 </inventory>
 
 
 <!-- version-->
-<!-- $Id$-->
+<!-- $Id: test-phonon_coherentinelastic_polyxtal_kernel.pml 611 2010-10-07 08:33:06Z linjiao $-->
 
 <!-- End of file -->

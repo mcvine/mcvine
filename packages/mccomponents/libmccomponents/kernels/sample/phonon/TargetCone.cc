@@ -34,7 +34,7 @@ namespace mccomponents { namespace kernels {
   double choose_scattering_direction
   (TargetCone::R_t & dir, const TargetCone & target_props)
   {
-    if ( target_props.radius < 0 ) {
+    if ( target_props.radius <= 0 ) {
       math::choose_direction( dir );
       return 4*mcni::PI;
     } else {

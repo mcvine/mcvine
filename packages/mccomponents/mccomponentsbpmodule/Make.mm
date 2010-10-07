@@ -50,6 +50,9 @@ PROJ_SRCS = \
 	wrap_ChangeCoordinateSystem_forDispersion_3D.cc \
 	wrap_LinearlyInterpolatedDispersionOnGrid_3D.cc \
 	wrap_Phonon_CoherentInelastic_PolyXtal_kernel.cc \
+	wrap_rootsfinders.cc \
+	wrap_targetregion.cc \
+	wrap_Phonon_CoherentInelastic_SingleXtal_kernel.cc \
 	wrap_RandomNumberGenerator.cc \
 	wrap_SimplePowderDiffractionKernel.cc \
 

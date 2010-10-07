@@ -21,6 +21,7 @@ class Document(base):
 
     tags = [
         'Phonon_CoherentInelastic_PolyXtal_Kernel',
+        'Phonon_CoherentInelastic_SingleXtal_Kernel',
         'LinearlyInterpolatedDispersion',
         ]
 

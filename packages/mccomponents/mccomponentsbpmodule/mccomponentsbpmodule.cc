@@ -46,6 +46,9 @@ namespace wrap_mccomponents{
   void wrap_LinearlyInterpolatedDispersionOnGrid_3D();
   void wrap_AtomicScatterer();
   void wrap_Phonon_CoherentInelastic_PolyXtal_kernel();
+  void wrap_rootsfinders();
+  void wrap_targetregion();
+  void wrap_Phonon_CoherentInelastic_SingleXtal_kernel();
   void wrap_RandomNumberGenerator();
   void wrap_SimplePowderDiffractionKernel();
 }
@@ -90,6 +93,11 @@ BOOST_PYTHON_MODULE(mccomponentsbp)
   
   wrap_AtomicScatterer();
   wrap_Phonon_CoherentInelastic_PolyXtal_kernel();
+
+  wrap_rootsfinders();
+  wrap_targetregion();
+  wrap_Phonon_CoherentInelastic_SingleXtal_kernel();
+
   wrap_RandomNumberGenerator();
 
   wrap_SimplePowderDiffractionKernel();

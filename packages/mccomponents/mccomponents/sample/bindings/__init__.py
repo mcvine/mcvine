@@ -18,8 +18,9 @@ def _import():
     try:
         import BoostPythonBinding
     except:
-        import warnings
+        import warnings, journal, traceback
         warnings.warn('binding not imported')
+        journal.debug('BoostPythonBinding').log(traceback.format_exc())
     return
 
 _import()

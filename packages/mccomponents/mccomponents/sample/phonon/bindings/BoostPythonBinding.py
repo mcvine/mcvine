@@ -218,6 +218,38 @@ class New:
             temperature, Ei, max_omega, max_Q,
             nMCsteps_to_calc_RARV)
 
+
+    def phonon_coherentinelastic_singlextal_kernel(
+        self,
+        dispersion, dw_calctor,
+        unitcell, 
+        temperature,
+        ):
+
+        unitcell_vol = unitcell.getVolume()
+        unitcell_vol = float(unitcell_vol)
+
+        temperature = float(temperature)
+        
+        atoms = [ self.atomicscatterer_fromSite( site ) for site in unitcell ]
+        atom_vector = b.vector_AtomicScatterer(0)
+        for atom in atoms: atom_vector.append( atom )
+        
+        deltaV_Jacobi = 0.001
+        zridd = b.ZRidd(1.e-7)
+        rootsfinder = b.FindRootsEvenly(zridd, 10000)
+        targetregion = b.TargetCone(self.vector3(0,0,0),0)
+        epsilon = 1.e-10
+
+        return b.Phonon_CoherentInelastic_SingleXtal_kernel(
+            dispersion, atom_vector, unitcell_vol, dw_calctor,
+            temperature,
+            deltaV_Jacobi, 
+            rootsfinder, targetregion,
+            epsilon
+            )
+
+
     pass # end of BoostPythonBinding
 
 

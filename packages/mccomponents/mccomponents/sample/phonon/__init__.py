@@ -25,6 +25,13 @@ def coherentinelastic_polyxtal_kernel(
     return f( dispersion, Ei, max_omega, max_Q, nMCsteps_to_calc_RARV )
 
 
+def coherentinelastic_singlextal_kernel(
+    dispersion
+    ):
+    from CoherentInelastic_SingleXtal_Kernel import CoherentInelastic_SingleXtal_Kernel as f
+    return f( dispersion )
+
+
 def linearlyinterpolateddispersion(
     nAtoms, dimension,
     Qaxes, eps_npyarr, E_npyarr,

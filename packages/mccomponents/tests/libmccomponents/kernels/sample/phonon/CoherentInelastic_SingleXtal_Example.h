@@ -21,8 +21,6 @@ namespace test {
     w_t::float_t unitcell_vol;
     w_t::float_t deltaV_Jacobi;
     
-    size_t nMCsteps_to_calc_RARV;
-  
     w_t::atoms_t create_atoms()
     {
       w_t::atoms_t atoms;
@@ -43,7 +41,6 @@ namespace test {
       Ei( 70 ), max_omega( 60 ), max_Q (13), temperature( 300 ),
       unitcell_vol( 10 ),
       deltaV_Jacobi(0.001),
-      nMCsteps_to_calc_RARV( 10000 ),
       dispersion_example(),
       atoms( create_atoms() ),
       DW_calculator_example(  ),
