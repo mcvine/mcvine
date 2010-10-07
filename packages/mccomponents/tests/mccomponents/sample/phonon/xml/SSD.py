@@ -1,49 +1,19 @@
 #!/usr/bin/env python
-#
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#
-#                                   Jiao Lin
-#                      California Institute of Technology
-#                        (C) 2007 All Rights Reserved  
-#
-# {LicenseText}
-#
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#
+import warnings
+warnings.simplefilter('ignore')
+import mcvine
+warnings.simplefilter('default')
+
+from mcvine.applications.InstrumentBuilder import build
+components = ['source', 'sample', 'detector']
+App = build(components)
 
 
-# An instrument base class.
+def main():
+    app = App('SSD')
+    app.run()
+    return
 
-from mcni.pyre_support.Instrument import Instrument as base
-class Instrument(base):
+if __name__ == '__main__': main()
 
-    class Inventory( base.Inventory ):
-
-        from mcni.pyre_support import facility, componentfactory as component
-        import mccomponents.pyre_support
-        
-        source = facility(
-            'source',
-            default = component('sources', 'MonochromaticSource')('source') )
-        sample = facility(
-            'sample',
-            default = component( 'samples', 'SampleAssemblyFromXml')('sample') )
-        detector = facility(
-            'detector',
-            default = component( 'detectors', 'DetectorSystemFromXml')('detector') )
-        
-        pass # end of Inventory
-
-
-    def _defaults(self):
-        base._defaults(self)
-        self.inventory.sequence = ['source', 'sample', 'detector']
-        return
-    
-    pass # end of Instrument
-
-
-# version
-__id__ = "$Id$"
-
-# End of file 
+# $Id$
