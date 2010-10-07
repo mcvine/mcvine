@@ -19,7 +19,7 @@ mcvine-simulate \
     \
     --source.energy=60 \
     \
-    --sample.xml=sampleassembly/Ni-sqekernel-isotropicsqe-sampleassembly.xml \
+    --sample.xml=sampleassemblies/Ni-isotropicsqekernel/sampleassembly.xml \
     \
     --monitor.Ei=60 \
     --monitor.Qmin=0. \

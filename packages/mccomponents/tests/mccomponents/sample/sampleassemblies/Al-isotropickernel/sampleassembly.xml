@@ -4,7 +4,7 @@
 
 <SampleAssembly name="Al">
   
-  <PowderSample name="Al-isotropic-kernel-plate" type="sample">
+  <PowderSample name="Al-plate" type="sample">
     <Shape>
       <block width="6*cm" height="10*cm" thickness="1*cm" />
     </Shape>
@@ -15,7 +15,7 @@
   </PowderSample>
   
   <LocalGeometer registry-coordinate-system="InstrumentScientist">
-    <Register name="Al-isotropic-kernel-plate" position="(0,0,0)" orientation="(0,0,0)"/>
+    <Register name="Al-plate" position="(0,0,0)" orientation="(0,0,0)"/>
   </LocalGeometer>
 <!--
   <environment>

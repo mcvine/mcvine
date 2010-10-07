@@ -33,7 +33,7 @@ class TestCase(unittest.TestCase):
         from mcni.components.MonochromaticSource import MonochromaticSource
         component1 = MonochromaticSource('source', neutron)
         from mccomponents.sample import samplecomponent
-        component2 = samplecomponent( 'Al', 'sampleassembly/Al-isotropickernel.xml' )
+        component2 = samplecomponent( 'Al', 'sampleassemblies/Al-isotropickernel/sampleassembly.xml' )
         instrument = mcni.instrument( [component1, component2] )
         
         geometer = mcni.geometer()

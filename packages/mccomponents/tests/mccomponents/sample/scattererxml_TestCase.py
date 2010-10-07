@@ -20,7 +20,7 @@ debug = journal.debug( "scattererxml_TestCase" )
 warning = journal.warning( "scattererxml_TestCase" )
 
 
-scattererxml = 'Ni-scatterer.xml'
+scattererxml = 'scatterers/fccNi/Ni-scatterer-SQEkernel.xml'
 
 
 class scattererxml_TestCase(unittest.TestCase):
