@@ -17,7 +17,7 @@ Sets name relations between McStas component and VNF neutron component
 Example: "SNS_source4" -> "./vnfb/vnfb/dom/neutron_experiment_simulations/neutron_components/SNSModerator"
 
 Notes:
-    - Names that coincide are not included in this dictionary
+    - Dom names that match McStas names are not included in this dictionary
 """
 
 IMPORT_DICT     = {
@@ -30,10 +30,6 @@ IMPORT_DICT     = {
     "V_sample":             "VanadiumPlate",
     "PSD_TEW_monitor":      "PSD_TEWMonitor"        # not exist
 }
-# Slit          # not exist
-# Guide         # not exist
-# DiskChopper   # not exist
-# Monitor
 
 __date__ = "$Oct 1, 2010 6:23:27 PM$"
 

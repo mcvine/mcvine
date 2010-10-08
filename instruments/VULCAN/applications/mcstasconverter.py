@@ -69,6 +69,8 @@ Questions:
 """
 
 # XXX: Fix options issue (see fixtures.textOptions)
+# XXX: Include toBuilderString() method to autogenerate methods for components
+#       See: ./vnfb/vnfb/components/job_builders/neutronexperiment/InstrumentSimulationAppBuilder.py 
 
 # Imports
 import re
@@ -251,6 +253,51 @@ class McStasConverter:
         str     += self._instrCreate()
         return str
 
+
+    def toBuilderString(self):
+        pass
+
+        """
+        # Generate something like this for each component
+        # See: ./vnfb/vnfb/components/job_builders/neutronexperiment/InstrumentSimulationAppBuilder.py 
+        # Note: This class is not complete! Generates methods for convenience purposes!
+        # Questions
+
+
+        from _ import JobBuilder as base
+        class Builder(base):
+        
+            def onLMonitor(self, m):
+                kwds = {
+                    'name': m.componentname,
+                    'category': 'monitors',
+                    'type': 'L_monitor',
+                    'supplier': 'mcstas2',
+                    }
+                self.onNeutronComponent( **kwds )
+
+                opts = {
+                    }
+
+                parameters = {
+                    'filename': outputfilename(m),
+                    'xmin': m.x_min,
+                    'xmax': m.x_max,
+                    'ymin': m.y_min,
+                    'ymax': m.y_max,
+                    'xwidth': m.x_width,
+                    'yheight': m.y_height,
+                    'Lmin': m.Lmin,
+                    'Lmax': m.Lmax,
+                    'nchan': m.nchan,
+                    }
+                for k,v in parameters.iteritems():
+                    opts['%s.%s' % (m.componentname, k)] = v
+                    continue
+
+                self.cmdline_opts.update( opts )
+
+        """
 
     def comptypes(self):
         "Returns list of component types"
