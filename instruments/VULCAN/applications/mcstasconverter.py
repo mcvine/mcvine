@@ -80,9 +80,6 @@ from time import localtime, strftime
 from mcstas2.utils.parsers.McStasComponentParser import McStasComponentParser
 from compmodules import IMPORT_DICT, PARAMS_DICT
 
-# McStas components base directory
-COMPBASE        = "../../../packages/legacycomponents/mcstas2/share/McStas-Components"
-
 # Regular expressions
 COMMENT         = '(/\*.*?\*/)'         # Non-greedy comment (.*?)
 SPACES          = '[ \t]*'              # Spaces and tabs
@@ -105,7 +102,13 @@ FILE            = ["--filename", "-f"]
 CONFIG          = ["--config", "-c"]
 ARGS            = FILE + CONFIG
 
+# McStas components base directory
+COMP_BASE       = "../../../packages/legacycomponents/mcstas2/share/McStas-Components"
 
+# Directories where the McStas components may reside
+COMP_CATEGORY   = ["monitors", "optics", "samples", "sources"]
+
+# Usage string
 USAGE_MESSAGE   = """NAME:
     McStasConverter - converter for McStas components 
 
@@ -302,7 +305,7 @@ class McStasConverter:
         str     += self._ind(ind) + "def on%s(self, m):" % self._domModule(type) + br
         str     += self._ind(2*ind) + "kwds = {" + br
         str     += self._ind(3*ind) + "'name': m.componentname," + br
-        str     += self._ind(3*ind) + "'category': 'monitors'" + br     # XXX: Fix
+        str     += self._ind(3*ind) + "'category': '%s'" % self._compCategory(type) + br
         str     += self._ind(3*ind) + "'type': '%s'," % type + br
         str     += self._ind(3*ind) + "'supplier': 'mcstas2'," + br
         str     += self._ind(3*ind) + "}" + br
@@ -330,14 +333,41 @@ class McStasConverter:
         return str
 
 
-    def _compPath(self, type):
-        "Returns relative to this script path to the McStas component of type"
+    def _compFile(self, type, ext="comp"):
+        "Returns filename of component of type"
+        # Example: L_monitor.comp
+        return "%s.%s" % (type, ext)
 
-        return COMPBASE + "/monitors/L_monitor.comp"
+
+    def _compCategory(self, type):
+        """
+        Returns category name where the component 'type' is located
+        
+        Note:
+            - It is implied that component of type exists in one of the category
+                directories only
+        """
+        for cc in COMP_CATEGORY:
+            path    = os.path.join(COMP_BASE, cc, self._compFile(type))
+            if os.path.exists(path):
+                return cc
+
+        return ""   # Component is not in any of the COMP_CATEGORY
+
     
             # Take parameters from McStasComponentParser.py
             #   See: MCViNE/trunk/packages/legacycomponents/mcstas2/mcstas2/utils/parsers/McStasComponentParser.
             # Find corresponding component (*.comp)
+
+
+    def _compPath(self, type):
+        """
+        Finds component in the component base directory and returns relative to
+        this script path to the McStas component of type
+        
+        Example: "../../../packages/legacycomponents/mcstas2/share/McStas-Components/monitors/L_monitor.comp"
+        """
+        return os.path.join(COMP_BASE, self._compCategory(type), self._compFile(type))
 
 
         """
@@ -388,10 +418,12 @@ class McStasConverter:
         filename    = self._compPath(type)
         parser      = McStasComponentParser(filename=filename)
         defs        = parser.definitions()
-        setparams   = defs["setting_parameters"]
-        defparams   = defs["definition_parameters"]
-        paramlist   = setparams + defparams
+        setparams   = defs.get("setting_parameters")
+        defparams   = defs.get("definition_parameters")
         params      = []
+        paramlist   = []
+        if setparams and defparams:
+            paramlist   = setparams + defparams
         for sp in paramlist:
             if not sp in params:
                 params.append(sp["name"])
