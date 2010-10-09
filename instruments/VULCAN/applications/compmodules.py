@@ -33,10 +33,10 @@ IMPORT_DICT     = {
 
 # Parameters dictionary for job builder
 PARAMS_DICT      = {
-    "xmin":     "x_min",
-    "xmax":     "x_max",
-    "ymin":     "y_min",
-    "ymax":     "y_max",
+    "xmin":     "m.x_min",
+    "xmax":     "m.x_max",
+    "ymin":     "m.y_min",
+    "ymax":     "m.y_max",
     "filename": "outputfilename(m)"
 }
 __date__ = "$Oct 1, 2010 6:23:27 PM$"

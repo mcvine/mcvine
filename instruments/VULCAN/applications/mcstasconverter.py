@@ -77,7 +77,11 @@ import re
 import sys
 import os.path
 from time import localtime, strftime
+from mcstas2.utils.parsers.McStasComponentParser import McStasComponentParser
 from compmodules import IMPORT_DICT, PARAMS_DICT
+
+# McStas components base directory
+COMPBASE        = "../../../packages/legacycomponents/mcstas2/share/McStas-Components"
 
 # Regular expressions
 COMMENT         = '(/\*.*?\*/)'         # Non-greedy comment (.*?)
@@ -307,31 +311,34 @@ class McStasConverter:
         str     += self._ind(2*ind) + "opts = {}" + br
         str     += br
         str     += self._ind(2*ind) + "parameters = {" + br
-        # PUT PARAMETERS HERE!!!
+
+        # Move in a separate method?
+        # Specify parameters
+        params  = self._mcstasParams(type)
+        for name in params:
+            value   = "m.%s" % name
+            if name in PARAMS_DICT.keys():
+                value   = PARAMS_DICT[name]
+            str     += self._ind(3*ind) + "'%s': %s," % (name, value) + br
+
         str     += self._ind(3*ind) + "}" + br
         str     += self._ind(2*ind) + "for k,v in parameters.iteritems():" + br
         str     += self._ind(3*ind) + "opts['%s.%s' % (m.componentname, k)] = v" + br
         str     += br
         str     += self._ind(2*ind) + "self.cmdline_opts.update( opts )" + br
 
-
         return str
+
+
+    def _compPath(self, type):
+        "Returns relative to this script path to the McStas component of type"
+
+        return COMPBASE + "/monitors/L_monitor.comp"
+    
             # Take parameters from McStasComponentParser.py
             #   See: MCViNE/trunk/packages/legacycomponents/mcstas2/mcstas2/utils/parsers/McStasComponentParser.
             # Find corresponding component (*.comp)
 
-        #comp["name"], comp["type"], comp["parameters"]
-        #print types
-
-#        str     += ind
-#        str     +=
-#        str     +=
-#        str     +=
-#        str     +=
-#        str     +=
-#        str     +=
-#        str     +=
-#        str     +=
 
         """
 
@@ -370,6 +377,26 @@ class McStasConverter:
                 self.cmdline_opts.update( opts )
 
         """
+
+    def _mcstasParams(self, type):
+        """
+        Returns list of parameters for McStas component
+        
+        This includes "DEFINITION PARAMETERS" and "SETTING PARAMETERS"
+        Example: ['xmin', 'xmax', 'ymin', 'ymax', 'xwidth', 'yheight', 'Lmin', 'Lmax', 'nchan', 'filename']
+        """
+        filename    = self._compPath(type)
+        parser      = McStasComponentParser(filename=filename)
+        defs        = parser.definitions()
+        setparams   = defs["setting_parameters"]
+        defparams   = defs["definition_parameters"]
+        paramlist   = setparams + defparams
+        params      = []
+        for sp in paramlist:
+            if not sp in params:
+                params.append(sp["name"])
+
+        return params
 
 
     def _ind(self, ind):
