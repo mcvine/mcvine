@@ -69,8 +69,7 @@ Questions:
 """
 
 # XXX: Fix options issue (see fixtures.textOptions)
-# XXX: Include toBuilderString() method to autogenerate methods for components
-#       See: ./vnfb/vnfb/components/job_builders/neutronexperiment/InstrumentSimulationAppBuilder.py 
+# XXX: Implement nice align of dictionary entries in toBuilderString()
 
 # Imports
 import re
@@ -305,7 +304,7 @@ class McStasConverter:
         str     += self._ind(ind) + "def on%s(self, m):" % self._domModule(type) + br
         str     += self._ind(2*ind) + "kwds = {" + br
         str     += self._ind(3*ind) + "'name': m.componentname," + br
-        str     += self._ind(3*ind) + "'category': '%s'" % self._compCategory(type) + br
+        str     += self._ind(3*ind) + "'category': '%s'," % self._compCategory(type) + br
         str     += self._ind(3*ind) + "'type': '%s'," % type + br
         str     += self._ind(3*ind) + "'supplier': 'mcstas2'," + br
         str     += self._ind(3*ind) + "}" + br
