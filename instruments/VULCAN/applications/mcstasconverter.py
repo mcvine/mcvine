@@ -318,6 +318,7 @@ class McStasConverter:
         # Move in a separate method?
         # Specify parameters
         params  = self._mcstasParams(type)
+        print params
         for name in params:
             value   = "m.%s" % name
             if name in PARAMS_DICT.keys():
@@ -329,6 +330,7 @@ class McStasConverter:
         str     += self._ind(3*ind) + "opts['%s.%s' % (m.componentname, k)] = v" + br
         str     += br
         str     += self._ind(2*ind) + "self.cmdline_opts.update( opts )" + br
+        str     += br
 
         return str
 
@@ -353,11 +355,6 @@ class McStasConverter:
                 return cc
 
         return ""   # Component is not in any of the COMP_CATEGORY
-
-    
-            # Take parameters from McStasComponentParser.py
-            #   See: MCViNE/trunk/packages/legacycomponents/mcstas2/mcstas2/utils/parsers/McStasComponentParser.
-            # Find corresponding component (*.comp)
 
 
     def _compPath(self, type):
@@ -422,7 +419,8 @@ class McStasConverter:
         defparams   = defs.get("definition_parameters")
         params      = []
         paramlist   = []
-        if setparams and defparams:
+        # Can be empty list but not None!
+        if (setparams != None) and (defparams != None): #(type(setparams) == list) and (type(defparams) == "list"):
             paramlist   = setparams + defparams
         for sp in paramlist:
             if not sp in params:
@@ -789,6 +787,9 @@ def main():
     print USAGE_MESSAGE
     return
 
+#def test():
+#    filename    = "../../../packages/legacycomponents/mcstas2/share/McStas-Components/sources/SNS_source4.comp"
+#    parser      =
 
 if __name__ == "__main__":
     main()
