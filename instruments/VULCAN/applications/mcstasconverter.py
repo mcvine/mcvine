@@ -77,7 +77,7 @@ import re
 import sys
 import os.path
 from time import localtime, strftime
-from compmodules import IMPORT_DICT
+from compmodules import IMPORT_DICT, PARAMS_DICT
 
 # Regular expressions
 COMMENT         = '(/\*.*?\*/)'         # Non-greedy comment (.*?)
@@ -274,12 +274,55 @@ class McStasConverter:
 
         types   = self.comptypes()
 
-        for type in types:  # L_monitor
-            print 
+        for type in types:  # Example of type: L_monitor
+            str += self._onComp(type, ind, br)
+
+        return str
+
+
+
+    def comptypes(self):
+        "Returns list of component types"
+        comps   = self.components()
+        ct      = []
+        for c in comps:
+            if not c["type"] in ct:
+                ct.append(c["type"])
+
+        return ct
+
+
+    def _onComp(self, type, ind, br):
+        "Returns string with component information for job builder"
+        str     = br
+        str     += self._ind(ind) + "def on%s(self, m):" % self._domModule(type) + br
+        str     += self._ind(2*ind) + "kwds = {" + br
+        str     += self._ind(3*ind) + "'name': m.componentname," + br
+        str     += self._ind(3*ind) + "'category': 'monitors'" + br     # XXX: Fix
+        str     += self._ind(3*ind) + "'type': '%s'," % type + br
+        str     += self._ind(3*ind) + "'supplier': 'mcstas2'," + br
+        str     += self._ind(3*ind) + "}" + br
+        str     += self._ind(2*ind) + "self.onNeutronComponent( **kwds )" + br
+        str     += br
+        str     += self._ind(2*ind) + "opts = {}" + br
+        str     += br
+        str     += self._ind(2*ind) + "parameters = {" + br
+        # PUT PARAMETERS HERE!!!
+        str     += self._ind(3*ind) + "}" + br
+        str     += self._ind(2*ind) + "for k,v in parameters.iteritems():" + br
+        str     += self._ind(3*ind) + "opts['%s.%s' % (m.componentname, k)] = v" + br
+        str     += br
+        str     += self._ind(2*ind) + "self.cmdline_opts.update( opts )" + br
+
+
+        return str
+            # Take parameters from McStasComponentParser.py
+            #   See: MCViNE/trunk/packages/legacycomponents/mcstas2/mcstas2/utils/parsers/McStasComponentParser.
+            # Find corresponding component (*.comp)
 
         #comp["name"], comp["type"], comp["parameters"]
-        print types
-        
+        #print types
+
 #        str     += ind
 #        str     +=
 #        str     +=
@@ -295,7 +338,7 @@ class McStasConverter:
 
         from _ import JobBuilder as base
         class Builder(base):
-        
+
             def onLMonitor(self, m):
                 kwds = {
                     'name': m.componentname,
@@ -329,24 +372,15 @@ class McStasConverter:
         """
 
 
-    def comptypes(self):
-        "Returns list of component types"
-        comps   = self.components()
-        ct      = []
-        for c in comps:
-            if not c["type"] in ct:
-                ct.append(c["type"])
-
-        return ct
-
-
-    def _onComp(self):
-        pass
+    def _ind(self, ind):
+        "Returns ind number of spaces"
+        return ind*" "
 
 
     def _domModule(self, comptype):
         "Takes component type and returns VNF dom module"
         # McStas component -> VNF dom module
+        # Example: L_Monitor -> LMonitor
         if comptype in IMPORT_DICT.keys():
             return IMPORT_DICT[comptype]
 

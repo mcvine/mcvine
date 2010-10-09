@@ -31,6 +31,14 @@ IMPORT_DICT     = {
     "PSD_TEW_monitor":      "PSD_TEWMonitor"        # not exist
 }
 
+# Parameters dictionary for job builder
+PARAMS_DICT      = {
+    "xmin":     "x_min",
+    "xmax":     "x_max",
+    "ymin":     "y_min",
+    "ymax":     "y_max",
+    "filename": "outputfilename(m)"
+}
 __date__ = "$Oct 1, 2010 6:23:27 PM$"
 
 
