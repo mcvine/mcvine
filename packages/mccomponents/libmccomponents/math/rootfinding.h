@@ -37,6 +37,9 @@ namespace mccomponents{ namespace math{
 
     /// solve given function in the region (x1, x2) and return the first root found
     virtual double solve( double x1, double x2, const Functor & function ) const = 0;
+
+    /// solve given function in the region (x1, x2) and return the first root found. if failed is set, it means it fails to find a solution
+    virtual double solve( double x1, double x2, const Functor & function, bool &failed ) const = 0;
   protected:
     //data
     double m_xacc;
@@ -85,10 +88,11 @@ namespace mccomponents{ namespace math{
 	  \param func f(x, parameters), the function to found root. 
 	  \param parameters parameters for the function func
 	  \param xacc accuracy requirement
-	*/
 	double zridd(double (*func)(double, const std::vector<double> &), 
 		     double x1, double x2, 
-		     const std::vector<double> &parameters, double xacc);
+		     const std::vector<double> &parameters, double xacc,
+		     bool &failed);
+	*/
 
 	//! find a root between x1 and x2 using Ridder's algorithm (brackets)
 	/*!
@@ -96,14 +100,20 @@ namespace mccomponents{ namespace math{
 	  \param xacc accuracy requirement
 	*/
 	double zridd(const Functor &f,
-		     double x1, double x2, double xacc);
+		     double x1, double x2, double xacc, bool &failed);
 
 	/// zridd as a subclass of RootFinder
 	class ZRidd : public RootFinder{
 	public:
 	  ZRidd( double xacc) : RootFinder(xacc) {}
 	  double solve( double x1, double x2, const Functor &f ) const {
-	    return zridd( f, x1, x2, m_xacc );
+	    bool failed;
+	    double rt = zridd( f, x1, x2, m_xacc, failed);
+	    if (failed) throw RootNotFound();
+	    return rt;
+	  }
+	  double solve( double x1, double x2, const Functor &f, bool &failed ) const {
+	    return zridd( f, x1, x2, m_xacc, failed);
 	  }
 	};
 

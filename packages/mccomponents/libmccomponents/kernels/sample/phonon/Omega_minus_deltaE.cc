@@ -11,6 +11,7 @@
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //
 
+#include <iostream>
 #include <cmath>
 #include <portinfo>
 #include "journal/debug.h"
@@ -92,6 +93,35 @@ Omega_q_minus_deltaE::float_t mccomponents::kernels::phonon::Omega_q_minus_delta
   
   return (res_phonon - res_neutron);  
 }
+
+template <typename T>
+std::ostream & operator << (std::ostream &os, const std::vector<T> &v)
+{
+  for (size_t i = 0; i<v.size(); i++) {
+    os << v[i] << ", " ;
+  }
+  return os;
+}
+
+void mccomponents::kernels::phonon::Omega_q_minus_deltaE::print(std::ostream & os, float_t x0, float_t x1, float_t dx) const
+{
+  std::vector<float_t> xarr, yarr;
+  for (float_t x =x0; x<x1; x+=dx) {
+    xarr.push_back(x);
+    yarr.push_back(evaluate(x));
+  }
+  os << "omega(q)-deltaE(" 
+     << "branch=" << _branch << ", "
+  // os << "vf direction=" << _vf_direction << ", ";
+  // os << _vf_direction;
+  // os << "vi=" << _vi << ", "
+     << "abs vi=" << _abs_vi << ", "
+     << ")"
+     << "[x=" << xarr << ","
+     << "y=" << yarr << "]"
+    ;
+}
+
 
 }}} // mccomponents::kernels::phonon
 

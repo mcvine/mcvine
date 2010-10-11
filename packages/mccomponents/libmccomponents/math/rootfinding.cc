@@ -16,10 +16,11 @@ namespace mccomponents { namespace math {
     // temp vars
     double root,range=x2-x1;
     double step = range/m_nSteps;
-	
     for (size_t i=0; i<m_nSteps; i++) {
+      bool failed = 0;
       try {
-	root = m_rootFinder.solve (x1+step*i, x1+step*(i+1), function);
+	root = m_rootFinder.solve (x1+step*i, x1+step*(i+1), function, failed);
+	if (failed) continue;
 	root_list.push_back(root);
       }
       catch (const char *str) {
@@ -27,6 +28,7 @@ namespace mccomponents { namespace math {
 		  << " from function findaroot " << std::endl;
       }
       catch (const RootNotFound & rnf) {
+	std::cerr << "caght root not found " << std::endl;
       }
 	    
     }//for loop i
@@ -74,9 +76,11 @@ namespace mccomponents { namespace math {
           }
         }
 
+	/*
 	double zridd(double (*func)(double, const std::vector<double> &), 
 		     double x1, double x2, 
-		     const std::vector<double> &parameters, double xacc)
+		     const std::vector<double> &parameters, double xacc,
+		     bool &failed)
 	{
 	  
 	  using misc::sign;
@@ -96,8 +100,9 @@ namespace mccomponents { namespace math {
 	  if (fl*fh >= 0) {
 
 	    if (fl==0) return x1;
-	    if (fh==0) return x2;       
-	    throw RootNotFound();
+	    if (fh==0) return x2;
+	    failed = 1;
+	    return 0;
 
 	  } else {
 
@@ -158,12 +163,12 @@ namespace mccomponents { namespace math {
 	  
 	  }
 	  
-	  return 0.0;  /* Never get here */
+	  return 0.0;  // Never get here 
 	} //zridd
-
+      */
 
 	double zridd(const Functor &f,
-		     double x1, double x2, double xacc)
+		     double x1, double x2, double xacc, bool &failed)
 	{
 	  
 	  using misc::sign;
@@ -193,7 +198,8 @@ namespace mccomponents { namespace math {
 
 	    if (fl==0) return x1;
 	    if (fh==0) return x2;       
-	    throw RootNotFound();
+	    failed = 1;
+	    return 0;
 
 	  } else {
 
@@ -279,7 +285,7 @@ namespace mccomponents { namespace math {
 	  
 	  }
 	  
-	  return 0.0;  /* Never get here */
+	  return 0.0;  // Never get here 
 	} //zridd
 
       } //Ridder

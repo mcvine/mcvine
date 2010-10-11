@@ -236,8 +236,8 @@ class New:
         for atom in atoms: atom_vector.append( atom )
         
         deltaV_Jacobi = 0.001
-        zridd = b.ZRidd(1.e-7)
-        rootsfinder = b.FindRootsEvenly(zridd, 10000)
+        zridd = b.ZRidd(0.1) # 0.1 - accuracy of velocity (m/s)
+        rootsfinder = b.FindRootsEvenly(zridd, 20000)
         targetregion = b.TargetCone(self.vector3(0,0,0),0)
         epsilon = 1.e-10
 

@@ -63,6 +63,12 @@ namespace mccomponents{ namespace kernels{ namespace phonon{
      float_t abs_vi, const dispersion_t &disp);
     float_t evaluate(float_t vf) const;
 
+    void getCurve
+    (std::vector<float_t> &x, std::vector<float_t> &y, 
+     float_t x1, float_t x2, size_t n) const;
+
+    void print(std::ostream &, float_t x0, float_t x1, float_t dx) const;
+    
   private:
     int _branch;
     V_t _vf_direction;

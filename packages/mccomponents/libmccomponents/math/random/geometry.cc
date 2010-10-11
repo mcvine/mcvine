@@ -18,6 +18,9 @@
 // temporarily we still need mcstas_compact
 #include "mcstas_compact/randvec.h"
 
+#ifdef DEEPDEBUG
+#define DEBUG
+#endif
 
 #ifdef DEEPDEBUG
 #define DEBUG

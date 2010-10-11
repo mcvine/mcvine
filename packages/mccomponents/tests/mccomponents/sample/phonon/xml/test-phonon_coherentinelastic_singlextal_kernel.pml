@@ -23,8 +23,8 @@
     <facility name="detector">monitors/IQE_monitor</facility>
 
     <property name="overwrite-datafiles">yes</property>
-    <property name="ncount">1000</property>
-    <property name="buffer_size">1000</property>
+    <property name="ncount">10000</property>
+    <property name="buffer_size">10000</property>
     <property name="output-dir">out-phonon_coherentinelastic_singlextal_kernel</property>
 
     <component name="source">
@@ -66,11 +66,9 @@
 
     <component name="journal">
       <component name="debug">
-	<!--
 	<property name="CoherentInelastic_SingleXtal">on</property>
 	<property name="Omega_minus_deltaE ctor">on</property>
 	<property name="Omega_minus_deltaE">on</property>
-	-->
       </component>
     </component>
 

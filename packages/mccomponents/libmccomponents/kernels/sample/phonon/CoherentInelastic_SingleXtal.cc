@@ -133,11 +133,13 @@ const
 	<< journal::endl;
 #endif
 
-  if (nf<1) mcni::throw_fatal_path_error
-	      ( phonon_cohinel_sc_journal_channel,
-		journal::at(__HERE__),
-		"Unable to find solution for function omega(Q)-dE");
-  
+  if (nf<1) {
+    omq_m_dE.print(std::cout, 0, v_i_l*2, v_i_l/10);
+    mcni::throw_fatal_path_error
+      ( phonon_cohinel_sc_journal_channel,
+	journal::at(__HERE__),
+	"Unable to find solution for function omega(Q)-dE");
+  }
   
 #ifdef DEBUG
   debug << journal::at(__HERE__)
