@@ -125,9 +125,11 @@ SHARE
 #ifndef Gravity_guide_Version
 #define Gravity_guide_Version "$Revision: 1.31 $"
 
+/*
 #ifndef PROP_GRAV_DT
 //#error McStas : You need PROP_GRAV_DT (McStas >= 1.4.3) to run this component
 #endif
+*/
 
 // ----------- added by Alex Dementsov --------
 // ----------  header for SHARE ----------
@@ -135,6 +137,8 @@ SHARE
 
 #ifndef GUIDE_GRAVITY_DEFS
 #define GUIDE_GRAVITY_DEFS
+
+%include "read_table-lib"
 
 /*
 * G:       (m/s^2) Gravitation acceleration along y axis [-9.81]
