@@ -67,7 +67,6 @@ def main():
         parts   = arg.split("=")
         key     = parts[0]
         if key in FILE:
-            print parts
             stripper    = PyreStripper(filename=parts[1])
 
     if not stripper:
