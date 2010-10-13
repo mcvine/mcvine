@@ -1,3 +1,4 @@
+
 /*******************************************************************************
 *
 * McStas, neutron ray-tracing package
@@ -109,8 +110,8 @@
 *******************************************************************************/
 
 DEFINE COMPONENT Guide_gravity
-DEFINITION PARAMETERS (string reflect=0)
-SETTING PARAMETERS (w1, h1, w2=0, h2=0, l,
+DEFINITION PARAMETERS ()
+SETTING PARAMETERS (string reflect=0, w1, h1, w2=0, h2=0, l,
   R0=0.99, Qc=0.0219, alpha=6.07, m=1.0, W=0.003, k=1, d=0.0005,
   mleft=-1, mright=-1, mtop=-1, mbottom=-1, kh=1, G=0,
   wavy=0, wavy_z=0, wavy_tb=0, wavy_lr=0,
@@ -122,18 +123,18 @@ STATE PARAMETERS (x,y,z,vx,vy,vz,t,s1,s2,p)
 SHARE
 %{
 
+// ----------- added by Alex Dementsov --------
+// ----------  header for SHARE ----------
+// ----------- added by Alex Dementsov --------
+
 #ifndef Gravity_guide_Version
 #define Gravity_guide_Version "$Revision: 1.31 $"
 
 /*
 #ifndef PROP_GRAV_DT
-//#error McStas : You need PROP_GRAV_DT (McStas >= 1.4.3) to run this component
+// #error McStas : You need PROP_GRAV_DT (McStas >= 1.4.3) to run this component
 #endif
 */
-
-// ----------- added by Alex Dementsov --------
-// ----------  header for SHARE ----------
-// ----------- added by Alex Dementsov --------
 
 #ifndef GUIDE_GRAVITY_DEFS
 #define GUIDE_GRAVITY_DEFS
@@ -189,6 +190,10 @@ SHARE
         double *cnx, double *cny,double *cnz);
 
 #endif
+#endif
+
+%include "read_table-lib"
+
 
 // ----------- added by Alex Dementsov --------
 // ----------  implementation for SHARE ----------
@@ -348,10 +353,6 @@ SHARE
     return (side);
   }
 
-%include "read_table-lib"
-
-
-#endif
 
 %}
 

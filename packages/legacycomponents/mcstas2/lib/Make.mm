@@ -17,6 +17,7 @@ PROJ_SRCS = \
 	display.cc \
 	exception.cc \
 	geometry.cc \
+	misc.cc \
 	misc_macros.cc \
 	propagators.cc \
 	random_numbers.cc \
@@ -87,6 +88,7 @@ EXPORT_HEADERS = \
 	exception.h \
 	geometry.h \
 	mcstas2.h \
+	misc.h \
 	misc_macros.h \
 	phys_constants.h \
 	propagator_macros.h \

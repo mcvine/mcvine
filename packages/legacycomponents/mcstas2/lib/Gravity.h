@@ -32,12 +32,19 @@ namespace mcstas2{
 
 } // namespace mcstas2
 
+// 
+#define GRAVITY (mcstas2::Gravity::amplitude)  /* [m/s^2] gravitational acceleration */
+extern int    mcgravitation;
+
+#define PROP_GRAV_DT(dt, Ax, Ay, Az) \
+  do { \
+    prop_dt_withgravity(dt, Ax, Ay, Az, x,y,z, vx,vy,vz, t);	\
+  } while(0)
+
 
 #endif // H_MCSTAS2_GRAVITY
 
 // version
 // $Id$
-
-// Generated automatically by CxxMill on Tue Jun 27 12:57:31 2006
 
 // End of file 

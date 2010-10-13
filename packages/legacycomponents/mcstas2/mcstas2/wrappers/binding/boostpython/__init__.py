@@ -16,7 +16,7 @@
 libstolink = ['boost_python']
 
 define_macros = [
-    ('BOOST_PYTHON_MAX_ARITY', 30),
+    ('BOOST_PYTHON_MAX_ARITY', 32),
     ]
 
 

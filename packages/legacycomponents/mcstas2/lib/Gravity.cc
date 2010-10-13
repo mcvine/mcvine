@@ -15,8 +15,9 @@
 #include "Gravity.h"
 
 
-const  double mcstas2::Gravity::amplitude = 9.8; // m/s**2
+const double mcstas2::Gravity::amplitude = 9.8; // m/s**2
 
+int  mcgravitation          = 0;
 
 
 // version

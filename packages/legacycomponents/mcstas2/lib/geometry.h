@@ -52,6 +52,29 @@ void randvec_target_rect
  double xi, double yi, double zi, double height, double width, Rotation A); 
 
 
+Coords coords_set(MCNUM x, MCNUM y, MCNUM z);
+Coords coords_get(Coords a, MCNUM *x, MCNUM *y, MCNUM *z);
+Coords coords_add(Coords a, Coords b);
+Coords coords_sub(Coords a, Coords b);
+Coords coords_neg(Coords a);
+Coords coords_scale(Coords b, double scale);
+double coords_sp(Coords a, Coords b);
+Coords coords_xp(Coords b, Coords c);
+void   coords_print(Coords a);
+
+void rot_set_rotation(Rotation t, double phx, double phy, double phz);
+int  rot_test_identity(Rotation t);
+void rot_mul(Rotation t1, Rotation t2, Rotation t3);
+void rot_copy(Rotation dest, Rotation src);
+void rot_transpose(Rotation src, Rotation dst);
+Coords rot_apply(Rotation t, Coords a);
+void mccoordschange(Coords a, Rotation t, double *x, double *y, double *z,
+    double *vx, double *vy, double *vz, double *time,
+    double *s1, double *s2);
+void mccoordschange_polarisation(Rotation t,
+    double *sx, double *sy, double *sz);
+
+
 #endif //H_MCSTAS2_GEOMETRY
 
 
