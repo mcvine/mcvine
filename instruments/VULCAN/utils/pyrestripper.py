@@ -14,6 +14,15 @@
 """
 PyreStripper - takes pyre command line script and strips parameters that are empty!
 
+Example input:
+. ~/.mcvine && python simapp.py --curved_guide36.Qc="0.0219"\
+	--tapered_guide3.reflect=""\
+	--vertical_tapered_guide2.mright="3.1"\
+
+Example output:
+. ~/.mcvine && python simapp.py --curved_guide36.Qc="0.0219"\
+	--vertical_tapered_guide2.mright="3.1"\
+
 Example session:
     $ python pyrestripper.py -f=../tests/teststripper.txt
 
