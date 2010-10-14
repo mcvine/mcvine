@@ -47,6 +47,7 @@ vlambda     = 1.5
 mode        = "hint"
 out_format  = "table"
 PI          = 3.14159265
+FLT_MAX     = 1e37  #?
 
 # INITIALIZE section
 dc_tphase = 6.529/3960*vlambda  # 0.002473
