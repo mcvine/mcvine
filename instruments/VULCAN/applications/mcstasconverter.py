@@ -291,7 +291,7 @@ class McStasConverter:
 
 
     # XXX: Merge component parameters both from instrument values and component default values
-    # XXX: Finish
+    # XXX: Finish!
     def toMcvineString(self, br="\n", allparams=True):
         "Returns *partial* command line string that is executed by McVine"
         str     = "#!/usr/bin/env bash" + br
