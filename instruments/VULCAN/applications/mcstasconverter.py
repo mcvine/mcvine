@@ -78,7 +78,7 @@ import sys
 import os.path
 from time import localtime, strftime
 from mcstas2.utils.parsers.McStasComponentParser import McStasComponentParser
-from compmodules import IMPORT_DICT, PARAMS_DICT
+from compmodules import IMPORT_DICT, PARAMS_DICT, INSTRUMENT
 
 # Regular expressions
 COMMENT         = '(/\*.*?\*/)'         # Non-greedy comment (.*?)
@@ -319,7 +319,7 @@ class McStasConverter:
             # Generate parameters
             for k, v in params.iteritems():
                 # Take from the rest of the default parameters from components itself!
-                str += "\t--%s.%s=%s \%s" % (comp["name"], k, self._quote(v), br)
+                str += "\t--%s.%s=%s \%s" % (comp["name"], k, self._paramValue(v), br)
             # Generate geometer
             str     += "\t--geometer.%s=\"%s,%s\" \%s" % (  comp["name"],
                                                             self._formatVector(comp["position"], bracket="square"),
@@ -338,6 +338,15 @@ class McStasConverter:
         str     += ss + " \\" + br
 
         return str
+
+
+    def _paramValue(self, value):
+        "Replaces constants in parameters by values"
+        instr   = INSTRUMENT["VULCAN"]  # XXX: Specific for Vulcan
+        if value in instr.keys():
+            return self._quote(str(instr[value]))
+
+        return self._quote(value)
 
 
     def _quote(self, s):
