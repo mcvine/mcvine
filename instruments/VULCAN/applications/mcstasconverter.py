@@ -303,19 +303,49 @@ class McStasConverter:
         return str
 
 
-    # XXX: Merge component parameters both from instrument values and component default values
     def toVnfString(self, br="\n", executable=". ~/.mcvine && python simapp.py", allparams=True):
-        "Returns command line string that is executed by VNF job builder"
+        """
+        Returns command line string that is executed by VNF job builder
+
+        Note:
+            - simapp.py is normally created by VNF
+        """
+        sequence    = []
         str     = "#!/usr/bin/env bash" + br
         str     += br
         str     += "%s \%s" % (executable, br)
         for comp in self.components():
             params  = self._compParams(comp, allparams)
+            # Generate parameters
             for k, v in params.iteritems():
                 # Take from the rest of the default parameters from components itself!
-                str += "\t--%s.%s=%s \%s" % (comp["name"], k, v, br)
-            #str     =+
+                str += "\t--%s.%s=%s \%s" % (comp["name"], k, self._quote(v), br)
+            # Generate geometer
+            str     += "\t--geometer.%s=\"%s,%s\" \%s" % (  comp["name"],
+                                                            self._formatVector(comp["position"], bracket="square"),
+                                                            self._formatVector(comp["rotation"], bracket="square"),
+                                                            br)
+            sequence.append(comp["name"])
+
+        # Generate sequence
+        ss  = "\t--sequence=\"["
+        for s in sequence:
+            ss  += "'%s', " % s
+
+        ss  = ss.rstrip(", ")   # Remove trailing comma on the right side
+        ss  += "]\""
+
+        str     += ss + " \\" + br
+
         return str
+
+
+    def _quote(self, s):
+        "Takes string and makes sure that it surrounded by quota"
+        if not s:
+            return "\"\""
+
+        return "\"%s\"" % s.strip("\"")
 
 
     def _compParams(self, comp, allparams=True):
@@ -664,10 +694,19 @@ class McStasConverter:
         return None     # Not found
 
 
-    def _formatVector(self, vector):
-        "Formats the vector to string"
+    def _formatVector(self, vector, bracket="round"):
+        """
+        Formats the vector to string
+
+        bracket = ("round"|"square")
+        """
         assert len(vector) == 3
-        return "(%.5f, %.5f, %.5f)" % vector
+        start   = "("
+        end     = ")"
+        if bracket == "square":
+            start   = "["
+            end     = "]"
+        return "%s%.5f, %.5f, %.5f%s" % (start, vector[0], vector[1], vector[2], end)
 
 
     def _prevVector(self, order, type, name=None):
