@@ -319,13 +319,22 @@ class McStasConverter:
 
 
     def _compParams(self, comp, allparams=True):
-        "Returns dictionary of component parameters"
+        """
+        Returns dictionary of component parameters
+        Example Output: {'xmin': '-0.025', 'ymin': '-0.045'}
+        """
         params  = comp["parameters"]
-        
-        if not allparams:
+        # Return those parameters that are set in an intrument only!
+        if not allparams:   
             return params
 
-        
+        totalparams  = self._mcstasParams(comp["type"])
+        for p in totalparams:
+            if not p["name"] in params.keys():  # Add only those parameters that are not set in instrument
+                params[p["name"]] = p["value"]
+
+        return params
+
 
 
     def comptypes(self):
@@ -358,8 +367,8 @@ class McStasConverter:
         # Move in a separate method?
         # Specify parameters
         params  = self._mcstasParams(type)
-        print params
-        for name in params:
+        names   = self._paramNames(params)
+        for name in names:
             value   = "component.%s" % name
             if name in PARAMS_DICT.keys():
                 value   = PARAMS_DICT[name]
@@ -412,7 +421,7 @@ class McStasConverter:
         Returns list of parameters for McStas component
         
         This includes "DEFINITION PARAMETERS" and "SETTING PARAMETERS"
-        Example: ['xmin', 'xmax', 'ymin', 'ymax', 'xwidth', 'yheight', 'Lmin', 'Lmax', 'nchan', 'filename']
+        Example: [{'type': '', 'name': 'xmin', 'value': '0'}, {'type': '', 'name': 'xmax', 'value': '0'}]
         """
         filename    = self._compPath(type)
         parser      = McStasComponentParser(filename=filename)
@@ -422,14 +431,35 @@ class McStasConverter:
         params      = []
         paramlist   = []
         # Can be empty list but not None!
-        if (setparams != None) and (defparams != None): #(type(setparams) == list) and (type(defparams) == "list"):
+        if (setparams != None) and (defparams != None):
             paramlist   = setparams + defparams
-        for sp in paramlist:
-            if not sp in params:
-                params.append(sp["name"])
+
+        # Not sure if I need this?
+        for p in paramlist:     
+            if not self._inParams(p, params):
+                params.append(p)
 
         return params
 
+
+    def _inParams(self, p, params):
+        "Checks if p dictionary in params. Used to avoid repeating parameters"
+        for i in range(len(params)):
+            if p["name"] == params[i]["name"]:  # Names match
+                return True
+
+        return False
+
+
+    def _paramNames(self, params):
+        """
+        Takes param dictionaries and return param names
+
+        Example Input: [{'type': '', 'name': 'xmin', 'value': '0'}, {'type': '', 'name': 'xmax', 'value': '0'}]
+        Example Output: ['xmin', 'xmax']
+        """
+        return [p["name"] for p in params]
+    
 
     def _ind(self, ind):
         "Returns ind number of spaces"

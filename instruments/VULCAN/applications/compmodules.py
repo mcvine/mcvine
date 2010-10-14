@@ -32,12 +32,13 @@ IMPORT_DICT     = {
 }
 
 # Parameters dictionary for job builder
+COMPVAR     = "component"
 PARAMS_DICT      = {
-    "xmin":     "m.x_min",
-    "xmax":     "m.x_max",
-    "ymin":     "m.y_min",
-    "ymax":     "m.y_max",
-    "filename": "outputfilename(m)"
+    "xmin":     "%s.x_min" % COMPVAR,
+    "xmax":     "%s.x_max" % COMPVAR,
+    "ymin":     "%s.y_min" % COMPVAR,
+    "ymax":     "%s.y_max" % COMPVAR,
+    "filename": "outputfilename(%s)" % COMPVAR
 }
 __date__ = "$Oct 1, 2010 6:23:27 PM$"
 
