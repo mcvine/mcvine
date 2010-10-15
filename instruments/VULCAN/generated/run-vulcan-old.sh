@@ -1,17 +1,14 @@
 #!/usr/bin/env bash
 
+# For old SNSModerator
+
 . ~/.mcvine && python simapp.py \
 	--source.yh="0.085" \
 	--source.dist="4.3" \
 	--source.Emin="0.01" \
 	--source.Emax="1000" \
-	--source.tinmin="0.0" \
-	--source.sample_t="1" \
 	--source.height="0.12" \
 	--source.width="0.10" \
-	--source.proton_T="0.600" \
-	--source.tinmax="2000.0" \
-	--source.sample_E="2" \
 	--source.S_filename="profile.dat" \
 	--source.xw="0.016" \
 	--geometer.source="[0.00000, 0.00000, 0.00000],[0.00000, 0.00000, 0.00000]" \
@@ -747,7 +744,7 @@
 	--vertical_tapered_guide1.G="0" \
 	--vertical_tapered_guide1.mright="3.07" \
 	--vertical_tapered_guide1.wavy_tb="0" \
-	--vertical_tapered_guide1.reflect="0" \
+	--vertical_tapered_guide1.reflect="" \
 	--vertical_tapered_guide1.Qc="0.0219" \
 	--vertical_tapered_guide1.wavy="0" \
 	--vertical_tapered_guide1.W="0.003" \
@@ -778,7 +775,7 @@
 	--vertical_tapered_guide2.G="0" \
 	--vertical_tapered_guide2.mright="3.10" \
 	--vertical_tapered_guide2.wavy_tb="0" \
-	--vertical_tapered_guide2.reflect="0" \
+	--vertical_tapered_guide2.reflect="" \
 	--vertical_tapered_guide2.Qc="0.0219" \
 	--vertical_tapered_guide2.wavy="0" \
 	--vertical_tapered_guide2.W="0.003" \
@@ -809,7 +806,7 @@
 	--vertical_tapered_guide3.G="0" \
 	--vertical_tapered_guide3.mright="3.10" \
 	--vertical_tapered_guide3.wavy_tb="0" \
-	--vertical_tapered_guide3.reflect="0" \
+	--vertical_tapered_guide3.reflect="" \
 	--vertical_tapered_guide3.Qc="0.0219" \
 	--vertical_tapered_guide3.wavy="0" \
 	--vertical_tapered_guide3.W="0.003" \
@@ -840,7 +837,7 @@
 	--vertical_tapered_guide4.G="0" \
 	--vertical_tapered_guide4.mright="3.07" \
 	--vertical_tapered_guide4.wavy_tb="0" \
-	--vertical_tapered_guide4.reflect="0" \
+	--vertical_tapered_guide4.reflect="" \
 	--vertical_tapered_guide4.Qc="0.0219" \
 	--vertical_tapered_guide4.wavy="0" \
 	--vertical_tapered_guide4.W="0.003" \
@@ -871,7 +868,7 @@
 	--vertical_tapered_guide5.G="0" \
 	--vertical_tapered_guide5.mright="3.10" \
 	--vertical_tapered_guide5.wavy_tb="0" \
-	--vertical_tapered_guide5.reflect="0" \
+	--vertical_tapered_guide5.reflect="" \
 	--vertical_tapered_guide5.Qc="0.0219" \
 	--vertical_tapered_guide5.wavy="0" \
 	--vertical_tapered_guide5.W="0.003" \
@@ -902,7 +899,7 @@
 	--vertical_tapered_guide6.G="0" \
 	--vertical_tapered_guide6.mright="3.10" \
 	--vertical_tapered_guide6.wavy_tb="0" \
-	--vertical_tapered_guide6.reflect="0" \
+	--vertical_tapered_guide6.reflect="" \
 	--vertical_tapered_guide6.Qc="0.0219" \
 	--vertical_tapered_guide6.wavy="0" \
 	--vertical_tapered_guide6.W="0.003" \
@@ -933,7 +930,7 @@
 	--vertical_tapered_guide7.G="0" \
 	--vertical_tapered_guide7.mright="3.02" \
 	--vertical_tapered_guide7.wavy_tb="0" \
-	--vertical_tapered_guide7.reflect="0" \
+	--vertical_tapered_guide7.reflect="" \
 	--vertical_tapered_guide7.Qc="0.0219" \
 	--vertical_tapered_guide7.wavy="0" \
 	--vertical_tapered_guide7.W="0.003" \
@@ -964,7 +961,7 @@
 	--vertical_tapered_guide8.G="0" \
 	--vertical_tapered_guide8.mright="3.02" \
 	--vertical_tapered_guide8.wavy_tb="0" \
-	--vertical_tapered_guide8.reflect="0" \
+	--vertical_tapered_guide8.reflect="" \
 	--vertical_tapered_guide8.Qc="0.0219" \
 	--vertical_tapered_guide8.wavy="0" \
 	--vertical_tapered_guide8.W="0.003" \
@@ -995,7 +992,7 @@
 	--vertical_tapered_guide9.G="0" \
 	--vertical_tapered_guide9.mright="3.00" \
 	--vertical_tapered_guide9.wavy_tb="0" \
-	--vertical_tapered_guide9.reflect="0" \
+	--vertical_tapered_guide9.reflect="" \
 	--vertical_tapered_guide9.Qc="0.0219" \
 	--vertical_tapered_guide9.wavy="0" \
 	--vertical_tapered_guide9.W="0.003" \
@@ -1026,7 +1023,7 @@
 	--vertical_tapered_guide10.G="0" \
 	--vertical_tapered_guide10.mright="3.15" \
 	--vertical_tapered_guide10.wavy_tb="0" \
-	--vertical_tapered_guide10.reflect="0" \
+	--vertical_tapered_guide10.reflect="" \
 	--vertical_tapered_guide10.Qc="0.0219" \
 	--vertical_tapered_guide10.wavy="0" \
 	--vertical_tapered_guide10.W="0.003" \
@@ -1057,7 +1054,7 @@
 	--vertical_tapered_guide11.G="0" \
 	--vertical_tapered_guide11.mright="3.15" \
 	--vertical_tapered_guide11.wavy_tb="0" \
-	--vertical_tapered_guide11.reflect="0" \
+	--vertical_tapered_guide11.reflect="" \
 	--vertical_tapered_guide11.Qc="0.0219" \
 	--vertical_tapered_guide11.wavy="0" \
 	--vertical_tapered_guide11.W="0.003" \
@@ -1088,7 +1085,7 @@
 	--vertical_tapered_guide12.G="0" \
 	--vertical_tapered_guide12.mright="3.15" \
 	--vertical_tapered_guide12.wavy_tb="0" \
-	--vertical_tapered_guide12.reflect="0" \
+	--vertical_tapered_guide12.reflect="" \
 	--vertical_tapered_guide12.Qc="0.0219" \
 	--vertical_tapered_guide12.wavy="0" \
 	--vertical_tapered_guide12.W="0.003" \
@@ -1119,7 +1116,7 @@
 	--vertical_tapered_guide13.G="0" \
 	--vertical_tapered_guide13.mright="3.10" \
 	--vertical_tapered_guide13.wavy_tb="0" \
-	--vertical_tapered_guide13.reflect="0" \
+	--vertical_tapered_guide13.reflect="" \
 	--vertical_tapered_guide13.Qc="0.0219" \
 	--vertical_tapered_guide13.wavy="0" \
 	--vertical_tapered_guide13.W="0.003" \
@@ -1150,7 +1147,7 @@
 	--vertical_tapered_guide14.G="0" \
 	--vertical_tapered_guide14.mright="3.15" \
 	--vertical_tapered_guide14.wavy_tb="0" \
-	--vertical_tapered_guide14.reflect="0" \
+	--vertical_tapered_guide14.reflect="" \
 	--vertical_tapered_guide14.Qc="0.0219" \
 	--vertical_tapered_guide14.wavy="0" \
 	--vertical_tapered_guide14.W="0.003" \
@@ -1181,7 +1178,7 @@
 	--vertical_tapered_guide15.G="0" \
 	--vertical_tapered_guide15.mright="3.15" \
 	--vertical_tapered_guide15.wavy_tb="0" \
-	--vertical_tapered_guide15.reflect="0" \
+	--vertical_tapered_guide15.reflect="" \
 	--vertical_tapered_guide15.Qc="0.0219" \
 	--vertical_tapered_guide15.wavy="0" \
 	--vertical_tapered_guide15.W="0.003" \
@@ -1232,7 +1229,7 @@
 	--tapered_guide1.G="0" \
 	--tapered_guide1.mright="3.12" \
 	--tapered_guide1.wavy_tb="0" \
-	--tapered_guide1.reflect="0" \
+	--tapered_guide1.reflect="" \
 	--tapered_guide1.Qc="0.0219" \
 	--tapered_guide1.wavy="0" \
 	--tapered_guide1.W="0.003" \
@@ -1263,7 +1260,7 @@
 	--tapered_guide2.G="0" \
 	--tapered_guide2.mright="3.10" \
 	--tapered_guide2.wavy_tb="0" \
-	--tapered_guide2.reflect="0" \
+	--tapered_guide2.reflect="" \
 	--tapered_guide2.Qc="0.0219" \
 	--tapered_guide2.wavy="0" \
 	--tapered_guide2.W="0.003" \
@@ -1294,7 +1291,7 @@
 	--tapered_guide3.G="0" \
 	--tapered_guide3.mright="3.12" \
 	--tapered_guide3.wavy_tb="0" \
-	--tapered_guide3.reflect="0" \
+	--tapered_guide3.reflect="" \
 	--tapered_guide3.Qc="0.0219" \
 	--tapered_guide3.wavy="0" \
 	--tapered_guide3.W="0.003" \
@@ -1325,7 +1322,7 @@
 	--tapered_guide4.G="0" \
 	--tapered_guide4.mright="3.12" \
 	--tapered_guide4.wavy_tb="0" \
-	--tapered_guide4.reflect="0" \
+	--tapered_guide4.reflect="" \
 	--tapered_guide4.Qc="0.0219" \
 	--tapered_guide4.wavy="0" \
 	--tapered_guide4.W="0.003" \
@@ -1356,7 +1353,7 @@
 	--tapered_guide5.G="0" \
 	--tapered_guide5.mright="3.07" \
 	--tapered_guide5.wavy_tb="0" \
-	--tapered_guide5.reflect="0" \
+	--tapered_guide5.reflect="" \
 	--tapered_guide5.Qc="0.0219" \
 	--tapered_guide5.wavy="0" \
 	--tapered_guide5.W="0.003" \
@@ -1387,7 +1384,7 @@
 	--tapered_guide6.G="0" \
 	--tapered_guide6.mright="3.07" \
 	--tapered_guide6.wavy_tb="0" \
-	--tapered_guide6.reflect="0" \
+	--tapered_guide6.reflect="" \
 	--tapered_guide6.Qc="0.0219" \
 	--tapered_guide6.wavy="0" \
 	--tapered_guide6.W="0.003" \
@@ -1418,7 +1415,7 @@
 	--tapered_guide7.G="0" \
 	--tapered_guide7.mright="3.10" \
 	--tapered_guide7.wavy_tb="0" \
-	--tapered_guide7.reflect="0" \
+	--tapered_guide7.reflect="" \
 	--tapered_guide7.Qc="0.0219" \
 	--tapered_guide7.wavy="0" \
 	--tapered_guide7.W="0.003" \
@@ -1449,7 +1446,7 @@
 	--tapered_guide8.G="0" \
 	--tapered_guide8.mright="3.07" \
 	--tapered_guide8.wavy_tb="0" \
-	--tapered_guide8.reflect="0" \
+	--tapered_guide8.reflect="" \
 	--tapered_guide8.Qc="0.0219" \
 	--tapered_guide8.wavy="0" \
 	--tapered_guide8.W="0.003" \
@@ -1480,7 +1477,7 @@
 	--tapered_guide9.G="0" \
 	--tapered_guide9.mright="3.10" \
 	--tapered_guide9.wavy_tb="0" \
-	--tapered_guide9.reflect="0" \
+	--tapered_guide9.reflect="" \
 	--tapered_guide9.Qc="0.0219" \
 	--tapered_guide9.wavy="0" \
 	--tapered_guide9.W="0.003" \
@@ -1511,7 +1508,6 @@
 	--L_monitor9.nchan="140" \
 	--L_monitor9.ymax="0" \
 	--L_monitor9.yheight="0.15" \
-	--L_monitor9.restore_neutron="1" \
 	--L_monitor9.filename="Vulcan_asbuilt_L_monitor9.txt" \
 	--L_monitor9.Lmax="14.0" \
 	--L_monitor9.xmax="0" \
@@ -1523,7 +1519,6 @@
 	--L_monitor10.nchan="140" \
 	--L_monitor10.ymax="0" \
 	--L_monitor10.yheight="0.002" \
-	--L_monitor10.restore_neutron="1" \
 	--L_monitor10.filename="Vulcan_asbuilt_L_monitor10.txt" \
 	--L_monitor10.Lmax="14.0" \
 	--L_monitor10.xmax="0" \
@@ -1534,7 +1529,6 @@
 	--geometer.L_monitor10="[0.00000, 0.00000, 43.73376],[0.00000, 0.41980, 0.00000]" \
 	--psd_sample_position.ymax="0" \
 	--psd_sample_position.yheight="0.1" \
-	--psd_sample_position.restore_neutron="1" \
 	--psd_sample_position.filename="Vulcan_asbuilt_sample_psd.txt" \
 	--psd_sample_position.nx="50" \
 	--psd_sample_position.ny="50" \
@@ -1554,7 +1548,6 @@
 	--psd_xscan_L.filename="0" \
 	--psd_xscan_L.username2="0" \
 	--psd_xscan_L.user1="1e+37" \
-	--psd_xscan_L.file="Vulcan_asbuilt_xscan.txt" \
 	--psd_xscan_L.xmin="0" \
 	--psd_xscan_L.user2="1e+37" \
 	--psd_xscan_L.xwidth="0.1" \
@@ -1574,7 +1567,6 @@
 	--psd_yscan_L.filename="0" \
 	--psd_yscan_L.username2="0" \
 	--psd_yscan_L.user1="1e+37" \
-	--psd_yscan_L.file="Vulcan_asbuilt_yscan.txt" \
 	--psd_yscan_L.xmin="0" \
 	--psd_yscan_L.user2="1e+37" \
 	--psd_yscan_L.xwidth="0.1" \
@@ -1584,4 +1576,3 @@
 	--psd_yscan_L.ymax="0" \
 	--geometer.psd_yscan_L="[0.00000, 0.00000, 43.73676],[0.00000, 0.41980, 0.00000]" \
 	--sequence="['source', 'core_vessel_insert', 'start_shutter_insert', 'end_shutter_insert', 'L_monitor1', 'bulk_shield_insert1', 'bulk_shield_insert2', 'L_monitor2', 'transition_guide1', 'transition_guide2', 'transition_guide3', 'L_monitor3', 'bandwidth_chopper', 'curved_guide1', 'curved_guide2', 'curved_guide3', 'curved_guide4', 'curved_guide5', 'curved_guide6', 'L_monitor4', 'curved_guide7', 'curved_guide8', 'curved_guide9', 'curved_guide10', 'curved_guide11', 'curved_guide12', 'curved_guide13', 'curved_guide14', 'curved_guide15', 'curved_guide16', 'curved_guide17', 'curved_guide18', 'curved_guide19', 'curved_guide20', 'curved_guide21', 'curved_guide22', 'curved_guide23', 'curved_guide24', 'curved_guide25', 'curved_guide26', 'curved_guide27', 'curved_guide28', 'curved_guide29', 'curved_guide30', 'curved_guide31', 'curved_guide32', 'curved_guide33', 'curved_guide34', 'curved_guide35', 'curved_guide36', 'curved_guide37', 'curved_guide38', 'curved_guide39', 'curved_guide40', 'curved_guide41', 'curved_guide42', 'L_monitor5', 'straight_section1', 'straight_section2', 'straight_section3', 'L_monitor6', 'VTG_Slit', 'vertical_tapered_guide1', 'vertical_tapered_guide2', 'vertical_tapered_guide3', 'vertical_tapered_guide4', 'vertical_tapered_guide5', 'vertical_tapered_guide6', 'vertical_tapered_guide7', 'vertical_tapered_guide8', 'vertical_tapered_guide9', 'vertical_tapered_guide10', 'vertical_tapered_guide11', 'vertical_tapered_guide12', 'vertical_tapered_guide13', 'vertical_tapered_guide14', 'vertical_tapered_guide15', 'L_monitor7', 'TG_Slit', 'tapered_guide1', 'tapered_guide2', 'tapered_guide3', 'tapered_guide4', 'tapered_guide5', 'tapered_guide6', 'tapered_guide7', 'tapered_guide8', 'tapered_guide9', 'L_monitor8', 'L_monitor9', 'L_monitor10', 'psd_sample_position', 'psd_xscan_L', 'psd_yscan_L']" \
-
