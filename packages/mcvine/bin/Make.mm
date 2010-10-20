@@ -43,6 +43,7 @@ EXPORT_PYTHON_MODULES = \
 
 
 EXPORT_BINS = \
+	checksqe \
 	mcvine-create-instrument-simulation-application \
 	mcvine-compare-pyre-registry \
 	mcvine-compile-mcstas-component \
@@ -51,6 +52,7 @@ EXPORT_BINS = \
 	mcvine-simulate \
 	mcvine-neutron-storage-count-neutrons \
 	mcvine-neutron-storage-merge \
+	mcvine-neutron-storage-get-neutrons \
 	mcvine-neutron-storage-print-neutrons \
 	mcvine-neutron-storage-total-intensity \
 	mcvine-reduce-eventdata-to-ipix \

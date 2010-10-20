@@ -1,0 +1,56 @@
+#!/usr/bin/env python
+
+from pyre.applications.Script import Script
+
+
+class App(Script):
+
+
+    class Inventory(Script.Inventory):
+
+        import pyre.inventory
+        
+        filename = pyre.inventory.str('filename')
+
+        start = pyre.inventory.int('start', default=0)
+        n = pyre.inventory.int('n', default=1)
+
+        out = pyre.inventory.str('out')
+        
+        pass
+
+    
+    def main(self, *args, **kwds):
+        import os
+        outfile = self.inventory.out
+        if not outfile:
+            raise RuntimeError, "path of output neutron file (--out) not specified"
+        if os.path.exists(outfile):
+            raise OSError, "output file %s already exists" % outfile
+        
+        from mcni.neutron_storage.Storage import Storage
+        
+        filename = self.inventory.filename
+        if not filename:
+            raise RuntimeError, "path of neutron file (--filename) not specified."
+        storage = Storage(filename)
+
+        start = self.inventory.start
+        storage.seek(start, 'start')
+
+        n = self.inventory.n
+        neutrons = storage.read(n)
+
+        outstorage = Storage(outfile, 'w')
+        outstorage.write(neutrons)
+        return
+
+
+def main():
+    app = App('mcvine-neutron-storage-get-neutrons')
+    app.run()
+    return
+
+
+if __name__ == '__main__': main()
+
