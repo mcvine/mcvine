@@ -11,36 +11,23 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
 
-PROJECT = mcvine
-
-# directory structure
-
-BUILD_DIRS = \
-	mcvine \
-	bin \
-	etc \
-
-OTHER_DIRS = \
-	tests \
-	examples
-
-
-RECURSE_DIRS = $(BUILD_DIRS) $(OTHER_DIRS)
+PROJECT = checksqe
+PACKAGE = 
 
 #--------------------------------------------------------------------------
 #
 
-all:
-	BLD_ACTION="all" $(MM) recurse
+all: export
 
-distclean::
-	BLD_ACTION="distclean" $(MM) recurse
 
-clean::
-	BLD_ACTION="clean" $(MM) recurse
+#--------------------------------------------------------------------------
+# export
 
-tidy::
-	BLD_ACTION="tidy" $(MM) recurse
+EXPORT_ETC = \
+	checksqe.pml \
+
+
+export:: export-etc
 
 # version
 # $Id$

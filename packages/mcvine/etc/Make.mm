@@ -1,6 +1,6 @@
 # -*- Makefile -*-
 #
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
 #                               Michael A.G. Aivazis
 #                        California Institute of Technology
@@ -8,39 +8,34 @@
 #
 # <LicenseText>
 #
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 PROJECT = mcvine
 
-# directory structure
-
 BUILD_DIRS = \
-	mcvine \
-	bin \
-	etc \
+	checksqe \
 
 OTHER_DIRS = \
-	tests \
-	examples
-
 
 RECURSE_DIRS = $(BUILD_DIRS) $(OTHER_DIRS)
 
 #--------------------------------------------------------------------------
 #
 
-all:
-	BLD_ACTION="all" $(MM) recurse
+all: export
 
-distclean::
-	BLD_ACTION="distclean" $(MM) recurse
+tidy::
+	BLD_ACTION="tidy" $(MM) recurse
 
 clean::
 	BLD_ACTION="clean" $(MM) recurse
 
-tidy::
-	BLD_ACTION="tidy" $(MM) recurse
+distclean::
+	BLD_ACTION="distclean" $(MM) recurse
+
+export::
+	BLD_ACTION="export" $(MM) recurse
+
 
 # version
 # $Id$

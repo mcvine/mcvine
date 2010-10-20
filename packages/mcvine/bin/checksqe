@@ -4,22 +4,25 @@ warnings.simplefilter('ignore')
 import mcvine
 warnings.simplefilter('default')
 
-def buildBase():
+def buildApp():
     from mcvine.applications.InstrumentBuilder import build
     components = ['source', 'monitor']
     return build(components)
 
-base = buildBase()
-
-class App(base):
-
-    def _defaults(self):
-        super(App, self)._defaults()
-        self.inventory.source = 'sources/NeutronFromStorage'
-        self.inventory.monitor = 'monitors/IQE_monitor'
-        return
 
 def main():
+    base = buildApp()
+    class App(base):
+        
+        def help(self):
+            super(App, self).help()
+            print
+            print 'Examples:'
+            print
+            print ' $ checksqe -source.path=neutrons-to-check -monitor.Ei=100 -monitor.Emin=-95 -monitor.Emax=95 -monitor.nE=190'
+            print
+            print
+
     app = App('checksqe')
     return app.run()
         
