@@ -1,7 +1,7 @@
-.. _tutorials:
+.. _tutorials-basics:
 
-Tutorials
-=========
+Tutorials -- basics
+===================
 
 
 Quick simulation: "mcvine-simulate"

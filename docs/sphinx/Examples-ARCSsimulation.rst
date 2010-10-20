@@ -1,3 +1,5 @@
+.. _tutorials-arcs:
+
 Simulation of ARCS experiments
 ==============================
 
@@ -185,4 +187,7 @@ See how many neutrons are there::
  $ mcvine-neutron-storage-count-neutrons out/neutrons
 
 
-(Optional) check the I(Q,E) using an ideal I(Q,E) monitor
+(Optional) check the I(Q,E) using an ideal I(Q,E) monitor::
+
+ $ checksqe -source.path=out/neutrons -monitor.Ei=100 -monitor.Emin=-95 -monitor.Emax=95 -monitor.nE=190 -monitor.Qmin=0 -monitor.Qmax=13 -monitor.nQ=130
+
