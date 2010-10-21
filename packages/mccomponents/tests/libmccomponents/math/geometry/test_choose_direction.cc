@@ -23,18 +23,24 @@ using namespace std;
 using namespace mccomponents::math;
 char * jrnltag ="test_choose_direction";
 
+typedef mcni::Vector3<double> V3;
+
 
 void test1()
 {
-
+  int N = 10000;
+  V3 dir;
+  for (int i=0; i<N; i++) {
+    choose_direction(dir);
+  }
 }
+
+
 int main()
 {
 #ifdef DEBUG
   //  journal::debug_t("mccomposite.geometry.ArrowIntersector").activate();
-//   journal::debug_t("mccomposite.geometry.Locator").activate();
-//   journal::debug_t("mccomposite.geometry.intersect").activate();
-//   journal::debug_t(jrnltag).activate();
+  //  journal::debug_t(jrnltag).activate();
 #endif
   test1();
 }
