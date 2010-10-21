@@ -14,6 +14,7 @@
 
 #include <cassert>
 #include <iostream>
+#include "mcni/test/assert.h"
 #include "mccomposite/geometry/shapes.h"
 #include "mccomposite/geometry/intersect.h"
 
@@ -163,6 +164,31 @@ void test6()
 void test7()
 {
   Cylinder cyl1(0.002,0.1);
+  Cylinder cyl2(0.000001,0.1);
+  RotationMatrix m(1,-0,0, 0,6.12323e-17,1, 0,-1,6.12323e-17);
+  Rotation r1(cyl1, m), r2(cyl2, m);
+  Difference hc(r1, r2);
+  RotationMatrix mI(1,0,0, 0,1,0, 0,0,1);
+  Rotation hcr(hc, mI);
+  Vector t(0,0,0);
+  Translation hcrt(hcr, t);
+  
+  std::vector<const AbstractShape *> shapes;
+  shapes.push_back( &hcrt );
+
+  Position start(0,0,-3);
+  Direction direction(0,0,3659.51);
+  assert (find_1st_hit< int >( start, direction, shapes )==0);
+}
+
+
+// this test only differs from test7 in cyl2. cyl2 has a small
+// radius in test7, but is zero here. 
+// test8 does not pass here and shows a bug in mccomposite geometry
+// lib
+void test8()
+{
+  Cylinder cyl1(0.002,0.1);
   Cylinder cyl2(0.,0.1);
   RotationMatrix m(1,-0,0, 0,6.12323e-17,1, 0,-1,6.12323e-17);
   Rotation r1(cyl1, m), r2(cyl2, m);
@@ -181,10 +207,113 @@ void test7()
 }
 
 
+void test9()
+{
+  Box box( 2, 4, 6 );
+  
+  Position start(0,0,-5);
+  Direction direction(0,0,2);
+  Arrow arrow(start, direction);
+  
+  ArrowIntersector::distances_t dists = intersect(arrow, box);
+  mcni::assertNumberEqual(dists.size(), 2);
+  mcni::assertAlmostEqual(dists[0], 1);
+  mcni::assertAlmostEqual(dists[1], 4);
+
+  arrow.start = Position(0,0,0);
+  dists = intersect(arrow, box);
+  mcni::assertNumberEqual(dists.size(), 2);
+  mcni::assertAlmostEqual(dists[0], -1.5);
+  mcni::assertAlmostEqual(dists[1], 1.5);
+
+  arrow.start = Position(0,0,1);
+  dists = intersect(arrow, box);
+  mcni::assertNumberEqual(dists.size(), 2);
+  mcni::assertAlmostEqual(dists[0], -2);
+  mcni::assertAlmostEqual(dists[1], 1);
+
+  arrow.start = Position(0,0,0);
+  arrow.direction = Direction(1,0,1);
+  dists = intersect(arrow, box);
+  mcni::assertNumberEqual(dists.size(), 2);
+  mcni::assertAlmostEqual(dists[0], -1);
+  mcni::assertAlmostEqual(dists[1], 1);
+
+  arrow.start = Position(0,0,0);
+  arrow.direction = Direction(0,1,1);
+  dists = intersect(arrow, box);
+  mcni::assertNumberEqual(dists.size(), 2);
+  mcni::assertAlmostEqual(dists[0], -2);
+  mcni::assertAlmostEqual(dists[1], 2);
+
+  arrow.start = Position(0,0,0);
+  arrow.direction = Direction(2,0,0);
+  dists = intersect(arrow, box);
+  mcni::assertNumberEqual(dists.size(), 2);
+  mcni::assertAlmostEqual(dists[0], -0.5);
+  mcni::assertAlmostEqual(dists[1], 0.5);
+
+  arrow.start = Position(0,0,0);
+  arrow.direction = Direction(0,2,0);
+  dists = intersect(arrow, box);
+  mcni::assertNumberEqual(dists.size(), 2);
+  mcni::assertAlmostEqual(dists[0], -1);
+  mcni::assertAlmostEqual(dists[1], 1);
+
+  arrow.start = Position(5,5,5);
+  arrow.direction = Direction(1,1,1);
+  dists = intersect(arrow, box);
+  mcni::assertNumberEqual(dists.size(), 2);
+  mcni::assertAlmostEqual(dists[0], -6);
+  mcni::assertAlmostEqual(dists[1], -4);
+
+  arrow.start = Position(-5,-5,-5);
+  arrow.direction = Direction(1,1,1);
+  dists = intersect(arrow, box);
+  mcni::assertNumberEqual(dists.size(), 2);
+  mcni::assertAlmostEqual(dists[0], 4);
+  mcni::assertAlmostEqual(dists[1], 6);
+
+  arrow.start = Position(-1,-3,-0);
+  arrow.direction = Direction(1,1,0);
+  dists = intersect(arrow, box);
+  mcni::assertNumberEqual(dists.size(), 2);
+  mcni::assertAlmostEqual(dists[0], 1);
+  mcni::assertAlmostEqual(dists[1], 2);
+
+  arrow.start = Position(-10,0,-10);
+  arrow.direction = Direction(0,0,1);
+  dists = intersect(arrow, box);
+  mcni::assertNumberEqual(dists.size(), 0);
+}
+
+
+void test10()
+{
+  Cylinder cyl( 1, 4 );
+  
+  Position start(0,0,-5);
+  Direction direction(0,0,2);
+  Arrow arrow(start, direction);
+  
+  ArrowIntersector::distances_t dists = intersect(arrow, cyl);
+  mcni::assertNumberEqual(dists.size(), 2);
+  mcni::assertAlmostEqual(dists[0], 1.5);
+  mcni::assertAlmostEqual(dists[1], 3.5);
+
+  arrow.start = Position(0.5,0.5,-5);
+  arrow.direction = Direction(0,0,2);
+  dists = intersect(arrow, cyl);
+  mcni::assertNumberEqual(dists.size(), 2);
+  mcni::assertAlmostEqual(dists[0], 1.5);
+  mcni::assertAlmostEqual(dists[1], 3.5);
+}
+
+
 int main()
 {
 #ifdef DEBUG
-//   journal::debug_t("mccomposite.geometry.ArrowIntersector").activate();
+  //  journal::debug_t("mccomposite.geometry.ArrowIntersector").activate();
 //   journal::debug_t("mccomposite.geometry.Locator").activate();
 //   journal::debug_t("mccomposite.geometry.intersect").activate();
 //   journal::debug_t(jrnltag).activate();
@@ -196,6 +325,9 @@ int main()
   test5();
   test6();
   test7();
+  // test8();
+  test9();
+  test10();
 }
 
 // version

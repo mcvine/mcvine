@@ -73,9 +73,32 @@ mccomposite::geometry::ArrowIntersector::calculate_intersections
 
 #include "mcstas_compact/mcstas_compact.h"
 
-bool isInvaildDirection( const mccomposite::geometry::Direction & direction )
-{
-  return (direction[0] == 0 && direction[1] == 0 && direction[2] == 0 );
+namespace {
+  using mccomposite::geometry::Position;
+  using mccomposite::geometry::Direction;
+
+  bool isInvaildDirection( const Direction & direction )
+  {
+    return (direction[0] == 0 && direction[1] == 0 && direction[2] == 0 );
+  }
+
+
+  // calculate the time an arrow intersecting a rectangle centered at origin
+  // the rectangle is on the x-y plane and its size is (X,Y)
+  // The arrow starts at "r" and has a "velocity" "v"
+  // if there is an intersection, the "time" of the intersection
+  // will be pushed into the result array "ts". if not, nothing will happen
+  void intersectRectangle
+  (double rx, double ry, double rz, 
+   double vx, double vy, double vz,
+   double X, double Y, 
+   std::vector<double> &ts)
+  {
+    double t = (0-rz)/vz;
+    double r1x = rx + vx*t, r1y = ry+vy*t;
+    if (std::abs(r1x) < X/2 && std::abs(r1y) < Y/2) 
+      ts.push_back(t);
+  }
 }
 
 // visiting methods
@@ -83,6 +106,9 @@ void
 mccomposite::geometry::ArrowIntersector::visit
 ( const Box * boxptr )
 {
+#ifdef DEBUG
+  journal::debug_t debug( ArrowIntersector_impl::jrnltag );
+#endif
   m_distances.clear();
   
   const Box & box = *boxptr;
@@ -90,6 +116,15 @@ mccomposite::geometry::ArrowIntersector::visit
   const Position & start = m_arrow.start;
   const Direction & direction = m_arrow.direction;
   if (isInvaildDirection(direction)) return;
+  
+#ifdef DEBUG
+  debug << journal::at(__HERE__) 
+	<< "box: "<< *boxptr << journal::newline
+	<< "start: " << start << journal::newline
+	<< "direction: " << direction
+	<< journal::endl
+    ;
+#endif
   
   double dt_in, dt_out;
   
@@ -101,24 +136,53 @@ mccomposite::geometry::ArrowIntersector::visit
   double vy = direction.y;
   double vz = direction.z;
   
-  if ( ! McStas::box_intersect
-       ( &dt_in,  &dt_out,  x,  y,  z,  vx,  vy,  vz,  
-	 box.edgeX,  box.edgeY,  box.edgeZ) )
-    return;
+  double X = box.edgeX, Y = box.edgeY, Z = box.edgeZ;
+  std::vector<double> ts;
+  if (vz!=0) {
+    intersectRectangle(x,y,z-Z/2, vx,vy,vz, X, Y, ts);
+    intersectRectangle(x,y,z+Z/2, vx,vy,vz, X, Y, ts);
+  }
+#ifdef DEBUG
+  debug << journal::at(__HERE__) 
+	<< ts << journal::endl
+    ;
+#endif
+  if (vx!=0) {
+    intersectRectangle(y,z,x-X/2, vy,vz,vx, Y, Z, ts);
+    intersectRectangle(y,z,x+X/2, vy,vz,vx, Y, Z, ts);
+  }
+#ifdef DEBUG
+  debug << journal::at(__HERE__) 
+	<< ts << journal::endl
+    ;
+#endif
+  if (vy!=0) {
+    intersectRectangle(z,x,y-Y/2, vz,vx,vy, Z, X, ts);
+    intersectRectangle(z,x,y+Y/2, vz,vx,vy, Z, X, ts);
+  }
+#ifdef DEBUG
+  debug << journal::at(__HERE__) 
+	<< ts << journal::endl
+    ;
+#endif
   
-  m_distances.push_back( dt_in );
-  m_distances.push_back( dt_out );
+  if (!ts.size()) return;
+  if (ts.size()!=2) throw Exception("number of intersections between a line and a box should be 0 or 2");
+  
+  if (ts[0] < ts[1]) {
+    m_distances.push_back(ts[0]);
+    m_distances.push_back(ts[1]);
+  } else {
+    m_distances.push_back(ts[1]);
+    m_distances.push_back(ts[0]);
+  }
   
 #ifdef DEBUG
-  journal::debug_t debug( ArrowIntersector_impl::jrnltag );
-
   debug << journal::at(__HERE__) 
 	<< m_distances << journal::endl
     ;
 #endif
 
-  //
-  //if (m_distances.size()%2==1) throw Exception("odd number of intersections");
   return ;
 }
 
