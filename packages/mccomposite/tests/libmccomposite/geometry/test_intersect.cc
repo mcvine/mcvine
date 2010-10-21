@@ -132,7 +132,8 @@ void test4()
 void test5()
 {
   Cylinder cyl1(0.002,0.1);
-  Cylinder cyl2(0.,0.1);
+  // Cylinder cyl2(0,0.1); this is not supported. should not support a shape that is actually nothing
+  Cylinder cyl2(1e-6, 0.1);
   Difference hc(cyl1, cyl2);
   
   std::vector<const AbstractShape *> shapes;
@@ -147,7 +148,8 @@ void test5()
 void test6()
 {
   Cylinder cyl1(0.002,0.1);
-  Cylinder cyl2(0.,0.1);
+  // Cylinder cyl2(0,0.1); this is not supported. should not support a shape that is actually nothing
+  Cylinder cyl2(1e-6, 0.1);
   RotationMatrix m(1,-0,0, 0,0,1, 0,-1,0);
   Rotation r1(cyl1, m), r2(cyl2, m);
   Difference hc(r1, r2);
@@ -307,6 +309,72 @@ void test10()
   mcni::assertNumberEqual(dists.size(), 2);
   mcni::assertAlmostEqual(dists[0], 1.5);
   mcni::assertAlmostEqual(dists[1], 3.5);
+
+  arrow.start = Position(0,0,0);
+  arrow.direction = Direction(1,0,0);
+  dists = intersect(arrow, cyl);
+  mcni::assertNumberEqual(dists.size(), 2);
+  mcni::assertAlmostEqual(dists[0], -1);
+  mcni::assertAlmostEqual(dists[1], 1);
+
+  arrow.start = Position(0,0,0);
+  arrow.direction = Direction(0,1,0);
+  dists = intersect(arrow, cyl);
+  mcni::assertNumberEqual(dists.size(), 2);
+  mcni::assertAlmostEqual(dists[0], -1);
+  mcni::assertAlmostEqual(dists[1], 1);
+
+  using std::sqrt;
+
+  arrow.start = Position(0.5,0,0);
+  arrow.direction = Direction(0,1,0);
+  dists = intersect(arrow, cyl);
+  mcni::assertNumberEqual(dists.size(), 2);
+  mcni::assertAlmostEqual(dists[0], -sqrt(3)/2);
+  mcni::assertAlmostEqual(dists[1], sqrt(3)/2);
+
+  arrow.start = Position(0,0.5,0);
+  arrow.direction = Direction(1,0,0);
+  dists = intersect(arrow, cyl);
+  mcni::assertNumberEqual(dists.size(), 2);
+  mcni::assertAlmostEqual(dists[0], -sqrt(3)/2);
+  mcni::assertAlmostEqual(dists[1], sqrt(3)/2);
+
+  arrow.start = Position(-5,0.5,0);
+  arrow.direction = Direction(2,0,0);
+  dists = intersect(arrow, cyl);
+  mcni::assertNumberEqual(dists.size(), 2);
+  mcni::assertAlmostEqual(dists[0], (5-sqrt(3)/2)/2);
+  mcni::assertAlmostEqual(dists[1], (5+sqrt(3)/2)/2);
+
+  arrow.start = Position(-1,0,0);
+  arrow.direction = Direction(1,0,1);
+  dists = intersect(arrow, cyl);
+  mcni::assertNumberEqual(dists.size(), 2);
+  mcni::assertAlmostEqual(dists[0], 0);
+  mcni::assertAlmostEqual(dists[1], 2);
+
+  arrow.start = Position(-1,0,0);
+  arrow.direction = Direction(0.5,0,1);
+  dists = intersect(arrow, cyl);
+  mcni::assertNumberEqual(dists.size(), 2);
+  mcni::assertAlmostEqual(dists[0], 0);
+  mcni::assertAlmostEqual(dists[1], 2);
+
+  arrow.start = Position(-1,0,0);
+  arrow.direction = Direction(1,0,0.5);
+  dists = intersect(arrow, cyl);
+  mcni::assertNumberEqual(dists.size(), 2);
+  mcni::assertAlmostEqual(dists[0], 0);
+  mcni::assertAlmostEqual(dists[1], 2);
+
+  arrow.start = Position(-1,0,0);
+  arrow.direction = Direction(1,0,0.9);
+  dists = intersect(arrow, cyl);
+  mcni::assertNumberEqual(dists.size(), 2);
+  mcni::assertAlmostEqual(dists[0], 0);
+  mcni::assertAlmostEqual(dists[1], 2);
+
 }
 
 

@@ -71,8 +71,6 @@ mccomposite::geometry::ArrowIntersector::calculate_intersections
 
 
 
-#include "mcstas_compact/mcstas_compact.h"
-
 namespace {
   using mccomposite::geometry::Position;
   using mccomposite::geometry::Direction;
@@ -98,6 +96,78 @@ namespace {
     double r1x = rx + vx*t, r1y = ry+vy*t;
     if (std::abs(r1x) < X/2 && std::abs(r1y) < Y/2) 
       ts.push_back(t);
+  }
+
+  
+  // calculate the time an arrow intersecting 
+  // the side of a cylinder.
+  // the cylinder is decribed by equation
+  //   x^2 + y^2 = r^2
+  // and z is limited in (-h/2, h/2)
+  void intersectCylinderSide
+  (double x, double y, double z,
+   double vx, double vy, double vz,
+   double r, double h,
+   std::vector<double> &ts)
+  {
+    double a = vx*vx + vy*vy;
+    double b = x*vx + y*vy;
+    double c = x*x+y*y - r*r;
+    double k = b*b-a*c;
+    double t, hh = h/2.;
+
+    if (k<0) return;
+    if (k==0) {
+      t = -b/a;
+      if (std::abs(z+vz*t)<hh)
+	ts.push_back(t);
+      return;
+    }
+    k = std::sqrt(k);    
+
+    t = (-b+k)/a;
+    if (std::abs(z+vz*t)<hh)
+      ts.push_back(t);
+
+    t = (-b-k)/a;
+    if (std::abs(z+vz*t)<hh)
+      ts.push_back(t);
+  }
+
+  // calculate the time an arrow intersecting 
+  // the top/bottom of a cylinder.
+  // the cylinder is decribed by equation
+  //   x^2 + y^2 = r^2
+  // and z is limited in (-h/2, h/2)
+  void intersectCylinderTopBottom
+  (double x, double y, double z,
+   double vx, double vy, double vz,
+   double r, double h,
+   std::vector<double> &ts)
+  {
+    double hh = h/2, r2 = r*r;
+    double t;
+    double x1, y1;
+
+    t = (hh-z)/vz;
+    x1 = x + vx*t;
+    y1 = y + vy*t;
+    if (x1*x1 + y1*y1 <= r2) {
+      ts.push_back(t);
+    }
+
+    t = (-hh-z)/vz;
+    x1 = x + vx*t;
+    y1 = y + vy*t;
+    if (x1*x1 + y1*y1 <= r2)
+      ts.push_back(t);
+  }
+
+  // 
+  const double epsilon = 1.e-7;
+  inline bool eq_withinepsilon(double x, double y)
+  {
+    return std::abs(x-y) < epsilon;
   }
 }
 
@@ -125,8 +195,6 @@ mccomposite::geometry::ArrowIntersector::visit
 	<< journal::endl
     ;
 #endif
-  
-  double dt_in, dt_out;
   
   double x = start.x; 
   double y = start.y;
@@ -191,15 +259,26 @@ void
 mccomposite::geometry::ArrowIntersector::visit
 ( const Cylinder * cylptr )
 {
+#ifdef DEBUG
+  journal::debug_t debug( ArrowIntersector_impl::jrnltag );
+#endif
+
   m_distances.clear();
   
   const Cylinder & cylinder = *cylptr;
-  
+
   const Position & start = m_arrow.start;
   const Direction & direction = m_arrow.direction;
   if (isInvaildDirection(direction)) return;
   
-  double dt_in, dt_out;
+#ifdef DEBUG
+  debug << journal::at(__HERE__) 
+	<< "cylinder: "<< cylinder << journal::newline
+	<< "start: " << start << journal::newline
+	<< "direction: " << direction
+	<< journal::endl
+    ;
+#endif
   
   double x = start.x; 
   double y = start.y;
@@ -208,17 +287,46 @@ mccomposite::geometry::ArrowIntersector::visit
   double vx = direction.x;
   double vy = direction.y;
   double vz = direction.z;
+
+  const double &r = cylinder.radius;
+  const double &h = cylinder.height;
+
+  std::vector<double> ts;
+  // side
+  intersectCylinderSide(x,y,z, vx,vy,vz, r, h, ts);
+#ifdef DEBUG
+  debug << journal::at(__HERE__) 
+	<< ts << journal::endl
+    ;
+#endif
+
+  // top/bottom
+  intersectCylinderTopBottom(x,y,z, vx,vy,vz, r, h, ts);
+#ifdef DEBUG
+  debug << journal::at(__HERE__) 
+	<< ts << journal::endl
+    ;
+#endif
   
-  if ( ! McStas::cylinder_intersect
-       ( &dt_in,  &dt_out,  y,  z,  x,  vy,  vz,  vx,  
-	 cylinder.radius, cylinder.height) )
-    return;
+  if (ts.size()==0) return;
   
-  m_distances.push_back( dt_in );
-  m_distances.push_back( dt_out );
-  
-  //
-  //  if (m_distances.size()%2==1) throw Exception("odd number of intersections");
+  if (ts.size()!=2) {
+    if (ts.size()==1)
+      throw Exception("number of intersections between a line and a cylinder should be 0 or 2");
+    // there might be duplicates
+    std::vector<double>::iterator new_end = std::unique
+      (ts.begin(), ts.end(), eq_withinepsilon);
+    if (new_end-ts.begin()!=2) 
+      throw Exception("number of intersections between a line and a cylinder should be 0 or 2");
+  }
+
+  if (ts[0]<ts[1]) {
+    m_distances.push_back(ts[0]);
+    m_distances.push_back(ts[1]);
+  } else {
+    m_distances.push_back(ts[1]);
+    m_distances.push_back(ts[0]);
+  }
   return;
 }
 
