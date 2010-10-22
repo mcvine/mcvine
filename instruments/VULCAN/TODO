@@ -15,7 +15,9 @@ ToDo list for VULCAN
 - [DONE] Display VULCAN components in the drop down menu
 - [DONE] Create VULCAN instrument in VNF
 - Fix non-functional monitors in VNF
-- Create VULCAN instrument in McVine script and run experiment
+- [IN PROGRESS] Create VULCAN instrument in McVine script and run experiment (with Vanadium sample)
+- Replace old components in McVine?
+- Implement composite detector consisting of 6 PSD_TEW_monitor (after the sample)
 - Integrate Sample Kernel to McVine script
 - Implement script for generation of instrument in .pml file: toInstrPML()
 - Finish with mcstas parser implementation
