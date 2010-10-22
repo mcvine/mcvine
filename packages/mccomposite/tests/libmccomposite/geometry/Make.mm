@@ -19,7 +19,7 @@ PROJ_CLEAN += $(PROJ_CPPTESTS)
 PROJ_PYTESTS =  alltests.py
 PROJ_CPPTESTS = testPrinter testArrowIntersector testDilation testLocator test_intersect
 PROJ_TESTS = $(PROJ_PYTESTS) $(PROJ_CPPTESTS)
-PROJ_LIBRARIES = -L$(BLD_LIBDIR) -ljournal -lmccomposite -lmcni -lmcstas_compact
+PROJ_LIBRARIES = -L$(BLD_LIBDIR) -ljournal -lmccomposite -lmcni 
 
 
 #--------------------------------------------------------------------------

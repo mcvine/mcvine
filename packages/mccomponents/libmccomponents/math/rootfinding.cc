@@ -13,26 +13,7 @@ namespace mccomponents { namespace math {
   {
     // resutl
     std::vector<double> root_list;
-    // temp vars
-    double root,range=x2-x1;
-    double step = range/m_nSteps;
-    for (size_t i=0; i<m_nSteps; i++) {
-      bool failed = 0;
-      try {
-	root = m_rootFinder.solve (x1+step*i, x1+step*(i+1), function, failed);
-	if (failed) continue;
-	root_list.push_back(root);
-      }
-      catch (const char *str) {
-	std::cerr << "caught " << str 
-		  << " from function findaroot " << std::endl;
-      }
-      catch (const RootNotFound & rnf) {
-	std::cerr << "caght root not found " << std::endl;
-      }
-	    
-    }//for loop i
-
+    solve(x1, x2, function, root_list);
     return root_list;
   }//solve
 
@@ -48,8 +29,10 @@ namespace mccomponents { namespace math {
     double step = range/m_nSteps;
 	
     for (size_t i=0; i<m_nSteps; i++) {
+      bool failed = 0;
       try {
-	root = m_rootFinder.solve (x1+step*i, x1+step*(i+1), function);
+	root = m_rootFinder.solve (x1+step*i, x1+step*(i+1), function, failed);
+	if (failed) continue;
 	root_list.push_back(root);
       }
       catch (const char *str) {
@@ -57,6 +40,7 @@ namespace mccomponents { namespace math {
 		  << " from function findaroot " << std::endl;
       }
       catch (const RootNotFound & rnf) {
+	std::cerr << "caght root not found " << std::endl;
       }
 	    
     }//for loop i
@@ -76,7 +60,6 @@ namespace mccomponents { namespace math {
           }
         }
 
-	/*
 	double zridd(double (*func)(double, const std::vector<double> &), 
 		     double x1, double x2, 
 		     const std::vector<double> &parameters, double xacc,
@@ -165,7 +148,6 @@ namespace mccomponents { namespace math {
 	  
 	  return 0.0;  // Never get here 
 	} //zridd
-      */
 
 	double zridd(const Functor &f,
 		     double x1, double x2, double xacc, bool &failed)

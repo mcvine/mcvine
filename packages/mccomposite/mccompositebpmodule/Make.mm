@@ -19,7 +19,7 @@ include std-pythonmodule.def
 include local.def
 
 
-PROJ_CXX_SRCLIB = -lboost_python  -L$(BOOSTPYTHON_LIBDIR) -ljournal -lmccomposite -lmcni -lmcstas_compact
+PROJ_CXX_SRCLIB = -lboost_python  -L$(BOOSTPYTHON_LIBDIR) -ljournal -lmccomposite -lmcni 
 
 
 PROJ_SRCS = \

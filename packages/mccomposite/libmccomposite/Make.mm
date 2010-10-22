@@ -18,7 +18,6 @@ PACKAGE = libmccomposite
 # directory structure
 
 BUILD_DIRS = \
-	mcstas_compact \
 	headers \
 	geometry \
 	mccomposite \

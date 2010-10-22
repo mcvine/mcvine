@@ -17,9 +17,6 @@
 #include "mcni/geometry/utils.h"
 
 
-// temporarily we still need mcstas_compact
-#include "mcstas_compact/randvec.h"
-
 #ifdef DEEPDEBUG
 #define DEBUG
 #endif
@@ -49,7 +46,7 @@ mccomponents::math::choose_direction
   double solidangle = 2*PI*(1 - costheta_max);
 
   // choose theta and phi
-  double theta = acos (random(costheta_max, 1-1e-10));
+  double theta = acos (random(costheta_max, 1));
   double phi = random(0, 2 * PI);
 
   // choose normal vector

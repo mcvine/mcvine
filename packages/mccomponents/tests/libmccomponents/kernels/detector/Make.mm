@@ -19,7 +19,7 @@ PROJ_CLEAN += $(PROJ_CPPTESTS)
 PROJ_PYTESTS =  alltests.py
 PROJ_CPPTESTS = testTof2Channel testZ2Channel testHe3Tube testEventModeMCA testHe3
 PROJ_TESTS = $(PROJ_PYTESTS) $(PROJ_CPPTESTS)
-PROJ_LIBRARIES = -L$(BLD_LIBDIR) -ljournal -lmcni -lmccomposite -lmcstas_compact -lmccomponents
+PROJ_LIBRARIES = -L$(BLD_LIBDIR) -ljournal -lmcni -lmccomposite -lmccomponents -lfparser
 
 
 #--------------------------------------------------------------------------

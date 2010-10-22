@@ -88,11 +88,11 @@ namespace mccomponents{ namespace math{
 	  \param func f(x, parameters), the function to found root. 
 	  \param parameters parameters for the function func
 	  \param xacc accuracy requirement
+	*/
 	double zridd(double (*func)(double, const std::vector<double> &), 
 		     double x1, double x2, 
 		     const std::vector<double> &parameters, double xacc,
 		     bool &failed);
-	*/
 
 	//! find a root between x1 and x2 using Ridder's algorithm (brackets)
 	/*!

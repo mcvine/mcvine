@@ -54,7 +54,9 @@ namespace mcni{
     
     // methods
     Vector3 <T> & normalize( void);
-    T length(void) const;
+    inline T length(void) const;
+    // square of length
+    inline T length2(void) const;
     
     // operators
     Vector3 <T> operator+(const Vector3 <T> & b) const;

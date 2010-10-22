@@ -22,7 +22,7 @@ PROJ_CPPTESTS = test_SimplePowderDiffractionKernel \
 
 
 PROJ_TESTS = $(PROJ_PYTESTS) $(PROJ_CPPTESTS)
-PROJ_LIBRARIES = -L$(BLD_LIBDIR) -ljournal -lmcni -lmccomposite -lmccomponents -lmcstas_compact -lfparser
+PROJ_LIBRARIES = -L$(BLD_LIBDIR) -ljournal -lmcni -lmccomposite -lmccomponents  -lfparser
 PROJ_CXX_DEFINES += DEEPDEBUG
 
 

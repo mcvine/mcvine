@@ -62,7 +62,15 @@ namespace mcni {
   Vector3<T>::length
   (void) const
   { 
-    return sqrt(fabs(x)*fabs(x)+fabs(y)*fabs(y)+fabs(z)*fabs(z));
+    return sqrt(length2());
+  }
+  
+  template <class T>
+  T 
+  Vector3<T>::length2
+  (void) const
+  { 
+    return fabs(x)*fabs(x)+fabs(y)*fabs(y)+fabs(z)*fabs(z);
   }
   
   // operators

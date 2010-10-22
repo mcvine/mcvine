@@ -23,7 +23,7 @@ PROJ_CPPTESTS = \
 	test_rootfinding \
 
 PROJ_TESTS = $(PROJ_PYTESTS) $(PROJ_CPPTESTS)
-PROJ_LIBRARIES = -L$(BLD_LIBDIR) -ljournal -lmcni -lmccomposite -lmcstas_compact -lmccomponents -lfparser
+PROJ_LIBRARIES = -L$(BLD_LIBDIR) -ljournal -lmcni -lmccomposite -lmccomponents -lfparser
 
 # directory structure
 

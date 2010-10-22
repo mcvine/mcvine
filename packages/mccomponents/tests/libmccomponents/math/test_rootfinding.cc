@@ -42,29 +42,29 @@ void test_zridd()
   double xacc = 1.e-7, root;
   
   vector<double> parms(2), root_list;
+  bool failed;
   
   //----------sin(x) in (-1,1)----------------------------------------
   //function parameters
-  parms[0] = 1.; parms[1] = 0.;
+  parms[0] = 1.; parms[1] = 0.; 
   //find root
   cout << "-> A root of sin(x) is in (-1, 1):" 
-       << zridd( cSin, -1, 1, parms, xacc) <<endl;
+       << zridd( cSin, -1, 1, parms, xacc, failed) <<endl;
   //check answer
-  assertAlmostEqual(  zridd( cSin, -1, 1, parms, xacc), 0 );
+  assertAlmostEqual(  zridd( cSin, -1, 1, parms, xacc, failed), 0);
   
   //--------sin(x) in PI/2, PI*5/2------------------------------------
   //root not found exception
-  try {
-    root = zridd( cSin, PI/2, PI*5/2, parms, xacc);
-  }
-  catch (const RootNotFound & rnf) {
+  root = zridd( cSin, PI/2, PI*5/2, parms, xacc, failed);
+  if (!failed) 
+    throw mcni::Exception("should catch error");
+  else
     std::cerr << "-> sin(x): root not found in (PI/2, PI*5/2)!" <<endl;
-  }
 
   //---------sin(x+0.5) in (-1, 1)------------------------------------
   parms[1] = 0.5;
-  cout << "-> A root of sin(x+0.5) in (-1,1): " << zridd( cSin, -1, 1, parms, xacc) <<endl;
-  assertAlmostEqual(  zridd( cSin, -1, 1, parms, xacc), -0.5, 1e-7, 1e-7 );
+  cout << "-> A root of sin(x+0.5) in (-1,1): " << zridd( cSin, -1, 1, parms, xacc, failed) <<endl;
+  assertAlmostEqual(  zridd( cSin, -1, 1, parms, xacc, failed), -0.5, 1e-7, 1e-7 );
 }
 
 
@@ -74,10 +74,10 @@ void test_zridd_functor()
   double xacc = 1.e-7;
   
   // try functor
-  SinFunctor sin_f(1.0, 0.0);
+  SinFunctor sin_f(1.0, 0.0); bool failed;
   cout << "-> A root of sin(x) is in (-1, 1):" 
-       << zridd( sin_f, -1, 1,  xacc) <<endl;
-  assertAlmostEqual(  zridd( sin_f, -1, 1,  xacc), 0 );
+       << zridd( sin_f, -1, 1,  xacc, failed) <<endl;
+  assertAlmostEqual(  zridd( sin_f, -1, 1,  xacc, failed), 0 );
 }
 
 void test_ZRidd()
