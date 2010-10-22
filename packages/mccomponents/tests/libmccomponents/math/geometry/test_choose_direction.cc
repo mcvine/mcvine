@@ -94,26 +94,30 @@ void test2()
   for (int i=0; i<Ntheta*Nphi; i++) 
     I[i] = 0;
 
-  int itheta, iphi;
-  double sa;
+  int itheta, iphi, index;
+  double sa, l;
   for (int i=0; i<N; i++) {
     sa = choose_direction(dir, target, radius);
-    mcni::assertAlmostEqual(dir.length(), 10.);
+    l = dir.length();
+    mcni::assertAlmostEqual(l, 10.);
     mcni::assertAlmostEqual(sa, 0.264985, 1e-4, 1e-5);
     
-    theta = std::acos(dir.z);
+    theta = std::acos(dir.z/l);
     phi = std::atan2(dir.y, dir.x);
     
     // convert to cos(theta) because solid angle is sintheta dtheta dphi = d(costheta) dphi
     itheta = (std::cos(theta)+1)/2*Ntheta;
     iphi = (phi+PI)/2/PI * Nphi;
+    if (iphi==Nphi) iphi = Nphi-1;
+    if (iphi>Nphi) throw mcni::Exception("phi index out of bound");
 
     /*
     std::cout << "theta=" << theta << ", "
 	      << "phi = " << phi 
 	      << std::endl;
     */
-    I[itheta*Nphi + iphi] += 1;
+    index = itheta*Nphi + iphi;
+    I[index] += 1;
   }
 
   double sigma = sqrt(N1*Ntheta);
@@ -129,7 +133,7 @@ void test2()
 	<< "i=" << i << ", "
 	<< "I=" << I[i] 
 	<< std::endl;
-    if (i<Nphi) 
+    if (i>=(Ntheta-1)*Nphi) 
       mcni::assertAlmostEqual(I[i], N1*Ntheta, 3./sigma, 3*sigma);
     else
       mcni::assertAlmostEqual(I[i], 0);
@@ -152,13 +156,14 @@ void test3()
     I[i] = 0;
 
   int itheta, iphi;
-  double sa;
+  double sa, l;
   for (int i=0; i<N; i++) {
     sa = choose_direction(dir, target, radius);
-    mcni::assertAlmostEqual(dir.length(), 10.);
+    l = dir.length();
+    mcni::assertAlmostEqual(l, 10.);
     mcni::assertAlmostEqual(sa, 0.264985, 1e-4, 1e-5);
     
-    theta = std::acos(dir.x);
+    theta = std::acos(dir.x/l);
     phi = std::atan2(dir.z, dir.y);
     
     // convert to cos(theta) because solid angle is sintheta dtheta dphi = d(costheta) dphi
@@ -186,7 +191,7 @@ void test3()
 	<< "i=" << i << ", "
 	<< "I=" << I[i] 
 	<< std::endl;
-    if (i<Nphi) 
+    if (i>=(Ntheta-1)*Nphi) 
       mcni::assertAlmostEqual(I[i], N1*Ntheta, 3./sigma, 3*sigma);
     else
       mcni::assertAlmostEqual(I[i], 0);
