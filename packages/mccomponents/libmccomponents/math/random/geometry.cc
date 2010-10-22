@@ -12,7 +12,9 @@
 //
 
 
+#include "mccomponents/math/random.h"
 #include "mccomponents/math/random/geometry.h"
+#include "mcni/geometry/utils.h"
 
 
 // temporarily we still need mcstas_compact
@@ -36,12 +38,34 @@ mccomponents::math::choose_direction
 ( mcni::Vector3<double> & dir, const mcni::Vector3<double> & target_dir,
   double target_radius)
 {
-  double solid_angle;
-  McStas::randvec_target_circle(&(dir.x), &(dir.y), &(dir.z),
-				&solid_angle, 
-				target_dir.x, target_dir.y, target_dir.z,
-				target_radius);
-  return solid_angle;
+  using mcni::PI;
+  typedef mcni::Vector3<double> V3;
+
+  // square of distance
+  double l2 = target_dir.length2();
+  double costheta_max = sqrt(l2/(target_radius*target_radius+l2));
+  if (target_radius < 0) costheta_max *= -1;
+
+  double solidangle = 2*PI*(1 - costheta_max);
+
+  // choose theta and phi
+  double theta = acos (random(costheta_max, 1-1e-10));
+  double phi = random(0, 2 * PI);
+
+  // choose normal vector
+  V3 n;
+  if(target_dir.x == 0 && target_dir.z == 0)
+    n = V3(1,0,0);
+  else
+    n = V3(-target_dir.z, 0, target_dir.x);
+  
+  V3 u = target_dir * n;
+  
+  dir = target_dir;
+  rotate(dir, u, theta);
+  rotate(dir, target_dir, phi);
+
+  return solidangle;
 }
 
 
@@ -49,23 +73,15 @@ void
 mccomponents::math::choose_direction
 ( mcni::Vector3<double> & dir )
 {
-#ifdef DEEPDEBUG
-  journal::debug_t debug("Random");
-#endif
-  double solid_angle;
-#ifdef DEEPDEBUG
-  debug << journal::at(__HERE__)
-	<< dir
-	<< journal::endl;
-#endif
-  McStas::randvec_target_circle(&(dir.x), &(dir.y), &(dir.z),
-				&solid_angle, 
-				0,0,1, 0);
-#ifdef DEEPDEBUG
-  debug << journal::at(__HERE__)
-	<< dir
-	<< journal::endl;
-#endif
+  using mcni::PI;
+  using namespace std;
+  double costheta = random(-1, 1);
+  double theta = acos(costheta);
+  double sintheta = sin(theta);
+  double phi = random(0, 2 * PI);
+  dir.x = sintheta*cos(phi);
+  dir.y = sintheta*sin(phi);
+  dir.z = costheta;
 }
 
 
