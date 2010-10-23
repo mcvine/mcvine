@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# For new SNSModerator
+# run.sh script executed by VNF (for new SNSModerator)
 
 . ~/.mcvine && python simapp.py \
 	--source.yh="0.085" \

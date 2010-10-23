@@ -41,6 +41,12 @@ PARAMS_DICT      = {
     "filename": "outputfilename(%s)" % COMPVAR
 }
 
+# Component filter, used to filter out some McStas specific parameters
+COMP_FILTER = {
+    "L_monitor":    ("restore_neutron",),
+    "PSD_monitor":  ("restore_neutron",),
+    "Monitor_nD":   ("file",)
+}
 
 # Instrument specific settings
 INSTRUMENT  = {}

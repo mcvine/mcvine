@@ -78,7 +78,7 @@ import sys
 import os.path
 from time import localtime, strftime
 from mcstas2.utils.parsers.McStasComponentParser import McStasComponentParser
-from compmodules import IMPORT_DICT, PARAMS_DICT, INSTRUMENT
+from compmodules import IMPORT_DICT, PARAMS_DICT, INSTRUMENT, COMP_FILTER
 
 # Regular expressions
 COMMENT         = '(/\*.*?\*/)'         # Non-greedy comment (.*?)
