@@ -1,0 +1,43 @@
+#!/usr/bin/env python
+#
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#
+#                                   Jiao Lin
+#                      California Institute of Technology
+#                      (C) 2007-2010  All Rights Reserved
+#
+# {LicenseText}
+#
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#
+
+from mcni.pyre_components.MultiMonitors import MultiMonitors
+class DetectorSystem(MultiMonitors):
+
+    class Inventory(MultiMonitors.Inventory):
+        
+        from mcni.pyre_support import facility
+        m1 = facility('m1', default="monitors/PSD_TEW_monitor")
+        m2 = facility('m2', default="monitors/PSD_TEW_monitor")
+        m3 = facility('m3', default="monitors/PSD_TEW_monitor")
+        m4 = facility('m4', default="monitors/PSD_TEW_monitor")
+        m5 = facility('m5', default="monitors/PSD_TEW_monitor")
+        m6 = facility('m6', default="monitors/PSD_TEW_monitor")
+        
+        
+    def _configure(self):
+        super(DetectorSystem, self)._configure()
+        self.monitors = [
+            self.inventory.m1, 
+            self.inventory.m2,
+            self.inventory.m3, 
+            self.inventory.m4,
+            self.inventory.m5, 
+            self.inventory.m6,
+            ]
+        return
+
+# version
+__id__ = "$Id$"
+
+# End of file 
