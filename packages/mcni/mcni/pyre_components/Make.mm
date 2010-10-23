@@ -30,6 +30,7 @@ update: clean
 EXPORT_PYTHON_MODULES = \
 	Dummy.py \
 	MonochromaticSource.py \
+	MultiMonitors.py \
 	NeutronFromStorage.py \
 	NeutronPrinter.py \
 	NeutronToStorage.py \
