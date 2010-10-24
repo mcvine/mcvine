@@ -38,6 +38,7 @@ EXPORT_PYTHON_MODULES = \
 	ParallelComponent.py \
 	RegistryToDict.py \
 	__init__.py \
+	_geometer_utils.py \
 	_invutils.py \
 	compareRegistry.py \
 	component_suppliers.py \

@@ -338,32 +338,9 @@ def _getCmdStr():
 
 
 def _build_geometer( instrument ):
-    
-    #find all components
+    from _geometer_utils import buildGeometerFromInventory
     Inventory = instrument.Inventory
-    componentnames = dir(Inventory)
-
-    from NeutronComponentFacility import NeutronComponentFacility
-    componentnames = filter(
-        lambda name: isinstance(
-            getattr(Inventory, name), NeutronComponentFacility ),
-        componentnames )
-    
-    #build the Geometer component
-    declarations = [
-        8*' ' + '%s = Register("%s")' % (name, name) for name in componentnames ]
-    declarations = '\n'.join( declarations )
-    
-    from Geometer import Geometer as base, Register
-    code = '''
-class Geometer1(base):
-    class Inventory(base.Inventory):
-%s
-''' % declarations
-    
-    exec code in locals()
-    
-    return Geometer1()
+    return buildGeometerFromInventory(Inventory)
     
 
 def getPartitions(N, n):
