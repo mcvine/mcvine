@@ -28,6 +28,12 @@ class C( AbstractComponent ):
         return neutrons
     
 
+
+# dummy geometer
+class Geometer(object):
+
+    def position(self, c): return (0,0,0)
+    def orientation(self, c): return (0,0,0)
     
 class TestCase(unittest.TestCase):
 
@@ -35,8 +41,10 @@ class TestCase(unittest.TestCase):
     def test0(self):
         'ComponentGroup'
         comps = [C() for i in range(10)]
+        geometer = Geometer()
+        from mcni.neutron_coordinates_transformers import default as transformer
         from mcni.components.ComponentGroup import ComponentGroup
-        cg = ComponentGroup('cg', comps)
+        cg = ComponentGroup('cg', comps, geometer, transformer)
         import mcni
         b = mcni.neutron_buffer(10)
         cg.process(b)

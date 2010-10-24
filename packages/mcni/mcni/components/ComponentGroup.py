@@ -37,17 +37,27 @@ class ComponentGroup( AbstractComponent ):
 
     __doc__ = simple_description + '\n' + full_description
 
-    def __init__(self, name, components):
+    def __init__(self, name, components, geometer, neutron_coords_transformer):
         AbstractComponent.__init__(self, name)
         self.components = components
+        self.geometer = geometer
+        self.neutron_coords_transformer = neutron_coords_transformer
         return
 
 
     def process(self, neutrons):
+        geometer = self.geometer
         N = len(neutrons)
         for c in self.components:
             # make a copy
             copy = neutrons.snapshot(N)
+            # transform coordinates of neutrons to the local
+            # coordinate system of the sub component
+            position = geometer.position(c)
+            orientation = geometer.orientation(c)
+            self.neutron_coords_transformer(
+                copy, (0,0,0), (0,0,0),
+                position, orientation)
             # send to sub-component
             c.process(copy)
             continue

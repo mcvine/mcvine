@@ -35,16 +35,41 @@ class MultiMonitors( AbstractComponent ):
 
     # derived component needs to overload this
     monitors = []
+
+
+    class Inventory(AbstractComponent.Inventory):
+
+        import pyre.inventory
+        
+        #geometer. this is a place holder. it got automatically
+        #created in _defaults
+        from mcni.pyre_support.Geometer import Geometer
+        geometer = pyre.inventory.facility(
+            'geometer', default = Geometer() )
+        geometer.meta['tip'] = 'geometer of instrument'
+
     
 
     def process(self, neutrons):
         return self.engine.process(neutrons)
 
 
+    def _defaults(self):
+        super(MultiMonitors, self)._defaults()
+        from mcni.pyre_support._geometer_utils import buildGeometerFromInventory
+        # geometer_name='%s-geometer' % self.name
+        geometer = buildGeometerFromInventory(
+            self.Inventory)#, name=geometer_name)
+        self.inventory.geometer = geometer
+        return
+
+
     def _init(self):
         super(MultiMonitors, self)._init()
+        geometer = self.inventory.geometer
+        from mcni.neutron_coordinates_transformers import default as transformer
         from mcni.components.ComponentGroup import ComponentGroup
-        self.engine = ComponentGroup(self.name, self.monitors)
+        self.engine = ComponentGroup(self.name, self.monitors, geometer, transformer)
         return
 
     

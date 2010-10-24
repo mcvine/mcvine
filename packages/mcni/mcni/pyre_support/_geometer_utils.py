@@ -12,7 +12,8 @@
 #
 
 
-def buildGeometer(componentnames):
+def buildGeometer(componentnames, name=None):
+    geometer_name = name or 'geometer'
     declarations = [
         8*' ' + '%s = Register("%s")' % (name, name) for name in componentnames ]
     declarations = '\n'.join( declarations )
@@ -26,10 +27,10 @@ class Geometer1(base):
     
     exec code in locals()
     
-    return Geometer1()
+    return Geometer1(geometer_name)
 
 
-def buildGeometerFromInventory(Inventory):
+def buildGeometerFromInventory(Inventory, name=None):
     #find all components
     componentnames = dir(Inventory)
 
@@ -39,7 +40,7 @@ def buildGeometerFromInventory(Inventory):
             getattr(Inventory, name), NeutronComponentFacility ),
         componentnames )
     
-    return buildGeometer(componentnames)
+    return buildGeometer(componentnames, name=name)
 
 
 # version
