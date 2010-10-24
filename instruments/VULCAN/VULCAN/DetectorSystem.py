@@ -23,6 +23,13 @@ class DetectorSystem(MultiMonitors):
         m4 = facility('m4', default="monitors/PSD_TEW_monitor")
         m5 = facility('m5', default="monitors/PSD_TEW_monitor")
         m6 = facility('m6', default="monitors/PSD_TEW_monitor")
+
+
+    def _defaults(self):
+        super(DetectorSystem, self)._defaults()
+        geometer = self.inventory.geometer
+        # geometer.inventory.m1 = (0,0,2), (0,90,0)
+        return
         
         
     def _configure(self):
