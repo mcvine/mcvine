@@ -64,6 +64,28 @@ will output something like::
  bin  docs  etc  include  lib  modules  share
 
 
+To make sure you have access to mcvine-wrapped mcstas components, please
+set the environment variable "MCSTAS_COMPONENT_LIBDIR". For example,
+you can set it by::
+
+ $ export MCSTAS_COMPONENT_LIBDIR=/path/to/mcvine/EXPORT/share/mcstas2/McStas-Components
+
+Now if you are a mcvine developer, run::
+
+ $ cd /path/to/mcvine/src
+ $ . dottools
+ $ cd mcvine/packages/softwareinstallationinfodb/softwareinstallationinfodb.dv
+ $ mm
+
+If you are a user, run::
+
+ $ cd /path/to/mcvine/src
+ $ . dottools
+ $ cd mcvine/packages/softwareinstallationinfodb/softwareinstallationinfodb.user
+ $ mm
+
+This step sets up your mcvine environment.
+
 .. _platform-specific-instructions:
 
 Platform specific instructions
