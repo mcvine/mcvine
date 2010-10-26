@@ -21,6 +21,7 @@ BUILD_DIRS = \
 	mccomposite \
 	mccomponents \
 	legacycomponents \
+	softwareinstallationinfodb/softwareinstallationinfodb.dv \
 
 OTHER_DIRS = \
 	tests \
