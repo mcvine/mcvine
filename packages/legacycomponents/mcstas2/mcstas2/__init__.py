@@ -182,16 +182,8 @@ def defaultcomponentpath( category, type ):
 
 
 def defaultcomponentlibrarypath( ):
-    from utils.xos import getEnv
-    var = 'MCSTAS_COMPONENT_LIBDIR'
-    path = getEnv( var, None )
-    if path is None:
-        raise RuntimeError, "Please specify the default path to mcstas component library "\
-              "as environment variable %r.\n"\
-              "For example, in bash environment, do\n"\
-              "  $ export %s=/.../mcstas/lib/mcstas\n"\
-              % (var, var)
-    return path
+    from release import component_library_dir as dir
+    return dir
 
 
 

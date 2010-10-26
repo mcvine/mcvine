@@ -25,7 +25,11 @@ else:
     mcvinedir = mcvinedir or pyredir or exportroot
     if not mcvinedir:
         raise RuntimeError, "environment variable MCVINE_DIR was not defined. please define it to the path of the mcvine installation"
-        
+
+
+component_library_dir = os.environ.get('MCSTAS_COMPONENT_LIBDIR', None)
+if component_library_dir is None:
+    component_library_dir = os.path.join(mcvinedir, 'share', 'mcstas2', 'McStas-Components')
 
     
 # version
