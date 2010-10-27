@@ -48,9 +48,19 @@ PARAM_FILTER = {
     "Monitor_nD":   ("file",)
 }
 
-# Component filter which filters specific components
-COMP_FILTER = ( "Progress_bar",
-                "Arm")
+# Component filter which filters components by type and by name
+COMP_FILTER = {
+    "type": ("Progress_bar",
+             "Arm"),
+    "name": ('sample',
+             'detector_90tc',
+             'detector_90wc',
+             'detector_90tt',
+             'detector_90wt',
+             'detector_90tb',
+             'detector_90wb',
+             'monitor_beamstop')
+}
 
 # Instrument specific settings
 INSTRUMENT  = {}

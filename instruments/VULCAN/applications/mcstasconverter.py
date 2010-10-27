@@ -180,7 +180,8 @@ class McStasConverter:
 
         complist   = []
         for c in self._components:
-            if c and not (c["type"] in filter):
+            if c and not (c["type"] in filter["type"] or
+                          c["name"] in filter["name"]):
                 complist.append(c)
 
         return complist
@@ -292,7 +293,6 @@ class McStasConverter:
 
 
     # XXX: Merge component parameters both from instrument values and component default values
-    # XXX: Finish!
     def toMcvineString(self, executable="mcvine-simulate", br="\n", allparams=True):
         "Returns *partial* command line string that is executed by McVine"
         str     = "#!/usr/bin/env bash" + br
@@ -304,8 +304,8 @@ class McStasConverter:
 
         compseq = compseq.rstrip(",")     # Remove trailing comma
         str     += "%s --- \%s" % (compseq, br)
-            #print comp
-            #str     =+
+        str     += self._clParams(br, allparams)
+
         return str
 
 
@@ -341,7 +341,7 @@ class McStasConverter:
         "Returns command line formatted parameters"
         str = ""
         for comp in self.components():
-            params  = self._compParams(comp, allparams)
+            params  = self._compParams(comp, allparams=allparams)
             # Generate parameters
             for k, v in params.iteritems():
                 # Take from the rest of the default parameters from components itself!
@@ -371,23 +371,31 @@ class McStasConverter:
         return "\"%s\"" % s.strip("\"")
 
 
-    def _compParams(self, comp, allparams=True):
+    def _compParams(self, comp, filter=PARAM_FILTER, allparams=True):
         """
-        Returns dictionary of component parameters
+        Returns dictionary of component parameters. It can accept parameters filter
         Example Output: {'xmin': '-0.025', 'ymin': '-0.045'}
         """
         params  = comp["parameters"]
         # Return those parameters that are set in an intrument only!
-        if not allparams:   
+        if not allparams:       # Do I still need this option?
             return params
 
+        # Add default values for parameters that are not set in instrument
         totalparams  = self._mcstasParams(comp["type"])
-        for p in totalparams:
-            if not p["name"] in params.keys():  # Add only those parameters that are not set in instrument
+        for p in totalparams:               
+            if not p["name"] in params.keys():  
                 params[p["name"]] = p["value"]
 
-        return params
+        filteredParams = []
+        if comp["type"] in filter.keys():
+            filteredParams  = filter[comp["type"]]
 
+        for pn in params.keys():
+            if params[pn] == "" or (pn in filteredParams):    # Empty or filtered
+                del params[pn]      # Remove parameter
+
+        return params
 
 
     def comptypes(self):
@@ -876,8 +884,8 @@ def main():
             #print conv.toString()
             #print conv.toInstrString()
             #print conv.toBuilderString()
-            #print conv.toMcvineString()
-            print conv.toVnfString()
+            print conv.toMcvineString()
+            #print conv.toVnfString()
             return
 
     print USAGE_MESSAGE
