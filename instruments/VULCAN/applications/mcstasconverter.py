@@ -71,6 +71,8 @@ Questions:
 # XXX: Fix rotation part in geometer parameter in toMcvineString() (it is not generated correctly)
 # XXX: Fix options issue (see fixtures.textOptions)
 # XXX: Implement nice align of dictionary entries in toBuilderString()
+# XXX: Implement filter for parameters and components
+
 
 # Imports
 import re
@@ -78,7 +80,7 @@ import sys
 import os.path
 from time import localtime, strftime
 from mcstas2.utils.parsers.McStasComponentParser import McStasComponentParser
-from compmodules import IMPORT_DICT, PARAMS_DICT, INSTRUMENT, COMP_FILTER
+from compmodules import IMPORT_DICT, PARAMS_DICT, INSTRUMENT, PARAM_FILTER, COMP_FILTER
 
 # Regular expressions
 COMMENT         = '(/\*.*?\*/)'         # Non-greedy comment (.*?)
@@ -97,7 +99,6 @@ ROTATION        = "ROTATED%s%s%s(RELATIVE|ABSOLUTE)%s([^ ]*)" % (SPACES, VECTOR,
 PROPERTIES      = ["AT", "ROTATED"]     # Standard properties
 RELATION        = ["RELATIVE", "ABSOLUTE"]
 TERMINATORS     = ["FINALLY", "END"]
-COMP_IGNORE     = ["Progress_bar", "Arm"]
 FILE            = ["--filename", "-f"]
 CONFIG          = ["--config", "-c"]
 ARGS            = FILE + CONFIG
@@ -168,7 +169,7 @@ class McStasConverter:
             order   += 1
 
 
-    def components(self, filter=COMP_IGNORE):
+    def components(self, filter=COMP_FILTER):
         """
         Returns list of components
         
@@ -292,18 +293,23 @@ class McStasConverter:
 
     # XXX: Merge component parameters both from instrument values and component default values
     # XXX: Finish!
-    def toMcvineString(self, br="\n", allparams=True):
+    def toMcvineString(self, executable="mcvine-simulate", br="\n", allparams=True):
         "Returns *partial* command line string that is executed by McVine"
         str     = "#!/usr/bin/env bash" + br
         str     += br
-        str     += "YOUR_EXECUTABLE_HERE \%s" % br
-        #for comp in self.components():
+        str     += "%s \%s" % (executable, br)
+        compseq  = "\t--components="
+        for comp in self.components():
+            compseq += "%s," % comp["name"]
+
+        compseq = compseq.rstrip(",")     # Remove trailing comma
+        str     += "%s --- \%s" % (compseq, br)
             #print comp
             #str     =+
         return str
 
 
-    def toVnfString(self, br="\n", executable=". ~/.mcvine && python simapp.py", allparams=True):
+    def toVnfString(self, executable=". ~/.mcvine && python simapp.py", br="\n", allparams=True):
         """
         Returns command line string that is executed by VNF job builder
 
@@ -314,17 +320,8 @@ class McStasConverter:
         str     = "#!/usr/bin/env bash" + br
         str     += br
         str     += "%s \%s" % (executable, br)
+        str     += self._clParams(br, allparams)
         for comp in self.components():
-            params  = self._compParams(comp, allparams)
-            # Generate parameters
-            for k, v in params.iteritems():
-                # Take from the rest of the default parameters from components itself!
-                str += "\t--%s.%s=%s \%s" % (comp["name"], k, self._paramValue(v), br)
-            # Generate geometer
-            str     += "\t--geometer.%s=\"%s,%s\" \%s" % (  comp["name"],
-                                                            self._formatVector(comp["position"], bracket="square"),
-                                                            self._formatVector(comp["rotation"], bracket="square"),
-                                                            br)
             sequence.append(comp["name"])
 
         # Generate sequence
@@ -337,6 +334,23 @@ class McStasConverter:
 
         str     += ss + " \\" + br
 
+        return str
+
+
+    def _clParams(self, br="\n", allparams=True):
+        "Returns command line formatted parameters"
+        str = ""
+        for comp in self.components():
+            params  = self._compParams(comp, allparams)
+            # Generate parameters
+            for k, v in params.iteritems():
+                # Take from the rest of the default parameters from components itself!
+                str += "\t--%s.%s=%s \%s" % (comp["name"], k, self._paramValue(v), br)
+            # Generate geometer
+            str     += "\t--geometer.%s=\"%s,%s\" \%s" % (  comp["name"],
+                                                            self._formatVector(comp["position"], bracket="square"),
+                                                            self._formatVector(comp["rotation"], bracket="square"),
+                                                            br)
         return str
 
 
@@ -684,7 +698,7 @@ class McStasConverter:
         return (x + vec[0], y + vec[1], z + vec[2])
 
 
-    def _compNames(self, filter=COMP_IGNORE):
+    def _compNames(self, filter=COMP_FILTER):
         "Returns list of component names in self._components!"
         names   = []
         for c in self.components(filter):

@@ -41,12 +41,16 @@ PARAMS_DICT      = {
     "filename": "outputfilename(%s)" % COMPVAR
 }
 
-# Component filter, used to filter out some McStas specific parameters
-COMP_FILTER = {
+# Parameter filter which filters parameter for component type
+PARAM_FILTER = {
     "L_monitor":    ("restore_neutron",),
     "PSD_monitor":  ("restore_neutron",),
     "Monitor_nD":   ("file",)
 }
+
+# Component filter which filters specific components
+COMP_FILTER = ( "Progress_bar",
+                "Arm")
 
 # Instrument specific settings
 INSTRUMENT  = {}
