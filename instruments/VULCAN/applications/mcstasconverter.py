@@ -304,6 +304,12 @@ class McStasConverter:
 
         compseq = compseq.rstrip(",")     # Remove trailing comma
         str     += "%s --- \%s" % (compseq, br)
+
+        # Add component types
+        for comp in self.components():
+            str     += "\t--%s=%s \%s" % (comp["name"], comp["type"], br)
+        
+        
         str     += self._clParams(br, allparams)
 
         return str
