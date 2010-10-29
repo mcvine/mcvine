@@ -29,7 +29,14 @@ class GridSQE(AbstractNode):
             pass
         elif hdfpath:
             from histogram.hdf import load
-            sqe = load( hdfpath )
+            try:
+                sqe = load( hdfpath )
+            except:
+                import os, traceback
+                f = os.path.dirname(hdfpath)
+                e = os.path.basename(hdfpath)
+                t = traceback.format_exc()
+                raise IOError, "unable to load histogram from file %s, entry %s. Original traceback:\n%s" % (f, e, t)
             pass
         else:
             raise ValueError, "GridSQE needs path to "\
