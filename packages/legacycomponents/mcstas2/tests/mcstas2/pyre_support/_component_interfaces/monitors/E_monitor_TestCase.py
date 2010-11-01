@@ -31,13 +31,21 @@ def _outdir():
     except ImportError:
         nompi = True
     outputdir = 'E_monitor_TestCase-out'
-    if not nompi: outputdir = outputdir  +'-0'
+    if not nompi: outputdir = outputdir  +'-worker-%s' % mpi.world().rank
     return outputdir
         
 
 class TestCase(unittest.TestCase):
 
     def test1(self):
+        try:
+            import mpi
+        except ImportError:
+            pass
+        else:
+            import sys
+            sys.argv += ['--mpirun.nodes=2']
+        
         instrument = Instrument()
         instrument.run()
 

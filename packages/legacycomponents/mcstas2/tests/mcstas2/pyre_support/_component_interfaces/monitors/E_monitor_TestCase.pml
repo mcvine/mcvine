@@ -19,7 +19,7 @@
 
         <property name="output-dir">E_monitor_TestCase-out</property>
         <property name="sequence">['source', 'monitor']</property>
-        <property name="ncount">10</property>
+        <property name="ncount">100</property>
         <property name="buffer_size">10</property>
         <property name="overwrite-datafiles">1</property>
 
