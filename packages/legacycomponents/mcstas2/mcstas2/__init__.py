@@ -13,7 +13,7 @@
 
 
 DEBUG = False
-#DEBUG = True
+# DEBUG = True
 
 
 def srandom( seed ):

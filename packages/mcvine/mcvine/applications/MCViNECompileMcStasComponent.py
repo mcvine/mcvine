@@ -22,6 +22,7 @@ class Application(Script):
         name = pyre.inventory.str('name')
         category = pyre.inventory.str('category')
         filename = pyre.inventory.str('filename')
+        debug = pyre.inventory.bool('debug')
 
 
     def help(self):
@@ -80,6 +81,10 @@ class Application(Script):
         self.type = self.inventory.name
         self.category = self.inventory.category
         self.filename = self.inventory.filename
+        debug = self.inventory.debug
+        if debug:
+            import mcstas2
+            mcstas2.DEBUG = True
         return
 
 
