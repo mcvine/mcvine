@@ -110,6 +110,7 @@ void wrap_neutron()
     .def("append", &Evts_append_events)
     .def("fromCevents", &events_fromCevents)
     .def("toCevents", &events_toCevents)
+    .def("swap", &Neutron::EventBuffer::swap)
     ;
 
   
