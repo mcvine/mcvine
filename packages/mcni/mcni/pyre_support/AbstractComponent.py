@@ -21,7 +21,6 @@ class AbstractComponent( base1, base2 ):
     simple_description = 'Please give a simple description of this comonent'
     full_description = 'Please give a full description of this component'
 
-
     def __init__(self, name, facility = 'neutron component'):
         base2.__init__(self, name)
         base1.__init__(self, name, facility)
@@ -34,7 +33,12 @@ class AbstractComponent( base1, base2 ):
         self._outputdir = outputdir
         return
 
-
+    
+    def init(self):
+        if getattr(self, '_noinit'): return
+        return super(AbstractComponent, self).init()
+    
+    
     pass # end of AbstractComponent
 
 

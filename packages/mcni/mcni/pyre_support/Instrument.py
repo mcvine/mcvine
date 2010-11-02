@@ -93,7 +93,7 @@ class Instrument( base, ParallelComponent ):
 
         multiple_scattering = self.inventory.multiple_scattering
         n = int(self.ncount / self.buffer_size)
-        assert n>0
+        assert n>0, 'ncount should be larger than buffer_size: ncount=%s, buffer_size=%s' % (self.ncount, self.buffer_size)
         for i in range(n):
             neutrons = mcni.neutron_buffer( self.buffer_size )
             mcni.simulate( instrument, geometer, neutrons, 
@@ -176,13 +176,14 @@ class Instrument( base, ParallelComponent ):
     
     
     def _configure(self):
+        
         # handle dumppml
         # this overrides the option dumpconfiguration in order to
         # provide a simpler interface for users.
         dumppml = self.inventory.dumppml
         if dumppml:
             self.inventory.dumpconfiguration = True
-            
+
         base._configure(self)
         self.geometer = self.inventory.geometer
         self.overwrite_datafiles = self.inventory.overwrite_datafiles
@@ -213,6 +214,21 @@ class Instrument( base, ParallelComponent ):
 
         self.neutron_components = neutron_components
         
+        # if in server mode for parallel computing
+        # we actually don't want the subcomponents to
+        # initialize, because in the "server" mode 
+        # the application just call launcher to 
+        # let workers start working.
+        # this logic probably should go into mpi application
+        # base class in pyre
+        from MpiApplication import usempi
+        noinit = usempi \
+            and self.inventory.launcher.nodes \
+            and self.inventory.mode == 'server'
+        for c in neutron_components:
+            comp = self.inventory.getTraitValue(c)
+            comp._noinit = noinit            
+            
         if not self._showHelpOnly: self._setup_ouputdir()
         return
 
