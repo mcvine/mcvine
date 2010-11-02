@@ -48,6 +48,7 @@ def wrap( componentfilename, componentcategory,
     if not path:
         import temporaryfiles
         path = temporaryfiles.temporarydir()
+        debug.log('generateing wrapper in %s' % path)
         pass
 
     if not componentname:

@@ -17,7 +17,18 @@ from mcni.pyre_support.ParallelComponent import ParallelComponent
 
 class ComponentInterface(base, ParallelComponent):
 
+
+    class Inventory(base.Inventory):
+
+        import pyre.inventory
+        restore_neutrons = pyre.inventory.bool('restore-neutrons')
+
+
     def process(self, neutrons):
+        restore_neutrons = self.inventory.restore_neutrons
+        if restore_neutrons:
+            # create a copy to be processed
+            saved = neutrons.snapshot(len(neutrons))
         
         # establish "iterationcount"
         iterationcount = self.__dict__.get('iterationcount')
@@ -34,8 +45,11 @@ class ComponentInterface(base, ParallelComponent):
         self._saveHistogramInMyoutputdir(filename=hout, overwrite=True)
         # also save a copy that mark the interation number
         self._saveHistogramInMyoutputdir(filename='%s.%s' % (hout, iterationcount))
-
-        #
+        
+        # restore neutrons if requested
+        if restore_neutrons:
+            neutrons.swap(saved)
+            
         return ret
 
 
@@ -94,7 +108,8 @@ class ComponentInterface(base, ParallelComponent):
                 overwrite=self.overwrite_datafiles)
 
         if self.mpiRank == 0:
-            outputdir = '%s-all' % self._master_outputdir
+            # outputdir = '%s-all' % self._master_outputdir
+            outputdir = '%s' % self._master_outputdir
             if not os.path.exists(outputdir):
                 os.makedirs(outputdir)
             self._debug.log('saving histogram to %s' % outputdir)

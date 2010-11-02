@@ -16,6 +16,8 @@
 import unittestX as unittest
 import journal
 
+
+# test instrument
 from TestInstrument1 import Instrument as base
 class Instrument(base):
 
@@ -24,28 +26,20 @@ class Instrument(base):
         return
     
 
-def _outdir():
-    try:
-        import mpi
-        nompi = False
-    except ImportError:
-        nompi = True
-    outputdir = 'E_monitor_TestCase-out'
-    if not nompi: outputdir = outputdir  +'-worker-%s' % mpi.world().rank
-    return outputdir
-        
+from mcni.pyre_support.MpiApplication import usempi
+outputdir = 'E_monitor_TestCase-out'
+if usempi: 
+    import mpi
+    outputdir += '-worker-%s' % mpi.world().rank
+
 
 class TestCase(unittest.TestCase):
 
     def test1(self):
-        try:
-            import mpi
-        except ImportError:
-            pass
-        else:
+        if usempi:
             import sys
             sys.argv += ['--mpirun.nodes=2']
-        
+
         instrument = Instrument()
         instrument.run()
 
@@ -53,7 +47,6 @@ class TestCase(unittest.TestCase):
         ctime = time.time()
 
         #check output directory exists
-        outputdir = _outdir()
         self.assert_( os.path.exists( outputdir ) )
         
         #make sure files were just created
