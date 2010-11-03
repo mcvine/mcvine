@@ -26,14 +26,16 @@ def init_package( package ):
     init_package( 'a.b.c' )
     """
     packagepath = os.path.join( path, package.replace( '.', '/' ) )
-    if os.path.exists( packagepath ) and os.path.isdir(packagepath): return
-    if os.path.exists( packagepath ):
-        raise IOError, "%s exists and not a directory. "
+    if os.path.exists( packagepath ) and not os.path.isdir(packagepath):
+        raise IOError, "%s exists and not a directory. " % packagepath
 
     #make path
-    os.makedirs( packagepath )
+    if not os.path.exists(packagepath):
+        os.makedirs( packagepath )
     #add __init__.py
-    open( os.path.join( packagepath, '__init__.py' ), 'w').write('')
+    f = os.path.join( packagepath, '__init__.py' )
+    if not os.path.exists(f):
+        open(f, 'w').write('')
     return
 
 
