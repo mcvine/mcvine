@@ -23,7 +23,7 @@ It is also necessary for your system admin to allow
 you to check out svn repository of danse anonymously  (At some places,
 this is blocked due to firewall); you can try the following command to see if it works::
 
- $ svn co -N svn://danse.us/buildInelast/mcvine
+ $ svn co svn://danse.us/buildInelast/mcvine
 
 Also you will need a c++ compiler. You may try this command if you use
 a typical linux environment ::
@@ -35,7 +35,18 @@ Numpy is required, you could test whether it exists in your system by ::
  $ python
  >>> import numpy
 
-The HDF5 library is required for storing histograms generated from monitors and detectors.
+Boost python is required for generating python bindings of mcvine c++ libraries.
+Please let mcvine installer know about your boost python installation by ::
+
+ $ export BOOSTPYTHON_DIR=/path/to/boost/python
+
+If you want to take advantage of parallel computing, please install
+mpich2. After installation of mpich2, you will need include mpich2 
+executables such as mpicxx in your PATH, so that the following
+command does not complain about "command not found"::
+
+ $ mpicxx
+
 
 
 Build and Install
@@ -45,23 +56,58 @@ To start, check out a release builder from danse.us svn repo::
 
  $ svn co svn://danse.us/buildInelast/mcvine
 
-Then get all sources::
+Then change directory into it::
 
  $ cd mcvine
- $ ./getsrc.py
 
 Then build::
 
- $ ./build.py
+ $ ./build.py <export_root>
+
+Here, <export_root> is the path where you want mcvine installed.
+If leave empty, it will by default be the sub-directory "EXPORT"
+in the current directory.
+
+The script will see if the dependencies are installed;
+if it cannot find a dependency, it will ask if
+you allow it to try to install it for you.
+You may decide to install the dependency yourself 
+and come back here to run the script again.
 
 If everything goes fine. You will have a mcvine installation built
-under directory "EXPORT"::
+under the directory you specified in the command
+line, and the following command ::
 
- $ ls EXPORT
+ $ ls <export_root>
 
 will output something like::
 
  bin  docs  etc  include  lib  modules  share
+
+This will conclude the installation. 
+To try your installation out, please do
+the following::
+
+ $ source <export_root>/bin/envs.sh
+ $ mcvine-component-info -type=E_monitor
+
+You should see mcvine starting to compile the mcstas E_monitor
+component (this will happen only once for every type of 
+mcvine-wrapped mcstas component. Built-in mcvine components
+don't need this step) and then show some info about the E_monitor
+component. If you see anything unexpected, there must be some
+problem in the installation; please don't hesitate to post
+a message to the mcvine user discussion group 
+mcvine-users at googlegroups dot com.
+
+.. note::
+  The command ::
+  
+   $ source <export_root>/bin/envs.sh
+  
+  build the environment necessary for using mcvine. 
+  You may want to look into it and make it part of your 
+  .bashrc.
 
 
 MCViNE-wrapped McStas components
@@ -83,16 +129,43 @@ to find it in default locations.
 Platform specific instructions
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-ubuntu 9.10
-"""""""""""
+ubuntu 9.10+
+""""""""""""
 
 Before install mcvine, please install following packages:
 
 * g++
 * python-dev
-* libboost-python1.38
+* libboost-python1.38 (or other version currently in your installation)
 * python-numpy
-* libhdf5-serial-1.6.6-0, libhdf5-serial-dev
+* python-h5py
+
+Optionally
+
+* mpich2
+* libmpich2-dev
+
+
+.. _buildnotes:
+
+Build notes
+===========
+
+SNS machines
+------------
+Before running "./build.py", 
+please let mcvine know about the mpich2 installation::
+
+ $ export MPI_DIR=/usr
+ $ export MPI_INCDIR=/usr/include/mpich2-x86_64
+ $ export MPI_LIBDIR=/usr/lib64/mpich2/lib
+
+Now you can run build.py::
+
+ $ ./build.py
+
+It will ask if you want to install h5py and boostpython, please
+answer with yes.
 
 
 
