@@ -343,6 +343,10 @@ class McStasConverter:
         return str
 
 
+    def toPmlString(self):
+        pass
+
+
     def _clParams(self, br="\n", allparams=True):
         "Returns command line formatted parameters"
         str = ""
