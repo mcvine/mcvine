@@ -34,7 +34,8 @@ class ComputationEngineRendererExtension:
         temperature = 300
 
         # total mass of unitcell. for DW calculator. this might be reimplemented later.
-        mass = sum( [ site.getAtom().mass for site in unitcell ] )
+        # mass = sum( [ site.getAtom().mass for site in unitcell ] )
+        mass = sum( [ atom.mass for atom in unitcell ] )
         # currently we need dos to calculate DW
         try:
             dos = kernel.dispersion.dos
@@ -85,7 +86,8 @@ class ComputationEngineRendererExtension:
         temperature = 300
 
         # total mass of unitcell. for DW calculator. this might be reimplemented later.
-        mass = sum( [ site.getAtom().mass for site in unitcell ] )
+        # mass = sum( [ site.getAtom().mass for site in unitcell ] )
+        mass = sum( [ atom.mass for atom in unitcell ] )
         # currently we need dos to calculate DW
         try:
             dos = kernel.dispersion.dos

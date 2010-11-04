@@ -74,8 +74,10 @@ class New:
 
     site: a crystal.Site instance
     '''
-        position = site.getPosition()
-        atom = site.getAtom()
+        # position = site.getPosition()
+        position = site.xyz
+        # atom = site.getAtom()
+        atom = site
         mass = atom.mass
         coh_xs = atom.average_neutron_coh_xs
 
@@ -204,7 +206,8 @@ class New:
         temperature, Ei,  max_omega, max_Q,
         nMCsteps_to_calc_RARV, seed = None):
 
-        unitcell_vol = unitcell.getVolume()
+        # unitcell_vol = unitcell.getVolume()
+        unitcell_vol = unitcell.lattice.getVolume()
         unitcell_vol = float(unitcell_vol)
 
         temperature = float(temperature)
@@ -226,7 +229,8 @@ class New:
         temperature,
         ):
 
-        unitcell_vol = unitcell.getVolume()
+        # unitcell_vol = unitcell.getVolume()
+        unitcell_vol = unitcell.lattice.getVolume()
         unitcell_vol = float(unitcell_vol)
 
         temperature = float(temperature)

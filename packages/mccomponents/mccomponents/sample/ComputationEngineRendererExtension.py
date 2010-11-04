@@ -23,7 +23,11 @@ class ComputationEngineRendererExtension:
         qbb = sqehist.axisFromName('Q').binBoundaries().asNumarray()
         qbegin, qend, qstep = qbb[0], qbb[-1], qbb[1]-qbb[0]
         
-        ebb = sqehist.axisFromName('energy').binBoundaries().asNumarray()
+        try:
+            ebb = sqehist.axisFromName('E').binBoundaries().asNumarray()
+        except KeyError:
+            ebb = sqehist.axisFromName('energy').binBoundaries().asNumarray()
+            
         ebegin, eend, estep = ebb[0], ebb[-1], ebb[1]-ebb[0]
         
         s = sqehist.data().storage().asNumarray()
