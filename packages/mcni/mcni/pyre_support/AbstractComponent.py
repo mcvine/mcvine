@@ -35,7 +35,12 @@ class AbstractComponent( base1, base2 ):
 
     
     def init(self):
-        if getattr(self, '_noinit'): return
+        try:
+            noinit = getattr(self, '_noinit')
+        except:
+            noinit = False
+        if noinit:
+            return
         return super(AbstractComponent, self).init()
     
     
