@@ -35,12 +35,17 @@ class TestCase(unittest.TestCase):
         sys.argv = [
             '',
             '--ncount=10',
-            '--buffer_size=5',
+            '--buffer_size=4',
             '--output-dir=pyre_support_test_out',
             '--overwrite-datafiles',
             ]
 
         instrument.run()
+
+        self.assertEqual(instrument.inventory.ncount,
+                         instrument.inventory.verifier.count,
+                         )
+        
         sys.argv = save
         return
     
@@ -80,7 +85,13 @@ class Verifier( AbstractComponent ):
             self.testFacility.assertVectorAlmostEqual(
                 v, (2,-1,3) )
             continue
+        self.count += len(neutrons)
         return neutrons
+
+    def __init__(self, *args, **kwds):
+        self.count = 0
+        super(Verifier, self).__init__(*args, **kwds)
+        return
 
     pass # end of Verifier
 

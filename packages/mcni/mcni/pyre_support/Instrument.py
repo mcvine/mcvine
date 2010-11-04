@@ -99,6 +99,12 @@ class Instrument( base, ParallelComponent ):
             mcni.simulate( instrument, geometer, neutrons, 
                            multiple_scattering=multiple_scattering)
             continue
+        
+        remain = int(self.ncount % self.buffer_size)
+        if remain:
+            neutrons = mcni.neutron_buffer(remain)
+            mcni.simulate( instrument, geometer, neutrons, 
+                           multiple_scattering=multiple_scattering)
 
         import os
         print os.times()
@@ -194,13 +200,12 @@ class Instrument( base, ParallelComponent ):
             self.outputdir = '%s-%s' % (self.outputdir, ext)
             
         self.sequence = self.inventory.sequence
+        self.buffer_size = self.inventory.buffer_size
         self.ncount = self.inventory.ncount
         if self.parallel:
             # every node only need to run a portion of the total counts
             partitions = getPartitions(self.ncount, self.mpiSize)
             self.ncount = partitions[self.mpiRank]
-
-        self.buffer_size = self.inventory.buffer_size
 
         neutron_components = {}
         for name in self.inventory.facilityNames():
