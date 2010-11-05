@@ -65,7 +65,7 @@ Then build::
  $ ./build.py <export_root>
 
 Here, <export_root> is the path where you want mcvine installed.
-If leave empty, it will by default be the sub-directory "EXPORT"
+If left empty, it will by default be the sub-directory "EXPORT"
 in the current directory.
 
 The script will see if the dependencies are installed;
