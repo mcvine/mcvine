@@ -1,6 +1,12 @@
 Developer Guide
 ===============
 
+Links
+-----
+
+* buildbot: http://bagua.cacr.caltech.edu:50082/
+
+
 Creating a new scattering kernel for sample
 -------------------------------------------
 

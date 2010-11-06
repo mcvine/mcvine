@@ -183,7 +183,7 @@ MCViNE is available through the "modules" package manager.
 
 To use mcvine, run ::
 
- $ module add python wx mcvine
+ $ module add python wx h5py mcvine
 
 
 
