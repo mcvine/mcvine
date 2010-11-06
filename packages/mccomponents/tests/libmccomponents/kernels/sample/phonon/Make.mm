@@ -28,6 +28,7 @@ PROJ_CPPTESTS = test_LinearlyInterpolatedGridData_3D \
 	test_PeriodicDispersion_3D \
 	test_ChangeCoordinateSystem_forDispersion_3D \
 	test_interpolation \
+	test_DWFromDOS \
 
 
 PROJ_TESTS = $(PROJ_PYTESTS) $(PROJ_CPPTESTS)
@@ -95,6 +96,9 @@ test_PeriodicDispersion_3D: test_PeriodicDispersion_3D.cc LinearlyInterpolatedDi
 
 test_interpolation: test_interpolation.cc 
 	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ test_interpolation.cc $(PROJ_LIBRARIES)
+
+test_DWFromDOS: test_DWFromDOS.cc 
+	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ test_DWFromDOS.cc $(PROJ_LIBRARIES)
 
 
 

@@ -39,7 +39,7 @@ namespace mccomponents {
       /// detlength: tube length. unit: meter
       /// npixels: number of pixels
       /// axisDirection: direction vector of z (axis)
-      /// channel0Coords: coordinates of the start point of the detector (channel 0)
+      /// channel0Coords: coordinates of the start point of the detector (negative end of channel 0)
       ///
       /// Eg: a tube of 1 meter long centered a (0,0,0). Its axis is along z direction.
       ///     then 

@@ -1,3 +1,5 @@
+// -*- c++ -*-
+
 #ifndef MCCOMPONENTS_KERNELS_Z2CHANNEL_H
 #error  Z2Channel.icc not meaningful outsied Z2Channel.h
 #else

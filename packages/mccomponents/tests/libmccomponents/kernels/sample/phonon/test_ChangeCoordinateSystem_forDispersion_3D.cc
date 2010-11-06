@@ -14,6 +14,7 @@
 
 #include <iostream>
 #include <cassert>
+#include "mcni/test/assert.h"
 #include "LinearlyInterpolatedDispersionOnGrid_3D_Example.h"
 #include "mccomponents/kernels/sample/phonon/ChangeCoordinateSystem_forDispersion_3D.h"
 
@@ -31,10 +32,20 @@ namespace test{
        0, 0, 1);
 
     w_t dispersion( example.disp, transformation );
-
-    assert ( dispersion.energy( 0, w_t::K_t(1,0,0) ) == example.disp.energy(0, w_t::K_t(3,1,0)) );
-    assert ( dispersion.energy( 0, w_t::K_t(0,1,0) ) == example.disp.energy(0, w_t::K_t(2,2,0)) );
-    assert ( dispersion.energy( 0, w_t::K_t(0,0,1) ) == example.disp.energy(0, w_t::K_t(1,3,1)) );
+    
+    using mcni::assertNumberAlmostEqual;
+    
+    assertNumberAlmostEqual
+      (dispersion.energy( 0, w_t::K_t(1,0,0) ), 
+       example.disp.energy(0, w_t::K_t(3,1,0)) );
+    
+    assertNumberAlmostEqual
+      ( dispersion.energy( 0, w_t::K_t(0,1,0) ),
+	example.disp.energy(0, w_t::K_t(2,2,0)) );
+    
+    assertNumberAlmostEqual
+      ( dispersion.energy( 0, w_t::K_t(0,0,1) ),
+	example.disp.energy(0, w_t::K_t(1,3,1)) );
   }
 }
 

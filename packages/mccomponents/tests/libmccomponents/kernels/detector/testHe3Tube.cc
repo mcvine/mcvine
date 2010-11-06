@@ -50,7 +50,7 @@ void test1()
   He3Tube tube( 10 * physics::atm, tube_channels, z2c, t2c, mca);
 
   mcni::Neutron::Event event;
-  event.state.position = mcni::Neutron::State::position_t( 0,0, 0);
+  event.state.position = mcni::Neutron::State::position_t( 0,0, 0.0001);
   event.probability = 10;
   event.time = 3000;
   tube.absorb( event );

@@ -13,6 +13,7 @@
 
 #include <iostream>
 #include <cassert>
+#include "mcni/test/assert.h"
 #include "mccomponents/kernels/sample/phonon/interpolate.h"
 
 #ifdef DEBUG
@@ -42,13 +43,15 @@ void test1()
   double u000 = f(0,0,0), u100 = f(1,0,0), u010 = f(0,1,0), u001 = f(0,0,1);
   double u110 = f(1,1,0), u101 = f(1,0,1), u011 = f(0,1,1), u111 = f(1,1,1);
   
+  using mcni::assertNumberAlmostEqual;
+  
   for (double x = 0; x<1; x+=0.1)
     for (double y = 0; y<1; y+=0.1)
       for (double z = 0; z<1; z+=0.1) {
 	double t = interp3D_01(u000, u100, u010, u001,
 			       u011, u101, u110, u111,
 			       x,y,z);
-	assert( t == f(x,y,z) );
+	assertNumberAlmostEqual( t, f(x,y,z) );
       }
   
 }

@@ -23,7 +23,8 @@ namespace test{
     typedef std::vector<double> array_t;
     typedef LinearlyInterpolatedDOS<double, array_t> w_t;
     
-    LinearlyInterpolatedDOS_Example () 
+    LinearlyInterpolatedDOS_Example ()
+      : emin(0), emax(50)
     {
       array_t Z(50);
       for (size_t i=0; i<50; i++) {
@@ -38,6 +39,7 @@ namespace test{
     }
     
     w_t *dos;
+    double emin, emax;
   };
 
 }

@@ -28,14 +28,14 @@ void test1()
 
   Z2Channel z2c( 1., 100, vector_t(0,0,1), vector_t(0,0,-0.5) );
 
-  assert (z2c( vector_t(0,0,0) ) == 50);
+  assert (z2c( vector_t(0,0,0.0001) ) == 50);
   assert (z2c( vector_t(0,0,0.49999) ) == 99);
   assert (z2c( vector_t(0,0,-0.5) ) == 0);
   assert (z2c( vector_t(1,0,-0.5) ) == 0);
   assert (z2c( vector_t(1,100,-0.5) ) == 0);
   assert (z2c( vector_t(1,100,1.5) ) == -1);
   assert (z2c( vector_t(1,100,-1.5) ) == -1);
-  assert (z2c( vector_t(1,100,0.5) ) == -1);
+  assert (z2c( vector_t(1,100,0.500001) ) == -1);
   assert (z2c( vector_t(1,100,-0.500001) ) == -1);
 }
 
@@ -43,7 +43,7 @@ void test1()
 int main()
 {
 #ifdef DEBUG
-  //journal::debug_t("HomogeneousNeutronScatterer").activate();
+  // journal::debug_t("HomogeneousNeutronScatterer").activate();
 #endif
   test1();
   return 0;
