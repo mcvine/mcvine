@@ -12,6 +12,7 @@
 #
 
 
+standalone = True
 
 import unittestX as unittest
 import journal
@@ -22,7 +23,6 @@ warning = journal.warning( "Copy_TestCase" )
 
 import mccomposite, mcni
 import mccomposite.extensions.Copy as Copy
-import UseNeutronPrinter2
 
 class TestCase(unittest.TestCase):
 
@@ -40,6 +40,7 @@ class TestCase(unittest.TestCase):
 
         #create pure python representation of scatterer composite
         composite1 = mccomposite.composite( smallblock )
+        import UseNeutronPrinter2
         nprinter = UseNeutronPrinter2.NeutronPrinter( smallblock )
         composite1.addElement( nprinter )
         #create a copy

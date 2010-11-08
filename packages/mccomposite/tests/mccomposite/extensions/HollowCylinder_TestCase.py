@@ -12,6 +12,7 @@
 #
 
 
+standalone = True
 
 import unittestX as unittest
 import journal
@@ -22,7 +23,6 @@ warning = journal.warning( "HollowCylinder_TestCase" )
 
 import mccomposite, mcni
 import mccomposite.extensions.HollowCylinder as HollowCylinder
-import UseNeutronPrinter2
 
 class TestCase(unittest.TestCase):
 
@@ -36,6 +36,7 @@ class TestCase(unittest.TestCase):
               "differing only on time-of-flight."
         # create a shape
         shape = HollowCylinder.HollowCylinder( 1, 1.2, 1 )
+        import UseNeutronPrinter2
         nprinter = UseNeutronPrinter2.NeutronPrinter( shape )
 
         #render the c++ representation

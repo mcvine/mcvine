@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <sstream>
 
 #include "mccomposite/geometry/visitors/ArrowIntersector.h"
 #include "mccomposite/geometry/visitors/Locator.h"
@@ -235,7 +236,28 @@ mccomposite::geometry::ArrowIntersector::visit
 #endif
   
   if (!ts.size()) return;
-  if (ts.size()!=2) throw Exception("number of intersections between a line and a box should be 0 or 2");
+  if (ts.size() == 1) {
+    // this is usually due to numerical errors
+#ifdef DEBUG
+    debug
+      << journal::at(__HERE__)
+      << "number of intersections between a line and a box should be 0 or 2, "
+      << "we got " << ts.size() << ". " << journal::newline
+      << "box: " << box << ", "
+      << "arrow: " << m_arrow
+      << journal::endl;
+#endif
+    return;
+  }
+  if (ts.size()!=2) {
+    std::ostringstream oss;
+    oss << "number of intersections between a line and a box should be 0 or 2, "
+	<< "we got " << ts.size() << ". "
+	<< "box: " << box << ", "
+	<< "arrow: " << m_arrow
+      ;
+    throw Exception(oss.str());
+  }
   
   if (ts[0] < ts[1]) {
     m_distances.push_back(ts[0]);
