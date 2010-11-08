@@ -19,6 +19,7 @@ PACKAGE = libmccomponents
 BUILD_DIRS = \
 	homogeneous_scatterer \
 	kernels \
+	math \
 	mccomponents \
 	boostpython_binding \
 
