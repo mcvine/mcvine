@@ -87,8 +87,8 @@
 
         <component name="geometer">
             <property name="sample">((0, 0, 0), (0, 0, 0))</property>
-            <property name="source">((0, 0, 0), (0, 0, 0))</property>
-            <property name="detector">((0, 0, 0), (0, 0, 0))</property>
+            <property name="source">((0, 0, 1), (0, 0, 0))</property>
+            <property name="detector">((0, 0, 2), (0, 0, 0))</property>
             <property name="dump">False</property>
         </component>
 
