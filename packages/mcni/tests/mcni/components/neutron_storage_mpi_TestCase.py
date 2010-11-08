@@ -18,6 +18,8 @@ To run this test case, you will need to use the following command line::
  
 '''
 
+skip = 1
+
 
 import unittestX as unittest
 import journal
@@ -30,35 +32,38 @@ warning = journal.warning( "mcni.components.test" )
 neutron_storage_path = 'neutrons'
 ntotneutrons = 3
 
-
 import mcni
-neutrons = mcni.neutron_buffer(ntotneutrons)
-for i in range(ntotneutrons):
-    neutrons[i] = mcni.neutron(
-        r = (0,0,i),
-        )
-    continue
+mpirank = None
 
-from mcni.utils import mpiutil
-mpirank = mpiutil.rank
-mpisize = mpiutil.world.size
-if mpisize != 3:
-    raise RuntimeError, __doc__
-
-import os
-channel = 1000
-if mpirank == 0:
-    if os.path.exists(neutron_storage_path):
-        os.remove(neutron_storage_path)
-    from mcni.neutron_storage.Storage import Storage
-    storage = Storage(neutron_storage_path, 'w')
-    storage.write(neutrons)
-    del storage
-    for i in range(1, mpisize):
-        mpiutil.send(0, i, channel)
+def _init():
+    neutrons = mcni.neutron_buffer(ntotneutrons)
+    for i in range(ntotneutrons):
+        neutrons[i] = mcni.neutron(
+            r = (0,0,i),
+            )
         continue
-else:
-    mpiutil.receive(0, channel)
+
+    from mcni.utils import mpiutil
+    global mpirank
+    mpirank = mpiutil.rank
+    mpisize = mpiutil.world.size
+    if mpisize != 3:
+        raise RuntimeError, __doc__
+
+    import os
+    channel = 1000
+    if mpirank == 0:
+        if os.path.exists(neutron_storage_path):
+            os.remove(neutron_storage_path)
+        from mcni.neutron_storage.Storage import Storage
+        storage = Storage(neutron_storage_path, 'w')
+        storage.write(neutrons)
+        del storage
+        for i in range(1, mpisize):
+            mpiutil.send(0, i, channel)
+            continue
+    else:
+        mpiutil.receive(0, channel)
 
 
 from mcni.AbstractComponent import AbstractComponent
@@ -106,6 +111,7 @@ def pysuite():
     return unittest.TestSuite( (suite1,) )
 
 def main():
+    _init()
     #debug.activate()
     pytests = pysuite()
     alltests = unittest.TestSuite( (pytests, ) )

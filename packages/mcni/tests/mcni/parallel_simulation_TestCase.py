@@ -27,6 +27,8 @@ Should try to automatically determine if neutrons are different.
 Probably should implement that using a shell script.
 '''
 
+skip = True
+
 
 import unittestX as unittest
 import journal
@@ -98,7 +100,7 @@ class Printer( AbstractComponent ):
 
     def process(self, neutrons):
         import mpi
-        rank = mpi.world().rank()
+        rank = mpi.world().rank
         
         s = [ '%s'% n for n in neutrons ]
         print 'node %d: %s' % (rank, ', '.join(s) )

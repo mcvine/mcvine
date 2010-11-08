@@ -21,7 +21,7 @@ warning = journal.warning( "mcni.pyre_support.test" )
 
 
 outdir = 'test-output-dir-option_out'
-import os, sys
+import os, sys, mcvine
 
 
 class TestCase(unittest.TestCase):
@@ -38,18 +38,12 @@ class TestCase(unittest.TestCase):
         instrument.testFacility = self
         instrument.run()
 
-        try:
-            import mpi
-            hasmpi = True
-        except:
-            hasmpi = False
-        if hasmpi: outdir1 = '%s-0' % outdir
-        self.assert_( os.path.exists( outdir1 ) )
-        edat = os.path.join( outdir1, 'e.dat' )
-        self.assert_( os.path.exists( edat ) )
+        self.assert_( os.path.exists( outdir ) )
+        IEh5 = os.path.join( outdir, 'IE.h5' )
+        self.assert_( os.path.exists( IEh5 ) )
         import time
         ctime = time.time()
-        mtime = os.path.getmtime( edat )
+        mtime = os.path.getmtime( IEh5 )
         self.assert_( ctime >= mtime and ctime < mtime + 10 )
         return
     

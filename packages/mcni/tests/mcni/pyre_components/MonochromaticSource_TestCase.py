@@ -23,12 +23,12 @@ class TestCase(unittest.TestCase):
         source.inventory.energy = 60
         source.inventory.velocity = [0,0,1.]
         source._configure()
-        self.assertAlmostEqual(source.velocity[2], 3388.04632683)
+        self.assertAlmostEqual(source.velocity[2], 3388.04632683, 1)
 
         source.inventory.energy = 60
         source.inventory.velocity = [1,0,0.]
         source._configure()
-        self.assertAlmostEqual(source.velocity[0], 3388.04632683)
+        self.assertAlmostEqual(source.velocity[0], 3388.04632683, 1)
 
         source.inventory.energy = 0
         source.inventory.velocity = [10,0,0.]

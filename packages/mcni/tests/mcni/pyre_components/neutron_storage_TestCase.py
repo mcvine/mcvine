@@ -27,14 +27,9 @@ instrument2_output = 'neutron_storage_TestCase-Instrument2-out'
 
 #the real output directory depends on
 # mpi is installed or not
-try:
-    import mpi
-    instrument1_outputpath = '%s-0' % instrument1_output
-    instrument2_outputpath = '%s-0' % instrument2_output
-except ImportError:
-    instrument1_outputpath = instrument1_output
-    instrument2_outputpath = instrument2_output
-    pass
+instrument1_outputpath = instrument1_output
+instrument2_outputpath = instrument2_output
+
 
 import shutil
 if os.path.exists( instrument1_outputpath ):
@@ -181,7 +176,7 @@ class TestCase(unittest.TestCase):
         import sys
         save = sys.argv
         sys.argv = [
-            '',
+            save[0],
             '--ncount=10',
             '--buffer_size=5',
             '--output-dir=%s' % instrument2_output,

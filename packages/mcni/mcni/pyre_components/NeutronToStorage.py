@@ -65,6 +65,8 @@ class NeutronToStorage( AbstractComponent ):
         append = False
         if self.overwrite_datafiles:
             append = False
+            if os.path.exists(path):
+                os.remove(path)
         if self.append:
             append = True
             

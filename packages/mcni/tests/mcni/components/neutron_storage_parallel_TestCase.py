@@ -22,6 +22,8 @@ For example:
 Make sure 
 '''
 
+skip = True
+
 
 import unittestX as unittest
 import journal
@@ -30,22 +32,29 @@ debug = journal.debug( "mcni.components.test" )
 warning = journal.warning( "mcni.components.test" )
 
 
-try:
-    import mpi
-except:
-    pass
-else:
-    neutron_storage_path = 'neutrons-%d' % rank
-ntotneutrons = 53
-packetsize = 10
-npackets = ntotneutrons/packetsize
-
 import mcni
-neutron = mcni.neutron( r = (0,0,0),
-                        v = (1000,2000,3000),
-                        time = 0,
-                        prob = 1,
-                        )
+neutron_storage_path = None
+ntotneutrons = None
+
+def _init():
+    global neutron_storage_path, ntotneutrons
+    try:
+        import mpi
+    except:
+        pass
+    else:
+        rank = mpi.world().rank
+        neutron_storage_path = 'neutrons-%d' % rank
+        import os
+        if os.path.exists(neutron_storage_path):
+            os.remove(neutron_storage_path)
+    ntotneutrons = 53
+
+    neutron = mcni.neutron( r = (0,0,0),
+                            v = (1000,2000,3000),
+                            time = 0,
+                            prob = 1,
+                            )
 
 
 from mcni.AbstractComponent import AbstractComponent
@@ -96,7 +105,7 @@ class TestCase(unittest.TestCase):
         component1 = Source( 'source' )
         
         from mcni.components.NeutronToStorage import NeutronToStorage
-        component2 = NeutronToStorage( 'storage', neutron_storage_path, packetsize = packetsize)
+        component2 = NeutronToStorage( 'storage', neutron_storage_path)
         instrument = mcni.instrument( [component1, component2] )
         
         geometer = mcni.geometer()
@@ -117,6 +126,7 @@ def pysuite():
     return unittest.TestSuite( (suite1,) )
 
 def main():
+    _init()
     #debug.activate()
     pytests = pysuite()
     alltests = unittest.TestSuite( (pytests, ) )

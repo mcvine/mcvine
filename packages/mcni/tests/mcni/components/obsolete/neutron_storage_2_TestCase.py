@@ -26,6 +26,9 @@ The behavior to test:
 '''
 
 
+skip = 1
+
+
 
 import unittestX as unittest
 import journal

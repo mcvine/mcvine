@@ -22,6 +22,9 @@ To run this test
 """
 
 
+skip = 1
+needmpi = 1
+
 import unittestX as unittest
 import journal
 

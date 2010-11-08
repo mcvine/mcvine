@@ -57,7 +57,7 @@ class Storage:
         if mode in ['w'] and os.path.exists( path ):
             msg = 'path %r already exists. if you want to append neutron event files to '\
                   'that directory, please use mode "a" to append' % path
-            raise msg
+            raise RuntimeError, msg
         
         #if not os.path.exists( path ) and mode in ['w']: os.makedirs( path )
 
