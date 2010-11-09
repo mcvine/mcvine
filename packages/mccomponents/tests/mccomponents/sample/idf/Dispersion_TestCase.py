@@ -13,6 +13,10 @@
 
 
 
+interactive = False
+
+
+
 import unittestX as unittest
 import journal
 
@@ -30,10 +34,12 @@ class TestCase(unittest.TestCase):
                 = readDispersion( datapath )
         print nAtoms, dimension, Qaxes
         print energies
-        import pylab
-        pylab.plot( dos[0], dos[1] )
-        pylab.show()
-        raw_input('Press ENTER to continue...')
+        
+        if interactive:
+            import pylab
+            pylab.plot( dos[0], dos[1] )
+            pylab.show()
+            raw_input('Press ENTER to continue...')
         return
 
     pass  # end of TestCase
@@ -46,6 +52,9 @@ def pysuite():
 
 
 def main():
+    global interactive
+    interactive = True
+    
     #debug.activate()
     pytests = pysuite()
     alltests = unittest.TestSuite( (pytests, ) )

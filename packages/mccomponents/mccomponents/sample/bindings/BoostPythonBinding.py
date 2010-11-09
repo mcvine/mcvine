@@ -40,8 +40,10 @@ class New:
         size = shape[0] * shape[1]
         
         svector = b.vector_double( size )
+        saveshape = s.shape
         s.shape = -1,
         svector[:] = s
+        s.shape = saveshape
         
         fxy = b.new_fxy(
             qbegin, qend, qstep,

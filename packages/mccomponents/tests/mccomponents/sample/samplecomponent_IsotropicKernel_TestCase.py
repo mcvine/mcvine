@@ -12,6 +12,8 @@
 #
 
 
+standalone = True
+
 
 import unittestX as unittest
 

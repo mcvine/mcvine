@@ -18,10 +18,12 @@ def readSQE( datapath, Q = 'Q', E = 'E', Sqe = 'Sqe' ):
     qpath = os.path.join( datapath, Q )
     import Q
     q = Q.read( qpath)[1]
+    q.shape = q.size,
 
     epath = os.path.join( datapath, E )
     import E
     e = E.read( epath)[1]
+    e.shape = e.size,
 
     sqepath = os.path.join( datapath, Sqe )
     import Sqe

@@ -36,7 +36,7 @@ class He3Tube_TestCase(unittest.TestCase):
         pixel0 = mccompositebp.Vector(0,0,-0.5)
         z2c = mccomponentsbp.Z2Channel(1., 100, z_direction, pixel0)
 
-        position = mccompositebp.Vector(0,0,0)
+        position = mccompositebp.Vector(0,0,0.001)
         self.assertEqual( z2c( position ), 50 )
         return
 
@@ -67,7 +67,7 @@ class He3Tube_TestCase(unittest.TestCase):
         
         tube = mccomponentsbp.He3TubeKernel( pressure, tube_channels, z2c, t2c, mca);
 
-        event = mcni.neutron( r = (0,0,0), prob = prob, time = tof )
+        event = mcni.neutron( r = (0,0,0.001), prob = prob, time = tof )
         tube.absorb( event );
 
         del tube, mca

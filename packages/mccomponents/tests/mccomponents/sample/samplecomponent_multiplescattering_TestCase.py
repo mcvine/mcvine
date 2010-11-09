@@ -13,6 +13,9 @@
 
 
 
+standalone = True
+
+
 import unittestX as unittest
 import journal
 

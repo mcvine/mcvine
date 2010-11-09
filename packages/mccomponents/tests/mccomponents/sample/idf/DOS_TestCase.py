@@ -12,6 +12,7 @@
 #
 
 
+interactive = False
 
 import unittestX as unittest
 import journal
@@ -33,10 +34,11 @@ class TestCase(unittest.TestCase):
         (filetype, version, comment), e, Z = read( path )
         print filetype, version, comment
         self.assertEqual( filetype, 'DOS' )
-        import pylab
-        pylab.plot( e, Z )
-        pylab.show()
-        raw_input('Press ENTER to continue...')
+        if interactive:
+            import pylab
+            pylab.plot( e, Z )
+            pylab.show()
+            raw_input('Press ENTER to continue...')
         return
 
     pass  # end of TestCase
@@ -50,6 +52,8 @@ def pysuite():
 
 def main():
     #debug.activate()
+    global interactive
+    interactive = True
     pytests = pysuite()
     alltests = unittest.TestSuite( (pytests, ) )
     unittest.TextTestRunner(verbosity=2).run(alltests)

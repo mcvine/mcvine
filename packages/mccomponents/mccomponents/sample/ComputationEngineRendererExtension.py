@@ -17,7 +17,6 @@ class ComputationEngineRendererExtension:
 
     
     def onGridSQE(self, gridsqe):
-        
         sqehist = gridsqe.sqehist
         
         qbb = sqehist.axisFromName('Q').binBoundaries().asNumarray()

@@ -108,12 +108,12 @@ def makeScatterer():
 
 
 def makeUnitcell():
-    from crystal.UnitCell import create_unitcell
-    from crystal.Atom import atom
-    atoms = [atom('Ni')]
-    positions = [(0,0,0)]
+    from matter import Atom, Structure, Lattice
+    atoms = [Atom('Ni')]
+    # positions = [(0,0,0)]
     cellvectors = [ (3.57,0,0), (0,3.57,0), (0,0,3.57) ]
-    return create_unitcell(cellvectors, atoms, positions)
+    lattice = Lattice(base=cellvectors)
+    return Structure(lattice=lattice, atoms=atoms)
 
 
 
@@ -122,12 +122,12 @@ import numpy as N
 
 
 def pysuite():
-    TestCase.interactive = True
     suite1 = unittest.makeSuite(TestCase)
     return unittest.TestSuite( (suite1,) )
 
 
 def main():
+    TestCase.interactive = True
     #debug.activate()
     #journal.debug("CompositeNeutronScatterer_Impl").activate()
     #journal.debug('phonon_coherent_inelastic_polyxtal_kernel').activate()

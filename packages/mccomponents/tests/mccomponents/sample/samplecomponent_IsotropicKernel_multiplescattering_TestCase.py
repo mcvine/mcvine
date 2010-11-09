@@ -12,6 +12,8 @@
 #
 
 
+standalone = True
+
 
 import unittestX as unittest
 import journal
@@ -27,7 +29,7 @@ class TestCase(unittest.TestCase):
 
 
     def test1(self):
-        'mccomponents.sample.samplecomponent'
+        'mccomponents.sample.samplecomponent isotropic kernel, multiple-scattering'
         import mcni
         neutron = mcni.neutron( r = (0,0,0), v = (0,0,3000), time = 0, prob = 1 )
         from mcni.components.MonochromaticSource import MonochromaticSource

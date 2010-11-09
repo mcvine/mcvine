@@ -37,9 +37,9 @@ pressure = 10
 tubeLength = 1.
 axisDirection = 0,0,1
 pixel0position = 0,0,-0.5
-neutronT = 1e-3
+neutronT = 1e-3 * (1+0.001)
 pixelID = 33
-neutronPosition = 0,0, -0.5 + 0.01*pixelID
+neutronPosition = 0,0, -0.5 + 0.01*(pixelID+0.001)
 prob = 1.222
 
 class TestCase(unittest.TestCase):
