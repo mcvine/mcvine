@@ -105,6 +105,10 @@ def createReport(sources, nobinaries, failed):
         print " - failed:"
         for src, e in failed:
             print e
+
+    # 
+    import sys
+    sys.exit(1)
     return
 
 
