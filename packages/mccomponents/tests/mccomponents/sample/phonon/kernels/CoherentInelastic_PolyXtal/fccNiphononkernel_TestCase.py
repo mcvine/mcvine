@@ -20,6 +20,10 @@ on the kernel python representation.
 '''
 
 
+skip = True
+need_user_interaction = True
+
+
 import unittestX as unittest
 import journal
 

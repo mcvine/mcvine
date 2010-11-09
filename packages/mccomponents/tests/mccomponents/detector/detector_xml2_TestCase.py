@@ -12,6 +12,7 @@
 #
 
 
+long_test = True
 
 import unittestX as unittest
 import journal

@@ -12,6 +12,9 @@
 #
 
 
+skip = True
+need_user_interaction = True
+
 '''
 '''
 
