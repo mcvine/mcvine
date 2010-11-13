@@ -43,8 +43,8 @@ PARAMS_DICT      = {
 
 # Parameter filter which filters parameter for component type
 PARAM_FILTER = {
-    "L_monitor":    ("restore_neutron",),
-    "PSD_monitor":  ("restore_neutron",),
+#    "L_monitor":    ("restore_neutron",),
+#    "PSD_monitor":  ("restore_neutron",),
     "Monitor_nD":   ("file",)
 }
 

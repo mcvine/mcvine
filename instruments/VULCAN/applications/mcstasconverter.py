@@ -305,11 +305,15 @@ class McStasConverter:
         compseq = compseq.rstrip(",")     # Remove trailing comma
         str     += "%s --- \%s" % (compseq, br)
 
+        # Add neutron counts
+        str     += "--ncount=1000000 \%s" % br
+        str     += "--buffer_size=100000 \%s" % br
+
         # Add component types
         for comp in self.components():
             str     += "\t--%s=%s \%s" % (comp["name"], comp["type"], br)
         
-        
+        # Add component parameters
         str     += self._clParams(br, allparams)
 
         return str
@@ -674,6 +678,14 @@ class McStasConverter:
         return s
 
 
+    def _mcvineVector(self, property, type, regex, order, text):
+        """
+        Returns vector ('position' or 'rotation')
+        """
+        prop    = self._property(property, text)
+        return prop
+
+
     def _vector(self, property, type, regex, order, text):
         """
         Returns vector ('position' or 'rotation') of component specified by order
@@ -741,13 +753,15 @@ class McStasConverter:
 
         bracket = ("round"|"square")
         """
-        assert len(vector) == 3
-        start   = "("
-        end     = ")"
-        if bracket == "square":
-            start   = "["
-            end     = "]"
-        return "%s%.5f, %.5f, %.5f%s" % (start, vector[0], vector[1], vector[2], end)
+        return vector   # No formatting 
+
+        #assert len(vector) == 3
+        #start   = "("
+        #end     = ")"
+        #if bracket == "square":
+        #    start   = "["
+        #    end     = "]"
+        #return "%s%.5f, %.5f, %.5f%s" % (start, vector[0], vector[1], vector[2], end)
 
 
     def _prevVector(self, order, type, name=None):
@@ -779,7 +793,8 @@ class McStasConverter:
 
         Example of text: AT (0, 0, 0.39855)  RELATIVE  PREVIOUS
         """
-        return self._vector("AT", "position", POSITION, order, text)
+        return self._mcvineVector("AT", "position", POSITION, order, text)
+        #return self._vector("AT", "position", POSITION, order, text)
         
 
     def _rotation(self, text, order):
@@ -788,7 +803,8 @@ class McStasConverter:
 
         Example of text: ROTATED (11.6, 0, 0) RELATIVE Detector_Position_t
         """
-        return self._vector("ROTATED", "rotation", ROTATION, order, text)
+        return self._mcvineVector("ROTATED", "rotation", ROTATION, order, text)
+        #return self._vector("ROTATED", "rotation", ROTATION, order, text)
 
 
     def _extra(self, text):
@@ -891,10 +907,10 @@ def main():
             elif parts[0] in CONFIG:
                 conv    = McStasConverter(config=parts[1])
                 
-            #print conv.toString()
+            print conv.toString()
             #print conv.toInstrString()
             #print conv.toBuilderString()
-            print conv.toMcvineString()
+            #print conv.toMcvineString()
             #print conv.toVnfString()
             return
 
