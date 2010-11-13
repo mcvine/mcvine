@@ -29,12 +29,16 @@ update: clean
 
 EXPORT_PYTHON_MODULES = \
 	AbstractComponent.py \
+	AbstractNeutronTracer.py \
+	ConsoleNeutronTracer.py \
 	Instrument.py \
 	Geometer.py \
 	LauncherMPICH2.py \
 	List.py \
 	MpiApplication.py \
 	NeutronComponentFacility.py \
+	NeutronTracerFacility.py \
+	NoNeutronTracer.py \
 	ParallelComponent.py \
 	RegistryToDict.py \
 	__init__.py \

@@ -20,8 +20,13 @@ class SimulationNode(Connectable):
         'out': ['neutrons', 'position', 'orientation'],
         }
 
-    def __init__(self, position, orientation, component, neutron_coordinates_transformer,
-                 multiple_scattering=False):
+    def __init__(
+        self, position, orientation, 
+        component, neutron_coordinates_transformer,
+        multiple_scattering=False,
+        tracer = None
+        ):
+        
         Connectable.__init__(self)
         self.position = position
         self.orientation = orientation
@@ -29,9 +34,11 @@ class SimulationNode(Connectable):
         self.neutron_coordinates_transformer = neutron_coordinates_transformer
         self.multiple_scattering = multiple_scattering
 
-        self._process = self.component.process
+        process = self.component.process
         if self.multiple_scattering and hasattr(self.component, 'processM'):
-            self._process = self.component.processM
+            process = self.component.processM
+        self.processor = _createProcessor(process, tracer=tracer)
+        
         return
 
 
@@ -51,9 +58,9 @@ class SimulationNode(Connectable):
 
 
         try:
-            self._process(neutrons)
+            self.processor(neutrons)
         except NotImplementedError:
-            raise "component %s at %s rotated %s has not implemented method 'process'" % (
+            raise NotImplementedError, "component %s at %s rotated %s has not implemented method 'process'" % (
                 self.component.name, position, orientation)
         
         self._outputs['neutrons'] = neutrons
@@ -63,6 +70,15 @@ class SimulationNode(Connectable):
 
     pass # end of SimulationNode
         
+
+
+def _createProcessor(process, tracer):
+    def _(neutrons):
+        process(neutrons)
+        if tracer:
+            tracer(neutrons)
+        return neutrons
+    return _
 
 
 # version

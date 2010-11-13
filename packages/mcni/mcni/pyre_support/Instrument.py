@@ -52,6 +52,11 @@ class Instrument( base, ParallelComponent ):
             'geometer', default = Geometer() )
         geometer.meta['tip'] = 'geometer of instrument'
 
+        # tracer
+        from NoNeutronTracer import NoNeutronTracer
+        from NeutronTracerFacility import NeutronTracerFacility
+        tracer = NeutronTracerFacility('tracer', default=NoNeutronTracer())
+
         # this option overrides "dumpconfiguration" to provide an iinterface
         # easier to use
         dumppml = pyre.inventory.str('dump-pml', default='')
@@ -92,19 +97,24 @@ class Instrument( base, ParallelComponent ):
         geometer = self.geometer
 
         multiple_scattering = self.inventory.multiple_scattering
+        tracer = self.tracer
+        
         n = int(self.ncount / self.buffer_size)
         assert n>0, 'ncount should be larger than buffer_size: ncount=%s, buffer_size=%s' % (self.ncount, self.buffer_size)
+        
         for i in range(n):
             neutrons = mcni.neutron_buffer( self.buffer_size )
             mcni.simulate( instrument, geometer, neutrons, 
-                           multiple_scattering=multiple_scattering)
+                           multiple_scattering=multiple_scattering,
+                           tracer = tracer)
             continue
         
         remain = int(self.ncount % self.buffer_size)
         if remain:
             neutrons = mcni.neutron_buffer(remain)
             mcni.simulate( instrument, geometer, neutrons, 
-                           multiple_scattering=multiple_scattering)
+                           multiple_scattering=multiple_scattering,
+                           tracer = tracer)
 
         import os
         print os.times()
@@ -218,6 +228,12 @@ class Instrument( base, ParallelComponent ):
             continue
 
         self.neutron_components = neutron_components
+
+        # tracer
+        tracer = self.inventory.tracer
+        if tracer.name == 'no-neutron-tracer':
+            tracer = None
+        self.tracer = tracer
         
         # if in server mode for parallel computing
         # we actually don't want the subcomponents to
