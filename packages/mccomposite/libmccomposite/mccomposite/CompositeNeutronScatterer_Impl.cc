@@ -288,6 +288,20 @@ mccomposite::CompositeNeutronScatterer_Impl::interactM_path1
       m_details->global2local( local_event, scatterer );
       // 4. scatter
       itype = scatterer.interactM_path1( local_event, newly_scattered );
+#ifdef DEBUG
+      debug << journal::at(__HERE__);
+      if (newly_scattered.size()) {
+	debug << "After interactM_path1, got "
+	      << newly_scattered.size()
+	      << " new neutrons: "
+	      << journal::newline;
+	for (int i=0; i<newly_scattered.size(); i++) 
+	  debug << newly_scattered[i] << journal::newline;
+      } else {
+	debug << "After interactM_path1, got no new neutrons.";
+      }
+      debug << journal::endl;
+#endif
       
       // absorbed. nothing to do
       if (itype == scatterer_interface::absorption) continue;
