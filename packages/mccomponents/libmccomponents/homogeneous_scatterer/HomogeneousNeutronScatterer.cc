@@ -31,6 +31,7 @@ namespace mccomponents {
 
 
 const double mccomponents::HomogeneousNeutronScatterer::minimum_neutron_event_probability = 1.e-20;
+const int mccomponents::HomogeneousNeutronScatterer::max_scattering_loops=8;
 
 
 mccomponents::HomogeneousNeutronScatterer::~HomogeneousNeutronScatterer
@@ -293,8 +294,9 @@ mccomponents::HomogeneousNeutronScatterer::interactM_path1
 
   mcni::Neutron::Events to_be_scattered, scattered;
   to_be_scattered.push_back(ev);
-
-  while (to_be_scattered.size()) {
+  
+  int nloop = 0;
+  while (to_be_scattered.size() && nloop++ < max_scattering_loops) {
 
 //     std::cout << "interactM_path1: "
 // 	      << "to_be_scattered = " << to_be_scattered
