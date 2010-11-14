@@ -17,7 +17,13 @@ PROJ_TIDY += $(PROJ_CPPTESTS)
 PROJ_CLEAN += $(PROJ_CPPTESTS)
 
 PROJ_PYTESTS =  alltests.py
-PROJ_CPPTESTS = testAbstractNeutronScatterer testCompositeNeutronScatterer testGeometer test_neutron_propagation
+PROJ_CPPTESTS = \
+	testAbstractNeutronScatterer \
+	testCompositeNeutronScatterer \
+	testGeometer \
+	test_neutron_propagation \
+	testMultipleScattering \
+
 PROJ_TESTS = $(PROJ_PYTESTS) $(PROJ_CPPTESTS)
 PROJ_LIBRARIES = -L$(BLD_LIBDIR) -ljournal -lmcni -lmccomposite 
 
@@ -48,8 +54,11 @@ testCompositeNeutronScatterer: testCompositeNeutronScatterer.cc
 testGeometer: testGeometer.cc
 	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ testGeometer.cc $(PROJ_LIBRARIES)
 
-test_neutron_propagation: test_neutron_propagation.cc
+ntest_neutron_propagation: test_neutron_propagation.cc
 	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ test_neutron_propagation.cc $(PROJ_LIBRARIES)
+
+testMultipleScattering: testMultipleScattering.cc
+	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ testMultipleScattering.cc $(PROJ_LIBRARIES)
 
 
 # version

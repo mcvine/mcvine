@@ -68,36 +68,6 @@ public:
   bool forwarding;
 };
 
-// scatter and forwarding. good to test multiple-scattering
-// "scattered" neutrons are always (1,0,0)
-class Scattering_and_Forwarding: public mccomposite::AbstractNeutronScatterer{
-public:
-  Scattering_and_Forwarding
-  (const mccomposite::geometry::AbstractShape & shape)
-    : AbstractNeutronScatterer( shape )
-  {}
-  InteractionType interact_path1(mcni::Neutron::Event & ev) 
-  {
-    mccomposite::propagate_to_next_exiting_surface( ev, shape() );
-    return scattering;
-  }
-  
-  InteractionType interactM_path1(const mcni::Neutron::Event & ev, mcni::Neutron::Events & evts) 
-  {
-    mcni::Neutron::Event ev1=ev;
-    interact_path1( ev1 );
-    evts.push_back(ev1);
-    
-    mcni::Neutron::Event ev2;
-    ev2.state.velocity = mccomposite::geometry::Direction(1,0,0);
-    ev2.state.position = mccomposite::geometry::Position(0,0,0);
-    interact_path1( ev2 );
-    evts.push_back( ev2 );
-    return scattering;
-  }
-  
-  bool forwarding;
-};
 
 // simple. a box that does nothing to neutron
 void test1()
@@ -327,105 +297,6 @@ void test5()
 }
 
 
-// a box and a spherical shell. the box forwards and satters the neutron.
-// the spherical shell does nothing.
-void test6()
-{
-  using namespace mccomposite;
-
-  geometry::Box box(1,1,1);
-  Scattering_and_Forwarding s1(box);
-
-  geometry::Sphere sphere1( 2), sphere2( 2.1 );
-  geometry::Difference shell(sphere2, sphere1);
-  Nothing s2(shell);
-
-  CompositeNeutronScatterer::scatterercontainer_t scatterers;
-
-  scatterers.push_back( &s1 );
-  scatterers.push_back( &s2 );
-
-  typedef CompositeNeutronScatterer::geometer_t geometer_t;
-  geometer_t g;
-
-  geometry::Union frameshape(box, shell);
-  CompositeNeutronScatterer cs( frameshape, scatterers, g );
-
-  mcni::Neutron::Event ev;
-  ev.state.position = geometry::Position(0,0,-5);
-  ev.state.velocity = geometry::Direction(0,0,1);
-  ev.time = 0;
-  ev.probability = 1.;
-
-  mcni::Neutron::Events evts;
-  cs.interactM_path1( ev, evts ) ;
-  for (size_t i=0; i<evts.size(); i++)
-    std::cout <<  evts[i] << std::endl;
-
-  assert (evts.size() == 1);
-  assert (std::abs(evts[0].state.position.z+2) < 1.e-5 );
-  assert (evts[0].time == 3);
-
-  evts.clear();
-  cs.scatterM( ev, evts ) ;
-  assert (evts.size() == 2);
-  assert (evts[0].state.position.z == 2.1 );
-  assert (evts[0].time == 7.1);
-  assert (evts[0].state.velocity.z == 1);
-  assert (evts[1].state.position.x == 2.1 );
-  assert (evts[1].state.velocity.x == 1);
-}
-
-
-// a box and a spherical shell. both forward and satter the neutron.
-void test7()
-{
-  using namespace mccomposite;
-
-  geometry::Box box(1,1,1);
-  Scattering_and_Forwarding s1(box);
-
-  geometry::Sphere sphere1( 2), sphere2( 2.1 );
-  geometry::Difference shell(sphere2, sphere1);
-  Scattering_and_Forwarding s2(shell);
-
-  CompositeNeutronScatterer::scatterercontainer_t scatterers;
-
-  scatterers.push_back( &s1 );
-  scatterers.push_back( &s2 );
-
-  typedef CompositeNeutronScatterer::geometer_t geometer_t;
-  geometer_t g;
-
-  geometry::Union frameshape(box, shell);
-  CompositeNeutronScatterer cs( frameshape, scatterers, g );
-
-  mcni::Neutron::Event ev;
-  ev.state.position = geometry::Position(0,0,-5);
-  ev.state.velocity = geometry::Direction(0,0,1);
-  ev.time = 0;
-  ev.probability = 1.;
-
-  mcni::Neutron::Events evts;
-  cs.interactM_path1( ev, evts ) ;
-  for (size_t i=0; i<evts.size(); i++)
-    std::cout <<  evts[i] << std::endl;
-
-  assert (evts.size() == 2);
-  assert (std::abs(evts[0].state.position.z+2) < 1.e-5 );
-  assert (evts[0].time == 3);
-
-  evts.clear();
-
-  cs.scatterM( ev, evts ) ;
-  // there must be five neutrons
-  // four of them going to x direction, one of them going to z direction
-  // this is fun!
-  std::cout << evts << std::endl;
-  assert (evts.size() == 5);
-}
-
-
 // a box that does nothing to neutron, and then another box
 // that scatters, 
 void test8()
@@ -553,8 +424,6 @@ int main()
   test3();
   test4();
   test5();
-  test6();
-  test7();
   test8();
   test9();
   test10();
