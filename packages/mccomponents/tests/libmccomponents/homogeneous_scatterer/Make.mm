@@ -17,7 +17,12 @@ PROJ_TIDY += $(PROJ_CPPTESTS)
 PROJ_CLEAN += $(PROJ_CPPTESTS)
 
 PROJ_PYTESTS =  alltests.py
-PROJ_CPPTESTS = testHomogeneousNeutronScatterer testCompositeScatteringKernel
+PROJ_CPPTESTS = \
+	testHomogeneousNeutronScatterer \
+	testCompositeScatteringKernel \
+	testMultipleScattering \
+
+
 PROJ_TESTS = $(PROJ_PYTESTS) $(PROJ_CPPTESTS)
 PROJ_LIBRARIES = -L$(BLD_LIBDIR) -ljournal -lmcni -lmccomposite -lmccomponents -lfparser
 
@@ -41,6 +46,9 @@ update: clean
 
 testHomogeneousNeutronScatterer: testHomogeneousNeutronScatterer.cc
 	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ testHomogeneousNeutronScatterer.cc $(PROJ_LIBRARIES)
+
+testMultipleScattering: testMultipleScattering.cc
+	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ testMultipleScattering.cc $(PROJ_LIBRARIES)
 
 testCompositeScatteringKernel: testCompositeScatteringKernel.cc
 	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ testCompositeScatteringKernel.cc $(PROJ_LIBRARIES)
