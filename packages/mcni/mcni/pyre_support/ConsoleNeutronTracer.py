@@ -22,7 +22,8 @@ class ConsoleNeutronTracer(base):
 
     
     def __call__(self, neutrons):
-        print neutrons
+        for neutron in neutrons:
+            print neutron
 
 
 # version
