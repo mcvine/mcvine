@@ -66,6 +66,11 @@ class Generator:
                 del arg
                 pass
 
+            
+            def processM(self, neutrons):
+                # for mcstas components, processM = process
+                return self.process(neutrons)
+
             def __getattribute__(self, name):
                 try: return base.__getattribute__(self, name)
                 except AttributeError:
