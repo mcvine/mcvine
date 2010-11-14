@@ -80,7 +80,6 @@ class ComputationEngineRendererExtension:
             # convert to meter^3
             unitcell_vol *= 1.e-30
         
-        import pdb; pdb.set_trace()
         return self.factory.sqekernel(
             abs, sctt, unitcell_vol,
             csqe, Qrange, Erange )
