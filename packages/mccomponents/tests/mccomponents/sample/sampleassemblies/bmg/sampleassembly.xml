@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE SampleAssembly>
+
+<SampleAssembly name="bmg">
+  
+  <PowderSample name="bmg-plate" type="sample">
+    <Shape>
+      <block width="5*cm" height="7*cm" thickness="1.6*mm" />
+    </Shape>
+    <Phase type="crystal">
+      <ChemicalFormula>bmg</ChemicalFormula>
+      <xyzfile>bmg.xyz</xyzfile>
+    </Phase>
+  </PowderSample>
+  
+  <LocalGeometer registry-coordinate-system="InstrumentScientist">
+    <Register name="bmg-plate" position="(0,0,0)" orientation="(0,0,-45)"/>
+  </LocalGeometer>
+<!--
+  <environment>
+    <temperature>300*K</temperature>
+    <pressure>1.*atm</pressure>
+  </environment>
+-->
+
+</SampleAssembly>
