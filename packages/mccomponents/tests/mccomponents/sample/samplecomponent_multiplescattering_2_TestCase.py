@@ -32,21 +32,19 @@ class TestCase(unittest.TestCase):
     def test1(self):
         'mccomponents.sample.samplecomponent'
         import mcni
-        neutron = mcni.neutron( r = (0,0,0), v = (0,0,3000), time = 0, prob = 1 )
         neutron = mcni.neutron( r = (0,0,0), v = (0,0,4149.48), time = 0, prob = 1 )
         from mcni.components.MonochromaticSource import MonochromaticSource
         component1 = MonochromaticSource('source', neutron)
         from mccomponents.sample import samplecomponent
-        # component2 = samplecomponent( 'Ni', 'sampleassemblies/Ni/sampleassembly.xml' )
         component2 = samplecomponent( 'bmg', 'sampleassemblies/bmg/sampleassembly.xml' )
         instrument = mcni.instrument( [component1, component2] )
         
         geometer = mcni.geometer()
         geometer.register( component1, (0,0,0), (0,0,0) )
         geometer.register( component2, (0,0,1), (0,0,0) )
-
+        
         neutrons = mcni.neutron_buffer( 1 )
-
+        
         from mcni.pyre_support.ConsoleNeutronTracer import ConsoleNeutronTracer
         tracer = ConsoleNeutronTracer()
         mcni.simulate( 

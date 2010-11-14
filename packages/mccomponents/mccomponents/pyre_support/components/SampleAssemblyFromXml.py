@@ -34,6 +34,13 @@ class SampleAssemblyFromXml( AbstractComponent ):
         return self.engine.process( neutrons )
 
 
+    def processM(self, neutrons):
+        engine = self.engine
+        if not engine:
+            raise RuntimeError, "engine not initialized"
+        return self.engine.processM( neutrons )
+
+
     def _configure(self):
         AbstractComponent._configure(self)
         self.xml = self.inventory.xml
