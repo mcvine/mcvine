@@ -28,12 +28,15 @@ namespace mccomposite{
   /// directly comes from CompositeNeutronScatterer.
   struct CompositeNeutronScatterer_Impl{
 
+    // const data
+    static const int max_scattering_loops;
+    
     // types
     typedef AbstractNeutronScatterer scatterer_interface;
     typedef scatterer_interface::InteractionType InteractionType;
     typedef Geometer<AbstractNeutronScatterer> geometer_t;
     typedef std::vector<AbstractNeutronScatterer *> scatterercontainer_t;
-    
+
     // meta-methods
     CompositeNeutronScatterer_Impl
     ( const AbstractShape & shape, const scatterercontainer_t & scatterers, 

@@ -81,6 +81,9 @@ namespace mccomposite {
 }
 
 
+const int mccomposite::CompositeNeutronScatterer_Impl::max_scattering_loops = 8;
+
+
 struct mccomposite::CompositeNeutronScatterer_Impl::Details {
   
   // meta-methods
@@ -237,8 +240,10 @@ mccomposite::CompositeNeutronScatterer_Impl::interactM_path1
   to_be_scattered.push_back( ev1 );
   
   scatterer_interface::InteractionType itype;
+
+  int nloop = 0;
   
-  while (to_be_scattered.size()>0) {
+  while (to_be_scattered.size()>0 && nloop++<max_scattering_loops) {
     
 #ifdef DEBUG
     debug << journal::at(__HERE__)
@@ -304,27 +309,53 @@ mccomposite::CompositeNeutronScatterer_Impl::interactM_path1
 #endif
       
       // absorbed. nothing to do
-      if (itype == scatterer_interface::absorption) continue;
+      if (itype == scatterer_interface::absorption)
+	continue;
       
       // if we reach here, that means we got some new neutrons
       // 1. convert neutrons back to global coordinate
       m_details->local2global( newly_scattered, scatterer );
+#ifdef DEBUG
+      debug << journal::at(__HERE__);
+      debug << "Convertrf neutrons after interactM_path1 back to global coords:"
+	    << journal::newline;
+      for (int i=0; i<newly_scattered.size(); i++) 
+	debug << newly_scattered[i] << journal::newline;
+      debug << journal::endl;
+#endif
       
       // 2. we need to check those neutrons. 
       // some of them may already exited first surface. we just need
       // to add to the out-list. The rest we need to deal with them
       // scatter them again.
+#ifdef DEBUG
+      debug << journal::at(__HERE__);
+      debug << "Now check neutrons." << journal::newline;
+#endif
       for (size_t new_neutron_index = 0; new_neutron_index < newly_scattered.size();
 	   new_neutron_index++ ) {
 	const mcni::Neutron::Event & ev = newly_scattered[new_neutron_index];
+#ifdef DEBUG
+	debug << new_neutron_index << ": " << ev << journal::newline;
+#endif
 	
 	// exited. add it to the out-list
-	if (locate(ev, m_shape) != Locator::inside)
-	  { evts.push_back(ev); continue; }
+	if (locate(ev, m_shape) != Locator::inside) { 
+#ifdef DEBUG
+	debug << "+ " << "exited" << journal::newline;
+#endif
+	    evts.push_back(ev); continue; 
+	}
 	
 	// not exited. need to scatter again.
+#ifdef DEBUG
+	debug << "+ " << "saved to be scattered latter" << journal::newline;
+#endif
 	to_be_scattered2.push_back( ev );
       }
+#ifdef DEBUG
+      debug << journal::endl;
+#endif
       
     }
     
@@ -355,7 +386,8 @@ mccomposite::CompositeNeutronScatterer_Impl::scatterM
   
   scatterer_interface::InteractionType itype;
   
-  while (scattered.size()>0) {
+  int nloop = 0;
+  while (scattered.size()>0 && nloop<max_scattering_loops) {
     
     mcni::Neutron::Events scattered2;
     

@@ -48,6 +48,11 @@ class Rotation(base):
         return
 
 
+    def __str__(self):
+        return "rotation: body={%s}, angles={%s}" %(
+            self.body, self.angles)
+
+
 
 def unite(*shapes):
     return Union(*shapes)

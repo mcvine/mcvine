@@ -39,9 +39,21 @@ class CompositeScatterer:
     def shape(self):
         if self._shape is None:
             from geometry.operations import unite
-            self._shape = unite( *[e.shape() for e in self.elements() ] )
+            self._shape = unite( *[self._getElementShape(e)
+                                   for e in self.elements() ] )
             pass
         return self._shape
+
+
+    def _getElementShape(self, e):
+        s = e.shape()
+        g = self.geometer
+        position = g.position(e)
+        orientation = g.orientation(e)
+        import geometry
+        r = geometry.operations.rotate(s, orientation)
+        t = geometry.operations.translate(r, position)
+        return t
     
 
     pass # end of CompositeScatterer
