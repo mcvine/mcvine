@@ -66,14 +66,23 @@ class ComputationEngineRendererExtension:
             #see sampleassembly_support.SampleAssembly2CompositeScatterer for details.
             origin = t.scatterer_origin
             from sampleassembly import cross_sections
-            abs, inc, coh = cross_sections( origin )
+            abs, inc, coh = cross_sections( origin, include_density=False)
             sctt = inc + coh
             pass
+
+        abs, sctt = self._unitsRemover.remove_unit( (abs, sctt), units.length.meter**2)
         
-        abs, sctt = self._unitsRemover.remove_unit( (abs, sctt), 1./units.length.meter )
+        unitcell_vol = t.unitcell_vol
+        if unitcell_vol is None:
+            origin = t.scatterer_origin
+            structure = origin.phase.unitcell
+            unitcell_vol = structure.lattice.getVolume()
+            # convert to meter^3
+            unitcell_vol *= 1.e-30
         
+        import pdb; pdb.set_trace()
         return self.factory.sqekernel(
-            abs, sctt,
+            abs, sctt, unitcell_vol,
             csqe, Qrange, Erange )
 
 

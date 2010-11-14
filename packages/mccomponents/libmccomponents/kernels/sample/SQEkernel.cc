@@ -4,7 +4,7 @@
 //
 //                                   Jiao Lin
 //                      California Institute of Technology
-//                        (C) 2007  All Rights Reserved
+//                      (C) 2007-2010  All Rights Reserved
 //
 // {LicenseText}
 //
@@ -42,11 +42,13 @@ const char mccomponents::kernels::SQEkernel::Details::jrnltag[] = "SQEkernel";
 mccomponents::kernels::SQEkernel::SQEkernel
 ( double absorption_cross_section,
   double scattering_cross_section,
+  double unitcell_vol,
   sample::AbstractSQE & sqe, 
   double Qmin, double Qmax,
   double Emin, double Emax) 
   : m_absorption_cross_section( absorption_cross_section ),
     m_scattering_cross_section( scattering_cross_section ),
+    m_uc_vol(unitcell_vol),
     m_epsilon(1.e-10),
     m_Qmin(Qmin), m_Qmax(Qmax), m_DQ(Qmax-Qmin),
     m_Emin(Emin), m_Emax(Emax), m_DE(Emax-Emin),
@@ -60,7 +62,7 @@ mccomponents::kernels::SQEkernel::absorption_coefficient(const mcni::Neutron::Ev
 {
   // !!!!!!!!!!!!!!!!
   // we need better implementation here
-  return m_absorption_cross_section;
+  return m_absorption_cross_section/m_uc_vol;
 }
 
 
@@ -69,7 +71,7 @@ mccomponents::kernels::SQEkernel::scattering_coefficient(const mcni::Neutron::Ev
 {
   // !!!!!!!!!!!!!!!!
   // we need better implementation here
-  return m_scattering_cross_section;
+  return m_scattering_cross_section/m_uc_vol;
 }
 
 
@@ -131,7 +133,7 @@ mccomponents::kernels::SQEkernel::scatter
   // !!!!!!!!!
   // need normalization factor here
   // XXX: Qmin Qmax???
-  ev.probability *= m_sqe(Q,E) * Q * (Qmax-Qmin) * (Emax-Emin);
+  ev.probability *= m_sqe(Q,E) * Q;
 
   // figure out the direction of the out-going neutron
   double cost = (kf*kf + ki*ki - Q*Q)/2/kf/ki;

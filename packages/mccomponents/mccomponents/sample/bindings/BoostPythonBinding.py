@@ -61,6 +61,7 @@ class New:
 
     
     def sqekernel(self, absorption_cross_section, scattering_cross_section,
+                  unitcell_vol,
                   sqe, Qrange, Erange):
         '''sqekernel: a kernel takes S(Q,E) a functor
 
@@ -73,6 +74,7 @@ class New:
         Qmin, Qmax = Qrange
         return b.SQEkernel(
             absorption_cross_section, scattering_cross_section,
+            unitcell_vol,
             sqe, Qmin, Qmax, Emin, Emax )
     
 

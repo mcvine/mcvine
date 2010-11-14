@@ -40,6 +40,7 @@ namespace mccomponents {
       //! ctor
       SQEkernel( double absorption_cross_section,
 		 double scattering_cross_section,
+		 double unitcell_vol,
 		 sample::AbstractSQE & sqe, 
 		 double Qmin, double Qmax,
 		 double Emin, double Emax) ;
@@ -53,6 +54,7 @@ namespace mccomponents {
     private:
       // data
       double m_absorption_cross_section, m_scattering_cross_section;
+      double m_uc_vol;
       double m_epsilon;
       double m_Qmin, m_Qmax, m_DQ;
       double m_Emin, m_Emax, m_DE;

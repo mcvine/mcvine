@@ -45,13 +45,14 @@ class TestCase(unittest.TestCase):
 
         neutrons = mcni.neutron_buffer( 1 )
 
-        mcni.simulate( instrument, geometer, neutrons, multiple_scattering=True)
+        from mcni.pyre_support.ConsoleNeutronTracer import ConsoleNeutronTracer
+        tracer = ConsoleNeutronTracer()
+        mcni.simulate( 
+            instrument, geometer, neutrons, 
+            multiple_scattering=True,
+            tracer = tracer
+            )
 
-        for i in range(len(neutrons)):
-            neutron = neutrons[i]
-            print neutron
-            continue
-        
         return
     
 
@@ -65,6 +66,9 @@ def pysuite():
 
 def main():
     #debug.activate()
+    import journal
+    # journal.debug('CompositeNeutronScatterer_Impl').activate()
+    # journal.debug('HomogeneousNeutronScatterer').activate()
     pytests = pysuite()
     alltests = unittest.TestSuite( (pytests, ) )
     unittest.TextTestRunner(verbosity=2).run(alltests)

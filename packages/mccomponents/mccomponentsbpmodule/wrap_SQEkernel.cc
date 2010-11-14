@@ -31,10 +31,10 @@ namespace wrap_mccomponents {
 
     kernel_wrapper<w_t>::wrap
       ("SQEkernel",
-       init<double, double,
+       init<double, double, double,
        AbstractSQE &,  
        double, double, double, double> () 
-       [with_custodian_and_ward<1,4> () ]
+       [with_custodian_and_ward<1,5> () ]
        )
       ;
     

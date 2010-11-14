@@ -36,17 +36,39 @@ class GridSQE(AbstractNode):
                 f = os.path.dirname(hdfpath)
                 e = os.path.basename(hdfpath)
                 t = traceback.format_exc()
-                raise IOError, "unable to load histogram from file %s, entry %s. Original traceback:\n%s" % (f, e, t)
+                raise IOError, "unable to load histogram from hdf5 file %s, entry %s. Original traceback:\n%s" % (f, e, t)
             pass
         else:
             raise ValueError, "GridSQE needs path to "\
                   "idf data files or "\
                   "histogram hdf5 file "
+
+        auto_normalization = kwds.get('auto-normalization')
+        if auto_normalization:
+            auto_normalization = bool(auto_normalization)
+            
+        norm = _calcNorm(sqe)
+        if abs(norm-1) > 0.2:
+            if auto_normalization:
+                sqe.I /= norm
+            else:
+                raise RuntimeError, "S(Q,E) should average to ~1, got %s" % ave
         
         from mccomponents.sample import gridsqe
         return gridsqe( sqe ) 
 
     pass # end of GridSQE
+
+
+def _calcNorm(sqe):
+    I = sqe.I
+    Q = sqe.Q
+    I1 = I.copy()
+    for i in range(len(Q)):
+        I1[i] *= Q[i]
+        continue
+    import numpy
+    return numpy.average(I1)
 
 
 # version

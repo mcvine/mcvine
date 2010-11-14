@@ -285,6 +285,10 @@ mccomponents::HomogeneousNeutronScatterer::InteractionType
 mccomponents::HomogeneousNeutronScatterer::interactM_path1
 (const mcni::Neutron::Event &ev, mcni::Neutron::Events &evts)
 {
+#ifdef DEBUG
+  journal::debug_t debug(HomogeneousNeutronScatterer_Impl::jrnltag);
+#endif
+
   using namespace mccomposite;
 
   mcni::Neutron::Events to_be_scattered, scattered;
@@ -315,6 +319,12 @@ mccomponents::HomogeneousNeutronScatterer::interactM_path1
 	
 	// if the probability is too low, we just absorb it and done
 	if (ev2.probability < minimum_neutron_event_probability) {
+#ifdef DEBUG
+	  debug << journal::at(__HERE__)
+		<< "event " << ev2 << " has a very low probability, "
+		<< "will be dicarded"
+		<< journal::endl;
+#endif
 	  // nothing to do actually
 	  continue;
 	}
