@@ -21,12 +21,12 @@ class ComponentInterface(base, ParallelComponent):
     class Inventory(base.Inventory):
 
         import pyre.inventory
-        restore_neutrons = pyre.inventory.bool('restore-neutrons')
+        restore_neutron = pyre.inventory.bool('restore_neutron')
 
 
     def process(self, neutrons):
-        restore_neutrons = self.inventory.restore_neutrons
-        if restore_neutrons:
+        restore_neutron = self.inventory.restore_neutron
+        if restore_neutron:
             # create a copy to be processed
             saved = neutrons.snapshot(len(neutrons))
         
@@ -47,7 +47,7 @@ class ComponentInterface(base, ParallelComponent):
         self._saveHistogramInMyoutputdir(filename='%s.%s' % (hout, iterationcount))
         
         # restore neutrons if requested
-        if restore_neutrons:
+        if restore_neutron:
             neutrons.swap(saved)
             
         return ret
