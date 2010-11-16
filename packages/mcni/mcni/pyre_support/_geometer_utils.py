@@ -26,7 +26,7 @@ class Geometer1(base):
 ''' % declarations
     
     exec code in locals()
-    
+
     return Geometer1(geometer_name)
 
 

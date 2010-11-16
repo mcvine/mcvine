@@ -12,7 +12,6 @@
 #
 
 
-
 from MpiApplication import Application as base
 from ParallelComponent import ParallelComponent
 
@@ -192,7 +191,6 @@ class Instrument( base, ParallelComponent ):
     
     
     def _configure(self):
-        
         # handle dumppml
         # this overrides the option dumpconfiguration in order to
         # provide a simpler interface for users.
@@ -249,7 +247,7 @@ class Instrument( base, ParallelComponent ):
         for c in neutron_components:
             comp = self.inventory.getTraitValue(c)
             comp._noinit = noinit            
-            
+
         if not self._showHelpOnly: self._setup_ouputdir()
         return
 
@@ -377,7 +375,9 @@ def _getCmdStr():
 def _build_geometer( instrument ):
     from _geometer_utils import buildGeometerFromInventory
     Inventory = instrument.Inventory
-    return buildGeometerFromInventory(Inventory)
+    g = buildGeometerFromInventory(Inventory)
+    g.instrument = instrument
+    return g
     
 
 def getPartitions(N, n):

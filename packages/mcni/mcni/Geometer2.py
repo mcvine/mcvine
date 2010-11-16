@@ -87,10 +87,13 @@ import numpy as np
 from Geometer import Geometer as base
 class Geometer(base):
 
+    #
+    element_sequence = None # need this to support "previous"
+    
 
     def __init__(self, transformer=None):
         super(Geometer, self).__init__()
-        
+
         self._abspos = {}
         self._absori = {}
         
@@ -121,6 +124,7 @@ class Geometer(base):
         rec = _toCoord(rec)
         if rec.isabsolute: return rec.value
         ref = rec.reference
+        ref = self._findReference(ref, element)
         refpos = self.position(ref)
         refori = self.orientation(ref)
         return self.transformer(refpos, refori, rec.value, I)[0]
@@ -131,6 +135,7 @@ class Geometer(base):
         rec = _toCoord(rec)
         if rec.isabsolute: return rec.value
         ref = rec.reference
+        ref = self._findReference(ref, element)
         refpos = (0,0,0)
         refori = self.orientation(ref)
         ret = self.transformer(refpos, refori, (0,0,0), rec.value)[1]
@@ -143,6 +148,17 @@ class Geometer(base):
 
     def _orientationRecord(self, element):
         return base.orientation( self, element )
+
+
+    def _findReference(self, ref, element):
+        if ref == 'previous':
+            seq = self.element_sequence
+            i = seq.index(element)
+            if i == 0:
+                raise RuntimeError, "there is no previous element for %s" % element
+            return seq[i-1]
+        return ref
+    
 
     pass # Geometer
 

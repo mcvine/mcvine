@@ -74,6 +74,10 @@ default_record = AbsoluteCoord((0,0,0)), AbsoluteCoord((0,0,0))
 
 class Geometer(Component, base):
 
+    # a weak reference to the instrument
+    # will need it to support "previous" 
+    instrument = None 
+
     
     class Inventory(Component.Inventory):
 
@@ -93,6 +97,12 @@ class Geometer(Component, base):
         return
 
 
+    def _get_comp_seq(self):
+        seq = self.instrument.sequence
+        return [getattr(self.instrument.inventory, n) for n in seq]
+    element_sequence = property(_get_comp_seq)
+
+
     def _positionRecord(self, element):
         try:
             return base._positionRecord( self, element )
@@ -101,6 +111,10 @@ class Geometer(Component, base):
                 return base._positionRecord( self, element.name )
             except:
                 #end to try out all aliases
+                aliases = getattr(element, 'aliases', None)
+                if aliases is None:
+                    raise RuntimeError, 'failed to find %r' % (element, )
+                
                 for alias in element.aliases:
                     try: return base._positionRecord( self, alias )
                     except: pass
@@ -116,6 +130,10 @@ class Geometer(Component, base):
             try:
                 return base._orientationRecord( self, element.name )
             except:
+                aliases = getattr(element, 'aliases', None)
+                if aliases is None:
+                    raise RuntimeError, 'failed to find %r' % (element, )
+
                 #end to try out all aliases
                 for alias in element.aliases:
                     try: return base._orientationRecord( self, alias )
@@ -124,6 +142,22 @@ class Geometer(Component, base):
                 #still nothing
                 raise "Orientation of element %s not registered" % element.name
 
+
+    def _findReference(self, ref, element):
+        if ref == 'previous':
+            seq = self.element_sequence
+            try:
+                i = seq.index(element)
+            except:
+                seq = [c.name for c in seq]
+                if not isinstance(element, basestring):
+                    element = element.name
+                i = seq.index(element)
+            if i == 0:
+                raise RuntimeError, "there is no previous element for %s" % element
+            return seq[i-1]
+        return ref
+    
 
     def _configure(self):
         Component._configure(self)
