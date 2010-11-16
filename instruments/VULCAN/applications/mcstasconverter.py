@@ -72,6 +72,7 @@ Questions:
 # XXX: Fix options issue (see fixtures.textOptions)
 # XXX: Implement nice align of dictionary entries in toBuilderString()
 # XXX: Implement filter for parameters and components
+# XXX: Filter is not set correctly (because it does not propagate to methods that use the filter)
 
 
 # Imports
@@ -94,6 +95,7 @@ VECTOR          = "\(%s,%s,%s\)" % (VECVAL, VECVAL, VECVAL) # Vector
 VECTOR_F        = "(\([^\)]*\))"
 POSITION        = "AT%s%s%s(RELATIVE|ABSOLUTE)%s([^ ]*)" % (SPACES, VECTOR, SPACES, SPACES)
 ROTATION        = "ROTATED%s%s%s(RELATIVE|ABSOLUTE)%s([^ ]*)" % (SPACES, VECTOR, SPACES, SPACES)
+RELTO           = "to=\"([^\"]+)\"" # Relative to component
 
 # Constants
 PROPERTIES      = ["AT", "ROTATED"]     # Standard properties
@@ -130,7 +132,7 @@ class McStasConverter:
     def __init__(self, filename=None, config=None, parse=True):
         self._filename      = filename
         self._config        = config
-        self._components    = []    # list of dictionaries
+        self._components    = []    # Keeps list of dictionaries for each component
 
         if parse and (self._fileExists() or config):
             self.parse()
@@ -163,8 +165,8 @@ class McStasConverter:
             comp["name"]        = m[0]
             comp["type"]        = m[1]
             comp["parameters"]  = self._params(m[2])
-            comp["position"]    = self._position(m[3], order)
-            comp["rotation"]    = self._rotation(m[3], order)
+            comp["position"]    = self._position(m[3], comp["name"], order)
+            comp["rotation"]    = self._rotation(m[3], comp["name"], order)
             comp["extra"]       = self._extra(m[3])
 
             order   += 1
@@ -172,7 +174,7 @@ class McStasConverter:
 
     def components(self, filter=COMP_FILTER):
         """
-        Returns list of components
+        Returns list of components with optional filter applied
         
         filter -- list of component types to filter out
         """
@@ -186,6 +188,24 @@ class McStasConverter:
                 complist.append(c)
 
         return complist
+
+
+    def component(self, name):
+        "Returns tuple (component, order) of first component specified by name"
+        for i in range(len(self._components)):
+            c   = self._components[i]
+            if c["name"] == name:
+                return (c, i)
+
+        return None
+
+
+    def firstComponent(self, filter=COMP_FILTER):
+        "Returns first component of instrument after filtering"
+        comps    = self.components(filter)
+        if len(comps) == 0:
+            return None
+        return comps[0]
 
 
     # XXX: Merge component parameters both from instrument values and component default values
@@ -731,11 +751,15 @@ class McStasConverter:
 
 
     def _relComp(self, order, name):
-        "Returns relative component specified by name starting from order-1 to the source"
+        """
+        Returns tuple (component, order) of relative component specified by name
+        starting from order-1 to the source
+        
+        """
         for i in range(order-1, -1, -1):
             comp    = self._components[i]
             if comp["name"] == name:
-                return comp
+                return (comp, i)
 
         return None     # Not found
 
@@ -773,34 +797,39 @@ class McStasConverter:
         # General case
         assert order > 0
         if name:
-            comp    = self._relComp(order, name)
+            relcomp = self._relComp(order, name)
+            comp    = relcomp[0]
         else:
             comp    = self._components[order-1]
 
         return comp[type]
         
 
-    def _position(self, text, order):
+    def _position(self, text, compname, order):
         """
         Returns absolute position of component with respect to source
 
         Example of text: AT (0, 0, 0.39855)  RELATIVE  PREVIOUS
+
+        compname    -- component name to which rotation is applied
         """
-        return self._mcvineVector("AT", "position", POSITION, order, text)
+        return self._mcvineVector("AT", "position", POSITION, compname, order, text)
         #return self._vector("AT", "position", POSITION, order, text)
         
 
-    def _rotation(self, text, order):
+    def _rotation(self, text, compname, order):
         """
         Returns absolute rotation (in degrees) of component with respect to source
 
         Example of text: ROTATED (11.6, 0, 0) RELATIVE Detector_Position_t
+
+        compname    -- component name to which rotation is applied
         """
-        return self._mcvineVector("ROTATED", "rotation", ROTATION, order, text)
+        return self._mcvineVector("ROTATED", "rotation", ROTATION, compname, order, text)
         #return self._vector("ROTATED", "rotation", ROTATION, order, text)
 
 
-    def _mcvineVector(self, property, type, regex, order, text):
+    def _mcvineVector(self, property, type, regex, compname, order, text):
         """
         Returns string of McVine ('position' or 'rotation')
         """
@@ -809,12 +838,7 @@ class McStasConverter:
         m       = p.findall(prop)
 
         if self._missingRotation(m, type):            
-            comp        = self._components[order]
-            # Position,
-            # Example 1: relative([0.0, 0.0, 0.09353], to="TRG_Out")
-            # Example 2: [0.0, 0.0, 1.02]
-            position    = comp["position"]
-            return  self._rotFromPos(position)  # XXX: Hack!
+            return  self._rotFromPos(order)
 
         # Expected format: (X, Y, Z, <Relation>, <Component>)
         if not m or not m[0] or len(m[0]) != 5:
@@ -829,43 +853,141 @@ class McStasConverter:
 
         # ABSOLUTE relation
         if relation == "ABSOLUTE":  # Easy: just return what you have
-            return "(%s, %s, %s)" % (x, y, z)
-
+            return self._absoluteVector(x, y, z)
         # RELATIVE relation is implied
         assert relation == "RELATIVE"
 
         relcomp = mm[4]     # Name of relative component
+
+        return self._relativeToComp(x, y, z, relcomp, order)
+
+
+    def _relativeToComp(self, x, y, z, relcomp, order):
+        """
+        Returns vector coordinates relative to component relcomp
+
+        x, y, z     -- coordinates of the current component
+        relcomp     -- name of the relative component
+        order       -- order of the current component
+        """
+        if self._isFirstComp(order):    # First component returns absolute position
+            return self._absoluteVector(0, 0, 0)
+
+        # If relative component is of Arm type, make it relative to component before Arm
+        if self._isArm(relcomp):
+            if self._ifFirstArm(relcomp):
+                return self._absoluteVector(x, y, z)
+
+            # Arms after the first arm
+            tuple       = self.component(relcomp)
+            armOrder    = tuple[1]
+            comp        = self._prevToArm(armOrder)
+            return self._relativeVector(x, y, z, "previous")    # XXX: Temp
         
-        # Arm, XXX: Name of Arm() should be "arm"
-        if relcomp.lower()  == "arm":
-            return "(%s, %s, %s)" % (x, y, z)   # Absolute position
+            #return self._relativeVector(x, y, z, comp["name"])
         
         # Previous
         if relcomp.lower()  == "previous":
-            relcomp = relcomp.lower()
+            relcomp = "previous"
 
-        return "relative((%s, %s, %s), to=\"%s\")" % (x, y, z, relcomp)
+        return self._relativeVector(x, y, z, relcomp)
 
 
-    def _missingRotation(self, match, type):
-        "Returns True if rotation is missing"
-        if not match or not match[0] and type == "rotation":
+    # XXX: Hack!
+    def _rotFromPos(self, order):
+        "Returns rotation from position"
+        comp        = self._components[order]
+        # Position,
+        # Example 1: relative([0.0, 0.0, 0.09353], to="TRG_Out")
+        # Example 2: [0.0, 0.0, 1.02]
+        position    = comp["position"]
+        p       = re.compile(RELTO, re.IGNORECASE)
+        m       = p.findall(position)
+
+        if self._isFirstComp(order):    # First component returns absolute position
+            return self._absoluteVector(0, 0, 0)
+
+        if not m or len(m) == 0:   # Not relative or something else
+            return self._relativeVector(0, 0, 0, "previous")    #"relative((0, 0, 0), to=\"previous\")"
+
+        relcomp = m[0]
+        return self._relativeVector(0, 0, 0, relcomp)   #"relative((0, 0, 0), to=\"%s\")" % relcomp
+
+
+    def _prevToArm(self, order):
+        """
+        Returns  non-Arm component closest and positioned before the Arm component
+        
+        order   -- order of current component
+        relname -- name of component to which the current component referse to
+        """
+        for i in range(order-1, -1, -1):
+            comp    = self._components[i]
+            if comp["type"] != "Arm":   
+                return comp
+
+        return None     # Not found
+        
+
+
+    def _firstArm(self):
+        "Returns first component of type Arm"
+        for c in self._components:
+            if c["type"] == "Arm":
+                return c
+
+        return None
+
+
+    def _ifFirstArm(self, name):
+        "Returns if component specified by name is the first arm"
+        firstArm    = self._firstArm()
+        if firstArm["name"] == name:
             return True
 
         return False
 
 
-    # Hack!
-    def _rotFromPos(self, posstr):
-        "Returns rotation from position"
-        regex   = "to=\"([^\"]*)\""
-        p       = re.compile(regex, re.IGNORECASE)
-        m       = p.findall(posstr)
-        if not m or len(m) == 0:   # Not relative or something else
-            return "relative((0, 0, 0), to=\"previous\")"
+    def _isArm(self, name):
+        "Checks if comp of name is of Arm type"
+        comp    = self.component(name)
+        if comp and comp[0]["type"] == "Arm":
+            return True
 
-        relcomp = m[0]
-        return "relative((0, 0, 0), to=\"%s\")" % relcomp
+        return False
+
+
+    def _isFirstComp(self, order):
+        "Returns True if order corresponds to the first component"
+        first   = self.firstComponent()
+        if not first:   # No first component available
+            return False
+            
+        name    = first["name"]
+        comp    = self.component(name)
+
+        if comp and comp[1] == order:
+            return True
+
+        return False
+        
+
+    def _absoluteVector(self, x, y, z):
+        "Returns absolute vector"
+        return "(%s, %s, %s)" % (x, y, z)
+
+
+    def _relativeVector(self, x, y, z, relcomp):
+        "Returns vector relative to relcomp"
+        return "relative((%s, %s, %s), to=\"%s\")" % (x, y, z, relcomp)
+
+
+    def _missingRotation(self, match, type):
+        "Returns True if rotation is missing"
+        if (not match or not match[0]) and type == "rotation":
+            return True
+
+        return False
 
 
     def _extra(self, text):
@@ -974,6 +1096,8 @@ def main():
             print conv.toMcvineString()
             #print conv.toVnfString()
             #print conv.toPmlString(self)
+            #print conv.component("TRG_Out")
+            return
 
     print USAGE_MESSAGE
     return
