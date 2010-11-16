@@ -45,9 +45,38 @@ class Application(base):
             return
 
 
+    def onServer(self, *args, **kwds):
+        self._debug.log("%s: onServer" % self.name)
+
+        launcher = self.inventory.launcher
+        launched = launcher.launch()
+        if not launched:
+            raise RuntimeError, "application not launched"
+        
+        return
+
+
+    def _init(self):
+        # if I am not really using mpi, I am a worker
+        if not usempi:
+            self.inventory.mode = 'worker'
+        if usempi and not self.inventory.launcher.nodes:
+            self.inventory.mode = 'worker'
+            
+        # if in server mode, we don't want to run
+        # any initiliazation. so let us claim
+        # we are running in the help mode
+        if self.inventory.mode != 'worker':
+            self._showHelpOnly = True
+            
+        super(Application, self)._init()
+        
+        return
+    
+    
     pass # end of Application
 
-    
+
 
 # version
 __id__ = "$Id$"
