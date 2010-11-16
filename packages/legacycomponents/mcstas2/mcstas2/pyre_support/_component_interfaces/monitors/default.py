@@ -108,7 +108,6 @@ class ComponentInterface(base, ParallelComponent):
                 overwrite=self.overwrite_datafiles)
 
         if self.mpiRank == 0:
-            # outputdir = '%s-all' % self._master_outputdir
             outputdir = '%s' % self._master_outputdir
             if not os.path.exists(outputdir):
                 os.makedirs(outputdir)
