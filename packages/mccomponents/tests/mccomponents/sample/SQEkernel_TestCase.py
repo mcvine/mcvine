@@ -41,7 +41,10 @@ class SQEkernel_TestCase(unittest.TestCase):
         'SQEkernel'
         sqe = createSqe()
         gridsqe = ms.gridsqe( sqe )
-        sqekernel = ms.sqekernel( 1., 1., gridsqe, (0, 12.), (-50, 50) )
+        sqekernel = ms.sqekernel(
+            1., 1., 1.,
+            SQE=gridsqe,
+            Qrange=(0, 12.), Erange=(-50, 50) )
         
         csqekernel = mh.scattererEngine( sqekernel )
         
