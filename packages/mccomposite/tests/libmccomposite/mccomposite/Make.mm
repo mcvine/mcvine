@@ -54,7 +54,7 @@ testCompositeNeutronScatterer: testCompositeNeutronScatterer.cc
 testGeometer: testGeometer.cc
 	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ testGeometer.cc $(PROJ_LIBRARIES)
 
-ntest_neutron_propagation: test_neutron_propagation.cc
+test_neutron_propagation: test_neutron_propagation.cc
 	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ test_neutron_propagation.cc $(PROJ_LIBRARIES)
 
 testMultipleScattering: testMultipleScattering.cc
