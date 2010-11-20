@@ -60,7 +60,14 @@ class Instrument( base, ParallelComponent ):
         # easier to use
         dumppml = pyre.inventory.str('dump-pml', default='')
         dumppml.meta['tip'] = "filename of output configuration (pml) file. if empty, ignored. if the given value is 'yes' or 'on', a default filename will be used."
-        
+
+        # XXX: to be removed
+        # for backward compatibility
+        dump_instrument = pyre.inventory.bool('dump-instrument')
+
+        # dump registry to pkl file
+        # this is for advanced users. the saved registry can be compared
+        # to another saved registry, for example.
         dumpregistry = pyre.inventory.bool('dump-registry', default=False)
         dumpregistry.meta['tip'] = 'if true, dump the pyre registry to a pkl file'
         pass # end of Inventory
@@ -191,6 +198,14 @@ class Instrument( base, ParallelComponent ):
     
     
     def _configure(self):
+
+        # XXX: to be removed
+        # XXX: for backward compatibility
+        dump_instrument = self.inventory.dump_instrument
+        if dump_instrument:
+            import warnings
+            warnings.warn('This option is not supported anymore. Please use --dump-pml')
+        
         # handle dumppml
         # this overrides the option dumpconfiguration in order to
         # provide a simpler interface for users.

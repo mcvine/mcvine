@@ -62,13 +62,7 @@ class Application(base):
             self.inventory.mode = 'worker'
         if usempi and not self.inventory.launcher.nodes:
             self.inventory.mode = 'worker'
-            
-        # if in server mode, we don't want to run
-        # any initiliazation. so let us claim
-        # we are running in the help mode
-        if self.inventory.mode != 'worker':
-            self._showHelpOnly = True
-            
+
         super(Application, self)._init()
         
         return

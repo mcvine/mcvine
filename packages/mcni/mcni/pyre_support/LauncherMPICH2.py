@@ -81,7 +81,9 @@ class LauncherMPICH2(Launcher):
         
         for arg in sysargs[1:]:
             index = arg.find('=')
-            if index == -1: args.append(arg)
+            if index == -1:
+                args.append(arg)
+                continue
             k = arg[:index]
             v = arg[index+1:]
             args.append('%s="%s"' % (k,v))
