@@ -69,8 +69,10 @@ INITIALIZE
   } else if(radius == 0 && !height ==0 && !width==0) {
     square = 1;
     srcArea = width * height;
+  } else {
+    printf("Source_simple: confused! Both radius and width/height are specified");
+    exit(0);
   }
-  
   
   pmul=flux*1e4*srcArea/mcget_ncount();
   if (srcArea <= 0 || dist < 0 || xw < 0 || yh < 0
