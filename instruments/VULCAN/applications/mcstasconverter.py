@@ -882,8 +882,7 @@ class McStasConverter:
             tuple       = self.component(relcomp)
             armOrder    = tuple[1]
             comp        = self._prevToArm(armOrder)
-            return self._relativeVector(x, y, z, "previous")    # XXX: Temp
-        
+            return self._relativeVector(x, y, z, "previous")    # XXX: Temp        
             #return self._relativeVector(x, y, z, comp["name"])
         
         # Previous

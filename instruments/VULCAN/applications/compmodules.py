@@ -52,14 +52,15 @@ PARAM_FILTER = {
 COMP_FILTER = {
     "type": ("Progress_bar",
              "Arm"),
-    "name": ('sample',
-             'detector_90tc',
-             'detector_90wc',
-             'detector_90tt',
-             'detector_90wt',
-             'detector_90tb',
-             'detector_90wb',
-             'monitor_beamstop')
+    "name": ()
+#    "name": ('sample',
+#             'detector_90tc',
+#             'detector_90wc',
+#             'detector_90tt',
+#             'detector_90wt',
+#             'detector_90tb',
+#             'detector_90wb',
+#             'monitor_beamstop')
 }
 
 # Instrument specific settings

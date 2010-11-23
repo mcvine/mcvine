@@ -1570,7 +1570,7 @@ mcvine-simulate \
 	--psd_xscan_L.max="1e40" \
 	--psd_xscan_L.zmin="0" \
 	--psd_xscan_L.yheight="0.1" \
-	--psd_xscan_L.filename="0" \
+	--psd_xscan_L.filename="Vulcan_asbuilt_psd_xscan.txt" \
 	--psd_xscan_L.username2="0" \
 	--psd_xscan_L.user1="1e+37" \
 	--psd_xscan_L.xmin="0" \
@@ -1589,7 +1589,7 @@ mcvine-simulate \
 	--psd_yscan_L.max="1e40" \
 	--psd_yscan_L.zmin="0" \
 	--psd_yscan_L.yheight="0.1" \
-	--psd_yscan_L.filename="0" \
+	--psd_yscan_L.filename="Vulcan_asbuilt_psd_yscan.txt" \
 	--psd_yscan_L.username2="0" \
 	--psd_yscan_L.user1="1e+37" \
 	--psd_yscan_L.xmin="0" \
