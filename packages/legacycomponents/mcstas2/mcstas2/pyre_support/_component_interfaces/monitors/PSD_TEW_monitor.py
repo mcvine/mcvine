@@ -48,9 +48,9 @@ def get_histogram( monitor ):
     Iarr.shape = E2arr.shape = shape
 
     from histogram import histogram, axis, arange
-    xaxis = axis( 'x', arange( xmin, xmax, dx ) )
-    yaxis = axis( 'y', arange( ymin, ymax, dy ) )
-    baxis = axis( 'b', arange( bmin, bmax, db ) )
+    xaxis = axis( 'x', boundaries=arange( xmin, xmax+dx/10, dx ) )
+    yaxis = axis( 'y', boundaries=arange( ymin, ymax+dy/10, dy ) )
+    baxis = axis( 'b', boundaries=arange( bmin, bmax+db/10, db ) )
 
     h = histogram(
         'I(x,y,b)', [xaxis,yaxis,baxis],
