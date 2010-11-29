@@ -35,6 +35,8 @@ class AbstractComponent( base1, base2 ):
 
     
     def init(self):
+        # init only when necessary
+        # see Instrument._configure
         try:
             noinit = getattr(self, '_noinit')
         except:

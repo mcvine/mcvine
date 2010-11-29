@@ -253,11 +253,11 @@ class Instrument( base, ParallelComponent ):
         # initialize, because in the "server" mode 
         # the application just call launcher to 
         # let workers start working.
-        # this logic probably should go into mpi application
-        # base class in pyre
+        # this logic probably should go into class MpiApplication.
+        # Please read MpiApplication._init as well!
         from MpiApplication import usempi
         noinit = usempi \
-            and self.inventory.launcher.nodes \
+            and (self.inventory.launcher.nodes > 1) \
             and self.inventory.mode == 'server'
         for c in neutron_components:
             comp = self.inventory.getTraitValue(c)

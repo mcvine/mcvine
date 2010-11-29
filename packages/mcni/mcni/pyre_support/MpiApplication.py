@@ -58,6 +58,10 @@ class Application(base):
 
     def _init(self):
         # if I am not really using mpi, I am a worker
+        global usempi
+        if usempi and self.inventory.launcher.nodes == 1:
+            self.inventory.mode = 'worker'
+            usempi = False
         if not usempi:
             self.inventory.mode = 'worker'
         if usempi and not self.inventory.launcher.nodes:
