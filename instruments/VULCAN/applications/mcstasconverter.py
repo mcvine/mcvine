@@ -604,6 +604,9 @@ class McStasConverter:
             if k in BUILD_DICT.keys():
                 k   = BUILD_DICT[k]
             str     += "    c.%s = %s\n" % (k, v)
+        # If component is relative, set referencename
+        
+            
         str     += "    return c\n\n"
         return str
 
