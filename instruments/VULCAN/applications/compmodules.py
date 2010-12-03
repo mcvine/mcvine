@@ -41,6 +41,15 @@ PARAMS_DICT      = {
     "filename": "outputfilename(%s)" % COMPVAR
 }
 
+BUILD_DICT      = {
+    "xmin":     "x_min",
+    "xmax":     "x_max",
+    "ymin":     "y_min",
+    "ymax":     "y_max",
+    "xwidth":   "x_width",
+    "yheight":  "y_height"
+}
+
 # Parameter filter which filters parameter for component type
 PARAM_FILTER = {
 #    "L_monitor":    ("restore_neutron",),

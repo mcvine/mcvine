@@ -81,7 +81,7 @@ import sys
 import os.path
 from time import localtime, strftime
 from mcstas2.utils.parsers.McStasComponentParser import McStasComponentParser
-from compmodules import IMPORT_DICT, PARAMS_DICT, INSTRUMENT, PARAM_FILTER, COMP_FILTER
+from compmodules import IMPORT_DICT, PARAMS_DICT, INSTRUMENT, PARAM_FILTER, COMP_FILTER, BUILD_DICT
 
 # Regular expressions
 COMMENT         = '(/\*.*?\*/)'         # Non-greedy comment (.*?)
@@ -600,6 +600,9 @@ class McStasConverter:
         params  = comp["parameters"]
 
         for k, v in params.iteritems():
+            # Replace for example xmin -> x_min, xwidth -> x_width
+            if k in BUILD_DICT.keys():
+                k   = BUILD_DICT[k]
             str     += "    c.%s = %s\n" % (k, v)
         str     += "    return c\n\n"
         return str
@@ -1090,9 +1093,9 @@ def main():
                 conv    = McStasConverter(config=parts[1])
                 
             #print conv.toString()
-            #print conv.toInstrString()
+            print conv.toInstrString()
             #print conv.toBuilderString()
-            print conv.toMcvineString()
+            #print conv.toMcvineString()
             #print conv.toVnfString()
             #print conv.toPmlString(self)
             #print conv.component("TRG_Out")
