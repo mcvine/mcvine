@@ -5,7 +5,7 @@ Critical:
 
 - Fix referencename in job builder,
     See http://danse.us/trac/VNET/browser/vnf/branches/beta-useluban/vnfb/vnfb/components/job_builders/neutronexperiment/InstrumentSimulationAppBuilder.py#L99
-- Fix referencename and geometer in mcstasconverter.py
+- [IN PROGRESS] Fix referencename and geometer in mcstasconverter.py
 
 
 

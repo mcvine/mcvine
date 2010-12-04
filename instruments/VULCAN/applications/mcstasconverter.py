@@ -74,6 +74,16 @@ Questions:
 # XXX: Implement filter for parameters and components
 # XXX: Filter is not set correctly (because it does not propagate to methods that use the filter)
 
+# XXX: Fix 
+#    _rotation(), _position()
+#    _formatVector() in _clParams()
+#    _toString()
+#    _VnfString()
+#    _toInstrString()
+
+# Get rid of _absoluteVector()
+
+# Refactoring of position and rotation is in progress
 
 # Imports
 import re
@@ -838,17 +848,20 @@ class McStasConverter:
     def _mcvineVector(self, property, type, regex, compname, order, text):
         """
         Returns string of McVine ('position' or 'rotation')
+
+        Output is tuple:  ((X, Y, Z), <Relation>, <Component Name>)
+        Example: ((0, 0, 1.200), "relative", "arm")
         """
         prop    = self._property(property, text)
         p       = re.compile(regex, re.IGNORECASE)
         m       = p.findall(prop)
 
         if self._missingRotation(m, type):            
-            return  self._rotFromPos(order)
+            return  self._rotFromPos(order)     # Fixed after rotation is fixed!
 
         # Expected format: (X, Y, Z, <Relation>, <Component>)
         if not m or not m[0] or len(m[0]) != 5:
-            return ""
+            return (None, None, None)
 
         mm          = m[0]
         (x, y, z)   = (float(mm[0]), float(mm[1]), float(mm[2]))
@@ -859,7 +872,8 @@ class McStasConverter:
 
         # ABSOLUTE relation
         if relation == "ABSOLUTE":  # Easy: just return what you have
-            return self._absoluteVector(x, y, z)
+            return ((x, y, z), "absolute", None)   #self._absoluteVector(x, y, z)
+        
         # RELATIVE relation is implied
         assert relation == "RELATIVE"
 
@@ -875,32 +889,35 @@ class McStasConverter:
         x, y, z     -- coordinates of the current component
         relcomp     -- name of the relative component
         order       -- order of the current component
+
+        Output is tuple:  ((X, Y, Z), <Relation>, <Component Name>)
         """
         if self._isFirstComp(order):    # First component returns absolute position
-            return self._absoluteVector(0, 0, 0)
+            return ((0, 0, 0), "absolute", None)    #self._absoluteVector(0, 0, 0)
 
         # If relative component is of Arm type, make it relative to component before Arm
         if self._isArm(relcomp):
             if self._ifFirstArm(relcomp):
-                return self._absoluteVector(x, y, z)
+                return ((x, y, z), "absolute", None)    #self._absoluteVector(x, y, z)
 
             # Arms after the first arm
             tuple       = self.component(relcomp)
             armOrder    = tuple[1]
             comp        = self._prevToArm(armOrder)
-            return self._relativeVector(x, y, z, "previous")    # XXX: Temp        
+            return ((x, y, z), "relative", "previous") #self._relativeVector(x, y, z, "previous")    # XXX: Temp
             #return self._relativeVector(x, y, z, comp["name"])
         
         # Previous
         if relcomp.lower()  == "previous":
             relcomp = "previous"
 
-        return self._relativeVector(x, y, z, relcomp)
+        return ((x, y, z), "relative", relcomp)     #self._relativeVector(x, y, z, relcomp)
 
 
     # XXX: Hack!
     def _rotFromPos(self, order):
         "Returns rotation from position"
+        # Make sure that position is already set!
         comp        = self._components[order]
         # Position,
         # Example 1: relative([0.0, 0.0, 0.09353], to="TRG_Out")
