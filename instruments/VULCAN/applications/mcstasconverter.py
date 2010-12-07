@@ -625,8 +625,14 @@ class McStasConverter:
             if k in BUILD_DICT.keys():
                 k   = BUILD_DICT[k]
             str     += "    c.%s = %s\n" % (k, v)
-        # If component is relative, set referencename
-        
+
+        vecrel    = comp["position"]
+        if vecrel[1] == "relative": # Position is relative
+            reference   = vecrel[2]
+            if reference == None:
+                reference   = "previous"
+            # If component has relative position, set referencename
+            str     += "    c.referencename = %s\n" % reference
             
         str     += "    return c\n\n"
         return str
@@ -1124,9 +1130,9 @@ def main():
                 conv    = McStasConverter(config=parts[1])
                 
             #print conv.toString()
-            #print conv.toInstrString()
+            print conv.toInstrString()
             #print conv.toBuilderString()
-            print conv.toMcvineString()
+            #print conv.toMcvineString()
             #print conv.toVnfString()
             #print conv.toPmlString(self)
             #print conv.component("TRG_Out")
