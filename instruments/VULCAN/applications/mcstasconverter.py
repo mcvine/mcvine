@@ -245,9 +245,12 @@ class McStasConverter:
         for comp in self.components():
             str += "name:%s%s%s"     % (self._resIndent("name:", ind), comp["name"], br)
             str += "type:%s%s%s"     % (self._resIndent("type:", ind), comp["type"], br)
-            str += "position:%s%s%s" % (self._resIndent("position:", ind), self._formatVecMcstas(comp["mcstas_position"]), br)
-            str += "rotation:%s%s%s" % (self._resIndent("rotation:", ind), self._formatVecMcstas(comp["mcstas_rotation"]), br)
-            str += "extra:%s%s%s"    % (self._resIndent("extra:", ind), comp["extra"], br)
+            str += "position:%s%s%s" % (self._resIndent("position:", ind),
+                                        self._formatVecMcstas(comp["mcstas_position"]), br)
+            str += "rotation:%s%s%s" % (self._resIndent("rotation:", ind),
+                                        self._formatVecMcstas(comp["mcstas_rotation"]), br)
+            str += "extra:%s%s%s"    % (self._resIndent("extra:", ind),
+                                        comp["extra"], br)
 
             params  = comp["parameters"]
             str     += self._firstParam(params, ind, br)
@@ -386,7 +389,7 @@ class McStasConverter:
 
 
     def toPmlString(self):
-        pass
+        return "Not Implemented"
 
 
     def _clParams(self, br="\n", allparams=True):
@@ -399,9 +402,9 @@ class McStasConverter:
                 # Take from the rest of the default parameters from components itself!
                 str += "\t--%s.%s=%s \%s" % (comp["name"], k, self._paramValue(v), br)
             # Generate geometer
-            str     += "\t--geometer.%s='%s,%s' \%s" % (  comp["name"],
-                                                            self._formatVecRel(comp["position"], bracket="square"),
-                                                            self._formatVecRel(comp["rotation"], bracket="square"),
+            str     += "\t--geometer.%s='%s,%s' \%s" % (    comp["name"],
+                                                            self._formatVecRel(comp["position"]),
+                                                            self._formatVecRel(comp["rotation"]),
                                                             br)
         return str
 
@@ -1120,10 +1123,10 @@ def main():
             elif parts[0] in CONFIG:
                 conv    = McStasConverter(config=parts[1])
                 
-            print conv.toString()
+            #print conv.toString()
             #print conv.toInstrString()
             #print conv.toBuilderString()
-            #print conv.toMcvineString()
+            print conv.toMcvineString()
             #print conv.toVnfString()
             #print conv.toPmlString(self)
             #print conv.component("TRG_Out")
