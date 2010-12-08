@@ -75,8 +75,6 @@ Questions:
 # XXX: Filter is not set correctly (because it does not propagate to methods that use the filter)
 
 # XXX: Fix 
-#    _formatVector() in _clParams()
-#    _toString()
 #    _VnfString()
 #    _toInstrString()
 
@@ -632,7 +630,7 @@ class McStasConverter:
             if reference == None:
                 reference   = "previous"
             # If component has relative position, set referencename
-            str     += "    c.referencename = %s\n" % reference
+            str     += "    c.referencename = \"%s\"\n" % reference
             
         str     += "    return c\n\n"
         return str
@@ -755,30 +753,37 @@ class McStasConverter:
         return None     # Not found
 
 
-    def _formatVecRel(self, vecrel, bracket="round"):
+    def _formatVector(self, vector, bracket="round"):
         """
-        Formats the vector to string
+        Formats vector
 
-        vector -- tuple of three elements: ((X, Y, Z), <Relation>, <Component Name>)
-        bracket = ("round"|"square")
+        vector -- tuple of coordinates: (X, Y, Z)
         """
-        assert len(vecrel) == 3
-
-        vector  = vecrel[0]
-        relation    = vecrel[1]
-        comp        = vecrel[2]
-
         if vector == None:
             return "None"
 
         assert len(vector) == 3
-        start   = "("
-        end     = ")"        
+        start, end   = "(", ")"
         if bracket == "square":
-            start   = "["
-            end     = "]"
+            start, end   = "[", "]"
 
-        vecstr      = "%s%.5f, %.5f, %.5f%s" % (start, vector[0], vector[1], vector[2], end)
+        return "%s%.5f, %.5f, %.5f%s" % (start, vector[0], vector[1], vector[2], end)
+        
+
+    def _formatVecRel(self, vecrel, bracket="round"):
+        """
+        Formats the vector relation to string
+
+        vecrel -- tuple of three elements: ((X, Y, Z), <Relation>, <Component Name>)
+        bracket = ("round"|"square")
+        """
+        assert len(vecrel) == 3
+
+        vector      = vecrel[0]
+        relation    = vecrel[1]
+        comp        = vecrel[2]
+
+        vecstr      = self._formatVector(vector, bracket)
 
         if relation != "relative":  # Not relative: None or "absolute"
             return vecstr
@@ -795,7 +800,14 @@ class McStasConverter:
 
 
     def _formatVecInstr(self, vecrel, bracket="round"):
-        return ""
+        """
+        Formats the vector relation to vector string
+
+        vecrel -- tuple of three elements: ((X, Y, Z), <Relation>, <Component Name>)
+        bracket = ("round"|"square")
+        """
+        assert len(vecrel) == 3        
+        return self._formatVector(vecrel[0], bracket)
 
 
     def _prevVector(self, order, type, name=None):
