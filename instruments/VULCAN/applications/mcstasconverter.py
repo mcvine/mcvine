@@ -368,6 +368,8 @@ class McStasConverter:
         sequence    = []
         str     = "#!/usr/bin/env bash" + br
         str     += br
+        str     += self.header(br)
+        str     += br
         str     += "%s \%s" % (executable, br)
         str     += self._clParams(br, allparams)
         for comp in self.components():
@@ -795,7 +797,8 @@ class McStasConverter:
 
 
     def _formatVecMcstas(self, mcstasvec):
-        "Formats McStas vector. No actual formatting performed"
+        "Formats McStas vector"
+        # No actual formatting performed
         return mcstasvec
 
 
@@ -1142,10 +1145,10 @@ def main():
                 conv    = McStasConverter(config=parts[1])
                 
             #print conv.toString()
-            print conv.toInstrString()
+            #print conv.toInstrString()
             #print conv.toBuilderString()
             #print conv.toMcvineString()
-            #print conv.toVnfString()
+            print conv.toVnfString()
             #print conv.toPmlString(self)
             #print conv.component("TRG_Out")
             return
