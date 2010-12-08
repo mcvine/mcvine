@@ -3,9 +3,9 @@ ToDo list for VULCAN
 
 Critical:
 
-- Fix referencename in job builder,
+- [DONE] (Need to test) Fix referencename in job builder,
     See http://danse.us/trac/VNET/browser/vnf/branches/beta-useluban/vnfb/vnfb/components/job_builders/neutronexperiment/InstrumentSimulationAppBuilder.py#L99
-- [IN PROGRESS] Fix referencename and geometer in mcstasconverter.py
+- [DONE] (Need to test) Fix referencename and geometer in mcstasconverter.py
 
 
 
