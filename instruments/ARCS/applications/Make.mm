@@ -43,6 +43,7 @@ EXPORT_PYTHON_MODULES = \
 
 
 EXPORT_BINS = \
+	arcs_beam \
 	arcs_moderator2sample \
 	arcs-m2s \
 

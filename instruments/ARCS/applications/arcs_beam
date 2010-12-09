@@ -1,0 +1,91 @@
+#!/usr/bin/env python
+
+import os, time
+
+from pyre.applications.Script import Script as base
+class App(base):
+
+    class Inventory(base.Inventory):
+
+        import pyre.inventory
+
+        fermi_nu = pyre.inventory.float('fermi_nu', default=600)
+        fermi_nu.meta['tip'] = 'Spinning frequency of fermi chopper'
+        
+        T0_nu = pyre.inventory.float('T0_nu', default=60)
+        T0_nu.meta['tip'] = 'Spinning frequency of T0 chopper'
+        
+        E = pyre.inventory.float('E', default=70)
+        E.meta['tip'] = 'desired incident beam energy. unit: meV'
+
+        emission_time = pyre.inventory.float('emission_time', default=-1)
+        emission_time.meta['tip'] = 'emission time for moderator unit (microsecond)'
+
+        ncount = pyre.inventory.int('ncount', default=1000)
+
+
+    def main(self):
+        self._run_arcs_m2s()
+        self._run_beam()
+        self._run_monitors()
+        return
+
+    
+    def _run_arcs_m2s(self):
+        cmd = ['arcs-m2s']
+        keys = [
+            'fermi_nu',
+            'T0_nu',
+            'E',
+            'emission_time',
+            ]
+        cmd += self._buildCmdFromInventory(keys)
+        cmd += ['--- -dump-pml=yes', '-h', '>arcs-m2s.out']
+        cmd = ' '.join(cmd)
+        print 'Generating pml for arcs beam instrument...'
+        self._exec(cmd)
+        print 'done.'
+        time.sleep(1)
+        return
+
+
+    def _run_beam(self):
+        cmd = ['arcs_moderator2sample']
+        keys = ['ncount']
+        cmd += self._buildCmdFromInventory(keys)
+        cmd += ['-buffer_size=%s' % (self.inventory.ncount/10)]
+        moddat = os.path.join(
+            os.environ['MCVINE_DIR'], 'share', 'mcvine',
+            'instruments', 'ARCS', 'source_sct521_bu_17_1.dat',
+            )
+        cmd += ['-moderator.S_filename=%s' % moddat]
+        cmd = ' '.join(cmd)
+        self._exec(cmd)
+        return
+
+
+    def _run_monitors(self):
+        
+        return
+
+
+    def _buildCmdFromInventory(self, keys):
+        kwds = {}
+        for k in keys:
+            v = getattr(self.inventory, k)
+            kwds[k] = v
+            continue
+        return ['-%s=%s' % (k,v) for k,v in kwds.iteritems()]
+    
+    
+    def _exec(self, cmd):
+        print " -> running %s..." % cmd
+        if os.system(cmd):
+            raise RuntimeError, "failed"
+        
+def main():
+    app = App('arcs_beam')
+    app.run()
+    return
+
+if __name__ == '__main__': main()
