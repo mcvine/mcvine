@@ -24,7 +24,7 @@ class ConsoleNeutronTracer(base):
     def __call__(self, neutrons):
         for neutron in neutrons:
             print neutron
-
+        print
 
 # version
 __id__ = "$Id$"
