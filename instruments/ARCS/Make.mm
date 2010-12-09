@@ -19,9 +19,10 @@ PROJ_TIDY += *.log *.tmp
 # directory structure
 
 BUILD_DIRS = \
-    ARCS \
-    applications \
-    etc \
+	ARCS \
+	applications \
+	etc \
+	resources \
 
 OTHER_DIRS = \
 
