@@ -12,12 +12,7 @@
 #
 
 
-category = 'monitors'
-
-
-from mcni.AbstractComponent import AbstractComponent
-
-class NDMonitor( AbstractComponent ):
+class NDMonitor(object):
 
     def process(self, neutrons):
         from mcni.neutron_storage import neutrons_as_npyarr, ndblsperneutron

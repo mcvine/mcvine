@@ -33,6 +33,10 @@ class AbstractComponent( base1, base2 ):
         self._outputdir = outputdir
         return
 
+
+    def getOutputDir(self):
+        return self._outputdir
+
     
     def init(self):
         # init only when necessary

@@ -29,6 +29,7 @@ update: clean
 
 EXPORT_PYTHON_MODULES = \
 	Dummy.py \
+	Monitor2D.py \
 	MonochromaticSource.py \
 	MultiMonitors.py \
 	NeutronFromStorage.py \
