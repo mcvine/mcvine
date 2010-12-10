@@ -625,14 +625,6 @@ class McStasConverter:
             if k in BUILD_DICT.keys():
                 k   = BUILD_DICT[k]
             str     += "    c.%s = %s\n" % (k, v)
-
-        vecrel    = comp["position"]
-        if vecrel[1] == "relative": # Position is relative
-            reference   = vecrel[2]
-            if reference == None:
-                reference   = "previous"
-            # If component has relative position, set referencename
-            str     += "    c.referencename = \"%s\"\n" % reference
             
         str     += "    return c\n\n"
         return str
@@ -656,11 +648,22 @@ class McStasConverter:
         str     += "    components = [\n"
         comps   = self.components()
         for comp in comps:
-            str     += "%sccomp(\"%s\", %s(), (%s, %s, '')),\n" % (ind,
+            # Set reference name
+            posrel    = comp["position"]
+            referencename   = "''"
+            if posrel[1] == "relative": # Position is relative
+                reference   = posrel[2]
+                if reference == None:
+                    reference   = "previous"
+                # If component has relative position, set referencename
+                referencename   = "'%s'" % reference
+            # Populate ccomp()
+            str     += "%sccomp(\"%s\", %s(), (%s, %s, %s)),\n" % (ind,
                         comp["name"],
                         comp["name"],
-                        self._formatVecInstr(comp["position"]),
-                        self._formatVecInstr(comp["rotation"]))
+                        self._formatVecInstr(posrel),
+                        self._formatVecInstr(comp["rotation"]),
+                        referencename)
 
         str     += "%s]\n\n" % ind
         return str
@@ -1145,10 +1148,10 @@ def main():
                 conv    = McStasConverter(config=parts[1])
                 
             #print conv.toString()
-            #print conv.toInstrString()
+            print conv.toInstrString()
             #print conv.toBuilderString()
             #print conv.toMcvineString()
-            print conv.toVnfString()
+            #print conv.toVnfString()
             #print conv.toPmlString(self)
             #print conv.component("TRG_Out")
             return
