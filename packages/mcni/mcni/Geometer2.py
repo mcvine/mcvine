@@ -153,6 +153,8 @@ class Geometer(base):
     def _findReference(self, ref, element):
         if ref == 'previous':
             seq = self.element_sequence
+            if seq is None:
+                raise RuntimeError, "sequence of elements were not set. Won't be able to deduce position/orientation using keyword 'previous'"
             i = seq.index(element)
             if i == 0:
                 raise RuntimeError, "there is no previous element for %s" % element
