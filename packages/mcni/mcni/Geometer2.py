@@ -154,7 +154,7 @@ class Geometer(base):
         if ref == 'previous':
             seq = self.element_sequence
             if seq is None:
-                raise RuntimeError, "sequence of elements were not set. Won't be able to deduce position/orientation using keyword 'previous'"
+                raise RuntimeError, "sequence of elements were not set. Won't be able to deduce position/orientation using keyword 'previous'. To fix this, you will need to set attribute 'element_sequence' for this geometer instance"
             i = seq.index(element)
             if i == 0:
                 raise RuntimeError, "there is no previous element for %s" % element
