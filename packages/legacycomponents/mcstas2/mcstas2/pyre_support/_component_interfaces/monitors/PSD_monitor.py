@@ -29,8 +29,8 @@ def get_histogram( monitor ):
     n = nx * ny
     shape = nx, ny
 
-    xmin = core.xmin; xmax = core.xmax
-    ymin = core.ymin; ymax = core.ymax
+    xmin = core.x_min; xmax = core.x_max
+    ymin = core.y_min; ymax = core.y_max
     dx = (xmax - xmin)/nx
     dy = (ymax - ymin)/ny
 
