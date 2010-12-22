@@ -7,6 +7,7 @@ BUILD_DIRS = \
 	lib \
 	mcstas2bpmodule \
 	mcstas2 \
+	bin \
 
 
 OTHER_DIRS = \
