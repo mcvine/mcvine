@@ -82,11 +82,13 @@ STATE PARAMETERS (x,y,z,vx,vy,vz,t,s1,s2,p)
 DECLARE
 %{
   double soller_theta1, soller_theta2, window_theta;
-  char   use_approx=1;
-  char   ideal     =0;
+  char   use_approx;
+  char   ideal     ;
 %}
 INITIALIZE
 %{
+  use_approx=1;
+  ideal     =0;
   double blades_thick;
   /* check for input parameters */
   if (radius <= 0) exit(printf("Collimator_radial: %s: incorrect radius\n", NAME_CURRENT_COMP));

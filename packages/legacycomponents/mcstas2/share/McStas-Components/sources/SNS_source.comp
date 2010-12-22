@@ -53,6 +53,7 @@ SHARE
 // ----------  header for SHARE ----------
 // ----------- added by Jiao Lin --------
 
+#include <string.h>
 #include <functional>
 
 // functor
