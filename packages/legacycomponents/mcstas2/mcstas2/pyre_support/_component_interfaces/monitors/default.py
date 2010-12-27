@@ -17,7 +17,8 @@ from mcni.pyre_support.ParallelComponent import ParallelComponent
 
 class ComponentInterface(base, ParallelComponent):
 
-    overwrite_datafiles = False     # Not sure is it is the right place
+    # Hack!
+    overwrite_datafiles = False     # Not sure if it is the right place
 
     class Inventory(base.Inventory):
 
