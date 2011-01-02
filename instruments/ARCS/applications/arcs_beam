@@ -9,6 +9,9 @@ class App(base):
 
         import pyre.inventory
 
+        fermi_chopper = pyre.inventory.str('fermi_chopper', default='')
+        fermi_chopper.meta['tip'] = 'The choice of fermi chopper'
+
         fermi_nu = pyre.inventory.float('fermi_nu', default=600)
         fermi_nu.meta['tip'] = 'Spinning frequency of fermi chopper'
         
