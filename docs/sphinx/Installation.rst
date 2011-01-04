@@ -149,10 +149,10 @@ Optionally
 .. _buildnotes:
 
 Build notes
-===========
+-----------
 
 SNS machines
-------------
+^^^^^^^^^^^^
 Before running "./build.py", 
 please let mcvine know about the mpich2 installation::
 
@@ -172,13 +172,13 @@ answer with yes.
 .. _deployments:
 
 Deployments
-===========
+-----------
 
 DANSE clusters at Caltech CACR
-------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 foxtrot.danse.us
-^^^^^^^^^^^^^^^^
+""""""""""""""""
 MCViNE is available through the "modules" package manager.
 
 To use mcvine, run ::
@@ -188,7 +188,7 @@ To use mcvine, run ::
 
 
 ARCS clusters at SNS
---------------------
+^^^^^^^^^^^^^^^^^^^^
 MCViNE is tentatively installed on arcs clusters at SNS. 
 You can use it at arcs1 and arcs2 clusters.
 

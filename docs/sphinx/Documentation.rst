@@ -14,11 +14,11 @@ Contents:
 
    Introduction
    Installation
+   Philosophy
    Demos
    Tutorials
    Fundamentals
    Components
-   API
    Extend
    Problems
    DeveloperGuide

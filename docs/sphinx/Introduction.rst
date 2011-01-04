@@ -12,6 +12,6 @@ Example usages
 
 Due to the flexibility of the framework, it 
 
-1. can simulate accurately a real, complex detector system such as that of the ARCS instrument at SNS
-2. can simulate complex sample with scattering of various origins (phonon scattering and magnetic scattering, etc)
+1. can simulate complex sample with scattering of various origins (phonon scattering and magnetic scattering, etc)
+2. can simulate accurately a real, complex detector system such as that of the ARCS instrument at SNS
 
