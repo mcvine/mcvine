@@ -56,39 +56,53 @@
             <component name="m1">
 	      <property name="xwidth">0.1</property>
 	      <property name="yheight">0.1</property>
+              <property name="type">time</property>
 	      <property name="filename">m1.dat</property>
 	    </component>
             <component name="m2">
 	      <property name="xwidth">0.1</property>
 	      <property name="yheight">0.1</property>
+              <property name="type">wavelength</property>
 	      <property name="filename">m2.dat</property>
 	    </component>
             <component name="m3">
 	      <property name="xwidth">0.1</property>
 	      <property name="yheight">0.1</property>
+              <property name="type">time</property>
 	      <property name="filename">m3.dat</property>
 	    </component>
             <component name="m4">
 	      <property name="xwidth">0.1</property>
 	      <property name="yheight">0.1</property>
+              <property name="type">wavelength</property>
 	      <property name="filename">m4.dat</property>
 	    </component>
             <component name="m5">
 	      <property name="xwidth">0.1</property>
 	      <property name="yheight">0.1</property>
+              <property name="type">time</property>
 	      <property name="filename">m5.dat</property>
 	    </component>
             <component name="m6">
 	      <property name="xwidth">0.1</property>
 	      <property name="yheight">0.1</property>
+              <property name="type">wavelength</property>
 	      <property name="filename">m6.dat</property>
 	    </component>
+            <component name="geometer">
+                <property name="m1">((-2, 0, 0), (0, 90, 0))</property>
+                <property name="m2">((-2, 0, 0), (0, 90, 0))</property>
+                <property name="m3">((-1.959, 0.403, 0), (0, 90, 0))</property>
+                <property name="m4">((-1.959, 0.403, 0), (0, 90, 0))</property>
+                <property name="m5">((-1.959, -0.403, 0), (0, 90, 0))</property>
+                <property name="m6">((-1.959, -0.403, 0), (0, 90, 0))</property>
+            </component>
         </component>
 
         <component name="geometer">
-            <property name="sample">((0, 0, 0), (0, 0, 0))</property>
-            <property name="source">((0, 0, 1), (0, 0, 0))</property>
-            <property name="detector">((0, 0, 2), (0, 0, 0))</property>
+            <property name="source">((0, 0, 0), (0, 0, 0))</property>
+            <property name="sample">((0, 0, 10), (0, 0, 0))</property>
+            <property name="detector">((0, 0, 10), (0, 0, 0))</property>
             <property name="dump">False</property>
         </component>
 
