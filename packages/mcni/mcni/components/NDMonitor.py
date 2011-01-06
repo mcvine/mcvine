@@ -46,25 +46,33 @@ class NDMonitor(object):
         return
 
 
-    def __init__(self, name, expressions, bins, ranges):
+    def __init__(self, name, axes):
         """
-        expressions: expressions of all dimensions. a list of length D
-        bins: a sequence of number of bins, each for one dimension.
-        ranges: a sequence of tuples. each tuple is (min, max) that specify the range
+        axes: a list of axis
+        axis: a tuple of name, expression, bins, ranges
+        name: name of the axis
+        expression: expression of the axis
+        bins: number of bins of the axis
+        ranges: (min, max) tuple for the axis
         """
         self.name = name
-        self.expressions = expressions
-        self.bins = bins
-        self.ranges = ranges
+        expressions = self.expressions = []
+        bins = self.bins = []
+        ranges = self.ranges = []
+        haxes = []
+
         from histogram import histogram, axis
-        axes = []
         from numpy import histogramdd as hdd, arange
-        for e, b, r in zip(expressions, bins, ranges):
+        
+        for n, e, b, r in axes:
+            expressions.append(e)
+            ranges.append(r)
+            bins.append(b)
             db = (r[1]-r[0])/b
-            a = axis(e, boundaries=arange(r[0], r[1]+db/10., db))
-            axes.append(a)
+            a = axis(n, boundaries=arange(r[0], r[1]+db/10., db))
+            haxes.append(a)
             continue
-        self.histogram = histogram(name, axes)
+        self.histogram = histogram(self.name, haxes)
         return
 
     

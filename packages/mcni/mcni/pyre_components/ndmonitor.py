@@ -75,29 +75,21 @@ def ndmonitor(*quantities):
         
         def _init(self):
             AbstractComponent._init(self)
-            expressions = []
-            bins = []
-            ranges = []
+            axes = []
             for q in quantities:
                 if q not in neqs:
                     expr = q2e[q]
                 else:
                     expr = q
-                expressions.append(expr)
                 n = getattr(self.inventory, 'n%s' % q)
-                bins.append(n)
                 range = getattr(self.inventory, '%smin' % q),\
                         getattr(self.inventory, '%smax' % q)
-                ranges.append(range)
+                axis = q, expr, n, range
+                axes.append(axis)
                 continue
 
             from ..components.NDMonitor import NDMonitor
-            self.engine = NDMonitor(
-                self.name,
-                expressions,
-                bins,
-                ranges,
-                )
+            self.engine = NDMonitor(self.name, axes)
             return
 
         pass

@@ -1,0 +1,7 @@
+# -*- python -*-
+
+def monitor():
+    from mcni.pyre_components.ndmonitor import ndmonitor
+    M = ndmonitor('x', 'divx')
+    return M('xdivxmonitor')
+
