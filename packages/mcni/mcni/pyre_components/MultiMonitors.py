@@ -64,8 +64,34 @@ class MultiMonitors( AbstractComponent ):
         return
 
 
+    def init(self):
+        if self._showHelpOnly:
+            for m in self.monitors:
+                m._showHelpOnly = True
+                continue
+            return
+        outdir = self.getOutputDir()
+        for m in self.monitors:
+            m.setOutputDir(outdir)
+            continue
+
+        super(MultiMonitors, self).init()
+        return
+
+
+    def fini(self):
+        if self._showHelpOnly:
+            return
+
+        super(MultiMonitors, self).fini()
+        return
+
+
     def _init(self):
         super(MultiMonitors, self)._init()
+        if self._showHelpOnly:
+            return
+        
         geometer = self.inventory.geometer
         from mcni.neutron_coordinates_transformers import default as transformer
         from mcni.components.ComponentGroup import ComponentGroup

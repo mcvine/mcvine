@@ -47,13 +47,14 @@ def beam_analyzer(name, monitors):
                 continue
             
         def _configure(self):
-            super(BeamAnalyzer, self)._configure()
             self.monitors = [
-                getattr(self.inventory, 'm%s' % componentname(m))
+                getattr(self.inventory, componentname(m))
                 for m in monitors
                 ]
+            super(BeamAnalyzer, self)._configure()
             return
-    
+
+
         pass # end
     
     return BeamAnalyzer(name)

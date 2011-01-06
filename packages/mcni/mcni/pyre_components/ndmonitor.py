@@ -48,9 +48,9 @@ def ndmonitor(*quantities, **kwds):
             for q in quantities:
 
                 name = q
-                code = '%smin = pyre.inventory.float("%smin")' % (name, name)
+                code = '%smin = pyre.inventory.float("%smin", default=0)' % (name, name)
                 exec code
-                code = '%smax = pyre.inventory.float("%smax")' % (name, name)
+                code = '%smax = pyre.inventory.float("%smax", default=1)' % (name, name)
                 exec code
                 code = 'n%s = pyre.inventory.int("n%s", default=10)' % (name, name)
                 exec code
@@ -64,18 +64,23 @@ def ndmonitor(*quantities, **kwds):
         
         
         def _fini(self):
-            h = self.engine.histogram
-            from histogram.hdf import dump
-            dir = self.getOutputDir()
-            f = self.inventory.filename or ('%s.h5' % self.name)
-            import os
-            f = os.path.join(dir, f)
-            dump(h, f, '/', 'c')
+            if not self._showHelpOnly:
+                h = self.engine.histogram
+                from histogram.hdf import dump
+                dir = self.getOutputDir()
+                f = self.inventory.filename or ('%s.h5' % self.name)
+                import os
+                f = os.path.join(dir, f)
+                dump(h, f, '/', 'c')
             super(Monitor, self)._fini()
             return
         
         
         def _init(self):
+            super(Monitor, self)._init()
+            if self._showHelpOnly:
+                return
+            
             if kwds:
                 quantity2expression = q2e.copy()
                 quantity2expression.update(kwds)
