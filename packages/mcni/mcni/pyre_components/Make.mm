@@ -29,6 +29,7 @@ update: clean
 
 EXPORT_PYTHON_MODULES = \
 	Dummy.py \
+	Monitor1D.py \
 	Monitor2D.py \
 	MonochromaticSource.py \
 	MultiMonitors.py \
@@ -38,6 +39,7 @@ EXPORT_PYTHON_MODULES = \
 	NeutronsOnCone_FixedQE.py \
 	Registry.py \
 	__init__.py \
+	beam_analyzer.py \
 	repositories.py \
 
 

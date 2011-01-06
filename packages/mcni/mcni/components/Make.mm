@@ -37,6 +37,7 @@ update: clean
 EXPORT_PYTHON_MODULES = \
 	ComponentGroup.py \
 	Dummy.py \
+	Monitor1D.py \
 	Monitor2D.py \
 	MonochromaticSource.py \
 	NDMonitor.py \
