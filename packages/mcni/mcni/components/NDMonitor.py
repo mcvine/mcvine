@@ -23,12 +23,26 @@ class NDMonitor(object):
         t = arr[:,6]; 
         s1 = arr[:,7]; s2 = arr[:,8];
         p = arr[:,9]
+
+        # propagate to z = 0
+        self._propagateToZ0(x,y,z,vx,vy,vz,t)
+        
         from numpy import histogramdd as hdd
+        from mcni.utils import conversion
         sample = [eval(e) for e in self.expressions]
         bins = self.bins
         ranges = self.ranges
         self.histogram.I += hdd(sample, bins, ranges, weights=p)[0]
         self.histogram.E2 += hdd(sample, bins, ranges, weights=p*p)[0]
+        return
+
+
+    def _propagateToZ0(self, x,y,z, vx,vy,vz, t):
+        dt = -z/vz
+        x += vx*dt
+        y += vy*dt
+        z[:] = 0
+        t += dt
         return
 
 
