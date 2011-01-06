@@ -37,6 +37,7 @@ EXPORT_PYTHON_MODULES = \
 	NeutronsOnCone_FixedQE.py \
 	Registry.py \
 	__init__.py \
+	beam_analyzer.py \
 	ndmonitor.py \
 	repositories.py \
 

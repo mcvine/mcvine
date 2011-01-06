@@ -33,8 +33,10 @@ q2e = {
 
 from mcni.pyre_support.AbstractComponent import AbstractComponent
 
-def ndmonitor(*quantities):
-    '''ndmonitor("x", "vy")
+def ndmonitor(*quantities, **kwds):
+    '''
+    ndmonitor("x", "vy")
+    ndmonitor("x", "inverseX", inverseX="1/x")
     '''
 
     class Monitor( AbstractComponent ):
@@ -74,11 +76,17 @@ def ndmonitor(*quantities):
         
         
         def _init(self):
+            if kwds:
+                quantity2expression = q2e.copy()
+                quantity2expression.update(kwds)
+            else:
+                quantity2expression = q2e
+                
             AbstractComponent._init(self)
             axes = []
             for q in quantities:
                 if q not in neqs:
-                    expr = q2e[q]
+                    expr = quantity2expression[q]
                 else:
                     expr = q
                 n = getattr(self.inventory, 'n%s' % q)
