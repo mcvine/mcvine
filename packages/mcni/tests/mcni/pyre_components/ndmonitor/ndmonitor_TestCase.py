@@ -17,7 +17,7 @@ import unittestX as unittest
 class TestCase(unittest.TestCase):
 
     def test1(self):
-        cmd = 'mcvine-simulate -components=source,monitor --- -source=Source_simple -monitor=tofmonitor -geometer.monitor="(0,0,10),(0,0,0)" -source.E0=100 -source.dE=10 -source.width=0.05 -source.height=0.05 -source.radius=0 -source.dist=9.5 -source.xw=0.05 -source.yh=0.05 -monitor.tofmin=0 -monitor.tofmax=0.005 -monitor.ntof=100 -monitor.filename=itof.h5 --output-dir=out-ndmonitor-test1'
+        cmd = 'mcvine-simulate -components=source,monitor --- -source=Source_simple -monitor=tofmonitor -geometer.monitor="(0,0,10),(0,0,0)" -source.E0=100 -source.dE=10 -source.width=0.05 -source.height=0.05 -source.radius=0 -source.dist=9.5 -source.xw=0.05 -source.yh=0.05 -monitor.tofmin=0 -monitor.tofmax=0.005 -monitor.ntof=100 -monitor.filename=itof.h5 --output-dir=out-test1'
         import os
         os.system(cmd)
         return
