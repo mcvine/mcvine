@@ -1,14 +1,22 @@
 ToDo list for VULCAN
 --------------------
 
+- Test DetectorSystem with vanadium sample
+- Test DetectorSystem in VNF
+- Test SampleKernel with PSD_monitor_4PI monitor
+- Test SampleKernel with DetectorSystem
+- Test SampleKernel with DetectorSystem in VNF
+- Implement PSD_monitor in VNF
+- Implement PSD_TEW_monitor  in VNF
+- Implement Monitor_nD  in VNF (optional)
+
 Critical:
+- None for now
+
 
 - [DONE] (Need to test) Fix referencename in job builder,
     See http://danse.us/trac/VNET/browser/vnf/branches/beta-useluban/vnfb/vnfb/components/job_builders/neutronexperiment/InstrumentSimulationAppBuilder.py#L99
 - [DONE] (Need to test) Fix referencename and geometer in mcstasconverter.py
-
-
-
 
 - [DONE] Install VNF related packages correctly!
 - Fix warning messages: 
