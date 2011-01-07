@@ -20,8 +20,8 @@ class NDMonitor(object):
         arr.shape = -1, ndblsperneutron
         x = arr[:,0]; y = arr[:,1]; z = arr[:,2]
         vx = arr[:,3]; vy = arr[:,4]; vz = arr[:,5]
-        t = arr[:,6]; 
-        s1 = arr[:,7]; s2 = arr[:,8];
+        s1 = arr[:,6]; s2 = arr[:,7];
+        t = arr[:,8]; 
         p = arr[:,9]
 
         # propagate to z = 0
