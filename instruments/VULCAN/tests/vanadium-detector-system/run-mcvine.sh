@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 mcvine-simulate \
-    --components=source,sample,detector_90tc,detector_90wc,detector_90tt,detector_90wt,detector_90tb,detector_90wb \
+    --components=source,sample,detector_90tc,detector_90wc,detector_90tt,detector_90wt,detector_90tb,detector_90wb --- \
     --ncount=1000 \
     --buffer_size=100 \
     --source=SNS_source4 \
