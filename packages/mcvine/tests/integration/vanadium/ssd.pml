@@ -33,8 +33,8 @@
             <property name="dist">9.5</property>
             <property name="height">0.1</property>
             <property name="width">0.1</property>
-            <property name="xw">0.05</property>
-            <property name="yh">0.05</property>
+            <property name="xw">0.02</property>
+            <property name="yh">0.02</property>
             <property name="radius">0.0</property>
             <property name="E0">60.0</property>
             <property name="dE">10.0</property>
@@ -48,7 +48,7 @@
         <component name="sample">
             <property name="radius_i">0.001</property>
             <property name="radius_o">0.01</property>
-            <property name="h">0.05</property>
+            <property name="h">0.02</property>
 
             <property name="xwidth">0.0</property>
             <property name="yheight">0.0</property>
