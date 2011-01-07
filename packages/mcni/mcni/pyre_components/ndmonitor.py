@@ -39,6 +39,8 @@ def ndmonitor(*quantities, **kwds):
     ndmonitor("x", "inverseX", inverseX="1/x")
     '''
 
+    hname = histogramname(quantities)
+
     class Monitor( AbstractComponent ):
 
         class Inventory( AbstractComponent.Inventory ):
@@ -68,7 +70,8 @@ def ndmonitor(*quantities, **kwds):
                 h = self.engine.histogram
                 from histogram.hdf import dump
                 dir = self.getOutputDir()
-                f = self.inventory.filename or ('%s.h5' % self.name)
+                f = self.inventory.filename or \
+                    ('%s.h5' % hname)
                 import os
                 f = os.path.join(dir, f)
                 dump(h, f, '/', 'c')
@@ -102,13 +105,17 @@ def ndmonitor(*quantities, **kwds):
                 continue
 
             from ..components.NDMonitor import NDMonitor
-            self.engine = NDMonitor(self.name, axes)
+            self.engine = NDMonitor(hname, axes)
             return
 
         pass
     
     return Monitor
 
+
+# function to compute histogram name from the measured quantities
+# like itof or ix_y
+histogramname = lambda m: 'i' + '_'.join([q for q in m])
 
 
 # version
