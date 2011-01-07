@@ -43,6 +43,7 @@ tidy::
 
 EXPORT_PYTHON_MODULES = \
 	AbstractComponent.py \
+	AbstractNeutronTracer.py \
 	DummyComponent.py \
 	Geometer.py \
 	Geometer2.py \

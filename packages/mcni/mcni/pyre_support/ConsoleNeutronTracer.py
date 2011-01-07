@@ -21,10 +21,22 @@ class ConsoleNeutronTracer(base):
         return
 
     
-    def __call__(self, neutrons):
+    def __call__(self, neutrons, context=None):
+        if context:
+            context.identify(self)
+
         for neutron in neutrons:
             print neutron
         print
+
+
+    def onBefore(self, context):
+        print 'Before entering %s' % context.obj
+
+
+    def onProcessed(self, context):
+        print 'After processed by %s' % context.obj
+
 
 # version
 __id__ = "$Id$"

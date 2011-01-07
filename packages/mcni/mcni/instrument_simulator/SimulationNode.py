@@ -37,7 +37,7 @@ class SimulationNode(Connectable):
         process = self.component.process
         if self.multiple_scattering and hasattr(self.component, 'processM'):
             process = self.component.processM
-        self.processor = _createProcessor(process, tracer=tracer)
+        self.processor = self._createProcessor(process, tracer=tracer)
         
         return
 
@@ -68,17 +68,33 @@ class SimulationNode(Connectable):
         self._outputs['orientation'] = self.orientation
         return
 
+
+    def _createProcessor(self, process, tracer):
+        def _(neutrons):
+            if tracer:
+                tracer(neutrons,  context=before(self))
+            process(neutrons)
+            if tracer:
+                tracer(neutrons,  context=processed(self))
+            return neutrons
+        return _
+
+
     pass # end of SimulationNode
         
 
 
-def _createProcessor(process, tracer):
-    def _(neutrons):
-        process(neutrons)
-        if tracer:
-            tracer(neutrons)
-        return neutrons
-    return _
+class context(object):
+
+    def __init__(self, obj):
+        self.obj = obj
+
+
+class before(context): 
+    def identify(self, visitor): return visitor.onBefore(self)
+
+class processed(context): 
+    def identify(self, visitor): return visitor.onProcessed(self)
 
 
 # version
