@@ -121,6 +121,8 @@ DECLARE
 INITIALIZE
 %{
 
+  printf("V_sample initializing...\n");
+  
   if (!xwidth || !yheight || !zthick) /* Cannot define a rectangle */
     if (!radius_o || !h)              /* Cannot define a cylinder either */
       exit(fprintf(stderr,"V_sample: %s: sample has no volume (zero dimensions)\n", NAME_CURRENT_COMP));
@@ -159,6 +161,7 @@ INITIALIZE
 
   /* different ways of setting rectangular area */
   VarsV.aw  = VarsV.ah = 0;
+  VarsV.xw  = VarsV.yh = 0;
   if (focus_xw) {
   VarsV.xw = focus_xw;
   }
@@ -171,6 +174,8 @@ INITIALIZE
   if (focus_ah) {
     VarsV.ah = DEG2RAD*focus_ah;
   }
+
+  printf("V_sample initialized\n");
 %}
 
 TRACE
