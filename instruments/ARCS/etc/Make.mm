@@ -14,6 +14,7 @@ PROJECT = mcvine/instruments/ARCS
 
 BUILD_DIRS = \
 	arcs_moderator2sample \
+	arcs_analyze_beam \
 
 OTHER_DIRS = \
 

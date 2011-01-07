@@ -28,9 +28,39 @@ class App(base):
 
 
     def main(self):
-        self._run_arcs_m2s()
-        self._run_beam()
-        self._run_monitors()
+        # self._run_arcs_m2s()
+        # self._run_beam()
+        # self._computeFocusedSpectraForRealMonitors()
+        self._runMonitorsAtSample()
+        return
+
+
+    def _runMonitorsAtSample(self):
+        
+
+
+    def _computeFocusedSpectraForRealMonitors(self):
+        E = self.inventory.E
+        from mcni.utils.conversion import e2v
+        v = e2v(E)
+        from pyre.units.time import second
+        import histogram.hdf as hh, histogram as H
+        
+        m1 = hh.load('out/mon1-tof.h5', 'I(tof)')
+        L1 = 11.831
+        t1 = L1/v #* second
+        m1p = m1[(t1*0.9, t1*1.1)]
+        m1pc = H.histogram('I(tof)', m1p.axes(), data=m1p.I, errors=m1p.E2)
+
+        hh.dump(m1pc, 'mon1-itof-focused.h5', '/', 'c')
+
+        m2 = hh.load('out/mon2-tof.h5', 'I(tof)')
+        L2 = 18.5
+        t2 = L2/v #* second
+        m2p = m2[(t2*0.9, t2*1.1)]
+        m2pc = H.histogram('I(tof)', m2p.axes(), data=m2p.I, errors=m2p.E2)
+
+        hh.dump(m2pc, 'mon2-itof-focused.h5', '/', 'c')
         return
 
     
@@ -64,11 +94,6 @@ class App(base):
         cmd += ['-moderator.S_filename=%s' % moddat]
         cmd = ' '.join(cmd)
         self._exec(cmd)
-        return
-
-
-    def _run_monitors(self):
-        
         return
 
 
