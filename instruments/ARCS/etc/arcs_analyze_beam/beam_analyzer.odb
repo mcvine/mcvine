@@ -19,11 +19,11 @@ def beam_analyzer():
     monitors = [
         ('tof',),
         ('energy',),
-        # ('x', 'y'),
-        # ('x', 'divx'),
-        # ('x', 'divy'),
-        # ('y', 'divx'),
-        # ('y', 'divy'),
+        ('x', 'y'),
+        ('x', 'divx'),
+        ('x', 'divy'),
+        ('y', 'divx'),
+        ('y', 'divy'),
         ]
     return beam_analyzer(name, monitors)
 monitor = beam_analyzer

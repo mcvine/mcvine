@@ -47,6 +47,51 @@
                 <property name="nenergy">100</property>
             </component>
 
+            <component name="mx_y">
+                <property name="xmin">-0.05</property>
+                <property name="xmax">0.05</property>
+                <property name="nx">100</property>
+                <property name="ymin">-0.05</property>
+                <property name="ymax">0.05</property>
+                <property name="ny">100</property>
+            </component>
+
+            <component name="mx_divx">
+                <property name="xmin">-0.05</property>
+                <property name="xmax">0.05</property>
+                <property name="nx">100</property>
+                <property name="divxmin">-0.01</property>
+                <property name="divxmax">0.01</property>
+                <property name="ndivx">100</property>
+            </component>
+
+            <component name="mx_divy">
+                <property name="xmin">-0.05</property>
+                <property name="xmax">0.05</property>
+                <property name="nx">100</property>
+                <property name="divymin">-0.01</property>
+                <property name="divymax">0.01</property>
+                <property name="ndivy">100</property>
+            </component>
+
+            <component name="my_divx">
+                <property name="ymin">-0.05</property>
+                <property name="ymax">0.05</property>
+                <property name="ny">100</property>
+                <property name="divxmin">-0.01</property>
+                <property name="divxmax">0.01</property>
+                <property name="ndivx">100</property>
+            </component>
+
+            <component name="my_divy">
+                <property name="ymin">-0.05</property>
+                <property name="ymax">0.05</property>
+                <property name="ny">100</property>
+                <property name="divymin">-0.01</property>
+                <property name="divymax">0.01</property>
+                <property name="ndivy">100</property>
+            </component>
+
         </component>
 
 
