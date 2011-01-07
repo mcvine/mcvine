@@ -28,15 +28,42 @@ class App(base):
 
 
     def main(self):
-        # self._run_arcs_m2s()
-        # self._run_beam()
-        # self._computeFocusedSpectraForRealMonitors()
+        self._run_arcs_m2s()
+        self._run_beam()
+        self._computeFocusedSpectraForRealMonitors()
         self._runMonitorsAtSample()
         return
 
 
     def _runMonitorsAtSample(self):
-        
+        E = self.inventory.E
+        from mcni.utils.conversion import e2v
+        v = e2v(E)
+        from pyre.units.time import second
+        L = 13.6
+        t = L/v
+
+        neutronfile = 'out/neutrons'
+        from mcni.neutron_storage.idf_usenumpy import count
+        n = count(neutronfile)
+
+        cmd = ['arcs_analyze_beam']
+        cmd += ['--output-dir=monitors-out']
+        cmd += ['--ncount=%s' % n]
+        cmd += ['--buffer_size=%s' % min(n, 1e6)]
+        cmd += ['--source.path=%s' % neutronfile]
+        cmd += ['--monitor.mtof.tofmin=%s' % (t*0.9)]
+        cmd += ['--monitor.mtof.tofmax=%s' % (t*1.1)]
+        cmd += ['--monitor.mtof.ntof=%s' % (200)]
+        cmd += ['--monitor.menergy.energymin=%s' % (E*0.9)]
+        cmd += ['--monitor.menergy.energymax=%s' % (E*1.1)]
+        cmd += ['--monitor.menergy.nenergy=%s' % (200)]
+        cmd = ' '.join(cmd)
+        print 'Running beam monitors...'
+        self._exec(cmd)
+        print 'done.'
+        time.sleep(1)
+        return
 
 
     def _computeFocusedSpectraForRealMonitors(self):
