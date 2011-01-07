@@ -24,7 +24,7 @@ class App(base):
         emission_time = pyre.inventory.float('emission_time', default=-1)
         emission_time.meta['tip'] = 'emission time for moderator unit (microsecond)'
 
-        ncount = pyre.inventory.int('ncount', default=1000)
+        ncount = pyre.inventory.float('ncount', default=1000)
 
 
     def main(self):
@@ -48,7 +48,7 @@ class App(base):
         n = count(neutronfile)
 
         cmd = ['arcs_analyze_beam']
-        cmd += ['--output-dir=monitors-out']
+        cmd += ['--output-dir=atsample']
         cmd += ['--ncount=%s' % n]
         cmd += ['--buffer_size=%s' % min(n, 1e6)]
         cmd += ['--source.path=%s' % neutronfile]
@@ -113,7 +113,7 @@ class App(base):
         cmd = ['arcs_moderator2sample']
         keys = ['ncount']
         cmd += self._buildCmdFromInventory(keys)
-        cmd += ['-buffer_size=%s' % (self.inventory.ncount/10)]
+        cmd += ['-buffer_size=%s' % int(self.inventory.ncount/10)]
         moddat = os.path.join(
             os.environ['MCVINE_DIR'], 'share', 'mcvine',
             'instruments', 'ARCS', 'source_sct521_bu_17_1.dat',
