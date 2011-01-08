@@ -163,6 +163,7 @@ TRACE
     }
     if(bb>=b_min && bb<=b_max && box_intersect(&t0,&t1,x,y,z,vx,vy,vz,x_max-x_min,y_max-y_min,0.0001)) {
        PROP_DT(t0);
+       if (p<0) return;
 /*       printf("xf= %10.5f yf= %10.5f  zf= %10.5f\n", x,y,z); */
     
        i = floor((x-x_min)/delta_x);              /* x bin number */
@@ -170,13 +171,13 @@ TRACE
        if(i < 0) {i=0;}
 
        j = floor((y-y_min)/delta_y);              /* y bin number */
-       if(j >= nychan) {i = nychan - 1;}
+       if(j >= nychan) {j = nychan - 1;}
        if(j < 0) {j=0;}
 
          
        k = floor((bb-b_min)/delta_b);            /* b bin number */
        if(k >= nbchan) {k = nbchan - 1;}
-       if(k < 0) {i=0;}
+       if(k < 0) {k=0;}
 
        TOF_N(i,j,k)++;
        TOF_p(i,j,k) += p;
