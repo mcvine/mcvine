@@ -12,6 +12,9 @@
 #
 
 
+category = "monitors"
+
+
 class NDMonitor(object):
 
     def process(self, neutrons):

@@ -32,6 +32,10 @@ q2e = {
 
 
 from mcni.pyre_support.AbstractComponent import AbstractComponent
+class NDMonitorBase(AbstractComponent):
+    supplier = 'mcni'
+    category = 'monitors'
+    type = 'NDMonitor'
 
 def ndmonitor(*quantities, **kwds):
     '''
@@ -41,9 +45,17 @@ def ndmonitor(*quantities, **kwds):
 
     hname = histogramname(quantities)
 
-    class Monitor( AbstractComponent ):
+    class Monitor(NDMonitorBase):
 
-        class Inventory( AbstractComponent.Inventory ):
+        simple_description = "Multidimensional monitor"
+        if not len(quantities):
+            full_description = (
+                "You have not specified the quantities this monitor will measure. "
+                "Please specify additional arguments for the quantities to measure. "
+                "For example, NDMonitor(x,y) is a monitor of I(x,y) histogram. "
+            )
+
+        class Inventory( NDMonitorBase.Inventory ):
 
             import pyre.inventory
 
@@ -90,7 +102,7 @@ def ndmonitor(*quantities, **kwds):
             else:
                 quantity2expression = q2e
                 
-            AbstractComponent._init(self)
+            NDMonitorBase._init(self)
             axes = []
             for q in quantities:
                 if q not in neqs:

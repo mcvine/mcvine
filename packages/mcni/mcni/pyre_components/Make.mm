@@ -31,6 +31,7 @@ EXPORT_PYTHON_MODULES = \
 	Dummy.py \
 	MonochromaticSource.py \
 	MultiMonitors.py \
+	NDMonitor.py \
 	NeutronFromStorage.py \
 	NeutronPrinter.py \
 	NeutronToStorage.py \
