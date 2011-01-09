@@ -37,11 +37,11 @@ class NeutronComponentFacility( Facility ):
            eg. mcni://MonochromaticSource
          * <supplier>://<componentcategory>/<componenttype>
            eg. mcni://sources/MonochromaticSource
-         * <supplier>://<componentcategory>/<componenttype>(<componentname>)
-           eg. mcni://sources/MonochromaticSource(source)
+         * <supplier>://<componentcategory>/<componenttypefactory>(*args)
+           eg. mcni://sources/NDMonitor(x, y)
         '''
         component_specifier = str(component_specifier)
-        supplier, category, type, name = _decode(component_specifier)
+        supplier, category, type, args = _decode(component_specifier)
         
         # component factory
         from mcni.pyre_support import findcomponentfactory
@@ -62,25 +62,67 @@ class NeutronComponentFacility( Facility ):
                 self.name, component_specifier)
                 )
             return None, None
+
+        # component type factory ?
+        if args:
+            factory = factory(*args)
         
-        # instantiate
-        if not name: name = self.name
-        uri = _encode(factory.supplier, factory.category, factory.type, name)
-        # XXX: the above does not work. pyre does not like abc://d.e/...
-        # XXX: for now, just <category>/<type>
-        uri = '%s/%s' % (factory.category, factory.type)
-        component = factory(name)
+        # instantiate the component
+        component = factory(self.name)
+
+        # uri
+        uri = _encode(factory.supplier, factory.category, factory.type, args)
         component.uri = uri
         # locator
         locator = '<mcvine.componentfactory>'
         #
         return component, locator
 
+
+    def _set(self, instance, component, locator):
+        if isinstance(component, basestring):
+            # bypass the standard pyre component specification syntax
+            # of component:args. only use the "component" part. the 
+            # args part is handled in _import 
+            name = component
+            args = []
+            component, source = self._retrieveComponent(instance, name, args)
+
+            import pyre.parsing.locators
+            locator = pyre.parsing.locators.chain(source, locator)
+
+        # all the following are just copied from pyre.inventory.Facility
+        if component is None:
+            return
+
+        # get the old component
+        try:
+            old = instance._getTraitValue(self.name)
+        except KeyError:
+            # the binding was uninitialized
+            return instance._initializeTraitValue(self.name, component, locator)
+
+        # if the previous binding was non-null, finalize it
+        if old:
+            old.fini()
+        
+        # bind the new value
+        return instance._setTraitValue(self.name, component, locator)
+    
+    
     pass # end of NeutronComponentFacility
 
 
-def _encode(supplier, category, type, name):
-    return '%s://%s/%s(%s)' % (supplier, category, type, name)
+def _encode(supplier, category, type, args):
+    if args:
+        argsstr = ','.join(args)
+        argsstr = '(' + argsstr + ')'
+    else:
+        argsstr = ''
+    # XXX: don't really need supplier and category right now.
+    # XXX: rethink this again later
+    # return '%s://%s/%s%s' % (supplier, category, type, argsstr)
+    return '%s/%s%s' % (category, type, argsstr)
 
 
 def _decode(specifier):
@@ -98,10 +140,16 @@ def _decode(specifier):
     
     if t2.find('(') == -1:
         type = t2
-        name = None
+        argsstr = ''
     else:
-        type, name = t2.strip()[:-1].split('(')
-    return supplier, category, type, name
+        type, argsstr = t2.strip()[:-1].split('(')
+
+    args = None
+    argsstr = argsstr.strip()
+    if argsstr:
+        args = argsstr.split(',')
+        args = [a.strip() for a in args]
+    return supplier, category, type, args
 
 
 def test_decode():
@@ -109,7 +157,7 @@ def test_decode():
     assert _decode('sources/MonochromaticSource') == (None, 'sources', 'MonochromaticSource', None)
     assert _decode('mcni://MonochromaticSource') == ('mcni', None, 'MonochromaticSource', None)
     assert _decode('mcni://sources/MonochromaticSource') == ('mcni', 'sources', 'MonochromaticSource', None)
-    assert _decode('mcni://sources/MonochromaticSource(source)') == ('mcni', 'sources', 'MonochromaticSource', 'source')
+    assert _decode('mcni://sources/NDMonitor(x, y)') == ('mcni', 'sources', 'NDMonitor', ['x', 'y'])
     return
 
 
