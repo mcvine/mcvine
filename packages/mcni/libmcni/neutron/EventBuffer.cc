@@ -33,7 +33,7 @@ mcni::Neutron::EventBuffer::EventBuffer()
 bool 
 isInValid(const mcni::Neutron::Event &evt)
 {
-  return evt.probability == -1;
+  return evt.probability <= 0;
 }
 
 mcni::Neutron::EventBuffer::EventBuffer
