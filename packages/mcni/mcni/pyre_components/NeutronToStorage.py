@@ -20,10 +20,22 @@ from mcni.pyre_support.AbstractComponent import AbstractComponent
 class NeutronToStorage( AbstractComponent ):
 
 
+    simple_description = "Save neutrons to a file"
+    full_description = (
+        "At times, it could be useful to save the simulated neutrons into file, "
+        "so that they can be reused. "
+        "When you add this component into the instrument component chain, "
+        "all neutrons reach its position will be saved into a file."
+        )
+
+
     class Inventory( AbstractComponent.Inventory ):
         import pyre.inventory as pinv
         path = pinv.str( 'path', default = 'neutrons' )
+        path.meta['tip'] = "The path at which neutrons will be saved"
+        
         append = pinv.bool( 'append', default = False )
+        append.meta['tip'] = "Append to an existing neutron file"
         pass
 
 
