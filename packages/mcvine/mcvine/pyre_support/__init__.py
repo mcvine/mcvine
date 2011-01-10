@@ -14,12 +14,22 @@
 
 from mcni.pyre_support import componentfactory
 
-def componentinfo(type, category=None, supplier=None):
+#def componentinfo(type, category=None, supplier=None):
+def componentinfo(*args, **kwds):
+    kwds = dict(kwds)
+    type = kwds['type']; del kwds['type']
+    category = kwds.get('category')
+    if kwds.has_key('category'): del kwds['category']
+    supplier = kwds.get('supplier')
+    if kwds.has_key('supplier'): del kwds['supplier']
+    
     # find the component factory and instantiate a componnet
     from mcni._find_component import find
     type, category, supplier = find(type, category=category, supplier=supplier)
     factory = componentfactory(type=type, category=category, supplier=supplier)
-    comp = factory(name='component')
+    if hasattr(factory, 'factoryfactory'):
+        factory = factory(*args, **kwds)
+    comp = factory('component')
     # docs for parameters
     from mcni.pyre_support._invutils import getComponentPropertyNameTipPairs
     params = getComponentPropertyNameTipPairs(comp)

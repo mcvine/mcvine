@@ -37,6 +37,15 @@ class NDMonitorBase(AbstractComponent):
     category = 'monitors'
     type = 'NDMonitor'
 
+    class Inventory(AbstractComponent.Inventory):
+        
+        import pyre.inventory
+        
+        filename = pyre.inventory.str('filename', default='')
+        filename.meta['tip'] = "file name for output histogram"
+    
+
+
 def ndmonitor(*quantities, **kwds):
     '''
     ndmonitor("x", "vy")
@@ -53,7 +62,11 @@ def ndmonitor(*quantities, **kwds):
                 "You have not specified the quantities this monitor will measure. "
                 "Please specify additional arguments for the quantities to measure. "
                 "For example, NDMonitor(x,y) is a monitor of I(x,y) histogram. "
-            )
+                )
+        else:
+            full_description = (
+                "Monitor collecting histogram of I(%s). " % (', '.join(quantities))
+                )
 
         class Inventory( NDMonitorBase.Inventory ):
 
@@ -64,14 +77,18 @@ def ndmonitor(*quantities, **kwds):
                 name = q
                 code = '%smin = pyre.inventory.float("%smin", default=0)' % (name, name)
                 exec code
+                code = '%smin.meta["tip"] = "minimum of %s"' % (name, name)
+                exec code
                 code = '%smax = pyre.inventory.float("%smax", default=1)' % (name, name)
+                exec code
+                code = '%smax.meta["tip"] = "maximum of %s"' % (name, name)
                 exec code
                 code = 'n%s = pyre.inventory.int("n%s", default=10)' % (name, name)
                 exec code
+                code = 'n%s.meta["tip"] = "number of bins for %s"' % (name, name)
+                exec code
                 continue
             
-            filename = pyre.inventory.str('filename', default='')
-    
 
         def process(self, neutrons):
             return self.engine.process( neutrons )
