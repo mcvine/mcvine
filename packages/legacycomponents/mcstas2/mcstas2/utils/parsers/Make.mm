@@ -34,8 +34,9 @@ EXPORT_PYTHON_MODULES = \
 	ComponentInfo.py \
 	orderedDict.py \
 	__init__.py \
-	ShareIncludeParser.py \
 	McStasComponentParser.py \
+	McStasInstrumentParser.py \
+	ShareIncludeParser.py \
 
 
 export:: export-package-python-modules 
