@@ -24,7 +24,7 @@ class TestCase(unittest.TestCase):
         parser = McStasInstrumentParser()
         path = '../../../../../../../instruments/VULCAN/resources/vulcan_asbuilt_L2d.instr'
         text = open(path).read()
-        comps = parser.parse(text)
+        instrument = parser.parse(text)
         return
 
     pass  # end of TestCase

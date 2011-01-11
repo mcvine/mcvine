@@ -104,23 +104,38 @@ RELTO           = "to=\"([^\"]+)\"" # Relative to component
 PROPERTIES      = ["AT", "ROTATED"]     # Standard properties
 RELATION        = ["RELATIVE", "ABSOLUTE"]
 TERMINATORS     = ["FINALLY", "END"]
-# ARGS            = FILE + CONFIG
 
 
 # Utils
 ifelse  = lambda a,b,c: (b,c)[not a]    # C ternary operator '?:'
 
+
+
+class Instrument:
+
+    components = None
+
+
+class Component:
+
+    type = None
+    name = None
+    parameters = None
+    position = None
+    orientation = None
+
+
+
 class McStasInstrumentParser(object):
 
     def parse(self, text):
-        "Parses text and return a dictionary of components"
+        "Parses text and return a list of component dictionaries"
         # Remove comments
         text         = self._removeComments(text)
         compSplits   = text.split("COMPONENT")   # Split by component parts
         compSplits   = compSplits[1:]             # Skip 0 part (should not have components)
 
         # Go over the component strings and populate components
-        order       = 0
         components = []
         for compText in compSplits:
             p   = re.compile(COMPONENT, re.DOTALL)
@@ -132,23 +147,23 @@ class McStasInstrumentParser(object):
 
             # Populate component
             m = matches[0]
-            comp    = {}
+            comp    = Component()
             components.append(comp)
 
-            comp["name"]        = m[0]
-            comp["type"]        = m[1]
-            comp["parameters"]  = self._params(m[2])
-            position = comp["position"]  = self._position(m[3])
+            comp.name        = m[0]
+            comp.type        = m[1]
+            comp.parameters  = self._params(m[2])
+            position = comp.position  = self._position(m[3])
             rotation    = self._rotation(m[3])
             if rotation is None:
                 rotation = list(position)
                 rotation[0] = (0,0,0)
-            comp['rotation'] = tuple(rotation)
-            comp["extra"]       = m[3]
+            comp.orientation = tuple(rotation)
+            comp.extra       = m[3]
 
-            order   += 1
-
-        return components
+        instrument = Instrument()
+        instrument.components = components
+        return instrument
 
 
     def _params(self, text):
