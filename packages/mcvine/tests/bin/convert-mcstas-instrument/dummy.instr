@@ -1,0 +1,42 @@
+/*************************************
+* test
+*************************************/
+
+
+DEFINE INSTRUMENT test() 
+DECLARE
+%{ 
+%}
+INITIALIZE
+%{
+%}   
+
+TRACE
+
+COMPONENT mod=SNS_source(S_filename="source_sct521_bu_17_1.dat",
+                         width=0.1,
+                         height=0.12,
+                         dist=2.5,
+                         xw=0.1,
+                         yh=0.12,
+                         Emin=60,
+                         Emax=100)
+AT(0,0,0) ABSOLUTE
+
+COMPONENT core_ves=Guide_channeled(w1=0.094285,h1=0.11323,w2=0.084684,h2=0.102362,l=1.2444,
+			 	   R0=0.0,mx=3.6,my=3.6,Qcx=0.2,Qcy=0.2,
+                          W=0.02,k=1,d=0.0,alphax=5.5,alphay=5.5)
+AT(0,0,1.0106) RELATIVE mod
+
+COMPONENT shutter_guide=Guide_channeled(w1=0.074930,h1=.094040,w2=0.070880,h2=0.086880,
+                          l=1.853,
+                          R0=0.98,mx=2.5,my=2.5,Qcx=0.2,Qcy=0.2,
+                          W=0.02,k=1,d=0.0,alphax=5.5,alphay=5.5)
+AT(0,0,2.26790) RELATIVE mod
+ROTATED (0,5,0) RELATIVE mod
+
+FINALLY
+%{                       	      
+%}
+END
+

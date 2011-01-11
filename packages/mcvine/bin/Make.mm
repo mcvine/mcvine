@@ -48,6 +48,7 @@ EXPORT_BINS = \
 	mcvine-compare-pyre-registry \
 	mcvine-compile-mcstas-component \
 	mcvine-component-info \
+	mcvine-convert-mcstas-instrument \
 	mcvine-list-components \
 	mcvine-simulate \
 	mcvine-neutron-storage-count-neutrons \
