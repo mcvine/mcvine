@@ -81,23 +81,120 @@ class App(Script):
         out = '%s.pml' % instrument.name
         if os.path.exists(out):
             os.remove(out)
-            
-        cmd = ['./%s' % instrument.name]
-        for c in instrument.components:
-            cmd.append('-%s=%s' % (c.name, c.type))
-            for k,v in c.parameters.iteritems():
-                cmd.append('-%s.%s="%s"' % (c.name, k,v))
-                continue
-            continue
-        cmd.append('-h')
-        cmd.append('-dump-pml=yes')
-        cmd = ' '.join(cmd)
-        cmd += '> /dev/null'
-        if os.system(cmd):
-            raise RuntimeError, "%s failed"  % cmd
+        
+        text = PmlRenderer().render(instrument)
+        text = '\n'.join(text)
+        open(out, 'w').write(text)
         print '* generated configuration "%s"' % out
+        return
 
     pass
+
+
+
+class PmlRenderer(object):
+
+
+    def render(self, instrument):
+        self._reps = []
+        self._indlevel = 0
+        self._indstr = '  '
+        self._write('<?xml version="1.0"?>')
+        self._write('<inventory>')
+        self._indent()
+        self.onInstrument(instrument)
+        self._outdent()
+        self._write('</inventory>')
+        return self._reps
+    
+
+    def onInstrument(self, instrument):
+        self._write('<component name="%s">' % instrument.name)
+        self._indent()
+
+        self._property('sequence', ','.join([c.name for c in instrument.components]))
+        for c in instrument.components:
+            self._property(c.name, c.type)
+            continue
+
+        self.onGeometer(instrument)
+        self._write('')
+
+        self._property('multiple-scattering', 'off')
+        
+        self._property('ncount', "1e6")
+        self._property('buffer_size', 100000)
+        
+        self._property('output-dir', 'out')
+        self._property('overwrite-datafiles', 'off')
+        self._write('')
+
+        for c in instrument.components:
+            self.onComponent(c)
+            self._write('')
+            continue
+        
+        self._outdent()
+        self._write('</component>')
+        return
+
+
+    def onGeometer(self, instrument):
+        self._write('<component name="geometer">')
+        self._indent()
+        for c in instrument.components:
+            k = c.name
+            v = self._geometerEntry(c.position, c.orientation)
+            self._property(k,v)
+            continue
+        self._outdent()
+        self._write('</component>')
+        return
+
+
+    def onComponent(self, component):
+        self._write('<component name="%s">' % component.name)
+        self._indent()
+        for k,v in component.parameters.iteritems():
+            self._property(k,v)
+            continue
+        self._outdent()
+        self._write('</component>')
+        return
+
+
+    def _geometerEntry(self, position, orientation):
+        position = self._coord(position)
+        orientation = self._coord(orientation)
+        return ','.join((position, orientation))
+
+
+    def _coord(self, coord):
+        v, relation, to = coord
+        if relation.lower() == 'absolute' or \
+                relation.lower() == 'relation' and to.lower() == 'absolute':
+            return str(v)
+        else:
+            assert relation.lower() == 'relative'
+            return 'relative(%s, to="%s")' % (v, to)
+
+
+    def _property(self, k, v):
+        t = '<property name="%s">%s</property>' % (k,v)
+        self._write(t)
+        return
+
+
+    def _write(self, text):
+        t = self._indlevel * self._indstr + text
+        self._reps.append(t)
+        return
+
+
+    def _indent(self): self._indlevel += 1
+    def _outdent(self): self._indlevel -= 1
+
+
 
 import os
 
