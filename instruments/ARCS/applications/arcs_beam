@@ -27,11 +27,32 @@ class App(base):
         ncount = pyre.inventory.float('ncount', default=1000)
 
 
+    m2sout = '_m2sout'
+    out = 'out'
+    
+
     def main(self):
+        if not os.path.exists(self.out):
+            os.makedirs(self.out)
+            
         self._run_arcs_m2s()
         self._run_beam()
         self._computeFocusedSpectraForRealMonitors()
         self._runMonitorsAtSample()
+        self._moveNeutronsToOutputDir()
+        self._computeFlux()
+        return
+
+
+    def _computeFlux(self):
+        return
+
+
+    def _moveNeutronsToOutputDir(self):
+        os.rename(
+            os.path.join(self.m2sout, 'neutrons'),
+            os.path.join(self.out, 'neutrons'),
+            )
         return
 
 
@@ -43,12 +64,12 @@ class App(base):
         L = 13.6
         t = L/v
 
-        neutronfile = 'out/neutrons'
+        neutronfile = os.path.join(self.m2sout, 'neutrons')
         from mcni.neutron_storage.idf_usenumpy import count
         n = count(neutronfile)
 
         cmd = ['arcs_analyze_beam']
-        cmd += ['--output-dir=atsample']
+        cmd += ['--output-dir=%s' % self.out]
         cmd += ['--ncount=%s' % n]
         cmd += ['--buffer_size=%s' % min(n, 1e6)]
         cmd += ['--source.path=%s' % neutronfile]
@@ -74,23 +95,23 @@ class App(base):
         from pyre.units.time import second
         import histogram.hdf as hh, histogram as H
         
-        m1 = hh.load('out/mon1-tof.h5', 'I(tof)')
+        m1 = hh.load(os.path.join(self.m2sout, 'mon1-tof.h5'), 'I(tof)')
         L1 = 11.831
         t1 = L1/v #* second
         m1p = m1[(t1*0.9, t1*1.1)]
         m1pc = H.histogram('I(tof)', m1p.axes(), data=m1p.I, errors=m1p.E2)
         m1pc.setAttribute('title', 'Monitor 1 I(tof)')
 
-        hh.dump(m1pc, 'mon1-itof-focused.h5', '/', 'c')
+        hh.dump(m1pc, os.path.join(self.out, 'mon1-itof-focused.h5'), '/', 'c')
 
-        m2 = hh.load('out/mon2-tof.h5', 'I(tof)')
+        m2 = hh.load(os.path.join(self.m2sout, 'mon2-tof.h5'), 'I(tof)')
         L2 = 18.5
         t2 = L2/v #* second
         m2p = m2[(t2*0.9, t2*1.1)]
         m2pc = H.histogram('I(tof)', m2p.axes(), data=m2p.I, errors=m2p.E2)
         m2pc.setAttribute('title', 'Monitor 2 I(tof)')
 
-        hh.dump(m2pc, 'mon2-itof-focused.h5', '/', 'c')
+        hh.dump(m2pc, os.path.join(self.out, 'mon2-itof-focused.h5'), '/', 'c')
         return
 
     
@@ -103,7 +124,7 @@ class App(base):
             'emission_time',
             ]
         cmd += self._buildCmdFromInventory(keys)
-        cmd += ['--- -dump-pml=yes', '-h', '>arcs-m2s.out']
+        cmd += ['--- -dump-pml=yes', '-h', '>arcs-m2s.log']
         cmd = ' '.join(cmd)
         print 'Generating pml for arcs beam instrument...'
         self._exec(cmd)
@@ -117,6 +138,7 @@ class App(base):
         keys = ['ncount']
         cmd += self._buildCmdFromInventory(keys)
         cmd += ['-buffer_size=%s' % int(self.inventory.ncount/10)]
+        cmd.append( '--output-dir=%s' % self.m2sout)
         moddat = os.path.join(
             os.environ['MCVINE_DIR'], 'share', 'mcvine',
             'instruments', 'ARCS', 'source_sct521_bu_17_1.dat',
