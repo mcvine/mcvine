@@ -156,11 +156,21 @@ class PmlRenderer(object):
         self._write('<component name="%s">' % component.name)
         self._indent()
         for k,v in component.parameters.iteritems():
+            v = self._formatValue(v)
             self._property(k,v)
             continue
         self._outdent()
         self._write('</component>')
         return
+
+    
+    def _formatValue(self, value):
+        "value might actually be c variable. here we add a mark for that"
+        try:
+            eval(value)
+            return value
+        except:
+            return '{'+value+'}'
 
 
     def _geometerEntry(self, position, orientation):

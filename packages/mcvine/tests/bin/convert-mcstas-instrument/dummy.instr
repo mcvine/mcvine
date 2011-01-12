@@ -19,7 +19,7 @@ COMPONENT mod=SNS_source(S_filename="source_sct521_bu_17_1.dat",
                          dist=2.5,
                          xw=0.1,
                          yh=0.12,
-                         Emin=60,
+                         Emin=Emin,
                          Emax=100)
 AT (0,0,0) ABSOLUTE
 
