@@ -43,6 +43,9 @@ class NDMonitorBase(AbstractComponent):
         
         filename = pyre.inventory.str('filename', default='')
         filename.meta['tip'] = "file name for output histogram"
+
+        title = pyre.inventory.str('title', default='')
+        title.meta['tip'] = 'Title of the histogram'
     
 
 
@@ -87,6 +90,7 @@ def ndmonitor(*quantities, **kwds):
                 exec code
                 code = 'n%s.meta["tip"] = "number of bins for %s"' % (name, name)
                 exec code
+                
                 continue
             
 
@@ -97,6 +101,9 @@ def ndmonitor(*quantities, **kwds):
         def _fini(self):
             if not self._showHelpOnly:
                 h = self.engine.histogram
+                title = self.inventory.title
+                h.setAttribute('title', title)
+                
                 from histogram.hdf import dump
                 dir = self.getOutputDir()
                 f = self.inventory.filename or \
