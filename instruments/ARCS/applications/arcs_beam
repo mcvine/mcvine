@@ -139,7 +139,7 @@ class App(base):
     def _exec(self, cmd):
         print " -> running %s..." % cmd
         if os.system(cmd):
-            raise RuntimeError, "failed"
+            raise RuntimeError, "%s failed" % cmd
         
 def main():
     app = App('arcs_beam')
