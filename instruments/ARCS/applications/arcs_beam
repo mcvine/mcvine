@@ -52,6 +52,7 @@ class App(base):
         cmd += ['--ncount=%s' % n]
         cmd += ['--buffer_size=%s' % min(n, 1e6)]
         cmd += ['--source.path=%s' % neutronfile]
+        # fix monitor params that depend on incident energy
         cmd += ['--monitor.mtof.tofmin=%s' % (t*0.9)]
         cmd += ['--monitor.mtof.tofmax=%s' % (t*1.1)]
         cmd += ['--monitor.mtof.ntof=%s' % (200)]
@@ -78,6 +79,7 @@ class App(base):
         t1 = L1/v #* second
         m1p = m1[(t1*0.9, t1*1.1)]
         m1pc = H.histogram('I(tof)', m1p.axes(), data=m1p.I, errors=m1p.E2)
+        m1pc.setAttribute('title', 'Monitor 1 I(tof)')
 
         hh.dump(m1pc, 'mon1-itof-focused.h5', '/', 'c')
 
@@ -86,6 +88,7 @@ class App(base):
         t2 = L2/v #* second
         m2p = m2[(t2*0.9, t2*1.1)]
         m2pc = H.histogram('I(tof)', m2p.axes(), data=m2p.I, errors=m2p.E2)
+        m2pc.setAttribute('title', 'Monitor 2 I(tof)')
 
         hh.dump(m2pc, 'mon2-itof-focused.h5', '/', 'c')
         return

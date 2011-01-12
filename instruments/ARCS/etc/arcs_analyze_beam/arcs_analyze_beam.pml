@@ -39,12 +39,14 @@
                 <property name="tofmin">0</property>
                 <property name="tofmax">0.016</property>
                 <property name="ntof">100</property>
+                <property name="title">I(tof) at sample</property>
             </component>
 
             <component name="menergy">
                 <property name="energymin">0</property>
                 <property name="energymax">100</property>
                 <property name="nenergy">100</property>
+                <property name="title">I(E) at sample</property>
             </component>
 
             <component name="mx_y">
@@ -54,6 +56,7 @@
                 <property name="ymin">-0.05</property>
                 <property name="ymax">0.05</property>
                 <property name="ny">100</property>
+                <property name="title">I(x,y) at sample</property>
             </component>
 
             <component name="mx_divx">
@@ -63,6 +66,7 @@
                 <property name="divxmin">-0.01</property>
                 <property name="divxmax">0.01</property>
                 <property name="ndivx">100</property>
+                <property name="title">I(x,divx) at sample</property>
             </component>
 
             <component name="mx_divy">
@@ -72,6 +76,7 @@
                 <property name="divymin">-0.01</property>
                 <property name="divymax">0.01</property>
                 <property name="ndivy">100</property>
+                <property name="title">I(x,divy) at sample</property>
             </component>
 
             <component name="my_divx">
@@ -81,6 +86,7 @@
                 <property name="divxmin">-0.01</property>
                 <property name="divxmax">0.01</property>
                 <property name="ndivx">100</property>
+                <property name="title">I(y, divx) at sample</property>
             </component>
 
             <component name="my_divy">
@@ -90,6 +96,7 @@
                 <property name="divymin">-0.01</property>
                 <property name="divymax">0.01</property>
                 <property name="ndivy">100</property>
+                <property name="title">I(y, divy) at sample</property>
             </component>
 
         </component>
