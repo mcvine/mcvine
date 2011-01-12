@@ -41,10 +41,47 @@ class App(base):
         self._runMonitorsAtSample()
         self._moveNeutronsToOutputDir()
         self._computeFlux()
+        self._computeAverageEnergy()
+        self._computeFWHM()
         return
 
 
     def _computeFlux(self):
+        f = os.path.join(self.out, 'neutrons')
+        from mcni.neutron_storage.idf_usenumpy import totalintensity
+        I = totalintensity(f)
+        # one MC run corresponds to 34kJ/pulse
+        # 1second = 60pulses
+        # this is the flux if the power is at 34kJ/pulse
+        # unit: 1/second
+        flux = I/self.inventory.ncount * 60
+        o = os.path.join(self.out, 'flux')
+        open(o, 'w').write(str(flux))
+        return
+    
+    
+    def _computeAverageEnergy(self):
+        from histogram.hdf import load
+        h = load(os.path.join(self.out, 'ienergy.h5'), 'ienergy')
+        e = (h.energy * h.I).sum()/h.I.sum()
+        o = os.path.join(self.out, 'average-energy')
+        open(o, 'w').write(str(e))
+        return
+
+
+    def _computeFWHM(self):
+        from histogram.hdf import load
+        import numpy as np
+        itof = load(os.path.join(self.out, 'itof.h5'), 'itof')
+        max = itof.I.max()
+        indmax = np.where(itof.I==max)[0][0]
+        left = itof.I[:indmax]
+        right = itof.I[indmax:]
+        leftindex = np.where(left > max/2)[0][0]
+        rightindex = np.where(right > max/2)[0][-1] + indmax
+        fwhm = (rightindex-leftindex) * (itof.tof[1]-itof.tof[0])
+        o = os.path.join(self.out, 'tof-fwhm')
+        open(o, 'w').write(str(fwhm))
         return
 
 
@@ -76,10 +113,10 @@ class App(base):
         # fix monitor params that depend on incident energy
         cmd += ['--monitor.mtof.tofmin=%s' % (t*0.9)]
         cmd += ['--monitor.mtof.tofmax=%s' % (t*1.1)]
-        cmd += ['--monitor.mtof.ntof=%s' % (200)]
+        cmd += ['--monitor.mtof.ntof=%s' % (1000)]
         cmd += ['--monitor.menergy.energymin=%s' % (E*0.9)]
         cmd += ['--monitor.menergy.energymax=%s' % (E*1.1)]
-        cmd += ['--monitor.menergy.nenergy=%s' % (200)]
+        cmd += ['--monitor.menergy.nenergy=%s' % (1000)]
         cmd = ' '.join(cmd)
         print 'Running beam monitors...'
         self._exec(cmd)
