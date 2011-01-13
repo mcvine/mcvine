@@ -35,14 +35,20 @@ class App(base):
         if not os.path.exists(self.out):
             os.makedirs(self.out)
             
-        self._run_arcs_m2s()
-        self._run_beam()
+        # self._run_arcs_m2s()
+        # self._run_beam()
         self._computeFocusedSpectraForRealMonitors()
         self._runMonitorsAtSample()
         self._moveNeutronsToOutputDir()
-        self._computeFlux()
-        self._computeAverageEnergy()
-        self._computeFWHM()
+        flux = self._computeFlux()
+        energy = self._computeAverageEnergy()
+        fwhm = self._computeFWHM()
+        props = {
+            'flux': flux,
+            'average energy': energy,
+            'tof fwhm': fwhm,
+            }
+        open(os.path.join(self.out, 'props.json'), 'w').write(str(props))
         return
 
 
@@ -55,18 +61,14 @@ class App(base):
         # this is the flux if the power is at 34kJ/pulse
         # unit: 1/second
         flux = I/self.inventory.ncount * 60
-        o = os.path.join(self.out, 'flux')
-        open(o, 'w').write(str(flux))
-        return
+        return flux
     
     
     def _computeAverageEnergy(self):
         from histogram.hdf import load
         h = load(os.path.join(self.out, 'ienergy.h5'), 'ienergy')
         e = (h.energy * h.I).sum()/h.I.sum()
-        o = os.path.join(self.out, 'average-energy')
-        open(o, 'w').write(str(e))
-        return
+        return e
 
 
     def _computeFWHM(self):
@@ -80,9 +82,7 @@ class App(base):
         leftindex = np.where(left > max/2)[0][0]
         rightindex = np.where(right > max/2)[0][-1] + indmax
         fwhm = (rightindex-leftindex) * (itof.tof[1]-itof.tof[0])
-        o = os.path.join(self.out, 'tof-fwhm')
-        open(o, 'w').write(str(fwhm))
-        return
+        return fwhm
 
 
     def _moveNeutronsToOutputDir(self):
