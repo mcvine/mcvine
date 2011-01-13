@@ -35,8 +35,8 @@ class App(base):
         if not os.path.exists(self.out):
             os.makedirs(self.out)
             
-        # self._run_arcs_m2s()
-        # self._run_beam()
+        self._run_arcs_m2s()
+        self._run_beam()
         self._computeFocusedSpectraForRealMonitors()
         self._runMonitorsAtSample()
         self._moveNeutronsToOutputDir()
