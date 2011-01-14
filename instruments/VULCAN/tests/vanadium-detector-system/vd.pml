@@ -28,7 +28,7 @@
         <property name="ncount">10000</property>
         <property name="buffer_size">1000</property>
 
-        <property name="overwrite-datafiles">False</property>
+        <property name="overwrite-datafiles">True</property>
         <property name="output-dir">out</property>
         <property name="dump-registry">False</property>
 
