@@ -2,8 +2,8 @@
 
 mcvine-simulate \
     --components=source,sample,detector_90tc,detector_90wc,detector_90tt,detector_90wt,detector_90tb,detector_90wb --- \
-    --ncount=1000 \
-    --buffer_size=100 \
+    --ncount=10000 \
+    --buffer_size=1000 \
     --source=SNS_source4 \
     --sample=V_sample \
     --detector_90tc=PSD_TEW_monitor \
