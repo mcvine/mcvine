@@ -15,7 +15,7 @@
 
 <inventory>
 
-    <component name="vulcan-ssd">
+    <component name="vd">
 
         <property name="sequence">['source', 'sample', 'detector']</property>
 
@@ -74,15 +74,8 @@
             <property name=""></property>
         </component>
 
-
-
-
-        
-
-
-
         <component name="detector">
-            <component name="tc">
+            <component name="m1">
                 <property name="nxchan">1</property>
                 <property name="format">table</property>
                 <property name="bmax">100</property>
@@ -97,7 +90,7 @@
                 <property name="type">time</property>
             </component>
 
-            <component name="wc">
+            <component name="m2">
                 <property name="nxchan">1</property>
                 <property name="format">table</property>
                 <property name="bmax">10</property>
@@ -112,7 +105,7 @@
                 <property name="type">wavelength</property>
             </component>
             
-            <component name="tt">
+            <component name="m3">
                 <property name="nxchan">1</property>
                 <property name="format">table</property>
                 <property name="bmax">100</property>
@@ -127,7 +120,7 @@
                 <property name="type">time</property>
             </component>
 
-            <component name="wt">
+            <component name="m4">
                 <property name="nxchan">1</property>
                 <property name="format">table</property>
                 <property name="bmax">10</property>
@@ -142,7 +135,7 @@
                 <property name="type">wavelength</property>
             </component>
 
-            <component name="tb">
+            <component name="m5">
                 <property name="nxchan">1</property>
                 <property name="format">table</property>
                 <property name="bmax">100</property>
@@ -157,7 +150,7 @@
                 <property name="type">time</property>
             </component>
 
-            <component name="wb">
+            <component name="m6">
                 <property name="nxchan">1</property>
                 <property name="format">table</property>
                 <property name="bmax">10</property>
@@ -173,12 +166,12 @@
             </component>
 
             <component name="geometer">
-                <property name="tc">((-2, 0, 0), (0, 90, 0))</property>
-                <property name="wc">((-2, 0, 0), (0, 90, 0))</property>
-                <property name="tt">((-1.959, 0.403, 0), (0, 90, 0))</property>
-                <property name="wt">((-1.959, 0.403, 0), (0, 90, 0))</property>
-                <property name="tb">((-1.959, -0.403, 0), (0, 90, 0))</property>
-                <property name="wb">((-1.959, -0.403, 0), (0, 90, 0))</property>
+                <property name="m1">((-2, 0, 0), (0, 90, 0))</property>
+                <property name="m2">((-2, 0, 0), (0, 90, 0))</property>
+                <property name="m3">((-1.959, 0.403, 0), (0, 90, 0))</property>
+                <property name="m4">((-1.959, 0.403, 0), (0, 90, 0))</property>
+                <property name="m5">((-1.959, -0.403, 0), (0, 90, 0))</property>
+                <property name="m6">((-1.959, -0.403, 0), (0, 90, 0))</property>
             </component>
         </component>
 

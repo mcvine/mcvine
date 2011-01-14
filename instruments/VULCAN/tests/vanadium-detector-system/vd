@@ -18,8 +18,6 @@ import mcvine
 warnings.simplefilter('default')
 
 
-import mccomponents.sample.diffraction.xml
-
 def main():
     from mcvine.applications.InstrumentBuilder import build
     components = ['source', 'sample', 'detector']
