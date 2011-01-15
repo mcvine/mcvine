@@ -71,7 +71,6 @@
             <property name="xwidth">0</property>
             <property name="gamma">0</property>
             <property name="pack">1</property>
-            <property name=""></property>
         </component>
 
         <component name="detector">
