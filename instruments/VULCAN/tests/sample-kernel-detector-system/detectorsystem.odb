@@ -1,0 +1,5 @@
+# -*- Python -*-
+
+def detector():
+    from mcvine.instruments.VULCAN.DetectorSystem import DetectorSystem
+    return DetectorSystem('detectorsystem')
