@@ -19,6 +19,7 @@ BUILD_DIRS = \
 	ARCS \
 	SANS \
 	SMARTS \
+	VULCAN \
 	generic \
 
 
