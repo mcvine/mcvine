@@ -24,7 +24,7 @@ def main():
     from mcvine.applications.InstrumentBuilder import build
     components = ['source', 'sample', 'detector']
     App = build(components)
-    app = App('ssd')
+    app = App('ssd1')
     app.run()
     return
 
