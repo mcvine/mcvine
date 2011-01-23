@@ -2,30 +2,30 @@
 <!--
 ! ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 !
-!                             Jiao Lin, Alex Dementsov
+!                             Alex Dementsov
 !                      California Institute of Technology
 !                      (C) 2006-2010  All Rights Reserved
 !
 ! {LicenseText}
 !
-! Testing Monitor_4PI
+! Testing TOF_monitor
 ! ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 -->
 
-<!-- [Source_simple] -> [V_sample] -> [Monitor_4PI] -->
+<!-- [Source_simple] -> [V_sample] -> [TOF_monitor] -->
 
 
 <!DOCTYPE inventory>
 
 <inventory>
 
-    <component name="ssd1">
+    <component name="ssd1_1">
 
         <property name="sequence">['source', 'sample', 'detector']</property>
 
         <facility name="source">sources/Source_simple</facility>
         <facility name="sample">samples/V_sample</facility>
-        <facility name="detector">monitors/Monitor_4PI</facility>
+        <facility name="detector">monitors/TOF_monitor</facility>
 
         <property name="multiple-scattering">False</property>
 
@@ -55,6 +55,7 @@
         </component>
 
         <component name="sample">
+
             <property name="target_index">0</property>
             <property name="radius_i">0.015</property>
             <property name="radius_o">0.02</property>
@@ -77,10 +78,18 @@
             <property name="xwidth">0</property>
             <property name="gamma">0</property>
             <property name="pack">1</property>
+            
         </component>
 
         <component name="detector">
-            <!-- Monitor_4PI doesn't have properties! -->
+
+            <property name="filename">tof_monitor1_1.txt</property>
+            <property name="xwidth">0.05</property>
+            <property name="yheight">0.05</property>
+            <property name="nchan">1000</property>
+            <property name="t0">1.0</property>
+            <property name="t1">50000.0</property>
+
         </component>
 
         <component name="geometer">

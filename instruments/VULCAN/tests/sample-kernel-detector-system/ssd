@@ -24,7 +24,7 @@ def main():
     from mcvine.applications.InstrumentBuilder import build
     components = ['source', 'sample', 'detector']
     App = build(components)
-    app = App('ssd1')
+    app = App('ssd1_1')     # Change name according to base name of .pml file, e.g. ssd1_1.pml
     app.run()
     return
 
