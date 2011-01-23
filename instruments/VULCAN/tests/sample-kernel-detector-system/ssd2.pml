@@ -8,12 +8,12 @@
 !
 ! {LicenseText}
 !
-! Testing SampleKernel for simple components
+! Testing SampleKernel with PSD_monitor_4PI
 !
 ! ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 -->
 
-<!-- [Source_simple] -> [SampleKernel] -> [Monitor_4PI] -->
+<!-- [Source_simple] -> [SampleKernel] -> [PSD_monitor_4PI] -->
 
 <!DOCTYPE inventory>
 
@@ -25,7 +25,7 @@
 
         <facility name="source">sources/Source_simple</facility>
         <facility name="sample">samples/SampleAssemblyFromXml</facility>
-        <facility name="detector">monitors/Monitor_4PI</facility>
+        <facility name="detector">monitors/PSD_monitor_4PI</facility>
 
         <property name="multiple-scattering">False</property>
 
@@ -59,12 +59,16 @@
         </component>
 
         <component name="detector">
+            <property name="filename">psd_monitor_4pi2.txt</property>
+            <property name="nx">100</property>
+            <property name="ny">100</property>
+            <property name="radius">0.025</property>
         </component>
 
         <component name="geometer">
             <property name="source">((0, 0, 0), (0, 0, 0))</property>
             <property name="sample">((0, 0, 2), (0, 0, 0))</property>
-            <property name="detector">((0, 0, 3), (0, 0, 0))</property>
+            <property name="detector">((0, 0, 2), (0, 0, 0))</property>
             <property name="dump">False</property>
         </component>
 

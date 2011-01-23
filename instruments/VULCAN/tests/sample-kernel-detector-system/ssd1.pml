@@ -8,11 +8,11 @@
 !
 ! {LicenseText}
 !
-! Testing Monitor_4PI
+! Testing PSD_monitor_4PI
 ! ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 -->
 
-<!-- [Source_simple] -> [V_sample] -> [Monitor_4PI] -->
+<!-- [Source_simple] -> [V_sample] -> [PSD_monitor_4PI] -->
 
 
 <!DOCTYPE inventory>
@@ -25,7 +25,7 @@
 
         <facility name="source">sources/Source_simple</facility>
         <facility name="sample">samples/V_sample</facility>
-        <facility name="detector">monitors/Monitor_4PI</facility>
+        <facility name="detector">monitors/PSD_monitor_4PI</facility>
 
         <property name="multiple-scattering">False</property>
 
@@ -80,13 +80,16 @@
         </component>
 
         <component name="detector">
-            <!-- Monitor_4PI doesn't have properties! -->
+            <property name="filename">psd_monitor_4pi1.txt</property>
+            <property name="nx">100</property>
+            <property name="ny">100</property>
+            <property name="radius">0.025</property>
         </component>
 
         <component name="geometer">
             <property name="source">((0, 0, 0), (0, 0, 0))</property>
             <property name="sample">((0, 0, 2), (0, 0, 0))</property>
-            <property name="detector">((0, 0, 3), (0, 0, 0))</property>
+            <property name="detector">((0, 0, 2), (0, 0, 0))</property>
             <property name="dump">False</property>
         </component>
 
