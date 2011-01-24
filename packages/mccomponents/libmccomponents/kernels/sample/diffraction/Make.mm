@@ -46,6 +46,7 @@ export:: export-package-headers
 EXPORT_HEADERS = \
 	SimplePowderDiffractionData.h \
 	SimplePowderDiffractionKernel.h \
+	EPSCDiffractionKernel.h \
 
 
 # version
