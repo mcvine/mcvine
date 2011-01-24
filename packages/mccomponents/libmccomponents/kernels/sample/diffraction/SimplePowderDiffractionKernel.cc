@@ -283,6 +283,12 @@ mccomponents::kernels::SimplePowderDiffractionKernel::scatter
   
   // change event
   ev.state.velocity = vout;
+  if (isnan(vout[0]) || isnan(vout[1]) || isnan(vout[2])) {
+    // XXX
+    // in case the engine is not working rationally, for now let us ignore them
+    ev.probability = -1;
+    return;
+  }
   ev.probability *= scatter_intensity;
 }
 

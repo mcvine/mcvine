@@ -155,6 +155,8 @@ mccomponents::HomogeneousNeutronScatterer::interact_path1(mcni::Neutron::Event &
     propagate( ev, x/velocity );
     m_kernel.scatter( ev );
     mcni::Neutron::Event save = ev;
+    if (ev.probability <=0) 
+      return base_t::absorption;
     propagate_to_next_exiting_surface( ev, shape() );
     ev.probability *= calculate_attenuation( save, ev.state.position );
     return base_t::scattering;
