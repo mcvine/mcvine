@@ -1,13 +1,8 @@
-// -*- C++ -*-
-//
-// Li Li
-// Jiao Lin
-//
 
+#ifndef MCCOMPONENTS_KERNELS_EPSCDIFFRACTIONDATA_H
+#define MCCOMPONENTS_KERNELS_EPSCDIFFRACTIONDATA_H
 
-#ifndef MCCOMPONENTS_KERNELS_SIMPLEPOWDERDIFFRACTIONPEAKDATA_H
-#define MCCOMPONENTS_KERNELS_SIMPLEPOWDERDIFFRACTIONPEAKDATA_H
-
+// This structure is subject to change based on first principles
 
 #include <vector>
 
@@ -15,8 +10,17 @@ namespace mccomponents {
 
   namespace kernels {
 
+      // Data structure for diffraction parameters averaged over the grains and directions
+      struct DiffractionPlane {
+          int hkl[3];
+          int load_steps;
+          double ellipse_a;
+          double ellipse_b;
+      };
+
+      
     // a simple structure describing a powder diffraction
-    struct SimplePowderDiffractionData {
+    struct EPSCDiffractionData {
       struct Peak{
 	// Q length
 	double q;
@@ -28,7 +32,7 @@ namespace mccomponents {
 	double intrinsic_line_width;
 	// Debye-Waller factor
 	double DebyeWaller_factor;
-	
+
 	bool operator== (const Peak &rhs) {
 	  return q == rhs.q				      \
 	  && F_squared == rhs.F_squared			      \
@@ -38,7 +42,7 @@ namespace mccomponents {
 	    ;
 	}
       };
-      
+
       // peaks
       std::vector<Peak> peaks;
       // relative line width Delta_d/d
@@ -62,10 +66,4 @@ namespace mccomponents {
   } // kernels::
 } // mccomponents::
 
-
-#endif // MCCOMPONENTS_KERNELS_SIMPLEPOWDERDIFFRACTIONPEAKDATA_H
-
-// version
-// $Id$
-
-// End of file
+#endif
