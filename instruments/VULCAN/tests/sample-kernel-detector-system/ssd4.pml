@@ -26,8 +26,8 @@
 
         <property name="multiple-scattering">False</property>
 
-        <property name="ncount">10000</property>
-        <property name="buffer_size">1000</property>
+        <property name="ncount">100000</property>
+        <property name="buffer_size">10000</property>
 
         <property name="overwrite-datafiles">True</property>
         <property name="output-dir">out</property>

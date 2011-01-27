@@ -1,5 +1,7 @@
 #!/usr/bin/env gnuplot -persist
 
+# Example script
+
 set xrange [45:75]
 set terminal png
 set output "ssd1_2/e_monitor1_2.png"
