@@ -96,6 +96,7 @@ class MultiMonitors( AbstractComponent ):
         from mcni.neutron_coordinates_transformers import default as transformer
         from mcni.components.ComponentGroup import ComponentGroup
         self.engine = ComponentGroup(self.name, self.monitors, geometer, transformer)
+        self.engine.debug_logger = self._debug.log
         return
 
     

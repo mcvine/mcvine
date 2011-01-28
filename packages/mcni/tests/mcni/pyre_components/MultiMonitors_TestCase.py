@@ -20,6 +20,7 @@ class TestCase(unittest.TestCase):
         cmd = '''./test-MultiMonitors-app.py \
  --monitor.geometer.m1="(0,0,1),(0,0,0)" \
  --monitor.geometer.m2="(0,0,0),(0,90,0)" \
+ --journal.debug.monitor \
 '''
         import os
         os.system(cmd)

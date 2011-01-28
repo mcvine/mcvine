@@ -37,6 +37,10 @@ class ComponentGroup( AbstractComponent ):
 
     __doc__ = simple_description + '\n' + full_description
 
+
+    debug_logger = None
+    
+
     def __init__(self, name, components, geometer, neutron_coords_transformer):
         AbstractComponent.__init__(self, name)
         self.components = components
@@ -59,6 +63,9 @@ class ComponentGroup( AbstractComponent ):
                 copy, (0,0,0), (0,0,0),
                 position, orientation)
             # send to sub-component
+            if self.debug_logger:
+                self.debug_logger("neutrons in subcomponent %s coordinate system: %s" % (
+                        c.name, copy))
             c.process(copy)
             continue
         return neutrons
