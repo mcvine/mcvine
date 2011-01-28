@@ -1,0 +1,30 @@
+
+/* [SNS_source4] -> [PowderN] -> [PSD_monitor_4PI] */
+
+DEFINE INSTRUMENT ssd()
+
+TRACE
+
+COMPONENT arm = Arm() AT (0,0,0) ABSOLUTE
+
+
+COMPONENT source = SNS_source4(yh = 0.085, dist = 4.3, Emin = 0.01,
+Emax = 1000, tinmin = 0.0, sample_t = 1, height = 0.12, width = 0.10,
+proton_T = 0.600, tinmax = 2000.0, sample_E = 2,
+S_filename = "a1Gw2-8-f5_fit_fit.dat", xw = 0.016)
+  AT (0,0,0) RELATIVE arm
+
+
+COMPONENT sample = PowderN(reflections="Al.laz",
+    yheight = 0.1, xwidth = 0.06, zthick = 0.01, DW = 0,
+    frac = 0, tfrac = 0
+)
+  AT (0,0,2) RELATIVE arm
+
+
+COMPONENT monitor = PSD_monitor_4PI(
+    filename = "psd_monitor_4pi3_mcstas.txt",
+    nx = 100, ny = 100, radius = 0.025)
+  AT (0, 0, 2) RELATIVE arm
+
+END
