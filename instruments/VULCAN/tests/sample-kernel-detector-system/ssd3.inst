@@ -16,7 +16,7 @@ S_filename = "a1Gw2-8-f5_fit_fit.dat", xw = 0.016)
 
 
 COMPONENT sample = PowderN(reflections="Al.laz",
-    yheight = 0.1, xwidth = 0.06, zthick = 0.01, DW = 0,
+    yheight = 0.1, xwidth = 0.06, zthick = 0.01, DW = 0, Delta_d = 1e-5,
     frac = 0, tfrac = 0
 )
   AT (0,0,2) RELATIVE arm
