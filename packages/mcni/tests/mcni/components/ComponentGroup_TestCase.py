@@ -28,12 +28,44 @@ class C( AbstractComponent ):
         return neutrons
     
 
-
 # dummy geometer
 class Geometer(object):
 
     def position(self, c): return (0,0,0)
     def orientation(self, c): return (0,0,0)
+
+
+
+
+class SetNeutron(AbstractComponent):
+
+    def process(self, neutrons):
+        from mcni import neutron
+        for i in range(len(neutrons)):
+            neutrons[i] = neutron(v=(0,0,1))
+            continue
+        return
+
+
+class SaveNeutron(AbstractComponent):
+
+
+    def __init__(self):
+        self.neutron = None
+
+
+    def process(self, neutrons):
+        n0 = neutrons[0]
+        from mcni import neutron
+        self.neutron = neutron(
+            r=n0.state.position, v=n0.state.velocity, 
+            s=(n0.state.spin.s1,n0.state.spin.s2),
+            time=n0.time,
+            prob=n0.probability,
+            )
+        return
+
+
     
 class TestCase(unittest.TestCase):
 
@@ -52,6 +84,30 @@ class TestCase(unittest.TestCase):
             self.assertEqual(c.count, 10)
             continue
         return
+
+
+    def test1(self):
+        'ComponentGroup: geometer'
+        # components
+        c1 = SaveNeutron()
+        comps = [c1]
+        # geometer
+        from mcni.Geometer import Geometer
+        geometer = Geometer()
+        geometer.register(c1, (0,0,1), (0,90,0))
+        #
+        from mcni.neutron_coordinates_transformers import default as transformer
+        from mcni.components.ComponentGroup import ComponentGroup
+        cg = ComponentGroup('cg', comps, geometer, transformer)
+        import mcni
+        b = mcni.neutron_buffer(1)
+        SetNeutron('set').process(b)
+        cg.process(b)
+        # print c1.neutron
+        self.assertVectorAlmostEqual(c1.neutron.state.position, (1,0,0))
+        self.assertVectorAlmostEqual(c1.neutron.state.velocity, (-1,0,0))
+        return
+
 
     pass # end of TestCase
 
