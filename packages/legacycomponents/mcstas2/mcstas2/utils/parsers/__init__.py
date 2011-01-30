@@ -90,7 +90,17 @@ def _format_share_str( share ):
 
     if start_of_implementation == -1:
         # did not find separator
-        raise RuntimeError, "invalid component share section. No separator to separate implementation code from header code: %s" % share
+        separator_example_header = """
+// ----------- added by YOUR NAME --------
+%s
+// ----------- added by YOUR NAME --------
+""" % header_start_signature
+        separator_example_implementation = """
+// ----------- added by YOUR NAME --------
+%s
+// ----------- added by YOUR NAME --------
+""" % implementation_start_signature
+        raise RuntimeError, "invalid component share section. No separator to separate implementation code from header code: %s\nHeader start example:\n%s\nImplementation start example:\n%s\n" % (share, separator_example_header, separator_example_implementation)
 
     return ('\n'.join( lines[:start_of_implementation] ),
             '\n'.join( lines[start_of_implementation:] ) )
