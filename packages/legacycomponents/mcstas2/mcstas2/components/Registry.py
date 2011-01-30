@@ -40,7 +40,7 @@ class Registry:
         factories = self.factories
         key = category, type
         if not factories.has_key( key ):
-            return self._getStaticComponent( key ).factory
+            return self._importComponent( key ).factory
         return factories[ key ]
 
 
@@ -48,13 +48,75 @@ class Registry:
         infos = self.infos
         key = category, type
         if not infos.has_key( key ):
-            return self._getStaticComponent( key ).info
+            return self._importComponent( key ).info
         return infos[ key ]
 
-    
-    def _getStaticComponent( self, key ):
+
+    def importAllComponents(self):
         from repositories import all as repos
         repos = list(repos)
+        
+        for repo in repos:
+            pkg = __import__(repo, {}, {}, [''])
+            cats = self._listCategoriesInPythonPackage(pkg)
+            map(self._importComponentsInCategory, cats)
+            continue
+        return
+
+
+    def _listCategoriesInPythonPackage(self, pkg):
+        pkgpath = os.path.abspath(pkg.__path__[0])
+        entries = os.listdir(pkgpath)
+
+        for e in entries:
+            p = os.path.join(pkgpath, e)
+            if not os.path.isdir(p):
+                continue
+            if e.find('.')!=-1:
+                raise NotImplementedError, str(e)
+            initpy = os.path.join(p, '__init__.py')
+            if not os.path.exists(initpy):
+                continue
+            m = '%s.%s' % (pkg.__name__, e)
+            yield __import__(m, {}, {}, [''])
+            continue
+        return
+
+
+    def _importComponentsInCategory(self, category):
+        categorypath = os.path.abspath(category.__path__[0])
+        categoryname = category.__name__
+        entries = os.listdir(categorypath)
+        imported = []
+        pyexts = ['.py', '.pyc', '.pyo']
+        from mcni.AbstractComponent import AbstractComponent
+        for e in entries:
+            base, ext = os.path.splitext(e)
+            if ext not in pyexts:
+                continue
+            if base in imported:
+                continue
+            
+            type = base
+            modulename = '%s.%s' % (categoryname, type )
+            try:
+                module = __import__( modulename, {}, {}, [''] )
+            except:
+                continue
+
+            if getattr(module, 'factory', None) is None:
+                continue
+            
+            imported.append(base)
+            self.register(categoryname.split('.')[-1], type, module)
+            continue
+        return 
+
+    
+    def _importComponent( self, key ):
+        from repositories import all as repos
+        repos = list(repos)
+        # look in the last repository first
         repos.reverse()
         
         category, type = key
@@ -93,6 +155,8 @@ class Registry:
     
     pass # end of Registry
 
+
+import os
 
 
 # version

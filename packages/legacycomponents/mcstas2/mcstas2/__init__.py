@@ -122,6 +122,8 @@ def listcomponentsincategory( category ):
     
     defaultcomponents = listdefaultcomponentsincategory( category )
     import components 
+    components.importallcomponents()
+    
     registered = components.registeredComponentsInCategory( category )
     return uniquelist( defaultcomponents + registered )
 

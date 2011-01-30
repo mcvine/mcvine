@@ -42,6 +42,12 @@ def registercomponent( category, type, componentmodule ):
     return
 
 
+def importallcomponents():
+    global _registry
+    _registry.importAllComponents()
+    return
+
+
 from Registry import Registry
 _registry = Registry()
 del Registry
