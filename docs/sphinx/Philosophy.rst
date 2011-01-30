@@ -133,6 +133,8 @@ If a user requests to simulate multiple-scattering,
 the mcvine framework will allow neutrons to scatter multiple
 times until neutrons have negligible probability.
 
+At this moment, you may want to start trying out mcvine by
+following :ref:`some tutorials <tutorials>`.
 
 Up to now, you may find mcvine very flexible and powerful,
 but you will see the design of mcvine is actually even

@@ -9,6 +9,7 @@ Getting Started
 * :ref:`Installation <installation>`
 * :ref:`Tutorials <tutorials>`
 * :ref:`Documentation <mcvinedocs>`
+* :ref:`FAQ <faq>`
 
 
 More infomation

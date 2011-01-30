@@ -6,9 +6,15 @@ Tutorials -- basics
 
 Quick simulation: "mcvine-simulate"
 -----------------------------------
+This is the "quick" way of simulating neutron experiments with mcvine if you 
+are impatient and want to see some results from mcvine quickly. 
+A better approach to run your mcvine simulation is presented in :ref:`create-sim-app`.
 
-An easy way to run a Monte Carlo simulation of a neutron experiment
-is to use the command "mcvine-simulate".
+By going through this tutorial you can get a feeling of the structure 
+of mcvine component chain and utilities about
+available neutron component types.
+
+The command we introduce here is "mcvine-simulate".
 
 To start, just use option "-h" to see a brief help message::
 
@@ -124,6 +130,8 @@ to see the output histogram.
    :width: 400
 
 
+
+.. _create-sim-app:
 
 Create your own simulation application: mcvine-create-instrument-simulation-application
 ---------------------------------------------------------------------------------------

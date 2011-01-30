@@ -10,7 +10,7 @@ MCViNE 0.2 documentation
 Contents:
 
 .. toctree::
-   :maxdepth: 3
+   :maxdepth: 2
 
    Introduction
    Installation
@@ -21,6 +21,7 @@ Contents:
    Components
    Extend
    Problems
+   FAQ
    DeveloperGuide
 
 

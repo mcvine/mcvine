@@ -3,8 +3,12 @@
 Components
 ==========
 
+
+Generic components provided by MCViNE
+-------------------------------------
+
 Neutron storage
----------------
+^^^^^^^^^^^^^^^
 
 In mcvine, you can save neutrons to a neutron storage, and
 reuse it in later simulations.
@@ -15,7 +19,7 @@ Following components are created for this purpose:
 * NeutronToStorage: save neutrons in simulation to a storage
 
 Example usages
-^^^^^^^^^^^^^^
+""""""""""""""
 
 1. Separate simulations of ARCS beam and sample scattering
 Simulation of an ARCS experiment can be done in two steps.
@@ -42,7 +46,7 @@ in the storage::
  neutron-from-storage -> monitor
 
 Error propagation when using neutron storage
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+""""""""""""""""""""""""""""""""""""""""""""
 
 When we use neutron storage, we need to make sure the
 neutrons saved in the storage have enough statistics
@@ -75,10 +79,10 @@ other simulations.
 
 
 Tools
-^^^^^
+"""""
 
 Count neutrons in a storage -- "mcvine-neutron-storage-count-neutrons"
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
 Signature::
 
@@ -89,7 +93,7 @@ Signature::
 
 
 Compute total intensity in a storage -- "mcvine-neutron-storage-total-intensity"
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
 Signature::
 
@@ -100,7 +104,7 @@ Signature::
 
 
 Merge neutron storages -- "mcvine-neutron-storage-merge"
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
 Signature::
  
@@ -110,6 +114,35 @@ Signature::
 
 - Input: neutron file(s)
 - Output: merged neutron file
+
+
+
+McStas component librarry
+-------------------------
+
+.. _user-defined-mcstas-components:
+
+User-defined mcstas components
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+It is not unusual that a user wants to use a mcstas component he 
+writes himself. To use a user-defined mcstas component, run::
+
+ $ mcvine-compile-mcstas-component --filename=<user-defined-component-file> --category=<category.>
+
+Here, <user-defined-component-file> is the path to the mcstas component file
+you created, <category> is the category this component belongs to.
+For example::
+
+ $ mcvine-compile-mcstas-component --filename=Al_window.comp --category=optics
+
+and mcvine will start compiling the component and put it into the system.
+If the compiling failed, please don't hesitate to post your questions
+to mcvine-users@googlegroups.com 
+
+If everything goes smoothly, now you can use this component just like any other components::
+
+ $ mcvine-component-info --type=Al_window
 
 
 
