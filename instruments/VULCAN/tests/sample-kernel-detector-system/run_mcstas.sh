@@ -2,4 +2,4 @@
 
 # Runs McStas simulation for [Source] -> [Sample] -> [Detector]
 
-mcrun ssd3.inst -n 100000 -d out
+mcrun ssd2_2.inst -n 10000 -d out
