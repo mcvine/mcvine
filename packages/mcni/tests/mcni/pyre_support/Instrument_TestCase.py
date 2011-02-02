@@ -48,6 +48,44 @@ class TestCase(unittest.TestCase):
         
         sys.argv = save
         return
+
+
+    def test2(self):
+        "Instrument: _getBufferSize"
+        instrument = Instrument('t')
+        
+        # for lower values of ncount, buffer_size=ncount/mpisize/DEFAULT_NUMBER_SIM_LOOPS
+        instrument.inventory.ncount = ncount = 1e3
+        self.assertEqual(instrument._getBufferSize(), ncount/DEFAULT_NUMBER_SIM_LOOPS)
+        
+        instrument.inventory.ncount = ncount = 2e3
+        self.assertEqual(instrument._getBufferSize(), ncount/DEFAULT_NUMBER_SIM_LOOPS)
+
+        instrument.mpiSize = mpiSize = 10
+        self.assertEqual(instrument._getBufferSize(), int(ncount/mpiSize/DEFAULT_NUMBER_SIM_LOOPS))
+        
+        # for higher values, buffer_size is set by memory limit
+        import psutil
+        from mcni.neutron_storage.idfneutron import ndblsperneutron
+        max = int(psutil.TOTAL_PHYMEM/2/ndblsperneutron/8/100) * 100
+        
+        instrument.inventory.ncount = ncount = 1e9
+        self.assertEqual(instrument._getBufferSize(), max)
+        
+        instrument.inventory.ncount = ncount = 2e9
+        self.assertEqual(instrument._getBufferSize(), max)
+
+        # if user set a too high number for buffer size, it is ignored
+        instrument.inventory.ncount = ncount = 2e9
+        instrument.inventory.buffer_size = 2e9
+        self.assertEqual(instrument._getBufferSize(), max)
+
+        # if user set a too low value for buffer_size, a warning would be issued
+        instrument.inventory.ncount = 1e8
+        instrument.inventory.buffer_size = 100
+        instrument._getBufferSize()
+        
+        return
     
         
     pass  # end of TestCase
@@ -96,7 +134,7 @@ class Verifier( AbstractComponent ):
     pass # end of Verifier
 
 
-from mcni.pyre_support.Instrument import Instrument as base
+from mcni.pyre_support.Instrument import Instrument as base, DEFAULT_NUMBER_SIM_LOOPS
 class Instrument(base):
 
     class Inventory( base.Inventory ):

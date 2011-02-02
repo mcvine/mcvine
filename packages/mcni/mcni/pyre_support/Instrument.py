@@ -12,6 +12,15 @@
 #
 
 
+# constants
+
+# number of simulation loops by default (ncount/buffer_size)
+DEFAULT_NUMBER_SIM_LOOPS = 5
+# minimum buffer size
+MINIMUM_BUFFER_SIZE = 100
+
+
+
 from MpiApplication import Application as base
 from ParallelComponent import ParallelComponent
 
@@ -32,7 +41,7 @@ class Instrument( base, ParallelComponent ):
             'overwrite-datafiles',  default = False)
         overwrite_datafiles.meta['tip'] = 'overwrite data files?'
         
-        buffer_size = pyre.inventory.int  ('buffer_size', default = 1000)
+        buffer_size = pyre.inventory.int  ('buffer_size', default = 0)
         buffer_size.meta['tip']= 'size of neutron buffer. This is for optimizing the preformance of the simulation. When it is too large, it will occupy too much memory. When it is too small, the simulation will be slow. If you are not sure, please just leave it unset so that the default value will be used.'
 
         from List import List
@@ -223,7 +232,7 @@ class Instrument( base, ParallelComponent ):
             self.outputdir = '%s-%s' % (self.outputdir, ext)
             
         self.sequence = self.inventory.sequence
-        self.buffer_size = self.inventory.buffer_size
+        self.buffer_size = self._getBufferSize()
         self.ncount = self.inventory.ncount
         if self.parallel:
             # every node only need to run a portion of the total counts
@@ -265,6 +274,53 @@ class Instrument( base, ParallelComponent ):
 
         if not self._showHelpOnly: self._setup_ouputdir()
         return
+
+
+    def _getBufferSize(self):
+        # user requested size
+        usersize = self.inventory.buffer_size
+        # 
+        if not usersize:
+            return self._computeBufferSize()
+
+        maxsize = self._maximumBufferSize()
+        if usersize > maxsize:
+            return maxsize
+
+        minsize = self._minimumSuggestedBufferSize()
+        if usersize < minsize:
+            import warnings
+            warnings.warn("The buffer size %s is too small" % usersize)
+            
+        return usersize
+
+
+    def _minimumSuggestedBufferSize(self):
+        return self.inventory.ncount / 1000 / (self.mpiSize or 1)
+
+
+    def _computeBufferSize(self):
+        ncount = self.inventory.ncount
+        mpisize = self.mpiSize or 1
+        nsteps = DEFAULT_NUMBER_SIM_LOOPS
+        return min(self._maximumBufferSize(), int(ncount/nsteps/mpisize))
+
+
+    def _maximumBufferSize(self):
+        import psutil
+        memsize = min(psutil.TOTAL_PHYMEM/2, (psutil.avail_phymem() + psutil.avail_virtmem())*0.7)
+        memsize = int(memsize)
+        from mcni.neutron_storage.idfneutron import ndblsperneutron
+        
+        bytesperdble = 8
+        minsize = MINIMUM_BUFFER_SIZE
+        
+        n = int(memsize/ndblsperneutron/bytesperdble/minsize)*MINIMUM_BUFFER_SIZE
+
+        if n<minsize:
+            raise RuntimeError, "Not enough memory"
+        
+        return n
 
 
     def _saveConfiguration(self):
