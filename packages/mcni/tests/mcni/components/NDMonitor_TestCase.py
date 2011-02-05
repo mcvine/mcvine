@@ -25,15 +25,19 @@ class TestCase(unittest.TestCase):
         'NDMonitor'
         
         from mcni.components.NDMonitor import NDMonitor
-        m = NDMonitor('abc', ['x'], [100], [(0,1000.)])
+        m = NDMonitor('abc', [ ('x', 'x', 100, (0,1000.)) ])
         
-        from mcni import neutron_buffer
-        b = neutron_buffer(100)
+        N = 100
+        from mcni import neutron_buffer, neutron
+        b = neutron_buffer(N)
+        for i in range(N):
+            b[i] = neutron()
+            continue
 
         m.process(b)
 
-        self.assertEqual(m.histogram.I[0], 100.)
-        self.assertEqual(m.histogram.E2[0], 100.)
+        self.assertEqual(m.histogram.I[0], N)
+        self.assertEqual(m.histogram.E2[0], N)
         self.assertEqual(m.histogram.I[1], 0.)
         self.assertEqual(m.histogram.E2[1], 0.)
 

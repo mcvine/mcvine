@@ -111,25 +111,28 @@ class Instrument( base, ParallelComponent ):
         
         geometer = self.geometer
 
-        multiple_scattering = self.inventory.multiple_scattering
-        tracer = self.tracer
+        from mcni.SimulationContext import SimulationContext
+        context = SimulationContext()
+        context.multiple_scattering = self.inventory.multiple_scattering
+        context.tracer = self.tracer
+        context.mpiRank = self.mpiRank
+        context.mpiSize = self.mpiSize
+        context.outputdir = self.outputdir
         
         n = int(self.ncount / self.buffer_size)
         assert n>0, 'ncount should be larger than buffer_size: ncount=%s, buffer_size=%s' % (self.ncount, self.buffer_size)
         
         for i in range(n):
             neutrons = mcni.neutron_buffer( self.buffer_size )
-            mcni.simulate( instrument, geometer, neutrons, 
-                           multiple_scattering=multiple_scattering,
-                           tracer = tracer)
+            context.iteration_no = i
+            mcni.simulate( instrument, geometer, neutrons, context=context)
             continue
         
         remain = int(self.ncount % self.buffer_size)
         if remain:
             neutrons = mcni.neutron_buffer(remain)
-            mcni.simulate( instrument, geometer, neutrons, 
-                           multiple_scattering=multiple_scattering,
-                           tracer = tracer)
+            context.iteration_no = n
+            mcni.simulate( instrument, geometer, neutrons, context=context)
 
         import os
         print os.times()
@@ -185,21 +188,16 @@ class Instrument( base, ParallelComponent ):
     
     
     def _setup_ouputdir(self):
-        outputdir = self.outputdir
+        outputdir = self.outputdir = self.inventory.outputdir
         if not self.overwrite_datafiles and os.path.exists( outputdir ):
-            print "output directory %r exists. If you want to overwrite the output "\
-                  "directory, please specify option --overwrite-datafiles." % outputdir
+            msg = "output directory %r exists. If you want to overwrite the output directory, please specify option --overwrite-datafiles." % outputdir
+            raise RuntimeError, msg
 
         if not os.path.exists( outputdir ):
             os.makedirs( outputdir )
             pass
 
         for component in self.neutron_components.itervalues():
-            component.setOutputDir( outputdir )
-            if self.parallel:
-                # need to let the master node component know the "master" outputdir
-                if self.mpiRank == 0:
-                    component._master_outputdir = self.inventory.outputdir
             component.overwrite_datafiles = self.overwrite_datafiles
             continue
         
@@ -226,11 +224,6 @@ class Instrument( base, ParallelComponent ):
         self.geometer = self.inventory.geometer
         self.overwrite_datafiles = self.inventory.overwrite_datafiles
 
-        self.outputdir = self.inventory.outputdir
-        if self.parallel:
-            ext = self._outputdir_mpiext()
-            self.outputdir = '%s-%s' % (self.outputdir, ext)
-            
         self.sequence = self.inventory.sequence
         self.buffer_size = self._getBufferSize()
         self.ncount = self.inventory.ncount
@@ -375,12 +368,6 @@ class Instrument( base, ParallelComponent ):
         return
     
     
-    def _outputdir_mpiext(self):
-        mode = self.inventory.mode
-        rank = self.mpiRank
-        return '%s-%s' % (mode, rank)
-
-
     def _componentListStr(self):
         comps = self.neutron_components
         l = []

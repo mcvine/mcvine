@@ -72,7 +72,7 @@ class NeutronToStorage( AbstractComponent ):
         if os.path.split( path )[0] != '':
             raise ValueError, "path must be relative path: path=%s" % path
         
-        if self._outputdir: path = os.path.join( self._outputdir, path )
+        path = os.path.join( self._getOutputDir(), path )
 
         append = False
         if self.overwrite_datafiles:

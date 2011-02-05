@@ -27,8 +27,8 @@ def copyright():
 def simulate( 
     instrument, geometer, neutrons, 
     simulator = None, 
-    multiple_scattering=False, 
-    tracer=None,
+    context = None,
+    **kwds
     ):
     
     '''run a simulation of the given instrument
@@ -37,15 +37,23 @@ def simulate(
     geometer: a geometer that contains geometry info of components in the instrument
     neutrons: a container of neutrons
     simulator: the simulation driver
+
+    context: the context of the simulation
     '''
+    if context is None:
+        from SimulationContext import SimulationContext
+        context = SimulationContext()
+        for k, v in kwds.iteritems():
+            setattr(context, k, v)
+            continue
+        
     if simulator is None:
         from instrument_simulator import default_simulator
         simulator = default_simulator
         pass
     return simulator.run( 
         neutrons, instrument, geometer, 
-        multiple_scattering=multiple_scattering,
-        tracer=tracer)
+        context = context)
 
 
 def geometer( *args, **kwds ):

@@ -66,8 +66,10 @@ class TestCase(unittest.TestCase):
         
         # for higher values, buffer_size is set by memory limit
         import psutil
+        temp = min(psutil.TOTAL_PHYMEM/2, (psutil.avail_phymem() + psutil.avail_virtmem())*0.7)
+        temp = int(temp)
         from mcni.neutron_storage.idfneutron import ndblsperneutron
-        max = int(psutil.TOTAL_PHYMEM/2/ndblsperneutron/8/100) * 100
+        max = int(temp/ndblsperneutron/8/100) * 100
         
         instrument.inventory.ncount = ncount = 1e9
         self.assertEqual(instrument._getBufferSize(), max)

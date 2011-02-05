@@ -105,7 +105,7 @@ def ndmonitor(*quantities, **kwds):
                 h.setAttribute('title', title)
                 
                 from histogram.hdf import dump
-                dir = self.getOutputDir()
+                dir = self._getOutputDir()
                 f = self.inventory.filename or \
                     ('%s.h5' % hname)
                 import os

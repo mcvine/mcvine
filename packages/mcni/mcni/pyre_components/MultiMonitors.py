@@ -70,9 +70,8 @@ class MultiMonitors( AbstractComponent ):
                 m._showHelpOnly = True
                 continue
             return
-        outdir = self.getOutputDir()
         for m in self.monitors:
-            m.setOutputDir(outdir)
+            m.simulation_context = self.simulation_context
             continue
 
         super(MultiMonitors, self).init()

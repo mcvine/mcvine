@@ -23,8 +23,7 @@ class SimulationNode(Connectable):
     def __init__(
         self, position, orientation, 
         component, neutron_coordinates_transformer,
-        multiple_scattering=False,
-        tracer = None
+        context = None
         ):
         
         Connectable.__init__(self)
@@ -32,12 +31,14 @@ class SimulationNode(Connectable):
         self.orientation = orientation
         self.component = component
         self.neutron_coordinates_transformer = neutron_coordinates_transformer
-        self.multiple_scattering = multiple_scattering
 
+        # let component know the simulation context
+        component.simulation_context = context
+        
         process = self.component.process
-        if self.multiple_scattering and hasattr(self.component, 'processM'):
+        if context.multiple_scattering and hasattr(self.component, 'processM'):
             process = self.component.processM
-        self.processor = self._createProcessor(process, tracer=tracer)
+        self.processor = self._createProcessor(process, tracer=context.tracer)
         
         return
 

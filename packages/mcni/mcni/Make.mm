@@ -48,6 +48,7 @@ EXPORT_PYTHON_MODULES = \
 	Geometer.py \
 	Geometer2.py \
 	Instrument.py \
+	SimulationContext.py \
 	__init__.py \
 	component_suppliers.py \
 	rng_seed.py \

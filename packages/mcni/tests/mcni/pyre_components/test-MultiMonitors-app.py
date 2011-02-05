@@ -42,6 +42,7 @@ class Instrument(base):
         self.inventory.sequence = ['source', 'monitor']
         self.inventory.ncount = 2
         self.inventory.buffer_size = 2
+        self.inventory.overwrite_datafiles = 1
         return
 
     pass # end of Instrument
