@@ -26,7 +26,7 @@ class TestCase(unittest.TestCase):
         print dir(component)
 
         self.assertEqual(component.name, 'E_monitor')
-        self.assert_(component.copyright.startswith('Written by: Kristian'))
+        self.assert_(component.copyright.startswith('Kristian Nielsen and Kim Lefmann'))
         self.assertEqual(
             component.simple_description,
             'Energy-sensitive monitor.')
@@ -63,12 +63,11 @@ class TestCase(unittest.TestCase):
             )
         self.assertEqual(
             component.declare.strip(),
-            '{ double *E_N, *E_p, *E_p2; }',
+            'double *E_N, *E_p, *E_p2;',
             )
         self.assertEqual(
             component.initialize.strip(),
-'''{
-    int i;
+'''int i;
     E_N = (double *)malloc(nchan*sizeof(double));
     E_p = (double *)malloc(nchan*sizeof(double));
     E_p2 = (double *)malloc(nchan*sizeof(double));
@@ -78,12 +77,10 @@ class TestCase(unittest.TestCase):
       E_N[i] = 0;
       E_p[i] = 0;
       E_p2[i] = 0;
-    }
-  }''')
+    }''')
         self.assertEqual(
             component.trace.strip(),
-'''{
-    int i;
+'''int i;
     double E;
 
     PROP_Z0;
@@ -99,12 +96,10 @@ class TestCase(unittest.TestCase):
         E_p2[i] += p*p;
         SCATTER;
       }
-    }
-  }''')
+    }''')
         self.assertLinesEqual(
             component.save.strip(),
-'''{
-#ifdef DEBUG
+'''#ifdef DEBUG
   printf("E_monitor: save\\n");
 #endif
     DETECTOR_OUT_1D(
@@ -113,16 +108,13 @@ class TestCase(unittest.TestCase):
         "Intensity",
         "E", Emin, Emax, nchan,
         &E_N[0],&E_p[0],&E_p2[0],
-        filename);
-  }''')
+        filename);''')
         self.assertLinesEqual(
             component.finalize.strip(),
-'''{
-#ifdef DEBUG
+'''#ifdef DEBUG
 printf("free: E_N = %p, E_p = %p, E_p2 = %p\\n", E_N, E_p, E_p2);
 #endif
-free(E_N); free(E_p); free(E_p2);
-}''')
+free(E_N); free(E_p); free(E_p2);''')
         return
 
 
