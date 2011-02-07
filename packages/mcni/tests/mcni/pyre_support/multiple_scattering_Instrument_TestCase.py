@@ -12,6 +12,9 @@
 #
 
 
+standalone = True
+
+
 ncount = 10
 n_multiple_scattering = 1
 
@@ -89,6 +92,8 @@ class Instrument(base):
         self.inventory.multiple_scattering = 1
         self.inventory.buffer_size = ncount
         self.inventory.ncount = ncount
+        
+        self.inventory.overwrite_datafiles = True
         return
     
     

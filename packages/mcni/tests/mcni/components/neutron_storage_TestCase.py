@@ -13,6 +13,9 @@
 
 
 
+standalone = True
+
+
 '''
 Test of neutrons storage components
 
