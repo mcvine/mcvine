@@ -13,6 +13,9 @@
 
 
 
+standalone = True
+
+
 import unittestX as unittest
 import journal
 
@@ -39,8 +42,8 @@ def neutronprinter(self, cshape):
     from neutron_printer2 import cScatterer
     return cScatterer( cshape )
 # 4. register the new class and handlers
-mccomposite.register( NeutronPrinter, onNeutronPrinter,
-                      {'BoostPythonBinding':neutronprinter} )
+# mccomposite.register( NeutronPrinter, onNeutronPrinter,
+#                      {'BoostPythonBinding':neutronprinter} )
 
 
 
