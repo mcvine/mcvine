@@ -58,6 +58,7 @@ Notes:
         AT (x, y, z) RELATIVE PREVIOUS ROTATED (Ax, Ay, Az) RELATIVE PREVIOUS(2) # Not supported
 
 Issues:
+    - Does not support 'AT(x,y,z) ...'
     - Check if name is case sensitive (like COMPONENT)
     - Extract properties from "extra" to separate properties
     - Assumption is made that new line is "\n"
@@ -269,7 +270,12 @@ class McStasInstrumentParser(object):
             return (None, None, None)
 
         mm          = m[0]
-        (x, y, z)   = (float(mm[0]), float(mm[1]), float(mm[2]))
+        def _cast(v):
+            try:
+                return float(v)
+            except:
+                return '{'+str(v)+'}'
+        (x, y, z)   = map(_cast, mm[:3])
 
         relation    = mm[3].upper()
         if not relation in RELATION:
