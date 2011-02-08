@@ -42,13 +42,16 @@ class build_TestCase(unittest.TestCase):
             c_libs = [
             ],
             c_includes = [
-            os.environ[ 'BLD_INCDIR' ],
-            os.environ[ 'CONFIG_PLATFORM_INCDIR' ],
-            os.environ[ 'CONFIG_COMPILER_INCDIR' ],
-            os.environ[ 'CONFIG_TARGET_INCDIR' ],
+                # os.environ[ 'BLD_INCDIR' ],
+                # os.environ[ 'CONFIG_PLATFORM_INCDIR' ],
+                # os.environ[ 'CONFIG_COMPILER_INCDIR' ],
+                # os.environ[ 'CONFIG_TARGET_INCDIR' ],
             ],
             )
-        build(binding, site_package_path = os.environ['EXPORT_MODULES'])
+        export_modules = os.environ.get('EXPORT_MODULES')
+        if not export_modules:
+            export_modules = os.path.join(os.environ['EXPORT_ROOT'], 'modules')
+        build(binding, site_package_path = export_modules)
 
         import projectname.projectname as p
         self.assertEqual( p.hello(), 'hello' )

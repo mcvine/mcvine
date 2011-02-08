@@ -12,11 +12,16 @@
 #
 
 
+skip = True
+standalone = True
+
 
 import unittestX as unittest
 import journal
 
 import mcstas2
+
+interactive = False
 
 
 class TestCase(unittest.TestCase):
@@ -52,8 +57,9 @@ class TestCase(unittest.TestCase):
             nchan=20, filename="e.dat",
             xmin=-0.2, xmax=0.2,
             ymin=-0.2, ymax=0.2,
-            Emin=50, Emax=60)
-        help( emonfac )
+            Emin=50., Emax=60.)
+        if interactive:
+            help( emonfac )
         return
     
     pass  # end of TestCase
@@ -74,6 +80,8 @@ def main():
     
     
 if __name__ == "__main__":
+    global interactive
+    interactive = True
     main()
     
 # version

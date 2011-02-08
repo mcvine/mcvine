@@ -21,6 +21,9 @@ and energy transfer constraints.
 '''
 
 
+interactive = False
+
+
 import unittestX as unittest
 import journal
 
@@ -65,8 +68,9 @@ class TestCase(unittest.TestCase):
         from mcstas2.pyre_support._component_interfaces.monitors.IQE_monitor import get_histogram
         hist = get_histogram(component)
         
-        from histogram.plotter import defaultPlotter
-        defaultPlotter.plot(hist)
+        if interactive:
+            from histogram.plotter import defaultPlotter
+            defaultPlotter.plot(hist)
         return
 
     pass  # end of TestCase
@@ -86,18 +90,16 @@ def makeKernel():
     nMCsteps_to_calc_RARV = 1000
     return b.phonon_coherentinelastic_polyxtal_kernel(
         makeDispersion(), makeDW(),
-        makeUnitcell(),
+        makeMatter(),
         temperature=temperature, Ei=Ei, max_omega=max_omega, max_Q=max_Q,
         nMCsteps_to_calc_RARV=nMCsteps_to_calc_RARV)
 
 
-def makeUnitcell():
-    from crystal.UnitCell import create_unitcell
-    from crystal.Atom import atom
-    atoms = [atom('Fe'), atom('Al')]
-    positions = [(0,0,0), (0.5,0.5,0.5)]
-    cellvectors = [ (1,0,0), (0,1,0), (0,0,1) ]
-    return create_unitcell(cellvectors, atoms, positions)
+def makeMatter():
+    from matter import Structure, Atom, Lattice
+    atoms = [Atom('Fe', xyz=(0,0,0)), Atom('Al', xyz=(0.5,0.5,0.5))]
+    lattice = Lattice(base=((1,0,0), (0,1,0), (0,0,1)))
+    return Structure(atoms, lattice)
 
 
 def mkDOS():
@@ -163,6 +165,8 @@ def main():
     
     
 if __name__ == "__main__":
+    global interactive
+    interactive = True
     main()
     
 # version

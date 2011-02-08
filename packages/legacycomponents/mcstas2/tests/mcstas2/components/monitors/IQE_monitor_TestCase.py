@@ -18,6 +18,12 @@ It should show a evely distributed intensities in the S(Q,E) plot.
 '''
 
 
+skip = False
+standalone = False
+
+interactive = False
+
+
 import unittestX as unittest
 import journal
 
@@ -67,8 +73,9 @@ class TestCase(unittest.TestCase):
         from mcstas2.pyre_support._component_interfaces.monitors.IQE_monitor import get_histogram
         hist = get_histogram(component)
 
-        from histogram.plotter import defaultPlotter
-        defaultPlotter.plot(hist)
+        if interactive:
+            from histogram.plotter import defaultPlotter
+            defaultPlotter.plot(hist)
         return
 
     pass  # end of TestCase
@@ -90,6 +97,8 @@ def main():
     
     
 if __name__ == "__main__":
+    global interactive
+    interactive = True
     main()
     
 # version

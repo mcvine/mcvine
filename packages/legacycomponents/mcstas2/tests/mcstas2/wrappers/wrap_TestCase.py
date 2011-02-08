@@ -12,6 +12,10 @@
 #
 
 
+# if ran with other tests that also wrap E_monitor, will segfaults
+standalone = True
+skip = True
+
 
 import unittestX as unittest
 import journal

@@ -12,60 +12,51 @@
 #
 
 
+skip = False
+standalone = True
+
 
 import unittestX as unittest
 import journal
 
 
-# test instrument
-from TestInstrument1 import Instrument as base
-class Instrument(base):
-
-    def __init__(self, name='E_monitor_TestCase'):
-        base.__init__(self, name)
-        return
-    
-
 from mcni.pyre_support.MpiApplication import usempi
-outputdir = 'E_monitor_TestCase-out'
-if usempi: 
-    import mpi
-    outputdir += '-worker-%s' % mpi.world().rank
+outputdir = 'out-E_monitor_TestCase'
 
 
 class TestCase(unittest.TestCase):
 
     def test1(self):
+        # remove the output directory
+        if os.path.exists(outputdir):
+            shutil.rmtree(outputdir)
+        
+        # build the command to ru
+        cmd = ['python E_monitor_TestCase_app.py']
         if usempi:
-            import sys
-            sys.argv += ['--mpirun.nodes=2']
+            cmd.append('--mpirun.nodes=2')
+        cmd = ' '.join(cmd)
 
-        instrument = Instrument()
-        instrument.run()
+        # run command
+        if os.system(cmd):
+            raise RuntimeError, "%s failed" % cmd
 
+        # checks
         import time
         ctime = time.time()
 
         #check output directory exists
         self.assert_( os.path.exists( outputdir ) )
         
-        #make sure files were just created
-        for item in os.listdir( outputdir ):
-            path = os.path.join( outputdir, item )
-            self.assert_( os.path.exists( path ) )
-
-            mtime = os.path.getmtime( path )
-            self.assert_( ctime - mtime >= 0 )
-            #print "path:", path, "timediff:", ctime - mtime 
-            self.assert_( ctime - mtime < 10 )
-            continue
-        
+        # make sure that the final histogram is identical to the 
+        # sum of all the final histograms in different nodes
+        # NOT IMPLEMENTED YET
         return
     
     pass  # end of TestCase
 
 
-import os
+import os, shutil
 
 
 def pysuite():

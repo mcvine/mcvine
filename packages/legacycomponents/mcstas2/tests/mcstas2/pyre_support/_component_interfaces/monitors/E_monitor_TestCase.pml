@@ -17,7 +17,7 @@
 
     <component name="E_monitor_TestCase">
 
-        <property name="output-dir">E_monitor_TestCase-out</property>
+        <property name="output-dir">out-E_monitor_TestCase</property>
         <property name="sequence">['source', 'monitor']</property>
         <property name="ncount">100</property>
         <property name="buffer_size">10</property>

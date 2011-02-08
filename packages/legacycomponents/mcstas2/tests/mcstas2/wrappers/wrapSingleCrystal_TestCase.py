@@ -12,6 +12,10 @@
 #
 
 
+# if ran with other tests that wrap components, will segfaults
+skip = True
+standalone = False
+
 
 import unittestX as unittest
 import journal

@@ -12,6 +12,10 @@
 #
 
 
+long_test = True
+skip = False
+standalone = True
+
 
 import unittestX as unittest
 import journal
@@ -19,7 +23,7 @@ import journal
 
 class TestCase(unittest.TestCase):
 
-    def test1(self):
+    def _test1(self):
         from TestInstrument1 import Instrument
         instrument = Instrument('IQE_monitor_TestCase')
 

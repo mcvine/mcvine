@@ -11,7 +11,7 @@
 //  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // 
 
-#include <portinfo>
+// #include <portinfo>
 #include <Python.h>
 
 PyObject *pyprojectname_runtimeError = 0;

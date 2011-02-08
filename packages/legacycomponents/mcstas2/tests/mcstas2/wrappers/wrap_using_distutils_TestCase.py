@@ -12,6 +12,9 @@
 #
 
 
+standalone = True
+skip = True
+
 
 import unittestX as unittest
 import journal

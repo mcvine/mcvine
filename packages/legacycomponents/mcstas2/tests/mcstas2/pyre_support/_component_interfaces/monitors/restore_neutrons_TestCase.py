@@ -13,6 +13,11 @@
 
 
 
+skip = False
+standalone = True
+
+
+
 import unittestX as unittest
 import journal
 
@@ -22,7 +27,9 @@ from mcni.pyre_support.AbstractComponent import AbstractComponent
 class Validator(AbstractComponent):
     
     def process(self, neutrons):
+        print self.name
         for n in neutrons:
+            print n
             assert n.state.position[2] == 0
         return neutrons
 
@@ -59,7 +66,7 @@ class Instrument(base):
         geometer.inventory.monitor = (0,0,1), (0,0,0)
         
         monitor = self.inventory.monitor
-        monitor.inventory.restore_neutrons = 1
+        monitor.inventory.restore_neutron = 1
 
         self.inventory.validator1 = Validator('validator1', 'validator')
         self.inventory.validator2 = Validator('validator2', 'validator')

@@ -12,6 +12,9 @@
 #
 
 
+skip = False
+standalone = True
+
 
 import unittestX as unittest
 import journal
@@ -21,13 +24,14 @@ componentname = 'E_monitor'
 componentfile = '%s.comp' % componentname
 projectpath = '%s' % componentname
 bpbindingname = '%sbp' % componentname
+wrapmethodname = 'wrap_E_monitor'
 
 class boostpython_TestCase(unittest.TestCase):
 
     def test(self):
         "codes for boost python binding"
         from mcstas2.wrappers.binding.boostpython.module_cc import generate
-        module_cc = generate( bpbindingname, projectpath )
+        module_cc = generate( bpbindingname, wrapmethodname, projectpath )
 
         from mcstas2.wrappers.component2cppClass.component2cppClass import component2cppClass
         klass = component2cppClass( componentfile )
@@ -37,7 +41,7 @@ class boostpython_TestCase(unittest.TestCase):
 
         ctor = klass.constructors() [0]
         from mcstas2.wrappers.binding.boostpython.wrap_cc import generate
-        wrap_cc = generate( klass.name, ctor.args, projectpath )
+        wrap_cc = generate( klass, projectpath, wrapmethodname)
 
         return
 

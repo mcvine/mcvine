@@ -181,9 +181,9 @@ DEFINE COMPONENT Single_crystal
 DEFINITION PARAMETERS(string reflections)
 SETTING PARAMETERS(xwidth, yheight, zthick, delta_d_d=1e-4,
             mosaic = -1, mosaic_h = -1, mosaic_v = -1, mosaic_n = -1,
-            ax = 0, ay = 0, az = 0,
-            bx = 0, by = 0, bz = 0,
-            cx = 0, cy = 0, cz = 0,
+            ax = 1, ay = 0, az = 0,
+            bx = 0, by = 1, bz = 0,
+            cx = 0, cy = 0, cz = 1,
             p_transmit = -1, absorption = 0, incoherent = 0,
             aa=0, bb=0, cc=0, order=0, powder=0)
 OUTPUT PARAMETERS() // ----------- changed by Jiao Lin -------- originally: (hkl_info)
