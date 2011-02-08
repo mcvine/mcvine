@@ -24,7 +24,7 @@
 
 class Absorber : public mccomponents::AbstractScatteringKernel {
 public:
-  double absorption_coefficient( const mcni::Neutron::Event & ev ) { return 1000; }
+  double absorption_coefficient( const mcni::Neutron::Event & ev ) { return 1e20; }
   double scattering_coefficient( const mcni::Neutron::Event & ev ) { return 0; }
   void scatter( mcni::Neutron::Event & ev ) 
   {
@@ -58,6 +58,7 @@ public:
 };
 
 
+// the absorber will absorb all neutrons
 void test1()
 {
   using namespace mccomponents;
@@ -71,28 +72,17 @@ void test1()
   mcni::Neutron::Event event, save;
   save.state.position = mccomposite::geometry::Position( 0,0, -5 );
   save.state.velocity = mccomposite::geometry::Direction( 0,0, 1 );
+  save.probability = 1.;
   
   size_t absorbed = 0, scattered = 0, transmitted = 0;
   size_t N = 1000;
   for (size_t i=0; i<N; i++) {
     event = save;
     absorber.scatter( event );
-    if (event.probability==-1) absorbed ++;
-    else {
-      assert(event.probability < 1.e-7 );
-      if (event.state.velocity.x == 1.) scattered ++;
-      else {
-	assert(event.state.velocity.x==0);
-	assert(event.state.velocity.y==0);
-	assert(event.state.velocity.z==1);
-	transmitted ++;
-      }
-    }
+    if (event.probability<=0) absorbed ++;
   }
-  assert( std::abs(absorbed*1./N - 1./3) < 2./std::sqrt(1.*N) );
-  assert( std::abs(scattered*1./N - 1./3) < 2./std::sqrt(1.*N) );
-  assert( std::abs(transmitted*1./N - 1./3) < 2./std::sqrt(1.*N) );
-
+  assert( absorbed == N);
+  std::cout << " - test 1 passed." << std::endl;
 }
 
 
@@ -130,6 +120,7 @@ void test2()
     //std::cout << Nz[i] << std::endl;
     assert (std::abs(Nz[i] - 1.*N/Ndivision) <  3. * std::sqrt( N/Ndivision ) );
   }
+  std::cout << " - test 2 passed." << std::endl;
 }
 
 
@@ -166,15 +157,17 @@ void test3()
 
   double absorbed = kernel.absorbed;
 
+  /*
   std::cout << "absorbed, scattered, transmitted = " 
 	    << absorbed << ", "
 	    << scattered << ", "
 	    << transmitted
 	    << std::endl;
-
+  */
   assert ( std::abs(transmitted-N*std::exp(-1)) < 2* sqrt(N) );
   assert ( std::abs(absorbed-N*(1-std::exp(-1))/2.) < 2* sqrt(N) );
   assert ( std::abs(scattered-N*(1-std::exp(-1))/2.) < 2* sqrt(N) );
+  std::cout << " - test 3 passed." << std::endl;
 }
 
 
@@ -213,6 +206,7 @@ void test4()
 
   double absorbed = kernel.absorbed;
 
+  /*
   std::cout << "nabsorbed, nscattered, ntransmitted = " 
 	    << nabsorbed << ", "
 	    << nscattered << ", "
@@ -224,6 +218,7 @@ void test4()
 	    << scattered << ", "
 	    << transmitted
 	    << std::endl;
+  */
 
   double expected = N*std::exp(-Z);
   //std::cout << expected << std::endl;
@@ -234,6 +229,7 @@ void test4()
   expected = N*(1-std::exp(-Z))/2. *std::exp(-0.5);
   //std::cout << expected << std::endl;
   assert ( std::abs(scattered-expected) < 3* sqrt(expected) );
+  std::cout << " - test 4 passed." << std::endl;
 }
 
 
@@ -257,6 +253,7 @@ void test5()
   absorber.scatterM( event, events );
   
   assert (events.size()==0);
+  std::cout << " - test 5 passed." << std::endl;
 }
 
 
@@ -287,7 +284,27 @@ void test6()
   //  - barely attenuated neutron along (0,0,1)
   //  - scattered to (1,0,0) with probability in the order of "size/2"
   //  - addtional neutrons to (1,0,0) with probability in the order of "size/2^n"
-  std::cout << events << std::endl;
+  // std::cout << events << std::endl;
+  mcni::Neutron::Event event0 = events[0];
+  assert (event0.state.velocity[0]==0);
+  assert (event0.state.velocity[1]==0);
+  assert (event0.state.velocity[2]==1);
+  assert (std::abs(1-event0.probability)< 1e-3);
+
+  mcni::Neutron::Event event1 = events[1];
+  assert (event1.state.velocity[0]==1);
+  assert (event1.state.velocity[1]==0);
+  assert (event1.state.velocity[2]==0);
+  assert (std::abs(size/2-event1.probability)< size*1e-3);
+
+  mcni::Neutron::Event event2 = events[2];
+  assert (event2.state.velocity[0]==1);
+  assert (event2.state.velocity[1]==0);
+  assert (event2.state.velocity[2]==0);
+  double expected = (size*0.5) * (size*0.5)/2;
+  assert (std::abs(event2.probability-expected) < expected*1e-3);
+
+  std::cout << " - test 6 passed." << std::endl;
 }
 
 
