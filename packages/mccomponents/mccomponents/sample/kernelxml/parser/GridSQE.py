@@ -52,7 +52,7 @@ class GridSQE(AbstractNode):
             if auto_normalization:
                 sqe.I /= norm
             else:
-                raise RuntimeError, "S(Q,E) should average to ~1, got %s" % ave
+                raise RuntimeError, "S(Q,E) should average to ~1, got %s" % norm
         
         from mccomponents.sample import gridsqe
         return gridsqe( sqe ) 

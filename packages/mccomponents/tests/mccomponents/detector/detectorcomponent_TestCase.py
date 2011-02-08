@@ -12,6 +12,7 @@
 #
 
 
+standalone = True
 long_test = True
 
 

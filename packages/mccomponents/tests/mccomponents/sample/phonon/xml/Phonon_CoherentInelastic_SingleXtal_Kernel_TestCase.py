@@ -11,6 +11,11 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
 
+
+standalone = True
+long_test = True
+
+
 import mcvine
 import mccomponents.sample.phonon.xml
 
