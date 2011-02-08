@@ -28,35 +28,10 @@ class ComponentInterface(AbstractComponent):
         return self.engine.process(neutrons)
 
 
-    def _fini(self):
-        # make sure to run _fini under my output directory
-        def _(): return super(ComponentInterface, self)._fini()
-        self._run_in_myoutputdir(_)
-        return
+    def _hasEngine(self):
+        return self.__dict__.get('engine')
+
     
-    
-    def _run_in_myoutputdir(self, func):
-        dir = self._outputdir
-        if not dir:
-            import os
-            dir = os.curdir
-        return self._run_in_dir(func, dir)
-
-
-    def _run_in_dir(self, func, dir):
-        return run_in_dir(func, dir)
-    
-
-
-def run_in_dir(func, dir):
-    import os
-    savedir = os.path.abspath( os.curdir )
-    os.chdir(dir)
-    ret = func()
-    os.chdir( savedir )
-    return ret
-
-
 # version
 __id__ = "$Id$"
 

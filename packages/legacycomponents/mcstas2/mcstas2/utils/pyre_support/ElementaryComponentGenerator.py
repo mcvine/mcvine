@@ -55,6 +55,8 @@ class Generator:
         base = self.baseclass
         class _( base ):
 
+            __name__ = klass.__name__
+
             Engine = klass
             __doc__ = klass.__doc__
             
@@ -93,9 +95,15 @@ class Generator:
                 return
 
             def _fini(self):
-                base._fini(self)
+                super(_, self)._fini()
+                # method to destory engine. when destroying an engine,
+                # mcstas component's "finalize" method will get called
+                def destroy(): del self.engine
+                # only call the destroy method when an engine is available
                 engine = self.__dict__.get('engine')
-                if engine: del self.engine
+                if engine: 
+                    del engine
+                    self._runInDir(destroy, self._getOutputDir())
                 return
 
             pass # end of _

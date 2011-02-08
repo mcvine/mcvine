@@ -31,22 +31,16 @@ class ComponentInterface(base, ParallelComponent):
         if restore_neutron:
             # create a copy to be processed
             saved = neutrons.snapshot(len(neutrons))
-        
-        # establish "iterationcount"
-        iterationcount = self.__dict__.get('iterationcount')
-        if iterationcount is None: iterationcount = 0
+            
         # and process neutrons as normal
         ret = super(ComponentInterface, self).process(neutrons)
-        iterationcount += 1
-        self.iterationcount = iterationcount
-
+        
         # save monitor data to a histogram in each round so that users
         # can see intermediate results
+        histogram = self._get_histogram()
+        outdir = self._getOutputDirInProgress()
         hout = self._histogramOutputFilename()
-        # this outputfile will be overwritten each round
-        self._saveHistogramInMyoutputdir(filename=hout, overwrite=True)
-        # also save a copy that mark the interation number
-        self._saveHistogramInMyoutputdir(filename='%s.%s' % (hout, iterationcount))
+        self._saveHistogram(histogram, directory=outdir, filename=hout)
         
         # restore neutrons if requested
         if restore_neutron:
@@ -57,106 +51,67 @@ class ComponentInterface(base, ParallelComponent):
 
     def _fini(self):
         if not self._showHelpOnly and self._hasEngine():
-            if self.parallel:
-                self._save_histogram_in_masternode_outdir()
+            context = self.simulation_context
+            if context.mpiSize:
+                histogram = self._get_histogram_summed_over_nodes()
             else:
-                h = self._setFinalHistogram(self._getNormalizedHistogram())
-                # save the final histogram (normalized)
-                def _():
-                    hout = self._histogramOutputFilename()
-                    saveHistogram(h, hout, overwrite=True)
-                self._run_in_myoutputdir(_)
+                histogram = self._get_histogram()
+            #
+            outdir = self._getOutputDir()
+            filename = self._histogramOutputFilename()
+            # only the master node need to save the final histogram
+            if self.simulation_context.mpiRank == 0:
+                self._saveHistogram(histogram, directory=outdir, filename=filename)
+            pass
+        
         super(ComponentInterface, self)._fini()
         return
 
 
-    def _getNormalizedHistogram(self):
-        h = self._get_histogram()
-        return self._normalizeHistogram(h)
-
-    
-    def _normalizeHistogram(self, histogram):
-        # by default do nothing
-        # override this method to do normalization correctly
-        return histogram
+    def _get_histogram(self):
+        raise NotImplementedError
 
 
-    def _save_histogram_in_masternode_outdir(self):
-        # save histogram to <out> instead of <out>-worker-0
+    def _get_histogram_summed_over_nodes(self):
         # get histogram to master node
         channel = 100
         histogram = self._get_histogram()
-        if self.mpiRank != 0:
+        context = self.simulation_context
+        if context.mpiRank != 0:
             I = histogram.I
             self.mpiSend(I, 0, channel)
         else:
             histogram = histogram.copy()
             I = histogram.I
-            for rank in range(1, self.mpiSize):
+            for rank in range(1, context.mpiSize):
                 I1 = self.mpiReceive(rank, channel)
                 I+=I1
                 continue
-
-        # normalize the histogram
-        histogram = self._normalizeHistogram(histogram)
-        
-        # save the histogram in the component
-        self._setFinalHistogram(histogram)
-
-        def _():
-            saveHistogram(
-                histogram,
-                self._histogramOutputFilename(),
-                overwrite=self.overwrite_datafiles)
-
-        if self.mpiRank == 0:
-            outputdir = '%s' % self._master_outputdir
-            if not os.path.exists(outputdir):
-                os.makedirs(outputdir)
-            self._debug.log('saving histogram to %s' % outputdir)
-            self._run_in_dir(func=_, dir=outputdir)
-        
-        return
+        return histogram
 
     
-    def getFinalHistogram(self):
-        k = '_final_histogram'
-        if hasattr(self, k):
-            return getattr(self, k)
-        return
-
-
-    def _setFinalHistogram(self, h):
-        k = '_final_histogram'
-        setattr(self, k, h)
-        return h
-
-
-    def _hasEngine(self):
-        return self.__dict__.get('engine')
-    
-
     def _histogramOutputFilename(self):
         filename = self.inventory.filename
         b, ext = os.path.splitext(filename)
         f = '%s.h5' % b
         return f
-
-
-    def _saveHistogramInMyoutputdir(self, filename, overwrite=False):
+    
+    
+    def _saveHistogram(self, histogram, directory, filename):
         overwrite = self.overwrite_datafiles or overwrite
-        def _():
-            return saveHistogram(
-                self._get_histogram(), filename,
-                overwrite=overwrite)
-        return self._run_in_myoutputdir(_)
-
+        path = os.path.join(directory, filename)
+        return saveHistogram(histogram, path, overwrite=overwrite)
 
 
 import os
 
 def saveHistogram(histogram, filename, overwrite=False):
-    if overwrite and os.path.exists(filename): os.remove( filename )
+    if os.path.exists(filename): 
+        if overwrite:
+            os.remove( filename )
+        else:
+            raise IOError, "%s already exists" % filename
+    #
     from histogram.hdf import dump
     dump( histogram, filename, '/', 'c')
     return

@@ -18,13 +18,37 @@ from default import ComponentInterface as base
 class ComponentInterface(base):
 
     def _get_histogram(self):
-        return get_histogram(self)
+        norm = self._get_normalization()
+        h = get_histogram(self)
+        return h/norm
 
     
-    def _normalizeHistogram(self, histogram):
-        norm = getNormalization(self, N=1000000)
-        return histogram/norm
-    
+    def _get_normalization(self):
+        if hasattr(self, '_norm'):
+            norm = self._norm
+        else:
+            norm = self._norm = self._get_normalization_p()
+        return norm
+
+
+    def _get_normalization_p(self):
+        context = self.simulation_context
+        # the master node need to compute the norm
+        if context.mpiRank == 0:
+            norm = getNormalization(self, N=1000000)
+        # if there are no other nodes, we are fine
+        if not context.mpiSize:
+            return norm
+        # otherwise, need to send norm to all nodes
+        channel = 101
+        if context.mpiRank == 0:
+            for node in range(1, context.mpiSize):
+                self.mpiSend(norm, node, channel)
+                continue
+        else:
+            norm = self.mpiReceive(0, channel)
+        return norm
+
 
 def get_histogram( monitor ):
     from mcstas2.utils.carray import bpptr2npyarr
