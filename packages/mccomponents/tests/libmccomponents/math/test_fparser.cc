@@ -16,11 +16,15 @@
 #include <string>
 #include <cmath>
 #include "fparser/fparser.hh"
+#include "mcni/test/assert.h"
 
+using mcni::assertAlmostEqual;
 
 int test1()
 {
   std::string function = "sin(2*pi*x)";
+  std::cout << "* Testing " << function << std::endl;
+
   FunctionParser fparser;
   
   double pi = 3.1415926535897932;
@@ -36,7 +40,7 @@ int test1()
     vals[0] = x;
     double y = fparser.Eval(vals);
     // std::cout << "f(" << x << ") = " << y << std::endl;
-    assert (y==std::sin(2*pi*x));
+    assertAlmostEqual(y,std::sin(2*pi*x));
   }
   return 0;
 }
@@ -45,6 +49,8 @@ int test1()
 int test2()
 {
   std::string function = "Q+E", vars="Q,E";
+  std::cout << "* Testing " << function << std::endl;
+
   FunctionParser fparser;
   
   fparser.AddConstant("pi", 3.1415926535897932);
@@ -70,8 +76,10 @@ int test2()
 
 int main()
 {
+  std::cout << "== fparser tests ==" << std::endl;
   if (test1()) return 1;
   if (test2()) return 1;
+  std::cout << "* All tests passed" << std::endl;
   return 0;
 }
 
