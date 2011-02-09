@@ -126,7 +126,8 @@ class ComputationEngineRendererExtension:
         try:
             mcweights = he3tube.mcweights
         except AttributeError:
-            mcweights = 0.9, 0, 0.1
+            from mccomponents.detector import default_mc_weights_for_detector_scatterer
+            mcweights = default_mc_weights_for_detector_scatterer
             
         # treat this detector as  a homogeneous scatterer
         import mccomponents.homogeneous_scatterer as mh

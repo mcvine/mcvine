@@ -125,6 +125,32 @@ def eventModeMCA( *args, **kwds ):
 
 
 
+def he3_absorption_coeff(energy, pressure):
+    """pressure: unit: atm
+    energy: unit: meV
+    """
+    from math import sqrt
+    refAbsXS =  5333.0e-28/1.798
+    N = pressure*101325 *2.414e20
+    return refAbsXS * sqrt(81.81/energy) * N
+
+
+def he3_transmission_percentage(energy, pressure, length):
+    """
+    pressure: atm
+    energy: meV
+    length: cm
+    """
+    length *= 0.01
+    mu = he3_absorption_coeff(energy, pressure)
+    from math import exp 
+    return exp(-mu*length)
+
+
+
+default_mc_weights_for_detector_scatterer = 0.9, 0.0, 0.1 # absorption, scattering, transmission
+
+
 import ComputationEngineRendererExtension
 
 def _import_bindings():
