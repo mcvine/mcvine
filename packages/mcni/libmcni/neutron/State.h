@@ -54,7 +54,7 @@ namespace mcni { namespace Neutron {
       inline State();
       
       // methdos
-      /// energy of neutron
+      /// energy of neutron (unit: meV)
       inline double energy( ) const;
       /// print to an output stream.
       /// Useful for defining operator << 
