@@ -29,7 +29,7 @@ import numpy as N
 
 instrumentxml = 'ARCS.xml'
 outfilename = 'detectorcomponent_TestCase-events.dat'
-nevents = 10000
+nevents = 100000
 absorption_weight = 0.9
 tofparams = 0, 10e-3, 1e-4
 coordinate_system = 'McStas'
@@ -65,7 +65,7 @@ class TestCase(unittest.TestCase):
         #print t
         n = len(t)/len(fmt)
         print "number of cases where absorption happen: ", n
-        self.assert_( abs(n-(nevents*absorption_weight)) < 3*N.sqrt(n) )
+        self.assertLessThan(abs(n-(nevents*absorption_weight)), 3*N.sqrt(n))
 
         t = N.array(t)
         t.shape = n, 3
@@ -73,6 +73,11 @@ class TestCase(unittest.TestCase):
         print "absorbed neutrons: ", p
         self.assert_( p>nevents*0.9 and p<nevents )
         return
+
+    
+    def assertLessThan(self, left, right):
+        if left >= right:
+            raise AssertionError, "%s is not smaller than %s" % (left, right)
 
     pass  # end of TestCase
 
