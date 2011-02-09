@@ -107,7 +107,7 @@ namespace mccomponents{ namespace math{
 	public:
 	  ZRidd( double xacc) : RootFinder(xacc) {}
 	  double solve( double x1, double x2, const Functor &f ) const {
-	    bool failed;
+	    bool failed=0;
 	    double rt = zridd( f, x1, x2, m_xacc, failed);
 	    if (failed) throw RootNotFound();
 	    return rt;
