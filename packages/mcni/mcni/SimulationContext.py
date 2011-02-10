@@ -34,6 +34,10 @@ class SimulationContext:
         this is different from property "outputdir" which is the output dir
         for final products
         '''
+        if self.outputdir is None:
+            import warnings
+            warnings.warn("output directory was not set")
+            return
         import os
         if self.mpiSize:
             dir = 'rank%s-step%s' % (self.mpiRank, self.iteration_no)

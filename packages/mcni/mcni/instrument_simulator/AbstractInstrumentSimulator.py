@@ -52,6 +52,8 @@ class AbstractInstrumentSimulator:
         # write out the number of mc samples processed
         context = self.context
         outdir = context.getOutputDirInProgress()
+        if outdir is None:
+            return
         import os
         p = os.path.join(outdir, 'number_of_mc_samples')
         open(p, 'w').write(str(n))
