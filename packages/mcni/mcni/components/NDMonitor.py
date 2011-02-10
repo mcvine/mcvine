@@ -38,7 +38,7 @@ class NDMonitor(object):
         self.histogram.I += hdd(sample, bins, ranges, weights=p)[0]
         self.histogram.E2 += hdd(sample, bins, ranges, weights=p*p)[0]
         return
-
+    
 
     def _propagateToZ0(self, x,y,z, vx,vy,vz, t):
         dt = -z/vz

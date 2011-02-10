@@ -25,6 +25,11 @@ class AbstractInstrumentSimulator:
     def run(self, neutrons, instrument, geometer, 
             context = None):
 
+        # save the number of neutrons
+        nneutrons = len(neutrons)
+        # save context
+        self.context = context
+        
         # provide seeds to all random number generators
         from mcni.seeder import feed
         feed()
@@ -38,7 +43,18 @@ class AbstractInstrumentSimulator:
 
         runnable.setInput('neutrons', neutrons)
         runnable.getOutput( 'neutrons' )
+
+        self.recordNumberOfMCSamples(nneutrons)
+        return
         
+
+    def recordNumberOfMCSamples(self, n):
+        # write out the number of mc samples processed
+        context = self.context
+        outdir = context.getOutputDirInProgress()
+        import os
+        p = os.path.join(outdir, 'number_of_mc_samples')
+        open(p, 'w').write(str(n))
         return
 
 

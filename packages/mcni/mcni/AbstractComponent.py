@@ -37,21 +37,12 @@ class AbstractComponent:
 
     def _getOutputDirInProgress(self):
         '''get output directory when simulation is in progress.
+        It depends on the computing node, and also the iteration #.
         this is different from _getOutputDir which is the output dir
         for final products
         '''
         context = self.simulation_context
-        if context.mpiSize:
-            dir = 'rank%s-step%s' % (context.mpiRank, context.iteration_no)
-        else:
-            dir = 'step%s' % (context.iteration_no,)
-
-        dir = os.path.join(context.outputdir, dir)
-        
-        if not os.path.exists(dir):
-            os.makedirs(dir)
-
-        return dir
+        return context.getOutputDirInProgress()
     
         
     def _runInDir(self, func, dir):

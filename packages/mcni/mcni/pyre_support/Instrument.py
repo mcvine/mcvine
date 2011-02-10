@@ -309,7 +309,7 @@ class Instrument( base, ParallelComponent ):
         minsize = MINIMUM_BUFFER_SIZE
         
         n = int(memsize/ndblsperneutron/bytesperdble/minsize)*MINIMUM_BUFFER_SIZE
-
+        
         if n<minsize:
             raise RuntimeError, "Not enough memory"
         

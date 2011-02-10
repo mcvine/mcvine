@@ -37,6 +37,8 @@ update: clean
 EXPORT_PYTHON_MODULES = \
 	ComponentGroup.py \
 	Dummy.py \
+	HistogramBasedMonitorMixin.py \
+	MonitorMixin.py \
 	MonochromaticSource.py \
 	NDMonitor.py \
 	NeutronFromStorage.py \
