@@ -54,7 +54,7 @@ class Generator:
         arguments = klass.arguments
         base = self.baseclass
         class _( base ):
-
+            
             __name__ = klass.__name__
 
             Engine = klass
@@ -90,9 +90,16 @@ class Generator:
             def _init(self):
                 base._init(self)
                 if self._showHelpOnly: return
-                kwds = self._argumentsFromInventory()
-                self.engine = klass( **kwds )
+                self._init_kwds = self._argumentsFromInventory()
+                self._createEngine()
                 return
+
+
+            def _createEngine(self):
+                kwds = self._init_kwds
+                self.engine = klass( **kwds )
+                return self.engine
+            
 
             def _fini(self):
                 super(_, self)._fini()
