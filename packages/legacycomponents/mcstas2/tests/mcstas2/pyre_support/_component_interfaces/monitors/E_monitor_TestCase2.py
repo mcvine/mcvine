@@ -23,7 +23,7 @@ import journal
 from mcni.pyre_support.MpiApplication import usempi
 
 # from E_monitor_TestCase.pml
-outputdir = 'out-E_monitor_TestCase'
+outputdir = 'out-E_monitor_TestCase2'
 ncount = 100 
 
 
@@ -35,11 +35,11 @@ class TestCase(unittest.TestCase):
             shutil.rmtree(outputdir)
         
         # build the command to ru
-        cmd = ['python E_monitor_TestCase_app.py']
+        cmd = ['python E_monitor_TestCase_app2.py']
         if usempi:
             cmd.append('--mpirun.nodes=2')
         cmd = ' '.join(cmd)
-
+        
         # run command
         if os.system(cmd):
             raise RuntimeError, "%s failed" % cmd
@@ -53,25 +53,19 @@ class TestCase(unittest.TestCase):
         
         # make sure that the final histogram is identical to the 
         # sum of all the final histograms in different nodes
-        from mcni.components.HistogramBasedMonitorMixin import hist_mcs_sum
-        h, n = hist_mcs_sum(outputdir, 'IE.h5')
-        self.assertEqual(n, ncount)
-        h.I/=n; h.E2/=n*n
-        
         from histogram.hdf import load
         from histogram.hdf.utils import getOnlyEntry
         p = os.path.join(outputdir, 'IE.h5')
-        ha = load(p, getOnlyEntry(p))
+        h = load(p, getOnlyEntry(p))
         
-        self.assert_((h.I == ha.I).all())
-        self.assert_((h.E2 == ha.E2).all())
-        
+        self.assertEqual(h.I.sum(), 1)
         return
     
     pass  # end of TestCase
 
 
 import os, shutil
+
 
 def pysuite():
     suite1 = unittest.makeSuite(TestCase)
