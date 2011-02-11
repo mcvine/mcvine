@@ -65,17 +65,7 @@ def hist_mcs_sum(outdir, histogramfilename):
     return h1, sum(mcs)
     
 
-def mcs_sum(outdir):
-    """compute the summed number of mc samples"""
-    import glob, os
-    pattern = os.path.join(outdir, '*', number_mc_samples_filename)
-    mcsamplesfiles = glob.glob(pattern)
-    if not mcsamplesfiles:
-        return 0
-    # load number_of_mc_samples
-    loadmcs = lambda f: float(open(f).read())
-    mcs = map(loadmcs, mcsamplesfiles)
-    return sum(mcs)
+from outputs import mcs_sum
     
 
 from MonitorMixin import MonitorMixin

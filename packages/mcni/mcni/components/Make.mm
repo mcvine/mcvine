@@ -47,6 +47,7 @@ EXPORT_PYTHON_MODULES = \
 	NeutronsOnCone_FixedQE.py \
 	Registry.py \
 	__init__.py \
+	outputs.py \
 	repositories.py \
 
 
