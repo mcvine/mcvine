@@ -1,5 +1,10 @@
 
-/* [Source_simple] -> [PowderN] -> [PSD_monitor_4PI] */
+/*
+    [Source_simple] -> [PowderN] -> [PSD_monitor_4PI]
+
+    Note:
+        - Custom reflection planes (Al_assembly/Al_2.laz)
+*/
 
 DEFINE INSTRUMENT ssd()
 

@@ -10,7 +10,9 @@
 !
 ! Testing PowderN component with PSD_monitor_4PI monitor
 !
-! PS: This test is similar to ssd2_2.inst McStas configuration file
+! Notes:
+!   - This test is similar to ssd2_3.inst McStas configuration file
+!   - Updated parameters for Source_simple
 !
 ! ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 -->
@@ -41,7 +43,7 @@
         <component name="source">
 
             <property name="yh">0.1</property>
-            <property name="dist">10.0</property>
+            <property name="dist">2.0</property>
             <property name="name">source_simple</property>
             <property name="width">0.0</property>
             <property name="dE">10.0</property>
@@ -60,7 +62,7 @@
 
             <property name="reflections">Al_assembly/Al_2.laz</property>
             <property name="yheight">0.1</property>
-            <property name="xwidth">0.06</property>
+            <property name="xwidth">0.1</property>
             <property name="zthick">0.01</property>
             <property name="DW">0</property>
             <property name="Delta_d">1e-5</property>
