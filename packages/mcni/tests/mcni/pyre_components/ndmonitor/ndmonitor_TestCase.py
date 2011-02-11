@@ -41,6 +41,21 @@ class TestCase(unittest.TestCase):
             raise RuntimeError, "%r failed" % cmd
         return
 
+
+    def test3(self):
+        cmd = 'mcvine-simulate -components=source,monitor --- -ncount=1e4 -buffer_size=1000 -source=MonochromaticSource -monitor="NDMonitor(energy)" -geometer.monitor="(0,0,1),(0,0,0)" -source.energy=60 -monitor.energymin=0 -monitor.energymax=100 -monitor.nenergy=100 -monitor.filename=ienergy.h5 --output-dir=out-test3'
+        import os
+        if os.system(cmd):
+            raise RuntimeError, "%r failed" % cmd
+
+        from histogram.hdf import load
+        from histogram.hdf.utils import getOnlyEntry
+        f = 'out-test3/ienergy.h5'
+        h = load(f, getOnlyEntry(f))
+        self.assertEqual( h[(58, 62)].sum() , (1., 1.e-4))
+        return
+
+
     pass # end of TestCase
 
 

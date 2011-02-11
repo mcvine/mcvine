@@ -4,7 +4,7 @@
 #
 #                                   Jiao Lin
 #                      California Institute of Technology
-#                        (C) 2007 All Rights Reserved  
+#                      (C) 2007-2011 All Rights Reserved  
 #
 # {LicenseText}
 #
@@ -12,27 +12,25 @@
 #
 
 
+import os, shutil
 
 import unittestX as unittest
-import journal
-
-debug = journal.debug( "mcni.components.test" )
-warning = journal.warning( "mcni.components.test" )
-
-
 
 class TestCase(unittest.TestCase):
 
+    def test3(self):
+        outdir = 'out-testmpi'
+        shutil.rmtree(outdir)
+        cmd = './testmpi -mpirun.nodes=2'
+        import os
+        if os.system(cmd):
+            raise RuntimeError, "%r failed" % cmd
 
-    def test1(self):
-        'NeutronsOnCone_FixedQE'
-        from mcni.components.NeutronsOnCone_FixedQE import NeutronsOnCone_FixedQE as factory
-        component = factory( 'source', 8, 30, 70, 10.3 )
-
-        import mcni
-        neutrons = mcni.neutron_buffer( 10 )
-        component.process( neutrons )
-        # print neutrons
+        from histogram.hdf import load
+        from histogram.hdf.utils import getOnlyEntry
+        f = '%s/ienergy.h5' % (outdir,)
+        h = load(f, getOnlyEntry(f))
+        self.assertEqual( h[(58, 62)].sum() , (1., 1.e-4))
         return
 
 
@@ -48,9 +46,8 @@ def main():
     pytests = pysuite()
     alltests = unittest.TestSuite( (pytests, ) )
     unittest.TextTestRunner(verbosity=2).run(alltests)
-    return
-
-
+    
+    
 if __name__ == "__main__":
     main()
     

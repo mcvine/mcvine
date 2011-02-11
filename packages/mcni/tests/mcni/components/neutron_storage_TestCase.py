@@ -69,7 +69,7 @@ class Verifier( AbstractComponent ):
         return
 
     def process(self, neutrons):
-        for n in neutrons: print n
+        # for n in neutrons: print n
         for i in range(len(neutrons)):
             r = list( neutrons[i].state.position )
 
@@ -120,7 +120,7 @@ class TestCase(unittest.TestCase):
     def test2(self):
         'storage --> verifier'
         from mcni.components.NeutronFromStorage import NeutronFromStorage
-        component1 = NeutronFromStorage('storage', neutron_storage_path)
+        component1 = NeutronFromStorage('storage', '%s-saved' % neutron_storage_path)
         component2 = Verifier( 'verifier', self)
         instrument = mcni.instrument( [component1, component2] )
         

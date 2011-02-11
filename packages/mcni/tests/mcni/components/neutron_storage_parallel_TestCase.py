@@ -22,7 +22,8 @@ For example:
 Make sure 
 '''
 
-skip = True
+# skip = 1
+standalone = 1
 
 
 import unittestX as unittest

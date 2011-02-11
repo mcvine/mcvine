@@ -12,27 +12,37 @@
 #
 
 
+# from neutron_storage_normalization_TestCase-app.pml
+ncount = 1e4
+outdir = 'out-neutron_storage_normalization_TestCase-app'
+import os
+outfile = os.path.join(outdir, 'neutrons')
+
 
 import unittestX as unittest
-import journal
-
-debug = journal.debug( "mcni.components.test" )
-warning = journal.warning( "mcni.components.test" )
-
 
 
 class TestCase(unittest.TestCase):
 
 
     def test1(self):
-        'NeutronsOnCone_FixedQE'
-        from mcni.components.NeutronsOnCone_FixedQE import NeutronsOnCone_FixedQE as factory
-        component = factory( 'source', 8, 30, 70, 10.3 )
-
-        import mcni
-        neutrons = mcni.neutron_buffer( 10 )
-        component.process( neutrons )
-        # print neutrons
+        cmd = './neutron_storage_normalization_TestCase-app'
+        import os
+        if os.system(cmd):
+            raise RuntimeError, "%r failed" % cmd
+        
+        # make sure the final result is normalized
+        from mcni.neutron_storage import readneutrons_asnpyarr
+        neutrons = readneutrons_asnpyarr(outfile)
+        self.assertEqual(len(neutrons), ncount)
+        expected = [0., 0., -1., 
+                    0., 0., 3000.,
+                    0., 1.,
+                    0.,
+                    1/ncount]
+        for n in neutrons:
+            self.assert_((n==expected).all())
+            continue
         return
 
 

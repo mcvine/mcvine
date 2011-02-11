@@ -29,7 +29,7 @@ warning = journal.warning( "mcni.components.test" )
 
 
 
-neutron_storage_path = 'neutrons'
+neutron_storage_path = 'neutrons-saved'
 ntotneutrons = 3
 
 import mcni
