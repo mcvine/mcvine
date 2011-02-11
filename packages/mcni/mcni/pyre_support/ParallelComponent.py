@@ -19,6 +19,21 @@ import journal
 info = journal.info( 'mpi' )
 
 
+
+class UniqueChannelGenerator(object):
+
+    def __init__(self, start=10000):
+        self.number = start
+        return
+
+
+    def __call__(self):
+        r = self.number
+        self.number += 1
+        return r
+    
+
+
 class ParallelComponent(object):
 
     '''Base class for components that can be parallelized.
@@ -40,6 +55,12 @@ class ParallelComponent(object):
         pass
 
     info.log( "rank %d of %d" % (mpiRank, mpiSize ) )
+
+
+    _unique_channel_generator = UniqueChannelGenerator()
+    def getUniqueChannel(self):
+        return self.__class__._unique_channel_generator()
+    
 
     def mpiSend( self, obj, peer, tag):
         s = pickle.dumps( obj )
@@ -75,8 +96,9 @@ class ParallelComponent(object):
 
     pass # end of ParallelComponent
 
+
 import cPickle as pickle
-    
+
 
 
 # version
