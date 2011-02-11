@@ -28,6 +28,15 @@ def merge( *args, **kwds ):
     return
 
 
+def normalize(neutronsfile, N):
+    """normalize the neutrons in the given file by the factor N"""
+    from idf_usenumpy import read, write
+    neutrons = read(neutronsfile)
+    neutrons[:,-1]/=N
+    write(neutrons, neutronsfile)
+    return
+
+
 def dump( neutrons, filename ):
     '''dump neutrons to the given file
     neutrons: a boost python instance of Neutron::Events, which can be

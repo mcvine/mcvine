@@ -231,7 +231,8 @@ class Storage:
 
     def close(self):
         if not self._closed:
-            self.flush()
+            if not self._readonly:
+                self.flush()
             self.stream.close()
             self._closed = True
         return
