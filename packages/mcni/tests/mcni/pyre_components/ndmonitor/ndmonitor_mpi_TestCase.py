@@ -20,9 +20,9 @@ class TestCase(unittest.TestCase):
 
     def test3(self):
         outdir = 'out-testmpi'
-        shutil.rmtree(outdir)
+        if os.path.exists(outdir):
+            shutil.rmtree(outdir)
         cmd = './testmpi -mpirun.nodes=2'
-        import os
         if os.system(cmd):
             raise RuntimeError, "%r failed" % cmd
 

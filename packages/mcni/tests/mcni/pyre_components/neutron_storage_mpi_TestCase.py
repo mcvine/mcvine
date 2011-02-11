@@ -12,6 +12,9 @@
 #
 
 
+standalone = True
+
+
 # from neutron_storage_normalization_TestCase-app.pml
 ncount = 1e4
 outdir = 'out-neutron_storage_normalization_TestCase-app'
