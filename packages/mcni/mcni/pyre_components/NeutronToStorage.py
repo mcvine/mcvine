@@ -116,7 +116,8 @@ class NeutronToStorage(ParallelComponent, AbstractComponent):
 
 
     def _fini(self):
-        self._saveFinalResult()
+        if not self._showHelpOnly and not self._noinit:
+            self._saveFinalResult()
         super(NeutronToStorage, self)._fini()
         return
 

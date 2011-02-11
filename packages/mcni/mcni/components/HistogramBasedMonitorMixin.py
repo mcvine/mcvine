@@ -76,7 +76,7 @@ class HistogramBasedMonitorMixin(MonitorMixin):
         context = self.simulation_context
         # make sure every node reaches here
         if context.mpiSize:
-            channel = 1000
+            channel = self.getUniqueChannel()
             if context.mpiRank:
                 self.mpiSend(context.mpiRank, 0, channel)
             else:

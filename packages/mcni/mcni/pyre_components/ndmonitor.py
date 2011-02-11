@@ -31,8 +31,10 @@ q2e = {
     }
 
 
+from mcni.components.HistogramBasedMonitorMixin import HistogramBasedMonitorMixin
+from mcni.pyre_support.ParallelComponent import ParallelComponent
 from mcni.pyre_support.AbstractComponent import AbstractComponent
-class NDMonitorBase(AbstractComponent):
+class NDMonitorBase(HistogramBasedMonitorMixin, ParallelComponent, AbstractComponent):
     supplier = 'mcni'
     category = 'monitors'
     type = 'NDMonitor'
@@ -95,29 +97,47 @@ def ndmonitor(*quantities, **kwds):
             
 
         def process(self, neutrons):
-            return self.engine.process( neutrons )
+            ret = self.engine.process( neutrons )
+            
+            # 
+            self._dumpData(self.simulation_context.getOutputDirInProgress())
+
+            # recreate engine
+            self._createEngine()
+            
+            return ret
+
+
+        def _dumpData(self, dir):
+            h = self.engine.histogram
+            title = self.inventory.title
+            h.setAttribute('title', title)
+
+            from histogram.hdf import dump
+            f = self._getHistogramFilename()
+            import os
+            f = os.path.join(dir, f)
+            dump(h, f, '/', 'c')
+            return
+
+        
+        # required by HistogramBasedMonitorMixin
+        def _getHistogramFilename(self):
+            return self.inventory.filename or \
+                ('%s.h5' % hname)
         
         
         def _fini(self):
-            if not self._showHelpOnly:
-                h = self.engine.histogram
-                title = self.inventory.title
-                h.setAttribute('title', title)
+            if not self._showHelpOnly and not self._noinit:
+                self._saveFinalResult()
                 
-                from histogram.hdf import dump
-                dir = self._getOutputDir()
-                f = self.inventory.filename or \
-                    ('%s.h5' % hname)
-                import os
-                f = os.path.join(dir, f)
-                dump(h, f, '/', 'c')
             super(Monitor, self)._fini()
             return
         
         
         def _init(self):
             super(Monitor, self)._init()
-            if self._showHelpOnly:
+            if self._showHelpOnly or self._noinit:
                 return
             
             if kwds:
@@ -140,8 +160,15 @@ def ndmonitor(*quantities, **kwds):
                 axes.append(axis)
                 continue
 
+            self._engine_args = hname, axes
+            self._createEngine()
+            return
+
+        
+        def _createEngine(self):
             from ..components.NDMonitor import NDMonitor
-            self.engine = NDMonitor(hname, axes)
+            args = self._engine_args
+            self.engine = NDMonitor(*args)
             return
 
         pass

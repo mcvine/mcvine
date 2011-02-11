@@ -16,7 +16,7 @@
 class MonitorMixin(object):
 
     def _saveFinalResult(self):
-        """save final result"""
+        """save final result. should be called within _fini in most cases"""
         context = self.simulation_context
         final_result = self._getFinalResult()
         # only the master node need to do the io
