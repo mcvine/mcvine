@@ -45,6 +45,7 @@ EXPORT_PYTHON_MODULES = \
 	NeutronPrinter.py \
 	NeutronToStorage.py \
 	NeutronsOnCone_FixedQE.py \
+	ParallelComponent.py \
 	Registry.py \
 	__init__.py \
 	outputs.py \
