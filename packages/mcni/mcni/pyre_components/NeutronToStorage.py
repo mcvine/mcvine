@@ -15,9 +15,10 @@
 from mcni.components.NeutronToStorage import NeutronToStorage as enginefactory, category
 
 
+from mcni.pyre_support.ParallelComponent import ParallelComponent
 from mcni.pyre_support.AbstractComponent import AbstractComponent
 
-class NeutronToStorage( AbstractComponent ):
+class NeutronToStorage(ParallelComponent, AbstractComponent):
 
 
     simple_description = "Save neutrons to a file"
@@ -32,10 +33,7 @@ class NeutronToStorage( AbstractComponent ):
     class Inventory( AbstractComponent.Inventory ):
         import pyre.inventory as pinv
         path = pinv.str( 'path', default = 'neutrons' )
-        path.meta['tip'] = "The path at which neutrons will be saved"
-        
-        append = pinv.bool( 'append', default = False )
-        append.meta['tip'] = "Append to an existing neutron file"
+        path.meta['tip'] = "The path where neutrons will be saved. This must be a relative path within the output directory of the instrument simulation application."
         pass
 
 
@@ -46,45 +44,82 @@ class NeutronToStorage( AbstractComponent ):
 
 
     def process(self, neutrons):
-        engine = self.engine
-        if engine is None: engine = self.engine = self._create_engine()
-        ret = engine.process( neutrons )
-        return ret
+        engine = self._createEngine()
+        engine.process( neutrons )
+        engine.close()
+        return neutrons
     
     
+    def _createEngine(self):
+        outdir = self.simulation_context.getOutputDirInProgress()
+        path = self.path
+        path = os.path.join(outdir, path)
+        if self.overwrite_datafiles:
+            if os.path.exists(path):
+                os.remove(path)
+        return enginefactory(self.name, path)
+
+
+    def _saveFinalResult(self):
+        context = self.simulation_context
+        # make sure every node reaches here
+        if context.mpiSize:
+            channel = self.getUniqueChannel()
+            if context.mpiRank:
+                self.mpiSend(context.mpiRank, 0, channel)
+            else:
+                for i in range(1, self.mpiSize):
+                    self.mpiReceive(i, channel)
+        # merge and normalize neutron files
+        if context.mpiRank == 0:
+            self._merge_and_normalize()
+        return
+
+
+    def _merge_and_normalize(self):
+        outdir = self.simulation_context.outputdir
+
+        # find all output files
+        from mcni.components.outputs import n_mcsamples_files, mcs_sum
+        import glob, os
+        filename = self.path
+        pattern = os.path.join(outdir, '*', filename)
+        nsfiles = glob.glob(pattern)
+        n_mcsamples = n_mcsamples_files(outdir)
+        assert len(nsfiles) == n_mcsamples, \
+            "neutron storage files %s does not match #mcsample files %s" %(
+            len(nsfiles), n_mcsamples)
+        if not nsfiles:
+            return None, None
+        
+        # output
+        out = os.path.join(outdir, self.path)
+        if self.overwrite_datafiles:
+            if os.path.exists(out):
+                os.remove(out)
+        # merge
+        from mcni.neutron_storage import merge
+        merge(nsfiles, out)
+
+        # load number_of_mc_samples
+        mcs = mcs_sum(outdir)
+        # normalize
+        from mcni.neutron_storage import normalize
+        normalize(out, mcs)
+        return
+
+
     def _configure(self):
-        AbstractComponent._configure(self)
+        super(NeutronToStorage, self)._configure()
         self.path = self.inventory.path
-        self.append = self.inventory.append
         return
 
 
     def _fini(self):
-        if self.engine:
-            self.engine.close()
+        self._saveFinalResult()
         super(NeutronToStorage, self)._fini()
         return
-    
 
-
-    def _create_engine(self):
-        path = self.path
-        if os.path.split( path )[0] != '':
-            raise ValueError, "path must be relative path: path=%s" % path
-        
-        path = os.path.join( self._getOutputDir(), path )
-
-        append = False
-        if self.overwrite_datafiles:
-            append = False
-            if os.path.exists(path):
-                os.remove(path)
-        if self.append:
-            append = True
-            
-        return enginefactory(
-            self.name, path, append=append)
-    
 
     pass # end of NeutronToStorage
 
