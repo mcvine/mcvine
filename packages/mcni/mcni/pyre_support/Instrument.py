@@ -189,13 +189,14 @@ class Instrument( base, ParallelComponent ):
     
     def _setup_ouputdir(self):
         outputdir = self.outputdir = self.inventory.outputdir
-        if not self.overwrite_datafiles and os.path.exists( outputdir ):
-            msg = "output directory %r exists. If you want to overwrite the output directory, please specify option --overwrite-datafiles." % outputdir
-            raise RuntimeError, msg
+        if self.mpiRank==0 and self.inventory.mode=='worker':
+            if not self.overwrite_datafiles and os.path.exists( outputdir ):
+                msg = "output directory %r exists. If you want to overwrite the output directory, please specify option --overwrite-datafiles." % outputdir
+                raise RuntimeError, msg
 
-        if not os.path.exists( outputdir ):
-            os.makedirs( outputdir )
-            pass
+            if not os.path.exists( outputdir ):
+                os.makedirs( outputdir )
+                pass
 
         for component in self.neutron_components.itervalues():
             component.overwrite_datafiles = self.overwrite_datafiles
