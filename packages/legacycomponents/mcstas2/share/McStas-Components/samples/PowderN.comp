@@ -80,7 +80,7 @@
 *   #column_q     <index of the scattering wavevector 'q' column [Angs-1]>
 *
 * %P
-* INPUT PARAMETERS
+* INPUT PARAMETERS:
 *
 * d_phi:    Angle corresponding to the vertical angular range
 *             to focus to, e.g. detector height. 0 for no focusing [deg,0-180]
@@ -132,7 +132,7 @@
 *****************************************************************************/
 DEFINE COMPONENT PowderN
 DEFINITION PARAMETERS (string reflections)
-SETTING PARAMETERS (d_phi=0, radius=0.01, radius_i=0, yheight=0.05,
+SETTING PARAMETERS (d_phi=0, radius=0, radius_i=0, yheight=0,
 		    pack=1, Vc=0, sigma_abs=0, sigma_inc=0, Delta_d=0, frac=0, tfrac=0.1,
 		    xwidth=0, zthick=0, xwidth_i=0, yheight_i=0, zthick_i=0, h=0, DW=0, nb_atoms=1, 
 		    concentric=0, density=0, weight=0, barns=1,
