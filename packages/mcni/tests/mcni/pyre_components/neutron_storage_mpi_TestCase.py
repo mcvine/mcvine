@@ -17,7 +17,10 @@ standalone = True
 
 # from neutron_storage_normalization_TestCase-app.pml
 ncount = 1e4
-outdir = 'out-neutron_storage_normalization_TestCase-app'
+
+
+# will set this below in the test methods
+outdir = 'out-neutron_storage_mpi_TestCase-app'
 import os
 outfile = os.path.join(outdir, 'neutrons')
 
@@ -29,7 +32,8 @@ class TestCase(unittest.TestCase):
 
 
     def test1(self):
-        cmd = './neutron_storage_normalization_TestCase-app --mpirun.nodes=2'
+        'mpi run of neutron_storage component: overwrite_datafiles is on'
+        cmd = './neutron_storage_normalization_TestCase-app --mpirun.nodes=2 --overwrite-datafiles --output-dir=%s' % outdir
         import os
         if os.system(cmd):
             raise RuntimeError, "%r failed" % cmd
@@ -50,9 +54,10 @@ class TestCase(unittest.TestCase):
 
 
     def test2(self):
+        'mpi run of neutron_storage component: overwrite_datafiles is off'
         import shutil
         shutil.rmtree(outdir)
-        cmd = './neutron_storage_normalization_TestCase-app --mpirun.nodes=2 --overwrite-datafiles=off'
+        cmd = './neutron_storage_normalization_TestCase-app --mpirun.nodes=2 --overwrite-datafiles=off  --output-dir=%s' % outdir
         import os
         if os.system(cmd):
             raise RuntimeError, "%r failed" % cmd
