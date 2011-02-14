@@ -18,6 +18,8 @@ category = "monitors"
 class NDMonitor(object):
 
     def process(self, neutrons):
+        if not len(neutrons):
+            return
         from mcni.neutron_storage import neutrons_as_npyarr, ndblsperneutron
         arr = neutrons_as_npyarr(neutrons)
         arr.shape = -1, ndblsperneutron
