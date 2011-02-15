@@ -12,6 +12,9 @@
 #
 
 
+standalone = True
+
+
 import os, shutil
 for entry in os.listdir('.'):
     if not entry.startswith('out-test'):

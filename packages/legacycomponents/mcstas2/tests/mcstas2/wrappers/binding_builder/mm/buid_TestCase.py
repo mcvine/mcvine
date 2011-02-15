@@ -12,6 +12,10 @@
 #
 
 
+# autotest will skip this one
+skip = True
+
+
 
 import unittestX as unittest
 import journal
