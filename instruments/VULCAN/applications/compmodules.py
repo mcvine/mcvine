@@ -59,8 +59,7 @@ PARAM_FILTER = {
 
 # Component filter which filters components by type and by name
 COMP_FILTER = {
-    "type": ("Progress_bar",
-             "Arm"),
+    "type": ("Progress_bar",),
     "name": ()
 #    "name": ('sample',
 #             'detector_90tc',

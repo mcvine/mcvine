@@ -16,7 +16,7 @@ McStasConverter - converter for McStas components to list of dictionaries.
                   This is a convenient form to create other data structures
                   and scripts (e.g. McVine components).
 
-.toInstrString() generates script for instrument creation
+.toInstrString() - generates script for instrument creation
 
 Example:
 
