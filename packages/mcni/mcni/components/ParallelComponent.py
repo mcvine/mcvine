@@ -94,6 +94,20 @@ class ParallelComponent(object):
         info.log( msg )
         return s
 
+
+    def mpiBarrier(self):
+        "a naive implementation of barrier"
+        if self.mpiSize < 2:
+            return
+        c = self.getUniqueChannel()
+        if self.mpiRank == 0:
+            for i in range(1, self.mpiSize):
+                self.mpiSendStr('', i, c)
+        else:
+            self.mpiReceiveStr(0, c)
+        return
+    
+
     pass # end of ParallelComponent
 
 

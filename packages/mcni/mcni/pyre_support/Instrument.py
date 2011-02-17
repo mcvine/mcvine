@@ -187,7 +187,8 @@ class Instrument( base, ParallelComponent ):
         return
     
     
-    def _setup_ouputdir(self):
+    def _setup_outputdir(self):
+        self.mpiBarrier()
         outputdir = self.outputdir = self.inventory.outputdir
         if self.mpiRank==0 and self.inventory.mode=='worker':
             if not self.overwrite_datafiles and os.path.exists( outputdir ):
@@ -266,7 +267,7 @@ class Instrument( base, ParallelComponent ):
             comp = self.inventory.getTraitValue(c)
             comp._noinit = noinit            
 
-        if not self._showHelpOnly: self._setup_ouputdir()
+        if not self._showHelpOnly: self._setup_outputdir()
         return
 
 
