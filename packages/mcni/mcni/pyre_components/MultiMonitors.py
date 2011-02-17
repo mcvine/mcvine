@@ -51,6 +51,7 @@ class MultiMonitors( AbstractComponent ):
     
 
     def process(self, neutrons):
+        self._propagateSimulationContext()
         return self.engine.process(neutrons)
 
 
@@ -70,10 +71,6 @@ class MultiMonitors( AbstractComponent ):
                 m._showHelpOnly = True
                 continue
             return
-        for m in self.monitors:
-            m.simulation_context = self.simulation_context
-            continue
-
         super(MultiMonitors, self).init()
         return
 
@@ -83,6 +80,13 @@ class MultiMonitors( AbstractComponent ):
             return
 
         super(MultiMonitors, self).fini()
+        return
+
+
+    def _propagateSimulationContext(self):
+        for m in self.monitors:
+            m.simulation_context = self.simulation_context
+            continue
         return
 
 
