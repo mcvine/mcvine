@@ -26,7 +26,7 @@ class LauncherMPICH2(Launcher):
         debug = pyre.inventory.bool("debug", default=False)
         command = pyre.inventory.str("command", default="mpirun")
         extra = pyre.inventory.str("extra", default="")
-        python_mpi = pyre.inventory.str("python-mpi", default="")
+        python_mpi = pyre.inventory.str("python-mpi", default="`which python`")
 
 
     def launch(self):
@@ -51,20 +51,6 @@ class LauncherMPICH2(Launcher):
         return
 
     
-    def _get_python_mpi(self):
-        import subprocess
-        exe = 'mpipython.exe'
-        cmd = 'which %s' % exe
-        p = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
-        if p.wait() != 0:
-            raise RuntimeError, 'failed to run "%s"' % cmd
-        out, err = p.communicate()
-        out = out.strip()
-        if not out:
-            raise RuntimeError, "Cannot find %s" % exe
-        return out
-    
-
     def _buildArgumentList(self):
         import sys
 
