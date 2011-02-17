@@ -83,7 +83,7 @@ class ComponentInterface(HistogramBasedMonitorMixin, base, ParallelComponent):
     
     
     def _saveHistogram(self, histogram, directory, filename):
-        overwrite = self.overwrite_datafiles or overwrite
+        overwrite = self.overwrite_datafiles
         path = os.path.join(directory, filename)
         return saveHistogram(histogram, path, overwrite=overwrite)
 
