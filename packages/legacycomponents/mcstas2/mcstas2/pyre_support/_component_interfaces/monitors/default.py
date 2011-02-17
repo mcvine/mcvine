@@ -18,8 +18,6 @@ from mcni.components.HistogramBasedMonitorMixin import HistogramBasedMonitorMixi
 
 class ComponentInterface(HistogramBasedMonitorMixin, base, ParallelComponent):
 
-    # Hack!
-    overwrite_datafiles = False     # Not sure if it is the right place
 
     class Inventory(base.Inventory):
 
@@ -83,7 +81,7 @@ class ComponentInterface(HistogramBasedMonitorMixin, base, ParallelComponent):
     
     
     def _saveHistogram(self, histogram, directory, filename):
-        overwrite = self.overwrite_datafiles
+        overwrite = self.simulation_context.overwrite_datafiles
         path = os.path.join(directory, filename)
         return saveHistogram(histogram, path, overwrite=overwrite)
 
