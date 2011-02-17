@@ -55,7 +55,7 @@
         </component>
 
         <component name="sample">
-            <property name="xml">Al_SimplePowderDiffractionKernel/sampleassembly.xml</property>
+            <property name="xml">Al_assembly/sampleassembly.xml</property>
         </component>
 
         <component name="detector">

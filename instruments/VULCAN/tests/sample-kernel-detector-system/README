@@ -11,7 +11,7 @@ ssd1.pml            [Source_simple] -> [V_sample] -> [PSD_monitor_4PI]
 ssd1_1.pml          [Source_simple] -> [V_sample] -> [TOF_monitor]
 ssd1_2.pml          [Source_simple] -> [V_sample] -> [E_monitor]
 ssd2.pml            [Source_simple] -> [PowderKernel] -> [PSD_monitor_4PI]  for Al.laz
-ssd2_1.pml          [Source_simple] -> [PowderKernel] -> [TOF_monitor]
+ssd2_1.pml          [Source_simple] -> [PowderKernel] -> [TOF_monitor]      for Al_2.laz
 ssd2_2.pml          [Source_simple] -> [PowderKernel] -> [PSD_monitor_4PI]  for Al_2.laz
 ssd2_3.pml          [Source_simple] -> [PowderN] -> [PSD_monitor_4PI]       for Al_2.laz
 ssd3.pml            [SNS_source4] -> [PowderKernel] -> [PSD_monitor_4PI]    for Al.laz
