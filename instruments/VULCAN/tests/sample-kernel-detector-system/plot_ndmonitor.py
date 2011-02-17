@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-# Sample script
+# Note: Before using this script make sure that "out/ixyt.h5" is generated!
 
 from histogram.hdf import load
 from histogram.plotter import defaultPlotter as dp

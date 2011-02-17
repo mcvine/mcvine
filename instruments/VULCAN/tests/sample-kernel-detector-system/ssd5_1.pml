@@ -8,21 +8,21 @@
 !
 ! {LicenseText}
 !
-! Testing PowderKernel with NDMonitor
+! Testing PowderN with NDMonitor
 !
 ! ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 -->
 
-<!-- [Source_simple] -> [PowderKernel] -> [NDMonitor] -->
+<!-- [Source_simple] -> [PowderN] -> [NDMonitor] -->
 
 <!DOCTYPE inventory>
 
 <inventory>
 
-    <component name="ssd5">
+    <component name="ssd5_1">
         <property name="sequence">['source', 'sample', 'detector']</property>
         <facility name="source">sources/Source_simple</facility>
-        <facility name="sample">samples/SampleAssemblyFromXml</facility>
+        <facility name="sample">samples/PowderN</facility>
         <facility name="detector">monitors/NDMonitor(x,y,t)</facility>
         
         <property name="dump-instrument">False</property>
@@ -54,7 +54,16 @@
 
 
         <component name="sample">
-            <property name="xml">Al_assembly2/sampleassembly.xml</property>
+
+            <property name="reflections">Al.laz</property>
+            <property name="yheight">0.1</property>
+            <property name="xwidth">0.1</property>
+            <property name="zthick">0.01</property>
+            <property name="DW">0</property>
+            <property name="Delta_d">1e-5</property>
+            <property name="frac">0</property>
+            <property name="tfrac">0</property>
+
         </component>
 
 
