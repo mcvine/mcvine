@@ -16,7 +16,7 @@ from psd_tew_monitor_parser import PSD_TEW_monitorParser
 
 p   = PSD_TEW_monitorParser()
 
-RESULT = "results/ssd4"
+RESULT = "results/ssd4_1"
 
 p.parse("%s/tt.txt" % RESULT)
 p.toFile("%s/tt_plot.txt" % RESULT, bin="x")

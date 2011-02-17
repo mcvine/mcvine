@@ -38,20 +38,20 @@
             <property name="dist">10.0</property>
             <property name="name">source_simple</property>
             <property name="width">0.0</property>
-            <property name="dE">10.0</property>
+            <property name="dE">70.0</property>
             <property name="gauss">0.0</property>
             <property name="height">0.0</property>
             <property name="flux">1.0</property>
             <property name="dLambda">0.0</property>
             <property name="radius">0.05</property>
             <property name="Lambda0">0.0</property>
-            <property name="E0">60.0</property>
+            <property name="E0">100.0</property>
             <property name="xw">0.1</property>
             
         </component>
 
         <component name="sample">
-            <property name="xml">Al_SimplePowderDiffractionKernel/sampleassembly.xml</property>
+            <property name="xml">Al_assembly2/sampleassembly.xml</property>
         </component>
 
         <component name="detector">
@@ -84,7 +84,7 @@
                 <property name="xwidth">0.770</property>
                 <property name="type">wavelength</property>
             </component>
-            
+
             <component name="m3">
                 <property name="nxchan">1</property>
                 <property name="format">table</property>
@@ -157,8 +157,8 @@
 
         <component name="geometer">
             <property name="source">((0, 0, 0), (0, 0, 0))</property>
-            <property name="sample">((0, 0, 2), (0, 0, 0))</property>
-            <property name="detector">((0, 0, 2), (0, 0, 0))</property>
+            <property name="sample">((0, 0, 10), (0, 0, 0))</property>
+            <property name="detector">(relative((0, 0, 0), to="sample"),relative((0, 0, 0), to="sample"))</property>
             <property name="dump">False</property>
         </component>
 
