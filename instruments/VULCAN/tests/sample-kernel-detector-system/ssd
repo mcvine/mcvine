@@ -25,7 +25,7 @@ def main():
     components = ['source', 'sample', 'detector']
     App = build(components)
     # Change name according to base name of .pml file, e.g. "ssd1" for ssd1.pml
-    app = App('ssd5')
+    app = App('ssd4')
     app.run()
     return
 

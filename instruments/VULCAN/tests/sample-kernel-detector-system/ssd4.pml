@@ -35,7 +35,7 @@
         <component name="source">
             
             <property name="yh">0.085</property>
-            <property name="dist">4.3</property>
+            <property name="dist">10</property>
             <property name="Emin">0.01</property>
             <property name="Emax">1000</property>
             <property name="tinmin">0.0</property>
@@ -51,7 +51,7 @@
         </component>
 
         <component name="sample">
-            <property name="xml">Al_SimplePowderDiffractionKernel/sampleassembly.xml</property>
+            <property name="xml">Al_assembly2/sampleassembly.xml</property>
         </component>
 
         <component name="detector">
@@ -157,8 +157,8 @@
 
         <component name="geometer">
             <property name="source">((0, 0, 0), (0, 0, 0))</property>
-            <property name="sample">((0, 0, 2), (0, 0, 0))</property>
-            <property name="detector">((0, 0, 2), (0, 0, 0))</property>
+            <property name="sample">((0, 0, 10), (0, 0, 0))</property>
+            <property name="detector">((0, 0, 10), (0, 0, 0))</property>
             <property name="dump">False</property>
         </component>
 

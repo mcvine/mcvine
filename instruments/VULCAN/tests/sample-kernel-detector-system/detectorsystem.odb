@@ -2,5 +2,4 @@
 
 def detector():
     from mcvine.instruments.VULCAN.DetectorSystem import DetectorSystem
-    from detsys import DetectorSystem
     return DetectorSystem('detectorsystem')
