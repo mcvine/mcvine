@@ -11,6 +11,7 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
 
+import mcvine
 
 from mcni.pyre_components.MultiMonitors import MultiMonitors
 class MyMonitor(MultiMonitors):

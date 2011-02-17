@@ -118,6 +118,7 @@ class Instrument( base, ParallelComponent ):
         context.mpiRank = self.mpiRank
         context.mpiSize = self.mpiSize
         context.outputdir = self.outputdir
+        context.overwrite_datafiles = self.overwrite_datafiles
         
         n = int(self.ncount / self.buffer_size)
         assert n>0, 'ncount should be larger than buffer_size: ncount=%s, buffer_size=%s' % (self.ncount, self.buffer_size)
@@ -199,10 +200,6 @@ class Instrument( base, ParallelComponent ):
                 os.makedirs( outputdir )
                 pass
 
-        for component in self.neutron_components.itervalues():
-            component.overwrite_datafiles = self.overwrite_datafiles
-            continue
-        
         return
     
     

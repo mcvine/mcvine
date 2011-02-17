@@ -22,12 +22,28 @@ class TestCase(unittest.TestCase):
  --monitor.geometer.m2="(0,0,0),(0,90,0)" \
  --journal.debug.monitor \
 '''
-        import os
-        os.system(cmd)
+        execute(cmd)
+        return
+
+    def test2(self):
+        cmd = '''./test-MultiMonitors-app.py \
+ --monitor.m1=E_monitor \
+ --output-dir=out-test2 \
+ --overwrite-datafiles \
+ --monitor.geometer.m1="(0,0,1),(0,0,0)" \
+ --monitor.geometer.m2="(0,0,0),(0,90,0)" \
+ --journal.debug.monitor \
+'''
+        execute(cmd)
         return
 
     pass # end of TestCase
 
+
+def execute(cmd):
+    import os
+    if os.system(cmd):
+        raise RuntimeError, "%s failed" % cmd
 
 def pysuite():
     suite1 = unittest.makeSuite(TestCase)
