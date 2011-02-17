@@ -11,6 +11,8 @@
 ! ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 -->
 
+<!-- [Source_simple] -> [PowderKernel] -> [DetectorSystem] -->
+
 <!DOCTYPE inventory>
 
 <inventory>

@@ -8,12 +8,12 @@
 !
 ! {LicenseText}
 !
-! Testing SampleKernel with SNS_source4 and PSD_monitor_4PI
+! Testing PowderKernel with SNS_source4 and PSD_monitor_4PI
 !
 ! ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 -->
 
-<!-- [SNS_source4] -> [SampleKernel] -> [PSD_monitor_4PI] -->
+<!-- [SNS_source4] -> [PowderKernel] -> [PSD_monitor_4PI] -->
 
 <!-- Doesn't work for SNS_source4 -->
 
@@ -55,7 +55,7 @@
         </component>
 
         <component name="sample">
-            <property name="xml">Al_SimplePowderDiffractionKernel/sampleassembly.xml</property>
+            <property name="xml">Al_assembly2/sampleassembly.xml</property>
         </component>
 
         <component name="detector">

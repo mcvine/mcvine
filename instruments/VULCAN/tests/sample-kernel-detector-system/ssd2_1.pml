@@ -8,12 +8,12 @@
 !
 ! {LicenseText}
 !
-! Testing SampleKernel with TOF_monitor
+! Testing PowderKernel with TOF_monitor
 !
 ! ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 -->
 
-<!-- [Source_simple] -> [SampleKernel] -> [TOF_monitor] -->
+<!-- [Source_simple] -> [PowderKernel] -> [TOF_monitor] -->
 
 <!DOCTYPE inventory>
 

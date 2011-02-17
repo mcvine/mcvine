@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+# Jiao Lin
 # Note: Before using this script make sure that "out/ixyt.h5" is generated!
 
 from histogram.hdf import load

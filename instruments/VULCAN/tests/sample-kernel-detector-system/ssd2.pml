@@ -8,12 +8,12 @@
 !
 ! {LicenseText}
 !
-! Testing SampleKernel with PSD_monitor_4PI
+! Testing PowderKernel with PSD_monitor_4PI
 !
 ! ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 -->
 
-<!-- [Source_simple] -> [SampleKernel] -> [PSD_monitor_4PI] -->
+<!-- [Source_simple] -> [PowderKernel] -> [PSD_monitor_4PI] -->
 
 <!DOCTYPE inventory>
 
@@ -55,7 +55,7 @@
         </component>
 
         <component name="sample">
-            <property name="xml">Al_SimplePowderDiffractionKernel/sampleassembly.xml</property>
+            <property name="xml">Al_assembly2/sampleassembly.xml</property>
         </component>
 
         <component name="detector">

@@ -11,6 +11,8 @@
 ! ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 -->
 
+<!-- [SNS_source4] -> [PowderKernel] -> [DetectorSystem] -->
+
 <!DOCTYPE inventory>
 
 <inventory>

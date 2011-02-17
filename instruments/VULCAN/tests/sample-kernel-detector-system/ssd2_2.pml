@@ -8,12 +8,12 @@
 !
 ! {LicenseText}
 !
-! Testing SampleKernel with PSD_monitor_4PI
+! Testing PowderKernel with PSD_monitor_4PI
 !
 ! ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 -->
 
-<!-- [Source_simple] -> [SampleKernel] -> [PSD_monitor_4PI] -->
+<!-- [Source_simple] -> [PowderKernel] -> [PSD_monitor_4PI] -->
 
 <!DOCTYPE inventory>
 

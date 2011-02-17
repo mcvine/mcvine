@@ -3,7 +3,7 @@
     [Source_simple] -> [PowderN] -> [PSD_monitor_4PI]
 
     Note:
-        - Standard reflection planes (Al.laz)
+        - Standard diffraction planes (Al.laz)
 */
 
 DEFINE INSTRUMENT ssd()
