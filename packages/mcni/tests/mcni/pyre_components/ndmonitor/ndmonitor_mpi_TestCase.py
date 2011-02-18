@@ -12,6 +12,9 @@
 #
 
 
+standalone = True
+
+
 import os, shutil
 
 import unittestX as unittest
