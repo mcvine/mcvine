@@ -14,26 +14,13 @@
 
 
 from default import ComponentInterface as base
+from default import attr
 
 class ComponentInterface(base):
 
     def _get_histogram(self):
         return get_histogram(self)
     
-
-def attr(obj, name, repl):
-    """
-    PSD_monitor.py script is used both by VNF and McVine. Due to issue with the
-    Postgres database considering 'xmin', 'xmax', 'ymin' and 'ymax' column names 
-    as special fields VNF uses replacement e.g. 'xmin' -> 'x_min' whereas McVine
-    still uses 'xmin'
-    """
-    if hasattr(obj, repl):  # If object has replacement attribute, use it
-        return getattr(obj, repl)
-
-    # Otherwise use standard name
-    return getattr(obj, name)
-
 
 def get_histogram( monitor ):
     from mcstas2.utils.carray import bpptr2npyarr

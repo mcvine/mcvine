@@ -2,7 +2,7 @@
 #
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
-#                                   Jiao Lin
+#                                   Jiao Lin, Alex Dementsov
 #                      California Institute of Technology
 #                      (C) 2008-2009  All Rights Reserved
 #
@@ -98,6 +98,21 @@ def saveHistogram(histogram, filename, overwrite=False):
     from histogram.hdf import dump
     dump( histogram, filename, '/', 'c')
     return
+
+
+def attr(obj, name, repl):
+    """
+    Scripts in this directory are used both by VNF and McVine. Due to issue with the
+    Postgres database considering 'xmin', 'xmax', 'ymin' and 'ymax' column names
+    as special fields VNF uses replacement e.g. 'xmin' -> 'x_min' whereas McVine
+    still uses 'xmin'
+    """
+    if hasattr(obj, repl):  # If object has replacement attribute, use it
+        return getattr(obj, repl)
+
+    # Otherwise use standard name
+    return getattr(obj, name)
+
 
 
 # version
