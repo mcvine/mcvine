@@ -1,7 +1,7 @@
 ToDo list for VULCAN
 --------------------
 
-- Test DetectorSystem with vanadium sample
+- Test DetectorSystem with Vanadium sample
 - Test DetectorSystem in VNF
 - Test SampleKernel with PSD_monitor_4PI monitor
 - Test SampleKernel with DetectorSystem
@@ -9,6 +9,17 @@ ToDo list for VULCAN
 - Implement PSD_monitor in VNF
 - Implement PSD_TEW_monitor  in VNF
 - Implement Monitor_nD  in VNF (optional)
+
+
+Conceptual ToDo list
+--------------------
+- Make SampleKernel working
+- Integrate SampleKernel in VNF
+- Fix missing monitors in VNF (and McVine?)
+- Make Vulcan instrument working
+- Create documentation
+
+
 
 Critical:
 - None for now
@@ -88,7 +99,7 @@ Milestones
     - in VNF
 
 3. EPSC Kernel: Size + Broadening
-    - C++ code (Li)
+    - C++ code
     - in McVine
     - in VNF
 

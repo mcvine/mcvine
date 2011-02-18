@@ -363,7 +363,7 @@ class McStasConverter:
         Returns command line string that is executed by VNF job builder
 
         Note:
-            - simapp.py is normally created by VNF
+            - This output is useful for testing VNF generated script, simapp.py
         """
         sequence    = []
         str     = "#!/usr/bin/env bash" + br
