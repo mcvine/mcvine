@@ -69,7 +69,6 @@ Questions:
 """
 
 # XXX: Fix rotation part in geometer parameter in toMcvineString() (it is not generated correctly)
-# XXX: Fix options issue (see fixtures.textOptions)
 # XXX: Implement nice align of dictionary entries in toBuilderString()
 # XXX: Implement filter for parameters and components
 # XXX: Filter is not set correctly (because it does not propagate to methods that use the filter)
@@ -96,7 +95,11 @@ SPACES          = '[ \t]*'              # Spaces and tabs
 NAME            = '%s([^ ()=]*)%s' % (SPACES, SPACES)  # Extracts name
 NO_BRACKETS     = '[^()]*'              # No brackets
 PARAMETERS      = '(%s)' % NO_BRACKETS  # Component parameters
-COMPONENT       = "%s=%s\(%s\)(.*)" %(NAME, NAME, PARAMETERS)  # Component
+PARAMNAME       = '([^\s=,]+)'        # Parameter's name
+# Parameter's value. First tries to match parameters in "..." and then the rest
+VALUE           = '(\"[^\"\n]+\"|\'[^\'\n]+\'|[^\s,]+)'
+PARAM           = '%s%s=%s%s' % (PARAMNAME, SPACES, SPACES, VALUE)  # Parameter's expression
+COMPONENT       = "%s=%s\(%s\)(.*)" %(NAME, NAME, PARAMETERS)       # Component
 VECVAL          = "([^,\)]+)"             # Vector's value
 VECTOR          = "\(%s,%s,%s\)" % (VECVAL, VECVAL, VECVAL) # Vector
 VECTOR_F        = "(\([^\)]*\))"
@@ -390,6 +393,27 @@ class McStasConverter:
 
     def toPmlString(self):
         return "Not Implemented"
+
+
+    def toDir(self, dirname, prefix=""):
+        """
+        Dumps strings .toString(), .toInstrString(), .toBuilderString(),
+        .toMcvineString() and .toVnfString() to the specified directory
+        """
+        if not os.path.exists(dirname):
+            print "Error: Directory \"%s\" does not exist!" % dirname
+            return
+
+        if prefix == "":
+            base = ""
+        else:
+            base = "%s-" % prefix
+        
+        open(os.path.join(dirname, "%sstring.txt" % base), "w").write(self.toString())
+        open(os.path.join(dirname, "%smcvine.sh" % base), "w").write(self.toMcvineString())
+        open(os.path.join(dirname, "%sdom.py" % base), "w").write(self.toInstrString())
+        open(os.path.join(dirname, "%sbuilder.py" % base), "w").write(self.toBuilderString())
+        open(os.path.join(dirname, "%svnf.sh" % base), "w").write(self.toVnfString())
 
 
     def _clParams(self, br="\n", allparams=True):
@@ -715,16 +739,24 @@ class McStasConverter:
         if not text:
             return {}   # Empty dictionary
 
-        ctext   = text.strip()      # Can have unnecessary white spaces
-        plist   = ctext.split(",")
-        params  = {}
-        for pp in plist:
-            keyval  = pp.split("=")
-            if len(keyval) == 2:
-                name            = keyval[0].strip()
-                value           = keyval[1].strip()
-                params[name]    = value
+        # Special case for Monitor_nD: parameter can have format as in example:
+        # options = "square, wavelength limits=[0.875 3.025] bins=21 y limits=[-0.05 0.05] bins=100, file=Vulcan_asbuilt_yscan.txt"
+        # Another words: comma inside quotation marks remains part of quoted string
+        
+        ctext   = text.strip()      # Do some cleaning: can have unnecessary white spaces
+        p       = re.compile(PARAM, re.DOTALL)
+        matches = p.findall(ctext)  # Finds all parameters
 
+        if not matches or not matches[0]: # No match, returns empty dictionary
+            return {}
+
+        params  = {}
+        for m in matches:
+            if len(m) == 2:
+                name            = m[0].strip()
+                value           = m[1].strip()
+                params[name]    = value
+        
         return params
 
 
@@ -1148,16 +1180,18 @@ def main():
                 conv    = McStasConverter(config=parts[1])
                 
             #print conv.toString()
-            print conv.toInstrString()
+            #print conv.toInstrString()
             #print conv.toBuilderString()
-            #print conv.toMcvineString()
+            print conv.toMcvineString()
             #print conv.toVnfString()
             #print conv.toPmlString(self)
             #print conv.component("TRG_Out")
+            #conv.toDir("../generated", prefix="vulcan")
             return
 
     print USAGE_MESSAGE
     return
+
 
 
 if __name__ == "__main__":
