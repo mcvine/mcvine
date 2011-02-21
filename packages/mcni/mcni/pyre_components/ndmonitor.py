@@ -11,6 +11,7 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
 
+from math import sqrt
 
 # quantities that are already in the neutron event record
 neqs = [
@@ -25,6 +26,7 @@ neqs = [
 #   mcni.utils.conversion as conversion
 q2e = {
     'energy': 'conversion.VS2E * (vx*vx + vy*vy + vz*vz)',
+    'wavelength': 'conversion.RV2W * 1/sqrt(vx*vx + vy*vy + vz*vz)',
     'divx': 'vx/vz',
     'divy': 'vy/vz',
     'tof': 't',
