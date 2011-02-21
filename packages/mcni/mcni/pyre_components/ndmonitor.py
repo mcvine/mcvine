@@ -26,7 +26,7 @@ neqs = [
 #   mcni.utils.conversion as conversion
 q2e = {
     'energy':       'conversion.VS2E * (vx*vx + vy*vy + vz*vz)',
-    'w':            'conversion.RV2W * 1/sqrt(vx*vx + vy*vy + vz*vz)',  # wavelength
+    'w':            'conversion.v2w(vx*vx + vy*vy + vz*vz)',  # wavelength
     'divx': 'vx/vz',
     'divy': 'vy/vz',
     'tof': 't',
