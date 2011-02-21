@@ -161,7 +161,8 @@ TRACE
     else if(strcmp(type,"wavelength")==0) {
        bb = (2*PI/V2K)/sqrt(vx*vx + vy*vy + vz*vz);
     }
-    if(bb>=b_min && bb<=b_max && box_intersect(&t0,&t1,x,y,z,vx,vy,vz,x_max-x_min,y_max-y_min,0.0001)) {
+    if(bb>=b_min && bb<=b_max && box_intersect(&t0,&t1,x,y,z,vx,vy,vz,x_max-x_min,y_max-y_min,0.0001))
+    {
        PROP_DT(t0);
        if (p<0) return;
 /*       printf("xf= %10.5f yf= %10.5f  zf= %10.5f\n", x,y,z); */

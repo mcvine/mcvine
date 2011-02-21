@@ -32,7 +32,7 @@ class NDMonitor(object):
         # propagate to z = 0
         self._propagateToZ0(x,y,z,vx,vy,vz,t)
 
-        from numpy import sqrt
+        from numpy import sqrt  # some expressions use 'sqrt()' function
         from numpy import histogramdd as hdd
         from mcni.utils import conversion
         sample = [eval(e) for e in self.expressions]

@@ -110,8 +110,8 @@ mccomponents::kernels::IsotropicKernel::scatter
   state.velocity = vf;
 
 #ifdef DEBUG
-  m_details->debug 
-    << "out" << ev 
+  m_details->debug
+    << "out" << ev
     << journal::endl;
 #endif
 
