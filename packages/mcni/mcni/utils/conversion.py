@@ -32,7 +32,7 @@ SE2V = sqrt(2e-3*e/mN)
 # SE2V = 437.3949	   #/* Convert sqrt(E)[meV] to v[m/s] */
 VS2E = mN/(2e-3*e)
 #VS2E = 5.227e-6	   #/* Convert (v[m/s])**2 to E[meV] */
-RV2W = 2*PI*K2V     # Converts reverse v[m/s] to wavelength[AA]; w = RV2W*1/v
+RV2W = 2*PI*K2V            # Converts reverse v[m/s] to wavelength[AA]; w = RV2W*1/v
 #RV2W = 3.95664E+3
 
 def v2k(vel):
@@ -48,7 +48,6 @@ def v2e(v):
     return v*v*VS2E
 def k2e(k):
     return v2e( k2v( k) )
-
 
 
 # version
