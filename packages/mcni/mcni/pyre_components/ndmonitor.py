@@ -25,8 +25,8 @@ neqs = [
 #   x, y, z, vx, vy, vz, t  -- those quantities in the neutron event
 #   mcni.utils.conversion as conversion
 q2e = {
-    'energy': 'conversion.VS2E * (vx*vx + vy*vy + vz*vz)',
-    'wavelength': 'conversion.RV2W * 1/sqrt(vx*vx + vy*vy + vz*vz)',
+    'energy':       'conversion.VS2E * (vx*vx + vy*vy + vz*vz)',
+    'w':            'conversion.RV2W * 1/sqrt(vx*vx + vy*vy + vz*vz)',  # wavelength
     'divx': 'vx/vz',
     'divy': 'vy/vz',
     'tof': 't',
