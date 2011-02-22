@@ -17,6 +17,7 @@ PROJECT = mcvine
 
 BUILD_DIRS = \
 	mcstas2 \
+	vitess \
 
 OTHER_DIRS = \
 
