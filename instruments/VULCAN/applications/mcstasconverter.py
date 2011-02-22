@@ -90,7 +90,8 @@ from mcstas2.utils.parsers.McStasComponentParser import McStasComponentParser
 from compmodules import IMPORT_DICT, PARAMS_DICT, INSTRUMENT, PARAM_FILTER, COMP_FILTER, BUILD_DICT
 
 # Regular expressions
-COMMENT         = '(/\*.*?\*/)'         # Non-greedy comment (.*?)
+COMMENT         = '(/\*.*?\*/)'         # Non-greedy block comment /*...*/ (.*?)
+COMMENT_SLASH   = '(//[^\n]*)'          # Slash comment //...
 SPACES          = '[ \t]*'              # Spaces and tabs
 NAME            = '%s([^ ()=]*)%s' % (SPACES, SPACES)  # Extracts name
 NO_BRACKETS     = '[^()]*'              # No brackets
@@ -762,8 +763,12 @@ class McStasConverter:
 
     def _removeComments(self, text):
         "Removes comments from the text"
-        p   = re.compile(COMMENT, re.DOTALL)
+        p   = re.compile(COMMENT, re.DOTALL)    # block comment
         s   = re.sub(p, '', text)
+        
+        p   = re.compile(COMMENT_SLASH)         # slash comment
+        s   = re.sub(p, '', s)
+
         return s
 
 
