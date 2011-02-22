@@ -8,7 +8,7 @@ namespace vitess {
    std::vector<Neutron> &neutrons)
   {
     neutrons.resize(evts.size());
-    std::vector<Neutron>::iterator outit;
+    std::vector<Neutron>::iterator outit=neutrons.begin();
     for (mcni::Neutron::Events::const_iterator it=evts.begin();
 	 it<evts.end(); it++) {
       mcvineneutron2vitessneutron(*it, *outit);

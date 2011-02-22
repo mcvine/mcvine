@@ -8,6 +8,7 @@ PROJECT = vitess
 BUILD_DIRS = \
 	lib \
 	vitess \
+	vitessbpmodule \
 
 
 OTHER_DIRS = \
