@@ -17,7 +17,10 @@ PROJ_TIDY += $(PROJ_CPPTESTS)
 PROJ_CLEAN += $(PROJ_CPPTESTS)
 
 PROJ_PYTESTS =  
-PROJ_CPPTESTS = testmcvine2vitess 
+PROJ_CPPTESTS = \
+	testmcvine2vitess \
+	testvitess2mcvine \
+
 PROJ_TESTS = $(PROJ_PYTESTS) $(PROJ_CPPTESTS)
 PROJ_LIBRARIES = -L$(BLD_LIBDIR) -lvitess
 
@@ -44,6 +47,9 @@ tidy::
 
 testmcvine2vitess: testmcvine2vitess.cc 
 	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ testmcvine2vitess.cc $(PROJ_LIBRARIES)
+
+testvitess2mcvine: testvitess2mcvine.cc 
+	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ testvitess2mcvine.cc $(PROJ_LIBRARIES)
 
 
 # version

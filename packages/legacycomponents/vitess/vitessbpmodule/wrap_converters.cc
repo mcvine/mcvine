@@ -13,7 +13,8 @@
 
 
 #include "boost/python.hpp"
-#include "vitess/neutronbuffer2stream.h"
+#include "vitess/mcvine2vitess.h"
+#include "vitess/vitess2mcvine.h"
 
 
 namespace wrap_vitess {
@@ -38,6 +39,14 @@ namespace wrap_vitess {
     return vnb;
   }
 
+  void vitessbuffer2mcvinebuffer(const char *s, size_t n, mcni::Neutron::Events &evts)
+  {
+    typedef std::vector<vitess::Neutron> vNeutrons_t;
+    const vitess::Neutron *p = (const vitess::Neutron *)s;
+    vNeutrons_t neutrons(p, p+n);
+    vitessneutrons2mcvineneutrons(neutrons, evts);
+  }
+
   void wrap_converters() 
   {
     using namespace boost::python;
@@ -46,7 +55,9 @@ namespace wrap_vitess {
     class_<VitessNeutronBuffer>
       ("VitessNeutronBuffer")
       .def("getCharPtr", &VitessNeutronBuffer::getCharPtr)
-      ;				
+      ;
+
+    def("vitessbuffer2mcvinebuffer", vitessbuffer2mcvinebuffer);
   }
 
 }
