@@ -17,7 +17,7 @@ PROJ_TIDY += $(PROJ_CPPTESTS)
 PROJ_CLEAN += $(PROJ_CPPTESTS)
 
 PROJ_PYTESTS =  
-PROJ_CPPTESTS = testneutronbuffer2stream 
+PROJ_CPPTESTS = testmcvine2vitess 
 PROJ_TESTS = $(PROJ_PYTESTS) $(PROJ_CPPTESTS)
 PROJ_LIBRARIES = -L$(BLD_LIBDIR) -lvitess
 
@@ -42,8 +42,8 @@ tidy::
 #--------------------------------------------------------------------------
 #
 
-testneutronbuffer2stream: testneutronbuffer2stream.cc 
-	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ testneutronbuffer2stream.cc $(PROJ_LIBRARIES)
+testmcvine2vitess: testmcvine2vitess.cc 
+	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ testmcvine2vitess.cc $(PROJ_LIBRARIES)
 
 
 # version

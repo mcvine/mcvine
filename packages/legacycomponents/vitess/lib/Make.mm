@@ -11,7 +11,8 @@ PROJ_TMPDIR = $(BLD_TMPDIR)/$(PROJECT)/$(PACKAGE)
 PROJ_CLEAN += $(PROJ_SAR) $(PROJ_DLL)
 
 PROJ_SRCS = \
-	neutronbuffer2stream.cc \
+	mcvine2vitess.cc \
+	vitess2mcvine.cc \
 
 # directory structure
 
@@ -66,7 +67,9 @@ endif
 
 EXPORT_HEADERS = \
 	neutron.h \
-	neutronbuffer2stream.h \
+	mcvine2vitess.h \
+	utils.h \
+	vitess2mcvine.h \
 
 
 EXPORT_LIBS = $(PROJ_SAR)

@@ -1,5 +1,5 @@
 #include <fstream>
-#include "vitess/neutronbuffer2stream.h"
+#include "vitess/mcvine2vitess.h"
 
 int main()
 {

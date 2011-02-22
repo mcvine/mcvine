@@ -3,40 +3,19 @@
 #ifndef MCVINE_VITESS_NEUTRONBUFFER2STREAM_H
 #define MCVINE_VITESS_NEUTRONBUFFER2STREAM_H
 
-#include <iostream>
-#include <cmath>
-#include <vector>
 
+#include <vector>
 #include "mcni/geometry/Vector3.h"
 #include "mcni/geometry/Position.h"
 #include "mcni/geometry/Velocity.h"
 #include "mcni/neutron/EventBuffer.h"
 #include "neutron.h"
+#include "utils.h"
 
-#include "mcni/math/number.h"
-#include "mcni/neutron/units_conversion.h"
 
 // convert mcvine neutron buffer to vitess neutron stream
 
 namespace vitess {
-
-  template <typename V3>
-  double wavelength(const V3& velocity)
-  {
-    double v = std::sqrt(velocity[0]*velocity[0] 
-			 +velocity[1]*velocity[1]
-			 +velocity[2]*velocity[2]);
-    using namespace mcni::neutron_units_conversion;
-    return 2*mcni::PI/(v2k*v);
-  }
-  
-  template <typename V3a, typename V3b>
-  void convertV3
-  (const V3a & invec, V3b & outvec)
-  {
-    for (unsigned int i=0; i<3; i++) 
-      outvec[i] = invec[i];
-  }
 
   void mcvineneutron2vitessneutron(const mcni::Neutron::Event &ev,
 				   Neutron & neutron)
