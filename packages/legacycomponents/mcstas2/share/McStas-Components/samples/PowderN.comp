@@ -401,7 +401,14 @@ INITIALIZE
   line_info.sigma_i  = sigma_inc;
   for (i=0; i< 8; i++) line_info.column_order[i] = columns[i];
   strncpy(line_info.compname, NAME_CURRENT_COMP, 256);
-  
+
+  /* Early cross-copy yheight and h */
+  if (h && !yheight) {
+    yheight = h;
+  } else if (yheight && !h) {
+    h = yheight;
+  }
+
   if (!radius || !yheight) {
     if (!xwidth || !yheight || !zthick) exit(fprintf(stderr,"PowderN: %s: sample has no volume (zero dimensions)\n", NAME_CURRENT_COMP));
     else isrect=1; }
