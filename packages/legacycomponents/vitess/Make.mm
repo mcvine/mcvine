@@ -12,6 +12,7 @@ BUILD_DIRS = \
 
 
 OTHER_DIRS = \
+	tests \
 
 
 RECURSE_DIRS = $(BUILD_DIRS) $(OTHER_DIRS)

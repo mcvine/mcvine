@@ -11,12 +11,10 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 PROJECT = vitess
-PACKAGE = vitess
+PACKAGE = components
 
 
 RECURSE_DIRS = \
-	components \
-	pyre_components \
 
 #--------------------------------------------------------------------------
 #
@@ -33,12 +31,15 @@ tidy::
 # export
 
 EXPORT_PYTHON_MODULES = \
-	Component.py \
+	Registry.py \
+	Vitess.py \
 	__init__.py \
+	repositories.py \
+
 
 EXPORT_BINS = \
 
-export:: export-python-modules export-binaries
+export:: export-package-python-modules
 
 # version
 # $Id$
