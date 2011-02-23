@@ -3,12 +3,39 @@
 Tutorials -- Powder Kernel
 ==========================
 
+Simulation with Powder Kernel
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+In this tutorial we will do experiment with a simple instrument consisting of three
+components:
 
-ssd.pml::
+::
+
+[Source_simple] -> [PowderKernel] -> [NDMonitor(x,y,t)]
+
+that uses **SimplePowderDiffractionKernel**, or simply **Powder Kernel**. The structure
+of configration and execution files for the instrument looks like the following:
+
+::
+
+    ssd         # execution Python script
+    ssd.pml     # main configuration file
+    Al/
+        Al-scatterer.xml
+        Al.laz
+        Al.xyz
+        peaks.py
+        sampleassembly.xml
+
+The main configuration file ssd.pml defines components, order of components in
+the instrument and parameters for each component. Let's take a look at the ssd.pml file
+
+**ssd.pml**
+
+::
 
     <?xml version="1.0"?>
-
+    
     <!-- [Source_simple] -> [PowderKernel] -> [NDMonitor(x,y,t)] -->
 
     <!DOCTYPE inventory>
@@ -74,6 +101,43 @@ ssd.pml::
         </component>
 
     </inventory>
+
+::
+
+ Note: Base name of the file ssd.pml should be the same as in tag
+       <component name="ssd"> otherwise simulation will silently
+       die without doing anything useful.
+
+::
+
+ Note: Name "ssd" stands for initial letters of source -> sample -> detector
+
+The ssd.pml file has three components: Source_simple, SampleAssemblyFromXml and
+NDMonitor(x,y,t). It describes parameters for source and detector components
+whereas parameters for sample component are defined in a separate file:
+"Al/sampleassembly.xml". Let's take a closer look at the components.
+
+Source_simple
+-------------
+
+Source_simple component is a standard component available in McStas simulation package.
+It generates flux of neutrons uniformly distributed in the energy range ``[E0-dE, E0+dE]`` in meV.
+In our configuration the energy range is ``[30, 170] meV``. Parameters ``xw``, ``yh`` and
+``dist`` define width, height and distance to the sample correspondingly. The benefit
+of using this simple source is to quickly get an estimate of what happens to the neutrons
+in this energy range as they propagates through the instrument.
+
+
+SampleAssemblyFromXml
+---------------------
+
+The purpose
+of the kernel is to describe a general mechanism of neutron scattering without 
+regard to any macroscopic properties of the material. It does though depend on
+microscopic properties such as atom species, lattice parameters, symmetry of the
+lattice, scattering cross sections etc.
+
+
 
 Al/sampleassembly.xml::
 
@@ -218,6 +282,10 @@ Al/Al.laz::
       8  0  0  81.05 162.10   0.5062  3.9032   975.79   8  0  0      34.4              0.5         0.52         0.00    0.00  6   6.59
 
 
+NDMonitor(x,y,t)
+----------------
+
+
 ssd::
 
     #!/usr/bin/env python
@@ -262,6 +330,9 @@ plot_ndmonitor.py::
 
    *Fig. 1 Diffraction image from PowderKernel simulation*
 
+
+Simulation with PowderN
+^^^^^^^^^^^^^^^^^^^^^^^
 
 ssd2.pml::
 
