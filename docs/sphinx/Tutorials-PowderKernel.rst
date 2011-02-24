@@ -570,9 +570,9 @@ and run again the experiment simulation.
 
  $ python ssd2
 
-As you can see we get a very similar picture to what obtained in the first section
+As you can see we get a very similar picture to what we obtained in the first section
 using  ``SimplePowderDiffractionKernel``. Results for ``SimplePowderDiffractionKernel``
-and ``PowderN`` component are consistent.
+and ``PowderN`` component look consistent.
 
 .. figure:: images/powderN.png
    :width: 600px
