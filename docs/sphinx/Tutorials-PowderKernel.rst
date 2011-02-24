@@ -14,7 +14,7 @@ components:
 [Source_simple] -> [PowderKernel] -> [NDMonitor(x,y,t)]
 
 that uses **SimplePowderDiffractionKernel**, or simply **Powder Kernel**. The structure
-of configration and execution files for the instrument looks like the following:
+of configuration and execution files for the instrument looks like the following:
 
 ::
 
@@ -35,7 +35,7 @@ the instrument and parameters for each component. Let's take a look at the ssd.p
 ::
 
     <?xml version="1.0"?>
-    
+
     <!-- [Source_simple] -> [PowderKernel] -> [NDMonitor(x,y,t)] -->
 
     <!DOCTYPE inventory>
@@ -112,10 +112,10 @@ the instrument and parameters for each component. Let's take a look at the ssd.p
 
  Note: Name "ssd" stands for initial letters of source -> sample -> detector
 
-The ssd.pml file has three components: Source_simple, SampleAssemblyFromXml and
-NDMonitor(x,y,t). It describes parameters for source and detector components
+The ssd.pml file has three components: ``Source_simple``, ``SampleAssemblyFromXml`` and
+``NDMonitor(x,y,t)``. It describes parameters for source and detector components
 whereas parameters for sample component are defined in a separate file:
-"Al/sampleassembly.xml". Let's take a closer look at the components.
+*Al/sampleassembly.xml*. Let's take a closer look at the components.
 
 Source_simple
 -------------
@@ -131,15 +131,26 @@ in this energy range as they propagates through the instrument.
 SampleAssemblyFromXml
 ---------------------
 
-The purpose
-of the kernel is to describe a general mechanism of neutron scattering without 
+The SampleAssemblyFromXml component allows to create a sample from detailed pieces
+of information about the material including configuration of unit cell, physical
+properties of atoms with respect to the scattered or absorbed neutrons. Please refer
+to :ref:`Sample Assebly <tutorials-sampleassembly>` tutorial for some details
+of how to write the configuration files for sample assembly.
+
+In this tutorial we will include *SimplePowderDiffractionKernel* in the sample assembly
+and describe some properties of the kernel. The purpose of the kernel in the sample
+assembly is to define a general mechanism of neutron scattering without
 regard to any macroscopic properties of the material. It does though depend on
 microscopic properties such as atom species, lattice parameters, symmetry of the
 lattice, scattering cross sections etc.
 
+In this experiment we will create a simple sample consisting of Al atoms and will
+keep all the configuration files related to the material in *Al* directory. The only
+parameter in the *ssd.pml* file related to sample was the name of xml file: *Al/sampleassembly.xml*
 
+**Al/sampleassembly.xml**
 
-Al/sampleassembly.xml::
+::
 
     <?xml version="1.0"?>
 
@@ -163,7 +174,14 @@ Al/sampleassembly.xml::
 
     </SampleAssembly>
 
-Al/Al.xyz::
+File *sampleassembly.xml* is the main file that describes general properties of the sample:
+shape, phase type, local geometry and some others. Our sample is a block with sizes: ``6cm*10cm*1cm``.
+The phase type is a crystal consisting of just one chemical element *Al* and the
+unit cell is given in *Al.xyz* file.
+
+**Al/Al.xyz**
+
+::
 
     4
     4.049320 0 0   0 4.049320 0   0 0 4.049320
@@ -172,7 +190,26 @@ Al/Al.xyz::
     Al 0.5 0 0.5
     Al 0 0.5 0.5
 
-Al/Al-scatterer.xml::
+The *Al.xyz* file tells us that the Al atoms comprise FCC unit cell with lattice
+constants:
+
+::
+
+ a = b = c = 4.049320 AA
+
+::
+
+ Note: .xyz file used here is not a standard .xyz file. Standard .xyz file
+        http://en.wikipedia.org/wiki/XYZ_file_format devotes the 2nd line
+        for comment where as in this case we store meaningful information:
+        lattice parameters.
+
+If the *Al-scatterer.xml* file is present in *Al* directory, then system will automatically
+recognize it and will turn on the scattering process for the sample.
+
+**Al/Al-scatterer.xml**
+
+::
 
     <?xml version="1.0"?>
 
@@ -186,42 +223,54 @@ Al/Al-scatterer.xml::
 
     </homogeneous_scatterer>
 
-peaks.py::
+*Al-scatterer.xml* configuration file describes the scattering process by defining
+the kernel. As mentioned above, we use *SimplePowderDiffractionKernel* for our experiment.
+We need to specify several parameters for the kernel: relative line width :math:`\Delta d/d`
+(``Dd_over_d``), Debye-Waller factor (``DebyeWaller_factor``) and file containing
+information about the diffraction planes (``peaks-py-path``).
+
+**peaks.py**
+
+::
 
     from mccomponents.sample.diffraction.SimplePowderDiffractionKernel import Peak
 
     peaks = [
-        Peak(q=2.687561, F_squared=1.690000, multiplicity=8, intrinsic_line_width=0.000000, DebyeWaller_factor=0.000000),
-        Peak(q=3.103329, F_squared=1.690000, multiplicity=6, intrinsic_line_width=0.000000, DebyeWaller_factor=0.000000),
-        Peak(q=4.388769, F_squared=1.440000, multiplicity=12, intrinsic_line_width=0.000000, DebyeWaller_factor=0.000000),
-        Peak(q=5.146288, F_squared=1.440000, multiplicity=24, intrinsic_line_width=0.000000, DebyeWaller_factor=0.000000),
-        Peak(q=5.375123, F_squared=1.210000, multiplicity=8, intrinsic_line_width=0.000000, DebyeWaller_factor=0.000000),
-        Peak(q=6.206657, F_squared=1.210000, multiplicity=6, intrinsic_line_width=0.000000, DebyeWaller_factor=0.000000),
-        Peak(q=6.763548, F_squared=1.000000, multiplicity=24, intrinsic_line_width=0.000000, DebyeWaller_factor=0.000000),
-        Peak(q=6.939254, F_squared=1.000000, multiplicity=24, intrinsic_line_width=0.000000, DebyeWaller_factor=0.000000),
-        Peak(q=7.601572, F_squared=1.000000, multiplicity=24, intrinsic_line_width=0.000000, DebyeWaller_factor=0.000000),
-        Peak(q=8.062684, F_squared=0.810000, multiplicity=24, intrinsic_line_width=0.000000, DebyeWaller_factor=0.000000),
-        Peak(q=8.062684, F_squared=0.810000, multiplicity=8, intrinsic_line_width=0.000000, DebyeWaller_factor=0.000000),
-        Peak(q=8.777539, F_squared=0.640000, multiplicity=12, intrinsic_line_width=0.000000, DebyeWaller_factor=0.000000),
-        Peak(q=9.179770, F_squared=0.640000, multiplicity=48, intrinsic_line_width=0.000000, DebyeWaller_factor=0.000000),
-        Peak(q=9.309986, F_squared=0.640000, multiplicity=24, intrinsic_line_width=0.000000, DebyeWaller_factor=0.000000),
-        Peak(q=9.309986, F_squared=0.640000, multiplicity=6, intrinsic_line_width=0.000000, DebyeWaller_factor=0.000000),
-        Peak(q=9.813587, F_squared=0.490000, multiplicity=24, intrinsic_line_width=0.000000, DebyeWaller_factor=0.000000),
-        Peak(q=10.174943, F_squared=0.490000, multiplicity=24, intrinsic_line_width=0.000000, DebyeWaller_factor=0.000000),
-        Peak(q=10.292577, F_squared=0.490000, multiplicity=24, intrinsic_line_width=0.000000, DebyeWaller_factor=0.000000),
-        Peak(q=10.750246, F_squared=0.490000, multiplicity=8, intrinsic_line_width=0.000000, DebyeWaller_factor=0.000000),
-        Peak(q=11.081100, F_squared=0.360000, multiplicity=24, intrinsic_line_width=0.000000, DebyeWaller_factor=0.000000),
-        Peak(q=11.081100, F_squared=0.360000, multiplicity=24, intrinsic_line_width=0.000000, DebyeWaller_factor=0.000000),
-        Peak(q=11.189210, F_squared=0.360000, multiplicity=24, intrinsic_line_width=0.000000, DebyeWaller_factor=0.000000),
-        Peak(q=11.611592, F_squared=0.360000, multiplicity=48, intrinsic_line_width=0.000000, DebyeWaller_factor=0.000000),
-        Peak(q=11.918560, F_squared=0.360000, multiplicity=24, intrinsic_line_width=0.000000, DebyeWaller_factor=0.000000),
-        Peak(q=11.918560, F_squared=0.360000, multiplicity=48, intrinsic_line_width=0.000000, DebyeWaller_factor=0.000000),
-        Peak(q=12.413314, F_squared=0.250000, multiplicity=6, intrinsic_line_width=0.000000, DebyeWaller_factor=0.000000),
+        Peak(q=2.687561, F_squared=1.690000, multiplicity=8, intrinsic_line_width=0.000000, DebyeWaller_factor=1.000000),
+        Peak(q=3.103329, F_squared=1.690000, multiplicity=6, intrinsic_line_width=0.000000, DebyeWaller_factor=1.000000),
+        Peak(q=4.388769, F_squared=1.440000, multiplicity=12, intrinsic_line_width=0.000000, DebyeWaller_factor=1.000000),
+        Peak(q=5.146288, F_squared=1.440000, multiplicity=24, intrinsic_line_width=0.000000, DebyeWaller_factor=1.000000),
+        Peak(q=5.375123, F_squared=1.210000, multiplicity=8, intrinsic_line_width=0.000000, DebyeWaller_factor=1.000000),
+        Peak(q=6.206657, F_squared=1.210000, multiplicity=6, intrinsic_line_width=0.000000, DebyeWaller_factor=1.000000),
+        Peak(q=6.763548, F_squared=1.000000, multiplicity=24, intrinsic_line_width=0.000000, DebyeWaller_factor=1.000000),
+        Peak(q=6.939254, F_squared=1.000000, multiplicity=24, intrinsic_line_width=0.000000, DebyeWaller_factor=1.000000),
+        Peak(q=7.601572, F_squared=1.000000, multiplicity=24, intrinsic_line_width=0.000000, DebyeWaller_factor=1.000000),
+        Peak(q=8.062684, F_squared=0.810000, multiplicity=24, intrinsic_line_width=0.000000, DebyeWaller_factor=1.000000),
+        Peak(q=8.062684, F_squared=0.810000, multiplicity=8, intrinsic_line_width=0.000000, DebyeWaller_factor=1.000000),
+        Peak(q=8.777539, F_squared=0.640000, multiplicity=12, intrinsic_line_width=0.000000, DebyeWaller_factor=1.000000),
+        Peak(q=9.179770, F_squared=0.640000, multiplicity=48, intrinsic_line_width=0.000000, DebyeWaller_factor=1.000000),
+        Peak(q=9.309986, F_squared=0.640000, multiplicity=24, intrinsic_line_width=0.000000, DebyeWaller_factor=1.000000),
+        Peak(q=9.309986, F_squared=0.640000, multiplicity=6, intrinsic_line_width=0.000000, DebyeWaller_factor=1.000000),
+        Peak(q=9.813587, F_squared=0.490000, multiplicity=24, intrinsic_line_width=0.000000, DebyeWaller_factor=1.000000),
+        Peak(q=10.174943, F_squared=0.490000, multiplicity=24, intrinsic_line_width=0.000000, DebyeWaller_factor=1.000000),
+        Peak(q=10.292577, F_squared=0.490000, multiplicity=24, intrinsic_line_width=0.000000, DebyeWaller_factor=1.000000),
+        Peak(q=10.750246, F_squared=0.490000, multiplicity=8, intrinsic_line_width=0.000000, DebyeWaller_factor=1.000000),
+        Peak(q=11.081100, F_squared=0.360000, multiplicity=24, intrinsic_line_width=0.000000, DebyeWaller_factor=1.000000),
+        Peak(q=11.081100, F_squared=0.360000, multiplicity=24, intrinsic_line_width=0.000000, DebyeWaller_factor=1.000000),
+        Peak(q=11.189210, F_squared=0.360000, multiplicity=24, intrinsic_line_width=0.000000, DebyeWaller_factor=1.000000),
+        Peak(q=11.611592, F_squared=0.360000, multiplicity=48, intrinsic_line_width=0.000000, DebyeWaller_factor=1.000000),
+        Peak(q=11.918560, F_squared=0.360000, multiplicity=24, intrinsic_line_width=0.000000, DebyeWaller_factor=1.000000),
+        Peak(q=11.918560, F_squared=0.360000, multiplicity=48, intrinsic_line_width=0.000000, DebyeWaller_factor=1.000000),
+        Peak(q=12.413314, F_squared=0.250000, multiplicity=6, intrinsic_line_width=0.000000, DebyeWaller_factor=1.000000),
     ]
 
+*peaks.py* file specifies cumulative parameters based on the Al.laz `powder pattern
+file <http://www.mcstas.org/download/components/data/>`_
+available in McStas package . We show the Al.laz file here for reference purposes:
 
+**Al/Al.laz**
 
-Al/Al.laz::
+::
 
     # TITLE *Aluminum-Al-[FM3-M] Miller, H.P.jr.;DuMond, J.W.M.[1942] at 298 K
     # CELL 4.049320 4.049320 4.049320 90.000000 90.000000 90.000000
@@ -281,12 +330,60 @@ Al/Al.laz::
       7  3  1  71.52 143.05   0.5272  3.5982   899.56   7  3  1     170.5              0.6         0.56         0.00    0.00 48   3.51
       8  0  0  81.05 162.10   0.5062  3.9032   975.79   8  0  0      34.4              0.5         0.52         0.00    0.00  6   6.59
 
+Parameters for *peaks.py* file are automatically generated from *Al.laz* file using
+Python script `peak_generator.py <http://dev.danse.us/trac/MCViNE/browser/trunk/instruments/VULCAN/applications/peak_generator.py>`_
+
+::
+
+ Note: For now peak_generator.py can only be used for cubic lattice types
+
+Let's take a closer look at the parameters provided in *peaks.py* file.
+
+
+Parameters ``q`` is a q-vector in reciprocal lattice related to lattice parameters and
+Miller indices (h,k,l). For orthorhombic lattice type q-vector can be simplified as follows:
+
+.. math::
+   \bold{q} = (2\pi h/a)\bold{i} + (2\pi k/b)\bold{j} + (2\pi l/c)\bold{k}
+
+with ``a``, ``b`` and ``c`` being the lattice constants. For FCC lattice type it
+can be even further simplified to:
+
+.. math::
+   \bold{q} = 2\pi/a(h\bold{i} + k\bold{j} + l\bold{k})
+
+so that the magnitude of the q-vector will be:
+
+.. math::
+   q = (2\pi/a)\sqrt{h^2 + k^2 + l^2}
+
+Parameter ``F_squared`` is the squared structure factor corresponding to ``|F(hkl)|`` in *Al.laz* file:
+
+::
+
+    F_squared = F(hkl)^2
+
+Parameter  ``multiplicity`` corresponds to column ``MULT`` in *Al.laz* file. Other
+parameters ``intrinsic_line_width`` and ``DebyeWaller_factor`` should be obtained
+from other experimental data.
 
 NDMonitor(x,y,t)
 ----------------
 
+The final component in our simple instrument is **NDMonitor**. It is a generic monitor
+that can plot various dependencies of physical values: ``x``, ``y``, ``z``, ``vx``,
+``vy``, ``vz``, ``w``, ``energy``.
+For the instrument we are interested in neutron
+distribution in ``(x,y)`` plane within some time range ``t``. For this we will use
+``NDMonitor(x,y,t)`` component. Other examples of NDMonitor include ``NDMonitor(w,x)``
+where ``w`` is the wavelength, ``NDMonitor(w)``, ``NDMonitor(energy,x)`` etc.
+[Need to write a separate section on NDMonitor!!!]
 
-ssd::
+The application script will look as follows:
+
+**ssd**
+
+::
 
     #!/usr/bin/env python
 
@@ -304,14 +401,21 @@ ssd::
     if __name__ == '__main__':
         main()
 
+After we finished with configuration and execution (application) files, it's time
+to run the experiment simulation:
 
 ::
 
  $ python ssd
 
-Draw plot use script
+The results of scattered neutrons is displayed on NDMonitor(x,y,t). To get the neutron
+intensity in ``(x,y)`` plane we need to sum neutron intensity over some time period.
+For our system we integrated neutrons over the time range ``[0, 002] sec``. To draw
+the plot for the monitor we use the script:
 
-plot_ndmonitor.py::
+**plot_ndmonitor.py**
+
+::
 
     #!/usr/bin/env python
 
@@ -324,17 +428,32 @@ plot_ndmonitor.py::
 
     dp.plot(ixy)
 
+This produces the diffraction image where every ring corresponds to separate
+diffraction plane, or separate combination of Miller indices (h,k,l)
 
 .. figure:: images/powder-kernel.png
-   :width: 450px
+   :width: 600px
 
-   *Fig. 1 Diffraction image from PowderKernel simulation*
+   *Fig. 1 Diffraction image with SimplePowderDiffractionKernel*
 
 
 Simulation with PowderN
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-ssd2.pml::
+In the previous section we used ``SimplePowderDiffractionKernel`` and assembled
+our sample using different pieces of information about material structure and
+macroscopic parameters. We can achieve the same result using standard McStas component
+for powder sample called ``PowderN.comp``. You might ask, why you actually need to have
+PowderKernel when one can use ``PowderN`` component instead. The answer is that PowderKernel
+allows more flexibility in defining your sample, especially when you want to investigate
+a complex structure for which the powder pattern file is not available.
+
+Let's replace ``SampleAssemblyFromXml`` component by ``PowderN`` and see if results
+are consistent.
+
+**ssd2.pml**
+
+::
 
     <?xml version="1.0"?>
 
@@ -411,8 +530,23 @@ ssd2.pml::
 
     </inventory>
 
+When configuring ``PowderN`` component we intentionally excluded incoherently
+scattered ``frac`` and transmitted ``tfrac`` neutrons.
 
-ssd2::
+::
+
+    <component name="sample">
+        ...
+        <property name="frac">0</property>
+        <property name="tfrac">0</property>
+    </component>
+
+We slightly update application script ...
+
+
+**ssd2**
+
+::
 
     #!/usr/bin/env python
 
@@ -430,13 +564,17 @@ ssd2::
     if __name__ == '__main__':
         main()
 
+and run again the experiment simulation.
+
 ::
 
  $ python ssd2
 
-
+As you can see we get a very similar picture to what obtained in the first section
+using  ``SimplePowderDiffractionKernel``. Results for ``SimplePowderDiffractionKernel``
+and ``PowderN`` component are consistent.
 
 .. figure:: images/powderN.png
-   :width: 450px
+   :width: 600px
 
    *Fig. 2 Diffraction image with PowderN component*
