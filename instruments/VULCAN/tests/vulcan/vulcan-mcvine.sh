@@ -1653,24 +1653,24 @@ mcvine-simulate \
 	--detector_90tc.nt='100' \
 	--detector_90tc.xmin='-0.385' \
 	--detector_90tc.xmax='0.385' \
-	--detector_90tc.xn='1' \
+	--detector_90tc.nx='1' \
 	--detector_90tc.ymin='-0.1925' \
 	--detector_90tc.ymax='0.1925' \
-	--detector_90tc.yn='1' \
+	--detector_90tc.ny='1' \
 	--detector_90tc.yheight='0.385' \
 	--detector_90tc.xwidth='0.770' \
 	--geometer.detector_90tc='relative((0.00000, 0.00000, 0.00000), to="previous"),relative((0.00000, 0.00000, 0.00000), to="previous")' \
 	--detector_90wc.title='detector_l90wc' \
 	--detector_90wc.filename='detector_l90wc.h5' \
-	--detector_90wc.tmin='0' \
-	--detector_90wc.tmax='100' \
-	--detector_90wc.nt='100' \
+	--detector_90wc.wmin='0' \
+	--detector_90wc.wmax='100' \
+	--detector_90wc.nw='100' \
 	--detector_90wc.xmin='-0.385' \
 	--detector_90wc.xmax='0.385' \
-	--detector_90wc.xn='1' \
+	--detector_90wc.nx='1' \
 	--detector_90wc.ymin='-0.1925' \
 	--detector_90wc.ymax='0.1925' \
-	--detector_90wc.yn='1' \
+	--detector_90wc.ny='1' \
 	--detector_90wc.yheight='0.385' \
 	--detector_90wc.xwidth='0.770' \
 	--geometer.detector_90wc='relative((0.00000, 0.00000, 0.00000), to="previous"),relative((0.00000, 0.00000, 0.00000), to="previous")' \
