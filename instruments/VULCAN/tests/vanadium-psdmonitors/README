@@ -1,0 +1,8 @@
+
+List of instruments:
+--------------------
+
+run-mcvine.sh       - PSD_TEW_monitor (should be compared with "vanadium-detector-system")
+run-mcvine2.sh      - PSD_TEW_monitor are replaced by NDMonitor and changed time parameters for PSD_TEW_monitor
+run-mcvine3.sh      - Modified run-mcvine.sh, changed time parameters for PSD_TEW_monitor
+                      (should be compared with run-mcvine2.sh script)
