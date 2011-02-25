@@ -112,8 +112,8 @@ mcvine-simulate \
 	--psd_yscan_L="NDMonitor(w,y)" \
 	--sample=V_sample \
 	--Detector_Position_c=Arm \
-	--detector_90tc=PSD_TEW_monitor \
-	--detector_90wc=PSD_TEW_monitor \
+	--detector_90tc="NDMonitor(x,y,t)" \
+	--detector_90wc="NDMonitor(x,y,w)" \
 	--Detector_Position_t=Arm \
 	--Detector_Position_tt=Arm \
 	--detector_90tt=PSD_TEW_monitor \
@@ -1646,31 +1646,33 @@ mcvine-simulate \
 	--sample.pack='1' \
 	--geometer.sample='relative((0.00000, 0.00000, 1.00000), to="previous"),relative((0.00000, 0.00000, 0.00000), to="previous")' \
 	--geometer.Detector_Position_c='relative((-2.00000, 0.00000, 0.00000), to="sample"),relative((0.00000, 90.00000, 0.00000), to="sample")' \
-	--detector_90tc.nxchan='1' \
-	--detector_90tc.format='table' \
-	--detector_90tc.bmax='100' \
+	--detector_90tc.title='detector_l90tc' \
+	--detector_90tc.filename='detector_l90tc.h5' \
+	--detector_90tc.tmin='0' \
+	--detector_90tc.tmax='100' \
+	--detector_90tc.nt='100' \
+	--detector_90tc.xmin='-0.385' \
+	--detector_90tc.xmax='0.385' \
+	--detector_90tc.xn='1' \
+	--detector_90tc.ymin='-0.1925' \
+	--detector_90tc.ymax='0.1925' \
+	--detector_90tc.yn='1' \
 	--detector_90tc.yheight='0.385' \
-	--detector_90tc.restore_neutron='1' \
-	--detector_90tc.filename='Vulcan_asbuilt_Ldetector_l90tc.txt' \
-	--detector_90tc.nychan='1' \
-	--detector_90tc.bmin='0' \
-	--detector_90tc.deltab='0' \
-	--detector_90tc.nbchan='100' \
 	--detector_90tc.xwidth='0.770' \
-	--detector_90tc.type='time' \
 	--geometer.detector_90tc='relative((0.00000, 0.00000, 0.00000), to="previous"),relative((0.00000, 0.00000, 0.00000), to="previous")' \
-	--detector_90wc.nxchan='1' \
-	--detector_90wc.format='table' \
-	--detector_90wc.bmax='10' \
+	--detector_90wc.title='detector_l90wc' \
+	--detector_90wc.filename='detector_l90wc.h5' \
+	--detector_90wc.tmin='0' \
+	--detector_90wc.tmax='100' \
+	--detector_90wc.nt='100' \
+	--detector_90wc.xmin='-0.385' \
+	--detector_90wc.xmax='0.385' \
+	--detector_90wc.xn='1' \
+	--detector_90wc.ymin='-0.1925' \
+	--detector_90wc.ymax='0.1925' \
+	--detector_90wc.yn='1' \
 	--detector_90wc.yheight='0.385' \
-	--detector_90wc.restore_neutron='1' \
-	--detector_90wc.filename='Vulcan_asbuilt_Ldetector_l90wc.txt' \
-	--detector_90wc.nychan='1' \
-	--detector_90wc.bmin='0' \
-	--detector_90wc.deltab='0' \
-	--detector_90wc.nbchan='100' \
 	--detector_90wc.xwidth='0.770' \
-	--detector_90wc.type='wavelength' \
 	--geometer.detector_90wc='relative((0.00000, 0.00000, 0.00000), to="previous"),relative((0.00000, 0.00000, 0.00000), to="previous")' \
 	--geometer.Detector_Position_t='relative((-1.95900, 0.40300, 0.00000), to="sample"),relative((0.00000, 90.00000, 0.00000), to="sample")' \
 	--geometer.Detector_Position_tt='relative((0.00000, 0.00000, 0.00000), to="previous"),relative((11.60000, 0.00000, 0.00000), to="previous")' \
