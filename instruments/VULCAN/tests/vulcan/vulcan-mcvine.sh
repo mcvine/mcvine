@@ -112,8 +112,8 @@ mcvine-simulate \
 	--psd_yscan_L="NDMonitor(w,y)" \
 	--sample=V_sample \
 	--Detector_Position_c=Arm \
-	--detector_90tc="NDMonitor(x,y,t)" \
-	--detector_90wc="NDMonitor(x,y,w)" \
+	--detector_90tc="NDMonitor(t)" \
+	--detector_90wc="NDMonitor(w)" \
 	--Detector_Position_t=Arm \
 	--Detector_Position_tt=Arm \
 	--detector_90tt=PSD_TEW_monitor \
@@ -1651,12 +1651,6 @@ mcvine-simulate \
 	--detector_90tc.tmin='0' \
 	--detector_90tc.tmax='100' \
 	--detector_90tc.nt='100' \
-	--detector_90tc.xmin='-0.385' \
-	--detector_90tc.xmax='0.385' \
-	--detector_90tc.nx='1' \
-	--detector_90tc.ymin='-0.1925' \
-	--detector_90tc.ymax='0.1925' \
-	--detector_90tc.ny='1' \
 	--detector_90tc.yheight='0.385' \
 	--detector_90tc.xwidth='0.770' \
 	--geometer.detector_90tc='relative((0.00000, 0.00000, 0.00000), to="previous"),relative((0.00000, 0.00000, 0.00000), to="previous")' \
@@ -1665,12 +1659,6 @@ mcvine-simulate \
 	--detector_90wc.wmin='0' \
 	--detector_90wc.wmax='100' \
 	--detector_90wc.nw='100' \
-	--detector_90wc.xmin='-0.385' \
-	--detector_90wc.xmax='0.385' \
-	--detector_90wc.nx='1' \
-	--detector_90wc.ymin='-0.1925' \
-	--detector_90wc.ymax='0.1925' \
-	--detector_90wc.ny='1' \
 	--detector_90wc.yheight='0.385' \
 	--detector_90wc.xwidth='0.770' \
 	--geometer.detector_90wc='relative((0.00000, 0.00000, 0.00000), to="previous"),relative((0.00000, 0.00000, 0.00000), to="previous")' \
