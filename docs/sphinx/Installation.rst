@@ -8,24 +8,49 @@ For a list of systems already deployed with MCViNE, please go to
 
 At this moment, mcvine can only be installed from source.
 
-Build mcvine from svn source
-----------------------------
+Build mcvine from source
+------------------------
 
 .. note::
   You may want to read :ref:`platform specific instructions <platform-specific-instructions>`
   first before you move on.
 
 
-Before you install
-^^^^^^^^^^^^^^^^^^
-This installation requires that you have installed subversion.
-It is also necessary for your system admin to allow
-you to check out svn repository of danse anonymously  (At some places,
-this is blocked due to firewall); you can try the following command to see if it works::
+Obtain mcvine source
+^^^^^^^^^^^^^^^^^^^^
+To obtain mcvine source, you can either get it from danse svn repository 
+or danse web site.
+
+
+
+Subversion repository
+"""""""""""""""""""""
+If subversion is available in your system and anonymous svn checkout
+is not blocked. You can do ::
 
  $ svn co svn://danse.us/buildInelast/mcvine
 
-Also you will need a c++ compiler. You may try this command if you use
+and change into the checked-out directory::
+
+ $ cd mcvine
+
+DANSE package web repository
+""""""""""""""""""""""""""""
+You can get a source distribution of mcvine
+from http://dev.danse.us/packages/mcvine-src-dist.tgz. 
+You will need
+to expand it somewhere::
+
+ $ tar -xvzf mcvine-src-dist.tgz
+
+and change into the expanded directory::
+
+ $ cd mcvine-src-dist
+
+
+Before you install
+^^^^^^^^^^^^^^^^^^
+You will need a c++ compiler. You may try this command if you use
 a typical linux environment ::
 
  $ g++
@@ -52,15 +77,7 @@ command does not complain about "command not found"::
 Build and Install
 ^^^^^^^^^^^^^^^^^
 
-To start, check out a release builder from danse.us svn repo::
-
- $ svn co svn://danse.us/buildInelast/mcvine
-
-Then change directory into it::
-
- $ cd mcvine
-
-Then build::
+To start, please run the build.py command::
 
  $ ./build.py <export_root>
 
