@@ -3,6 +3,66 @@
 Fundamentals
 ============
 
+
+Instrument creation
+-------------------
+You may want to follow 
+:ref:`this tutorial <create-sim-app>`.
+
+Create an instrument simulation application::
+
+  $ mcvine-create-instrument-simulation-application  --name=<name> --components=<list of components>
+
+
+
+Positioning of Components
+-------------------------
+Positioning of components is done through the "geometer"::
+
+ --geometer.<component>=<position>,<orientation>
+
+E.g.::
+
+ --geometer.sample=(0,0,10),(0,0,0)
+
+The first tuple (0,0,10) means the position of the sample is at (0,0,10).
+The second tuple (0,0,0) menas the orientation of the sample is the same
+as the absolute coordinate system.
+
+.. note::
+   Coordinate system convention: 
+
+   mcvine uses the same convention as mcstas.
+   
+   * z -- beam downstream
+   * y -- vertical up.
+
+
+.. note::
+   Units: 
+   
+   * position: meters
+   * orientation: degrees
+
+
+Relative coordinates
+^^^^^^^^^^^^^^^^^^^^
+A coomponent's position and orientation can be specified as relative to another
+component. For example ::
+   
+ --geometer.sample=relative("source",(0,0,10)),relative("source",(0,30,0))
+
+means the sample is at (0,0,10) relative to the coordinate system attached to 
+the "source" component, and rotated 30 degrees by the y axis of the coordinate
+system attached to the "source" component.
+
+The reference component is specified by its name.
+
+You can also use the keyword "previous" to mean the reference
+component is the one just before this component in the pipeline.
+
+
+
 Error bar of simulated intensities
 ----------------------------------
 
