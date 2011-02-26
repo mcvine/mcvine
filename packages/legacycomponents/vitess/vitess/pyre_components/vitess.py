@@ -67,6 +67,7 @@ def vitess(modulename=None):
             simple_description = "vitess component %s" % modulename
         else:
             simple_description = "vitess component"
+        simple_description += "  ** this component is experimental **"
 
         if modulename:
             full_description = ""

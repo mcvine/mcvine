@@ -23,9 +23,6 @@ import os
 from mcni.AbstractComponent import AbstractComponent
 class Component(AbstractComponent):
 
-    vitessmodulespath = os.environ.get('VITESS_MODULES_DIR')
-    if not vitessmodulespath:
-        raise RuntimeError, "Cannot find vitess modules. please set env var VITESS_MODULES_DIR"
 
     def __init__(self, name, modulename=None, parameters={}):
         super(Component, self).__init__(name)
@@ -48,6 +45,14 @@ class Component(AbstractComponent):
         neutrons.resize(n)
         vitessbuffer2mcvinebuffer(out, n, neutrons)
         return
+
+
+    def _get_vitessmodulespath(self):
+        path = os.environ.get('VITESS_MODULES_DIR')
+        if not path:
+            raise RuntimeError, "Cannot find vitess modules. please set env var VITESS_MODULES_DIR"
+        return path
+    vitessmodulespath = property(_get_vitessmodulespath)
 
     
 from vitessbp import neutronbuffer2vitess, vitessbuffer2mcvinebuffer
