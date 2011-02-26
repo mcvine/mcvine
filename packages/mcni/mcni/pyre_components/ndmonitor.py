@@ -52,10 +52,10 @@ class NDMonitorBase(HistogramBasedMonitorMixin, ParallelComponent, AbstractCompo
         title.meta['tip'] = 'Title of the histogram'
 
         # Stubs
-        xwidth = pyre.inventory.str('xwidth', default=0)
+        xwidth = pyre.inventory.str('xwidth', default=0.1)
         xwidth.meta['tip'] = 'Width of the monitor'
 
-        yheight = pyre.inventory.str('yheight', default=0)
+        yheight = pyre.inventory.str('yheight', default=0.1)
         yheight.meta['tip'] = 'Height of the monitor'
     
 

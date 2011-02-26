@@ -61,7 +61,7 @@ class NDMonitor(object):
         return
 
 
-    def __init__(self, name, axes, size):
+    def __init__(self, name, axes, size=[0.1, 0.1]):
         """
         axes: a list of axis
         axis: a tuple of name, expression, bins, ranges
