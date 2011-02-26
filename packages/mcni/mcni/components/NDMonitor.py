@@ -52,7 +52,7 @@ class NDMonitor(object):
         return
 
 
-    def __init__(self, name, axes):
+    def __init__(self, name, axes, size):
         """
         axes: a list of axis
         axis: a tuple of name, expression, bins, ranges
@@ -66,11 +66,13 @@ class NDMonitor(object):
         bins = self.bins = []
         ranges = self.ranges = []
         haxes = []
+        print name, axes, size
 
         from histogram import histogram, axis
         from numpy import histogramdd as hdd, arange
-        
-        for n, e, b, r in axes:
+
+        # n='variable name', e='expression', b='number of bins (divisions)', r='range'
+        for n, e, b, r in axes:     
             expressions.append(e)
             ranges.append(r)
             bins.append(b)

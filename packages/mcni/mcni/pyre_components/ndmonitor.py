@@ -169,7 +169,8 @@ def ndmonitor(*quantities, **kwds):
                 axes.append(axis)
                 continue
 
-            self._engine_args = hname, axes
+            size    = self.inventory.xwidth, self.inventory.yheight     # monitor size
+            self._engine_args = hname, axes, size
             self._createEngine()
             return
 
