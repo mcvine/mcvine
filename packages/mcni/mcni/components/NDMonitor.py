@@ -29,6 +29,16 @@ class NDMonitor(object):
         t = arr[:,8]; 
         p = arr[:,9]
 
+        # Apply filter if area is positive
+        assert self.xwidth > 0 and self.yheight > 0
+            
+        ftr    = (x >= -self.xwidth/2)*(x <= self.xwidth/2)*(y >= -self.yheight/2)*(y <= self.yheight/2)
+
+        x = x[ftr]; y = y[ftr]; z = z[ftr];
+        vx = vx[ftr]; vy = vy[ftr]; vz = vz[ftr];
+        s1 = s1[ftr]; s2 = s2[ftr]; t = t[ftr]; p = p[ftr];
+
+        print len(x), len(t)
         # propagate to z = 0
         self._propagateToZ0(x,y,z,vx,vy,vz,t)
 
@@ -66,7 +76,8 @@ class NDMonitor(object):
         bins = self.bins = []
         ranges = self.ranges = []
         haxes = []
-        print name, axes, size
+        self.xwidth     = size[0]
+        self.yheight    = size[1]
 
         from histogram import histogram, axis
         from numpy import histogramdd as hdd, arange

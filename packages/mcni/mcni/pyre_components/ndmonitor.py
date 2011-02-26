@@ -169,7 +169,13 @@ def ndmonitor(*quantities, **kwds):
                 axes.append(axis)
                 continue
 
-            size    = self.inventory.xwidth, self.inventory.yheight     # monitor size
+            xwidth  = float(self.inventory.xwidth)
+            yheight = float(self.inventory.yheight)
+            if xwidth <=0 or yheight <=0:
+                raise Exception("Zero or negative area: xwidth=%s, yheight=%s",
+                                (self.inventory.xwidth, self.inventory.yheight))
+
+            size    = xwidth, yheight     # monitor size
             self._engine_args = hname, axes, size
             self._createEngine()
             return
