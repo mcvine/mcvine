@@ -38,7 +38,6 @@ class NDMonitor(object):
         vx = vx[ftr]; vy = vy[ftr]; vz = vz[ftr];
         s1 = s1[ftr]; s2 = s2[ftr]; t = t[ftr]; p = p[ftr];
 
-        print len(x), len(t)
         # propagate to z = 0
         self._propagateToZ0(x,y,z,vx,vy,vz,t)
 
