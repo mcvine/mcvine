@@ -12,7 +12,7 @@
 #
 
 
-from mcni.components.Registry import Registry as base
+from mcni.components.RegistryBase import RegistryBase as base
 
 
 class Registry(base):
