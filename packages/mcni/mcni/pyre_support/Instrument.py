@@ -12,6 +12,14 @@
 #
 
 
+
+# by default, let us disable this annoying channel.
+# one can always enable it by 
+#  --journal.error.pyre.inventory
+import journal
+journal.error('pyre.inventory').deactivate()
+
+
 # constants
 
 # number of simulation loops by default (ncount/buffer_size)
@@ -140,6 +148,21 @@ class Instrument( base, ParallelComponent ):
         return
 
 
+    def init(self):
+        # some initialization must be done before my sub components initialize
+        self._init_before_my_components()
+        
+        # the following is copied from pyre.inventory.Configurable
+        
+        # initialize my subcomponents
+        self.inventory.init()
+
+        # perform any last initializations
+        self._init()
+
+        return
+    
+        
     def _dumpRegsitry(self):
         out = '%s-reg.pkl' % self.name
         import os
@@ -218,6 +241,7 @@ class Instrument( base, ParallelComponent ):
         dumppml = self.inventory.dumppml
         if dumppml:
             self.inventory.dumpconfiguration = True
+            self._showHelpOnly = True
 
         base._configure(self)
         self.geometer = self.inventory.geometer
@@ -231,24 +255,63 @@ class Instrument( base, ParallelComponent ):
             partitions = getPartitions(self.ncount, self.mpiSize)
             self.ncount = partitions[self.mpiRank]
 
-        neutron_components = {}
-        for name in self.inventory.facilityNames():
-            comp = self.inventory.getTraitValue( name )
-            if self._showHelpOnly:
-                comp._showHelpOnly = True
-            if isinstance(comp, McniComponent):
-                neutron_components[ name ] = comp
-                pass
-            continue
-
-        self.neutron_components = neutron_components
-
         # tracer
         tracer = self.inventory.tracer
         if tracer.name == 'no-neutron-tracer':
             tracer = None
         self.tracer = tracer
         
+        return
+
+
+    def _propagate_showHelpOnly_from_subcomponents(self):
+        # I want to know if my sub components are requested in help mode
+        # right now actually.
+        # This is done inside _init method implemented in pyre.components.Component.
+        # I just copied it here. 
+        self._showHelpOnly = self._showHelpOnly or _requestedForHelp(self)
+        if not self._showHelpOnly:
+            for component in self.components():
+                component._showHelpOnly = component._showHelpOnly or \
+                    _requestedForHelp(component)
+                if component._showHelpOnly:
+                    self._showHelpOnly = True
+                    break
+        return
+
+
+    def _propagate_showHelpOnly_to_subcomponents(self):
+        # it is actually necessary to propagate to sub components
+        # if the application is requested to just show help
+        self._showHelpOnly = self._showHelpOnly or _requestedForHelp(self)
+        if self._showHelpOnly:
+            for name in self.inventory.facilityNames():
+                comp = self.inventory.getTraitValue( name )
+                comp._showHelpOnly = True
+                continue
+        return
+    
+
+    def _init_before_my_components(self):
+        # need to know if my subcomponents was requested for help
+        self._propagate_showHelpOnly_from_subcomponents()
+        # need to let my subcomponents know I am requested for help
+        self._propagate_showHelpOnly_to_subcomponents()
+        
+        # output directory
+        if not self._showHelpOnly: 
+            self._setup_outputdir()
+
+        # find all neutron components
+        neutron_components = {}
+        for name in self.inventory.facilityNames():
+            comp = self.inventory.getTraitValue( name )
+            if isinstance(comp, McniComponent):
+                neutron_components[ name ] = comp
+                pass
+            continue
+        self.neutron_components = neutron_components
+
         # if in server mode for parallel computing
         # we actually don't want the subcomponents to
         # initialize, because in the "server" mode 
@@ -264,7 +327,6 @@ class Instrument( base, ParallelComponent ):
             comp = self.inventory.getTraitValue(c)
             comp._noinit = noinit            
 
-        if not self._showHelpOnly: self._setup_outputdir()
         return
 
 
@@ -321,7 +383,7 @@ class Instrument( base, ParallelComponent ):
         
         # the given filename
         dumppml = self.inventory.dumppml
-        if dumppml in ['yes', 'on']:
+        if dumppml in ['yes', 'on', 'true']:
             outfile = default_filename
         else:
             outfile = dumppml
@@ -329,7 +391,12 @@ class Instrument( base, ParallelComponent ):
         # make sure the output path does not exist
         import os
         if os.path.exists(outfile):
-            raise RuntimeError, "output file %r already exists" % outfile
+            # save the old configuration 
+            timeformat = '%m-%d-%Y--%H-%M-%S'
+            import time, shutil
+            timestr = time.strftime(timeformat)
+            newfilename = '%s.saved-%s' % (outfile, timestr)
+            shutil.copyfile(outfile, newfilename)
 
         # get registry
         registry = self.createRegistry()
@@ -417,6 +484,15 @@ class Instrument( base, ParallelComponent ):
 
     pass # end of Instrument
 
+
+
+
+def _requestedForHelp(component):
+    "check if a component is requested for help"
+    return component.inventory.usage or \
+        component.inventory.showProperties or \
+        component.inventory.showComponents or \
+        component.inventory.showCurator
 
 
 def _getCmdStr():
