@@ -110,6 +110,58 @@ Miscellanesous
   This option is only valid if mpi binding of mcvine is available.
 
 
+.. _fundamentals-tracer:
+
+Using tracer to debug
+---------------------
+To see how neutrons move through the components,
+use the "tracer" facility. 
+
+For example, if your simulation application is named "myapp", please
+try the following::
+
+ $ /path/to/myapp --tracer=console --ncount=10
+
+The simulation will print out the neutrons before they enter each 
+component and after they exit each component.
+
+
+.. _fundamentals-simulated-intensities:
+
+Simulated intensities
+---------------------
+The simulated intensities at monitors are normalized by "ncount",
+the number of Monte Carlo runs.
+
+
+.. _fundamentals-list-of-components:
+
+List of available neutron components
+------------------------------------
+To list all components::
+
+ $ mcvine-list-components
+
+To list components of a specific category::
+
+ $ mcvine-list-components --category=monitors
+
+
+.. _fundamentals-component-info:
+
+Show component information
+--------------------------
+
+To find out more information about a component, run ::
+
+ $ mcvine-component-info --type=<component-type>
+
+For example::
+
+ $ mcvine-component-info --type=E_monitor
+
+
+
 Error bar of simulated intensities
 ----------------------------------
 

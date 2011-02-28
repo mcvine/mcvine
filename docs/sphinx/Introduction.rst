@@ -18,11 +18,11 @@ Features
 Infrastructure:
 
 * Simple, clean command line interface for
- - Creation of simulation application
- - Listing available neutron components
- - Displaying info about any neutron component
-* Debugging facility
-* Easily extensible python/c++ interface for neutron component
+ - Creation of simulation application (:ref:`tutorial <create-sim-app>`, :ref:`manual <fundamentals-instrument>`)
+ - :ref:`Listing available neutron components <fundamentals-list-of-components>`
+ - :ref:`Displaying info about any neutron component <fundamentals-component-info>`
+* :ref:`Debugging facility <fundamentals-tracer>`
+* :ref:`Easily extensible python/c++ interface for neutron component <extend-mcvine>`
 * Sample simulation framework
 * Detector system simulation framework
 * XML schema for sample assembly configuration

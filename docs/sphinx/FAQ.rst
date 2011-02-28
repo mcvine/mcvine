@@ -26,3 +26,6 @@ How do I ...
     For help on common simulation application options, please refer 
     to :ref:`fundamentals-instrument`; for a tutorial, see
     :ref:`create-sim-app`.
+
+... What does the intensities at monitors mean?
+    Please refer to :ref:`fundamentals-simulated-intensities`

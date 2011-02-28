@@ -155,8 +155,8 @@ You can also tell the command to list components in specific category. For examp
 
  $ mcvine-list-components --category=monitors
 
-To find out more information about a specific component you are interested in, for example
-the E_monitor component, run ::
+To find out more information about a specific component you are interested in,
+run ::
 
  $ mcvine-component-info --type=<component-type>
 
