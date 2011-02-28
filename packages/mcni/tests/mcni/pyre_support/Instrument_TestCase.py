@@ -36,7 +36,7 @@ class TestCase(unittest.TestCase):
             '',
             '--ncount=10',
             '--buffer_size=4',
-            '--output-dir=pyre_support_test_out',
+            '--output-dir=out-pyre_support_test',
             '--overwrite-datafiles',
             ]
 
@@ -46,6 +46,28 @@ class TestCase(unittest.TestCase):
                          instrument.inventory.verifier.count,
                          )
         
+        sys.argv = save
+        return
+
+
+    def test_dumppml(self):
+        'mcni.pyre_support.Instrument: option dumppml'
+        instrument = Instrument('test-dumppml')
+        instrument.testFacility = self
+
+        import sys
+        save = sys.argv
+        sys.argv = [
+            '',
+            '--ncount=10',
+            '--buffer_size=4',
+            '--output-dir=out-Instrument-dumppml',
+            '--dump-pml',
+            '--overwrite-datafiles',
+            ]
+
+        instrument.run()
+
         sys.argv = save
         return
 
