@@ -1,0 +1,9 @@
+# -*- python -*-
+
+from mcni.pyre_support.AbstractComponent import AbstractComponent
+class NeutronPrinter( AbstractComponent ):
+  
+    def process(self, neutrons):
+        for n in neutrons: print n
+
+def neutroncomponent(): return NeutronPrinter('printer')
