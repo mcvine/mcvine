@@ -7,6 +7,28 @@ Components
 Generic components provided by MCViNE
 -------------------------------------
 
+NDMonitor
+^^^^^^^^^
+
+NDMonitor is a rectangular monitor with a finite size (width and height) 
+and infinitisimal thickness.
+It can be used to measure a multi-dimensional histogram
+of intensities.
+The quantities to measure can be specify through command line.
+
+Examples
+""""""""
+
+* I(tof): --monitor=NDMonitor(tof)
+* I(energy): --monitor=NDMonitor(energy)
+* I(x,y):  --monitor=NDMonitor(x,y)
+* I(x,divergence of x): --monitor=NDMonitor(x, divx)
+* I(x,y,tof):  --monitor=NDMonitor(x,y,tof)
+
+Quick tutorial
+""""""""""""""
+
+
 Neutron storage
 ^^^^^^^^^^^^^^^
 

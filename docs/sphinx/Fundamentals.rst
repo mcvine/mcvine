@@ -4,8 +4,13 @@ Fundamentals
 ============
 
 
-Instrument creation
--------------------
+.. _fundamentals-instrument:
+
+Instrument
+----------
+
+Creat instrument simulation applicatioin
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 You may want to follow 
 :ref:`this tutorial <create-sim-app>`.
 
@@ -15,8 +20,10 @@ Create an instrument simulation application::
 
 
 
+.. _fundamentals-instrument-positioning-of-components:
+
 Positioning of Components
--------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^
 Positioning of components is done through the "geometer"::
 
  --geometer.<component>=<position>,<orientation>
@@ -46,7 +53,7 @@ as the absolute coordinate system.
 
 
 Relative coordinates
-^^^^^^^^^^^^^^^^^^^^
+""""""""""""""""""""
 A coomponent's position and orientation can be specified as relative to another
 component. For example ::
    
@@ -61,6 +68,46 @@ The reference component is specified by its name.
 You can also use the keyword "previous" to mean the reference
 component is the one just before this component in the pipeline.
 
+
+
+Options of instrument simulation app
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Scattering
+""""""""""
+
+* --multiple-scattering: indicates whether multiple scattering is on. This option
+  is only useful for the components that support this feature.
+
+Monte Carlo
+"""""""""""
+
+* --ncount=<n>: number of simulation runs
+* --buffer_size=<n>: (optional) number of neutrons buffered in memory. By default a value will be picked for you depending on ncount and memory size.
+
+
+Outputs
+"""""""
+* --overwrite-datafiles:
+  If on, existing outputs will be overwritten.
+* --output-dir=<dir>:
+  The output directory.
+
+Miscellanesous
+""""""""""""""
+* --dump-pml:
+  Writes out pml file for the simulation. A pml file is a configuration file
+  that contains all configuration details of the simulation application.
+  When this option is on, no real simulation will be done.
+* --tracer:
+  facility to trace neutrons. By default, no tracer will be used. Choices:
+
+  * --tracer=console: print out neutrons to console. Be sure to turn down ncount.
+
+* --mpirun.nodes=<n>:
+  Select the number of nodes to parallely run the simulation.
+  <n> is an integer.
+  This option is only valid if mpi binding of mcvine is available.
 
 
 Error bar of simulated intensities

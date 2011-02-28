@@ -4,7 +4,7 @@
 
 .. _mcvinedocs:
 
-MCViNE 0.2 documentation
+MCViNE 1.0 documentation
 =========================
 
 Contents:

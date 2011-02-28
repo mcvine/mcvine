@@ -30,7 +30,7 @@ all: docs
 PROJ_CLEAN = \
 	_build/* \
 
-clean::
+clean:: sphinx-clean
 	BLD_ACTION="clean" $(MM) recurse
 
 distclean::
