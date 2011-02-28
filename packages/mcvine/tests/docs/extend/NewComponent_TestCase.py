@@ -12,14 +12,13 @@
 #
 
 
-interactive = False
-
 simapp = 'sd'
 outdir = 'out'
 
 import os, glob, shutil
 def cleanup():
-    # clean up
+    pmls = glob.glob('sd.pml*')
+    map(os.remove, pmls)
     if os.path.exists(outdir):
         shutil.rmtree('out')
 
@@ -37,6 +36,14 @@ class TestCase(unittest.TestCase):
 
     def test1(self):
         'create and use new component'
+        cleanup()
+        
+        cmd = 'mcvine-create-instrument-simulation-application --name=sd --components=source,detector'
+        execute(cmd)
+        
+        cmd = './sd --source=Souce_simple --detector=printer --dump-pml'
+        execute(cmd)
+        
         cmd = './sd -ncount=5'
         execute(cmd)
         return
@@ -58,8 +65,6 @@ def main():
     
     
 if __name__ == "__main__":
-    global interactive
-    interactive = True
     main()
     
 # version
