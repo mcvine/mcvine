@@ -18,6 +18,12 @@ from pyre.inventory.Facility import Facility
 class NeutronComponentFacility( Facility ):
 
 
+    def __init__(self, name, family=None, **kwds):
+        family = family or 'neutroncomponent'
+        super(NeutronComponentFacility, self).__init__(name, family, **kwds)
+        return
+
+
     def _import(self, name):
         component, locator = self._createNeutronComponent(name)
         if component is None:
