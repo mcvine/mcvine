@@ -36,6 +36,18 @@ else:
         'mcstas2', pyre_component_suppliers.PyModuleAsSupplier('mcstas2.pyre_support'))
 
 
+try: 
+    import vitess
+except ImportError:
+    import warnings
+    warnings.warn('vitess not available')
+else:
+    component_suppliers.register(
+        'vitess', component_suppliers.PyModuleAsSupplier('vitess.components'))
+    pyre_component_suppliers.register(
+        'vitess', pyre_component_suppliers.PyModuleAsSupplier('vitess.pyre_components'))
+
+
 # version
 __id__ = "$Id$"
 
