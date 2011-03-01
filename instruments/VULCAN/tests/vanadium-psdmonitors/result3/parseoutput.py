@@ -17,22 +17,22 @@ from psd_tew_monitor_parser import PSD_TEW_monitorParser
 p   = PSD_TEW_monitorParser()
 
 p.parse("tt.txt")
-p.toFile("tt_plot.txt", bin="x")
+p.distToFile("tt_plot.txt", 0, 0)
 
 p.parse("tc.txt")
-p.toFile("tc_plot.txt", bin="x")
+p.distToFile("tc_plot.txt", 0, 0)
 
 p.parse("tb.txt")
-p.toFile("tb_plot.txt", bin="x")
+p.distToFile("tb_plot.txt", 0, 0)
 
 p.parse("wt.txt")
-p.toFile("wt_plot.txt", bin="x")
+p.distToFile("wt_plot.txt", 0, 0)
 
 p.parse("wc.txt")
-p.toFile("wc_plot.txt", bin="x")
+p.distToFile("wc_plot.txt", 0, 0)
 
 p.parse("wb.txt")
-p.toFile("wb_plot.txt", bin="x")
+p.distToFile("wb_plot.txt", 0, 0)
 
 __date__ = "$Jan 14, 2011 3:35:33 PM$"
 

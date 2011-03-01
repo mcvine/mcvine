@@ -19,22 +19,22 @@ p   = PSD_TEW_monitorParser()
 RESULT = "results/ssd4_1"
 
 p.parse("%s/tt.txt" % RESULT)
-p.toFile("%s/tt_plot.txt" % RESULT, bin="x")
+p.distToFile("%s/tt_plot.txt" % RESULT, 0, 0)
 
 p.parse("%s/tc.txt" % RESULT)
-p.toFile("%s/tc_plot.txt" % RESULT, bin="x")
+p.distToFile("%s/tc_plot.txt" % RESULT, 0, 0)
 
 p.parse("%s/tb.txt" % RESULT)
-p.toFile("%s/tb_plot.txt" % RESULT, bin="x")
+p.distToFile("%s/tb_plot.txt" % RESULT, 0, 0)
 
 p.parse("%s/wt.txt" % RESULT)
-p.toFile("%s/wt_plot.txt" % RESULT, bin="x")
+p.distToFile("%s/wt_plot.txt" % RESULT, 0, 0)
 
 p.parse("%s/wc.txt" % RESULT)
-p.toFile("%s/wc_plot.txt" % RESULT, bin="x")
+p.distToFile("%s/wc_plot.txt" % RESULT, 0, 0)
 
 p.parse("%s/wb.txt" % RESULT)
-p.toFile("%s/wb_plot.txt" % RESULT, bin="x")
+p.distToFile("%s/wb_plot.txt" % RESULT, 0, 0)
 
 __date__ = "$Jan 14, 2011 3:35:33 PM$"
 
