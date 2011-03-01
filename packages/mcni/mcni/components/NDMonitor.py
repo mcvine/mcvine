@@ -29,17 +29,18 @@ class NDMonitor(object):
         t = arr[:,8]; 
         p = arr[:,9]
 
+        # propagate to z = 0
+        self._propagateToZ0(x,y,z,vx,vy,vz,t)
+
         # Apply filter if area is positive
         assert self.xwidth > 0 and self.yheight > 0
-            
+
         ftr    = (x >= -self.xwidth/2)*(x <= self.xwidth/2)*(y >= -self.yheight/2)*(y <= self.yheight/2)
 
         x = x[ftr]; y = y[ftr]; z = z[ftr];
         vx = vx[ftr]; vy = vy[ftr]; vz = vz[ftr];
         s1 = s1[ftr]; s2 = s2[ftr]; t = t[ftr]; p = p[ftr];
 
-        # propagate to z = 0
-        self._propagateToZ0(x,y,z,vx,vy,vz,t)
 
         from numpy import sqrt  # some expressions use 'sqrt()' function
         from numpy import histogramdd as hdd
