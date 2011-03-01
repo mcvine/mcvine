@@ -56,38 +56,50 @@
             <component name="m1">
 	      <property name="xwidth">0.1</property>
 	      <property name="yheight">0.1</property>
-              <property name="type">time</property>
-	      <property name="filename">m1.dat</property>
+              <property name="tmin">0</property>
+              <property name="tmax">1</property>
+              <property name="nt">100</property>
+	      <property name="filename">m1.h5</property>
 	    </component>
             <component name="m2">
 	      <property name="xwidth">0.1</property>
 	      <property name="yheight">0.1</property>
-              <property name="type">wavelength</property>
-	      <property name="filename">m2.dat</property>
+              <property name="wmin">0</property>
+              <property name="wmax">10</property>
+              <property name="nw">100</property>
+	      <property name="filename">m2.h5</property>
 	    </component>
             <component name="m3">
 	      <property name="xwidth">0.1</property>
 	      <property name="yheight">0.1</property>
-              <property name="type">time</property>
-	      <property name="filename">m3.dat</property>
+              <property name="tmin">0</property>
+              <property name="tmax">1</property>
+              <property name="nt">100</property>
+	      <property name="filename">m3.h5</property>
 	    </component>
             <component name="m4">
 	      <property name="xwidth">0.1</property>
 	      <property name="yheight">0.1</property>
-              <property name="type">wavelength</property>
-	      <property name="filename">m4.dat</property>
+              <property name="wmin">0</property>
+              <property name="wmax">10</property>
+              <property name="nw">100</property>
+	      <property name="filename">m4.h5</property>
 	    </component>
             <component name="m5">
 	      <property name="xwidth">0.1</property>
 	      <property name="yheight">0.1</property>
-              <property name="type">time</property>
-	      <property name="filename">m5.dat</property>
+              <property name="tmin">0</property>
+              <property name="tmax">1</property>
+              <property name="nt">100</property>
+	      <property name="filename">m5.h5</property>
 	    </component>
             <component name="m6">
 	      <property name="xwidth">0.1</property>
 	      <property name="yheight">0.1</property>
-              <property name="type">wavelength</property>
-	      <property name="filename">m6.dat</property>
+              <property name="wmin">0</property>
+              <property name="wmax">10</property>
+              <property name="nw">100</property>
+	      <property name="filename">m6.h5</property>
 	    </component>
             <component name="geometer">
                 <property name="m1">((-2, 0, 0), (0, 90, 0))</property>

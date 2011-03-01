@@ -17,12 +17,12 @@ class DetectorSystem(MultiMonitors):
     class Inventory(MultiMonitors.Inventory):
         
         from mcni.pyre_support import facility
-        m1 = facility('m1', default="monitors/PSD_TEW_monitor")
-        m2 = facility('m2', default="monitors/PSD_TEW_monitor")
-        m3 = facility('m3', default="monitors/PSD_TEW_monitor")
-        m4 = facility('m4', default="monitors/PSD_TEW_monitor")
-        m5 = facility('m5', default="monitors/PSD_TEW_monitor")
-        m6 = facility('m6', default="monitors/PSD_TEW_monitor")
+        m1 = facility('m1', default="monitors/NDMonitor(t)")
+        m2 = facility('m2', default="monitors/NDMonitor(w)")
+        m3 = facility('m3', default="monitors/NDMonitor(t)")
+        m4 = facility('m4', default="monitors/NDMonitor(w)")
+        m5 = facility('m5', default="monitors/NDMonitor(t)")
+        m6 = facility('m6', default="monitors/NDMonitor(w)")
 
 
     def _defaults(self):
