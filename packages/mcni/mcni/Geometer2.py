@@ -76,7 +76,7 @@ from coordinate_system_transformers.mcstas import transformCoordinateSystem as d
 
 def _toCoord(candidate):
     if isinstance(candidate, Coord): return candidate
-    assert len(candidate) == 3, "coord must be a 3-vector"
+    assert len(candidate) == 3, "%s is not a 3-vector" % (candidate,)
     return AbsoluteCoord(candidate)
     
 
