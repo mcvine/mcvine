@@ -100,7 +100,7 @@ class TestCase(unittest.TestCase):
         from histogram.hdf.utils import getOnlyEntry
         f = 'out-test4/iw2.h5'
         h = load(f, getOnlyEntry(f))
-        self.assertEqual( h.I.sum() , 1.0)
+        self.assertEqual( h.I.sum() , 0.0)
 
         # Hits monitor
         (xw, yh)    = (0.1, 0.1)
@@ -111,7 +111,7 @@ class TestCase(unittest.TestCase):
 
         f = 'out-test4/iw2.h5'
         h = load(f, getOnlyEntry(f))
-        self.assertEqual( h.I.sum() , 0.0)
+        self.assertEqual( h.I.sum() , 1.0)
 
     
 
