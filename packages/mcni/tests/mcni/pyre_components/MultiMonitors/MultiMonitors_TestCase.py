@@ -17,7 +17,7 @@ import unittestX as unittest
 class TestCase(unittest.TestCase):
 
     def test1(self):
-        cmd = '''./test-MultiMonitors-app.py \
+        cmd = '''./testapp1.py \
  --monitor.geometer.m1="(0,0,1),(0,0,0)" \
  --monitor.geometer.m2="(0,0,0),(0,90,0)" \
  --journal.debug.monitor \
@@ -26,7 +26,7 @@ class TestCase(unittest.TestCase):
         return
 
     def test2(self):
-        cmd = '''./test-MultiMonitors-app.py \
+        cmd = '''./testapp1.py \
  --monitor.m1=E_monitor \
  --output-dir=out-test2 \
  --overwrite-datafiles \

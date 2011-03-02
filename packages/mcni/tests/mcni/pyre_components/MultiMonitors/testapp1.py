@@ -50,7 +50,7 @@ class Instrument(base):
 
 
 def main():
-    app = Instrument('test-MultiMonitors-app')
+    app = Instrument('testapp1')
     app.run()
     return
     
