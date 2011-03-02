@@ -62,34 +62,56 @@ class TestCase(unittest.TestCase):
         return
 
 
-    def test4(self):
-        'ndmonitor: w'
-        cmd = 'mcvine-simulate -components=source,monitor --- -ncount=1e4 -buffer_size=1000 -source=MonochromaticSource -monitor="NDMonitor(w)" -geometer.monitor="(0,0,1),(0,0,0)" -source.energy=60 -monitor.wmin=0 -monitor.wmax=100 -monitor.nw=100 -monitor.filename=iw.h5 --output-dir=out-test3'
+
+    def test_sizes(self):
+        'ndmonitor: w; tests: xwidth, yheight'
+        cmd = 'mcvine-simulate -components=source,monitor --- \
+                                -overwrite-datafiles=on \
+                                -ncount=1 \
+                                -buffer_size=1 \
+                                -source=Source_simple \
+                                -monitor="NDMonitor(w)" \
+                                -source.xw=0.1 \
+                                -source.yh=0.1 \
+                                -source.radius=0.05 \
+                                -source.dist=1.0 \
+                                -source.dE=10.0 \
+                                -source.E0=60.0 \
+                                -source.gauss=0.0 \
+                                -source.flux=1.0 \
+                                -monitor.wmin=0 \
+                                -monitor.wmax=100 \
+                                -monitor.nw=100 \
+                                -monitor.filename=iw2.h5 \
+                                -monitor.xwidth=%f \
+                                -monitor.yheight=%f \
+                                -geometer.monitor="%s" \
+                                --output-dir=out-test4'
+
+        # Misses monitor
+        (xw, yh)    = (0.1, 0.1)
+        position    = "(0,1,1),(0,0,0)"
+        cmd = cmd % (xw, yh, position)
         import os
         if os.system(cmd):
             raise RuntimeError, "%r failed" % cmd
 
         from histogram.hdf import load
         from histogram.hdf.utils import getOnlyEntry
-        f = 'out-test3/iw.h5'
+        f = 'out-test4/iw2.h5'
         h = load(f, getOnlyEntry(f))
-        # self.assertEqual( h[(58, 62)].sum() , (1., 1.e-4))
-        return
+        self.assertEqual( h.I.sum() , 1.0)
 
+        # Hits monitor
+        (xw, yh)    = (0.1, 0.1)
+        position    = "(0,0,1),(0,0,0)"
+        cmd = cmd % (xw, yh, position)
+        if os.system(cmd):
+            raise RuntimeError, "%r failed" % cmd
 
-#    def test_sizes(self):
-#        'ndmonitor: w; tests: xwidth, yheight'
-#        cmd = 'mcvine-simulate -components=source,monitor --- -ncount=1e4 -buffer_size=1000 -source=MonochromaticSource -monitor="NDMonitor(w)" -geometer.monitor="(0,0,1),(0,0,0)" -source.energy=60 -monitor.wmin=0 -monitor.wmax=100 -monitor.nw=100 -monitor.filename=iw.h5 --output-dir=out-test3'
-#        import os
-#        if os.system(cmd):
-#            raise RuntimeError, "%r failed" % cmd
-#
-#        from histogram.hdf import load
-#        from histogram.hdf.utils import getOnlyEntry
-#        f = 'out-test3/iw.h5'
-#        h = load(f, getOnlyEntry(f))
-#        # self.assertEqual( h[(58, 62)].sum() , (1., 1.e-4))
-#        return
+        f = 'out-test4/iw2.h5'
+        h = load(f, getOnlyEntry(f))
+        self.assertEqual( h.I.sum() , 0.0)
 
     
 
