@@ -314,7 +314,13 @@ class Instrument( AppInitMixin, CompositeNeutronComponentMixin, base, ParallelCo
         ncount = self.inventory.ncount
         mpisize = self.mpiSize or 1
         nsteps = DEFAULT_NUMBER_SIM_LOOPS
-        return min(self._maximumBufferSize(), int(ncount/nsteps/mpisize))
+        candidate = int(ncount/nsteps/mpisize)
+        # rare case where ncount is way too small
+        if candidate < 1:
+            candidate = int(ncount/mpisize)
+            if candidate < 1:
+                candidate = ncount
+        return min(self._maximumBufferSize(), candidate)
 
 
     def _maximumBufferSize(self):
