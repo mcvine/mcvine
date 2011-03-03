@@ -55,8 +55,6 @@ class Generator:
         base = self.baseclass
         class _( base ):
             
-            __name__ = klass.__name__
-
             Engine = klass
             __doc__ = klass.__doc__
             
@@ -103,6 +101,8 @@ class Generator:
 
             def _fini(self):
                 super(_, self)._fini()
+                if self._showHelpOnly:
+                    return
                 # method to destory engine. when destroying an engine,
                 # mcstas component's "finalize" method will get called
                 def destroy(): del self.engine
@@ -136,6 +136,8 @@ class Generator:
                     kwds[name] = eval( 'self.inventory.%s' % name )
                     continue
                 return kwds
+
+        _.__name__ = klass.info.name
 
         _._argumentsFromInventory = _argumentsFromInventory
 
