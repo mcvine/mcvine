@@ -30,7 +30,23 @@ class NeutronComponentFacility( Facility ):
             return super(NeutronComponentFacility, self)._import(name)
         return component, locator
 
-            
+
+    def _retrieveComponent(self, instance, componentName, args):
+        # try to load using my name first
+        component = instance.retrieveComponent(name=componentName, factory=self.name, args=args)
+        if component is not None:
+            # if successful, we are good
+            locator = component.getLocator()
+            # adjust the names by which this component is known
+            component.aliases.append(self.name)
+            return component, locator
+        
+        # the original implementation in my ancestor pyre.inventory.Facility
+        # will load using my family name
+        return super(NeutronComponentFacility, self)._retrieveComponent(
+            instance, componentName, args)
+
+
     def _createNeutronComponent(self, component_specifier):
         '''create a pyre neutron component from the given name
         
