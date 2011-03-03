@@ -65,7 +65,7 @@ class TestCase(unittest.TestCase):
 
     def test_sizes(self):
         'ndmonitor: w; tests: xwidth, yheight'
-        cmd = 'mcvine-simulate -components=source,monitor --- \
+        cmd_fmt = 'mcvine-simulate -components=source,monitor --- \
                                 -overwrite-datafiles=on \
                                 -ncount=1 \
                                 -buffer_size=1 \
@@ -91,7 +91,7 @@ class TestCase(unittest.TestCase):
         # Misses monitor
         (xw, yh)    = (0.1, 0.1)
         position    = "(0,1,1),(0,0,0)"
-        cmd = cmd % (xw, yh, position)
+        cmd = cmd_fmt % (xw, yh, position)
         import os
         if os.system(cmd):
             raise RuntimeError, "%r failed" % cmd
@@ -105,7 +105,7 @@ class TestCase(unittest.TestCase):
         # Hits monitor
         (xw, yh)    = (0.1, 0.1)
         position    = "(0,0,1),(0,0,0)"
-        cmd = cmd % (xw, yh, position)
+        cmd = cmd_fmt % (xw, yh, position)
         if os.system(cmd):
             raise RuntimeError, "%r failed" % cmd
 
