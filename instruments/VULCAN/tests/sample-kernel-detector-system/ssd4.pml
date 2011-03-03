@@ -59,7 +59,7 @@
         <component name="detector">
             <component name="m1">
                 <property name="title">detector_l90tc</property>
-                <property name="filename">tc.txt</property>
+                <property name="filename">tc.h5</property>
                 <property name="xwidth">0.770</property>
                 <property name="yheight">0.385</property>
                 <property name="tmin">0</property>
@@ -69,7 +69,7 @@
 
             <component name="m2">
                 <property name="title">detector_l90wc</property>
-                <property name="filename">wc.txt</property>
+                <property name="filename">wc.h5</property>
                 <property name="xwidth">0.770</property>
                 <property name="yheight">0.385</property>
                 <property name="wmin">0</property>
@@ -79,7 +79,7 @@
             
             <component name="m3">
                 <property name="title">detector_l90tt</property>
-                <property name="filename">tt.txt</property>
+                <property name="filename">tt.h5</property>
                 <property name="xwidth">0.770</property>
                 <property name="yheight">0.385</property>
                 <property name="tmin">0</property>
@@ -89,7 +89,7 @@
 
             <component name="m4">
                 <property name="title">detector_l90wt</property>
-                <property name="filename">wt.txt</property>
+                <property name="filename">wt.h5</property>
                 <property name="xwidth">0.770</property>
                 <property name="yheight">0.385</property>
                 <property name="wmin">0</property>
@@ -99,7 +99,7 @@
 
             <component name="m5">
                 <property name="title">detector_l90tb</property>
-                <property name="filename">tb.txt</property>
+                <property name="filename">tb.h5</property>
                 <property name="xwidth">0.770</property>
                 <property name="yheight">0.385</property>
                 <property name="tmin">0</property>
@@ -109,7 +109,7 @@
 
             <component name="m6">
                 <property name="title">detector_l90wb</property>
-                <property name="filename">wb.txt</property>
+                <property name="filename">wb.h5</property>
                 <property name="xwidth">0.770</property>
                 <property name="yheight">0.385</property>
                 <property name="wmin">0</property>
