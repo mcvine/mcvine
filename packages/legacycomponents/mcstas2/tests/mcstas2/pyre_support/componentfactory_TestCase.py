@@ -13,6 +13,7 @@
 
 
 skip = False
+standalone = True
 
 
 import unittestX as unittest
