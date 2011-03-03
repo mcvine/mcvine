@@ -12,6 +12,9 @@
 #
 
 
+standalone = True
+
+
 import unittestX as unittest
 
 class TestCase(unittest.TestCase):
@@ -79,6 +82,9 @@ class TestCase(unittest.TestCase):
 '''
         execute(cmd)
 
+        # the flux from source is 1/(s*cm**2*st)
+        # each round the neutron intensity is
+        #   1 * 0.01 (width) * 0.01 (height) * 1e4 = 1
         # the solid angle for each monitor is
         # about 0.1*0.1/(1*1) = 0.01
         # there are totally 100 pixels per monitor
