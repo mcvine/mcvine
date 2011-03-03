@@ -42,6 +42,10 @@ class AbstractComponent:
 
     def _getOutputDir(self):
         "get the output directory of the simulation"
+        simulation_context = self.simulation_context
+        if simulation_context is None:
+            raise RuntimeError, 'simulation context was not defined. Type: %s, Name: %s' % (
+                self.__class__.__name__, self.name)
         return self.simulation_context.outputdir
 
 

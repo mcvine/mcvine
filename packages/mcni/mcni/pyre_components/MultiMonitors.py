@@ -66,11 +66,7 @@ class MultiMonitors( AbstractComponent ):
 
 
     def init(self):
-        if self._showHelpOnly:
-            for m in self.monitors:
-                m._showHelpOnly = True
-                continue
-            return
+        self._init_before_my_components()
         super(MultiMonitors, self).init()
         return
 
@@ -80,6 +76,11 @@ class MultiMonitors( AbstractComponent ):
             return
 
         super(MultiMonitors, self).fini()
+        return
+
+
+    def _init_before_my_components(self):
+        self._propagateSimulationContext()
         return
 
 

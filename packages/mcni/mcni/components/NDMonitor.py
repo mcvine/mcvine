@@ -40,12 +40,16 @@ class NDMonitor(object):
         x = x[ftr]; y = y[ftr]; z = z[ftr];
         vx = vx[ftr]; vy = vy[ftr]; vz = vz[ftr];
         s1 = s1[ftr]; s2 = s2[ftr]; t = t[ftr]; p = p[ftr];
-
-
+        
+        # after filtering, there might be no neutrons left
+        if len(x) == 0:
+            return
+        
         from numpy import sqrt  # some expressions use 'sqrt()' function
         from numpy import histogramdd as hdd
         from mcni.utils import conversion
         sample = [eval(e) for e in self.expressions]
+        
         bins = self.bins
         ranges = self.ranges
         self.histogram.I += hdd(sample, bins, ranges, weights=p)[0]

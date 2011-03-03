@@ -30,6 +30,9 @@ update: clean
 EXPORT_PYTHON_MODULES = \
 	AbstractComponent.py \
 	AbstractNeutronTracer.py \
+	AppInitMixin.py \
+	ComponentInitMixin.py \
+	CompositeNeutronComponentMixin.py \
 	ConsoleNeutronTracer.py \
 	Instrument.py \
 	Geometer.py \

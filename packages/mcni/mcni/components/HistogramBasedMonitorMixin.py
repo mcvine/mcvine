@@ -74,6 +74,9 @@ class HistogramBasedMonitorMixin(MonitorMixin):
     def _getFinalResult(self):
         """get the final result of this monitor"""
         context = self.simulation_context
+        if context is None:
+            raise RuntimeError, "context not defined: type - %s, name - %s" % (
+                self.__class__.__name__, self.name)
         # make sure every node reaches here
         if context.mpiSize > 1:
             channel = self.getUniqueChannel()

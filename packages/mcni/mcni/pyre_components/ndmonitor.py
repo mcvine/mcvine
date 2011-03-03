@@ -137,7 +137,7 @@ def ndmonitor(*quantities, **kwds):
         
         
         def _fini(self):
-            if not self._showHelpOnly and not self._noinit:
+            if not self._showHelpOnly:
                 self._saveFinalResult()
                 
             super(Monitor, self)._fini()
@@ -146,7 +146,7 @@ def ndmonitor(*quantities, **kwds):
         
         def _init(self):
             super(Monitor, self)._init()
-            if self._showHelpOnly or self._noinit:
+            if self._showHelpOnly:
                 return
             
             if kwds:
@@ -188,6 +188,8 @@ def ndmonitor(*quantities, **kwds):
             return
 
         pass
+
+    Monitor.__name__ = "NDMonitor"
     
     return Monitor
 

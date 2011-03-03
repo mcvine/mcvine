@@ -30,18 +30,6 @@ class AbstractComponent( base1, base2 ):
         return
 
 
-    def init(self):
-        # init only when necessary
-        # see Instrument._configure
-        try:
-            noinit = getattr(self, '_noinit')
-        except:
-            noinit = False
-        if noinit:
-            return
-        return super(AbstractComponent, self).init()
-    
-    
     pass # end of AbstractComponent
 
 

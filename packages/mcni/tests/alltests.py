@@ -12,34 +12,55 @@
 #
 
 import os
-
-#get current directory
-curdir = os.path.abspath( os.path.split( __file__ ) [0] )
-if curdir == "": curdir = "."
-
-#get all files
-files = os.listdir( curdir )
-
-#get names of all test cases
-tests = []
-for f in files:
-    if f.endswith("TestCase.py"): tests.append( f.rstrip('.py') )
-    continue
-
-#make a list of test suites
-allsuites = []
-for test in tests:
-    testmodule = __import__( test )
-    suite = testmodule.pysuite()
-    allsuites.append( suite )
-    continue
-
 import unittest
-alltests = unittest.TestSuite( allsuites )
 
+
+def findAllTests():
+    #get current directory
+    curdir = os.path.abspath( os.path.split( __file__ ) [0] )
+    if curdir == "": curdir = "."
+
+    #get all files
+    files = os.listdir( curdir )
+
+    #get names of all test cases
+    tests = []
+    for f in files:
+        if f.endswith("TestCase.py"): tests.append( f.rstrip('.py') )
+        continue
+
+    #make a list of test suites
+    allsuites = []
+    for test in tests:
+        testmodule = __import__( test )
+        if hasattr(testmodule, 'pysuite'):
+            suite = testmodule.pysuite()
+            allsuites.append( suite )
+        else:
+            testcases = _iterTestCases(testmodule)
+            for c in testcases:
+                suite = unittest.makeSuite(c)
+                allsuites.append(suite)
+        continue
+
+    alltests = unittest.TestSuite( allsuites )
+    return alltests
+
+
+def _iterTestCases(mod):
+    for item in mod.__dict__.itervalues():
+        if item == unittest.TestCase:
+            continue
+        try:
+            t = issubclass(item, unittest.TestCase)
+            yield item
+        except:
+            continue
+    return
 
 
 def main():
+    alltests = findAllTests()
     #run test
     unittest.TextTestRunner(verbosity=2).run(alltests)
     return

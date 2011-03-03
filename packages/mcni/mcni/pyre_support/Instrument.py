@@ -30,9 +30,11 @@ MINIMUM_BUFFER_SIZE = 100
 
 
 from MpiApplication import Application as base
+from CompositeNeutronComponentMixin import CompositeNeutronComponentMixin
+from AppInitMixin import AppInitMixin
 from ParallelComponent import ParallelComponent
 
-class Instrument( base, ParallelComponent ):
+class Instrument( AppInitMixin, CompositeNeutronComponentMixin, base, ParallelComponent ):
 
     class Inventory( base.Inventory ):
 
@@ -148,21 +150,6 @@ class Instrument( base, ParallelComponent ):
         return
 
 
-    def init(self):
-        # some initialization must be done before my sub components initialize
-        self._init_before_my_components()
-        
-        # the following is copied from pyre.inventory.Configurable
-        
-        # initialize my subcomponents
-        self.inventory.init()
-
-        # perform any last initializations
-        self._init()
-
-        return
-    
-        
     def _dumpRegsitry(self):
         out = '%s-reg.pkl' % self.name
         import os
@@ -264,54 +251,17 @@ class Instrument( base, ParallelComponent ):
         return
 
 
-    def _propagate_showHelpOnly_from_subcomponents(self):
-        # I want to know if my sub components are requested in help mode
-        # right now actually.
-        # This is done inside _init method implemented in pyre.components.Component.
-        # I just copied it here. 
-        self._showHelpOnly = self._showHelpOnly or _requestedForHelp(self)
-        if not self._showHelpOnly:
-            for component in self.components():
-                component._showHelpOnly = component._showHelpOnly or \
-                    _requestedForHelp(component)
-                if component._showHelpOnly:
-                    self._showHelpOnly = True
-                    break
-        return
+    def _init_before_my_inventory(self):
 
+        super(Instrument, self)._init_before_my_inventory()
 
-    def _propagate_showHelpOnly_to_subcomponents(self):
-        # it is actually necessary to propagate to sub components
-        # if the application is requested to just show help
-        self._showHelpOnly = self._showHelpOnly or _requestedForHelp(self)
-        if self._showHelpOnly:
-            for name in self.inventory.facilityNames():
-                comp = self.inventory.getTraitValue( name )
-                comp._showHelpOnly = True
-                continue
-        return
-    
-
-    def _init_before_my_components(self):
-        # need to know if my subcomponents was requested for help
-        self._propagate_showHelpOnly_from_subcomponents()
-        # need to let my subcomponents know I am requested for help
-        self._propagate_showHelpOnly_to_subcomponents()
-        
         # output directory
         if not self._showHelpOnly: 
             self._setup_outputdir()
 
-        # find all neutron components
-        neutron_components = {}
-        for name in self.inventory.facilityNames():
-            comp = self.inventory.getTraitValue( name )
-            if isinstance(comp, McniComponent):
-                neutron_components[ name ] = comp
-                pass
-            continue
-        self.neutron_components = neutron_components
-
+        #
+        self._find_all_neutron_subcomponents()
+        
         # if in server mode for parallel computing
         # we actually don't want the subcomponents to
         # initialize, because in the "server" mode 
@@ -319,14 +269,21 @@ class Instrument( base, ParallelComponent ):
         # let workers start working.
         # this logic probably should go into class MpiApplication.
         # Please read MpiApplication._init as well!
+        # 
         from MpiApplication import usempi
-        noinit = usempi \
+        mpi_server_mode = usempi \
             and (self.inventory.launcher.nodes > 1) \
             and self.inventory.mode == 'server'
-        for c in neutron_components:
-            comp = self.inventory.getTraitValue(c)
-            comp._noinit = noinit            
-
+        # mpi_server_mode is true means that it is not a worker,
+        # and no initialization is necessary for all neutron sub-components
+        # we can just set _showHelpOnly for them.
+        # We cannot just set the application _showHelpOnly since
+        # we need this application to start the workers.
+        # There should be a more systematic way of dealing with this
+        # in pyre.
+        if mpi_server_mode:
+            for comp in self.neutron_components.itervalues():
+                comp._showHelpOnly = True
         return
 
 
@@ -487,14 +444,6 @@ class Instrument( base, ParallelComponent ):
 
 
 
-def _requestedForHelp(component):
-    "check if a component is requested for help"
-    return component.inventory.usage or \
-        component.inventory.showProperties or \
-        component.inventory.showComponents or \
-        component.inventory.showCurator
-
-
 def _getCmdStr():
     import sys, os
     argv = list(sys.argv)
@@ -534,7 +483,6 @@ def getPartitionIterator( N, n ):
     return 
 
 
-from mcni.AbstractComponent import AbstractComponent as McniComponent
 import os, journal
 
 
