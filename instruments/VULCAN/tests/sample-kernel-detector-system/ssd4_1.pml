@@ -58,93 +58,63 @@
 
         <component name="detector">
             <component name="m1">
-                <property name="nxchan">1</property>
-                <property name="format">table</property>
-                <property name="bmax">100</property>
-                <property name="yheight">0.385</property>
-                <property name="restore_neutron">1</property>
-                <property name="filename">tc.txt</property>
-                <property name="nychan">1</property>
-                <property name="bmin">0</property>
-                <property name="deltab">0</property>
-                <property name="nbchan">100</property>
+                <property name="title">detector_l90tc</property>
+                <property name="filename">tc.h5</property>
                 <property name="xwidth">0.770</property>
-                <property name="type">time</property>
+                <property name="yheight">0.385</property>
+                <property name="tmin">0</property>
+                <property name="tmax">100</property>
+                <property name="nt">100</property>
             </component>
 
             <component name="m2">
-                <property name="nxchan">1</property>
-                <property name="format">table</property>
-                <property name="bmax">10</property>
-                <property name="yheight">0.385</property>
-                <property name="restore_neutron">1</property>
-                <property name="filename">wc.txt</property>
-                <property name="nychan">1</property>
-                <property name="bmin">0</property>
-                <property name="deltab">0</property>
-                <property name="nbchan">100</property>
+                <property name="title">detector_l90wc</property>
+                <property name="filename">wc.h5</property>
                 <property name="xwidth">0.770</property>
-                <property name="type">wavelength</property>
+                <property name="yheight">0.385</property>
+                <property name="wmin">0</property>
+                <property name="wmax">10</property>
+                <property name="nw">100</property>
             </component>
 
             <component name="m3">
-                <property name="nxchan">1</property>
-                <property name="format">table</property>
-                <property name="bmax">100</property>
-                <property name="yheight">0.385</property>
-                <property name="restore_neutron">1</property>
-                <property name="filename">tt.txt</property>
-                <property name="nychan">1</property>
-                <property name="bmin">0</property>
-                <property name="deltab">0</property>
-                <property name="nbchan">100</property>
+                <property name="title">detector_l90tt</property>
+                <property name="filename">tt.h5</property>
                 <property name="xwidth">0.770</property>
-                <property name="type">time</property>
+                <property name="yheight">0.385</property>
+                <property name="tmin">0</property>
+                <property name="tmax">100</property>
+                <property name="nt">100</property>
             </component>
 
             <component name="m4">
-                <property name="nxchan">1</property>
-                <property name="format">table</property>
-                <property name="bmax">10</property>
-                <property name="yheight">0.385</property>
-                <property name="restore_neutron">1</property>
-                <property name="filename">wt.txt</property>
-                <property name="nychan">1</property>
-                <property name="bmin">0</property>
-                <property name="deltab">0</property>
-                <property name="nbchan">100</property>
+                <property name="title">detector_l90wt</property>
+                <property name="filename">wt.h5</property>
                 <property name="xwidth">0.770</property>
-                <property name="type">wavelength</property>
+                <property name="yheight">0.385</property>
+                <property name="wmin">0</property>
+                <property name="wmax">10</property>
+                <property name="nw">100</property>
             </component>
 
             <component name="m5">
-                <property name="nxchan">1</property>
-                <property name="format">table</property>
-                <property name="bmax">100</property>
-                <property name="yheight">0.385</property>
-                <property name="restore_neutron">1</property>
-                <property name="filename">tb.txt</property>
-                <property name="nychan">1</property>
-                <property name="bmin">0</property>
-                <property name="deltab">0</property>
-                <property name="nbchan">100</property>
+                <property name="title">detector_l90tb</property>
+                <property name="filename">tb.h5</property>
                 <property name="xwidth">0.770</property>
-                <property name="type">time</property>
+                <property name="yheight">0.385</property>
+                <property name="tmin">0</property>
+                <property name="tmax">100</property>
+                <property name="nt">100</property>
             </component>
 
             <component name="m6">
-                <property name="nxchan">1</property>
-                <property name="format">table</property>
-                <property name="bmax">10</property>
-                <property name="yheight">0.385</property>
-                <property name="restore_neutron">1</property>
-                <property name="filename">wb.txt</property>
-                <property name="nychan">1</property>
-                <property name="bmin">0</property>
-                <property name="deltab">0</property>
-                <property name="nbchan">100</property>
+                <property name="title">detector_l90wb</property>
+                <property name="filename">wb.h5</property>
                 <property name="xwidth">0.770</property>
-                <property name="type">wavelength</property>
+                <property name="yheight">0.385</property>
+                <property name="wmin">0</property>
+                <property name="wmax">10</property>
+                <property name="nw">100</property>
             </component>
 
             <component name="geometer">
