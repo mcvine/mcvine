@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+
+mcvine-simulate \
+    --components=source,detector_90tc,detector_90wc --- \
+    --ncount=10000 \
+    --buffer_size=1000 \
+    --source=Source_simple \
+    --detector_90tc=PSD_TEW_monitor \
+    --detector_90wc=PSD_TEW_monitor \
+    --source.yh='0.02' \
+    --source.dist='20' \
+    --source.width='0.0' \
+    --source.dE='70.0' \
+    --source.gauss='0.0' \
+    --source.height='0.0' \
+    --source.flux='1.0' \
+    --source.dLambda='0.0' \
+    --source.radius='0.05' \
+    --source.Lambda0='0.0' \
+    --source.E0='100.0' \
+    --source.xw='0.02' \
+    --geometer.source='(0.00000, 0.00000, 0.00000),(0.00000, 0.00000, 0.00000)' \
+    --detector_90tc.nxchan='1' \
+    --detector_90tc.format='table' \
+    --detector_90tc.bmax='0.1' \
+    --detector_90tc.yheight='0.385' \
+    --detector_90tc.restore_neutron='1' \
+    --detector_90tc.filename='tc.txt' \
+    --detector_90tc.nychan='1' \
+    --detector_90tc.bmin='0' \
+    --detector_90tc.deltab='0' \
+    --detector_90tc.nbchan='100' \
+    --detector_90tc.xwidth='0.770' \
+    --detector_90tc.type='time' \
+    --geometer.detector_90tc='relative((0, 0.00000, 20), to="source"),relative((0.00000, 0, 0.00000), to="source")' \
+    --detector_90wc.nxchan='1' \
+    --detector_90wc.format='table' \
+    --detector_90wc.bmax='10' \
+    --detector_90wc.yheight='0.385' \
+    --detector_90wc.restore_neutron='1' \
+    --detector_90wc.filename='wc.txt' \
+    --detector_90wc.nychan='1' \
+    --detector_90wc.bmin='0' \
+    --detector_90wc.deltab='0' \
+    --detector_90wc.nbchan='100' \
+    --detector_90wc.xwidth='0.770' \
+    --detector_90wc.type='wavelength' \
+    --geometer.detector_90wc='relative((0, 0.00000, 20), to="source"),relative((0.00000, 0, 0.00000), to="source")' \
