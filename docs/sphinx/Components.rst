@@ -28,6 +28,33 @@ Examples
 Quick tutorial
 """"""""""""""
 
+Create an instrument simulation application::
+
+ $ mcvine-create-instrument-simulation-application --name=sd --components=source,detector
+
+Assign components::
+
+ $ ./sd --source=Source_simple --detector="NDMonitor(energy)"  --dump-pml
+
+Configure::
+
+ $ ./sd \
+ --geometer.detector="(0,0,10),(0,0,0)" \
+ --source.width=0.1 --source.height=0.1 --source.radius=0 \
+ --source.xw=0.1 --source.yh=0.1 --source.dist=10 \
+ --source.E0=100 --source.dE=20 \
+ --detector.title="I(E)" --detector.yheight=0.1 --detector.xwidth=0.1 \
+ --detector.nenergy=100 --detector.energymin=60 --detector.energymax=140 \
+ --dump-pml
+
+Run::
+
+ $ ./sd --ncount=1e5
+
+See result::
+
+ $ PlotHist.py out/ienergy.h5
+
 
 Neutron storage
 ^^^^^^^^^^^^^^^

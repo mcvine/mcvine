@@ -29,3 +29,19 @@ How do I ...
 
 ... What does the intensities at monitors mean?
     Please refer to :ref:`fundamentals-simulated-intensities`
+
+
+Why do I...
+-----------
+
+... get nothing from my simulation?
+    You may want to check if your configuration is done correctly.
+    A good thing to check is if the components are assign correctly::
+    
+      $ mysimapp.py --help-persistence
+      
+    It prints out looking-up of all components (not only neutron components, but also
+    other components that help make the simulation application possible,
+    such as geometer). 
+    You may see hints of why some components are not really loaded successfully.
+
