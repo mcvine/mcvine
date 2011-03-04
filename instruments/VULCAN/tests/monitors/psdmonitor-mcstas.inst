@@ -1,0 +1,23 @@
+DEFINE INSTRUMENT simple()
+
+TRACE
+
+COMPONENT arm = Arm() AT (0,0,0) ABSOLUTE
+
+COMPONENT source = Source_simple(yh=0.02, dist = 20, width=0.0, dE=70.0, gauss=0.0,
+    height=0.0, flux=1.0, dLambda=0.0, radius = 0.05, Lambda0=0.0, E0=100.0, xw=0.02)
+  AT (0,0,0) RELATIVE arm
+
+COMPONENT detector_90tc = PSD_TEW_monitor(nxchan=1, format="table", bmax=0.1,
+    yheight=0.385, restore_neutron=1, filename="tc.txt", nychan=1, bmin=0,
+    deltab=0, nbchan=100, xwidth=0.770, type="time")
+  AT (0,0,20) RELATIVE source
+
+COMPONENT detector_90wc = PSD_TEW_monitor(nxchan=1, format="table", bmax=10,
+    yheight=0.385, restore_neutron=1, filename="wc.txt", nychan=1, bmin=0,
+    deltab=0, nbchan=100, xwidth=0.770, type="wavelength")
+  AT (0,0,20) RELATIVE source
+
+END
+
+

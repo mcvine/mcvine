@@ -11,4 +11,6 @@ psdmonitor  -> PSD_TEW_monitor
 
 Configurations:
 
-
+ndmonitor-mcvine.sh:    [Source_simple] -> 2*[NDMonitor]
+psdmonitor-mcvine.sh:   [Source_simple] -> 2*[PSD_TEW_monitor]
+psdmonitor-mcstas.sh:   [Source_simple] -> 2*[PSD_TEW_monitor], in McStas
