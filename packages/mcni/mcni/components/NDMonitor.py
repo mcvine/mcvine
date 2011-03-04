@@ -87,7 +87,13 @@ class NDMonitor(object):
         from numpy import histogramdd as hdd, arange
 
         # n='variable name', e='expression', b='number of bins (divisions)', r='range'
-        for n, e, b, r in axes:     
+        for n, e, b, r in axes:  
+            # validation
+            if len(r) != 2:
+                raise ValueError, "Invalid range: %s. A range has to be a 2-tuple" % (r, )
+            if r[0] >= r[1]:
+                raise ValueError, "Invalid range: %s" % (r,)
+            
             expressions.append(e)
             ranges.append(r)
             bins.append(b)
