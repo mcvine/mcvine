@@ -1,6 +1,6 @@
 
-This test runs Vulcan simulation that uses NDMonitor from McVine instead of Monitor_nD
-from McStas package.
+This test runs Vulcan simulation that replaces PSD_TEW_monitor and Monitor_nD 
+McStas components by NDMonitor McVine component.
 
-The purpose of this test is to get consistent results for NDMonitor. As plots for
-NDMonitor show the results are consistent with that of Monitor_nD component!
+This is the Vulcan instrument configuration that will be used in VNF.
+
