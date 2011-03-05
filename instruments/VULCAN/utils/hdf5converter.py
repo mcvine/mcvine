@@ -96,8 +96,11 @@ class HDF5Converter:
         "Generates .png files from .h5 files"
         for i in range(len(self._h5files)):
             f       = h5py.File(self._h5files[i])
-            gr      = f["/iw"]       # group
-            gr_bin  = f["/iw/grid/w"]
+            gr_name = f.values()[0].name
+            grbin_name  = f.values()[0].values()[2].values()[0].name
+
+            gr      = f[gr_name]     # group. e.g. "/iw"
+            gr_bin  = f[grbin_name]  # "/iw/grid/w"
             yset    = gr["data"]     # set
             xset    = gr_bin["bin boundaries"]
             ylist   = [repr(item) for item in yset]
