@@ -1185,9 +1185,9 @@ def main():
                 conv    = McStasConverter(config=parts[1])
                 
             #print conv.toString()
-            #print conv.toInstrString()
+            print conv.toInstrString()
             #print conv.toBuilderString()
-            print conv.toMcvineString()
+            #print conv.toMcvineString()
             #print conv.toVnfString()
             #print conv.toPmlString(self)
             #print conv.component("TRG_Out")
