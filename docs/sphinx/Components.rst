@@ -7,6 +7,9 @@ Components
 Generic components provided by MCViNE
 -------------------------------------
 
+
+.. _ndmonitor:
+
 NDMonitor
 ^^^^^^^^^
 
@@ -55,6 +58,72 @@ See result::
 
  $ PlotHist.py out/ienergy.h5
 
+
+.. image:: images/ndmonitor-ie.png
+   :width: 50%
+
+
+.. _monochromaticsource:
+
+Monochromatic source
+^^^^^^^^^^^^^^^^^^^^
+This is a neutron source that always generates the same neutron.
+It exists mostly for debugging purpose.
+
+
+Quick tutorial
+""""""""""""""
+
+Create an instrument simulation application::
+
+ $ mcvine-create-instrument-simulation-application --name=sd --components=source,detector
+
+Assign components and configure::
+
+ $ ./sd \
+ --source=MonochromaticSource --source.energy=70 \
+ --detector=E_monitor --detector.filename=IE.dat \
+ --dump-pml
+
+Run::
+
+ $ ./sd --ncount=1e3
+
+See result::
+
+ $ PlotHist.py out/IE.h5
+
+
+.. image:: images/monosource-ie.png
+   :width: 50%
+
+
+
+.. _neutronprinter:
+
+Neutron printer
+^^^^^^^^^^^^^^^
+Neutron printer can be used to print out neutrons in the beam.
+Actually this can be better achieved by uing 
+:ref:`the tracer <fundamentals-tracer>`.
+
+Quick tutorial
+""""""""""""""
+
+Create an instrument simulation application::
+
+ $ mcvine-create-instrument-simulation-application --name=sd --components=source,detector
+
+Assign components::
+
+ $ ./sd --source=Source_simple --detector="NeutronPrinter"  --dump-pml
+
+Run::
+
+ $ ./sd --ncount=5
+
+
+.. _neutronstorage:
 
 Neutron storage
 ^^^^^^^^^^^^^^^
@@ -165,9 +234,32 @@ Signature::
 - Output: merged neutron file
 
 
+.. _mcstas-comp-lib:
 
 McStas component librarry
 -------------------------
+
+MCViNE is teamed with
+`McStas <http://mcstas.org>`_ project to provide
+access to McStas components from mcvine.
+If you run::
+
+ $ mcvine-list-components
+
+you will see a lot of components coming from mcstas, for example "Monitor_4PI".
+You can use it like any other mcvine components::
+
+ $ <simapp> --monitor=Monitor_4PI --dump-pml
+
+For more details on any McStas component (e.g. Monitor_4PI), 
+you can use the mcvine command line interface::
+
+ $ mcvine-component-info --type=Monitor_4PI
+
+Or you can visit the McStas documentation at 
+http://mcstas.org/documentation/
+
+
 
 .. _user-defined-mcstas-components:
 
@@ -195,3 +287,9 @@ If everything goes smoothly, now you can use this component just like any other 
 
 
 
+.. _vitess-comp-lib:
+
+Vitess component librarry
+-------------------------
+
+This is still experimental.

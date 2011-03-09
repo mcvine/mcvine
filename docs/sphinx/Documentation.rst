@@ -19,6 +19,7 @@ Contents:
    Tutorials
    Fundamentals
    Components
+   SampleAssembly
    Extend
    Problems
    FAQ

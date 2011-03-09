@@ -4,7 +4,7 @@ Developer Guide
 Links
 -----
 
-* buildbot: http://bagua.cacr.caltech.edu:50082/
+* automatic build and testing (buildbot): http://bagua.cacr.caltech.edu:50082/
 
 
 Creating a new scattering kernel for sample
@@ -122,3 +122,36 @@ Create python handlers
 The steps presented here are good for more-or-less generic sample kernels.
 It is desirable in many cases to group kernels into subpackages of
 mccomponents.sample, for example, mccomponents.sample.phonons.
+
+
+.. _wrap-legacy-packages:
+
+Legacy Monte Carlo Neutron Scattering Simulation Packages based on pipeline structure
+-------------------------------------------------------------------------------------
+
+.. note::
+   To see how to use components from legacy packages,
+   please refer to :ref:`mcstas-comp-lib` and :ref:`vitess-comp-lib`.
+
+Please read :ref:`philosophy`
+to get a feeling of the architecture and design of mcvine.
+
+MCViNE is compatible with other pipeline-based Monte Carlo
+neutron scattering simulation packages.
+The basic idea is to wrap legacy components in python to
+be compatible with the mcvine neutron component interface.
+
+.. _wrap-mcstas:
+
+McStas
+------
+In mcstas, each component is written in c language with some extra 
+paragraphs written in mcstas meta language.
+
+To wrap a mcstas componet in mcvine, mcvine parses the component file
+to extract information about the component such as name, help text,
+type and default value for parameters, and code blocks for intialization,
+finalization, and neutron-processing, and build a c++ class from it,
+and then use boost python to bind the c++ class to python, and finally
+add a python wrapper on top of the python binding.
+

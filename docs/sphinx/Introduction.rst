@@ -12,6 +12,8 @@ neutron scattering code such as mcstas, vitess, etc?
 Please take a moment to read :ref:`philosophy of MCViNE <philosophy>`.
 
 
+.. _features:
+
 Features
 --------
 
@@ -23,18 +25,18 @@ Infrastructure:
  - :ref:`Displaying info about any neutron component <fundamentals-component-info>`
 * :ref:`Debugging facility <fundamentals-tracer>`
 * :ref:`Easily extensible python/c++ interface for neutron component <extend-mcvine>`
-* Sample simulation framework
+* :ref:`Sample simulation framework <SampleAssembly>`
 * Detector system simulation framework
-* XML schema for sample assembly configuration
-* Wrapping legacy packages and putting them to work in one framework
+* :ref:`Wrapping legacy packages and putting them to work in one framework <wrap-legacy-packages>`.
 
 Generic components:
 
-* Neutron Printer
-* Monochromatic Source
-* Neutron storage (reader, writer)
-* NDMonitor
-* SampleAssemblyFromXml
+* :ref:`Neutron Printer <neutronprinter>`
+* :ref:`Monochromatic Source <monochromatic source>`
+* :ref:`Neutron storage (reader, writer) <neutronstorage>`
+* :ref:`NDMonitor <ndmonitor>`
+* :ref:`SampleAssemblyFromXml <SampleAssembly>`
+* DetectorSystemFromXml
 
 Sample scattering kernels:
 
@@ -56,11 +58,11 @@ Instruments:
 * SEQUOIA (in progress)
 * CNCS (in progress)
 
-McStas binding:
+:ref:`McStas binding <mcstas-comp-lib>`:
 
+* Availability of reusable mcvine-wrapped mcstas component library upon installation
 * Seamless integration of mcvine-wrapped mcstas components
 * (Semi-)automatic translation of mcstas component
-* Availability of reusable mcvine-wrapped mcstas component library upon installation
 * CLI for compiling a mcstas component to a reusable c++ shared library and a python component
 
 
