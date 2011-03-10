@@ -40,6 +40,7 @@ tidy::
 
 
 EXPORT_PYTHON_MODULES = \
+	peak_generator.py \
 
 
 EXPORT_BINS = \

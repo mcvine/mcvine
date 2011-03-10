@@ -11,6 +11,8 @@ ToDo list for VULCAN
 - Implement Monitor_nD  in VNF (optional)
 
 
+- Update test "vanadium-psdmonitors" and "vanadium-detector-system"!
+
 Conceptual ToDo list
 --------------------
 - Make SampleKernel working
