@@ -1,9 +1,9 @@
 .. _tutorials-powder-kernel:
 
-Tutorials -- Powder Kernel
+Tutorials -- Powder Diffraction Kernel
 ==========================
 
-Simulation with Powder Kernel
+Simulation with Powder Diffraction Kernel
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 In this tutorial we will do experiment with a simple instrument consisting of three
@@ -11,9 +11,9 @@ components:
 
 ::
 
-[Source_simple] -> [PowderKernel] -> [NDMonitor(x,y,t)]
+[Source_simple] -> [PowderDiffractionKernel] -> [NDMonitor(x,y,t)]
 
-that uses **SimplePowderDiffractionKernel**, or simply **Powder Kernel**. The structure
+that uses **SimplePowderDiffractionKernel**, or simply **Powder Diffraction Kernel**. The structure
 of configuration and execution files for the instrument looks like the following:
 
 ::
@@ -36,7 +36,7 @@ the instrument and parameters for each component. Let's take a look at the ssd.p
 
     <?xml version="1.0"?>
 
-    <!-- [Source_simple] -> [PowderKernel] -> [NDMonitor(x,y,t)] -->
+    <!-- [Source_simple] -> [PowderDiffractionKernel] -> [NDMonitor(x,y,t)] -->
 
     <!DOCTYPE inventory>
 
@@ -444,7 +444,7 @@ In the previous section we used ``SimplePowderDiffractionKernel`` and assembled
 our sample using different pieces of information about material structure and
 macroscopic parameters. We can achieve the same result using standard McStas component
 for powder sample called ``PowderN.comp``. You might ask, why you actually need to have
-PowderKernel when one can use ``PowderN`` component instead. The answer is that PowderKernel
+PowderDiffractionKernel when one can use ``PowderN`` component instead. The answer is that PowderDiffractionKernel
 allows more flexibility in defining your sample, especially when you want to investigate
 a complex structure for which the powder pattern file is not available.
 
