@@ -40,14 +40,14 @@ Generic components:
 
 Sample scattering kernels:
 
-* Isotropic
-* Constant energy transfer
-* Constant Q,E
-* S(Q,E)
-* S(Q)
-* powder diffraction (experimental)
-* Coherent inelastic phonon scattering for polycrystal
-* Coherent inelastic phonon scattering for single crysal
+* :ref:`Isotropic <kernel_isotropic>`
+* :ref:`Constant energy transfer <kernel_constant-energy-transfer>`
+* :ref:`Constant Q,E <kernel_constant-qe>`
+* :ref:`S(Q,E) <kernel_sqe>`
+* :ref:`S(Q) <kernel_sq>`
+* :ref:`powder diffraction (experimental) <kernel_powderdiffr>`
+* :ref:`Coherent inelastic phonon scattering for polycrystal <kernel_coh_inel_phonon_polyxtal>`
+* :ref:`Coherent inelastic phonon scattering for single crysal <kernel_coh_inel_phonon_singlextal>`
 * Detector scattering kernels:
   - He3
 

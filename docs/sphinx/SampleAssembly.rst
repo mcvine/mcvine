@@ -107,7 +107,62 @@ an Al-scatterer.xml file ::
 .. _kernel-types:
 
 Kernels
--------
+=======
+
+.. _kernel_isotropic:
+
+Isotropic
+^^^^^^^^^
+This kernel elastically and isotropically scatters neutrons
+to all 4pi solid angle.
+
+You can find an example in directory "kernels/isotropic" in
+`the examples tar ball <http://dev.danse.us/packages/mcvine-examples.tgz>`_
+
+Running it will generate the following plot (a mostly uniform distribution of 
+intensities in 4pi solid angle):
+
+.. figure:: images/kernels/isotropickernel-psd4pimonitor.png
+   :width: 600px
+
+
+.. _kernel_constant-energy-transfer:
+
+Constant energy transfer
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _kernel_constant-qe:
+
+Constant Q,E
+^^^^^^^^^^^^
+
+.. _kernel_sqe:
+
+S(Q,E)
+^^^^^^
+
+.. _kernel_sq:
+
+S(Q)
+^^^^
+
+
+.. _kernel_powderdiffr:
+
+powder diffraction (experimental)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+.. _kernel_coh_inel_phonon_polyxtal:
+
+Coherent inelastic phonon scattering for polycrystal
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+.. _kernel_coh_inel_phonon_singlextal:
+
+Coherent inelastic phonon scattering for single crysal
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 
 

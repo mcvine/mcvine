@@ -16,6 +16,7 @@ PACKAGE = sphinx
 
 EXPORT_DATADIRS = \
 	tutorials \
+	examples \
 
 
 RECURSE_DIRS = \
