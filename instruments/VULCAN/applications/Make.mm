@@ -40,6 +40,7 @@ tidy::
 
 
 EXPORT_PYTHON_MODULES = \
+	__init__.py \
 	peak_generator.py \
 
 
