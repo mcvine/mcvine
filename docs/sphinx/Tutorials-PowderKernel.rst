@@ -434,7 +434,7 @@ diffraction plane, or separate combination of Miller indices (h,k,l)
 .. figure:: images/powder-kernel.png
    :width: 600px
 
-   *Fig. 1 Diffraction image with SimplePowderDiffractionKernel*
+   *Fig. 1 Diffraction with SimplePowderDiffractionKernel*
 
 
 Simulation with PowderN
@@ -463,7 +463,7 @@ are consistent.
 
     <inventory>
 
-        <component name="ssd">
+        <component name="ssd2">
             <property name="sequence">['source', 'sample', 'detector']</property>
             <facility name="source">sources/Source_simple</facility>
             <facility name="sample">samples/SampleAssemblyFromXml</facility>
@@ -577,4 +577,129 @@ and ``PowderN`` component look consistent.
 .. figure:: images/powderN.png
    :width: 600px
 
-   *Fig. 2 Diffraction image with PowderN component*
+   *Fig. 2 Diffraction with PowderN component*
+
+
+Wave Vector Sensitive Monitor
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Let's now change our initial instrument configuration by replacing ``NDMonitor(x,y,t)``
+by ``NDMonitor(q)`` as shown below:
+
+::
+
+[Source_simple] -> [PowderDiffractionKernel] -> [NDMonitor(q)]
+
+The monitor ``NDMonitor(q)`` is sensitive to the wave vector. Our new configuration
+files will look like:
+
+**ssd3.pml**
+
+::
+
+    <?xml version="1.0"?>
+
+    <!-- [Source_simple] -> [PowderDiffractionKernel] -> [NDMonitor(q)] -->
+
+    <!DOCTYPE inventory>
+
+    <inventory>
+
+        <component name="ssd3">
+            <property name="sequence">['source', 'sample', 'detector']</property>
+            <facility name="source">sources/Source_simple</facility>
+            <facility name="sample">samples/SampleAssemblyFromXml</facility>
+            <facility name="detector">monitors/NDMonitor(q)</facility>
+
+            <property name="dump-instrument">False</property>
+            <property name="overwrite-datafiles">on</property>
+            <property name="launcher">mpirun</property>
+            <property name="output-dir">out</property>
+            <property name="ncount">100000</property>
+            <property name="buffer_size">10000</property>
+            <property name="multiple-scattering">False</property>
+            <property name="mode">worker</property>
+            <facility name="geometer">geometer</facility>
+            <property name="dump-registry">False</property>
+
+            <component name="source">
+                <property name="yh">0.01</property>
+                <property name="dist">10.0</property>
+                <property name="width">0.0</property>
+                <property name="dE">70.0</property>
+                <property name="gauss">0.0</property>
+                <property name="height">0.0</property>
+                <property name="flux">1.0</property>
+                <property name="dLambda">0.0</property>
+                <property name="radius">0.05</property>
+                <property name="Lambda0">0.0</property>
+                <property name="E0">100.0</property>
+                <property name="xw">0.01</property>
+            </component>
+
+            <component name="sample">
+                <property name="xml">Al/sampleassembly.xml</property>
+            </component>
+
+            <component name="detector">
+                <property name="title">iq</property>
+                <property name="filename">iq.h5</property>
+                <property name="xwidth">0.5</property>
+                <property name="yheight">0.5</property>
+                <property name="qmin">0.0</property>
+                <property name="qmax">10.0</property>
+                <property name="nq">200</property>
+            </component>
+
+            <component name="geometer">
+                <property name="source">((0, 0, 0), (0, 0, 0))</property>
+                <property name="sample">((0, 0, 10), (0, 0, 0))</property>
+                <property name="detector">((0, 0, 11), (0, 0, 0))</property>
+            </component>
+
+        </component>
+
+    </inventory>
+
+**ssd3**
+
+::
+
+    #!/usr/bin/env python
+
+    import mcvine
+    import mccomponents.sample.diffraction.xml
+
+    def main():
+        from mcvine.applications.InstrumentBuilder import build
+        components = ['source', 'sample', 'detector']
+        App = build(components)
+        app = App('ssd3')
+        app.run()
+        return
+
+    if __name__ == '__main__':
+        main()
+
+Running experiment simulation
+
+::
+
+ $ python ssd3
+ $ PlotHist.py out/iq.h5
+
+we get the plot I(q), where wave vector (q) has units 1/AA and intensity (I)
+has arbitrary units:
+
+.. figure:: images/ndmonitor-q.png
+   :width: 600px
+
+   *Fig. 3 Diffraction with SimplePowderDiffractionKernel and NDMonitor(q)*
+
+Due to the fact that the monitor detects the vector component perpendicular
+to the monitor only :math:`q_z`, selective values of the wave vector will be
+displayed. In `Al.laz` file we provided 26 diffraction planes and this should correspond
+to the 26 diffraction peaks in the detector. The only condition for that is that
+it should be large enough to include all of the diffraction rings.
+
+
