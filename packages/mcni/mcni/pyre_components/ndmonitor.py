@@ -27,6 +27,7 @@ neqs = [
 q2e = {
     'energy':       'conversion.VS2E * (vx*vx + vy*vy + vz*vz)',
     'w':            'conversion.RV2W * 1/sqrt(vx*vx + vy*vy + vz*vz)',  # wavelength
+    'q':            'conversion.V2K * sqrt(vx*vx + vy*vy + vz*vz)',     # wave vector
     'divx': 'vx/vz',
     'divy': 'vy/vz',
     'tof': 't',
@@ -51,7 +52,6 @@ class NDMonitorBase(HistogramBasedMonitorMixin, ParallelComponent, AbstractCompo
         title = pyre.inventory.str('title', default='')
         title.meta['tip'] = 'Title of the histogram'
 
-        # Stubs
         xwidth = pyre.inventory.str('xwidth', default=0.1)
         xwidth.meta['tip'] = 'Width of the monitor'
 

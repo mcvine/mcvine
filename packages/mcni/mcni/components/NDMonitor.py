@@ -2,7 +2,7 @@
 #
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
-#                                   Jiao Lin
+#                             Jiao Lin, Alex Dementsov
 #                      California Institute of Technology
 #                      (C) 2007-2010  All Rights Reserved
 #
@@ -35,6 +35,7 @@ class NDMonitor(object):
         # Apply filter if area is positive
         assert self.xwidth > 0 and self.yheight > 0
 
+        # Filter
         ftr    = (x >= -self.xwidth/2)*(x <= self.xwidth/2)*(y >= -self.yheight/2)*(y <= self.yheight/2)
 
         x = x[ftr]; y = y[ftr]; z = z[ftr];
