@@ -696,10 +696,8 @@ has arbitrary units:
 
    *Fig. 3 Diffraction with SimplePowderDiffractionKernel and NDMonitor(q)*
 
-Due to the fact that the monitor detects the vector component perpendicular
-to the monitor only :math:`q_z`, selective values of the wave vector will be
-displayed. In `Al.laz` file we provided 26 diffraction planes and this should correspond
+In `Al.laz` file we provided 26 diffraction planes and this should correspond
 to the 26 diffraction peaks in the detector. The only condition for that is that
-it should be large enough to include all of the diffraction rings.
+it should be large enough to include the diffraction rings.
 
 
