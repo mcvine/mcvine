@@ -1,0 +1,9 @@
+
+def visual(director):
+    import luban.content
+    frame = luban.content.frame(title='test frame')
+    
+    doc = frame.document(title='Hello world!')
+    doc.paragraph().text = ['This is a test frame.']
+    
+    return frame
