@@ -644,10 +644,10 @@ files will look like:
             <component name="detector">
                 <property name="title">iq</property>
                 <property name="filename">iq.h5</property>
-                <property name="xwidth">0.5</property>
-                <property name="yheight">0.5</property>
-                <property name="qmin">0.0</property>
-                <property name="qmax">10.0</property>
+                <property name="xwidth">0.4</property>
+                <property name="yheight">0.4</property>
+                <property name="qmin">2.0</property>
+                <property name="qmax">8.0</property>
                 <property name="nq">200</property>
             </component>
 
