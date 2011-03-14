@@ -25,6 +25,10 @@ class AbstractNeutronComponent(object):
 
     # short_description = ''
 
+    def customizeLubanObjectDrawer(self, drawer):
+        drawer.mold.sequence = ['componentname']
+
+
     pass # end of AbstractNeutronComponent
 
 
