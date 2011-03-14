@@ -1,36 +1,7 @@
 # -*- Python -*-
 
-from luban.content import select
-
 from mcvineui.dom.neutron_components.Arm import Arm
-
-import luban.orm
-base = luban.orm.object2actor(Arm, needauthorization=False)
-class Actor(base):
-
-    class Inventory(base.Inventory):
-
-        import luban.inventory
-
-
-    def _postStoringUserInputs(self, director):
-        
-        action1 = super(Actor, self)._postStoringUserInputs(director)
-        
-        # load component
-        component = director.clerk.orm(self._load(director))
-        
-        # action to refresh the button in the cmponent chain
-        from mcvineui.visuals.componentchain import \
-            button_id_formatter_for_component, createComponentButton
-        button_id = button_id_formatter_for_component % self.inventory.id
-        newbutton = createComponentButton(component)
-        refresh_component_button = select(id=button_id).replaceBy(newbutton)
-        
-        #
-        return [action1, refresh_component_button]
- 
-
+from mcvineui.actors.NeutronComponentOrmActorFactory import factory
+Actor = factory(Arm, needauthorization=False)
 def actor():
     return Actor('orm/arm')
-
