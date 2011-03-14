@@ -17,12 +17,13 @@ def createDefaultInstrumentConfiguration():
     from mcvineui.dom.InstrumentConfiguration import InstrumentConfiguration
     ic = InstrumentConfiguration()
     
-    from mcvineui.dom.neutron_components.Arm import Arm
-    arm1 = Arm()
-    arm2 = Arm()
-    arm3 = Arm()
+    from mcvineui.dom.neutron_components.Source_simple import Source_simple
+    source = Source_simple(); source.componentname = 'source'
     
-    ic.components = [arm1, arm2, arm3]
+    from mcvineui.dom.neutron_components.E_monitor import E_monitor
+    monitor = E_monitor(); monitor.componentname = 'monitor'
+    
+    ic.components = [source, monitor]
 
     return ic
 

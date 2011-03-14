@@ -83,7 +83,7 @@ class Factory(object):
         # tip = ('Note: If you change the type of the component, '\
         #       'all configuration of this component will be lost.'\
         #       )
-        tip = ''
+        tip = 'click to select component type'
         
         types = self._getComponentTypes()
         labels = [t.__name__ for t in types]

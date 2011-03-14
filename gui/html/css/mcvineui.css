@@ -31,6 +31,11 @@ border:1px solid gray;
 margin-top:3em;
 }
 
+#component-editor > h1{
+    color: white;
+}
+
+
 body {
     font-size: 85%;
     background-color: black;
@@ -836,8 +841,6 @@ color:red;
 }
 
 /* component editor */
-#component-editor {
-}
 #component-editor-toolbar {
     margin-right:1em;
     margin-left:auto;
