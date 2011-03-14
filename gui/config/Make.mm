@@ -29,6 +29,7 @@ EXPORT_DATAFILES = \
 	journal.pml \
 	librarian.pml \
 	main.pml \
+	mcvine-uiapp-ext.odb \
 	web-weaver.pml
 
 

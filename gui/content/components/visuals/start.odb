@@ -1,0 +1,36 @@
+# -*- Python -*-
+#
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#
+#                                   Jiao Lin
+#                      California Institute of Technology
+#                      (C) 2006-2011  All Rights Reserved
+#
+# {LicenseText}
+#
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#
+
+from luban.content import alert, select, load
+
+
+def visual(director):
+    from mcvineui import createDefaultInstrumentConfiguration
+    ic = createDefaultInstrumentConfiguration()
+
+    clerk = director.clerk
+    orm = clerk.orm
+    orm.save(ic)
+
+    return director.retrieveVisual(
+        'instrument_configuration_editor',
+        instrument_configuration = ic,
+        director = director,
+        actorname = 'instrument_configuration_editor',
+        )
+
+
+# version
+__id__ = "$Id$"
+
+# End of file 

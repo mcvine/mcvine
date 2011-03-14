@@ -1,9 +1,9 @@
 
 def visual(director):
     import luban.content
-    frame = luban.content.frame(title='test frame')
+    frame = luban.content.frame(title='mcvine')
     
-    doc = frame.document(title='Hello world!')
-    doc.paragraph().text = ['This is a test frame.']
+    doc = director.retrieveVisual('start')
+    frame.add(doc)
     
     return frame

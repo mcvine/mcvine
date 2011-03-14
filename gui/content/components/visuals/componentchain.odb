@@ -25,7 +25,7 @@ import luban.content as lc
 def visual(
     instrument=None,
     components=[], refresh_component_configuration_panel=None, component_in_focus=None,
-    actor = None,
+    actorname = None,
     db = None,
     director = None,
     button_id_formatter_for_component='component-%s',
@@ -36,7 +36,7 @@ def visual(
     components: list of component instances
     refresh_component_configuration_panel: action factory that creates an action to refresh component configuration panel give the component. sth like lambda component: ... some action ...
     component_in_focus: the component that is now being focused
-    actor: the actor to deal with events for this visual
+    actorname: the actor to deal with events for this visual
     db: db manager
     """
     
@@ -63,7 +63,7 @@ def visual(
         insertbutton.label = '->'
         insertbutton.tip = 'click to insert component'
         insertbutton.onclick = load(
-            actor=actor, routine='onInsertComponent',
+            actor=actorname, routine='onInsertComponent',
             id = instrument, before=compuid)
 
         # "button" of a comonent
@@ -97,7 +97,7 @@ def visual(
     appendbutton.label = '->'
     appendbutton.tip = 'click to append component'
     appendbutton.onclick = load(
-        actor=actor, routine='onAppendComponent',
+        actor=actorname, routine='onAppendComponent',
         id = instrument)
 
     return doc

@@ -1,0 +1,87 @@
+# -*- Python -*-
+#
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#
+#                                   Jiao Lin
+#                      California Institute of Technology
+#                      (C) 2006-2011  All Rights Reserved
+#
+# {LicenseText}
+#
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#
+
+from luban.content import alert, select, load
+import luban.content as lc
+
+
+def visual(director=None, actorname=None,
+           instrument_configuration=None, icid = None, componenttoedit=None):
+    """
+    actorname: actor handling this visual
+    instrument_configuration: instrument configuration object
+    icid: instrument configuration db record id
+    componenttoedit: data object of component to edit
+    """
+    clerk = director.clerk
+    orm = clerk.orm
+    
+    if icid:
+        from mcvineui.dom.InstrumentConfiguration import InstrumentConfiguration
+        instrument_configuration = orm.load(InstrumentConfiguration, icid)
+    else:
+        icid = orm(instrument_configuration).id
+
+    doc = lc.document(id='instrument-configuration-editor')
+    
+    components = instrument_configuration.components
+    if componenttoedit is None:
+        componenttoedit = components[0]
+
+    componentrecords = [orm(c) for c in components]
+
+    # action to load view of a component
+    loadcomponentview = lambda component: load(
+        actor='loadvisual', visual='componenteditor',
+        instrument_configuration=icid, 
+        actorname=actorname,
+        componentuid = clerk.db.getUniqueIdentifierStr(component)
+        )
+    # view of current component
+    componentview = director.retrieveVisual(
+        'componenteditor',
+        instrument_configuration=icid, 
+        actorname = actorname,
+        component=orm(componenttoedit),
+        director=director)
+    
+    # the panel to edit/view individual component
+    componentpanel = lc.document(id='experimentwizard-componentpanel')
+    componentpanel.add(componentview)
+
+    # action to refresh component configuration view
+    refresh_component_configuration_panel = lambda component: select(
+        element=componentpanel).replaceContent(loadcomponentview(component))
+
+    # component chain
+    componentchaindoc =  director.retrieveVisual(
+        'componentchain', director = director,
+        instrument=orm(instrument_configuration).id,
+        components=componentrecords, 
+        refresh_component_configuration_panel=refresh_component_configuration_panel, 
+        component_in_focus=componentrecords[0],
+        actorname = actorname,
+        db = clerk.db,
+        )
+    doc.add(componentchaindoc)
+
+    # add panel for the current component
+    doc.add(componentpanel)
+
+    return doc
+
+
+# version
+__id__ = "$Id$"
+
+# End of file 

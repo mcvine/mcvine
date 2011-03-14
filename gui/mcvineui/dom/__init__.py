@@ -12,6 +12,31 @@
 #
 
 
+def createRecordWithID(table, id):
+    r = table()
+    r.id = id
+    return r
+
+
+def insertRecordWithID(table, id, db):
+    r = createRecordWithID(table, id)
+    db.insertRow(r)
+    return r
+
+
+def getAllTypes():
+    "get all data object types"
+    from neutroncomponent_types import getTypes
+    component_types = getTypes()
+    from InstrumentConfiguration import InstrumentConfiguration
+    return [InstrumentConfiguration] + component_types
+
+
+def mapAllTypes(orm):
+    map(orm, getAllTypes())
+    return
+
+
 # version
 __id__ = "$Id$"
 

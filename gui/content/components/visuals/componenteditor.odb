@@ -1,0 +1,127 @@
+# -*- Python -*-
+#
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#
+#                                 Jiao Lin
+#                      California Institute of Technology
+#                      (C) 2006-2011  All Rights Reserved
+#
+# {LicenseText}
+#
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#
+
+
+from luban.content import load, select, alert
+import luban.content as lc
+
+from luban.content.FormSelectorField import FormSelectorField
+
+
+class Factory(object):
+
+
+    def __init__(self, instrument_configuration, director, actor):
+        '''
+        instrument_configuration: id of instrument configuration
+        director:
+        actor: name of the actor for editing an instrument configuration
+        '''
+        self.director = director
+        self.instrument_configuration = instrument_configuration
+        self.actor = actor
+        return
+    
+
+    def __call__(self, component=None, componentuid=None):
+        #
+        director = self.director
+        db = director.clerk.db
+        
+        #
+        if component is None:
+            component = db.fetchRecordUsingUniqueIdentifierStr(componentuid)
+        if componentuid is None:
+            componentuid = db.getUniqueIdentifierStr(component)
+
+        #
+        title = '%s: %s' % (component.componentname, component.__class__.__name__)
+        doc = lc.document(Class='container', id='component-editor', title=title)
+
+        toolbar = lc.toolbar(id='component-editor-toolbar', Class='topright-toolbar')
+        doc.add(toolbar)
+        
+        # widget to change type of component
+        typenames = self._getComponentTypeNames()
+        changecomponenttype = self._createChangeComponentTypeWidget(
+            componentuid, component, typenames)
+        toolbar.add(changecomponenttype)
+        
+        # delete link
+        deletelink = lc.button(
+            label = 'Delete this component',
+            onclick = load(
+                actor=self.actor, routine='onDeleteComponent',
+                id=self.instrument_configuration, component=componentuid),
+            id = 'delete-component',
+            )
+        #deletelink.Class='float-right'
+        toolbar.add(deletelink)
+        
+        # orm generated view of current component
+        # ormview = director.redirect(
+        #    actor = 'orm/%s' % component.getTableName(), routine='display',
+        #    id = component.id, editlink=True, include_credential=False)
+        # doc.add(ormview)
+        
+        return doc
+
+
+    def _createChangeComponentTypeWidget(self, componentuid, component, types):
+        # document to change component type
+        doc1 = lc.document()
+        label='change component type'
+        # tip = ('Note: If you change the type of the component, '\
+        #       'all configuration of this component will be lost.'\
+        #       )
+        tip = ''
+        
+        labels = [t.split('.')[-1] for t in types]
+        entries = zip(types, labels)
+        t = self.director.clerk.orm.getObjectTypeFromTableName(component.getTableName())
+        typename = '.'.join(t.__module__.split('.')[2:]) + '.' + t.__name__
+        
+        from luban.content.FormSelectorField import FormSelectorField
+        selector = FormSelectorField(
+            label=label, tip=tip, entries = entries, value=typename)
+        selected = select(element=selector).getAttr('value')
+        selector.onchange = load(
+            actor=self.actor, routine='onChangeComponentType',
+            id = self.instrument_configuration, component=componentuid, newtype=selected)
+        doc1.add(selector)
+        return doc1
+
+
+    def _getComponentTypeNames(self):
+        from mcvineui.dom.neutron_components import typenames
+        return typenames
+    
+
+def visual(
+    instrument_configuration=None, actorname = None,
+    component=None, componentuid=None, 
+    director=None):
+    '''
+    instrument_configuration: id of instrument configuration
+    actor: actor handling this visual
+    component: component to edit
+    componentid: id of component
+    '''
+    return Factory(instrument_configuration, director, actorname)\
+        (component=component, componentuid=componentuid)
+
+
+# version
+__id__ = "$Id$"
+
+# End of file 
