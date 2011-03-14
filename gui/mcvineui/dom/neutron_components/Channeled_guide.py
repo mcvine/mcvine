@@ -1,15 +1,15 @@
 # -*- Python -*-
 
 from AbstractNeutronComponent import AbstractNeutronComponent as base
-class Arm(base):
+class Channeled_guide(base):
     abstract = False
 
 InvBase=base.Inventory
 class Inventory(InvBase):
-    dbtablename = 'arm'
+    dbtablename = 'channeled_guide'
 
-Arm.Inventory = Inventory
+Channeled_guide.Inventory = Inventory
 del Inventory
 
 from _ import o2t, NeutronComponentTableBase
-ArmTable = o2t(Arm, {'subclassFrom': NeutronComponentTableBase})
+Channeled_guideTable = o2t(Channeled_guide, {'subclassFrom': NeutronComponentTableBase})

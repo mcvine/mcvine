@@ -25,6 +25,7 @@ distclean::
 
 EXPORT_DATAFILES = \
 	create-instrument-configuration.py \
+	initdb.py \
 	startservices.sh
 
 

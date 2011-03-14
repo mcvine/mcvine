@@ -1,0 +1,8 @@
+# -*- Python -*-
+
+from mcvineui.dom.neutron_components.ESS_moderator_short import ESS_moderator_short
+from mcvineui.actors.NeutronComponentOrmActorFactory import factory
+Actor = factory(ESS_moderator_short, needauthorization=False)
+def actor():
+    return Actor('orm/ess_moderator_short')
+

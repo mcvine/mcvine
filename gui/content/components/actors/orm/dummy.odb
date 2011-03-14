@@ -1,0 +1,8 @@
+# -*- Python -*-
+
+from mcvineui.dom.neutron_components.Dummy import Dummy
+from mcvineui.actors.NeutronComponentOrmActorFactory import factory
+Actor = factory(Dummy, needauthorization=False)
+def actor():
+    return Actor('orm/dummy')
+

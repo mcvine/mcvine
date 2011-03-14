@@ -1,0 +1,8 @@
+# -*- Python -*-
+
+from mcvineui.dom.neutron_components.Selector import Selector
+from mcvineui.actors.NeutronComponentOrmActorFactory import factory
+Actor = factory(Selector, needauthorization=False)
+def actor():
+    return Actor('orm/selector')
+

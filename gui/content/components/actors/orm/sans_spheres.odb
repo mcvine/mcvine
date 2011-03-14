@@ -1,0 +1,8 @@
+# -*- Python -*-
+
+from mcvineui.dom.neutron_components.Sans_spheres import Sans_spheres
+from mcvineui.actors.NeutronComponentOrmActorFactory import factory
+Actor = factory(Sans_spheres, needauthorization=False)
+def actor():
+    return Actor('orm/sans_spheres')
+

@@ -1,15 +1,15 @@
 # -*- Python -*-
 
 from AbstractNeutronComponent import AbstractNeutronComponent as base
-class Arm(base):
+class DiskChopper(base):
     abstract = False
 
 InvBase=base.Inventory
 class Inventory(InvBase):
-    dbtablename = 'arm'
+    dbtablename = 'diskchopper'
 
-Arm.Inventory = Inventory
+DiskChopper.Inventory = Inventory
 del Inventory
 
 from _ import o2t, NeutronComponentTableBase
-ArmTable = o2t(Arm, {'subclassFrom': NeutronComponentTableBase})
+DiskChopperTable = o2t(DiskChopper, {'subclassFrom': NeutronComponentTableBase})

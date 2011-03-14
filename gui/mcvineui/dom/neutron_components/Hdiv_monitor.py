@@ -1,15 +1,15 @@
 # -*- Python -*-
 
 from AbstractNeutronComponent import AbstractNeutronComponent as base
-class Arm(base):
+class Hdiv_monitor(base):
     abstract = False
 
 InvBase=base.Inventory
 class Inventory(InvBase):
-    dbtablename = 'arm'
+    dbtablename = 'hdiv_monitor'
 
-Arm.Inventory = Inventory
+Hdiv_monitor.Inventory = Inventory
 del Inventory
 
 from _ import o2t, NeutronComponentTableBase
-ArmTable = o2t(Arm, {'subclassFrom': NeutronComponentTableBase})
+Hdiv_monitorTable = o2t(Hdiv_monitor, {'subclassFrom': NeutronComponentTableBase})

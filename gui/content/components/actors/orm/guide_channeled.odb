@@ -1,0 +1,8 @@
+# -*- Python -*-
+
+from mcvineui.dom.neutron_components.Guide_channeled import Guide_channeled
+from mcvineui.actors.NeutronComponentOrmActorFactory import factory
+Actor = factory(Guide_channeled, needauthorization=False)
+def actor():
+    return Actor('orm/guide_channeled')
+

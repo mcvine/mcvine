@@ -1,15 +1,15 @@
 # -*- Python -*-
 
 from AbstractNeutronComponent import AbstractNeutronComponent as base
-class Arm(base):
+class Source_Maxwell_3(base):
     abstract = False
 
 InvBase=base.Inventory
 class Inventory(InvBase):
-    dbtablename = 'arm'
+    dbtablename = 'source_maxwell_3'
 
-Arm.Inventory = Inventory
+Source_Maxwell_3.Inventory = Inventory
 del Inventory
 
 from _ import o2t, NeutronComponentTableBase
-ArmTable = o2t(Arm, {'subclassFrom': NeutronComponentTableBase})
+Source_Maxwell_3Table = o2t(Source_Maxwell_3, {'subclassFrom': NeutronComponentTableBase})

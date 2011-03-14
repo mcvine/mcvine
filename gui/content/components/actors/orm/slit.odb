@@ -1,0 +1,8 @@
+# -*- Python -*-
+
+from mcvineui.dom.neutron_components.Slit import Slit
+from mcvineui.actors.NeutronComponentOrmActorFactory import factory
+Actor = factory(Slit, needauthorization=False)
+def actor():
+    return Actor('orm/slit')
+

@@ -1,0 +1,8 @@
+# -*- Python -*-
+
+from mcvineui.dom.neutron_components.Moderator import Moderator
+from mcvineui.actors.NeutronComponentOrmActorFactory import factory
+Actor = factory(Moderator, needauthorization=False)
+def actor():
+    return Actor('orm/moderator')
+

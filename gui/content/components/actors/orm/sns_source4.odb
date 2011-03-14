@@ -1,0 +1,8 @@
+# -*- Python -*-
+
+from mcvineui.dom.neutron_components.SNS_source4 import SNS_source4
+from mcvineui.actors.NeutronComponentOrmActorFactory import factory
+Actor = factory(SNS_source4, needauthorization=False)
+def actor():
+    return Actor('orm/sns_source4')
+

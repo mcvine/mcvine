@@ -1,15 +1,15 @@
 # -*- Python -*-
 
 from AbstractNeutronComponent import AbstractNeutronComponent as base
-class Arm(base):
+class CNCS_radial_coll(base):
     abstract = False
 
 InvBase=base.Inventory
 class Inventory(InvBase):
-    dbtablename = 'arm'
+    dbtablename = 'cncs_radial_coll'
 
-Arm.Inventory = Inventory
+CNCS_radial_coll.Inventory = Inventory
 del Inventory
 
 from _ import o2t, NeutronComponentTableBase
-ArmTable = o2t(Arm, {'subclassFrom': NeutronComponentTableBase})
+CNCS_radial_collTable = o2t(CNCS_radial_coll, {'subclassFrom': NeutronComponentTableBase})

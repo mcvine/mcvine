@@ -1,0 +1,8 @@
+# -*- Python -*-
+
+from mcvineui.dom.neutron_components.NeutronPrinter import NeutronPrinter
+from mcvineui.actors.NeutronComponentOrmActorFactory import factory
+Actor = factory(NeutronPrinter, needauthorization=False)
+def actor():
+    return Actor('orm/neutronprinter')
+

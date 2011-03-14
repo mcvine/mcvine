@@ -1,0 +1,8 @@
+# -*- Python -*-
+
+from mcvineui.dom.neutron_components.NeutronToStorage import NeutronToStorage
+from mcvineui.actors.NeutronComponentOrmActorFactory import factory
+Actor = factory(NeutronToStorage, needauthorization=False)
+def actor():
+    return Actor('orm/neutrontostorage')
+

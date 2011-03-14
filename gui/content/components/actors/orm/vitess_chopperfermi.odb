@@ -1,0 +1,8 @@
+# -*- Python -*-
+
+from mcvineui.dom.neutron_components.Vitess_ChopperFermi import Vitess_ChopperFermi
+from mcvineui.actors.NeutronComponentOrmActorFactory import factory
+Actor = factory(Vitess_ChopperFermi, needauthorization=False)
+def actor():
+    return Actor('orm/vitess_chopperfermi')
+

@@ -1,0 +1,8 @@
+# -*- Python -*-
+
+from mcvineui.dom.neutron_components.Vertical_T0 import Vertical_T0
+from mcvineui.actors.NeutronComponentOrmActorFactory import factory
+Actor = factory(Vertical_T0, needauthorization=False)
+def actor():
+    return Actor('orm/vertical_t0')
+

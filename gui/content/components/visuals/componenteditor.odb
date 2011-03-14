@@ -52,9 +52,8 @@ class Factory(object):
         doc.add(toolbar)
         
         # widget to change type of component
-        typenames = self._getComponentTypeNames()
         changecomponenttype = self._createChangeComponentTypeWidget(
-            componentuid, component, typenames)
+            componentuid, component)
         toolbar.add(changecomponenttype)
         
         # delete link
@@ -77,7 +76,7 @@ class Factory(object):
         return doc
 
 
-    def _createChangeComponentTypeWidget(self, componentuid, component, types):
+    def _createChangeComponentTypeWidget(self, componentuid, component):
         # document to change component type
         doc1 = lc.document()
         label='change component type'
@@ -86,14 +85,17 @@ class Factory(object):
         #       )
         tip = ''
         
-        labels = [t.split('.')[-1] for t in types]
-        entries = zip(types, labels)
-        t = self.director.clerk.orm.getObjectTypeFromTableName(component.getTableName())
-        typename = '.'.join(t.__module__.split('.')[2:]) + '.' + t.__name__
+        types = self._getComponentTypes()
+        labels = [t.__name__ for t in types]
+        from mcvineui.dom import object2table
+        typeidentifiers = [object2table(t).getTableName() for t in types]
+        entries = zip(typeidentifiers, labels)
+        #
+        currenttype_identifier = component.getTableName()
         
         from luban.content.FormSelectorField import FormSelectorField
         selector = FormSelectorField(
-            label=label, tip=tip, entries = entries, value=typename)
+            label=label, tip=tip, entries = entries, value=currenttype_identifier)
         selected = select(element=selector).getAttr('value')
         selector.onchange = load(
             actor=self.actor, routine='onChangeComponentType',
@@ -102,9 +104,9 @@ class Factory(object):
         return doc1
 
 
-    def _getComponentTypeNames(self):
-        from mcvineui.dom.neutron_components import typenames
-        return typenames
+    def _getComponentTypes(self):
+        from mcvineui.dom.neutron_components import getTypes
+        return getTypes()
     
 
 def visual(

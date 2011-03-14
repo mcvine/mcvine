@@ -1,0 +1,8 @@
+# -*- Python -*-
+
+from mcvineui.dom.neutron_components.Monochromator_flat import Monochromator_flat
+from mcvineui.actors.NeutronComponentOrmActorFactory import factory
+Actor = factory(Monochromator_flat, needauthorization=False)
+def actor():
+    return Actor('orm/monochromator_flat')
+

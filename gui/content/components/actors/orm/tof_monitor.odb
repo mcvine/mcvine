@@ -1,0 +1,8 @@
+# -*- Python -*-
+
+from mcvineui.dom.neutron_components.TOF_monitor import TOF_monitor
+from mcvineui.actors.NeutronComponentOrmActorFactory import factory
+Actor = factory(TOF_monitor, needauthorization=False)
+def actor():
+    return Actor('orm/tof_monitor')
+

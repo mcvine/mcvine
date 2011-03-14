@@ -1,15 +1,15 @@
 # -*- Python -*-
 
 from AbstractNeutronComponent import AbstractNeutronComponent as base
-class Arm(base):
+class ESS_moderator_short(base):
     abstract = False
 
 InvBase=base.Inventory
 class Inventory(InvBase):
-    dbtablename = 'arm'
+    dbtablename = 'ess_moderator_short'
 
-Arm.Inventory = Inventory
+ESS_moderator_short.Inventory = Inventory
 del Inventory
 
 from _ import o2t, NeutronComponentTableBase
-ArmTable = o2t(Arm, {'subclassFrom': NeutronComponentTableBase})
+ESS_moderator_shortTable = o2t(ESS_moderator_short, {'subclassFrom': NeutronComponentTableBase})

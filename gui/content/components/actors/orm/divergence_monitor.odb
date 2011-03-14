@@ -1,0 +1,8 @@
+# -*- Python -*-
+
+from mcvineui.dom.neutron_components.Divergence_monitor import Divergence_monitor
+from mcvineui.actors.NeutronComponentOrmActorFactory import factory
+Actor = factory(Divergence_monitor, needauthorization=False)
+def actor():
+    return Actor('orm/divergence_monitor')
+

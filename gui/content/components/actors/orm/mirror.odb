@@ -1,0 +1,8 @@
+# -*- Python -*-
+
+from mcvineui.dom.neutron_components.Mirror import Mirror
+from mcvineui.actors.NeutronComponentOrmActorFactory import factory
+Actor = factory(Mirror, needauthorization=False)
+def actor():
+    return Actor('orm/mirror')
+

@@ -135,7 +135,7 @@ class Actor(base):
         
         # replace the old component with the newcomponent
         index = ic.components.getIndex(component, db=db)
-        ic.components.setElement(index=index, element=newcomponent, db=domaccess.db)
+        ic.components.setElement(index=index, element=newcomponent, db=db)
 
         # destroy the old component
         orm.destroy(orm.record2object(component))

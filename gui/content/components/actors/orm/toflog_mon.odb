@@ -1,0 +1,8 @@
+# -*- Python -*-
+
+from mcvineui.dom.neutron_components.TOFlog_mon import TOFlog_mon
+from mcvineui.actors.NeutronComponentOrmActorFactory import factory
+Actor = factory(TOFlog_mon, needauthorization=False)
+def actor():
+    return Actor('orm/toflog_mon')
+

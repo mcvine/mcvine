@@ -1,0 +1,8 @@
+# -*- Python -*-
+
+from mcvineui.dom.neutron_components.SampleAssemblyFromXml import SampleAssemblyFromXml
+from mcvineui.actors.NeutronComponentOrmActorFactory import factory
+Actor = factory(SampleAssemblyFromXml, needauthorization=False)
+def actor():
+    return Actor('orm/sampleassemblyfromxml')
+

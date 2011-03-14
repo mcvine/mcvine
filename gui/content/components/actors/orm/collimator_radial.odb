@@ -1,0 +1,8 @@
+# -*- Python -*-
+
+from mcvineui.dom.neutron_components.Collimator_radial import Collimator_radial
+from mcvineui.actors.NeutronComponentOrmActorFactory import factory
+Actor = factory(Collimator_radial, needauthorization=False)
+def actor():
+    return Actor('orm/collimator_radial')
+

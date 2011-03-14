@@ -1,0 +1,8 @@
+# -*- Python -*-
+
+from mcvineui.dom.neutron_components.TOFLambda_monitor import TOFLambda_monitor
+from mcvineui.actors.NeutronComponentOrmActorFactory import factory
+Actor = factory(TOFLambda_monitor, needauthorization=False)
+def actor():
+    return Actor('orm/toflambda_monitor')
+

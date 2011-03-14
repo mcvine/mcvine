@@ -1,0 +1,8 @@
+# -*- Python -*-
+
+from mcvineui.dom.neutron_components.NDMonitor import NDMonitor
+from mcvineui.actors.NeutronComponentOrmActorFactory import factory
+Actor = factory(NDMonitor, needauthorization=False)
+def actor():
+    return Actor('orm/ndmonitor')
+
