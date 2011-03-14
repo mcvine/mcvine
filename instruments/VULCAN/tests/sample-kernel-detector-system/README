@@ -17,8 +17,8 @@ ssd2_3.pml          [Source_simple] -> [PowderN] -> [PSD_monitor_4PI]       for 
 ssd3.pml            [SNS_source4] -> [PowderKernel] -> [PSD_monitor_4PI]    for Al.laz
 ssd4.pml            [SNS_source4] -> [PowderKernel] -> [DetectorSystem]     for Al.laz
 ssd4_1.pml          [Source_simple] -> [PowderKernel] -> [DetectorSystem]   for Al.laz
-ssd5.pml            [Source_simple] -> [PowderKernel] -> [NDMonitor]        for Al.laz
-ssd5_1.pml          [Source_simple] -> [PowderN] -> [NDMonitor]
+ssd5.pml            [Source_simple] -> [PowderKernel] -> [NDMonitor(x,y,t)] for Al.laz
+ssd5_1.pml          [Source_simple] -> [PowderN] -> [NDMonitor(x,y,t)]
 
 McStas simulations
 ------------------
