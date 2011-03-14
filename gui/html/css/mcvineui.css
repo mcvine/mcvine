@@ -3,7 +3,7 @@
 #instrument-editor {
 padding:1em;
 height: 100%;
-background-color: black;
+/*background-color: black;*/
 }
 #instrument-editor > h1 {
 font-family:Verdana;
@@ -20,11 +20,13 @@ margin:1em;
 background-color:#fafaf0;
 padding:1.5em;
 -moz-border-radius:0.5em;
+-webkit-border-radius: 0.5em;
 }
 
 #component-editor {
 background-color:#c0c0c0;
 -moz-border-radius:0.5em;
+-webkit-border-radius: 0.5em;
 padding:1em;
 border:1px solid gray;
 }
@@ -50,7 +52,7 @@ color:Green;
 
 body {
     font-size: 85%;
-    /* background-color: black; */
+    background-color: black;
 }
 
 div table {
