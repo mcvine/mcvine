@@ -23,20 +23,24 @@ def visual(director):
     orm = clerk.orm
     orm.save(ic)
 
+    container = lc.document(title='Instrument editor', id='instrument-editor')
+
+    # download 
+    download_sim_tarball = load(actor='simapp', routine='createTarball', id=orm(ic).id)
+    b = lc.downloader(
+        id = 'sim-app-download-link',
+        label='Create simulation script', ondownload=download_sim_tarball)
+    container.add(b)
+    
+    # editor 
     editor = director.retrieveVisual(
         'instrument_configuration_editor',
         instrument_configuration = ic,
         director = director,
         actorname = 'instrument_configuration_editor',
         )
-
-    container = lc.document(title='Instrument editor', id='instrument-editor')
     container.add(editor)
 
-    download_sim_tarball = load(actor='simapp', routine='createTarball', id=orm(ic).id)
-    b = lc.downloader(label='Create simulation script', ondownload=download_sim_tarball)
-    container.add(b)
-    
     return container
 
 
