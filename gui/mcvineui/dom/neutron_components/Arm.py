@@ -15,7 +15,8 @@ from AbstractNeutronComponent import AbstractNeutronComponent as base
 class Arm(base):
     abstract = False
     def customizeLubanObjectDrawer(self, drawer):
-        drawer.mold.sequence = ['componentname', 'short_description', 'referencename', 'position', 'orientation']
+        # drawer.mold.sequence = ['componentname', 'short_description', 'referencename', 'position', 'orientation']
+        drawer.mold.sequence = ['componentname']
 
 InvBase=base.Inventory
 class Inventory(InvBase):

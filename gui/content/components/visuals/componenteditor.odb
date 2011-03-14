@@ -69,10 +69,10 @@ class Factory(object):
         toolbar.add(deletelink)
         
         # orm generated view of current component
-        # ormview = director.redirect(
-        #    actor = 'orm/%s' % component.getTableName(), routine='display',
-        #    id = component.id, editlink=True, include_credential=False)
-        # doc.add(ormview)
+        ormview = director.redirect(
+           actor = 'orm/%s' % component.getTableName(), routine='edit',
+           id = component.id, include_credential=False)
+        doc.add(ormview)
         
         return doc
 

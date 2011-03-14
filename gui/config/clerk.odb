@@ -1,0 +1,13 @@
+# -*- python -*-
+
+from luban.components.Clerk import Clerk as base
+
+class Clerk(base):
+
+    def _getObject2TableMapper(self):
+        from mcvineui.dom import object2table
+        return object2table
+
+
+def clerk():
+    return Clerk('clerk')

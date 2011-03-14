@@ -1,3 +1,5 @@
+# -*- python -*-
+
 from luban.applications.UIApp import Extension as base
 
 class Ext(base):
@@ -9,7 +11,7 @@ class Ext(base):
         from mcvineui.dom import mapAllTypes
         mapAllTypes(orm)
         return
-    
+
 
 def extension():
     return Ext('mcvine-uiapp-ext')

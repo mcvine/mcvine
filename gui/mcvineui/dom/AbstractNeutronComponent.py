@@ -17,13 +17,13 @@ class AbstractNeutronComponent(object):
     abstract = True
 
     componentname = 'name'
-    position = [0.,0.,0.]
-    orientation = [[1.,0.,0.],
-                   [0.,1.,0.],
-                   [0.,0.,1.],]
-    referencename = ''
+    # position = [0.,0.,0.]
+    # orientation = [[1.,0.,0.],
+    #               [0.,1.,0.],
+    #               [0.,0.,1.],]
+    # referencename = ''
 
-    short_description = ''
+    # short_description = ''
 
     pass # end of AbstractNeutronComponent
 
@@ -36,29 +36,29 @@ class Inventory(InvBase):
     componentname.label = 'name'
     componentname.help = 'name of the component'
 
-    position = InvBase.d.array(
-        name='position',
-        elementtype='float',
-        shape=3,
-        default=AbstractNeutronComponent.position,
-        )
-    position.help = 'position of this component relative to the reference component'
+    # position = InvBase.d.array(
+    #    name='position',
+    #    elementtype='float',
+    #    shape=3,
+    #    default=AbstractNeutronComponent.position,
+    #    )
+    # position.help = 'position of this component relative to the reference component'
 
-    orientation = InvBase.d.array(
-        name='orientation',
-        elementtype='float',
-        shape=(3,3),
-        default = AbstractNeutronComponent.orientation,
-        )
-    orientation.help = 'orientation of this component relative to the reference component'
+    # orientation = InvBase.d.array(
+    #    name='orientation',
+    #    elementtype='float',
+    #    shape=(3,3),
+    #    default = AbstractNeutronComponent.orientation,
+    #    )
+    # orientation.help = 'orientation of this component relative to the reference component'
 
-    referencename = InvBase.d.str(name='referencename')
-    referencename.label = 'reference'
-    referencename.help = 'name of the component as reference. if blank, position and orientation are absolute'
+    # referencename = InvBase.d.str(name='referencename')
+    # referencename.label = 'reference'
+    # referencename.help = 'name of the component as reference. if blank, position and orientation are absolute'
 
-    short_description = InvBase.d.str(name='short_description')
-    short_description.label = 'description (optional)'
-    short_description.help = 'Give a brief description of this component'
+    # short_description = InvBase.d.str(name='short_description')
+    # short_description.label = 'description (optional)'
+    # short_description.help = 'Give a brief description of this component'
 
 
 AbstractNeutronComponent.Inventory = Inventory
