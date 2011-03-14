@@ -1,0 +1,12 @@
+.moneyAmount {
+    color: #00a000;
+}
+
+.odd {
+    background-color: #dfe6fd;
+    /*background-color: #f0f3fc;*/
+}
+
+.even {
+    background-color: #f0f0f0;
+}

@@ -32,7 +32,8 @@ EXPORT_DATAFILES = \
 	librarian.pml \
 	main.pml \
 	mcvine-uiapp-ext.odb \
-	web-weaver.pml
+	web-weaver.pml \
+	web-weaver-library.pml \
 
 
 

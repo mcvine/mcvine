@@ -1,0 +1,213 @@
+/*  -*- CSS -*-  */
+
+body {
+    font-size: 88%;
+}
+
+/* accordion */
+.ui-accordion .ui-accordion-content { 
+    padding: 0.1em 0.2em;
+}
+
+/* tabs label */
+.ui-tabs .ui-tabs-nav li {
+    font-size: 11px;
+}
+
+.preview {
+    border-style: dotted;
+    border-width: 1px;
+    margin: 4px;
+    padding: 4px;
+}
+
+.preview.selected {
+    border-style: solid;
+    border-width: 2px;
+    padding: 5px;
+}
+
+.tinytitle > .luban-document-title {
+    font-size: 70%;
+    font-weight: bold;
+    margin: 5px 0 0 0;
+    color:#3E3B40;
+    text-shadow:0.2em 0.2em 3px #999999;
+}
+
+.tinysubtitle > .luban-document-title {
+    color:#222222;
+    font-size:115%;
+    font-weight:normal;
+    margin:8px 0 0;
+    text-shadow:none;
+    font-family:monospace;
+}
+
+.luban-toolbar {
+    background-color: #e4d5d5;
+}
+
+.ui-widget {
+    font-size: 0.9em;
+}
+
+.luban-document-title {
+    font-size: 130%;
+}
+
+a.luban-link {
+    color: blue;
+}
+
+a.luban-link:hover{
+    text-decoration: underline;
+}
+
+#body-wrapper{
+}
+
+#mainarea-frame{
+}
+
+#ask-for-project-frame{
+    margin: 5;
+}
+
+#ask-for-project-tabs-frame{
+    margin: 5;
+}
+
+#new-project-frame{
+    margin: 5;
+}
+
+#project-selection-frame{
+    margin: 5;
+}
+
+#page-content{
+    background-color: #e6f0fc;
+    height: auto;
+    min-height: 400;
+    padding: 0 10px;
+}
+
+#page-content > table {
+    border-collapse:collapse;
+    border-width:0;
+    width:100%;
+    height:100%;
+}
+
+#page-columnLeft {
+    vertical-align: top;
+    max-width: 22em;
+    min-width: 16em;
+}
+
+#page-columnRight {
+    vertical-align: top;
+    max-width: 20em;
+    min-width: 15em;
+}
+
+#page-main {
+    vertical-align: top;
+    width: 65%;
+}
+
+#page-main .visualPadding {
+    padding: 0 5pt;
+}
+
+#widgetpalette .ui-tabs .ui-tabs-panel {
+    padding: 0px;
+}
+
+#editorpanel > div {
+    background-color: #ffffff;
+}
+
+/* smaller font size for col names */
+.tabulated thead{
+    font-size: 85%;
+}
+#propertyeditor-table {
+    margin: 6px;
+    width: 90%;
+    font-size: 80%;
+    background-color: white;
+}
+#projectsettings-table {
+    margin: 6px;
+    width: 90%;
+    font-size: 80%;
+    background-color: white;
+}
+
+#projectinfopanel {
+    bottom:5px;
+    position:absolute;
+    border-style:solid;
+    padding:0 0.5em 0.2em 0.5em;
+    margin:1em;
+    border-color:green;
+    background-color:#ddd;
+    border-width:1px;
+}
+
+#projectstatus {
+    font-size:100%;
+    font-family:times New Roman;
+    padding:2px 2px 2px 10px;
+}
+
+#projectstatus p.darkred {
+    color: darkRed;
+}
+
+div.preview table.luban-splitter {
+    width: 100%;
+}
+
+.luban-codeeditor {
+    width: 100%;
+    height: inherit;
+    min-height: 500;
+    min-width: 500;
+}
+
+
+#actor-list .luban-portletitem-container.selected .luban-portletitem-content a {
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-style: solid;
+    border-color:#777
+}
+
+#actor-list .luban-portletitem-content a {
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    text-align: center;
+    border-color: #aaa;
+    border-style: solid;
+    padding: 0.3em;
+    color: #111;
+    cursor: pointer;
+}
+
+#actor-list .luban-portletitem-content a:hover {
+    background-color:#666;
+    color:#eee;
+}
+
+#actor-list .luban-portlet-body {
+    border:medium none;
+    padding:0;
+}
+
+/* version */
+/* $Id$ */
+
+/* End of file  */

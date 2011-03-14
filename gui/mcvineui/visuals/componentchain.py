@@ -28,18 +28,33 @@ from luban.content import load, select, alert
 import luban.content as lc
 
 
+def createComponentButtonLabelElement(component):
+    # when icons are available, add them into the "button"
+    # path = 'components/%s/middle-size-icon.png' % name
+    # img = lc.image(path=path)
+    label = '%s: %s' % (component.componentname, component.__class__.__name__)
+    p = lc.paragraph(text=[label])
+    return p
 
-def createComponentButton(component):
+
+def createComponentButton(component, infocus=False, buttonids=[], refresh_config_panel=None):
     'create the button for the given component'
     
     button = lc.document(id=button_id_formatter_for_component % component.id)
     button.Class='component-chain-button'
 
-    # when icons are available, add them into the "button"
-    # path = 'components/%s/middle-size-icon.png' % name
-    # img = lc.image(path=path)
-    label = '%s: %s' % (component.componentname, component.__class__.__name__)
-    button.paragraph(text=[label])
+    labelelem = createComponentButtonLabelElement(component)
+    button.add(labelelem)
+    
+    if infocus:
+        button.addClass('selected')
+
+    #
+    from mcvineui.visuals import select_one
+    selectthisbutton = select_one(button.id, buttonids)
+    button.onclick = selectthisbutton + [refresh_config_panel]
+    
+    button.tip = '%s: click for more details' % component.componentname
     
     return button
 
@@ -87,20 +102,15 @@ def visual(
             id = instrument, before=compuid)
 
         # "button" of a comonent
-        button = createComponentButton(component)
+        infocus = component_in_focus.id == component.id
+        refresh_config_panel = refresh_component_configuration_panel(component)
+        button = createComponentButton(
+            component, 
+            infocus=infocus, 
+            buttonids = buttonids,
+            refresh_config_panel = refresh_config_panel,
+            )
         sp.section().add(button)
-
-        if component_in_focus.id == component.id:
-            button.addClass('selected')
-
-        #
-        from mcvineui.visuals import select_one
-        selectthisbutton = select_one(button.id, buttonids)
-        button.onclick = selectthisbutton + [
-            refresh_component_configuration_panel(component),
-            ]
-
-        button.tip = '%s: click for more details' % component.componentname
         continue
 
     # button to append before a component

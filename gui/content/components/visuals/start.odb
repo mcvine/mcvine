@@ -12,6 +12,7 @@
 #
 
 from luban.content import alert, select, load
+import luban.content as lc
 
 
 def visual(director):
@@ -22,12 +23,17 @@ def visual(director):
     orm = clerk.orm
     orm.save(ic)
 
-    return director.retrieveVisual(
+    editor = director.retrieveVisual(
         'instrument_configuration_editor',
         instrument_configuration = ic,
         director = director,
         actorname = 'instrument_configuration_editor',
         )
+
+    container = lc.document(title='Instrument editor', id='instrument-editor')
+    container.add(editor)
+    
+    return container
 
 
 # version

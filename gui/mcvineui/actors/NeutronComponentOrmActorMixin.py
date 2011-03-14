@@ -22,11 +22,11 @@ class NeutronComponentOrmActorMixin:
         
         # action to refresh the button in the cmponent chain
         from mcvineui.visuals.componentchain import \
-            button_id_formatter_for_component, createComponentButton
+            button_id_formatter_for_component, createComponentButtonLabelElement
         button_id = button_id_formatter_for_component % self.inventory.id
-        newbutton = createComponentButton(component)
+        newlabel = createComponentButtonLabelElement(component)
         from luban.content import select
-        return select(id=button_id).replaceBy(newbutton)
+        return select(id=button_id).replaceContent(newlabel)
  
 
 # version

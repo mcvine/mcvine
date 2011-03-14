@@ -1,0 +1,871 @@
+/*  -*- CSS -*-  */
+
+#instrument-editor {
+padding:1em;
+}
+#instrument-editor > h1 {
+font-family:Verdana;
+font-style:italic;
+font-size:1.5em;
+color:#e0f0ff;
+}
+#instrument-editor > .luban-document-body {
+margin:1em;
+}
+
+#instrument-editor > .luban-document-body {
+margin:1em;
+background-color:#fafaf0;
+padding:1.5em;
+-moz-border-radius:0.5em;
+}
+
+#component-editor {
+background-color:#c0c0c0;
+-moz-border-radius:0.5em;
+padding:1em;
+border:1px solid gray;
+}
+
+#experimentwizard-componentpanel {
+margin-top:3em;
+}
+
+body {
+    font-size: 85%;
+    background-color: black;
+}
+
+div table {
+    font-size: 1em;
+}
+
+/* Link */
+a {
+    text-decoration: underline;
+    color: blue;
+}
+a:hover {
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.ui-accordion .ui-accordion-content { 
+    padding: 0.1em 0.2em;
+}
+
+.luban-toolbar {
+}
+
+.ui-widget {
+}
+
+a.luban-link {
+    text-decoration: underline;
+}
+
+a.luban-link:hover{
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#body-wrapper{
+}
+
+
+table.luban-splitter {
+    width: 100%;
+}
+
+td[luban-element-type=splitsection] {
+    vertical-align: top;
+}
+
+div h1,h2,h3,h4,h5,h6 {
+    font-weight: normal;
+    margin: 0;
+    padding-top: 0.5em;
+    border-bottom: none;
+}
+
+p.hidden {
+    color: transparent;
+}
+
+.invisible {
+    color: transparent;
+}
+
+
+/* overload the default behavior of luban for input */
+input, select, textarea{
+    border-color: #cced8c;
+    border-width: 2;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+}
+textarea {
+    min-height: 120px;
+}
+
+
+/* overload the default behavior of luban for buttons */
+.luban-button-container {
+    padding: 12px 8px;
+    margin: 5px;
+    text-align: center;
+}
+.luban-button {
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    background-color: #eeeeee;
+    border: none;
+    padding: 2px 5px;
+    color: #333333;
+    border: 2px solid #CCED8C;
+}
+
+.luban-button-container,
+.luban-button-container a{
+    text-decoration: none;
+    padding: 3px 5px;
+    margin: 3px 0px 7px 0px;
+    text-align: left;
+}
+
+.luban-button img {
+    margin: 5px;
+    height: 27px;
+}
+
+.luban-button span {
+    margin: 5px;
+}
+
+
+/* overload uploader button */
+.luban-uploader-button {
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    background-color: #eeeeee;
+    border: none;
+    padding: 2px 5px;
+    color: #333333;
+    border: 2px solid #CCED8C;
+}
+
+
+
+/* overload the default behavior of luban for forms */
+fieldset{
+    background-color: lightYellow;
+    -moz-border-radius: 15px;
+    -webkit-border-radius: 15px;
+}
+
+
+/* plot2d default size */
+.luban-plot2d  {
+    border:2px solid #eeeeff;
+    margin:0.5em;
+    padding:0.5em 2em;
+    width:480px;
+}
+.luban-plot2d div.plot{
+    width: 480px;
+    height: 320px;
+}
+.luban-plot2d div.caption{
+    font-family: Times new roman;
+    margin-top:0.5em;
+}
+
+
+/* error */
+.luban-formfield .error {
+}
+
+
+/* properties grid */
+.properties td.prop-name {
+    font-style:italic;
+    text-align:right;
+    padding-right:1em;
+    font-size:90%;
+}
+
+
+/* toolbar at the top-right corner */
+.topright-toolbar.luban-toolbar {
+    background-color:#f0f5f5;
+    border: 1px solid #AAAAAA;
+    -moz-border-radius:12px;
+    -webkit-border-radius:12px;
+}
+.topright-toolbar.luban-toolbar table {
+border-collapse:collapse;
+}
+.topright-toolbar.luban-toolbar .luban-toolbar-left-padding {
+    -moz-border-radius-bottomleft:12px;
+    -moz-border-radius-topleft:12px;
+    -webkit-border-bottom-left-radius:12px;
+    -webkit-border-top-left-radius:12px;
+    width:8px;
+    min-width:8px;
+    background-color:gray;
+}
+.topright-toolbar.luban-toolbar > table > tbody > tr > td {
+    border-right:2px solid #999999;
+}
+.topright-toolbar.luban-toolbar > table > tbody > tr > td:last-child {
+    border-right:none;
+}
+.topright-toolbar.luban-toolbar .luban-button-container {
+    margin:5px 2px;
+}
+.topright-toolbar.luban-toolbar .luban-button-container a {
+    margin:0;
+    color:green;
+}
+
+/* warning */
+.panel.luban-document.warning {
+border:1px solid #EEAAAA;
+}
+.luban-document.warning {
+-moz-border-radius-bottomleft:1em;
+border:1px solid #EEAAAA;
+margin-bottom:1em;
+padding:0.5em 1em;
+}
+
+
+/* luban document */
+.luban-document-title {
+    font-size: 1.2em;
+}
+
+/* panel luban document */
+/* panel */
+.panel.luban-document {
+-moz-border-radius:1em;
+-webkit-border-radius:1em;
+padding:0.3em;
+border:solid 1px #ccc;
+}
+.panel.luban-document .titlebar {
+-moz-border-radius:12px;
+-webkit-border-radius:12px;
+border-bottom:1px solid #ddd;
+}
+.panel.luban-document .titlebar table {
+border-collapse:collapse;
+}
+.panel.luban-document .titlebar table td {
+}
+.panel.luban-document .titlebar p {
+margin-left:0em;
+margin-top:0.2em;
+margin-bottom:0.2em;
+padding:0.1em 0.2em;
+-moz-border-radius:7px;
+-webkit-border-radius:7px;
+font-size:0.85em;
+}
+.panel.luban-document .titlebar a {
+margin:0.5em;
+}
+.panel.luban-document .titlebar .controls-container {
+width:3em;
+}
+
+.luban-document.panel > .luban-document-title > table  td.luban-document-title-controls a{
+    color: white;
+    font-size: 1.7em;
+    font-weight: bolder;
+    text-decoration: none;
+}
+.luban-document.panel > .luban-document-title >table>tbody>tr>td.luban-document-title-controls > a.collapse-expand:hover {
+    text-decoration:underline;
+    cursor: pointer;
+}
+.luban-document.panel > .luban-document-title >table>tbody>tr>td.luban-document-title-controls > a.float:hover {
+    text-decoration:underline;
+    cursor: pointer;
+}
+.luban-document.panel > .luban-document-title >table>tbody>tr>td.luban-document-title-controls > a.close:hover {
+    text-decoration:underline;
+    cursor: pointer;
+}
+
+.luban-document.panel > .luban-document-title > table td.luban-document-title-controls a.float {
+background-color:transparent;
+background-image:url(../images/icons/expand-arrow.16.png);
+color:transparent;
+background-position:center;
+background-repeat:no-repeat;
+}
+
+/* highlighted */
+.panel.luban-document.highlighted > .luban-document-title {
+background-color:#88B0BC;
+}
+.panel.luban-document.highlighted > .luban-document-body {
+border-color:#88B0BC;
+}
+
+
+/* dockable */
+.dockable.panel.luban-document > .luban-document-body  {
+    border:none;
+    max-height:92%;
+    /*overflow:scroll;*/
+}
+
+/* dock */
+.luban-dock > table > tbody > tr > td:first-child {
+background-color: #555555;
+background-image: url(../images/vnf-logos/vnf.darker-color.27px.png) ;
+background-repeat: no-repeat;
+width:4.6em;
+}
+.luban-dock > table > tbody > tr > td {
+background-color:blue;
+color:white;
+font-weight:bold;
+border:2px solid white;
+}
+.luban-dock > table {
+height:2.5em;
+}
+.luban-dock {
+background-color:lightBlue;
+height:2.6em;
+border-top:1px solid #888888;
+border-bottom:1px solid #226666;
+z-index: 100;
+
+filter:alpha(opacity=50);
+opacity:0.5;
+}
+
+/* help */
+#help{
+    width: 990px;
+    z-index: 200;
+    background-color: lightYellow;
+}
+#help-container{
+    border-bottom:1px solid lightGrey;
+    border-top:1px solid lightGrey;
+    margin:0 0 8px;
+}
+#help.dockable.panel.luban-document > .luban-document-body {
+    padding: 0px;
+}
+#help .luban-button-container  {
+text-align:center;
+}
+#help .luban-button-container a {
+border:2px solid #99bb99;
+}
+
+/* server-load */
+#server-load-dialog{
+    width: 1005px;
+}
+#ganglia-page-container{
+    border-bottom:1px solid lightGrey;
+    border-top:1px solid lightGrey;
+    margin:0 0 8px;
+}
+
+/* dialog */
+.luban-dialog .luban-button-container .luban-button {
+    color:#444444;
+}
+
+/* bug report dialog */
+.bug-body > .luban-document-body {
+margin-left:1em;
+}
+.traceback-container > .luban-document-body {
+margin-left:2em;
+}
+.traceback-doc {
+max-width:960;
+max-height:400;
+overflow:scroll;
+}
+.bug-report-form fieldset {
+border:2px solid lightGrey;
+}
+.bug-report-form .luban-formtextarea {
+width:100%;
+}
+.bug-report-form .luban-formtextarea table {
+width:100%;
+}
+.bug-report-form .luban-formtextarea table td.input-container {
+width:100%;
+}
+.bug-report-form .luban-formtextarea table td.input-container textarea {
+width:100%;
+}
+
+/* misc */
+.float-right {
+    float: right;
+}
+.inline-display {
+    display: inline;
+}
+.align-top {
+    vertical-align: top;
+}
+.luban-link.debug {
+    color: lightBlue;
+}
+
+/* portal applications */
+/* frame of portal application */
+.app-main-frame.panel.luban-document {
+    width: 95%;
+    height: 90%;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+.app-main-frame.luban-document {
+    margin-left:1em;
+    margin-right:1em;
+    min-height: 25em;
+}
+.app-main-frame > .luban-document-title {
+    text-align:right;
+    font-size:0.83em;
+    font-weight:lighter;
+    font-family:fantasy;
+}
+.app-main-frame #view-indicator {
+    padding:0;
+}
+/* layout of the portal application grid */
+.app-main-frame .luban-grid > table {
+    margin-right:auto;
+    margin-left:auto;
+}
+.app-main-frame .luban-gridcell {
+    padding: 1.5em;
+}
+/* container of one application */
+/* application title */
+.app-container > .luban-document-title {
+    padding-top: 0;
+    font-size: large;
+    text-align: center;
+    /* border-bottom:1px solid #888888; */
+}
+.app-container .luban-document.panel > .luban-document-title > table td > h1.luban-document-title-text {
+    color:#7f9fff;
+    padding:0;
+    margin:0;
+}
+.app-container .luban-document.panel > .luban-document-body {
+    padding-right:1em;
+}
+/* application body */
+.app-container > .luban-document-body {
+    padding: 0.5em 1em;
+    background-color: #d0d0d0;
+    -moz-border-radius: 1em;
+    -webkit-border-radius: 1em;
+}
+/* center the whole application panel */
+.app-container .luban-grid > table {
+    margin-right:auto;
+    margin-left:auto;
+}
+/* app body: toolbar */
+.app-container > .luban-document-body > .luban-toolbar {
+    border: 1px solid #e5e5f5;
+    margin-bottom:1em;
+    background-color: #e0e0e0;
+    -moz-border-radius:0.5em;
+    -webkit-border-radius: 0.5em;
+}
+/* app body: toolbar button */
+.app-container > .luban-document-body > .luban-toolbar .luban-button {
+    background-color:gray;
+    color:white;
+}
+.app-container > .luban-document-body > .luban-toolbar .luban-button-container {
+    margin:1px;
+}
+.app-container > .luban-document-body > .luban-toolbar .luban-button-container a {
+    border:1px solid gray;
+}
+.app-container > .luban-document-body > .luban-toolbar .luban-button-container a:hover {
+    color:#4b5ea6;
+    background-color:#f0f0f0;
+}
+/* app body: form */
+.app-container .object-editor.luban-document.panel {
+    border-width:1px;
+    border-color:#9090a0;
+}
+/* button to start running an application */
+.app-container .run-button > .luban-button:hover {
+    color:red;
+}
+.app-container .run-button > .luban-button {
+    border:medium none;
+    font-size:large;
+    color:#555599;
+}
+/* app body: output */
+.app-container .app-output-cell {
+    min-width: 50em;
+    min-height: 30em;
+    border: 1px solid #909090;
+    background-color: #f5f5f5;
+    -moz-border-radius: 1em;
+    -webkit-border-radius: 1em;
+}
+/* big buttons for launching applications */
+.app-launch-button {
+    border: 2px solid silver;
+    background-color:#DDDDDF;
+    padding:0;
+    text-align:center;
+    -moz-border-radius: 1em;
+    -webkit-border-radius: 1em;
+}
+.app-launch-button img{
+    height: 70px;
+}
+.app-launch-button a {
+    background-color:transparent;
+    border:medium none;
+    color:transparent;
+    margin:0;
+    padding:0;
+}
+.app-launch-button.withtextlabel a {
+    color:black;
+}
+.app-launch-button:hover {
+    border-color:#aaaaff;
+    background-color:#f0f0f0;
+}
+.update-button-cell {
+    padding-top: 3em;
+}
+
+/* admin */
+.admin-portlet-container {
+    width: 16em;
+}
+.admin-portlet-container .luban-portlet-body {
+    -moz-border-radius: 0.4em;
+    -webkit-border-radius: 0.4em;
+}
+.admin-main-panel {
+    padding-left: 1em;
+}
+
+
+
+
+/* object editor */
+.object-editor .object-referenceset.luban-document{
+    background-color: transparent;
+}
+.object-editor .object-referenceset.container > .luban-document-body{
+    background-color: transparent;
+}
+.object-editor .container.luban-document > .luban-document-body > .object-referenceset-item.collapsable.luban-document {
+    margin-left: 1em;
+}
+.object-editor .controls.luban-document > .luban-document-body {
+    margin:0.5em 0;
+    padding:0;
+}
+.object-editor .controls.luban-document {
+    background-color:transparent;
+    border:none;
+    padding:0;
+}
+.object-editor form.luban-form fieldset {
+    margin:0;
+}
+.object-editor .highlighted {
+    border: 1px solid red;
+}
+.object-editor .highlighted.luban-document {
+    border: 1px solid red;
+}
+
+/* panel */
+.panel.luban-document {
+-moz-border-radius:1em;
+-webkit-border-radius:1em;
+padding:0;
+border:solid 1px #ccc;
+margin-bottom:0.5em;
+}
+.panel.luban-document > .luban-document-title {
+    -moz-border-radius: 1.2em 1.2em 0 0;
+    -webkit-border-top-left-radius: 1.2em;
+    -webkit-border-top-right-radius: 1.2em;
+    -webkit-border-bottom-left-radius: 0;
+    -webkit-border-bottom-right-radius: 0;
+    font-size: 0.73em;
+    background-color: lightGrey;
+}
+.panel.luban-document > .luban-document-body {
+    -moz-border-radius-bottomleft:1em;
+    -moz-border-radius-bottomright:1em;
+    -moz-border-radius-topleft:0;
+    -moz-border-radius-topright:0;
+    -webkit-border-bottom-left-radius: 1em;
+    -webkit-border-bottom-right-radius: 1em;
+    -webkit-border-top-left-radius: 0;
+    -webkit-border-top-right-radius: 0;
+    border: 1px solid lightgrey;
+    border-top: none;
+}
+.panel.luban-document .panel.luban-document {
+padding:0;
+border:none;
+}
+.panel.luban-document .titlebar {
+-moz-border-radius:12px;
+-webkit-border-radius:12px;
+border-bottom:1px solid #ddd;
+}
+.panel.luban-document .titlebar table {
+border-collapse:collapse;
+}
+.panel.luban-document .titlebar table td {
+}
+.panel.luban-document .titlebar p {
+margin-left:0em;
+margin-top:0.2em;
+margin-bottom:0.2em;
+padding:0.1em 0.2em;
+-moz-border-radius:7px;
+-webkit-border-radius:7px;
+font-size:0.85em;
+}
+.panel.luban-document .titlebar a {
+margin:0.5em;
+}
+.panel.luban-document .titlebar .controls-container {
+width:3em;
+}
+
+
+
+
+
+#experimentwizard-container {
+    background-color: #f0f0f0;
+    -moz-border-radius:2em;
+    -webkit-border-radius:2em;
+}
+
+#experimentwizard-navigationbar {
+padding:0.3em;
+/*background-color:#F0F5F5;*/
+-moz-border-radius-topleft:2em;
+-moz-border-radius-topright:2em;
+-webkit-border-top-left-radius: 2em;
+-webkit-border-top-right-radius: 2em;
+}
+#experimentwizard-navigationbar table {
+border-collapse:collapse;
+width:auto;
+}
+#experimentwizard-navigationbar td {
+padding:0 0.4em;
+text-align:center;
+}
+#experimentwizard-navigationbar div.navigation-button:hover {
+border:3px solid lightGreen;
+cursor:pointer;
+}
+#experimentwizard-navigationbar div.navigation-button.selected{
+border:3px solid white;
+background-color: white;
+}
+#experimentwizard-navigationbar .index {
+color:#229999;
+font-size:1.3em;
+margin:0;
+padding:0;
+}
+#experimentwizard-navigationbar .navigation-button {
+background-color:#d0d0d0;
+-moz-border-radius:1em;
+-webkit-border-radius:1em;
+border:3px solid #f0f0f0;
+}
+#experimentwizard-navigationbar p {
+margin:0;
+}
+#experimentwizard-navigationbar div {
+margin:0;
+padding:0.2em 0.3em;
+}
+#experimentwizard-navigationbar img {
+height:2.5em;
+}
+
+#experimentwizard-editpanel {
+padding:1em;
+}
+
+#experimentwizard-instrumentselector {
+padding:0.5em 1em;
+}
+
+#instrument-gallery-container {
+}
+#instrument-gallery table {
+width:auto;
+}
+#instrument-gallery td {
+text-align:center;
+border:1em solid transparent;
+}
+#instrument-gallery div.luban-image-container:hover {
+border:3px solid lightgreen;
+}
+#instrument-gallery div.luban-image-container:hover img {
+height:5.1em;
+}
+#instrument-gallery div.luban-image-container.selected {
+border:3px solid red;
+}
+#instrument-gallery div.luban-image-container.selected img{
+height:6em;
+}
+#instrument-gallery img {
+height:5em;
+}
+#instrument-gallery div.luban-image-container {
+border:3px solid transparent;
+cursor:pointer;
+}
+#instrument-gallery {
+background-color:#444444;
+padding:0.2em;
+-moz-border-radius:1em;
+-webkit-border-radius:1em;
+margin:1em;
+width:60em;
+overflow-x:scroll;
+}
+#experimentwizard-instrumentintro {
+padding:0em 1em 1.0em 1.5em;
+font-family:times New Roman;
+font-size:1.2em;
+}
+
+/* select button */
+#experimentwizard-instrumentselector .luban-button-container {
+/* text-align:center; */
+font-size:1.3em;
+}
+#experimentwizard-instrumentselector .luban-button-container a.luban-button {
+border-width:3px;
+}
+
+/* instrument configuration */
+#instrumentconfigurationpanel {
+margin:1em;
+padding-bottom:1em;
+}
+/* component chain */
+#component-chain-container td {
+padding:0.2em 0.1em;
+}
+#component-chain-container .component-chain-button p {
+margin:0;
+}
+#component-chain-container div.component-chain-button:hover {
+border:2px solid green;
+}
+#component-chain-container .component-chain-button.selected {
+border:2px solid #f590a0;
+}
+#component-chain-container .component-chain-button {
+border:2px solid #777777;
+padding:0.5em 0.5em;
+background-color:#f5fff5;
+cursor: pointer;
+-moz-border-radius: 9px;
+-webkit-border-radius: 9px;
+}
+#component-chain-container > h1 {
+text-decoration:underline;
+margin-bottom:0.5em;
+}
+#component-chain-container {
+padding:0.5em 1.5em 1.3em 1.5em;
+border:1px solid #999999;
+max-width:95%;
+overflow-x:scroll;
+-moz-border-radius:1em;
+-web-border-radius:1em;
+background-color:white;
+margin-bottom:1em;
+}
+#component-chain-container table{
+    width: auto;
+}
+#component-chain-container div.component-chain-insert-button a {
+border:none;
+background-color:transparent;
+padding:0;
+margin:0;
+}
+#component-chain-container div.component-chain-insert-button:hover a {
+color:red;
+}
+
+/* component editor */
+#component-editor {
+}
+#component-editor-toolbar {
+    margin-right:1em;
+    margin-left:auto;
+    width:29em;
+    margin-bottom: 4px;
+}
+#component-editor-toolbar .luban-formfield {
+margin:0.2em 0.5em;
+}
+
+/* sample */
+#samplepanel {
+background-color:#f5f5f5;
+padding:0.5em;
+-moz-border-radius:1em;
+}
+#samplepanel .luban-document-body {
+padding-left:0.2em;
+}
+#samplepanel > .luban-document-title {
+font-weight:bold;
+font-size:1.4em;
+}
+#samplepanel h1.luban-document-title {
+margin-bottom:5px;
+}
+
+/* version */
+/* $Id$ */
+
+/* End of file  */
