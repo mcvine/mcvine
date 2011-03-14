@@ -1,0 +1,91 @@
+#!/usr/bin/env python
+#
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#
+#                                 Jiao Lin
+#                      California Institute of Technology
+#                      (C) 2006-2011  All Rights Reserved
+#
+# {LicenseText}
+#
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#
+
+
+import luban.content as lc
+from luban.content import load, select, alert
+
+
+from luban.components.Actor import Actor as base
+class Actor(base):
+
+
+    class Inventory(base.Inventory):
+
+        import pyre.inventory
+
+        id = pyre.inventory.str('id')
+
+
+    def createTarball(self, director):
+        '''id: id of instrument configuration'''
+
+        ic = self._getICRecord(self.inventory.id, director)
+        components = ic.components.dereference(director.clerk.db)
+        components = [c for k,c in components]
+        
+        name = 'sim'
+        compnames = [c.componentname for c in components]
+        compnames = ','.join(compnames)
+        cmd1 = 'mcvine-create-instrument-simulation-application --name=%(name)s --components=%(compnames)s' % locals()
+
+        cmd2 = ['./%s' % name]
+        cmd2 += ['--%s=%s' % (c.componentname, c.__class__.__name__) 
+                 for c in components]
+        cmd2.append('-dump-pml')
+        cmd2 = ' '.join(cmd2)
+
+        import tempfile
+        tmpd = tempfile.mkdtemp()
+        
+        dirname = 'mcvine-sim'
+        tarballname = '%s.tgz' % dirname
+        cmd = 'cd %s && mkdir %s && cd %s && %s && %s && cd .. && tar -czf %s %s' % (
+            tmpd, dirname, dirname, cmd1, cmd2, tarballname, dirname)
+        import subprocess as sp
+        p = sp.Popen(cmd, shell=True, stdout=sp.PIPE, stderr=sp.PIPE)
+        out, err = p.communicate()
+        if p.wait():
+            # raise RuntimeError, 'cmd %s failed!!\nout: %s\nerr: %s\n' % (cmd, out, err)
+            return alert("failed to generate simulation application")
+        
+        import os
+        content = open(os.path.join(tmpd, tarballname), 'rb').read()
+        
+        # remove tmp dir
+        # import shutil
+        # shutil.rmtree(tmpd)
+        return lc.file(filename=tarballname, content=content)
+    
+
+    def _getICRecord(self, id, director):
+        from mcvineui.dom.InstrumentConfiguration import InstrumentConfigurationTable
+        from mcvineui.dom.InstrumentConfiguration import InstrumentConfiguration
+        orm = director.clerk.orm
+        return orm(orm.load(InstrumentConfiguration, id))
+        return director.clerk.orm.db.query(InstrumentConfigurationTable).filter_by(id=id)
+
+
+    def __init__(self, name='simapp'):
+        super(Actor, self).__init__(name)
+        return
+
+
+def actor(): return Actor()
+
+
+# version
+__id__ = "$Id$"
+
+# End of file 
+

@@ -32,6 +32,10 @@ def visual(director):
 
     container = lc.document(title='Instrument editor', id='instrument-editor')
     container.add(editor)
+
+    download_sim_tarball = load(actor='simapp', routine='createTarball', id=orm(ic).id)
+    b = lc.downloader(label='Create simulation script', ondownload=download_sim_tarball)
+    container.add(b)
     
     return container
 
