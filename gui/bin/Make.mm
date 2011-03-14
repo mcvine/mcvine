@@ -24,6 +24,7 @@ distclean::
 # export
 
 EXPORT_DATAFILES = \
+	create-instrument-configuration.py \
 	startservices.sh
 
 

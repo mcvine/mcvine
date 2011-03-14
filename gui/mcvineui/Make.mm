@@ -17,4 +17,8 @@ EXPORT_PYTHON_MODULES = \
 
 
 
-export:: export-python-modules
+export:: export-python-tree
+
+
+export-python-tree::
+	rsync -a ./ $(EXPORT_MODULEDIR)/

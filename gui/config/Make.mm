@@ -25,6 +25,7 @@ distclean::
 
 EXPORT_DATAFILES = \
 	SimpleHttpServer.pml \
+	instrument-configuration-creator.odb \
 	journal.pml \
 	librarian.pml \
 	main.pml \
