@@ -36,6 +36,17 @@ class Actor(base):
         
         name = 'sim'
         compnames = [c.componentname for c in components]
+        dup = hasduplicatenames(compnames)
+        if dup:
+            # f = lc.frame(title="error")
+            # doc = f.document(title="Error!", Class='error')
+            text = [
+                "The instrument has components with duplicate names: %r. " % dup,
+                "Please give each component a unique name",
+                ]
+            return ' '.join(text)
+            doc.paragraph(text=text) 
+            return f
         compnames = ','.join(compnames)
         cmd1 = 'mcvine-create-instrument-simulation-application --name=%(name)s --components=%(compnames)s' % locals()
 
@@ -79,6 +90,14 @@ class Actor(base):
     def __init__(self, name='simapp'):
         super(Actor, self).__init__(name)
         return
+
+
+def hasduplicatenames(l):
+    for i, item in enumerate(l):
+        if item in l[i+1:]:
+            return item
+        continue
+    return
 
 
 def actor(): return Actor()

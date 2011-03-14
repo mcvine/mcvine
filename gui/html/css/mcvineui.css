@@ -2,6 +2,8 @@
 
 #instrument-editor {
 padding:1em;
+height: 100%;
+background-color: black;
 }
 #instrument-editor > h1 {
 font-family:Verdana;
@@ -42,9 +44,13 @@ font-size:1.5em;
 color:Green;
 }
 
+.error {
+    color: red;
+}
+
 body {
     font-size: 85%;
-    background-color: black;
+    /* background-color: black; */
 }
 
 div table {
