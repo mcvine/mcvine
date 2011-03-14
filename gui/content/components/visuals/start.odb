@@ -41,6 +41,13 @@ def visual(director):
         )
     container.add(editor)
 
+    # links
+    htmldoc = lc.htmldocument(id='links')
+    container.add(htmldoc)
+    htmldoc.text = [
+            '<p><a target="_blank" href="https://vnf.caltech.edu">vnf</a></p>',
+            ]
+
     return container
 
 

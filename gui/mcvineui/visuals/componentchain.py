@@ -95,7 +95,7 @@ def visual(
         insertbutton = lc.button(id=button_id_formatter_for_insert_before%component.id)
         insertbuttoncontainer.add(insertbutton)
         insertbutton.Class='component-chain-insert-button'
-        insertbutton.label = '->'
+        insertbutton.label = '==>'
         insertbutton.tip = 'click to insert component'
         insertbutton.onclick = load(
             actor=actorname, routine='onInsertComponent',
@@ -118,7 +118,7 @@ def visual(
     appendbutton = lc.button(id='append-component')
     appendbuttoncontainer.add(appendbutton)
     appendbutton.Class='component-chain-insert-button'
-    appendbutton.label = '->'
+    appendbutton.label = '==>'
     appendbutton.tip = 'click to append component'
     appendbutton.onclick = load(
         actor=actorname, routine='onAppendComponent',
