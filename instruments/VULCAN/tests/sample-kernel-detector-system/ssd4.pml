@@ -57,74 +57,14 @@
         </component>
 
         <component name="detector">
-            <component name="m1">
-                <property name="title">detector_l90tc</property>
-                <property name="filename">tc.h5</property>
-                <property name="xwidth">0.770</property>
-                <property name="yheight">0.385</property>
-                <property name="tmin">0</property>
-                <property name="tmax">100</property>
-                <property name="nt">100</property>
-            </component>
-
-            <component name="m2">
-                <property name="title">detector_l90wc</property>
-                <property name="filename">wc.h5</property>
-                <property name="xwidth">0.770</property>
-                <property name="yheight">0.385</property>
-                <property name="wmin">0</property>
-                <property name="wmax">10</property>
-                <property name="nw">100</property>
-            </component>
-            
-            <component name="m3">
-                <property name="title">detector_l90tt</property>
-                <property name="filename">tt.h5</property>
-                <property name="xwidth">0.770</property>
-                <property name="yheight">0.385</property>
-                <property name="tmin">0</property>
-                <property name="tmax">100</property>
-                <property name="nt">100</property>
-            </component>
-
-            <component name="m4">
-                <property name="title">detector_l90wt</property>
-                <property name="filename">wt.h5</property>
-                <property name="xwidth">0.770</property>
-                <property name="yheight">0.385</property>
-                <property name="wmin">0</property>
-                <property name="wmax">10</property>
-                <property name="nw">100</property>
-            </component>
-
-            <component name="m5">
-                <property name="title">detector_l90tb</property>
-                <property name="filename">tb.h5</property>
-                <property name="xwidth">0.770</property>
-                <property name="yheight">0.385</property>
-                <property name="tmin">0</property>
-                <property name="tmax">100</property>
-                <property name="nt">100</property>
-            </component>
-
-            <component name="m6">
-                <property name="title">detector_l90wb</property>
-                <property name="filename">wb.h5</property>
-                <property name="xwidth">0.770</property>
-                <property name="yheight">0.385</property>
-                <property name="wmin">0</property>
-                <property name="wmax">10</property>
-                <property name="nw">100</property>
-            </component>
-
-            <component name="geometer">
-                <property name="m1">((-2, 0, 0), (0, 90, 0))</property>
-                <property name="m2">((-2, 0, 0), (0, 90, 0))</property>
-                <property name="m3">((-1.959, 0.403, 0), (0, 90, 0))</property>
-                <property name="m4">((-1.959, 0.403, 0), (0, 90, 0))</property>
-                <property name="m5">((-1.959, -0.403, 0), (0, 90, 0))</property>
-                <property name="m6">((-1.959, -0.403, 0), (0, 90, 0))</property>
-            </component>
+            <property name="xwidth">0.770</property>
+            <property name="yheight">0.385</property>
+            <property name="tmin">0</property>
+            <property name="tmax">0.02</property>
+            <property name="nt">100</property>
+            <property name="wmin">0</property>
+            <property name="wmax">10</property>
+            <property name="nw">100</property>
         </component>
 
         <component name="geometer">

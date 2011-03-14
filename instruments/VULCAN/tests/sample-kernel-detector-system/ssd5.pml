@@ -13,7 +13,7 @@
 ! ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 -->
 
-<!-- [Source_simple] -> [PowderKernel] -> [NDMonitor] -->
+<!-- [Source_simple] -> [PowderKernel] -> [NDMonitor(x,y,t)] -->
 
 <!DOCTYPE inventory>
 
