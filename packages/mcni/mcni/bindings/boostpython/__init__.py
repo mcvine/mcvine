@@ -19,11 +19,11 @@ class Binding:
     
     
     def position( self, x,y,z ):
-        return b.Position_double( x,y,z )
+        return b.Position_double( float(x), float(y), float(z) )
     
     
     def velocity( self, x,y,z ):
-        return b.Velocity_double( x,y,z )
+        return b.Velocity_double( float(x), float(y), float(z) )
     
     
     def spin( self, s1, s2):
