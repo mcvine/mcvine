@@ -45,7 +45,7 @@ Sample scattering kernels:
 * :ref:`Constant Q,E <kernel_constant-qe>`
 * :ref:`S(Q,E) <kernel_sqe>`
 * :ref:`S(Q) <kernel_sq>`
-* :ref:`powder diffraction (experimental) <kernel_powderdiffr>`
+* :ref:`Simple powder diffraction (experimental) <kernel_simplepowderdiffr>`
 * :ref:`Coherent inelastic phonon scattering for polycrystal <kernel_coh_inel_phonon_polyxtal>`
 * :ref:`Coherent inelastic phonon scattering for single crysal <kernel_coh_inel_phonon_singlextal>`
 * Detector scattering kernels:

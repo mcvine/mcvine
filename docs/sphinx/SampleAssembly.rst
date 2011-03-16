@@ -240,10 +240,10 @@ The input for this simulation is an artifical I(Q,E):
 .. ^^^^
 
 
-.. _kernel_powderdiffr:
+.. _kernel_simplepowderdiffr:
 
-powder diffraction (experimental)
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Simple powder diffraction (experimental)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 This kernel is for powder diffraction.
 
 Parameters: 
@@ -256,7 +256,7 @@ Example::
 
   <SimplePowderDiffractionKernel Dd_over_d="1e-5" DebyeWaller_factor="1." peaks-py-path="peaks.py"/>
 
-You can find a full example in directory "kernels/powder-diffraction" in
+You can find a full example in directory "kernels/simple-powder-diffraction" in
 `the examples tar ball <http://dev.danse.us/packages/mcvine-examples.tgz>`_
 
 Running it will generate the following plot:

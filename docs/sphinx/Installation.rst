@@ -156,12 +156,28 @@ Before install mcvine, please install following packages:
 * libboost-python1.38 (or other version currently in your installation)
 * python-numpy
 * python-h5py
+* python-psutil
 
 Optionally
 
 * mpich2
 * libmpich2-dev
 
+
+fedora 14
+"""""""""
+
+Before install mcvine, please install following packages:
+* gcc-c++
+* python-devel
+* hdf5-devel
+* boost-devel, boost-python
+* numpy
+* python-psutil
+* python-h5py
+
+Optionally
+* mpich2-devel
 
 .. _buildnotes:
 

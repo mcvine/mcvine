@@ -16,10 +16,11 @@ PACKAGE = sphinx
 
 EXPORT_DATADIRS = \
 	tutorials \
-	examples \
+	_static/jsmath \
 
 
 RECURSE_DIRS = \
+	examples \
 
 
 #--------------------------------------------------------------------------
@@ -53,8 +54,6 @@ jsmath::
 	fi; \
 
 
-EXPORT_DATADIRS = \
-	_static/jsmath \
 
 include std-docs.def
 include sphinx/default.def
