@@ -213,3 +213,12 @@ To use mcvine, run ::
 
  $ source ~linjiao/.mcvine
 
+
+Systems tested
+--------------
+
+* Ubuntu 
+ - 9.10
+ - 10.04
+
+
