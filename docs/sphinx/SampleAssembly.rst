@@ -118,7 +118,11 @@ to all 4pi solid angle.
 
 Parameters: None
 
-You can find an example in directory "kernels/isotropic" in
+Example::
+
+ <IsotropicKernel/>
+
+You can find a full example in directory "kernels/isotropic" in
 `the examples tar ball <http://dev.danse.us/packages/mcvine-examples.tgz>`_
 
 Running it will generate the following plot (a mostly uniform distribution of 
@@ -140,9 +144,18 @@ transfer
 The scattered neutrons goes
 to all 4pi solid angle isotropically.
 
+This kernel is mostly for testing purpose and resolution study.
+
 Parameters: 
 
-You can find an example in directory "kernels/constant-energy-transfer" in
+- energy-transfer: The energy transfer.
+
+Example::
+
+ <ConstantEnergyTransferKernel energy-transfer="10*meV"/>
+
+
+You can find a full example in directory "kernels/constant-energy-transfer" in
 `the examples tar ball <http://dev.danse.us/packages/mcvine-examples.tgz>`_
 
 Running it will generate the following plot:
