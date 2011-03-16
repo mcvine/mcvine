@@ -26,7 +26,8 @@ extensions = ['sphinx.ext.autodoc',
               'sphinx.ext.doctest', 
               'sphinx.ext.todo', 
               'sphinx.ext.coverage', 
-              'sphinx.ext.pngmath', 
+              # 'sphinx.ext.pngmath', 
+              'sphinx.ext.jsmath',
               'sphinx.ext.ifconfig',
               #'sphinx.ext.intersphinx',
               'sphinx.ext.inheritance_diagram']#, 'sphinx.ext.jsmath']
@@ -167,6 +168,8 @@ html_static_path = ['_static']
 # Output file base name for HTML help builder.
 htmlhelp_basename = 'mcvinedoc'
 
+# js math path
+jsmath_path = 'jsmath/easy/load.js'
 
 # -- Options for LaTeX output --------------------------------------------------
 

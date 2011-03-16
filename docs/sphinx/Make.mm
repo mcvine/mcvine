@@ -40,8 +40,21 @@ distclean::
 tidy::
 	BLD_ACTION="tidy" $(MM) recurse
 
-docs: sphinx-build export-sphinx-data
+docs: jsmath sphinx-build export-sphinx-data
 
+
+jsmath::
+	if [ -z $(JSMATH_DIR) ]; \
+	then \
+	  echo Please define env var JSMATH_DIR to point to the directory of jsmath; \
+	  exit 1;\
+	else \
+	  rsync -a $(JSMATH_DIR)/ _static/jsmath/ ;\
+	fi; \
+
+
+EXPORT_DATADIRS = \
+	_static/jsmath \
 
 include std-docs.def
 include sphinx/default.def

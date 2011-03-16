@@ -116,6 +116,8 @@ Isotropic
 This kernel elastically and isotropically scatters neutrons
 to all 4pi solid angle.
 
+Parameters: None
+
 You can find an example in directory "kernels/isotropic" in
 `the examples tar ball <http://dev.danse.us/packages/mcvine-examples.tgz>`_
 
@@ -123,13 +125,31 @@ Running it will generate the following plot (a mostly uniform distribution of
 intensities in 4pi solid angle):
 
 .. figure:: images/kernels/isotropickernel-psd4pimonitor.png
-   :width: 600px
+   :width: 50%
 
 
 .. _kernel_constant-energy-transfer:
 
 Constant energy transfer
 ^^^^^^^^^^^^^^^^^^^^^^^^
+This kernel scatters neutrons with a constant energy
+transfer
+
+.. math:: E_{out} = E_{in} - E_{constant}
+   	  
+The scattered neutrons goes
+to all 4pi solid angle isotropically.
+
+Parameters: 
+
+You can find an example in directory "kernels/constant-energy-transfer" in
+`the examples tar ball <http://dev.danse.us/packages/mcvine-examples.tgz>`_
+
+Running it will generate the following plot:
+
+.. figure:: images/kernels/constant-energy-transfer-kernel-iqe.png
+   :width: 50%
+
 
 .. _kernel_constant-qe:
 
