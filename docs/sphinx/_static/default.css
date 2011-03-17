@@ -15,7 +15,7 @@ body {
     padding: 0;
     border: 1px solid #aaa;
 
-    margin: 0px 80px 0px 80px;
+    margin: 20px 80px 20px 80px;
     /*min-width: 740px;*/
 
     /* background-image:url('bg.png'); */
@@ -23,10 +23,17 @@ body {
     background-position:bottom right;
     /* background-color:#eddaa8; */
     background-color:#111e25;
+
+    -moz-border-radius: 1em;
+    border-top-left-radius: 1em;
+    border-top-right-radius: 1em;
+    border-bottom-left-radius: 1em;
+    border-bottom-right-radius: 1em;
 }
 
 a {
-    color: #2f2a4e;
+    /* color: #2f2a4e;*/
+    color: #225533;
     text-decoration: none;
 }
 
@@ -40,7 +47,8 @@ pre {
     letter-spacing: 0.015em;
     padding: 0.5em;
     border: 1px solid #ccc;
-    background-color: #f8f8f8;
+    /* background-color: #f8f8f8; */
+    background-color: #fafaf0;
 }
 
 td.linenos pre {
@@ -158,9 +166,16 @@ pre a {
 }
 
 div.header {
-    background-color: white;
+    background-color: gray;
+    -moz-border-radius: 1em 1em 0 0;
+    border-top-left-radius: 1em;
+    border-top-right-radius: 1em;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    /*
     opacity: 0.7;
     filter:alpha(opacity=70);
+    */
 }
 
 div.document {
@@ -238,7 +253,7 @@ div.bodywrapper {
 }
 
 div.body a {
-    text-decoration: underline;
+    /* text-decoration: underline; */
 }
 
 div.sphinxsidebar {
@@ -290,7 +305,11 @@ h1 {
     margin: 0;
     padding: 0.7em 0 0.3em 0;
     font-size: 1.5em;
+    font-family: Times New Roman;
+    /*
     color: #11557C;
+    */
+    color: #303030;
 }
 
 h2 {
@@ -344,7 +363,13 @@ div.footer {
     text-align: right;
     background-color: #eeeeee;
     opacity: 0.8;
-    filter:alpha(opacity=80);    
+    filter:alpha(opacity=80);
+
+    -moz-border-radius: 0 0 1em 1em;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-left-radius: 1em;
+    border-bottom-right-radius: 1em;
 }
 
 div.footer a {
@@ -386,10 +411,12 @@ div.sphinxsidebar ul.toc ul li {
 }
 
 div.admonition, div.warning {
-    font-size: 0.9em;
-    margin: 1em 0 0 0;
-    border: 1px solid #86989B;
-    background-color: #f7f7f7;
+    background-color:#fefffe;
+    border:1px solid #EE9816;
+    font-size:0.9em;
+    margin:1em 0 0;
+    -moz-border-radius: 0.4em;
+    -webkit-border-radius: 0.4em;    
 }
 
 div.admonition p, div.warning p {
@@ -403,12 +430,12 @@ div.admonition pre, div.warning pre {
 
 div.admonition p.admonition-title,
 div.warning p.admonition-title {
-    margin: 0;
-    padding: 0.1em 0 0.1em 0.5em;
-    color: white;
-    border-bottom: 1px solid #86989B;
-    font-weight: bold;
-    background-color: #AFC1C4;
+    /* background-color:white; */
+    border-bottom:1px dotted;
+    color:#EE9816;
+    font-weight:bold;
+    margin:0;
+    padding:0.1em 0 0.1em 0.5em;
 }
 
 div.warning {
