@@ -36,7 +36,7 @@ isInValid(const mcni::Neutron::Event &evt)
   return evt.probability <= 0;
 }
 
-mcni::Neutron::EventBuffer::EventBuffer
+mcni::Neutron::EventBuffer
 mcni::Neutron::EventBuffer::snapshot( size_t n )
 {
   EventBuffer valid_evts;
