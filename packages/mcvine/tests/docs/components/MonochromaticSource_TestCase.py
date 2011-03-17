@@ -28,7 +28,6 @@ def cleanup():
 
 from _utils import execute
 
-
 import unittest
 
 
@@ -44,27 +43,19 @@ class TestCase(unittest.TestCase):
         execute(cmd)
 
         #
-        cmd = './sd --source=Source_simple --detector="NDMonitor(energy)"  --dump-pml'
-        execute(cmd)
-
-        #
         cmd = './sd \
- --geometer.detector="(0,0,10),(0,0,0)" \
- --source.width=0.1 --source.height=0.1 --source.radius=0 \
- --source.xw=0.1 --source.yh=0.1 --source.dist=10 \
- --source.E0=100 --source.dE=20 \
- --detector.title="I(E)" --detector.yheight=0.1 --detector.xwidth=0.1 \
- --detector.nenergy=100 --detector.energymin=60 --detector.energymax=140 \
+ --source=MonochromaticSource --source.energy=70 \
+ --detector=E_monitor --detector.filename=IE.dat \
  --dump-pml'
         execute(cmd)
 
         #
-        cmd = './sd --ncount=1e5'
+        cmd = './sd --ncount=1e3'
         execute(cmd)
 
         global interactive
         if interactive:
-            cmd = 'PlotHist.py out/ienergy.h5'
+            cmd = 'PlotHist.py out/IE.h5'
             execute(cmd)
         
         return
