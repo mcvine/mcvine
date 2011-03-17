@@ -194,21 +194,7 @@ def defaultcomponentlibrarypath( ):
 
 
 
-from sys import version_info
-if version_info[0] <=2 and version_info[1] <= 3 \
-        or version_info[0]==2 and version_info[1] >=7:
-    
-    def uniquelist( l ):
-        u = {}
-        for i in l: u[i] = 1
-        return u.keys()
-    
-else:
-    def uniquelist( l ):
-        return [ u for u in l if u not in locals()['_[1]'] ]
-
-del version_info
-
+from mcni.utils import uniquelist
 
 def _init():
     from release import type as releasetype
