@@ -49,6 +49,7 @@ Sample scattering kernels:
 * :ref:`Coherent inelastic phonon scattering for polycrystal <kernel_coh_inel_phonon_polyxtal>`
 * :ref:`Coherent inelastic phonon scattering for single crysal <kernel_coh_inel_phonon_singlextal>`
 * Detector scattering kernels:
+
   - He3
 
 Instruments:
@@ -66,12 +67,12 @@ Instruments:
 * CLI for compiling a mcstas component to a reusable c++ shared library and a python component
 
 
-Example usages
---------------
+.. Example usages
+.. --------------
 
-MCViNE framework is very flexible and powerful and can take on a variety of
-simulation problems. Here are just some simple examples:
+.. MCViNE framework is very flexible and powerful and can take on a variety of
+.. simulation problems. Here are just some simple examples:
 
-1. can simulate complex sample with scattering of various origins (phonon scattering and magnetic scattering, etc)
-2. can simulate accurately a real, complex detector system such as that of the ARCS instrument at SNS
+.. 1. can simulate complex sample with scattering of various origins (phonon scattering and magnetic scattering, etc)
+.. 2. can simulate accurately a real, complex detector system such as that of the ARCS instrument at SNS
 

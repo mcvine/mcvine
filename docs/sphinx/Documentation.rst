@@ -15,7 +15,7 @@ Contents:
    Introduction
    Installation
    Philosophy
-   Demos
+..   Demos
    Tutorials
    Fundamentals
    Components

@@ -167,17 +167,29 @@ Optionally
 fedora 14
 """""""""
 
-Before install mcvine, please install following packages:
+Before install mcvine, please install following packages using package manager
+(System->Administration->Add/Remove Software):
+* wget
 * gcc-c++
 * python-devel
 * hdf5-devel
 * boost-devel, boost-python
 * numpy
 * python-psutil
-* python-h5py
+
+And then install h5py using easy_install (as super user)::
+
+ $ easy_install h5py
 
 Optionally
 * mpich2-devel
+
+If using mpich2, need to set the following environment variables::
+
+ $ export MPI_DIR=/usr/lib/mpich2
+ $ export MPI_INCDIR=/usr/include/mpich2-i386
+ $ export MPI_LIBDIR=$MPI_DIR/lib
+ $ export PATH=$MPI_DIR/bin:$PATH
 
 .. _buildnotes:
 
