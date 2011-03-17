@@ -66,6 +66,9 @@ Instruments:
 * (Semi-)automatic translation of mcstas component
 * CLI for compiling a mcstas component to a reusable c++ shared library and a python component
 
+Graphical user interface:
+
+* http://vnf-dev.caltech.edu/mcvine
 
 .. Example usages
 .. --------------

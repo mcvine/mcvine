@@ -16,6 +16,10 @@ By going through this tutorial you can get to know
 * utilities to find out about available neutron component
 * options that affect behavior of instrument simulations
 
+.. note::
+   Experimental: you could also create your simulation application online at
+   http://vnf-dev.caltech.edu/mcvine
+
 
 Create instrument simulation application
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

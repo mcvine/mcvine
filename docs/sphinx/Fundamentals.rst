@@ -11,8 +11,15 @@ Instrument
 
 Creat instrument simulation applicatioin
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-You may want to follow 
-:ref:`this tutorial <create-sim-app>`.
+
+.. note::
+   You may want to follow 
+   :ref:`this tutorial <create-sim-app>`.
+
+.. note::
+   Experimental: you could also create your simulation application online at
+   http://vnf-dev.caltech.edu/mcvine
+
 
 Create an instrument simulation application::
 

@@ -15,16 +15,17 @@ Contents:
    Introduction
    Installation
    Philosophy
-..   Demos
    Tutorials
    Fundamentals
    Components
    SampleAssembly
+   WebApp
    Extend
    Problems
    FAQ
    DeveloperGuide
 
+..   Demos
 
 Indices and tables
 ==================
