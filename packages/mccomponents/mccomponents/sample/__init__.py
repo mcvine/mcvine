@@ -95,6 +95,14 @@ def _import_bindings():
 _import_bindings()
 
 
+#make additional kernels available
+def _import_kernels():
+    import phonon.xml
+    import diffraction.xml
+    return
+_import_kernels()
+
+
 # version
 __id__ = "$Id$"
 
