@@ -1,10 +1,10 @@
 .. _tutorials-powder-kernel:
 
 Tutorials -- Powder Diffraction Kernel
-==========================
+======================================
 
 Simulation with Powder Diffraction Kernel
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 In this tutorial we will do experiment with a simple instrument consisting of three
 components:
