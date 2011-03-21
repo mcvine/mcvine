@@ -18,10 +18,13 @@ Build mcvine from source
 
 Obtain mcvine source
 ^^^^^^^^^^^^^^^^^^^^
-To obtain mcvine source, you can either get it from danse svn repository 
-or danse web site.
+To obtain mcvine source, you can either get it from
+:ref:`danse svn repository <install-src-svn>`
+or 
+:ref:`danse web site <install-src-repo-on-web>`.
 
 
+.. _install-src-svn:
 
 Subversion repository
 """""""""""""""""""""
@@ -34,8 +37,11 @@ and change into the checked-out directory::
 
  $ cd mcvine-1.0beta
 
-DANSE package web repository
-""""""""""""""""""""""""""""
+
+.. _install-src-repo-on-web:
+
+DANSE package repository on the web
+"""""""""""""""""""""""""""""""""""
 You can get a source distribution of mcvine
 from http://dev.danse.us/packages/mcvine-1.0beta-src.tgz. 
 You will need
@@ -150,7 +156,6 @@ ubuntu 9.10+
 """"""""""""
 
 Before install mcvine, please install following packages:
-
 * g++
 * python-dev
 * libboost-python1.38 (or other version currently in your installation)
@@ -160,16 +165,20 @@ Before install mcvine, please install following packages:
 
 Optionally
 
-* mpich2
-* libmpich2-dev
+- ... for parallel mcvine
+ * mpich2 
+ * libmpich2-dev
+
+- ... for installing from svn
+ * subversion
 
 
 fedora 14
 """""""""
 
 Before install mcvine, please install following packages using package manager
-(System->Administration->Add/Remove Software):
-* wget
+(System->Administration->Add/Remove Software) or yum:
+
 * gcc-c++
 * python-devel
 * hdf5-devel
@@ -181,8 +190,16 @@ And then install h5py using easy_install (as super user)::
 
  $ easy_install h5py
 
+
 Optionally
-* mpich2-devel
+
+- ... for parallel mcvine
+ * mpich2-devel
+
+- ... for installing from svn
+ * wget
+ * subversion
+
 
 If using mpich2, need to set the following environment variables::
 
@@ -190,6 +207,84 @@ If using mpich2, need to set the following environment variables::
  $ export MPI_INCDIR=/usr/include/mpich2-i386
  $ export MPI_LIBDIR=$MPI_DIR/lib
  $ export PATH=$MPI_DIR/bin:$PATH
+
+
+Cent OS 5.5
+"""""""""""
+Before install mcvine, please install following packages using 
+yum:
+
+* gcc-c++
+* hdf5-devel (it is not included in standard package repository, so you will need to download the rpm directly, or add extra repository like rpmforge)
+
+
+python
+''''''
+
+You will need to install python 2.6+ from source (default version in Cent OS 5.5 is 2.4 and it does not work for some dependencies of mcvine):
+
+1. Install zlib development package::
+
+ $ yum install zlib-devel
+
+
+2. Download python source tarball from http://python.org and expand::
+
+ $ tar xvfz <python-tar-ball>
+ $ cd Python-x.x.x
+
+3. Configure python and build and install::
+
+ $ ./configure --prefix=<prefix> --with-zlib=/usr/include
+ $ make
+ $ make install
+
+Then we can install setuptools (easy install) 
+from http://pypi.python.org/pypi/setuptools.
+
+
+numpy
+'''''
+1. Download source tar ball from numpy: http://numpy.org 
+2. Expand::
+
+ $ tar xvzf numpy-x.x.x.tar.gz
+
+3. Build and install
+
+ $ cd numpy-x.x.x
+ $ python setup.py install
+
+
+h5py
+''''
+Install using easy_install::
+
+ $ easy_install h5py
+
+psutil
+''''''
+Install using easy_install::
+
+ $ easy_install psutil
+
+boost python
+''''''''''''
+
+from source.
+
+
+Optionally
+''''''''''
+
+- ... for parallel mcvine
+ * mpich2-devel
+
+- ... for installing from svn
+ * subversion
+
+
+
 
 .. _buildnotes:
 
@@ -249,4 +344,11 @@ Systems tested
  - 9.10
  - 10.04
 
+* Fedora
+ - 14
 
+* RHEL client
+ - 5.5
+
+* Cent OS
+ - 5.5
