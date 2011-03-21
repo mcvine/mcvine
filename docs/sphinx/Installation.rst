@@ -28,24 +28,24 @@ Subversion repository
 If subversion is available in your system and anonymous svn checkout
 is not blocked. You can do ::
 
- $ svn co svn://danse.us/buildInelast/mcvine
+ $ svn co svn://danse.us/buildInelast/mcvine-1.0beta
 
 and change into the checked-out directory::
 
- $ cd mcvine
+ $ cd mcvine-1.0beta
 
 DANSE package web repository
 """"""""""""""""""""""""""""
 You can get a source distribution of mcvine
-from http://dev.danse.us/packages/mcvine-src-dist.tgz. 
+from http://dev.danse.us/packages/mcvine-1.0beta-src.tgz. 
 You will need
 to expand it somewhere::
 
- $ tar -xvzf mcvine-src-dist.tgz
+ $ tar -xvzf mcvine-1.0beta-src.tgz
 
 and change into the expanded directory::
 
- $ cd mcvine-src-dist
+ $ cd mcvine-1.0beta-src
 
 
 Before you install
