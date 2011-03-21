@@ -12,6 +12,9 @@
 #
 
 
+from __future__ import with_statement
+
+
 class AbstractComponent:
 
 
@@ -86,7 +89,6 @@ class ChangeDirectory:
     def __exit__(self, type, value, traceback):
         os.chdir(self.savedir)
         return
-
 
 
 def run_in_dir(func, dir):
