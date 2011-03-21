@@ -24,7 +24,7 @@ or
 :ref:`danse web site <install-src-repo-on-web>`.
 
 
-.. install-src-svn::
+.. _install-src-svn:
 
 Subversion repository
 """""""""""""""""""""
@@ -38,10 +38,11 @@ and change into the checked-out directory::
  $ cd mcvine
 
 
-.. install-src-repo-on-web::
+.. _install-src-repo-on-web:
 
 DANSE package repository on the web
 """""""""""""""""""""""""""""""""""
+>>>>>>> .merge-right.r1055
 You can get a source distribution of mcvine
 from http://dev.danse.us/packages/mcvine-src-dist.tgz. 
 You will need
