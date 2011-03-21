@@ -335,7 +335,7 @@ You can use it at arcs1 and arcs2 clusters.
 
 To use mcvine, run ::
 
- $ source ~linjiao/.mcvine
+ $ source ~linjiao/mcvine.sh
 
 
 Systems tested
