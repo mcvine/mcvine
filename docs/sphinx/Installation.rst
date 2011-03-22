@@ -42,7 +42,7 @@ and change into the checked-out directory::
 
 DANSE package repository on the web
 """""""""""""""""""""""""""""""""""
->>>>>>> .merge-right.r1055
+
 You can get a source distribution of mcvine
 from http://dev.danse.us/packages/mcvine-src-dist.tgz. 
 You will need
