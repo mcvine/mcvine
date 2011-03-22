@@ -36,9 +36,12 @@ def _register_components():
     return
 
 
-
-_register_components()
-
+try:
+    _register_components()
+except ImportError:
+    import warnings
+    warnings.warn("SampleAssemblyFromXml and DetectorSystemFromXml are not available.")
+    pass
 
 
 

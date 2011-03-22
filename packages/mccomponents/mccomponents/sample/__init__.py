@@ -97,8 +97,12 @@ _import_bindings()
 
 #make additional kernels available
 def _import_kernels():
-    import phonon.xml
-    import diffraction.xml
+    try:
+        import phonon.xml
+        import diffraction.xml
+    except ImportError:
+        import warnings
+        warnings.warn("kernels not available: phonon, diffraction")
     return
 _import_kernels()
 
