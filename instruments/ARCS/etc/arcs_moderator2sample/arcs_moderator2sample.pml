@@ -467,7 +467,6 @@
 
         <component name="monitor">
             <property name="path">neutrons</property>
-            <property name="append">False</property>
         </component>
 
 
