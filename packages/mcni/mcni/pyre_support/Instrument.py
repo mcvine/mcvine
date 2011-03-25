@@ -369,6 +369,7 @@ class Instrument( AppInitMixin, CompositeNeutronComponentMixin, base, ParallelCo
             'dumpconfiguration', 'dumpconfiguration-output',
             'help-properties', 'help', 'help-persistence', 'help-components',
             'dump-pml',
+            'buffer_size',
             ]
         from pyre.applications.Application import retrieveConfiguration
         registry = retrieveConfiguration( 
