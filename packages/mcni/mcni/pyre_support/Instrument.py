@@ -233,7 +233,7 @@ class Instrument( AppInitMixin, CompositeNeutronComponentMixin, base, ParallelCo
         base._configure(self)
         self.geometer = self.inventory.geometer
         self.overwrite_datafiles = self.inventory.overwrite_datafiles
-
+        
         self.sequence = self.inventory.sequence
         self.buffer_size = self._getBufferSize()
         self.ncount = self.inventory.ncount
@@ -271,7 +271,7 @@ class Instrument( AppInitMixin, CompositeNeutronComponentMixin, base, ParallelCo
         # Please read MpiApplication._init as well!
         # 
         from MpiApplication import usempi
-        mpi_server_mode = usempi \
+        self.mpi_server_mode = usempi \
             and (self.inventory.launcher.nodes > 1) \
             and self.inventory.mode == 'server'
         # mpi_server_mode is true means that it is not a worker,
@@ -281,9 +281,28 @@ class Instrument( AppInitMixin, CompositeNeutronComponentMixin, base, ParallelCo
         # we need this application to start the workers.
         # There should be a more systematic way of dealing with this
         # in pyre.
-        if mpi_server_mode:
+        if self.mpi_server_mode:
             for comp in self.neutron_components.itervalues():
                 comp._showHelpOnly = True
+        return
+
+    
+    def _init(self):
+        super(Instrument, self)._init()
+        # XXX
+        # if I am in server mode for the mpi application,
+        # I told my sub components to not to initialize 
+        # (see _init_before_my_inventory). 
+        # and that results in my _showHelpOnly flag set.
+        # I need to revert that flag so that I can run
+        # my workers.
+        # That is really confusing. We actually need a separate
+        # flat that just indicate whether the user is requesting
+        # for help, or there are other reasons for which some
+        # components should not be initialized.
+        # need to modify pyre for that.
+        if self.mpi_server_mode:
+            self._showHelpOnly = False
         return
 
 
@@ -370,6 +389,7 @@ class Instrument( AppInitMixin, CompositeNeutronComponentMixin, base, ParallelCo
             'help-properties', 'help', 'help-persistence', 'help-components',
             'dump-pml',
             'buffer_size',
+            'mode',
             ]
         from pyre.applications.Application import retrieveConfiguration
         registry = retrieveConfiguration( 
