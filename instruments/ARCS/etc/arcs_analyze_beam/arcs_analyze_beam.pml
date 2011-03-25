@@ -20,7 +20,6 @@
         <property name="multiple-scattering">False</property>
 
         <property name="ncount">1e6</property>
-        <property name="buffer_size">100000</property>
 
         <property name="overwrite-datafiles">False</property>
         <property name="output-dir">out</property>
