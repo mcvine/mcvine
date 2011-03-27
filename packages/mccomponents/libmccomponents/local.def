@@ -20,6 +20,7 @@
     PROJ_CXX_FLAGS += $(CXX_SOFLAGS)
     PROJ_LCXX_FLAGS += $(LCXX_SARFLAGS)
 
+
 # version
 # $Id$
 
