@@ -64,6 +64,13 @@ namespace mccomponents {
       ///      channels = (25, 3, 31, 2122)
       /// n: number of particles in the event
       virtual void accept( const channels_t & channels, double n );
+
+      /// change output file
+      void setOutputFile(const char * path)
+      {
+	m_out.close();
+	m_out.open(path);
+      }
       
     private:
       //data

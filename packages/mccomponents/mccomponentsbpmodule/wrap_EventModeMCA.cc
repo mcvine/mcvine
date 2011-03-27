@@ -30,6 +30,7 @@ namespace wrap_mccomponents {
       ("EventModeMCA",
        init<const char *, w_t::indexes_t>()
        )
+      .def("setOutputFile", &w_t::setOutputFile)
       ;
   }
 }
