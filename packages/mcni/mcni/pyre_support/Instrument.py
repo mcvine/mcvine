@@ -201,7 +201,7 @@ class Instrument( AppInitMixin, CompositeNeutronComponentMixin, base, ParallelCo
     def _setup_outputdir(self):
         self.mpiBarrier()
         outputdir = self.outputdir = self.inventory.outputdir
-        if self.mpiRank==0 and self.inventory.mode=='worker':
+        if self.parallel and self.mpiRank==0 and self.inventory.mode=='worker':
             if not self.overwrite_datafiles and os.path.exists( outputdir ):
                 msg = "output directory %r exists. If you want to overwrite the output directory, please specify option --overwrite-datafiles." % outputdir
                 raise RuntimeError, msg
