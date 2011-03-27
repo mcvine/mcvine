@@ -16,13 +16,17 @@ coordinate_system = 'McStas'
 
 
 from mccomponents.detector import detectorcomponent as enginefactory
+from mcni.pyre_support.ParallelComponent import ParallelComponent
 from mcni.pyre_support.AbstractComponent import AbstractComponent
 
 
-class DetectorSystemFromXml( AbstractComponent ):
+class DetectorSystemFromXml(ParallelComponent, AbstractComponent):
 
     __doc__ = enginefactory.__doc__
+    simple_description = "Detector system constructed from xml representation"
+    full_description = ""
 
+    
     class Inventory( AbstractComponent.Inventory ):
 
         import pyre.inventory as pinv
@@ -37,8 +41,93 @@ class DetectorSystemFromXml( AbstractComponent ):
     
 
     def process(self, neutrons):
-        self._debug.log( 'detector accepting neutrons: %s' % (neutrons,) )
-        return self.engine.process( neutrons )
+        # self._debug.log( 'detector accepting neutrons: %s' % (neutrons,) )
+        engine = self._resetEngine()
+        engine.process(neutrons)
+        # engine.close()
+        return neutrons
+
+
+    def _resetEngine(self):
+        if self.engine is None:
+            self.engine = self._createEngine()
+            return self.engine
+        outdir = self.simulation_context.getOutputDirInProgress()
+        path = self.eventsdat
+        import os
+        path = os.path.join(outdir, path)
+        if not self.overwrite_datafiles and os.path.exists(path):
+            raise IOError, "%s already exists" % path
+        self._setOutputPath(path)
+        return self.engine
+
+
+    def _setOutputPath(self, path):
+        self.engine.mca.setOutputFile(path)
+        return
+
+
+    def _createEngine(self):
+        # output file path
+        outdir = self.simulation_context.getOutputDirInProgress()
+        path = self.eventsdat
+        import os
+        path = os.path.join(outdir, path)
+        if not self.overwrite_datafiles and os.path.exists(path):
+            raise IOError, "%s already exists" % path
+        
+        # other parameters
+        instrumentxml = self.instrumentxml
+        tofparams = self.tofparams
+
+        # XXX: probably should make coordinate_system a parameter
+        # XXX: in the future
+        return enginefactory(
+            self.name, instrumentxml, coordinate_system, tofparams, path)
+
+
+    def _saveFinalResult(self):
+        context = self.simulation_context
+        # make sure every node reaches here
+        if context.mpiSize:
+            self.mpiBarrier()
+        # merge and normalize neutron files
+        if context.mpiRank == 0:
+            self._merge_and_normalize()
+        return
+
+
+    def _merge_and_normalize(self):
+        outdir = self.simulation_context.outputdir
+
+        # find all output files
+        from mcni.components.outputs import n_mcsamples_files, mcs_sum
+        import glob, os
+        filename = self.eventsdat
+        pattern = os.path.join(outdir, '*', filename)
+        eventdatfiles = glob.glob(pattern)
+        n_mcsamples = n_mcsamples_files(outdir)
+        assert len(eventdatfiles) == n_mcsamples, \
+            "neutron storage files %s does not match #mcsample files %s" %(
+            len(eventdatfiles), n_mcsamples)
+        if not eventdatfiles:
+            return
+        
+        # output
+        out = os.path.join(outdir, self.eventsdat)
+        if self.overwrite_datafiles:
+            if os.path.exists(out):
+                os.remove(out)
+        # merge
+        from mccomponents.detector import mergeEventFiles
+        mergeEventFiles(eventdatfiles, out)
+
+        # load number_of_mc_samples
+        mcs = mcs_sum(outdir)
+        # normalize
+        from mccomponents.detector import normalizeEventFile
+        normalizeEventFile(out, mcs)
+        return
 
 
     def _configure(self):
@@ -51,28 +140,28 @@ class DetectorSystemFromXml( AbstractComponent ):
         self.eventsdat = self.inventory.eventsdat
         return
 
-
+    
     def _init(self):
-        AbstractComponent._init(self)
-        if self._showHelpOnly: return
-        instrumentxml = self.instrumentxml
-        tofparams = self.tofparams
-
-        eventsdat = self.eventsdat
-        import os
-        eventsdat = os.path.join(self._outputdir, eventsdat)
-
-        
-        self.engine = enginefactory(
-            self.name, instrumentxml, coordinate_system, tofparams, eventsdat )
+        super(DetectorSystemFromXml, self)._init()
+        if self._showHelpOnly: 
+            return
         return
 
 
     def _fini(self):
-        if self.__dict__.has_key( 'engine' ):
+        if self.engine:
             del self.engine
-        AbstractComponent._fini(self)
+            if not self._showHelpOnly:
+                self._saveFinalResult()
+        super(DetectorSystemFromXml, self)._fini()
         return
+
+
+    def __init__(self, name):
+        AbstractComponent.__init__(self, name)
+        self.engine = None
+        return
+    
 
     pass # end of Source
 

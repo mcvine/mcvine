@@ -71,6 +71,7 @@ class ComputationEngineRendererExtension:
         
         self._indexes_in_detsys = []
         ret = self.onCompositeDetector( detectorSystem )
+        ret.mca = mca
         del self._indexes_in_detsys
         
         del self.mca_cinstance, self.t2c_cinstance

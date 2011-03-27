@@ -39,6 +39,7 @@ tidy::
 EXPORT_PYTHON_MODULES = \
 	ComputationEngineRendererExtension.py \
 	__init__.py \
+	event_utils.py \
 	reduction_utils.py \
 	units.py \
 	utils.py \

@@ -48,6 +48,18 @@ def detectorcomponent( name, instrumentxml, coordinate_system, tofparams, outfil
     return cds
 
 
+def mergeEventFiles(files, out):
+    "merge event data files into one output file"
+    from event_utils import mergeEventFiles
+    return mergeEventFiles(files, out)
+
+
+def normalizeEventFile(file, n):
+    "normalize the event data file by the number n"
+    from event_utils import normalizeEventFile
+    return normalizeEventFile(file, n)
+
+
 import units
 
 def he3tube_withpixels(

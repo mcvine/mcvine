@@ -19,15 +19,10 @@ def events2Ipixtof( events, ipixtof ):
     return
 
 
-def readevents( filename ):
-    import numpy as N
-    datatype = N.dtype( [ ('pixelID', N.uint32), ('tofchannel', N.uint32), ('n', N.double) ] )
-    s = open(filename).read()
-    events = N.fromstring( s, dtype = datatype )
-    print len(events)
-    print events[0]
-    return events
+# def events2IQE(events, pixelpositions, L1, 
 
+
+from event_utils import readEvents as readevents
 
 
 # version
