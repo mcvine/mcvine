@@ -53,13 +53,16 @@ def execute(cmd, input=None, cwd=None, env=None):
 
 
 
-def runtest(src):
+def runtest(src, dry=False):
     print '* %s' % src
     bin = findCorrespondingBinary(src)
     if not os.path.exists(bin): raise NoTestBinary
     dirname = os.path.dirname(bin)
     fn = os.path.basename(bin)
     cmd = './%s' % (fn,)
+    if dry:
+        print "* running %s in %s" % (cmd, dirname)
+        return
     code, out, err = execute(cmd, cwd=dirname)
     if code:
         raise TestRunFailed, '%s failed: out:\n%serr:\n%s' % (
@@ -67,12 +70,12 @@ def runtest(src):
     return
 
 
-def runtests(root='.'):
+def runtests(root='.', dry=False):
     sources = findTestSources(root)
     nobinaries = []
     failed = []
     for src in sources:
-        try: runtest(src)
+        try: runtest(src, dry=dry)
         except NoTestBinary:
             nobinaries.append(src)
         except TestRunFailed, e:
@@ -113,8 +116,17 @@ def createReport(sources, nobinaries, failed):
 
 
 def main():
-    res = runtests()
+    
+    import optparse
+    parser = optparse.OptionParser()
+    parser.add_option('-d', '--dry-run', action='store_true', dest='dry')
+    opts, args = parser.parse_args()
+    
+    dry = opts.dry
+    
+    res = runtests(dry=dry)
     createReport(*res)
+    
     return
 
 
