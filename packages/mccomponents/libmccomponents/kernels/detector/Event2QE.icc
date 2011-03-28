@@ -1,0 +1,136 @@
+// -*- C++ -*-
+#ifndef H_MCCOMPONENTS_EVENT2QE
+#error "Event2QE.icc not meaningful outside Event2QE.h"
+#else
+
+#include <cmath>
+#include <iostream>
+#include "mcni/neutron/units_conversion.h"
+
+
+#ifdef DEBUG
+#include "journal/debug.h"
+#endif
+
+
+namespace mccomponents { namespace reduction {
+
+    namespace Event2QE_impl {
+      const char jrnltag[] = "Event2QE";
+    }
+
+    using namespace mcni::neutron_units_conversion;
+    
+    template <typename event_t, typename float_t>
+    Event2QE<event_t, float_t>
+    ::Event2QE
+    ( float_t Ei,
+      const float_t * pixelPositions, unsigned int ntotpixels,
+      float_t tofUnit, float_t mod2sample, float_t toffset,
+      float_t tofmax) 
+      : m_Ei(Ei), m_vi( std::sqrt(Ei) * sqrte2v ), m_ki(m_vi*v2k),
+	m_pixelPositions( pixelPositions ), m_tofUnit( tofUnit ),
+	m_mod2sample( mod2sample ), m_ntotpixels(ntotpixels),
+	m_toffset(toffset*1.e-6), m_tofmax(tofmax*1.e-6)
+    {
+#ifdef DEBUG
+      journal::debug_t debug( Event2QE_impl::jrnltag );
+      debug << journal::at(__HERE__)
+	    << "m_pixelPositions=" << m_pixelPositions 
+	    << journal::endl;
+#endif
+    }
+    
+
+    template <typename event_t, typename float_t>
+    float_t
+    Event2QE<event_t, float_t>
+    ::operator ()
+      ( const event_t & e, float_t &Q, float_t &E ) const
+    {
+      const unsigned int & pixelID = e.pixelID;
+      
+      if (pixelID<0 || pixelID>=m_ntotpixels) {
+#ifdef DEBUG
+	journal::debug_t debug( Event2QE_impl::jrnltag );
+	debug << journal::at(__HERE__)
+	      << "pixel ID out of bound: " << pixelID 
+	      << journal::endl;
+#endif
+	return 0;
+      }
+      const unsigned int & tofchannelno = e.tofChannelNo;
+
+      // pixel position
+      const float_t *ppos = m_pixelPositions + 3*pixelID;
+      const float_t &x = *ppos;
+      const float_t &y = *(ppos+1);
+      const float_t &z = *(ppos+2);
+      
+      // tof total in second
+      float_t toftotal = tofchannelno * m_tofUnit;
+      if (toftotal>m_tofmax) {
+#ifdef DEBUG
+	journal::debug_t debug( Event2QE_impl::jrnltag );
+	debug << journal::at(__HERE__)
+	    << "tof out of range: "  << toftotal
+	      << journal::endl;
+#endif
+	return 0;
+      }
+      
+      // tof from sample to pixel in second
+      float_t tof = toftotal - m_toffset - m_mod2sample/m_vi;
+      if (tof<0) {
+#ifdef DEBUG
+	journal::debug_t debug( Event2QE_impl::jrnltag );
+	debug << journal::at(__HERE__)
+	      << "negative time of flight" << tof 
+	    << journal::endl;
+#endif
+	return 0;
+      }
+      
+      // distances in meter
+      float_t sample2pixel = sqrt(x*x+y*y+z*z);
+      
+      // velocity of final neutron
+      float_t velocity = sample2pixel/tof;
+      
+      // final energy of neutron
+      float_t Ef = vsq2e * velocity * velocity;
+      
+      // energy transfer
+      E = m_Ei - Ef;
+      
+      // kf vector
+      float_t t = velocity*v2k/sample2pixel, kx = x*t, ky = y*t, kz = z*t;
+      // momentum transfer
+      Q = std::sqrt( kz*kz + ky*ky + (kx-m_ki)*(kx-m_ki) );
+      
+#ifdef DEBUG
+      {
+	journal::debug_t debug( Event2QE_impl::jrnltag );
+	debug 
+	  << "pixelID=" << pixelID 
+	  << ", x,y,z=" << x 
+	  << "," << y 
+	  << "," << z 
+	  << ", sample2pixel = " << sample2pixel 
+	  << ", mo2sample=" << m_mod2sample 
+	  << "tof = " << tof 
+	  << "velocity = " << velocity
+	  << "k=" << kx << ',' << ky << ',' << kz 
+	  << "ki = " << m_ki 
+	  << ", Q = " << Q
+	  << ", E = " << E
+	  << journal::endl;
+      }
+#endif
+      return e.n;
+    }
+    
+  }}
+
+
+#endif

@@ -17,7 +17,14 @@ PROJ_TIDY += $(PROJ_CPPTESTS)
 PROJ_CLEAN += $(PROJ_CPPTESTS)
 
 PROJ_PYTESTS =  alltests.py
-PROJ_CPPTESTS = testTof2Channel testZ2Channel testHe3Tube testEventModeMCA testHe3
+PROJ_CPPTESTS = \
+	testTof2Channel \
+	testZ2Channel \
+	testHe3Tube \
+	testEventModeMCA \
+	testHe3 \
+	testevents2iqe \
+
 PROJ_TESTS = $(PROJ_PYTESTS) $(PROJ_CPPTESTS)
 PROJ_LIBRARIES = -L$(BLD_LIBDIR) -ljournal -lmcni -lmccomposite -lmccomponents -lfparser
 
@@ -53,6 +60,9 @@ testHe3: testHe3.cc
 
 testEventModeMCA: testEventModeMCA.cc
 	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ testEventModeMCA.cc $(PROJ_LIBRARIES)
+
+testevents2iqe: testevents2iqe.cc
+	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ testevents2iqe.cc $(PROJ_LIBRARIES)
 
 
 # version
