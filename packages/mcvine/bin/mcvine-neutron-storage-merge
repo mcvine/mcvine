@@ -38,7 +38,7 @@ class App(Script):
 
 
 def main():
-    app = App('mcvine-neutron-storage-count-neutrons')
+    app = App('mcvine-neutron-storage-merge')
     app.run()
     return
 

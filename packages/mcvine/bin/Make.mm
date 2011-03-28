@@ -52,6 +52,7 @@ EXPORT_BINS = \
 	mcvine-list-components \
 	mcvine-simulate \
 	mcvine-neutron-storage-count-neutrons \
+	mcvine-neutron-storage-extract \
 	mcvine-neutron-storage-merge \
 	mcvine-neutron-storage-get-neutrons \
 	mcvine-neutron-storage-print-neutrons \
