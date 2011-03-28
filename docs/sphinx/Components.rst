@@ -163,6 +163,56 @@ in the storage::
 
  neutron-from-storage -> monitor
 
+Tools
+"""""
+
+Count neutrons in a storage -- "mcvine-neutron-storage-count-neutrons"
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
+Signature::
+
+ $ mcvine-neutron-storage-count-neutrons <neutron-file>
+
+- Input: a neutron file
+- Output: Number of neutrons in the given storage
+
+
+Compute total intensity in a storage -- "mcvine-neutron-storage-total-intensity"
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
+Signature::
+
+ $ mcvine-neutron-storage-total-intensity <neutron-file>
+
+- Input: a neutron file
+- Output: Total neutron intensity in the given storage
+
+
+Merge neutron storages -- "mcvine-neutron-storage-merge"
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
+Signature::
+ 
+ $ mcvine-neutron-storage-merge \
+     -files=<neutron-files-to-merge> \
+     -output=<output-neutron-file>
+
+- Input: neutron file(s)
+- Output: merged neutron file
+
+
+Print neutrons -- "mcvine-neutron-storage-print-neutrons"
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+Signature::
+ 
+ $ mcvine-neutron-storage-print-neutrons \
+     -filename=<neutron-file> \
+     -n=<number-of-neutrons>
+
+- Input: neutron file(s)
+- Output: merged neutron file
+
+
 Error propagation when using neutron storage
 """"""""""""""""""""""""""""""""""""""""""""
 
@@ -196,42 +246,17 @@ for the simulation of the neutron storage before using it for
 other simulations.
 
 
-Tools
-"""""
+.. _detectorsystem:
 
-Count neutrons in a storage -- "mcvine-neutron-storage-count-neutrons"
-''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+Detector System
+^^^^^^^^^^^^^^^
+DetectorSystemFromXml.
 
-Signature::
+To see the events in an events file::
 
- $ mcvine-neutron-storage-count-neutrons <neutron-file>
-
-- Input: a neutron file
-- Output: Number of neutrons in the given storage
-
-
-Compute total intensity in a storage -- "mcvine-neutron-storage-total-intensity"
-''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-
-Signature::
-
- $ mcvine-neutron-storage-total-intensity <neutron-file>
-
-- Input: a neutron file
-- Output: Total neutron intensity in the given storage
-
-
-Merge neutron storages -- "mcvine-neutron-storage-merge"
-''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-
-Signature::
- 
- $ mcvine-neutron-storage-merge \ \
-     -files=<neutron-files-to-merge> \
-     -output=<output-neutron-file>
-
-- Input: neutron file(s)
-- Output: merged neutron file
+ from mccomponents.detector.event_utils import readEvents
+ events = readEvents(filepath)
+ print events
 
 
 .. _mcstas-comp-lib:
