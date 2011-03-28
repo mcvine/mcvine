@@ -8,6 +8,7 @@ For a list of systems already deployed with MCViNE, please go to
 
 At this moment, mcvine can only be installed from source.
 
+
 Build mcvine from source
 ------------------------
 
@@ -15,6 +16,14 @@ Build mcvine from source
   You may want to read :ref:`platform specific instructions <platform-specific-instructions>`
   first before you move on.
 
+
+To install mcvine from source, please follow these steps:
+
+* :ref:`Obtain MCViNE source <obtain-mcvine-source>`
+* :ref:`Check and install dependencies <check-deps>`
+* :ref:`Run install script <run-install>`
+
+.. _obtain-mcvine-source:
 
 Obtain mcvine source
 ^^^^^^^^^^^^^^^^^^^^
@@ -54,6 +63,7 @@ and change into the expanded directory::
 
  $ cd mcvine-src-dist
 
+.. _check-deps:
 
 Before you install
 ^^^^^^^^^^^^^^^^^^
@@ -66,6 +76,10 @@ Numpy is required, you could test whether it exists in your system by ::
 
  $ python
  >>> import numpy
+
+MCViNE uses python psutil. It can be installed from easy_install::
+
+ $ easy_install -U psutil
 
 Boost python is required for generating python bindings of mcvine c++ libraries.
 Please let mcvine installer know about your boost python installation by ::
@@ -80,6 +94,8 @@ command does not complain about "command not found"::
  $ mpicxx
 
 
+
+.. _run-install:
 
 Build and Install
 ^^^^^^^^^^^^^^^^^

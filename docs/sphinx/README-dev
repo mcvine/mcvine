@@ -1,0 +1,23 @@
+To build, we need jsmath
+
+Go to jsmath site, download both jsmath 3.6 and the image font zip files.
+Expand both. The jsmath main zip file expands to
+
+root 
+ + easy
+ + extensions
+ + plugins
+ ...
+
+
+The font zip file expands to
+
+root
+ + fonts
+
+Just copy or move the fonts subdir into the main jsmath directory
+
+
+Now set env var JSMATH_DIR to the directory where jsmath was expanded.
+
+You are ready to run mm.
