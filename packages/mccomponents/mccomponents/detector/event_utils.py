@@ -18,8 +18,8 @@ import numpy as np
 # for the struct definition for event
 # { uint, uint, double }
 datatype = np.dtype(
-    [('pixelID',np.uint), 
-     ('tofChannelNo', np.uint), 
+    [('pixelID',np.uint32), 
+     ('tofChannelNo', np.uint32), 
      ('p', np.double),
      ])
 
