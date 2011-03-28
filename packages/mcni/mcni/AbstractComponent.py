@@ -35,7 +35,9 @@ class AbstractComponent:
 
     def _get_overwrite_datafiles(self):
         import warnings
-        warnings.warn("Deprecated. should use self.simulation_context.overwrite_datafiles")
+        msg = "In %s: Deprecated. should use self.simulation_context.overwrite_datafiles" %(
+            self.__class__.__name__)
+        warnings.warn(msg)
         return self.simulation_context.overwrite_datafiles
 
     def _set_overwrite_datafiles(self, v):
