@@ -19,6 +19,7 @@ BUILD_DIRS = \
 	libmccomponents \
 	mccomponentsbpmodule \
 	mccomponents \
+	bin \
 	sansmodel_sk_bpmodule \
 #    mccomponentsmodule \
 
