@@ -12,6 +12,12 @@
 //
 
 
+// XXX: this file should be inside a reduction library
+// XXX: and in here we only need to specialize this method.
+// XXX: to use the event struct (EventModeMCA::Event)
+// XXX: and the event2qe functor (Event2QE)
+
+
 #ifndef H_MCCOMPONENTS_EVENTS2IQE
 #define H_MCCOMPONENTS_EVENTS2IQE
 
