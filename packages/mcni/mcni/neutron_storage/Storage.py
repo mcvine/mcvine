@@ -167,6 +167,10 @@ class Storage:
         if n is None:
             n = ntotal - position
             debug.log('n was given as None, now set to %s' % n)
+
+        # nothing to read
+        if n == 0:
+            return
             
         # next position of cursor
         nextpostion = position + n

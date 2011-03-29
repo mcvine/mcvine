@@ -36,7 +36,8 @@ def merge(paths, newpath):
         s = storage(path, 'r')
         neutrons = s.read()
 
-        out.write(neutrons)
+        if neutrons:
+            out.write(neutrons)
         continue
     
     return

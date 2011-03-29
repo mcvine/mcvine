@@ -57,7 +57,13 @@ def read(filename=None, stream=None, start=None, n=None):
     if start is None and n is None:
         start = 0
         n = count(stream=stream)
+        
     assert start is not None and n is not None
+
+    # nothing to read, just return
+    if n == 0:
+        return
+    
     assert start >= 0 and n > 0
     stream.seek(headersize+neutronsize*start)
     s = stream.read(n*neutronsize)
