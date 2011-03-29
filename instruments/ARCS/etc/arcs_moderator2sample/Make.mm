@@ -25,6 +25,12 @@ all: export
 
 EXPORT_ETC = \
 	arcs_moderator2sample.pml \
+	fermichopper-100-1.5-SMI.odb \
+	fermichopper-100-1.5-SMI.pml \
+	fermichopper-700-1.5-SMI.odb \
+	fermichopper-700-1.5-SMI.pml \
+	fermichopper-700-0.5-AST.odb \
+	fermichopper-700-0.5-AST.pml \
 	guide511.pml.example \
 
 

@@ -36,7 +36,7 @@
         <facility name="guide213">optics/Guide_channeled</facility>
         <facility name="guide214">optics/Guide_channeled</facility>
         <facility name="guide215">optics/Guide_channeled</facility>
-        <facility name="fermichopper">optics/Fermi_chop2</facility>
+        <facility name="fermichopper">fermichopper-700-1.5-SMI</facility>
         <facility name="monitor1">monitors/TOF_monitor2</facility>
         <facility name="guide311">optics/Guide_channeled</facility>
         <facility name="guide411">optics/Guide_channeled</facility>
@@ -377,21 +377,6 @@
             <property name="d"> 0.0 </property>
             <property name="alphax">5.5</property>
             <property name="alphay">5.5</property>
-        </component>
-
-
-        <component name="fermichopper">
-            <property name="len">0.1</property>
-            <property name="w">0.060364</property>
-            <property name="ymin">-0.0325</property>
-            <property name="ymax">0.0325</property>
-            <property name="nu">600.0</property>
-            <property name="delta">0.0</property>
-            <property name="tc">0.0</property>
-            <property name="nchan">31.0</property>
-            <property name="bw">0.00041</property>
-            <property name="blader">0.5801</property>
-            <property name="max_iter">10000</property>
         </component>
 
 

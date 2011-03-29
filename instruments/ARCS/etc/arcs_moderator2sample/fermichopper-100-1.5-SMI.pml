@@ -42,7 +42,7 @@ Blade radius (blader)
     That is ths Slat radius: 580.1mm
 -->
 
-        <component name="fermichopper">
+        <component name="fermichopper-100-1.5-SMI">
             <property name="nu">600.0</property>
 
             <property name="len">0.1</property>
