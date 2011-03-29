@@ -17,6 +17,14 @@ class App(Script):
         
         pass
 
+
+    def help(self):
+        print "$ mcvine-neutron-storage-print-neutrons \\"
+        print "      -filename=<filename> \\"
+        print "      -start=<start index> \\"
+        print "      -n=<number of neutrons> \\"
+        return
+
     
     def main(self, *args, **kwds):
         from mcni.neutron_storage.Storage import Storage
