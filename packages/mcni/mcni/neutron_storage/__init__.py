@@ -32,7 +32,7 @@ def normalize(neutronsfile, N):
     """normalize the neutrons in the given file by the factor N"""
     from idf_usenumpy import read, write
     neutrons = read(neutronsfile)
-    if not neutrons:
+    if neutrons is not None:
         return
 
     neutrons[:,-1]/=N
