@@ -46,6 +46,11 @@ create simulation configuration by::
 
 This will generate a file "arcs_moderator2sample.pml".
 
+Now we will need a data file that contains Monte-carlo simulated
+neutron profile for the moderator::
+
+ $ ln $MCVINE_DIR/share/mcvine/instruments/ARCS/source_sct521_bu_17_1.dat
+
 Now run the simulation::
  
  $ arcs_moderator2sample.py -ncount=1e8 -buffer_size=10000000
