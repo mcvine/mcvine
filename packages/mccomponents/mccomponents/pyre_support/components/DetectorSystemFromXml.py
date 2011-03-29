@@ -98,35 +98,11 @@ class DetectorSystemFromXml(ParallelComponent, AbstractComponent):
 
 
     def _merge_and_normalize(self):
-        outdir = self.simulation_context.outputdir
-
-        # find all output files
-        from mcni.components.outputs import n_mcsamples_files, mcs_sum
-        import glob, os
-        filename = self.eventsdat
-        pattern = os.path.join(outdir, '*', filename)
-        eventdatfiles = glob.glob(pattern)
-        n_mcsamples = n_mcsamples_files(outdir)
-        assert len(eventdatfiles) == n_mcsamples, \
-            "neutron storage files %s does not match #mcsample files %s" %(
-            len(eventdatfiles), n_mcsamples)
-        if not eventdatfiles:
-            return
-        
-        # output
-        out = os.path.join(outdir, self.eventsdat)
-        if self.overwrite_datafiles:
-            if os.path.exists(out):
-                os.remove(out)
-        # merge
-        from mccomponents.detector import mergeEventFiles
-        mergeEventFiles(eventdatfiles, out)
-
-        # load number_of_mc_samples
-        mcs = mcs_sum(outdir)
-        # normalize
-        from mccomponents.detector import normalizeEventFile
-        normalizeEventFile(out, mcs)
+        merge_and_normalize(
+            self.simulation_context.outputdir,
+            self.eventsdat,
+            self.overwrite_datafiles,
+            )
         return
 
 
@@ -164,6 +140,41 @@ class DetectorSystemFromXml(ParallelComponent, AbstractComponent):
     
 
     pass # end of Source
+
+
+def merge_and_normalize(
+    outputdir='out',
+    eventsdat='events.dat',
+    overwrite_datafiles=True):
+    
+    # find all output files
+    from mcni.components.outputs import n_mcsamples_files, mcs_sum
+    import glob, os
+    filename = eventsdat
+    pattern = os.path.join(outputdir, '*', filename)
+    eventdatfiles = glob.glob(pattern)
+    n_mcsamples = n_mcsamples_files(outputdir)
+    assert len(eventdatfiles) == n_mcsamples, \
+        "neutron storage files %s does not match #mcsample files %s" %(
+        len(eventdatfiles), n_mcsamples)
+    if not eventdatfiles:
+        return
+
+    # output
+    out = os.path.join(outputdir, eventsdat)
+    if overwrite_datafiles:
+        if os.path.exists(out):
+            os.remove(out)
+    # merge
+    from mccomponents.detector import mergeEventFiles
+    mergeEventFiles(eventdatfiles, out)
+
+    # load number_of_mc_samples
+    mcs = mcs_sum(outputdir)
+    # normalize
+    from mccomponents.detector import normalizeEventFile
+    normalizeEventFile(out, mcs)
+    return
 
 
 
