@@ -20,7 +20,8 @@ import unittest
 class TestCase(unittest.TestCase):
 
 
-    def test(self):
+    def _test(self):
+        "ARCS detector system. Neutrons shotting at one single pixel."
         cmd = './sd'
         import os
         if os.system(cmd):
@@ -32,6 +33,21 @@ class TestCase(unittest.TestCase):
         # print events['p'].sum()
         p = events['p'].sum()
         self.assert_(p>0.9 and p<1)
+        return
+
+
+    def test2(self):
+        "ARCS detector system. A neutron missing all pixels."
+        # cmd = './sd --source.velocity=1000,0,-2000 --ncount=1 --output-dir=out2'        
+        cmd = './sd --source.position=-0.00875,0.00462,0.005  --source.velocity=5713.19,-765.203,9068.39 --ncount=1 --output-dir=out2'
+        import os
+        if os.system(cmd):
+            raise RuntimeError, "%s failed" % cmd
+        eventdata = 'out2/events.dat'
+        from mccomponents.detector.event_utils import readEvents
+        events = readEvents(eventdata)
+        print events
+        # self.assertEqual(len(events), 0)
         return
 
 

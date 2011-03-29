@@ -12,6 +12,10 @@
 #
 
 
+import journal
+debug = journal.debug("mcvine.detector.reduction_utils")
+
+
 def events2Ipixtof( events, ipixtof ):
     for pix,tof, n in events:
         ipixtof[ pix, tof ] += n
@@ -25,6 +29,7 @@ import pyre.units.time
 
 def events2IQE(
     eventsfile, nevents, 
+    intensityfile,
     pixelpositionsfile, npixels,
     mod2sample=13.6*pyre.units.length.meter, Ei=100*pyre.units.energy.meV,
     Qaxis=(0,10,0.1), Eaxis=(-95,95,1.),
@@ -66,6 +71,9 @@ def events2IQE(
         nevents  = int(nevents)
     except:
         raise ValueError, "Cannot convert %s to integer" % nevents
+
+    if not isinstance(intensityfile, basestring):
+        raise ValueError, "%s is not a str" % intensityfile
     
     if not isinstance(pixelpositionsfile, basestring):
         raise ValueError, "%s is not a str" % pixelpositionsfile
@@ -85,13 +93,14 @@ def events2IQE(
     Qmin, Qmax, dQ = Qaxis
     Emin, Emax, dE = Eaxis
     tofUnit = tofUnit/pyre.units.time.second
-    toffset = tofUnit/pyre.units.time.microsecond
+    toffset = toffset/pyre.units.time.microsecond
     tofmax = tofmax/pyre.units.time.microsecond
     args = [
         eventsfile,
         nevents,
+        intensityfile,
         Qmin, Qmax, dQ,
-        Ebegin, Eend, dE,
+        Emin, Emax, dE,
         Ei, 
         pixelpositionsfile,
         npixels,
@@ -101,10 +110,30 @@ def events2IQE(
         tofmax
         ]
     cmd = 'events2iqe ' + ' '.join([str(a) for a in args])
-    print cmd
-    if os.system(cmd):
+    debug.log("running command %s" % cmd)
+    import subprocess
+    p = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    out, err = p.communicate()
+    if p.wait():
         raise RuntimeError, "%s failed" % cmd
-    return
+    nQ, nE = eval(out.strip().splitlines()[-1])
+
+    import numpy
+    i = numpy.fromfile(intensityfile, numpy.double)
+    i.shape = nQ, nE
+    from histogram import histogram, axis, arange
+    Qaxis = axis(
+        'Q',
+        boundaries = arange(Qmin, Qmin+dQ*nQ+dQ/2, dQ), 
+        unit = '1./angstrom',
+        )
+    Eaxis = axis(
+        'E',
+        boundaries = arange(Emin, Emin+dE*nE+dE/2, dE), 
+        unit = 'meV',
+        )
+    iqe = histogram('IQE', [Qaxis, Eaxis], data = i)
+    return iqe
 
 
 from event_utils import readEvents as readevents

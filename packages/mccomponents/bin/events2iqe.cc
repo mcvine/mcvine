@@ -45,6 +45,7 @@ int main(int argc, char *argv[])
   int index = 1;
   const char * eventsfile = argv[index++];
   int nevents = fromStr<int>(argv[index++]);
+  const char * outputfile = argv[index++];
   float_t Qbegin = fromStr<float_t>(argv[index++]);
   float_t Qend = fromStr<float_t>(argv[index++]);
   float_t dQ = fromStr<float_t>(argv[index++]);
@@ -82,7 +83,7 @@ int main(int argc, char *argv[])
   mccomponents::reduction::events2iqe
     <event_t, float_t, event_it_t, float_it_t>
     (// input events
-     evtp, evtp+1,
+     evtp, evtp+nevents,
      // output
      intensities,
      // output histogram bin parameters
@@ -96,6 +97,10 @@ int main(int argc, char *argv[])
      toffset, tofmax
      );
   
+  std::ofstream ofs(outputfile);
+  ofs.write((char *)intensities, N * sizeof(float_t));
+
+  std::cout << NQ << ", " << NE << std::endl;
   //
   // for (int i=0; i<100; i++) {
   //   for (int j=0; j<100; j++) 

@@ -14,7 +14,7 @@ PROJECT = mccomponents
 PACKAGE = bin
 
 
-PROJ_LIBRARIES = -L$(BLD_LIBDIR) -lhistogram -ljournal -lmccomponents
+PROJ_LIBRARIES = -L$(BLD_LIBDIR) -lhistogram -ljournal -lmcni -lmccomposite -lmccomponents -lfparser
 
 
 # directory structure
@@ -48,7 +48,7 @@ EXPORT_PYTHON_MODULES = \
 
 
 events2iqe: events2iqe.cc
-	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ events2iqe.cc
+	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ events2iqe.cc $(PROJ_LIBRARIES)
 
 
 PROJ_CPPEXE = \
