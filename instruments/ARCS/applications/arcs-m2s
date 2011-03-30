@@ -21,14 +21,22 @@ class App(base):
 
         import pyre.inventory
         
+        fermi_chopper = pyre.inventory.str(
+            'fermi_chopper', default='100-1.5-SMI')
+        fermi_chopper.meta['tip'] = 'fermi chopper choice'
+        fermi_chopper.meta[base.inventory_item_signature] = True
+        fermi_chopper.validator = pyre.inventory.choice(
+            ['100-1.5-SMI', '700-1.5-SMI', '700-0.5-AST']
+            )
+        
         fermi_nu = pyre.inventory.float('fermi_nu', default=600)
         fermi_nu.meta['tip'] = 'Spinning frequency of fermi chopper'
         fermi_nu.meta[base.inventory_item_signature] = True
-        
-        fermi_bladeradius = pyre.inventory.float('fermi_bladeradius', default=0.5801)
-        fermi_bladeradius.meta['tip'] = 'blad radius of fermi chopper'
+
+        fermi_bladeradius = pyre.inventory.float('fermi_bladeradius', default=-1)
+        fermi_bladeradius.meta['tip'] = 'blade radius of fermi chopper'
         fermi_bladeradius.meta[base.inventory_item_signature] = True
-        
+
         T0_nu = pyre.inventory.float('T0_nu', default=60)
         T0_nu.meta['tip'] = 'Spinning frequency of T0 chopper'
         T0_nu.meta[base.inventory_item_signature] = True
@@ -41,16 +49,21 @@ class App(base):
         emission_time.meta['tip'] = 'emission time for moderator unit (microsecond)'
         emission_time.meta[base.inventory_item_signature] = True
 
+        dry_run = pyre.inventory.bool('dry_run', default=False)
+        dry_run.meta[base.inventory_item_signature] = True
+
         pass # end of Inventory
     
     
-    def runApp(self, fermi_nu=None, fermi_bladeradius=None, T0_nu=None, E=None, emission_time=None):
-        # fermi_nu = self.inventory.fermi_nu
-        # fermi_bladeradius = self.inventory.fermi_bladeradius
-        # T0
-        # T0_nu = self.inventory.T0_nu
+    def runApp(
+        self, 
+        fermi_chopper = None,
+        fermi_nu=None, fermi_bladeradius=None, 
+        T0_nu=None, E=None, emission_time=None,
+        dry_run = False,
+        ):
+        
         #
-        # E = self.inventory.E
         Emin = E*0.8
         Emax = E*1.2
         
@@ -61,22 +74,39 @@ class App(base):
         from mcvine.instruments.ARCS import t0chopper, fermichopper
         t0phase = t0chopper.phase(E, 8.77, emission_time=emission_time)
         fermiphase = fermichopper.phase(E, 11.61, emission_time=emission_time)
-        
+
+        # set the fermi chopper component
+        # see ../etc/arcs_moderator2sample
+        fermichopper_name = 'fermichopper-%s' % fermi_chopper
+
+        # 
         opts = {
-            'fermichopper.nu': fermi_nu,
-            'fermichopper.blader': fermi_bladeradius,
+            # fermi chopper
+            'fermichopper': fermichopper_name,
+            '%s.nu' % fermichopper_name: fermi_nu,
+            '%s.tc' % fermichopper_name: fermiphase,
+            # T0
             't0chopper.nu': T0_nu,
-            'fermichopper.tc': fermiphase,
             't0chopper.tc': t0phase,
+            # moderator
             'moderator.Emin': Emin,
             'moderator.Emax': Emax,
             }
+        
+        # this is only for advanced users: fermi chopper blade radius
+        if fermi_bladeradius>0:
+            opts['%s.blader' % fermichopper_name] = fermi_bladeradius
+            
         import sys
         addOptions(opts, sys.argv)
+
+        if dry_run:
+            print sys.argv
         
-        from mcvine.instruments.ARCS.Instrument import Instrument
-        instrument = Instrument('arcs_moderator2sample')
-        instrument.run()
+        else:
+            from mcvine.instruments.ARCS.Instrument import Instrument
+            instrument = Instrument('arcs_moderator2sample')
+            instrument.run()
         
         return
 
