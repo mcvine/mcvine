@@ -83,8 +83,8 @@ class App(base):
         opts = {
             # fermi chopper
             'fermichopper': fermichopper_name,
-            '%s.nu' % fermichopper_name: fermi_nu,
-            '%s.tc' % fermichopper_name: fermiphase,
+            'fermichopper.nu': fermi_nu,
+            'fermichopper.tc': fermiphase,
             # T0
             't0chopper.nu': T0_nu,
             't0chopper.tc': t0phase,
@@ -95,7 +95,7 @@ class App(base):
         
         # this is only for advanced users: fermi chopper blade radius
         if fermi_bladeradius>0:
-            opts['%s.blader' % fermichopper_name] = fermi_bladeradius
+            opts['fermichopper.blader'] = fermi_bladeradius
             
         import sys
         addOptions(opts, sys.argv)
