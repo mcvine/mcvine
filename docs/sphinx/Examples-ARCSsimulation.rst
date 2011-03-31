@@ -196,3 +196,44 @@ See how many neutrons are there::
 
  $ checksqe -source.path=out/neutrons -monitor.Ei=100 -monitor.Emin=-95 -monitor.Emax=95 -monitor.nE=190 -monitor.Qmin=0 -monitor.Qmax=13 -monitor.nQ=130
 
+
+Tutorial 2: Compute resolution function in Q,E space
+----------------------------------------------------
+
+This example can be found in ::
+
+ $MCVINE_DIR/share/mcvine/instruments/ARCS/simulations/resolution-calculator
+
+To start, make a copy of that directory::
+
+ $ cp -r $MCVINE_DIR/share/mcvine/instruments/ARCS/simulations/resolution-calculator <workdir>
+
+Now cd into it::
+
+ $ cd <workdir>
+
+To run a moderator...sample simulation, cd into mod2sample::
+
+ $ cd mod2sample
+
+Take a look at the "run" script and modify it according to your needs,
+and run it::
+
+ $ ./run
+
+After the simulation, you can find results in directories "out" and 
+"out-analyzer". For example::
+
+ $ PlotHist.py out-analyzer/ienergy.h5
+
+Next, go to the "QE" directory::
+
+ $ cd ../QE
+
+In this directory you can calculate resolution function for a
+particular Q,E pair of your choice. To do that, take a look
+at the "run" script and modify it to your needs, and run it::
+
+ $ ./run
+
+You should see a I(Q,E) plot after the simulation is done.
