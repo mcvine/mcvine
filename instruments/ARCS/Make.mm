@@ -23,6 +23,7 @@ BUILD_DIRS = \
 	applications \
 	etc \
 	resources \
+	simulations \
 
 OTHER_DIRS = \
 
