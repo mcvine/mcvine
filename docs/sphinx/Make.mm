@@ -16,7 +16,8 @@ PACKAGE = sphinx
 
 EXPORT_DATADIRS = \
 	tutorials \
-	_static/jsmath \
+#
+#	_static/jsmath \
 
 
 RECURSE_DIRS = \
@@ -41,9 +42,11 @@ distclean::
 tidy::
 	BLD_ACTION="tidy" $(MM) recurse
 
-docs: _static/jsmath sphinx-build export-sphinx-data
+docs: sphinx-build export-sphinx-data
 
 
+# jsmath is causing trouble in some linux platforms, pngmath is safer
+# docs: _static/jsmath sphinx-build export-sphinx-data
 _static/jsmath::
 	if [ -z $(JSMATH_DIR) ]; \
 	then \
