@@ -82,9 +82,14 @@ MCViNE uses python psutil. It can be installed from easy_install::
  $ easy_install -U psutil
 
 Boost python is required for generating python bindings of mcvine c++ libraries.
-Please let mcvine installer know about your boost python installation by ::
+You may need to let mcvine installer know about your boost python installation by ::
 
  $ export BOOSTPYTHON_DIR=/path/to/boost/python
+
+If you have installed boost python package using package manager such 
+as apt-get or yum as described in :ref:`platform-specific-instructions`
+to system default directories, mcvine installer should be able to
+find it.
 
 If you want to take advantage of parallel computing, please install
 mpich2. After installation of mpich2, you will need include mpich2 
@@ -173,9 +178,10 @@ ubuntu 9.10+
 """"""""""""
 
 Before install mcvine, please install following packages:
+
 * g++
 * python-dev
-* libboost-python1.38 (or other version currently in your installation)
+* libboost-python1.38 (or other version available for your current ubuntu version)
 * python-numpy
 * python-h5py
 * python-psutil
