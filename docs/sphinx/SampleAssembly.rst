@@ -4,11 +4,14 @@ Sample Assembly
 ---------------
 
 .. note::
-   Several tutorials:
+   `The examples tar ball <http://dev.danse.us/packages/mcvine-examples.tgz>`_
+   contains several examples introduced here.
+
+.. note::
+   Tutorials:
    
    * :ref:`Start from here <tutorials-sampleassembly>`
    * :ref:`Sample with powder diffraction kernel <tutorials-powder-kernel>`
-
 
 Use sample assembly in your simulation application
 ==================================================
