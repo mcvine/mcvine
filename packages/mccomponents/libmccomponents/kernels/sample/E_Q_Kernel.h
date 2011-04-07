@@ -64,7 +64,7 @@ namespace mccomponents {
       E_Q_functor_t m_E;
       S_Q_functor_t m_S;
       double m_Qmin, m_Qmax;
-      double m_absorption_cross_section, m_scattering_cross_section;
+      double m_absorption_coefficient, m_scattering_coefficient;
       // impl details
       struct Details;
       std::auto_ptr<Details> m_details;

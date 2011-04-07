@@ -14,7 +14,12 @@
 
 #include <boost/python.hpp>
 
+
+#include "wrap_E_Q_Kernel.h"
+
+
 namespace wrap_mccomponents{
+  
   void wrap_basic_containers();
 
   void wrap_HomogeneousNeutronScatterer();
@@ -51,6 +56,8 @@ namespace wrap_mccomponents{
   void wrap_Phonon_CoherentInelastic_SingleXtal_kernel();
   void wrap_RandomNumberGenerator();
   void wrap_SimplePowderDiffractionKernel();
+
+  struct Wrap_E_Q_Kernel;
 }
 
 
@@ -101,6 +108,8 @@ BOOST_PYTHON_MODULE(mccomponentsbp)
   wrap_RandomNumberGenerator();
 
   wrap_SimplePowderDiffractionKernel();
+
+  Wrap_E_Q_Kernel wrap_e_q_kernel;
 }
 
 
