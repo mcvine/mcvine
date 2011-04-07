@@ -52,6 +52,8 @@ EXPORT_HEADERS = \
 	AbstractSQE.h \
 	ConstantEnergyTransferKernel.h \
 	ConstantQEKernel.h \
+	E_Q_Kernel.h \
+	E_Q_Kernel.icc \
 	SQAdaptor.h \
 	SQkernel.h \
 	SQEkernel.h \

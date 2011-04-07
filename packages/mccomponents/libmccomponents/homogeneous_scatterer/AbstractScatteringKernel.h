@@ -39,11 +39,21 @@ namespace mccomponents {
     
     /// scatter the given neutron
     /// note: 
-    ///  - probability: should adjust the probability of the neutron
-    ///                 event depending on the direction of scattering.
-    ///                 The scattering coefficient is already considered in
-    ///                 HomogeneousNeutronScatterer, so here we are only
-    ///                 concerned with directional distribution of neutron events.
+    ///  - probability: 
+    ///    should adjust the probability of the neutron
+    ///    event depending on the direction of scattering.
+    ///    The scattering coefficient is already considered in
+    ///    HomogeneousNeutronScatterer, so here we are only
+    ///    concerned with directional distribution of
+    ///    neutron events.
+    ///    make sure that the avaraged value of probablility
+    ///    factor applied in this method is consistent with
+    ///    the scattering_coefficient method.
+    ///    For example, in case of incoherent scattering, if method
+    ///    scattering_coefficient returns \sigma_inc * \rho ,
+    ///    where \rho is the density (# of nuclei per unit volume),
+    ///    then in the scatter method here, the average probability
+    ///    factor applied should be 1.
     virtual void scatter( mcni::Neutron::Event & ev ) = 0;
 
     /// absorb the neutron

@@ -21,16 +21,20 @@ namespace mccomponents {
   namespace sample {
     
     /// S(scalar Q)
-    class AbstractSQ
+    struct AbstractSQ
     {
-    public:
-      
       virtual double operator () ( double Q ) const = 0;
       virtual ~AbstractSQ() {}
     } ;
-    
-    
+
+    /// identity S(scalar Q)
+    struct IdentitySQ : public AbstractSQ {
+      virtual double operator() (double Q) const { return 1.; }
+      virtual ~IdentitySQ() {};
+    };
+
   } // sample::
+
 } // mccomponents::
 
 

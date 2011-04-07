@@ -19,6 +19,7 @@ PROJ_TIDY += $(PROJ_CPPTESTS)
 PROJ_CLEAN += $(PROJ_CPPTESTS)
 PROJ_PYTESTS =  #alltests.py
 PROJ_CPPTESTS = \
+	test_E_Q_Kernel \
 	test_SQkernel \
 	test_SQAdaptor \
 	test_SQE_fromexpression \
@@ -72,6 +73,9 @@ test_SQAdaptor: test_SQAdaptor.cc
 
 test_SQE_fromexpression: test_SQE_fromexpression.cc
 	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ test_SQE_fromexpression.cc $(PROJ_LIBRARIES)
+
+test_E_Q_Kernel: test_E_Q_Kernel.cc
+	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ test_E_Q_Kernel.cc $(PROJ_LIBRARIES)
 
 
 

@@ -1,0 +1,170 @@
+// -*- C++ -*-
+//
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//
+//                                   Jiao Lin
+//                      California Institute of Technology
+//                      (C) 2006-2010  All Rights Reserved
+//
+// {LicenseText}
+//
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//
+
+
+
+#ifndef MCCOMPONENTS_KERNELS_E_Q_KERNEL_H
+#error E_Q_Kernel.icc not meaningful outside E_Q_Kernel.h
+#endif
+
+#include <cmath>
+#include "mccomponents/exception.h"
+#include "mcni/math/number.h"
+#include "mccomponents/math/random.h"
+
+
+#ifdef DEBUG
+#include "journal/debug.h"
+#endif
+
+
+template< typename E_Q_functor_t, typename S_Q_functor_t>
+struct 
+mccomponents::kernels::E_Q_Kernel<E_Q_functor_t, S_Q_functor_t>\
+:: Details {
+
+#ifdef DEBUG
+  const static char jrnltag[];
+  journal::debug_t debug;
+  Details() : debug( jrnltag ) {}
+#endif
+
+};
+
+
+#ifdef DEBUG
+template< typename E_Q_functor_t, typename S_Q_functor_t>
+const char 
+mccomponents::kernels::E_Q_Kernel<E_Q_functor_t, S_Q_functor_t>\
+::Details::jrnltag[] = "E_Q_Kernel";
+#endif
+
+
+template< typename E_Q_functor_t, typename S_Q_functor_t>
+mccomponents::kernels::E_Q_Kernel<E_Q_functor_t, S_Q_functor_t>\
+::E_Q_Kernel
+(const E_Q_functor_t & E_Q, 
+ const S_Q_functor_t & S_Q,
+ double Qmin, double Qmax,
+ double absorption_coefficient,
+ double scattering_coefficient)
+  : m_E(E_Q),
+    m_S(S_Q),
+    m_Qmin(Qmin),
+    m_Qmax(Qmax),
+    m_absorption_coefficient( absorption_coefficient ),
+    m_scattering_coefficient( scattering_coefficient ),
+    m_details( new Details )
+{
+  if (m_Qmin<0) {
+    std::cerr << "Qmin must be not negative. Got " << m_Qmin << std::endl;
+    throw;
+  }
+  if (m_Qmin >= m_Qmax) {
+    std::cerr << "Qmin (" << m_Qmin 
+	      << ") must be smaller than Qmax ("
+	      << m_Qmax << ")." << std::endl;
+    throw;
+  }
+}
+
+
+template< typename E_Q_functor_t, typename S_Q_functor_t>
+double
+mccomponents::kernels::E_Q_Kernel<E_Q_functor_t, S_Q_functor_t>\
+::absorption_coefficient(const mcni::Neutron::Event & ev )
+{
+  // this is a simplified model
+  return m_absorption_coefficient;
+}
+
+
+template< typename E_Q_functor_t, typename S_Q_functor_t>
+double
+mccomponents::kernels::E_Q_Kernel<E_Q_functor_t, S_Q_functor_t>\
+::scattering_coefficient(const mcni::Neutron::Event & ev )
+{
+
+  // this is a simplified model
+  return m_scattering_coefficient;
+}
+
+
+template< typename E_Q_functor_t, typename S_Q_functor_t>
+void
+mccomponents::kernels::E_Q_Kernel<E_Q_functor_t, S_Q_functor_t>\
+::absorb
+( mcni::Neutron::Event & ev )
+{
+}
+
+
+template< typename E_Q_functor_t, typename S_Q_functor_t>
+void
+mccomponents::kernels::E_Q_Kernel<E_Q_functor_t, S_Q_functor_t>\
+::scatter
+( mcni::Neutron::Event & ev )
+{
+  namespace conversion = mcni::neutron_units_conversion;
+
+  // input neutron state
+  mcni::Neutron::State & state = ev.state;
+  // incident neutron velocity
+  double vi = state.velocity.length();
+  // incident neutron energy
+  double Ei = conversion::v2E( vi );
+
+  // randomly pick momentum transfer
+  double Q = math::random(m_Qmin, m_Qmax);
+  
+  // compute E from Q
+  double E = m_E(Q);
+  
+  // final energy
+  double Ef = Ei-E;
+
+  // final velocity magnitude
+  double vf = conversion::E2v( Ef );
+  
+  // theta, phi
+  double ki = conversion::v2k* vi;
+  double kf = conversion::v2k* vf;
+  double cost = (ki*ki+kf*kf-Q*Q)/(2*ki*kf);
+  double cost2 = cost*cost;
+  if (cost2>1) {
+    // Ei is too small and we have a problem
+    // no scattering
+    return;
+  }
+  double sint = std::sqrt(1-cost2);
+  // 
+  double phi = math::random(0, mcni::PI*2);
+  
+  // scattered neutron velocity vector
+  double vx = vf*sint*cos(phi);
+  double vy = vf*sint*sin(phi);
+  double vz = vf*cost;
+  
+  // adjust probability of neutron event
+  // ev.probability *= 1.;
+  
+  typedef mcni::Vector3<double> V3d;
+  V3d vfv(vx,vy,vz);
+  state.velocity = vfv;
+}
+
+
+// version
+// $Id: E_Q_Kernel.cc 601 2010-10-03 19:55:29Z linjiao $
+
+// End of file 

@@ -107,7 +107,7 @@ mccomponents::kernels::ConstantQEKernel::scatter
   double vz = vf*cost;
   
   // adjust probability of neutron event
-  ev.probability *= mcni::PI*2;
+  // ev.probability *= 1.;
   
   typedef mcni::Vector3<double> V3d;
   V3d vfv(vx,vy,vz);
