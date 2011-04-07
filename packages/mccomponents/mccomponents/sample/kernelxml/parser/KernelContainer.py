@@ -20,7 +20,9 @@ class KernelContainer(AbstractNode):
 
     tag = "KernelContainer"
     
-    onIsotropicKernel = onConstantQEKernel = onConstantEnergyTransferKernel \
+    onIsotropicKernel \
+        = onConstantQEKernel = onConstantEnergyTransferKernel \
+        = onE_Q_Kernel \
         = onSQEkernel \
         = onKernelContainer = AbstractNode.onElement
 

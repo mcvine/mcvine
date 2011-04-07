@@ -27,6 +27,7 @@ class Document(base):
         'SQE_fromexpression',
         'ConstantEnergyTransferKernel',
         'ConstantQEKernel',
+        'E_Q_Kernel',
 
         'IsotropicKernel',
         ]

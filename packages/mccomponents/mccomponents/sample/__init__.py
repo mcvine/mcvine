@@ -78,6 +78,11 @@ def constantQEKernel(*args, **kwds):
     return ConstantQEKernel(*args, **kwds)
 
 
+def E_Q_Kernel(*args, **kwds):
+    from E_Q_Kernel import E_Q_Kernel
+    return E_Q_Kernel(*args, **kwds)
+
+
 def kernelcontainer(*args, **kwds):
     from KernelContainer import KernelContainer
     return KernelContainer( *args, **kwds )

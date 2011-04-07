@@ -97,6 +97,27 @@ class New:
         return b.ConstantEnergyTransferKernel(E, absorption_cross_section, scattering_cross_section)
 
 
+    def E_Q_Kernel(
+        self,
+        E_Q, S_Q='1', 
+        Qmin = 0., Qmax = 10.,
+        absorption_coefficient=1., scattering_coefficient=1.
+        ):
+        '''
+        S(Q,E) = S(E) * delta(E-E(Q))
+
+        E_Q: E(Q). str. ex: Q*Q/3.5
+        S_Q: S(Q). str. ex: 1.
+        Qmin, Qmax: range of Q. AA**-1
+        absorption_coefficient: absorption coefficient (m**-1)
+        scattering_coefficient: scattering coefficient (m**-1)
+        '''
+        return b.create_E_Q_Kernel(
+            E_Q, S_Q, 
+            Qmin, Qmax,
+            absorption_coefficient, scattering_coefficient)
+
+
     def constantQEKernel(self, Q, E, absorption_cross_section, scattering_cross_section):
         '''constantqekernel: a kernel scatters isotropically with fixed momentum and energy transfer
 
