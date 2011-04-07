@@ -21,6 +21,8 @@ PROJ_CPPTESTS = \
 	test_fparser \
 	test_random \
 	test_rootfinding \
+	test_Fx_fromExpr \
+
 
 PROJ_TESTS = $(PROJ_PYTESTS) $(PROJ_CPPTESTS)
 PROJ_LIBRARIES = -L$(BLD_LIBDIR) -ljournal -lmcni -lmccomposite -lmccomponents -lfparser
@@ -60,6 +62,9 @@ test_rootfinding: test_rootfinding.cc
 
 test_fparser: test_fparser.cc
 	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ test_fparser.cc $(PROJ_LIBRARIES)
+
+test_Fx_fromExpr: test_Fx_fromExpr.cc
+	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ test_Fx_fromExpr.cc $(PROJ_LIBRARIES)
 
 
 # version
