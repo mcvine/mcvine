@@ -15,7 +15,7 @@
 #include <sstream>
 #include <cassert>
 #include "mccomponents/kernels/detector/EventModeMCA.h"
-#include "mccomponents/kernels/detector/events2iqe.h"
+#include "drchops/events2iqe.h"
 
 
 #ifdef DEBUG
@@ -80,7 +80,7 @@ int main(int argc, char *argv[])
   ppfs.read((char *)pixelpositions, nbytes);
 
   // reduce
-  mccomponents::reduction::events2iqe
+  DANSE::reduction::events2iqe
     <event_t, float_t, event_it_t, float_it_t>
     (// input events
      evtp, evtp+nevents,

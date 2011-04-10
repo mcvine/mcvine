@@ -51,8 +51,6 @@ EXPORT_HEADERS = \
 	He3Tube.h \
 	Tof2Channel.h Tof2Channel.icc\
 	Z2Channel.h Z2Channel.icc\
-	Event2QE.h Event2QE.icc \
-	events2iqe.h \
 
 
 # version

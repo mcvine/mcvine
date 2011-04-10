@@ -13,8 +13,7 @@
 
 #include <iostream>
 #include <cassert>
-#include "mccomponents/kernels/detector/EventModeMCA.h"
-#include "mccomponents/kernels/detector/events2iqe.h"
+#include "drchops/events2iqe.h"
 
 
 #ifdef DEBUG
@@ -53,7 +52,7 @@ void test1()
   pixelPositions[3*100+2] = 3.;
 
   // reduce
-  mccomponents::reduction::events2iqe
+  DANSE::reduction::events2iqe
     <event_t, float_t, event_it_t, float_it_t>
     (// input events
      evtp, evtp+1,
