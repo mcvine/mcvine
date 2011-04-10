@@ -23,11 +23,11 @@ import journal
 class TestCase(unittest.TestCase):
 
     def test(self):
-        "Source_flat --> E_monitor"
+        "Source_simple --> E_monitor"
         from mcstas2 import componentfactory
-        sflatfac = componentfactory( 'sources', 'Source_flat' )
-        sflat = sflatfac(
-            'sflat',
+        ssimplefac = componentfactory( 'sources', 'Source_simple' )
+        ssimple = ssimplefac(
+            'ssimple',
             radius=0.1, dist=2, xw=0.1, yh=0.1, E0=55, dE=2)
         
         from mcstas2.wrappers import wrap
@@ -41,10 +41,10 @@ class TestCase(unittest.TestCase):
             Emin=50, Emax=60)
 
         import mcni
-        instrument = mcni.instrument( [sflat, emon] )
+        instrument = mcni.instrument( [ssimple, emon] )
 
         geometer = mcni.geometer()
-        geometer.register( sflat, (0,0,0), (0,0,0) )
+        geometer.register( ssimple, (0,0,0), (0,0,0) )
         geometer.register( emon, (0,0,1), (0,0,0) )
 
         neutrons = mcni.neutron_buffer( 100 )
@@ -67,7 +67,9 @@ def main():
     #journal.debug("CompositeNeutronScatterer_Impl").activate()
     pytests = pysuite()
     alltests = unittest.TestSuite( (pytests, ) )
-    unittest.TextTestRunner(verbosity=2).run(alltests)
+    res = unittest.TextTestRunner(verbosity=2).run(alltests)
+    import sys; sys.exit(not res.wasSuccessful())
+
     
     
 if __name__ == "__main__":

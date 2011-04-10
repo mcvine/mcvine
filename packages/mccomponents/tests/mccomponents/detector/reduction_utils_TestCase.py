@@ -58,7 +58,9 @@ def main():
     journal.debug("Event2QE").activate()
     pytests = pysuite()
     alltests = unittest.TestSuite( (pytests, ) )
-    unittest.TextTestRunner(verbosity=2).run(alltests)
+    res = unittest.TextTestRunner(verbosity=2).run(alltests)
+    import sys; sys.exit(not res.wasSuccessful())
+
     
 
 interactive = False    

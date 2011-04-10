@@ -63,7 +63,9 @@ def pysuite():
 def main():
     pytests = pysuite()
     alltests = unittest.TestSuite( (pytests, ) )
-    unittest.TextTestRunner(verbosity=2).run(alltests)
+    res = unittest.TextTestRunner(verbosity=2).run(alltests)
+    import sys; sys.exit(not res.wasSuccessful())
+
     
     
 if __name__ == "__main__":

@@ -80,12 +80,8 @@ def pysuite():
     return unittest.TestSuite( (suite1,) )
 
 
-def main():
-    #debug.activate()
-    pytests = pysuite()
-    alltests = unittest.TestSuite( (pytests, ) )
-    unittest.TextTestRunner(verbosity=2).run(alltests)
-    
+def main(): unittest.main()
+
     
 if __name__ == "__main__":
     main()

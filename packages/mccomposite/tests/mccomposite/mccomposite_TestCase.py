@@ -13,7 +13,7 @@
 
 
 
-standalone = True
+skip = True
 
 
 import unittestX as unittest
@@ -42,12 +42,20 @@ def neutronprinter(self, cshape):
     from neutron_printer2 import cScatterer
     return cScatterer( cshape )
 # 4. register the new class and handlers
-# mccomposite.register( NeutronPrinter, onNeutronPrinter,
-#                      {'BoostPythonBinding':neutronprinter} )
-
+registered = False
+def register():
+    global registered
+    if registered: return
+    mccomposite.register( 
+        NeutronPrinter, onNeutronPrinter,
+        {'BoostPythonBinding':neutronprinter} ,
+        )
+    registered = True
+    return
 
 
 class mccomposite_TestCase(unittest.TestCase):
+
 
     def test(self):
         # create a weird shape
@@ -139,13 +147,16 @@ def pysuite():
     return unittest.TestSuite( (suite1,) )
 
 def main():
+    register()
     #debug.activate()
     #journal.debug("mccomposite.geometry.ArrowIntersector").activate()
     #journal.debug("mccomposite.geometry.Locator").activate()
     #journal.debug("CompositeNeutronScatterer_Impl").activate()
     pytests = pysuite()
     alltests = unittest.TestSuite( (pytests, ) )
-    unittest.TextTestRunner(verbosity=2).run(alltests)
+    res = unittest.TextTestRunner(verbosity=2).run(alltests)
+    import sys; sys.exit(not res.wasSuccessful())
+
     
     
 if __name__ == "__main__":

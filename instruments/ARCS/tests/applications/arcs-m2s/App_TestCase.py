@@ -32,10 +32,10 @@ class TestCase(unittest.TestCase):
         argv = eval(out.splitlines()[-1])
         # print argv
         self.assert_('-fermichopper=fermichopper-100-1.5-SMI' in argv)
-        self.assert_('-fermichopper-100-1.5-SMI.nu=600.0' in argv)
-        self.assert_('-fermichopper-100-1.5-SMI.tc=0.00317317948677' in argv)
+        self.assert_('-fermichopper.nu=600.0' in argv)
+        self.assert_('-fermichopper.tc=0.00317317948677' in argv)
         for arg in argv:
-            self.assert_(not arg.startswith('-fermichopper-100-1.5-SMI.blader'))
+            self.assert_(not arg.startswith('-fermichopper.blader'))
         return
 
 
@@ -45,9 +45,9 @@ class TestCase(unittest.TestCase):
         argv = eval(out.splitlines()[-1])
         # print argv
         self.assert_('-fermichopper=fermichopper-100-1.5-SMI' in argv)
-        self.assert_('-fermichopper-100-1.5-SMI.nu=600.0' in argv)
-        self.assert_('-fermichopper-100-1.5-SMI.tc=0.00317317948677' in argv)
-        self.assert_('-fermichopper-100-1.5-SMI.blader=3.0' in argv)
+        self.assert_('-fermichopper.nu=600.0' in argv)
+        self.assert_('-fermichopper.tc=0.00317317948677' in argv)
+        self.assert_('-fermichopper.blader=3.0' in argv)
         return
 
 
@@ -57,10 +57,10 @@ class TestCase(unittest.TestCase):
         argv = eval(out.splitlines()[-1])
         # print argv
         self.assert_('-fermichopper=fermichopper-700-0.5-AST' in argv)
-        self.assert_('-fermichopper-700-0.5-AST.nu=600.0' in argv)
-        self.assert_('-fermichopper-700-0.5-AST.tc=0.00317317948677' in argv)
+        self.assert_('-fermichopper.nu=600.0' in argv)
+        self.assert_('-fermichopper.tc=0.00317317948677' in argv)
         for arg in argv:
-            self.assert_(not arg.startswith('-fermichopper-700-0.5-AST.blader'))
+            self.assert_(not arg.startswith('-fermichopper.blader'))
         return
 
 
@@ -70,9 +70,9 @@ class TestCase(unittest.TestCase):
         argv = eval(out.splitlines()[-1])
         # print argv
         self.assert_('-fermichopper=fermichopper-700-0.5-AST' in argv)
-        self.assert_('-fermichopper-700-0.5-AST.nu=600.0' in argv)
-        self.assert_('-fermichopper-700-0.5-AST.tc=0.00317317948677' in argv)
-        self.assert_('-fermichopper-700-0.5-AST.blader=3.0' in argv)
+        self.assert_('-fermichopper.nu=600.0' in argv)
+        self.assert_('-fermichopper.tc=0.00317317948677' in argv)
+        self.assert_('-fermichopper.blader=3.0' in argv)
         return
 
 
@@ -85,14 +85,7 @@ def pysuite():
     return unittest.TestSuite( (suite1,) )
 
 
-def main():
-    #debug.activate()
-    #journal.debug("CompositeNeutronScatterer_Impl").activate()
-    pytests = pysuite()
-    alltests = unittest.TestSuite( (pytests, ) )
-    unittest.TextTestRunner(verbosity=2).run(alltests)
-    
-    
+def main(): unittest.main()
 if __name__ == "__main__":
     main()
     

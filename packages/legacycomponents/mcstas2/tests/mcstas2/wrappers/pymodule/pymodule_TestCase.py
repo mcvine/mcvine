@@ -36,7 +36,7 @@ class TestCase(unittest.TestCase):
         compinfo = parseComponent( componentfile )
 
         from mcstas2.wrappers.pymodule import generate
-        sources = generate( compinfo, klass, bpbindingname, projectpath )
+        sources = generate( compinfo, bpbindingname, projectpath )
 
         self.assertEqual( sources[0], '%s/%s.py' %(componentname, componentname) )
         return
@@ -57,7 +57,9 @@ def main():
     #journal.debug("CompositeNeutronScatterer_Impl").activate()
     pytests = pysuite()
     alltests = unittest.TestSuite( (pytests, ) )
-    unittest.TextTestRunner(verbosity=2).run(alltests)
+    res = unittest.TextTestRunner(verbosity=2).run(alltests)
+    import sys; sys.exit(not res.wasSuccessful())
+
     
     
 if __name__ == "__main__":

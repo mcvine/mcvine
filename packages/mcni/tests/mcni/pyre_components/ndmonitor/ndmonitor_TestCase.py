@@ -65,6 +65,8 @@ class TestCase(unittest.TestCase):
 
     def test_sizes(self):
         'ndmonitor: w; tests: xwidth, yheight'
+        outdir = 'out-test_sizes'
+        histfile = '%s/iw2.h5' % outdir
         cmd_fmt = 'mcvine-simulate -components=source,monitor --- \
                                 -overwrite-datafiles=on \
                                 -ncount=1 \
@@ -86,32 +88,32 @@ class TestCase(unittest.TestCase):
                                 -monitor.xwidth=%f \
                                 -monitor.yheight=%f \
                                 -geometer.monitor="%s" \
-                                --output-dir=out-test4'
+                                --output-dir=%s'
 
         # Misses monitor
         (xw, yh)    = (0.1, 0.1)
         position    = "(0,1,1),(0,0,0)"
-        cmd = cmd_fmt % (xw, yh, position)
+        cmd = cmd_fmt % (xw, yh, position, outdir)
         import os
         if os.system(cmd):
             raise RuntimeError, "%r failed" % cmd
 
         from histogram.hdf import load
         from histogram.hdf.utils import getOnlyEntry
-        f = 'out-test4/iw2.h5'
+        f = histfile
         h = load(f, getOnlyEntry(f))
         self.assertEqual( h.I.sum() , 0.0)
 
         # Hits monitor
         (xw, yh)    = (0.1, 0.1)
         position    = "(0,0,1),(0,0,0)"
-        cmd = cmd_fmt % (xw, yh, position)
+        cmd = cmd_fmt % (xw, yh, position, outdir)
         if os.system(cmd):
             raise RuntimeError, "%r failed" % cmd
 
-        f = 'out-test4/iw2.h5'
+        f = histfile
         h = load(f, getOnlyEntry(f))
-        self.assertEqual( h.I.sum() , 1.0)
+        self.assert_( h.I.sum() > 0)
 
     
 
@@ -124,7 +126,9 @@ def main():
     #debug.activate()
     pytests = pysuite()
     alltests = unittest.TestSuite( (pytests, ) )
-    unittest.TextTestRunner(verbosity=2).run(alltests)
+    res = unittest.TextTestRunner(verbosity=2).run(alltests)
+    import sys; sys.exit(not res.wasSuccessful())
+
     
     
 if __name__ == "__main__":
