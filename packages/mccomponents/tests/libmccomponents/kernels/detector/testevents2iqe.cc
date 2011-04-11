@@ -14,6 +14,7 @@
 #include <iostream>
 #include <cassert>
 #include "drchops/events2iqe.h"
+#include "mccomponents/kernels/detector/EventModeMCA.h"
 
 
 #ifdef DEBUG
