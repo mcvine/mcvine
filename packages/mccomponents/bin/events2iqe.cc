@@ -49,6 +49,11 @@ int main(int argc, char *argv[])
   typedef const event_t * event_it_t;
   typedef double * float_it_t;
 
+#ifdef DEBUG
+  journal::debug_t debug("Event2QE");
+  debug.activate();
+#endif
+
 
   // parse inputs
   int index = 1;
