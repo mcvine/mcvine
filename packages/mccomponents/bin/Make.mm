@@ -15,7 +15,7 @@ PACKAGE = bin
 
 
 PROJ_LIBRARIES = -L$(BLD_LIBDIR) -lhistogram -ljournal -lmcni -lmccomposite -lmccomponents -lfparser
-
+PROJ_CXX_DEFINES += USE_DANSE_NAMESPACE
 
 # directory structure
 

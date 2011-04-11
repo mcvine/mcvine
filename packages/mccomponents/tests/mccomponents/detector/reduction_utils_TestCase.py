@@ -22,6 +22,7 @@ class TestCase(unittest.TestCase):
         outfile = 'intensities.dat'
         nevents = 337
         pixelpositionsfile = 'arcs-pixelID2position.bin'
+        solidanglesfile = 'arcs-solidangles.bin'
         npixels = 117760
         import pyre.units.length
         import pyre.units.energy
@@ -29,7 +30,9 @@ class TestCase(unittest.TestCase):
         iqe = events2IQE(
             eventsfile, nevents, 
             outfile,
-            pixelpositionsfile, npixels,
+            pixelpositionsfile, 
+            solidanglesfile,
+            npixels,
             mod2sample=13.6*pyre.units.length.meter,
             Ei=700*pyre.units.energy.meV,
             Qaxis=(9.5,10.5,0.02), Eaxis=(30,120,1.),

@@ -30,7 +30,8 @@ import pyre.units.time
 def events2IQE(
     eventsfile, nevents, 
     intensityfile,
-    pixelpositionsfile, npixels,
+    pixelpositionsfile, solidanglesfile, 
+    npixels,
     mod2sample=13.6*pyre.units.length.meter, Ei=100*pyre.units.energy.meV,
     Qaxis=(0,10,0.1), Eaxis=(-95,95,1.),
     tofUnit=100*pyre.units.time.ns,
@@ -55,7 +56,8 @@ def events2IQE(
 
     eventsfile: events file
     nevents: number of events
-    pixelpositionsfile:  unit:meter
+    pixelpositionsfile:  filename for pixel positions. position unit:meter
+    solidanglesfile: filename for pixel solid angles. solid angle unit: sr
     npixels:
     mod2sample: moderator to sample distance 
     Ei: incident energy
@@ -81,6 +83,11 @@ def events2IQE(
     if not os.path.exists(pixelpositionsfile):
         raise IOError, "%s does not exist" % pixelpositionsfile
     
+    if not isinstance(solidanglesfile, basestring):
+        raise ValueError, "%s is not a str" % solidanglesfile
+    if not os.path.exists(solidanglesfile):
+        raise IOError, "%s does not exist" % solidanglesfile
+
     try:
         npixels  = int(npixels)
     except:
@@ -103,6 +110,7 @@ def events2IQE(
         Emin, Emax, dE,
         Ei, 
         pixelpositionsfile,
+        solidanglesfile,
         npixels,
         tofUnit,
         mod2sample,

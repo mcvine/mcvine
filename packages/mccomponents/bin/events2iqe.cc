@@ -16,6 +16,7 @@
 #include <cassert>
 #include "mccomponents/kernels/detector/EventModeMCA.h"
 #include "drchops/events2iqe.h"
+#include "drchops/solidangle_qe.h"
 
 
 #ifdef DEBUG
@@ -28,7 +29,15 @@ value_t fromStr(const char *s)
 {
   std::istringstream iss(s);
   value_t v;
-  iss >> v;
+  try {
+    iss >> v;
+  } 
+  catch (...) {
+    std::cerr 
+      << "failed to parse " << s 
+      << std::endl;
+    throw;
+  }
   return v;
 }
 
@@ -54,6 +63,7 @@ int main(int argc, char *argv[])
   float_t dE = fromStr<float_t>(argv[index++]);
   float_t Ei = fromStr<float_t>(argv[index++]);
   const char * pixelpositionfile = argv[index++];
+  const char * solidanglefile = argv[index++];
   int npixels = fromStr<int>(argv[index++]);
   float_t tofUnit = fromStr<float_t>(argv[index++]);
   float_t mod2sample = fromStr<float_t>(argv[index++]);
@@ -67,19 +77,25 @@ int main(int argc, char *argv[])
   evtsfs.read((char *)evtp, nbytes);
   
   // output intensities
-  int NQ = (Qend-Qbegin)/dQ;
-  int NE = (Eend-Ebegin)/dE;
+  int NQ = (Qend-Qbegin)/dQ + 0.5; Qend = Qbegin + dQ*(NQ+0.1);
+  int NE = (Eend-Ebegin)/dE + 0.5; Eend = Ebegin + dE*(NE+0.1);
   const int N = NQ*NE;
   float_it_t intensities = new float_t[N];
   for (int i=0; i<N; i++) intensities[i] = 0;
 
-  // event -> qe conversion parameters
+  // pixel positions
   float_t * pixelpositions = new float_t[3*npixels];
   std::ifstream ppfs(pixelpositionfile);
   nbytes = sizeof(float_t) * 3 * npixels;
   ppfs.read((char *)pixelpositions, nbytes);
 
-  // reduce
+  // pixel solid angles
+  float_t * solidangles = new float_t[npixels];
+  std::ifstream safs(solidanglefile);
+  nbytes = sizeof(float_t) * npixels;
+  safs.read((char *)solidangles, nbytes);
+  
+  // reduce to iqe
   DANSE::reduction::events2iqe
     <event_t, float_t, event_it_t, float_it_t>
     (// input events
@@ -96,7 +112,34 @@ int main(int argc, char *argv[])
      tofUnit, mod2sample,
      toffset, tofmax
      );
+
+  // compute solid angles (q,e)
+  float_it_t sa_arr = new float_t[N];
+  for (int i=0; i<N; i++) sa_arr[i] = 0;
+  typedef DRCHOPS_NAMESPACE_PREFIX::SaQE SaQE;
+  SaQE sa( Qbegin, Qend, dQ,
+	   Ebegin, Eend, dE,
+	   sa_arr );
+  DRCHOPS_NAMESPACE_PREFIX::calcSolidAngleQE<SaQE, double, unsigned int>
+    (sa, Ei, 
+     npixels, pixelpositions, solidangles
+     );  
+
+  // normalize iqe by saqe
+  for (int i=0; i<N; i++) {
+    double sa = sa_arr[i];
+    if (std::abs(sa) < 1.e-10) {
+      std::cerr
+	<< "Error in normalizing iqe -- solid angle too small." << std::endl
+	<< " - index in array: " << i 
+	<< std::endl;
+      intensities[i] = 0;
+      continue;
+    }
+    intensities[i] /= sa;
+  }
   
+  // write out
   std::ofstream ofs(outputfile);
   ofs.write((char *)intensities, N * sizeof(float_t));
 
@@ -110,6 +153,7 @@ int main(int argc, char *argv[])
   
   // finalize
   delete [] pixelpositions;
+  delete [] solidangles;
   delete [] intensities;
   delete [] evtp;
 
