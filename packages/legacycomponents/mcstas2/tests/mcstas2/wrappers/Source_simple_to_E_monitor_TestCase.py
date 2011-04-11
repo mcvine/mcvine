@@ -12,8 +12,7 @@
 #
 
 
-skip = False
-standalone = True
+skip = True
 
 
 import unittestX as unittest

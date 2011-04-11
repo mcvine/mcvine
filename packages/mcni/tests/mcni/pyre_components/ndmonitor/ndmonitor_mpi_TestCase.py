@@ -12,7 +12,7 @@
 #
 
 
-standalone = True
+skip = True
 
 
 import os, shutil
