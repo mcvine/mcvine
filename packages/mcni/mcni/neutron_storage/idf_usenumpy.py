@@ -46,6 +46,8 @@ def count(filename=None, stream=None):
 def totalintensity(filename=None, stream=None):
     'return sum of intensities of all neutrons'
     neutrons = read(filename=filename, stream=stream)
+    if neutrons is None:
+        return 0
     # XXX: the last double is the probability
     return neutrons[:, -1].sum()
 
