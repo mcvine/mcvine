@@ -9,9 +9,13 @@ class App(base):
 
         import pyre.inventory
 
-        fermi_chopper = pyre.inventory.str('fermi_chopper', default='')
+        fermi_chopper = pyre.inventory.str(
+            'fermi_chopper', default='100-1.5-SMI')
         fermi_chopper.meta['tip'] = 'The choice of fermi chopper'
-
+        fermi_chopper.validator = pyre.inventory.choice(
+            ['100-1.5-SMI', '700-1.5-SMI', '700-0.5-AST']
+            )
+        
         fermi_nu = pyre.inventory.float('fermi_nu', default=600)
         fermi_nu.meta['tip'] = 'Spinning frequency of fermi chopper'
         
@@ -24,7 +28,7 @@ class App(base):
         emission_time = pyre.inventory.float('emission_time', default=-1)
         emission_time.meta['tip'] = 'emission time for moderator unit (microsecond)'
 
-        ncount = pyre.inventory.float('ncount', default=1000)
+        ncount = pyre.inventory.float('ncount', default=1000000)
 
 
     m2sout = '_m2sout'
@@ -35,13 +39,21 @@ class App(base):
         if not os.path.exists(self.out):
             os.makedirs(self.out)
             
+        # create configuration for arcs moderator to sample simulation
         self._run_arcs_m2s()
+        # run the simulation from mod to sample
         self._run_beam()
-        self._computeFocusedSpectraForRealMonitors()
-        self._runMonitorsAtSample()
-        self._moveNeutronsToOutputDir()
+        # compute flux at sample position and make sure flux is nonzero
         flux = self._computeFlux()
+        # computed spectra for real monitors
+        self._computeFocusedSpectraForRealMonitors()
+        # simulate spectra for fake monitors at sample position
+        self._runMonitorsAtSample()
+        # move neutrons to output dir
+        self._moveNeutronsToOutputDir()
+        # compute average incident energy at sample
         energy = self._computeAverageEnergy()
+        # compute fwhm of energy spetrum at sample
         fwhm = self._computeFWHM()
         props = {
             'flux': flux,
@@ -53,9 +65,11 @@ class App(base):
 
 
     def _computeFlux(self):
-        f = os.path.join(self.out, 'neutrons')
+        f = os.path.join(self.m2sout, 'neutrons')
         from mcni.neutron_storage.idf_usenumpy import totalintensity
         I = totalintensity(f)
+        if I == 0:
+            raise RuntimeError, "There is no neutrons at sample position. Please increase ncount"
         # one MC run corresponds to 34kJ/pulse
         # 1second = 60pulses
         # this is the flux if the power is at 34kJ/pulse
@@ -155,13 +169,14 @@ class App(base):
     def _run_arcs_m2s(self):
         cmd = ['arcs-m2s']
         keys = [
+            'fermi_chopper',
             'fermi_nu',
             'T0_nu',
             'E',
             'emission_time',
             ]
         cmd += self._buildCmdFromInventory(keys)
-        cmd += ['--- -dump-pml=yes', '-h', '>arcs-m2s.log']
+        cmd += ['--- -dump-pml=yes', '-h'] # , '>arcs-m2s.log']
         cmd = ' '.join(cmd)
         print 'Generating pml for arcs beam instrument...'
         self._exec(cmd)
@@ -197,8 +212,10 @@ class App(base):
     
     def _exec(self, cmd):
         print " -> running %s..." % cmd
+        import os
         if os.system(cmd):
             raise RuntimeError, "%s failed" % cmd
+
         
 def main():
     app = App('arcs_beam')
