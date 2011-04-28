@@ -55,10 +55,11 @@ class App(base):
         energy = self._computeAverageEnergy()
         # compute fwhm of energy spetrum at sample
         fwhm = self._computeFWHM()
+        fwhm *= 1e6 # convert to microsecond
         props = {
             'flux': '%s counts per second' % flux,
             'average energy': '%s meV' % energy,
-            'tof fwhm': '%s microsecond' % fwhm * 1e6,
+            'tof fwhm': '%s microsecond' % fwhm,
             }
         open(os.path.join(self.out, 'props.json'), 'w').write(str(props))
         return
