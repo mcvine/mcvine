@@ -56,9 +56,9 @@ class App(base):
         # compute fwhm of energy spetrum at sample
         fwhm = self._computeFWHM()
         props = {
-            'flux': flux,
-            'average energy': energy,
-            'tof fwhm': fwhm,
+            'flux': '%s counts per second' % flux,
+            'average energy': '%s meV' % energy,
+            'tof fwhm': '%s microsecond' % fwhm * 1e6,
             }
         open(os.path.join(self.out, 'props.json'), 'w').write(str(props))
         return
@@ -74,7 +74,7 @@ class App(base):
         # 1second = 60pulses
         # this is the flux if the power is at 34kJ/pulse
         # unit: 1/second
-        flux = I/self.inventory.ncount * 60
+        flux = I * 60
         return flux
     
     
