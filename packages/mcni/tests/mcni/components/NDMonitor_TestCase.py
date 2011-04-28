@@ -24,8 +24,13 @@ class TestCase(unittest.TestCase):
     def test1(self):
         'NDMonitor'
         
-        from mcni.components.NDMonitor import NDMonitor
-        m = NDMonitor('abc', [ ('x', 'x', 100, (0,1000.)) ])
+        from mcni.components.NDMonitor import NDMonitor, Axis
+        xaxis = Axis(
+            name = 'x', expression='x',
+            bins = 100, range=(0, 1000.),
+            unit = 'meter',
+            )
+        m = NDMonitor('abc', [xaxis])
         
         N = 100
         from mcni import neutron_buffer, neutron
@@ -66,7 +71,6 @@ def main():
 
 
 if __name__ == "__main__": 
-    global interactive
     interactive = True
     main()
 

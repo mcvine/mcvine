@@ -12,10 +12,17 @@
 #
 
 
+"""
+A powerful multi-dimensional monitor that 
+can take various axes.
+"""
+
+
 category = "monitors"
 
 
-class NDMonitor(object):
+class NDMonitor(object):    
+
 
     def process(self, neutrons):
         if not len(neutrons):
@@ -70,7 +77,8 @@ class NDMonitor(object):
     def __init__(self, name, axes, size=[0.1, 0.1]):
         """
         axes: a list of axis
-        axis: a tuple of name, expression, bins, ranges
+        axis: an instance of Axis class, or 
+            (obsolete) a tuple of name, expression, bins, range 
         name: name of the axis
         expression: expression of the axis
         bins: number of bins of the axis
@@ -84,11 +92,26 @@ class NDMonitor(object):
         self.xwidth     = size[0]
         self.yheight    = size[1]
 
-        from histogram import histogram, axis
+        from histogram import histogram, axis as createAxis
         from numpy import histogramdd as hdd, arange
 
         # n='variable name', e='expression', b='number of bins (divisions)', r='range'
-        for n, e, b, r in axes:  
+        for axis in axes:  
+            if isinstance(axis, tuple):
+                import warnings
+                warnings.warn(
+                    "It is obsolete to specify an axis using tuple. "
+                    "Please use an Axis instance instead"
+                    )
+                n, e, b, r = axis
+                unit = None
+            else:
+                n = axis.name
+                e = axis.expression
+                b = axis.bins
+                r = axis.range
+                unit = axis.unit
+                
             # validation
             if len(r) != 2:
                 raise ValueError, "Invalid range: %s. A range has to be a 2-tuple" % (r, )
@@ -99,7 +122,10 @@ class NDMonitor(object):
             ranges.append(r)
             bins.append(b)
             db = (r[1]-r[0])/b
-            a = axis(n, boundaries=arange(r[0], r[1]+db/10., db))
+            a = createAxis(
+                n, 
+                boundaries=arange(r[0], r[1]+db/10., db), 
+                unit=unit)
             haxes.append(a)
             continue
         self.histogram = histogram(self.name, haxes)
@@ -107,6 +133,23 @@ class NDMonitor(object):
 
     
     pass # end of NDMonitor
+
+
+    # this is the required interface to supply an axis
+    # to the constructor
+class Axis(object):
+    # name of axis
+    name = '' 
+    # evaluation expression
+    expression = ''
+    # number of bins
+    bins = 0
+    # range (min, max)
+    range = (0, 0)
+
+    def __init__(self, **kwds):
+        for k,v in kwds.iteritems():
+            setattr(self, k, v)
 
 
 # version
