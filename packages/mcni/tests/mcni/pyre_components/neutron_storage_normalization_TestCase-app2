@@ -1,0 +1,19 @@
+#!/usr/bin/env python
+import warnings
+warnings.simplefilter('ignore')
+import mcvine
+warnings.simplefilter('default')
+
+def main():
+    from mcvine.applications.InstrumentBuilder import build
+    components = ['source', 'chopper', 'monitor']
+    App = build(components)
+    app = App('neutron_storage_normalization_TestCase-app2')
+    app.run()
+    return
+
+if __name__ == '__main__': main()
+
+# This application was created by the following command:
+# $ mcvine-create-instrument-simulation-application -name=neutron_storage_normalization_TestCase-app -components=source,monitor
+

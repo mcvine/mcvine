@@ -100,12 +100,20 @@ class NeutronToStorage(ParallelComponent, AbstractComponent):
         # merge
         from mcni.neutron_storage import merge
         merge(nsfiles, out)
+        
+        # number of neutron events totaly in the neutron file
+        from mcni.neutron_storage.idf_usenumpy import count
+        nevts = count(out)
 
         # load number_of_mc_samples
         mcs = mcs_sum(outdir)
+
+        # normalization factor. this is a bit tricky!!!
+        nfactor = mcs/nevts
+        
         # normalize
         from mcni.neutron_storage import normalize
-        normalize(out, mcs)
+        normalize(out, nfactor)
         return
 
 

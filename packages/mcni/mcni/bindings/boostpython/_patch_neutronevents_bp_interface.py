@@ -11,3 +11,16 @@ def __str__(self):
 
 vector_Event.__str__ = __str__
     
+
+
+def NEB_appendNeutrons(self, neutrons, startindex, endindex):
+    """append neutrons to the end of this neutron buffer
+
+    neutrons: the neutron buffer from which the new neutrons are to be obtained
+            and appended to this buffer
+    startindex, endindex: define the region from which neutrons are obtained
+    """
+    self.append(neutrons, startindex, endindex)
+    return
+from mcni.mcnibp import NeutronEventBuffer
+NeutronEventBuffer.appendNeutrons = NEB_appendNeutrons

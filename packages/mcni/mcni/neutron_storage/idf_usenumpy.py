@@ -100,7 +100,6 @@ def write( neutrons, filename='neutrons', comment = '', stream=None):
     
     neutrons.shape = -1,
     stream.write( neutrons.tostring() )
-    
     return
 
 

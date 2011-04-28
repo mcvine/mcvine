@@ -1,0 +1,27 @@
+# -*- python -*-
+
+# a fake chopper that pass 1 neutron out of 10 neutrons
+
+from mcni.pyre_support.AbstractComponent import AbstractComponent
+class Chopper(AbstractComponent):
+
+    def process(self, neutrons):
+        # only let 10% of neutrons move forward
+        n = len(neutrons)
+        n1 = n/10
+        # .. new buffer
+        from mcni import neutron_buffer
+        neutrons1 = neutron_buffer(0)
+        # .. only get 10%
+        neutrons1.appendNeutrons(neutrons, 0, n1)
+        # .. swap new buffer with the old buffer
+        neutrons.swap(neutrons1)
+        return neutrons
+
+
+    def __init__(self, name='chopper'):
+        super(Chopper, self).__init__(name)
+        return
+
+
+def neutroncomponent(): return Chopper()
