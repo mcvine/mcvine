@@ -57,7 +57,7 @@ class App(base):
         fwhm = self._computeFWHM()
         fwhm *= 1e6 # convert to microsecond
         props = {
-            'flux': '%s counts per second' % flux,
+            'flux': '%s counts per 34kJ pulse' % flux,
             'average energy': '%s meV' % energy,
             'tof fwhm': '%s microsecond' % fwhm,
             }
@@ -67,15 +67,17 @@ class App(base):
 
     def _computeFlux(self):
         f = os.path.join(self.m2sout, 'neutrons')
-        from mcni.neutron_storage.idf_usenumpy import totalintensity
+        from mcni.neutron_storage.idf_usenumpy import totalintensity, count
         I = totalintensity(f)
         if I == 0:
             raise RuntimeError, "There is no neutrons at sample position. Please increase ncount"
         # one MC run corresponds to 34kJ/pulse
-        # 1second = 60pulses
         # this is the flux if the power is at 34kJ/pulse
-        # unit: 1/second
-        flux = I * 60
+        # unit: 1/34kJ pulse
+        # every neutron in the storage represents one 34kJ pulse. so 
+        # we need to normalize by number of events in the storage
+        nevts = count(f)
+        flux = I/nevts
         return flux
     
     
