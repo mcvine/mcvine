@@ -28,6 +28,20 @@ except ImportError:
     usempi = False
 
 
+# check whether mpi is really available by checking the size
+# of the mpi world
+if usempi:
+    import mpi
+    size = mpi.world().size
+    if size <=0:
+        msg = (
+            "The size of the mpi world is 0. "
+            "It could be the mpi binding of mcvine is not compiled correctly. "
+            "Or mpi daemon is not started."
+            )
+        raise RuntimeError, msg
+
+
 class Application(base):
 
     class Inventory(base.Inventory):

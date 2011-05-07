@@ -26,7 +26,7 @@ journal.error('pyre.inventory').deactivate()
 DEFAULT_NUMBER_SIM_LOOPS = 5
 # minimum buffer size
 MINIMUM_BUFFER_SIZE = 100
-
+MAXIMUM_BUFFER_SIZE = int(1e7)
 
 
 from MpiApplication import Application as base
@@ -327,8 +327,8 @@ class Instrument( AppInitMixin, CompositeNeutronComponentMixin, base, ParallelCo
 
     def _minimumSuggestedBufferSize(self):
         return self.inventory.ncount / 1000 / (self.mpiSize or 1)
-
-
+    
+    
     def _computeBufferSize(self):
         ncount = self.inventory.ncount
         mpisize = self.mpiSize or 1
@@ -340,25 +340,18 @@ class Instrument( AppInitMixin, CompositeNeutronComponentMixin, base, ParallelCo
             if candidate < 1:
                 candidate = ncount
         return min(self._maximumBufferSize(), candidate)
-
-
+    
+    
     def _maximumBufferSize(self):
-        import psutil
-        memsize = min(psutil.TOTAL_PHYMEM/2, (psutil.avail_phymem() + psutil.avail_virtmem())*0.7)
-        memsize = int(memsize)
-        from mcni.neutron_storage.idfneutron import ndblsperneutron
-        
-        bytesperdble = 8
-        minsize = MINIMUM_BUFFER_SIZE
-        
-        n = int(memsize/ndblsperneutron/bytesperdble/minsize)*MINIMUM_BUFFER_SIZE
-        
-        if n<minsize:
-            raise RuntimeError, "Not enough memory"
-        
-        return n
-
-
+        # XXX need to tell if we are in the shared memory machine
+        # XXX or not. for now, let us play safe
+        nodes = self.mpiSize or 1
+        return min(
+            _computeMaximumBufferSize(nodes),
+            MAXIMUM_BUFFER_SIZE,
+            )
+    
+    
     def _saveConfiguration(self):
         # the default configuration filename
         default_filename = '%s.pml' % self.name
@@ -469,6 +462,34 @@ class Instrument( AppInitMixin, CompositeNeutronComponentMixin, base, ParallelCo
     pass # end of Instrument
 
 
+
+
+def _computeMaximumBufferSize(nodes):
+    """number of nodes.
+
+    This actually depends on the system mcvine is running on.
+
+    If we are running on one machine that has shared memory, we need
+    to set here nodes to the number of mpi instances.
+
+    If we are running on a cluster of nodes without shared memory,
+    we should not need to divide the maximum buffer size by nodes.
+    """
+    import psutil
+    memsize = min(psutil.TOTAL_PHYMEM/2, (psutil.avail_phymem() + psutil.avail_virtmem())*0.7)
+    memsize = int(memsize)
+    from mcni.neutron_storage.idfneutron import ndblsperneutron
+
+    bytesperdble = 8
+    minsize = MINIMUM_BUFFER_SIZE
+
+    n = int(memsize/nodes/ndblsperneutron/bytesperdble/minsize) \
+        *MINIMUM_BUFFER_SIZE
+
+    if n<minsize:
+        raise RuntimeError, "Not enough memory"
+
+    return n
 
 
 def _getCmdStr():
