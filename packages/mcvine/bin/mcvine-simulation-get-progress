@@ -1,0 +1,41 @@
+#!/usr/bin/env python
+
+from pyre.applications.Script import Script
+
+
+class App(Script):
+
+
+    class Inventory(Script.Inventory):
+
+        import pyre.inventory
+        
+        outdir = pyre.inventory.str('outdir')
+        
+        pass
+
+    
+    def main(self, *args, **kwds):
+        outdir = self.inventory.outdir
+        import os
+        outdir = os.path.abspath(outdir)
+
+        from mcni.components.outputs import mcs_sum
+        n = mcs_sum(outdir)
+
+        print
+        print 'In total, %g Monte Carlo samples were run in "%s"' % (
+            float(n), outdir)
+        print
+        
+        return
+
+
+def main():
+    app = App('mcvine-simulation-get-progress')
+    app.run()
+    return
+
+
+if __name__ == '__main__': main()
+
