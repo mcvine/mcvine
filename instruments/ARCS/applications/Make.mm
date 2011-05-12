@@ -45,6 +45,7 @@ EXPORT_PYTHON_MODULES = \
 EXPORT_BINS = \
 	arcs_analyze_beam \
 	arcs_beam \
+	arcs-compute-IQE-resolution \
 	arcs_moderator2sample \
 	arcs-m2s \
 
