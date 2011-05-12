@@ -30,6 +30,22 @@ def run(
     if Ei_user is not None and abs(Ei-Ei_user)/Ei > 0.1:
         raise ValueError, "nominal energy %s is too different from average energy at sample position %s" % (Ei_user, Ei)
 
+    # make sure E and Q are in the correct ranges
+    if E <= 0 or E >= Ei:
+        raise ValueError, "E should be in the range of (0, Ei=%s)" % (
+            Ei,)
+    from mcni.utils import conversion
+    Qi = conversion.e2k(Ei)
+    if Q <= 0 or Q >= 2*Qi:
+        raise ValueError, "Q should be in the range of (0, 2*Qi=%s)" % (
+            2*Qi,)
+
+    # make sure we have sound resolution
+    if dQ == 0:
+        dQ = Q/10.
+    if dE == 0:
+        dE = E/10.
+
     #
     if incident_neutrons is None:
         incident_neutrons = os.path.join(mod2sample, 'neutrons')
@@ -175,7 +191,7 @@ class App(AppBase):
         workdir = pyre.inventory.str('workdir', default='work')
         ncount = pyre.inventory.float('ncount', default=1e7)
         nodes = pyre.inventory.int('nodes', default=1)
-        Ei = pyre.inventory.float('Ei', default=700)
+        Ei = pyre.inventory.float('Ei', default=0)
         Q = pyre.inventory.float('Q', default=10)
         E = pyre.inventory.float('E', default=100)
         dQ = pyre.inventory.float('dQ', default=0)
@@ -193,21 +209,8 @@ class App(AppBase):
         dE = self.inventory.dE
         mod2sample = self.inventory.mod2sample
         
-        # make sure E and Q are in the correct ranges
-        if E <= 0 or E >= Ei:
-            raise ValueError, "E should be in the range of (0, Ei=%s)" % (
-                Ei,)
-        from mcni.utils import conversion
-        Qi = conversion.e2k(Ei)
-        if Q <= 0 or Q >= 2*Qi:
-            raise ValueError, "Q should be in the range of (0, 2*Qi=%s)" % (
-                2*Qi,)
-        
-        # make sure we have sound resolution
-        if dQ == 0:
-            dQ = Q/20.
-        if dE == 0:
-            dE = E/20.
+        if Ei == 0:
+            Ei = None
         
         # run
         run(
