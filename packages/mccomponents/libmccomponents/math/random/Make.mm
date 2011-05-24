@@ -44,6 +44,7 @@ clean::
 export:: export-package-headers
 
 EXPORT_HEADERS = \
+	gaussian.h \
 	geometry.h \
 
 

@@ -31,6 +31,7 @@ PROJ_LIBRARIES = -L$(BLD_LIBDIR) -ljournal -lmcni -lmccomposite -lmccomponents -
 
 BUILD_DIRS = \
 	geometry \
+	random \
 
 OTHER_DIRS = \
 

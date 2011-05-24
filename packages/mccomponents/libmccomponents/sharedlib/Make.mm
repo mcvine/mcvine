@@ -36,6 +36,7 @@ PROJ_SRCS = \
 	Functor.cc \
 	math_misc.cc \
 	random_geometry.cc \
+	random_gaussian.cc \
 	CompositeScatteringKernel.cc \
 	IsotropicKernel.cc \
 	EventModeMCA.cc \
@@ -82,6 +83,9 @@ Functor.cc: ../math/Functor.cc
 
 random_geometry.cc: ../math/random/geometry.cc
 	cp ../math/random/geometry.cc ./random_geometry.cc
+
+random_gaussian.cc: ../math/random/gaussian.cc
+	cp ../math/random/gaussian.cc ./random_gaussian.cc
 
 CompositeScatteringKernel.cc: ../homogeneous_scatterer/CompositeScatteringKernel.cc
 	cp ../homogeneous_scatterer/CompositeScatteringKernel.cc .
