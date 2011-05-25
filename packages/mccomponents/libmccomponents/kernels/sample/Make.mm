@@ -50,6 +50,7 @@ EXPORT_HEADERS = \
 	AbstractScatteringKernel.h \
 	AbstractSQ.h \
 	AbstractSQE.h \
+	Broadened_E_Q_Kernel.h Broadened_E_Q_Kernel.icc \
 	ConstantEnergyTransferKernel.h \
 	ConstantQEKernel.h \
 	E_Q_Kernel.h \
