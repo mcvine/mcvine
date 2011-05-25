@@ -78,14 +78,26 @@ class Renderer(base):
         return
 
 
+    def onBroadened_E_Q_Kernel(self, kernel):
+        E_Q = kernel.E_Q
+        S_Q = kernel.S_Q
+        sigma_Q = kernel.sigma_Q
+        Qmin = kernel.Qmin
+        Qmax = kernel.Qmax
+        self._write('<Broadened_E_Q_Kernel E_Q="%s" S_Q="%s" sigma_Q="%s" Qmin="%s" Qmax="%s">' % (
+                E_Q, S_Q, sigma_Q, Qmin, Qmax))
+        self._write('</Broadened_E_Q_Kernel>')
+        return
+    
+    
     def onConstantQEKernel(self, kernel):
         E = kernel.E; Q = kernel.Q
         self._write('<ConstantQEKernel momentum-transfer="%s" energy-transfer="%s">' % (
                 Q, E))
         self._write('</ConstantQEKernel>')
         return
-
-
+    
+    
     def onGridSQE(self, gridsqe):
         sqehist = gridsqe.sqehist
         from histogram.hdf import dump

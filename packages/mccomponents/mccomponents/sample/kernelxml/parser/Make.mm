@@ -25,6 +25,7 @@ all: export
 
 EXPORT_PYTHON_MODULES = \
 	AbstractNode.py \
+	Broadened_E_Q_Kernel.py \
 	ConstantEnergyTransferKernel.py \
 	ConstantQEKernel.py \
 	Document.py \

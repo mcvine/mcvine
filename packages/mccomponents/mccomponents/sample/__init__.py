@@ -83,6 +83,11 @@ def E_Q_Kernel(*args, **kwds):
     return E_Q_Kernel(*args, **kwds)
 
 
+def broadened_E_Q_Kernel(*args, **kwds):
+    from Broadened_E_Q_Kernel import Broadened_E_Q_Kernel
+    return Broadened_E_Q_Kernel(*args, **kwds)
+
+
 def kernelcontainer(*args, **kwds):
     from KernelContainer import KernelContainer
     return KernelContainer( *args, **kwds )

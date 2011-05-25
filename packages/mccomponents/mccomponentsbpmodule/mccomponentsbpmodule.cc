@@ -16,6 +16,7 @@
 
 
 #include "wrap_E_Q_Kernel.h"
+#include "wrap_Broadened_E_Q_Kernel.h"
 
 
 namespace wrap_mccomponents{
@@ -58,6 +59,7 @@ namespace wrap_mccomponents{
   void wrap_SimplePowderDiffractionKernel();
 
   struct Wrap_E_Q_Kernel;
+  struct Wrap_Broadened_E_Q_Kernel;
 }
 
 
@@ -110,6 +112,7 @@ BOOST_PYTHON_MODULE(mccomponentsbp)
   wrap_SimplePowderDiffractionKernel();
 
   Wrap_E_Q_Kernel wrap_e_q_kernel;
+  Wrap_Broadened_E_Q_Kernel wrap_broadened_e_q_kernel;
 }
 
 

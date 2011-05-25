@@ -28,6 +28,7 @@ class Document(base):
         'ConstantEnergyTransferKernel',
         'ConstantQEKernel',
         'E_Q_Kernel',
+        'Broadened_E_Q_Kernel', 
 
         'IsotropicKernel',
         ]

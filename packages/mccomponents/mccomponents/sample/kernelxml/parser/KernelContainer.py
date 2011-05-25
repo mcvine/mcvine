@@ -22,7 +22,7 @@ class KernelContainer(AbstractNode):
     
     onIsotropicKernel \
         = onConstantQEKernel = onConstantEnergyTransferKernel \
-        = onE_Q_Kernel \
+        = onE_Q_Kernel = onBroadened_E_Q_Kernel \
         = onSQEkernel \
         = onKernelContainer = AbstractNode.onElement
 

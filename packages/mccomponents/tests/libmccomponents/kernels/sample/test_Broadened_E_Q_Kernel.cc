@@ -86,7 +86,6 @@ void test1()
 	      << "dE=" << E-Q*Q/3.
 	      << std::endl;
 #endif
-    // assert (std::abs(E-Q*Q/3) < 1.e-10);
   }
   
 }
