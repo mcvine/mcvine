@@ -40,3 +40,46 @@ def NEB_snapshot(self, n=None):
         n = len(self)
     return NEB_snapshot_o(self, n)
 NeutronEventBuffer.snapshot = NEB_snapshot
+
+def NEB_tonpyarr(self):
+    from mcni.neutron_storage import neutrons_as_npyarr, ndblsperneutron
+    arr = neutrons_as_npyarr(self)
+    arr.shape = -1, ndblsperneutron
+    return arr
+NeutronEventBuffer.to_npyarr = NEB_tonpyarr
+
+
+def NEB_fromnpyarr(self, arr):
+    # 
+    from mcni.neutron_storage import ndblsperneutron
+    arr.shape = -1, ndblsperneutron
+
+    # # of events
+    N = len(arr)
+    
+    # cevents
+    cevents = cevents_from_npyarr(arr)
+
+    # resize myself so we can accept events from array
+    from mcni import neutron
+    ev = neutron()
+    self.resize(N, ev)
+    
+    # copy
+    self.fromCevents(cevents, N)
+    
+    return
+NeutronEventBuffer.from_npyarr = NEB_fromnpyarr
+
+
+def cevents_from_npyarr(npyarr):
+    '''convert a numpy array to a boost-python instance of Neutron::cEvent pointer'''
+    from numpyext import getdataptr
+    ptr = getdataptr( npyarr )
+    from bpext import wrap_ptr
+    import mcni.mcni
+    cevents = wrap_ptr( ptr, 'cNeutronEvent' )
+    cevents.origin = npyarr
+    return cevents
+
+

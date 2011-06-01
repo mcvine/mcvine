@@ -50,13 +50,8 @@ class Binding:
 
     def cevents_from_npyarr( self, npyarr ):
         '''convert a numpy array to a boost-python instance of Neutron::cEvent pointer'''
-        from numpyext import getdataptr
-        ptr = getdataptr( npyarr )
-        from bpext import wrap_ptr
-        import mcni.mcni
-        cevents = wrap_ptr( ptr, 'cNeutronEvent' )
-        cevents.origin = npyarr
-        return cevents
+        from _patch_neutronevents_bp_interface import cevents_from_npyarr
+        return cevents_from_npyarr(npyarr)
 
 
     def vector3(self, *args):

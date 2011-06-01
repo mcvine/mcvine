@@ -105,7 +105,7 @@ def neutrons_as_npyarr( neutrons ):
     to a numpy array'''
     n = len(neutrons)
     ceventsnpyarr = numpy.zeros( n*ndblsperneutron, numpy.double )
-
+    
     cevents = binding.cevents_from_npyarr( ceventsnpyarr )
     neutrons.toCevents( cevents, n )
     

@@ -126,6 +126,23 @@ class TestCase(unittest.TestCase):
         return
 
 
+    def test10(self):
+        "neutron buffer <-> numpy array"
+        from mcni import neutron_buffer, neutron
+        nb = neutron_buffer(3)
+        a = nb.to_npyarr()
+        a[0,3]= 5
+        nb.from_npyarr(a)
+        self.assertEqual(nb[0].state.velocity[0], 5)
+
+        import numpy
+        b = numpy.arange(50.)
+        nb.from_npyarr(b)
+        self.assertEqual(nb[3].state.velocity[0], 33)
+        self.assertEqual(nb[2].state.position[0], 20)
+        return
+
+
     pass  # end of TestCase
 
 
