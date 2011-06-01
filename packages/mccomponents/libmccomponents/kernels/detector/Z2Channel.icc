@@ -47,7 +47,7 @@ mccomponents::detector::Z2Channel::operator()
   
   int n = z/m_pixelheight + 0.5;
   
-  if (z < 0 or n >= m_npixels) return -1;
+  if (n < 0 or n >= m_npixels) return -1;
   
   return n;
 }
