@@ -40,6 +40,12 @@ class MonochromaticSource( AbstractComponent ):
         position = pinv.array( 'position', default = '0,0,0' )
         position.meta['tip'] = 'position of neutrons. unit: m'
 
+        width = pinv.float('width', default=0)
+        width.meta['tip'] = 'width of source. unit:m'
+        
+        height = pinv.float('height', default=0)
+        height.meta['tip'] = 'height of source. unit:m'
+
         time = pinv.float( 'time', default = 0 )
         time.meta['tip'] = 'time of flight for neutrons. unit: s'
 
@@ -71,6 +77,9 @@ class MonochromaticSource( AbstractComponent ):
         position = self.inventory.position
         assert len(position)==3
         self.position = position
+        
+        self.width = self.inventory.width
+        self.height = self.inventory.height
 
         self.time = self.inventory.time
         self.probability = self.inventory.probability
@@ -84,7 +93,10 @@ class MonochromaticSource( AbstractComponent ):
             r = self.position, v = self.velocity,
             time = self.time, prob = self.probability,
             )
-        self.engine = enginefactory( self.name, self.neutron )
+        self.engine = enginefactory( 
+            self.name, self.neutron,
+            dx = self.width, dy = self.height,
+            )
         return
 
     pass # end of Source
