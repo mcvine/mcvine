@@ -95,6 +95,7 @@ void wrap_neutron()
     .def_readonly("state", &Event::state)
     .def_readonly("probability", &Event::probability)
     .def_readonly("time", &Event::time)
+    .def("energy", &Event::energy)
     .def("__str__", &NeutronEvent_str)
     ;
 

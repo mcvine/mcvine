@@ -107,6 +107,62 @@ class TestCase(unittest.TestCase):
         return
         
 
+    def test3(self):
+        'MonochromaticSource - energy spread'
+        
+        # source component
+        from mcni.components.MonochromaticSource import MonochromaticSource
+        from mcni import neutron_buffer, neutron
+        neutron0 = neutron(v=(0,0,3000), r=(0.3, 0.4, 1.5))
+        dx=0.1; dy=0.8; dE = 5
+        s = MonochromaticSource("name", neutron0, dx=0, dy=0, dE=dE)
+        
+        # neutron buffer
+        N = 100000
+        b = neutron_buffer(N)
+        
+        # process
+        s.process(b)
+
+        #
+        E0 = neutron0.energy()
+        #
+        n_in_onesigma = 0
+        n_in_twosigma = 1
+        for n in b:
+
+            E = n.energy()
+            # print n
+            # print E, E0
+            # not always true but usually true
+            self.assertNotEqual(E, E0)
+
+            #
+            if abs(E-E0) < dE:
+                n_in_onesigma += 1
+            if abs(E-E0) < 2*dE:
+                n_in_twosigma += 1
+
+            self.assertEqual(
+                tuple(n.state.position),
+                tuple(neutron0.state.position),
+                )
+            self.assertEqual(
+                n.time,
+                neutron0.time,
+                )
+            self.assertEqual(
+                n.probability,
+                neutron0.probability,
+                )
+
+            continue
+
+        self.assert_( abs(n_in_onesigma*1./N-0.68) < 0.01)
+        self.assert_( abs(n_in_twosigma*1./N-0.95) < 0.01)
+        return
+        
+
     pass # end of TestCase
 
 
