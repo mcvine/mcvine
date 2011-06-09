@@ -33,6 +33,14 @@ class MonochromaticSource( AbstractComponent ):
             'the energy of the neutron will be the given value of energy,'
             'and the moving direction will be determined by the "velocity" vector'
             )
+
+        energy_width = pinv.float('energy-width', default=0)
+        energy_width.meta['tip'] = (
+            "energy spread. if positive, there will be a normal distribution",
+            "of neutron energies around the central energy.",
+            "the energy_width is the standard deviation of the normal",
+            "distribution.",
+            )
         
         velocity = pinv.array( 'velocity', default = '0,0,3000' ) # m/s
         velocity.meta['tip'] = 'velocity of neutrons. unit: m/s. Note: if energy is nonzero, the magnitude of the velocity is set by energy'
@@ -73,6 +81,11 @@ class MonochromaticSource( AbstractComponent ):
             velocity = np.array(velocity)
             velocity *= v/norm
             self.velocity = velocity
+
+        energy_width = self.inventory.energy_width
+        if energy_width < 0:
+            raise ValueError, "energy width must be not negative"
+        self.energy_width = energy_width
             
         position = self.inventory.position
         assert len(position)==3
@@ -96,6 +109,7 @@ class MonochromaticSource( AbstractComponent ):
         self.engine = enginefactory( 
             self.name, self.neutron,
             dx = self.width, dy = self.height,
+            dE = self.energy_width,
             )
         return
 
