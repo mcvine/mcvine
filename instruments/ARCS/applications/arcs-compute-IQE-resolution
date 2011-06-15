@@ -17,7 +17,7 @@ def run(
     incident_neutrons = None,
     mod2sample='../mod2sample',
     ):
-
+    
     import os
     #
     _init(workdir)
@@ -45,7 +45,7 @@ def run(
         dQ = Q/10.
     if dE == 0:
         dE = E/10.
-
+        
     #
     if incident_neutrons is None:
         incident_neutrons = os.path.join(mod2sample, 'neutrons')
