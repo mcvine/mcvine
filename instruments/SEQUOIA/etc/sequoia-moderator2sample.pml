@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <inventory>
   <component name="sequoia-moderator2sample">
-    <property name="sequence">arm1,mod,core_ves,shutter_guide,guide1,guide2,guide3,guide4,guide5,guide6,guide7,guide8,guide9,guide10,guide11,t0_chopp,tmin,guide13,guide14,guide15,guide16,guide17,guide18,guide19,guide20,guide21,guide22,guide23,guide24,guide25,guide26,guide27,fermi_chopp,adjustable_slits,Monitor1,guide29,guide31,guide32,guide34,E_det,Sample_Arm,sample,t_mon_detC,t_mon_detB,t_mon_detD,tmin</property>
+    <property name="sequence">arm1,mod,core_ves,shutter_guide,guide1,guide2,guide3,guide4,guide5,guide6,guide7,guide8,guide9,guide10,guide11,t0_chopp,tmin,guide13,guide14,guide15,guide16,guide17,guide18,guide19,guide20,guide21,guide22,guide23,guide24,guide25,guide26,guide27,fermi_chopp,adjustable_slits,Monitor1,guide29,guide31,guide32,guide34,E_det,recorder,t_mon2</property>
     <property name="arm1">Arm</property>
     <property name="mod">SNS_source</property>
     <property name="core_ves">Channeled_guide</property>
@@ -42,12 +42,8 @@
     <property name="guide32">Channeled_guide</property>
     <property name="guide34">Channeled_guide</property>
     <property name="E_det">E_monitor</property>
-    <property name="Sample_Arm">Arm</property>
-    <property name="sample">V_sample</property>
-    <property name="t_mon_detC">Monitor_nD</property>
-    <property name="t_mon_detB">Monitor_nD</property>
-    <property name="t_mon_detD">Monitor_nD</property>
-    <property name="tmin"></property>
+    <property name="recorder">NeutronToStorage</property>
+    <property name="t_mon2">TOF_monitor2</property>
     <component name="geometer">
       <property name="arm1">(0.0, 0.0, 0.0),(0, 0, 0)</property>
       <property name="mod">relative((0.0, 0.0, 0.0), to="arm1"),relative((0, 0, 0), to="arm1")</property>
@@ -89,12 +85,9 @@
       <property name="guide32">relative((0.0, 0.0, '{18.9315+.0254}'), to="mod"),relative((0, 0, 0), to="mod")</property>
       <property name="guide34">relative((0.0, 0.0, '{19.391+.0254}'), to="mod"),relative((0, 0, 0), to="mod")</property>
       <property name="E_det">relative((0.0, 0.0, '{L2-.01}'), to="fermi_chopp"),relative((0, 0, 0), to="fermi_chopp")</property>
-      <property name="Sample_Arm">relative((0.0, 0.0, '{samp_pos}'), to="mod"),relative((0, 0, 0), to="mod")</property>
-      <property name="sample">relative((0.0, 0.0, 0.0), to="Sample_Arm"),relative((0, 0, 0), to="Sample_Arm")</property>
-      <property name="t_mon_detC">relative((0.0, 0.0, '{samp_pos+0.00005}'), to="mod"),relative((0, 0, 0), to="mod")</property>
-      <property name="t_mon_detB">relative((0.0, 0.0, '{samp_pos+0.00005}'), to="mod"),relative((0, 0, 0), to="mod")</property>
-      <property name="t_mon_detD">relative((0.0, 0.0, '{samp_pos+0.00005}'), to="mod"),relative((0, 0, 0), to="mod")</property>
-      <property name="tmin">relative((0.0, 0.0, '{LM2}'), to="mod"),relative((0, 0, 0), to="mod")</property>
+      <!-- 20.0254 is the nominal position of sample -->
+      <property name="Sample_Arm">relative((0.0, 0.0, 20.), to="mod"),relative((0, 0, 0), to="mod")</property>
+      <property name="t_mon2">relative((0.0, 0.0, 29.0032), to="mod"),relative((0, 0, 0), to="mod")</property>
     </component>
     
     <property name="multiple-scattering">off</property>
@@ -749,38 +742,10 @@
       <property name="ymin">-.025</property>
     </component>
     
-    <component name="Sample_Arm">
+    <component name="recorder">
     </component>
     
-    <component name="sample">
-      <property name="focus_r">0</property>
-      <property name="h">0.2</property>
-      <property name="target_z">0.0</property>
-      <property name="target_x">4.5</property>
-      <property name="target_y">0.0</property>
-      <property name="radius_i">0.0005</property>
-      <property name="radius_o">0.00635</property>
-    </component>
-    
-    <component name="t_mon_detC">
-      <property name="xwidth">11.024</property>
-      <property name="yheight">7.0</property>
-      <property name="restore_neutron">1</property>
-    </component>
-    
-    <component name="t_mon_detB">
-      <property name="xwidth">10.742</property>
-      <property name="yheight">7.0</property>
-      <property name="restore_neutron">1</property>
-    </component>
-    
-    <component name="t_mon_detD">
-      <property name="xwidth">10.742</property>
-      <property name="yheight">7.0</property>
-      <property name="restore_neutron">1</property>
-    </component>
-    
-    <component name="tmin">
+    <component name="t_mon2">
     </component>
     
   </component>
