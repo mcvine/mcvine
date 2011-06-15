@@ -18,6 +18,7 @@ PROJECT = mcvine
 BUILD_DIRS = \
 	ARCS \
 	SANS \
+	SEQUOIA \
 	SMARTS \
 	VULCAN \
 	generic \
