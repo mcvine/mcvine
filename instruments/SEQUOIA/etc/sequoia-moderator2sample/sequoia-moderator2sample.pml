@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <inventory>
   <component name="sequoia-moderator2sample">
-    <property name="sequence">arm1,mod,core_ves,shutter_guide,guide1,guide2,guide3,guide4,guide5,guide6,guide7,guide8,guide9,guide10,guide11,t0_chopp,tmin,guide13,guide14,guide15,guide16,guide17,guide18,guide19,guide20,guide21,guide22,guide23,guide24,guide25,guide26,guide27,fermi_chopp,adjustable_slits,Monitor1,guide29,guide31,guide32,guide34,E_det,recorder,t_mon2</property>
+    <property name="sequence">arm1,mod,core_ves,shutter_guide,guide1,guide2,guide3,guide4,guide5,guide6,guide7,guide8,guide9,guide10,guide11,t0_chopp,guide13,guide14,guide15,guide16,guide17,guide18,guide19,guide20,guide21,guide22,guide23,guide24,guide25,guide26,guide27,fermi_chopp,adjustable_slits,Monitor1,guide29,guide31,guide32,guide34,E_det,recorder,t_mon2</property>
     <property name="arm1">Arm</property>
     <property name="mod">SNS_source</property>
     <property name="core_ves">Channeled_guide</property>
@@ -17,8 +17,7 @@
     <property name="guide9">Channeled_guide</property>
     <property name="guide10">Channeled_guide</property>
     <property name="guide11">Channeled_guide</property>
-    <property name="t0_chopp">Vertical_T0a</property>
-    <property name="tmin"></property>
+    <property name="t0_chopp">Vertical_T0</property>
     <property name="guide13">Channeled_guide</property>
     <property name="guide14">Channeled_guide</property>
     <property name="guide15">Channeled_guide</property>
@@ -34,7 +33,7 @@
     <property name="guide25">Channeled_guide</property>
     <property name="guide26">Channeled_guide</property>
     <property name="guide27">Channeled_guide</property>
-    <property name="fermi_chopp">Fermi_chop2a</property>
+    <property name="fermi_chopp">Fermi_chop2</property>
     <property name="adjustable_slits">Slit</property>
     <property name="Monitor1">TOF_monitor2</property>
     <property name="guide29">Channeled_guide</property>
@@ -61,7 +60,6 @@
       <property name="guide10">relative((0.0, 0.0, 8.5380000000000003), to="mod"),relative((0, 0, 0), to="mod")</property>
       <property name="guide11">relative((0.0, 0.0, 9.0199999999999996), to="mod"),relative((0, 0, 0), to="mod")</property>
       <property name="t0_chopp">relative((0.0, 0.0, 10.0), to="mod"),relative((0, 0, 0), to="mod")</property>
-      <property name="tmin">relative((0.0, 0.0, 10.03), to="mod"),relative((0, 0, 0), to="mod")</property>
       <property name="guide13">relative((0.0, 0.0, 10.5), to="mod"),relative((0, 0, 0), to="mod")</property>
       <property name="guide14">relative((0.0, 0.0, 10.992000000000001), to="mod"),relative((0, 0, 0), to="mod")</property>
       <property name="guide15">relative((0.0, 0.0, 11.484), to="mod"),relative((0, 0, 0), to="mod")</property>
@@ -349,9 +347,6 @@
       <property name="w1">0.08</property>
       <property name="delta">0.0</property>
       <property name="ymin">-0.045</property>
-    </component>
-    
-    <component name="tmin">
     </component>
     
     <component name="guide13">
@@ -732,6 +727,14 @@
     </component>
     
     <component name="t_mon2">
+      <property name="xmin">-0.035</property>
+      <property name="xmax">0.035</property>
+      <property name="ymin">-0.035</property>
+      <property name="ymax">0.035</property>
+      <property name="tmin">0.0</property>
+      <property name="tmax">0.02</property>
+      <property name="nchan">20000</property>
+      <property name="filename">mon2-tof.dat</property>
     </component>
     
   </component>

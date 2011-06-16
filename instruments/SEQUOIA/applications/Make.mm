@@ -43,7 +43,8 @@ EXPORT_PYTHON_MODULES = \
 
 
 EXPORT_BINS = \
-	sequoia_moderator2sample \
+	sequoia-moderator2sample \
+	sequoia-m2s \
 
 
 export:: export-binaries release-binaries export-package-python-modules #export-docs

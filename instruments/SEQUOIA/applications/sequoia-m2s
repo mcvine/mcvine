@@ -52,6 +52,8 @@ class App(base):
 
         slit_window = pyre.inventory.array(
             'slit_window', default=[-0.04, 0.04, -0.04, 0.04])
+        slit_window.meta['tip'] = 'slit window: xmin, xmax, ymin, ymax'
+        slit_window.meta[base.inventory_item_signature] = True
 
         dry_run = pyre.inventory.bool('dry_run', default=False)
         dry_run.meta[base.inventory_item_signature] = True
@@ -65,7 +67,7 @@ class App(base):
         fermi_nu=None, 
         T0_nu=None, T0_off=None,
         E=None, emission_time=None,
-        slit_window = None
+        slit_window = None,
         dry_run = False,
         ):
         
@@ -123,7 +125,7 @@ class App(base):
         
         else:
             from mcvine.instruments.SEQUOIA.Instrument import Instrument
-            instrument = Instrument('sequoia_moderator2sample')
+            instrument = Instrument('sequoia-moderator2sample')
             instrument.run()
         
         return
