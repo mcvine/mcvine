@@ -41,8 +41,13 @@ class App(base):
         E.meta['tip'] = 'desired incident beam energy. unit: meV'
         E.meta[base.inventory_item_signature] = True
 
+
+        T0_off = pyre.inventory.float('T0_off', default=0)
+        T0_off.meta['tip'] = 'offset time for T0 chopper (microsecond)'
+        T0_off.meta[base.inventory_item_signature] = True        
+
         emission_time = pyre.inventory.float('emission_time', default=-1)
-        emission_time.meta['tip'] = 'emission time for moderator unit (microsecond)'
+        emission_time.meta['tip'] = 'emission time for moderator (microsecond)'
         emission_time.meta[base.inventory_item_signature] = True
 
         slit_window = pyre.inventory.array(
@@ -58,7 +63,7 @@ class App(base):
         self, 
         fermi_chopper = None,
         fermi_nu=None, 
-        T0_nu=None,
+        T0_nu=None, T0_off=None,
         E=None, emission_time=None,
         slit_window = None
         dry_run = False,
@@ -73,12 +78,19 @@ class App(base):
         if emission_time < 0: emission_time = None
         else:emission_time *= 1.e-6
         from mcvine.instruments.SEQUOIA import t0chopper, fermichopper
-        t0phase = t0chopper.phase(E, 8.77, emission_time=emission_time)
-        fermiphase = fermichopper.phase(E, 11.61, emission_time=emission_time)
+        
+        mod2T0 = 10.0
+        t0phase = t0chopper.phase(E, mod2T0, emission_time=emission_time) + T0_off
+        
+        mod2fc = 18.0
+        fermiphase = fermichopper.phase(E, mod2fc, emission_time=emission_time)
 
         # set the fermi chopper component
         # see ../etc/sequoia_moderator2sample
         fermichopper_name = 'fermichopper-%s' % fermi_chopper
+
+        #
+        sxmin, sxmax, symin, symax = slit_window
 
         # 
         opts = {
@@ -87,16 +99,21 @@ class App(base):
             'fermichopper.nu': fermi_nu,
             'fermichopper.tc': fermiphase,
             # T0
-            't0chopper.nu': T0_nu,
-            't0chopper.tc': t0phase,
+            't0_chopp.nu': T0_nu,
+            't0_chopp.tc': t0phase,
             # moderator
-            'moderator.Emin': Emin,
-            'moderator.Emax': Emax,
+            'mod.Emin': Emin,
+            'mod.Emax': Emax,
+            # slit
+            'adjustable_slits.xmin': sxmin,
+            'adjustable_slits.xmax': sxmax,
+            'adjustable_slits.ymin': symin,
+            'adjustable_slits.ymax': symax,
+            # e monitor
+            'E_det.Emin': Emin,
+            'E_det.Emax': Emax,
             }
         
-        # this is only for advanced users: fermi chopper blade radius
-        if fermi_bladeradius>0:
-            opts['fermichopper.blader'] = fermi_bladeradius
             
         import sys
         addOptions(opts, sys.argv)
