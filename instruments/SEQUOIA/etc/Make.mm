@@ -13,7 +13,7 @@
 PROJECT = mcvine/instruments/SEQUOIA
 
 BUILD_DIRS = \
-	sequoia_moderator2sample \
+	sequoia-moderator2sample \
 
 OTHER_DIRS = \
 
