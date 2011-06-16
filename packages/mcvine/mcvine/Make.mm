@@ -41,6 +41,7 @@ tidy::
 
 EXPORT_PYTHON_MODULES = \
 	component_suppliers.py \
+	deployment_info.py \
 	__init__.py \
 
 
