@@ -4,6 +4,9 @@ warnings.simplefilter('ignore')
 import mcvine
 warnings.simplefilter('default')
 
+# import journal
+# journal.error("pyre.inventory").activate()
+
 def main():
     from mcvine.instruments.SEQUOIA.Instrument import Instrument
     app = Instrument('sequoia-moderator2sample')

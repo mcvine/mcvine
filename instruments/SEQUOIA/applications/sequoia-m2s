@@ -97,9 +97,9 @@ class App(base):
         # 
         opts = {
             # fermi chopper
-            'fermichopper': fermichopper_name,
-            'fermichopper.nu': fermi_nu,
-            'fermichopper.tc': fermiphase,
+            'fermi_chopp': fermichopper_name,
+            'fermi_chopp.nu': fermi_nu,
+            'fermi_chopp.tc': fermiphase,
             # T0
             't0_chopp.nu': T0_nu,
             't0_chopp.tc': t0phase,

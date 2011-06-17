@@ -35,11 +35,12 @@ Description: ???
             <property name="nchan">27</property>
             <property name="blader">0.58</property>
 	    
-	  <!-- misc -->
+	  <!-- misc 
             <property name="nu">600.0</property>
 	    <property name="delta">0.0</property>
             <property name="max_iter">10000</property>
-	    
+	  -->
+	  
         </component>
 
 

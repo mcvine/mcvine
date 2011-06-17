@@ -89,8 +89,6 @@
     </component>
     
     <property name="multiple-scattering">off</property>
-    <property name="ncount">1e6</property>
-    <property name="buffer_size">100000</property>
     <property name="output-dir">out</property>
     <property name="overwrite-datafiles">off</property>
     

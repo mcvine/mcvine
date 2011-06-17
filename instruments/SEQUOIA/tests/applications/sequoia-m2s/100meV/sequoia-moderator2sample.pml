@@ -22,7 +22,7 @@
         <facility name="mod">sources/SNS_source</facility>
         <facility name="guide13">obsolete/Channeled_guide</facility>
         <property name="sequence">[u'arm1', u'mod', u'core_ves', u'shutter_guide', u'guide1', u'guide2', u'guide3', u'guide4', u'guide5', u'guide6', u'guide7', u'guide8', u'guide9', u'guide10', u'guide11', u't0_chopp', u'guide13', u'guide14', u'guide15', u'guide16', u'guide17', u'guide18', u'guide19', u'guide20', u'guide21', u'guide22', u'guide23', u'guide24', u'guide25', u'guide26', u'guide27', u'fermi_chopp', u'adjustable_slits', u'Monitor1', u'guide29', u'guide31', u'guide32', u'guide34', u'E_det', u'recorder', u't_mon2']</property>
-        <property name="ncount">1000000.0</property>
+        <property name="ncount">10000.0</property>
         <facility name="guide29">obsolete/Channeled_guide</facility>
         <facility name="guide21">obsolete/Channeled_guide</facility>
         <facility name="guide20">obsolete/Channeled_guide</facility>
@@ -34,7 +34,7 @@
         <facility name="guide26">obsolete/Channeled_guide</facility>
         <facility name="recorder">monitors/NeutronToStorage</facility>
         <property name="multiple-scattering">False</property>
-        <facility name="fermi_chopp">optics/Fermi_chop2</facility>
+        <property name="fermi_chopp">fermichopper-1</property>
         <facility name="t0_chopp">optics/Vertical_T0</facility>
         <facility name="guide8">obsolete/Channeled_guide</facility>
         <facility name="guide9">obsolete/Channeled_guide</facility>
@@ -79,23 +79,19 @@
         </component>
 
 
-        <component name="guide8">
-            <property name="alphay">5.5</property>
-            <property name="R0">0.98</property>
-            <property name="name">channeled_guide</property>
-            <property name="h1">0.08988</property>
-            <property name="alphax">5.5</property>
-            <property name="Qcy">0.02</property>
-            <property name="Qcx">0.02</property>
-            <property name="l">0.482</property>
-            <property name="h2">0.08908</property>
-            <property name="w2">0.07538</property>
-            <property name="W">0.002</property>
-            <property name="k">1.0</property>
-            <property name="my">3.0</property>
-            <property name="mx">3.0</property>
-            <property name="w1">0.07597</property>
-            <property name="d">0.0</property>
+        <component name="fermichopper-1">
+            <property name="nchan">16.0</property>
+            <property name="ymax">0.0325</property>
+            <property name="max_iter">0</property>
+            <property name="len">0.1</property>
+            <property name="nu">600.0</property>
+            <property name="bw">0.0005</property>
+            <property name="w">0.06</property>
+            <property name="delta">0.0</property>
+            <property name="ymin">-0.0325</property>
+            <property name="tc">0.00411573267923</property>
+            <property name="blader">1.53</property>
+            <property name="name">fermi_chop2</property>
         </component>
 
 
@@ -115,6 +111,26 @@
             <property name="my">3.6</property>
             <property name="mx">3.6</property>
             <property name="w1">0.06872</property>
+            <property name="d">0.0</property>
+        </component>
+
+
+        <component name="guide8">
+            <property name="alphay">5.5</property>
+            <property name="R0">0.98</property>
+            <property name="name">channeled_guide</property>
+            <property name="h1">0.08988</property>
+            <property name="alphax">5.5</property>
+            <property name="Qcy">0.02</property>
+            <property name="Qcx">0.02</property>
+            <property name="l">0.482</property>
+            <property name="h2">0.08908</property>
+            <property name="w2">0.07538</property>
+            <property name="W">0.002</property>
+            <property name="k">1.0</property>
+            <property name="my">3.0</property>
+            <property name="mx">3.0</property>
+            <property name="w1">0.07597</property>
             <property name="d">0.0</property>
         </component>
 
@@ -341,22 +357,6 @@
             <property name="command">mpirun</property>
             <property name="debug">False</property>
             <property name="nodes">0</property>
-        </component>
-
-
-        <component name="fermi_chopp">
-            <property name="nchan">32.0</property>
-            <property name="ymax">0.0325</property>
-            <property name="max_iter">0</property>
-            <property name="len">0.1</property>
-            <property name="nu">600.0</property>
-            <property name="bw">0.0005</property>
-            <property name="w">0.06</property>
-            <property name="delta">0.0</property>
-            <property name="ymin">-0.0325</property>
-            <property name="tc">0.0</property>
-            <property name="blader">0.5801</property>
-            <property name="name">fermi_chop2</property>
         </component>
 
 
@@ -878,11 +878,11 @@
 <!-- version-->
 <!-- $Id$-->
 
-<!-- Generated automatically by Renderer on Thu Jun 16 11:21:00 2011-->
+<!-- Generated automatically by Renderer on Thu Jun 16 21:47:48 2011-->
 
 <!-- End of file -->
 <!-- 
  automatically created by the following command:
- $ sequoia-m2s -h -dump-pml -E_det.Emin=80.0 -adjustable_slits.xmin=-0.04 -mod.Emin=80.0 -E_det.Emax=120.0 -fermichopper.nu=600.0 -adjustable_slits.ymin=-0.04 -fermichopper=fermichopper-1 -mod.Emax=120.0 -fermichopper.tc=0.00411573267923 -t0_chopp.nu=60.0 -t0_chopp.tc=0.00228671523681 -adjustable_slits.xmax=0.04 -adjustable_slits.ymax=0.04
+ $ sequoia-m2s -h -dump-pml -E_det.Emin=80.0 -adjustable_slits.xmin=-0.04 -E_det.Emax=120.0 -fermi_chopp=fermichopper-1 -mod.Emax=120.0 -mod.Emin=80.0 -fermi_chopp.nu=600.0 -t0_chopp.nu=60.0 -adjustable_slits.ymin=-0.04 -t0_chopp.tc=0.00228671523681 -adjustable_slits.xmax=0.04 -adjustable_slits.ymax=0.04 -fermi_chopp.tc=0.00411573267923
 -->
 

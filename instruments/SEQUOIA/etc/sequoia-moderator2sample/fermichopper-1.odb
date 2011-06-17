@@ -13,9 +13,10 @@
 
 
 
-def fermichopper():
+def neutron_component():
     from mcstas2.pyre_support import componentfactory
     return componentfactory('optics', 'Fermi_chop2')('fermichopper-1')
+fermi_chopp = neutron_component
     
 
 if __name__ == '__main__': neutron_component()
