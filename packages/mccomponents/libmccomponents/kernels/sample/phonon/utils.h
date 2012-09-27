@@ -15,6 +15,8 @@
 #ifndef MCCOMPONENTS_KERNELS_SAMPLE_PHONON_UTILS_H
 #define MCCOMPONENTS_KERNELS_SAMPLE_PHONON_UTILS_H
 
+#include <cstring>
+
 namespace mccomponents { namespace kernels { namespace phonon {
 
       /// randomly pick a phonon branch
