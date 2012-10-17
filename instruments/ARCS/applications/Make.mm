@@ -46,6 +46,7 @@ EXPORT_BINS = \
 	arcs_analyze_beam \
 	arcs_beam \
 	arcs-compute-IQE-resolution \
+	arcs-events2nxs \
 	arcs_moderator2sample \
 	arcs-m2s \
 

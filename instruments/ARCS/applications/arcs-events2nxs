@@ -1,0 +1,100 @@
+#!/usr/bin/env python
+
+appname = 'arcs-events2nxs'
+
+
+def execute(cmd):
+    import os
+    print '* executing %s... ' % cmd
+    if os.system(cmd):
+        raise RuntimeError, "%r failed" % cmd
+
+
+import numpy as np
+
+def run(eventfile, nxsfile):
+    print (eventfile, nxsfile)
+    from mccomponents.detector.event_utils import readEvents
+    events = readEvents(eventfile)
+    # convert events to indices, pulse_time, tof, weights
+    indices, pulse_time, tof, weights = convert(events)
+    # write to nexus file
+    write(nxsfile, indices, pulse_time, tof, weights)
+    return
+
+npixels = (38+39+38) * 8 * 128
+def convert(events):
+    events.sort(order='pixelID')
+    pixelids = events['pixelID']
+    hist, bin_edges = np.histogram(
+        pixelids, 
+        bins=np.arange(-0.5, npixels+1.5), 
+        )
+    indices = np.cumsum(hist)
+    
+    nevents = len(events)
+    pulse_time = np.zeros(nevents)
+    
+    tof = events['tofChannelNo'] # XXX: tof unit?
+    weights = events['p']
+    
+    return indices, pulse_time, tof, weights
+
+
+from mcvine.deployment_info import mcvinedir
+import os
+nxs_template = os.path.join(mcvinedir, 'share', 'mcvine', 'instruments', 'ARCS', 'arcs-events-template.nxs')
+def write(path, indices, pulse_time, tof, weights):
+    import shutil
+    shutil.copyfile(nxs_template, path)
+    import time; time.sleep(0.5)
+    import h5py
+    f = h5py.File(path, 'a')
+    e = f['mantid_workspace_1']['event_workspace']
+    e['indices'] = indices
+    e['pulsetime'] = pulse_time
+    e['tof'] = tof
+    e['weights'] = weights
+    f.close()
+    return
+
+
+# constants
+mod2sample_distance = 13.6
+
+import pyre.units.length
+import pyre.units.energy
+import pyre.units.time
+npixels = 117760 # number of pixels for ARCS
+mod2sample=13.6*pyre.units.length.meter
+mod_period=0.015*pyre.units.time.s # moderator period
+
+
+from pyre.applications.Script import Script as AppBase
+class App(AppBase):
+
+    class Inventory(AppBase.Inventory):
+
+        import pyre.inventory
+        events = pyre.inventory.str('events', default='events.dat')
+        nxs = pyre.inventory.str('nxs', default='arcs-sim.nxs')
+
+        
+    def main(self):
+        events = self.inventory.events
+        nxs = self.inventory.nxs
+        run(events, nxs)
+        return
+    
+
+def main():
+    app = App(appname)
+    app.run()
+    return
+
+
+interactive = False
+
+if __name__ == '__main__': 
+    interactive = True
+    main()
