@@ -19,6 +19,7 @@ def run(
     # run main sim
     cmd = './sd --source.velocity="%s" --source.energy=%s --ncount=%s' % (
         tuple(vi), ei, ncount)
+    print ("running", cmd)
     execute(cmd)
     
     # reduce events to S(Q,E)
@@ -46,7 +47,7 @@ class App(AppBase):
 
         import pyre.inventory
         ncount = pyre.inventory.float('ncount', default=1e7)
-        vi = pyre.inventory.array('vi', default=(0,0,1))
+        vi = pyre.inventory.array('vi', default=[0,0,1])
         ei = pyre.inventory.float('ei', default=700)
 
         
