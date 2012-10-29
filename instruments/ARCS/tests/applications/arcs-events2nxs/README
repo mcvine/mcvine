@@ -1,0 +1,6 @@
+arcs-events2nxs convertts events.dat to nexus data file.
+
+events.dat data files need to be generated from mcvine simulation
+that sends scattered neutrons to ARCS det system.
+this is demonsstrated in create-events*
+
