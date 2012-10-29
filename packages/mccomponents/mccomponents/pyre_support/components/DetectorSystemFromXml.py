@@ -93,6 +93,7 @@ class DetectorSystemFromXml(ParallelComponent, AbstractComponent):
             self.mpiBarrier()
         # merge and normalize neutron files
         if context.mpiRank == 0:
+            import time; time.sleep(5)
             self._merge_and_normalize()
         return
 
@@ -168,7 +169,7 @@ def merge_and_normalize(
     # merge
     from mccomponents.detector import mergeEventFiles
     mergeEventFiles(eventdatfiles, out)
-
+    
     # load number_of_mc_samples
     mcs = mcs_sum(outputdir)
     # normalize
