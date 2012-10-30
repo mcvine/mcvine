@@ -1,0 +1,3 @@
+#!/usr/bin/env sh
+
+arcs-neutrons2nxs --neutrons=/SNS/users/linjiao/simulations/ARCS/resolution-calculator/sample-scattering-deltaQE/out/scattered-neutrons
