@@ -49,6 +49,7 @@ EXPORT_BINS = \
 	arcs-events2nxs \
 	arcs_moderator2sample \
 	arcs-m2s \
+	arcs-neutrons2nxs \
 
 
 export:: export-binaries release-binaries export-package-python-modules #export-docs
