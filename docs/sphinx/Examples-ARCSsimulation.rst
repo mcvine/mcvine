@@ -314,3 +314,24 @@ where
   reduced I(Q,E) will be
 - mod2sample: the path to the directory where mod2sample simulation
   were run
+
+
+Commands
+--------
+
+arcs-neutrons2nxs
+"""""""""""""""""
+
+Convert scattered neutrons into nexus data file.
+
+::
+
+ $ arcs-neutrons2nxs --neutrons=<neutron-file> --nxs=<nexus-output-file> --workdir=<temporary-working-dir>
+
+* neutrons: input neutron file. This file must be generated from a mcvine simulation of 
+  sample-scattered neutrons
+* nxs: output nexus data file. default: arcs-sim.nxs
+* workdir: temporary working dir. default: work
+
+
+
