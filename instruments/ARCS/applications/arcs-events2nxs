@@ -62,7 +62,7 @@ def write(path, indices, pulse_time, tof, weights):
     e = f['mantid_workspace_1']['event_workspace']
     e['indices'] = indices
     e['pulsetime'] = pulse_time
-    e['tof'] = tof
+    e['tof'] = np.array(tof, dtype="double")
     e['weights'] = weights
     f.close()
     return
