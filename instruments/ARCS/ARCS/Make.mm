@@ -15,6 +15,7 @@ PACKAGE = instruments/ARCS
 
 
 BUILD_DIRS = \
+	nxs \
 
 RECURSE_DIRS = $(BUILD_DIRS)
 
