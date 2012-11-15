@@ -29,10 +29,7 @@ def run(eventfile, nxsfile, type):
     prefix = 'mcvine.instruments.ARCS.nxs'
     mod = '%s.%s' % (prefix, type)
     mod = __import__(mod, fromlist = [''])
-    # convert events to indices, pulse_time, tof, weights
-    indices, pulse_time, tof, weights = mod.convert(events)
-    # write to nexus file
-    mod.write(nxsfile, indices, pulse_time, tof, weights)
+    mod.write(events, nxsfile)
     return
 
 

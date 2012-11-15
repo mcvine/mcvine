@@ -28,6 +28,11 @@ mantid GUI, and we were able to reduce the simulated
 data to I(Q,E) with expected results.
 """
 
+def write(events, nxsfile):
+    data = convert(events)
+    _write(nxsfile, *data)
+    return
+
 
 npixels = (38+39+38) * 8 * 128
 def convert(events):
@@ -54,7 +59,7 @@ def convert(events):
 import os
 from mcvine.deployment_info import mcvinedir
 nxs_template = os.path.join(mcvinedir, 'share', 'mcvine', 'instruments', 'ARCS', 'arcs-events-template.nxs')
-def write(path, indices, pulse_time, tof, weights):
+def _write(path, indices, pulse_time, tof, weights):
     """write "processed" ARCS nexus file given relevant data
     """
     import shutil
