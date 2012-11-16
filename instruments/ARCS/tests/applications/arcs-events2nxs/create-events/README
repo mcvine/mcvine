@@ -3,6 +3,9 @@ The simulation here sends neutrons to arcs detector system.
 The neutrons were simulated from an artificial sample 
 that scatters only to one particular angle (on a cone).
 The neutrons were saved in the file "scattered-neutrons-example".
+That simulation was done with incident energy 700meV.
+The sample was a "resolution sample", which only scatters neutrons
+to Q = 10 angstrom**-1 and E = 100 meV.
 
 The detector system is specified by ARCS.xml. Please note 
 that this ARCS.xml is different from the one in instruments/ARCS/resources.
