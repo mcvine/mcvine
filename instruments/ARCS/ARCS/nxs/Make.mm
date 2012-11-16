@@ -36,6 +36,7 @@ tidy::
 EXPORT_PYTHON_MODULES = \
 	__init__.py \
 	processed.py \
+	raw.py \
 
 
 export:: export-package-python-modules 
