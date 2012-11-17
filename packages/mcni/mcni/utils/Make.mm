@@ -36,6 +36,7 @@ update: clean
 
 EXPORT_PYTHON_MODULES = \
 	__init__.py \
+	constants.py \
 	conversion.py \
 	mpiutil.py \
 
