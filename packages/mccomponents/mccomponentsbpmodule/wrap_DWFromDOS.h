@@ -35,6 +35,7 @@ namespace wrap_mccomponents {
 	 ]
        )
       .def( "calc_DW_core", &w_t::calc_DW_core )
+      .def( "core", &w_t::core )
       ;
   }
 
