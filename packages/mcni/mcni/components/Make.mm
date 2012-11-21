@@ -37,6 +37,7 @@ update: clean
 EXPORT_PYTHON_MODULES = \
 	ComponentGroup.py \
 	Dummy.py \
+	EventAreaMonitor.py \
 	HistogramBasedMonitorMixin.py \
 	MonitorMixin.py \
 	MonochromaticSource.py \
