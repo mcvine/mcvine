@@ -12,31 +12,32 @@
 #
 
 
-"""
-event mode area detector
-
-detector has an area in
-[xmin, xmax) X [ymin, ymax)
-and accepts neutrons in tof region [tmin, tmax)
-
-detector is divided to pixels nx X ny
-
-total tof bins: nt
-
-The detector will generate a data file with events
-saved as numpy array. 
-Its data structure is defined in mccomponents.detector.event_utils.
-
-pixelID: x_index*ny + y_index (this is so because y is normally vertical along detector tube)
-tofChannelNo: tof_index
-p: probability
-"""
-
-
 category = "monitors"
 
 
 class EventAreaMonitor(object):    
+
+
+    """
+    event mode area detector
+
+    detector has an area in
+      [xmin, xmax) X [ymin, ymax)
+    and accepts neutrons in tof region [tofmin, tofmax)
+
+    detector is segmented into pixels nx X ny
+    
+    total tof bins: ntof
+    
+    The detector will generate a data file with events
+    saved as numpy array. 
+    Its data structure is defined in mccomponents.detector.event_utils.
+
+    pixelID: x_index*ny + y_index (this is so because y is normally 
+             vertical along detector tube)
+    tofChannelNo: tof_index
+    p: probability
+    """
 
 
     def process(self, neutrons):
@@ -55,10 +56,10 @@ class EventAreaMonitor(object):
         self._propagateToZ0(x,y,z,vx,vy,vz,t)
 
         # Apply filter if area is positive
-        assert self.xmax > self.xmin and self.ymax > self.ymin and self.tmax > self.tmin
+        assert self.xmax > self.xmin and self.ymax > self.ymin and self.tofmax > self.tofmin
         
         # Filter
-        ftr    = (x >= self.xmin)*(x < self.xmax)*(y >= self.ymin)*(y < self.ymax)*(t >= self.tmin)*(t<self.tmax)
+        ftr    = (x >= self.xmin)*(x < self.xmax)*(y >= self.ymin)*(y < self.ymax)*(t >= self.tofmin)*(t<self.tofmax)
         
         x = x[ftr]
         # after filtering, there might be no neutrons left
@@ -82,8 +83,8 @@ class EventAreaMonitor(object):
         y_index = (y-self.ymin)/dy
         events['pixelID'] = x_index * self.ny + y_index
         # t
-        dt = (self.tmax-self.tmin)/self.nt
-        events['tofChannelNo'] = (t-self.tmin)/dt
+        dt = (self.tofmax-self.tofmin)/self.ntof
+        events['tofChannelNo'] = (t-self.tofmin)/dt
         # p
         events['p'] = p
         
@@ -103,8 +104,8 @@ class EventAreaMonitor(object):
     def __init__(
         self, name, 
         xmin=-0.1, xmax=0.1, ymin=-0.1, ymax=0.1, 
-        tmin=0.0, tmax=0.01,
-        nx = 100, ny = 100, nt=100,
+        tofmin=0.0, tofmax=0.01,
+        nx = 100, ny = 100, ntof=100,
         ):
         """
         """
@@ -115,9 +116,9 @@ class EventAreaMonitor(object):
         self.ymin = ymin
         self.ymax = ymax
         self.ny = ny
-        self.tmin = tmin
-        self.tmax = tmax
-        self.nt = nt
+        self.tofmin = tofmin
+        self.tofmax = tofmax
+        self.ntof = ntof
         return
     
     
@@ -125,6 +126,6 @@ class EventAreaMonitor(object):
 
 
 # version
-__id__ = "$Id: NDMonitor.py 1144 2011-04-28 04:02:13Z linjiao $"
+__id__ = "$Id$"
 
 # End of file 
