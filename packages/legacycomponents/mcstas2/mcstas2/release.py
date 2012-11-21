@@ -14,7 +14,7 @@
 
 import os
 
-from mcvine.development_info import mcvinedir
+from mcvine.deployment_info import mcvinedir, type
 
 component_library_dir = os.environ.get('MCSTAS_COMPONENT_LIBDIR', None)
 if component_library_dir is None:
