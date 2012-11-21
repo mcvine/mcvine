@@ -29,6 +29,7 @@ update: clean
 
 EXPORT_PYTHON_MODULES = \
 	Dummy.py \
+	EventAreaMonitor.py \
 	MonochromaticSource.py \
 	MultiMonitors.py \
 	NDMonitor.py \
