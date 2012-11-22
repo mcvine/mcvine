@@ -33,25 +33,22 @@ namespace mccomponents { namespace kernels {
       position( R_t( 0,0,0 ) ),
       mass( 10 ),
       coherent_scattering_length( sqrt(5) ),
-      coherent_cross_section( 5 )
+      coherent_cross_section( 5 ),
+      incoherent_cross_section( 5 )
     {}
 
-    AtomicScatterer( const R_t & pos,
-	  double m,
-	  double coh_sc_len,
-	  double coh_xsec) 
+    AtomicScatterer( const R_t & pos, double m)
       :
       position( pos ),
-      mass( m ),
-      coherent_scattering_length( coh_sc_len ),
-      coherent_cross_section( coh_xsec )
+      mass( m )
     {}	  
 
     // data
     R_t position; // position 
     double mass; // mass
     double coherent_scattering_length; // coherent scattering length
-    double coherent_cross_section; // cross section
+    double coherent_cross_section; // coherent cross section
+    double incoherent_cross_section; // incoherent cross section 
     
   };
 
