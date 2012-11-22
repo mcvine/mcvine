@@ -31,10 +31,12 @@ namespace wrap_mccomponents {
     class_<w_t>
       ("AtomicScatterer", 
        init<
-       const R_t &,
-       float_t, float_t, float_t
+       const R_t &, float_t
        > ()
        )
+      .def_readwrite("coherent_scattering_length", &w_t::coherent_scattering_length)
+      .def_readwrite("coherent_cross_section", &w_t::coherent_cross_section)
+      .def_readwrite("incoherent_cross_section", &w_t::incoherent_cross_section)
       ;
 
     wrap_vector2<w_t>( "AtomicScatterer" );
