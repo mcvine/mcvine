@@ -139,8 +139,27 @@ mccomponents::HomogeneousNeutronScatterer::interact_path1(mcni::Neutron::Event &
     // absorption
     double x = math::random(0, distance);
     double prob = mu * distance * std::exp( -(mu+sigma) * x );
+#ifdef DEBUG
+  debug << journal::at(__HERE__) 
+	<< "original probability = " << ev.probability << ", "
+	<< "mu = " << mu << ", "
+	<< "sigma = " << sigma << ", "
+	<< "distance = " << distance << ", "
+	<< "probability to propagate to x = " << x << " is " << prob
+	<< journal::endl;
+#endif
     ev.probability *= prob * (sum_of_weights/m_weights.absorption);
+#ifdef DEBUG
+  debug << journal::at(__HERE__) 
+	<< "adjusted probability = " << ev.probability
+	<< journal::endl;
+#endif
     propagate( ev, x/velocity );
+#ifdef DEBUG
+  debug << journal::at(__HERE__) 
+	<< "propagated. neutron is now " << ev
+	<< journal::endl;
+#endif
     m_kernel.absorb( ev );
 
     ev.probability = -1;
