@@ -54,6 +54,8 @@ namespace DANSE{ namespace phonon {
       typedef LinearlyInterpolatedDOS<FLT, Array_1D> this_t;
 
       // meta methods
+      /// ctor
+      /// energies are in meV
       LinearlyInterpolatedDOS
       ( float_t e0, float_t de, index_t ne, const array_t &Z) ;
       ~LinearlyInterpolatedDOS();
