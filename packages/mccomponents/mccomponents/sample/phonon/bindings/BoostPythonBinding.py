@@ -55,7 +55,9 @@ class New:
 
     def atomicscatterer(
         self, position, mass,
-        coherent_scattering_length, coherent_cross_section):
+        coherent_scattering_length, 
+        coherent_cross_section, 
+        incoherent_cross_section):
         
         '''create a boost python object of AtomicScatterer
 
@@ -63,11 +65,16 @@ class New:
     mass: mass of atom
     coherent_scattering_length: (unit: fm)
     coherent_cross_section: (unit: barn)
+    incoherent_cross_section: (unit: barn)
     '''
         position = self.position( *position )
-        return b.AtomicScatterer(
-            position, mass, coherent_scattering_length, coherent_cross_section )
-
+        ascatterer = b.AtomicScatterer(
+            position, mass)
+        ascatterer.coherent_scattering_length = coherent_scattering_length
+        ascatterer.coherent_cross_section = coherent_cross_section
+        ascatterer.incoherent_cross_section = incoherent_cross_section
+        return ascatterer
+    
 
     def atomicscatterer_fromSite(self, site):
         '''create a boost python object of AtomicScatterer
@@ -80,7 +87,8 @@ class New:
         atom = site
         mass = atom.mass
         coh_xs = atom.average_neutron_coh_xs
-
+        inc_xs = atom.average_neutron_inc_xs
+        
         # !!!!!!!
         # the following is a hack. should get it directly from atom
         from math import sqrt, pi
@@ -88,7 +96,9 @@ class New:
 
         #
         return self.atomicscatterer(
-            position, mass, coh_b, coh_xs )
+            position, mass,
+            coh_b, coh_xs, inc_xs,
+            )
 
 
     def linearlyinterpolateddos(
