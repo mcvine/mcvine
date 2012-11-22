@@ -142,7 +142,18 @@ class TestCase(unittest.TestCase):
             disp0,
             ( (2,0,0), (0,3,0), (0,0,4) )
             )
-        self.assertAlmostEqual( disp.energy(0, bp.Q(2,3,4)), disp.energy(0, bp.Q(0,0,0) ) )
+        self.assertAlmostEqual( 
+            disp.energy(0, bp.Q(2,3,4)), 
+            disp.energy(0, bp.Q(0,0,0) ) 
+            )
+        return
+    
+    
+    def test6(self):
+        import matter
+        atom = matter.Atom('H')
+        atomic_scatterer = bp.atomicscatterer_fromSite(atom)
+        print atomic_scatterer
         return
 
     pass  # end of TestCase
