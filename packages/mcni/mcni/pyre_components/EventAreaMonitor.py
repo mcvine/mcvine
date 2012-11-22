@@ -74,11 +74,11 @@ class EventAreaMonitor(ParallelComponent, AbstractComponent):
         if self.engine is None:
             self.engine = self._createEngine()
             return self.engine
-        self._resetEngine(self, self.engine)
+        self._resetEngine(self.engine)
         return self.engine
 
 
-    def _resetEngine(self):
+    def _resetEngine(self, engine):
         "override this if engine needs to be reset for each sim iteration"
         return
 
