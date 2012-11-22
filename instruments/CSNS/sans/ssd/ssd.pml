@@ -11,10 +11,7 @@
 <facility name="aperture_1">optics/Slit</facility>
 <facility name="sample">samples/SampleAssemblyFromXml</facility>
 <facility name="detector">monitors/NDMonitor(x,y,t)</facility>
-<!--
-<facility name="neutron_printer">monitors/NeutronPrinter</facility>
--->
-<facility name="neutron_printer">Dummy</facility>
+<facility name="neutron_printer">monitors/EventAreaMonitor</facility>
 
 <property name="dump-instrument">False</property>
 <property name="overwrite-datafiles">on</property>
@@ -137,6 +134,15 @@
 
 
 <component name="neutron_printer">
+<property name="xmin">-0.5</property>
+<property name="xmax">0.5</property>
+<property name="nx">100</property>
+<property name="ymin">-0.5</property>
+<property name="ymax">0.5</property>
+<property name="ny">100</property>
+<property name="tofmin">0</property>
+<property name="tofmax">0.02</property>
+<property name="ntof">100</property>
 </component>
 
 <component name="geometer">
