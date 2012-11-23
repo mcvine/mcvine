@@ -35,8 +35,9 @@ class TestCase(unittest.TestCase):
         coherent_scattering_length = math.sqrt(5)
         coherent_cross_section = 5
         atom = mccomponentsbp.AtomicScatterer(
-            position, mass, coherent_scattering_length, coherent_cross_section,
-            )
+            position, mass)
+        atom.coherent_cross_section = coherent_cross_section
+        atom.coherent_scattering_length = coherent_scattering_length
         return
 
 
