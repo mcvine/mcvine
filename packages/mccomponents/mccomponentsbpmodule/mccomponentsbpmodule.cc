@@ -51,6 +51,7 @@ namespace wrap_mccomponents{
   void wrap_ChangeCoordinateSystem_forDispersion_3D();
   void wrap_LinearlyInterpolatedDispersionOnGrid_3D();
   void wrap_AtomicScatterer();
+  void wrap_Phonon_IncoherentElastic_kernel();
   void wrap_Phonon_CoherentInelastic_PolyXtal_kernel();
   void wrap_rootsfinders();
   void wrap_targetregion();
@@ -99,6 +100,8 @@ BOOST_PYTHON_MODULE(mccomponentsbp)
   wrap_PeriodicDispersion_3D();
   wrap_ChangeCoordinateSystem_forDispersion_3D();
   wrap_LinearlyInterpolatedDispersionOnGrid_3D();
+
+  wrap_Phonon_IncoherentElastic_kernel();
   
   wrap_AtomicScatterer();
   wrap_Phonon_CoherentInelastic_PolyXtal_kernel();
