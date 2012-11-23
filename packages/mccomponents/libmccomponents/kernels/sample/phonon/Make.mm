@@ -53,6 +53,7 @@ EXPORT_HEADERS = \
 	ChangeCoordinateSystem_forDispersion_3D.h \
 	CoherentInelastic_PolyXtal.h \
 	CoherentInelastic_SingleXtal.h \
+	IncoherentElastic.h \
 	DWFromDOS.h \
 	DWFromDOS.icc \
 	LinearlyInterpolatableAxis.h \
