@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE scatterer>
+
+<!-- weights: absorption, scattering, transmission -->
+<homogeneous_scatterer mcweights="0, 1, 0">
+  
+  <Phonon_IncoherentElastic_Kernel dw_core='0.1*angstrom**2'>
+  </Phonon_IncoherentElastic_Kernel>
+  
+</homogeneous_scatterer>
