@@ -37,6 +37,7 @@ EXPORT_PYTHON_MODULES = \
 	Document.py \
 	HomogeneousScatterer.py \
 	LinearlyInterpolatedDispersion.py \
+	Phonon_IncoherentElastic_Kernel.py \
 	Phonon_CoherentInelastic_PolyXtal_Kernel.py \
 	Phonon_CoherentInelastic_SingleXtal_Kernel.py \
 	__init__.py \

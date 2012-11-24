@@ -38,6 +38,7 @@ EXPORT_PYTHON_MODULES = \
 	AbstractDispersion.py \
 	PeriodicDispersion.py \
 	AbstractPhononKernel.py \
+	IncoherentElastic_Kernel.py \
 	CoherentInelastic_PolyXtal_Kernel.py \
 	CoherentInelastic_SingleXtal_Kernel.py \
 	ComputationEngineRendererExtension.py \

@@ -209,6 +209,24 @@ class New:
         return disp
 
 
+    def phonon_incoherentelastic_kernel(
+        self,
+        unitcell, dw_core,
+        ):
+
+        # unitcell_vol = unitcell.getVolume()
+        unitcell_vol = unitcell.lattice.getVolume()
+        unitcell_vol = float(unitcell_vol)
+
+        atoms = [ self.atomicscatterer_fromSite( site ) for site in unitcell ]
+        atom_vector = b.vector_AtomicScatterer(0)
+        for atom in atoms: atom_vector.append( atom )
+
+        return b.Phonon_IncoherentElastic_kernel(
+            atom_vector, unitcell_vol, dw_core,
+            )
+
+    
     def phonon_coherentinelastic_polyxtal_kernel(
         self,
         dispersion, dw_calctor,

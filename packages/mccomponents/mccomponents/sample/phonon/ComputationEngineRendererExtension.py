@@ -17,6 +17,26 @@ nsampling = 100
 class ComputationEngineRendererExtension:
 
 
+    def onPhonon_IncoherentElastic_Kernel(self, kernel):
+        '''handler to create c++ instance of phonon incoherent elastic
+        scattering kernel.
+        '''
+        # get unit cell
+        scatterer = kernel.scatterer_origin
+        try: unitcell = scatterer.phase.unitcell
+        except AttributeError, err:
+            raise "Cannot obtain unitcell from scatterer %s, %s" % (
+                scatterer.__class__.__name__, scatterer.name )
+
+        # additional kernel parameters
+        AA= units.length.angstrom
+        dw_core = kernel.dw_core / AA**2
+        
+        return self.factory.phonon_incoherentelastic_kernel(
+            unitcell, dw_core,
+            )
+
+
     def onPhonon_CoherentInelastic_PolyXtal_Kernel(self, kernel):
         '''handler to create c++ instance of phonon coherent inelastic polyxtal
         scattering kernel.

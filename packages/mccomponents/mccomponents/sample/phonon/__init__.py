@@ -17,6 +17,13 @@ meV = units.energy.meV
 angstrom = units.length.angstrom
 
 
+def incoherentelastic_kernel(
+    dw_core
+    ):
+    from IncoherentElastic_Kernel import IncoherentElastic_Kernel as f
+    return f( dw_core )
+
+
 def coherentinelastic_polyxtal_kernel(
     dispersion,
     Ei = 70*meV, max_omega = 55 *meV, max_Q = 12 / angstrom,
