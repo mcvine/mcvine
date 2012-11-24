@@ -1,0 +1,108 @@
+#!/usr/bin/env python
+
+
+"""
+compute Debye Waller "core" from phonon density of states
+
+Debye Waller factor is written as 
+
+ exp(-2W)
+
+where
+
+ 2W ~ 1/3 * u**2 * Q**2
+
+and 
+
+ u**2
+
+can be computed from phonon DOS
+
+This script computes
+
+ 1/3 * u**2
+
+from phonon DOS, and it is termed as Debye Waller factor "core" in MCViNE.
+
+This is useful for simulating incoherent elastic scattering.
+
+The computed core has the units of AA**2.
+
+Inputs are:
+* DOS
+* mass: relative atomic mass
+* temperature: unit K
+* nsampling: 
+
+
+The input phonon DOS is in 2-col ascii format.
+
+* x: phonon frequency in TeraHertz
+* y: DOS
+
+"""
+
+def loadDOS(f):
+    from mcni.utils.constants import hbar, e
+    from math import pi
+    # constant to convert frequency on terahertz to energy in meV
+    toenergy = hbar * 1e12 * 2*pi / e * 1e3
+    
+    lines = open(f).readlines()
+    es, Is = [], []
+    for line  in lines:
+        if line.startswith('#'): continue
+        line = line.strip()
+        e, I = line.split()
+        es.append(float(e)*toenergy)
+        Is.append(float(I))
+        continue
+    import histogram
+    h = histogram.histogram(
+        'dos', 
+        [('energy', es, 'meV')],
+        Is)
+    return h
+
+
+def compute(dos, mass, temperature, nsampling):
+    from mccomponents.sample.phonon.bindings.BoostPythonBinding  import New
+    b = New()
+    bpdos = b.dos_fromhistogram(dos)
+    bpdw = b.dwfromDOS(bpdos, mass, temperature, nsampling)
+    return bpdw.core()
+
+
+from pyre.applications.Script import Script as AppBase
+class App(AppBase):
+
+    class Inventory(AppBase.Inventory):
+
+        import pyre.inventory
+        mass = pyre.inventory.float('m', default=51)
+        temperature = pyre.inventory.float('T', default=300)
+        nsampling = pyre.inventory.int('nsampling', default=100)
+        dos = pyre.inventory.str('dos', default='V-dos.dat')
+        
+        
+    def main(self):
+        mass = self.inventory.mass
+        temperature = self.inventory.temperature
+        nsampling = self.inventory.nsampling
+        dos = loadDOS(self.inventory.dos)
+        core = compute(dos, mass, temperature, nsampling)
+        print "Debye-Waller factor core (unit: angstrom**2):"
+        print core
+        return
+    
+
+
+def main():
+    app = App('mcvine-debye-waller-core-from-phonon-dos')
+    app.run()
+    return
+
+
+if __name__ == '__main__': main()
+
+    
