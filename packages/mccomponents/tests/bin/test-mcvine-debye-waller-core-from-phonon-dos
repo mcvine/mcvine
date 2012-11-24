@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+mcvine-debye-waller-core-from-phonon-dos --dos=V-dos.dat --m=51 --T=300
