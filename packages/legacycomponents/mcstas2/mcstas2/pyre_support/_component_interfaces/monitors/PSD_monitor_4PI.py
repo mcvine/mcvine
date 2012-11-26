@@ -26,6 +26,8 @@ def get_histogram( monitor ):
     core = monitor.core()
 
     nx = core.nx; ny =core.ny
+    assert nx == int(nx); nx = int(nx)
+    assert ny == int(ny); ny = int(ny)
     n = nx * ny
     shape = nx, ny
 
@@ -37,7 +39,7 @@ def get_histogram( monitor ):
     dx = 360./nx
     xaxis = axis( 'x', arange( 0, 360, dx ), unit = 'deg' )
 
-    dy = 180/ny
+    dy = 180./ny
     yaxis = axis( 'y', arange( -90, 90, dy ), unit = 'deg' )
 
     h = histogram( 'I(x,y)', [xaxis,yaxis], data = Iarr, errors = E2arr )
