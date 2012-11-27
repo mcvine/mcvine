@@ -1,0 +1,34 @@
+#!/usr/bin/env python
+import warnings
+warnings.simplefilter('ignore')
+import mcvine
+warnings.simplefilter('default')
+
+def buildApp():
+    from mcvine.applications.InstrumentBuilder import build
+    components = ['source', 'monitor']
+    return build(components)
+
+
+def main():
+    base = buildApp()
+    class App(base):
+        
+        def help(self):
+            super(App, self).help()
+            print
+            print 'Examples:'
+            print
+            print ' $ mcvine-check-angular-distribution -source.path=neutrons-to-check'\
+                  ' -monitor.radius=3 -monitor.nx=100 -monitor.ny=100'
+            print
+            print
+
+    app = App('mcvine-check-angular-distribution')
+    return app.run()
+
+
+if __name__ == '__main__': main()
+
+
+# $Id$

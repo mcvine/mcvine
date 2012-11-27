@@ -19,11 +19,11 @@ def main():
             print
             print 'Examples:'
             print
-            print ' $ checksqe -source.path=neutrons-to-check -monitor.Ei=100 -monitor.Emin=-95 -monitor.Emax=95 -monitor.nE=190'
+            print ' $ mcvine-check-iqe -source.path=neutrons-to-check -monitor.Ei=100 -monitor.Emin=-95 -monitor.Emax=95 -monitor.nE=190'
             print
             print
 
-    app = App('checksqe')
+    app = App('mcvine-check-iqe')
     return app.run()
         
 if __name__ == '__main__': main()

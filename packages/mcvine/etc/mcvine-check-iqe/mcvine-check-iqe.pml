@@ -12,7 +12,7 @@
 
 <inventory>
 
-    <component name="checksqe">
+    <component name="mcvine-check-iqe">
 
         <property name="sequence">['source', 'monitor']</property>
         <facility name="source">sources/NeutronFromStorage</facility>
@@ -23,7 +23,7 @@
         <property name="ncount">1e4</property>
         <property name="buffer_size">10000</property>
 
-        <property name="output-dir">out-check</property>
+        <property name="output-dir">out-check-iqe</property>
         <property name="overwrite-datafiles">True</property>
 
         <component name="source">

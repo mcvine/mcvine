@@ -13,7 +13,8 @@
 PROJECT = mcvine
 
 BUILD_DIRS = \
-	checksqe \
+	mcvine-check-iqe \
+	mcvine-check-angular-distribution \
 
 OTHER_DIRS = \
 

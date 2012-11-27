@@ -43,7 +43,8 @@ EXPORT_PYTHON_MODULES = \
 
 
 EXPORT_BINS = \
-	checksqe \
+	mcvine-check-iqe \
+	mcvine-check-angular-distribution \
 	mcvine-create-instrument-simulation-application \
 	mcvine-compare-pyre-registry \
 	mcvine-compile-mcstas-component \

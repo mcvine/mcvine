@@ -11,7 +11,7 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
 
-PROJECT = checksqe
+PROJECT = mcvine-check-angular-distribution
 PACKAGE = 
 
 #--------------------------------------------------------------------------
@@ -24,12 +24,12 @@ all: export
 # export
 
 EXPORT_ETC = \
-	checksqe.pml \
+	mcvine-check-angular-distribution.pml \
 
 
 export:: export-etc
 
 # version
-# $Id$
+# $Id: Make.mm 639 2010-10-20 18:10:41Z linjiao $
 
 # End of file
