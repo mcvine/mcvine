@@ -13,6 +13,7 @@
 
 
 #include <boost/python.hpp>
+#include "journal/debug.h"
 
 namespace wrap_mccomposite{
   void wrap_basics();
@@ -33,6 +34,9 @@ namespace wrap_mccomposite{
 
 BOOST_PYTHON_MODULE(mccompositebp)
 {
+  char jrnltag[] = "mccompositebp";
+  journal::debug_t debug(jrnltag);
+
   using namespace boost::python;
   using namespace wrap_mccomposite;
 

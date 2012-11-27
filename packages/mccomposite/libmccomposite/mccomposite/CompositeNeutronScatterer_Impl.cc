@@ -11,6 +11,8 @@
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //
 
+// #define DEBUG
+
 #include <vector>
 #include "mccomposite/CompositeNeutronScatterer_Impl.h"
 #include "mccomposite/geometry/operations/Rotation.h"
@@ -546,6 +548,7 @@ mccomposite::CompositeNeutronScatterer_Impl::interact_path1
   ev.probability *= attenuation;
 #ifdef DEBUG
   debug << journal::at(__HERE__)
+	<< "attenuation: " << attenuation << ", "
 	<< "neutron attenuated: " << ev
 	<< journal::endl;
 #endif
@@ -645,6 +648,12 @@ mccomposite::CompositeNeutronScatterer_Impl::scatter
   // 3. compute attenuation
   double attenuation = calculate_attenuation( save, ev.state.position );
   ev.probability *= attenuation;
+#ifdef DEBUG
+  debug << journal::at(__HERE__)
+	<< "attenuation: " << attenuation << ", "
+	<< "neutron attenuated: " << ev
+	<< journal::endl;
+#endif
   
   return;
 }
