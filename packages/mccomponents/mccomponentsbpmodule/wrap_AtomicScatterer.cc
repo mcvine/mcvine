@@ -37,6 +37,7 @@ namespace wrap_mccomponents {
       .def_readwrite("coherent_scattering_length", &w_t::coherent_scattering_length)
       .def_readwrite("coherent_cross_section", &w_t::coherent_cross_section)
       .def_readwrite("incoherent_cross_section", &w_t::incoherent_cross_section)
+      .def_readwrite("absorption_cross_section", &w_t::absorption_cross_section) 
       ;
 
     wrap_vector2<w_t>( "AtomicScatterer" );
