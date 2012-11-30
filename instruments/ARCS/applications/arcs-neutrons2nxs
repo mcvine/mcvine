@@ -7,6 +7,13 @@ convert scattereed neutrons to nexus file.
 
 
 appname = 'arcs-neutrons2nxs'
+cmd_help = """
+convert scattereed neutrons to nexus file.
+
+Examples:
+
+ $ arcs-neutrons2nxs --neutrons=scattered-neutrons-example
+"""
 
 
 # application 
@@ -27,6 +34,10 @@ class App(AppBase):
         workdir = self.inventory.workdir; workdir = os.path.abspath(workdir)
         run(neutrons, nxs, workdir)
         return
+
+
+    def help(self):
+        print cmd_help
     
 
 # main methods
