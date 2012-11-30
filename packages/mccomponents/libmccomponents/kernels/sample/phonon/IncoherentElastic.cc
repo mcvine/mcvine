@@ -74,10 +74,15 @@ IncoherentElastic
     m_dw_core( dw_core ),
     m_details( new Details )
 {
-  // calculate the total scattering cross section
+  // calculate the total cross sections
   m_total_scattering_xs = 0;
   for (size_t i=0; i<m_atoms.size(); i++) {
-    m_total_scattering_xs += m_atoms[i].incoherent_cross_section + m_atoms[i].coherent_cross_section;
+    m_total_scattering_xs += m_atoms[i].incoherent_cross_section;
+  }
+
+  m_total_absorption_xs = 0;
+  for (size_t i=0; i<m_atoms.size(); i++) {
+    m_total_absorption_xs += m_atoms[i].absorption_cross_section;
   }
 }
 
@@ -93,8 +98,10 @@ mccomponents::kernels::phonon::IncoherentElastic::float_t
 mccomponents::kernels::phonon::IncoherentElastic::absorption_coefficient
 ( const neutron_t & ev )
 {
-  //!!!!!! must reimplement this !!!!
-  return scattering_coefficient( ev );
+  float_t v = ev.state.velocity.length();
+  float_t ret = m_total_absorption_xs/m_uc_vol * (2200/v);
+  // convert to m**-1
+  return ret * 1.e2;
 }
 
 

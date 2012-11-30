@@ -75,7 +75,7 @@ namespace mccomponents{
 	atoms_t m_atoms;
 	float_t m_uc_vol;
 	float_t m_dw_core;
-	float_t m_total_scattering_xs;
+	float_t m_total_scattering_xs, m_total_absorption_xs;
 
 	// implementation details
 	struct Details;
