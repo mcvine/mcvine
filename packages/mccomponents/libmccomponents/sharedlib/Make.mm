@@ -59,6 +59,7 @@ PROJ_SRCS = \
 	CoherentInelastic_PolyXtal.cc \
 	CoherentInelastic_SingleXtal.cc \
 	IncoherentElastic.cc \
+	IncoherentInelastic.cc \
 	PeriodicDispersion_3D.cc \
 	Omega_minus_deltaE.cc \
 	TargetCone.cc \
@@ -153,6 +154,9 @@ CoherentInelastic_SingleXtal.cc: ../kernels/sample/phonon/CoherentInelastic_Sing
 
 IncoherentElastic.cc: ../kernels/sample/phonon/IncoherentElastic.cc
 	cp ../kernels/sample/phonon/IncoherentElastic.cc IncoherentElastic.cc
+
+IncoherentInelastic.cc: ../kernels/sample/phonon/IncoherentInelastic.cc
+	cp ../kernels/sample/phonon/IncoherentInelastic.cc IncoherentInelastic.cc
 
 DWFromDOS.cc: ../kernels/sample/phonon/DWFromDOS.cc
 	cp ../kernels/sample/phonon/DWFromDOS.cc DWFromDOS.cc
