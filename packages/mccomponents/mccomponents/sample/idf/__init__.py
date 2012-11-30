@@ -117,6 +117,16 @@ def readDispersion(
     return nAtoms, dimension, Qaxes, polarizations, energies, dos
 
 
+def readDOS(datapath):
+    from DOS import read
+    dummy, v, Z = read( datapath )
+    # v is in terahertz, and it is not angular frequency
+    from math import pi
+    E = v * 2*pi * 1e12 * hertz2mev
+    dos = E,Z
+    return dos
+
+
 def length( vector ):
     import numpy.linalg as nl
     return nl.norm( vector )
