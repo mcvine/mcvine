@@ -34,7 +34,8 @@ namespace mccomponents { namespace kernels {
       mass( 10 ),
       coherent_scattering_length( sqrt(5) ),
       coherent_cross_section( 5 ),
-      incoherent_cross_section( 5 )
+      incoherent_cross_section( 5 ),
+      absorption_cross_section( 5 )
     {}
 
     AtomicScatterer( const R_t & pos, double m)
@@ -49,7 +50,7 @@ namespace mccomponents { namespace kernels {
     double coherent_scattering_length; // coherent scattering length
     double coherent_cross_section; // coherent cross section
     double incoherent_cross_section; // incoherent cross section 
-    
+    double absorption_cross_section; // absorption cross section
   };
 
 }} // namespace mccomponents:kernels
