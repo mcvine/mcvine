@@ -57,7 +57,9 @@ class New:
         self, position, mass,
         coherent_scattering_length, 
         coherent_cross_section, 
-        incoherent_cross_section):
+        incoherent_cross_section,
+        absorption_cross_section,
+        ):
         
         '''create a boost python object of AtomicScatterer
 
@@ -66,6 +68,7 @@ class New:
     coherent_scattering_length: (unit: fm)
     coherent_cross_section: (unit: barn)
     incoherent_cross_section: (unit: barn)
+    absorption_cross_section: (unit: barn)
     '''
         position = self.position( *position )
         ascatterer = b.AtomicScatterer(
@@ -73,6 +76,7 @@ class New:
         ascatterer.coherent_scattering_length = coherent_scattering_length
         ascatterer.coherent_cross_section = coherent_cross_section
         ascatterer.incoherent_cross_section = incoherent_cross_section
+        ascatterer.absorption_cross_section = absorption_cross_section
         return ascatterer
     
 
@@ -88,6 +92,7 @@ class New:
         mass = atom.mass
         coh_xs = atom.average_neutron_coh_xs
         inc_xs = atom.average_neutron_inc_xs
+        abs_xs = atom.average_neutron_abs_xs
         
         # !!!!!!!
         # the following is a hack. should get it directly from atom
@@ -97,7 +102,7 @@ class New:
         #
         return self.atomicscatterer(
             position, mass,
-            coh_b, coh_xs, inc_xs,
+            coh_b, coh_xs, inc_xs, abs_xs,
             )
 
 
@@ -227,6 +232,29 @@ class New:
             )
 
     
+    def phonon_incoherentinelastic_kernel(
+        self,
+        unitcell, 
+        dos, dw_calctor,
+        temperature,
+        ):
+
+        # unitcell_vol = unitcell.getVolume()
+        unitcell_vol = unitcell.lattice.getVolume()
+        unitcell_vol = float(unitcell_vol)
+
+        temperature = float(temperature)
+        
+        atoms = [ self.atomicscatterer_fromSite( site ) for site in unitcell ]
+        atom_vector = b.vector_AtomicScatterer(0)
+        for atom in atoms: atom_vector.append( atom )
+
+        return b.Phonon_IncoherentInelastic_kernel(
+            atom_vector, unitcell_vol,
+            dos, dw_calctor,
+            temperature)
+
+
     def phonon_coherentinelastic_polyxtal_kernel(
         self,
         dispersion, dw_calctor,

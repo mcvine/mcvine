@@ -32,9 +32,8 @@ class Phonon_IncoherentElastic_Kernel(AbstractNode):
     pass # end of Phonon_IncoherentElastic_Kernel
 
 
-from HomogeneousScatterer import HomogeneousScatterer
+from .HomogeneousScatterer import HomogeneousScatterer
 HomogeneousScatterer.onPhonon_IncoherentElastic_Kernel = HomogeneousScatterer.onKernel
-
 
 # version
 __id__ = "$Id: Phonon_IncoherentElastic_Kernel.py 601 2010-10-03 19:55:29Z linjiao $"

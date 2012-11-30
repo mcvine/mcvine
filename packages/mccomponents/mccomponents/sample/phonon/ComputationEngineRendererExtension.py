@@ -37,6 +37,43 @@ class ComputationEngineRendererExtension:
             )
 
 
+    def onPhonon_IncoherentInelastic_Kernel(self, kernel):
+        '''handler to create c++ instance of phonon incoherent inelastic
+        scattering kernel.
+        '''
+        # get unit cell
+        scatterer = kernel.scatterer_origin
+        try: unitcell = scatterer.phase.unitcell
+        except AttributeError, err:
+            raise "Cannot obtain unitcell from scatterer %s, %s" % (
+                scatterer.__class__.__name__, scatterer.name )
+
+        # environment temperature
+        #environment = scatterer.environment
+        #temperature = environment.temperature
+        temperature = 300
+
+        # total mass of unitcell. for DW calculator. this might be reimplemented later.
+        # mass = sum( [ site.getAtom().mass for site in unitcell ] )
+        mass = sum( [ atom.mass for atom in unitcell ] )
+        # currently we need dos to calculate DW
+        try:
+            dos = kernel.dos
+        except AttributeError:
+            raise NotImplementedError, "Should implement a way to extract dos"
+        # c object of dos
+        cdos = dos.identify(self)
+        # c object of DW calculator
+        nsampling = 100
+        cdw_calculator = self.factory.dwfromDOS(
+            cdos, mass, temperature, nsampling )
+
+        # additional kernel parameters
+        
+        return self.factory.phonon_incoherentinelastic_kernel(
+            unitcell, cdos, cdw_calculator, temperature)
+
+
     def onPhonon_CoherentInelastic_PolyXtal_Kernel(self, kernel):
         '''handler to create c++ instance of phonon coherent inelastic polyxtal
         scattering kernel.
@@ -149,6 +186,11 @@ class ComputationEngineRendererExtension:
         ccore = core.identify(self)
         rcell = dispersion.reciprocalcell
         return self.factory.periodicdispersion( ccore, rcell )
+
+
+    def onLinearlyInterpolatedDOS(self, dos):
+        doshist = dos.doshist
+        return self.factory.dos_fromhistogram(doshist)
     
 
     pass # end of ComputationEngineRendererExtension

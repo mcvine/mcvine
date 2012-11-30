@@ -24,6 +24,13 @@ def incoherentelastic_kernel(
     return f( dw_core )
 
 
+def incoherentinelastic_kernel(
+    dos
+    ):
+    from IncoherentInelastic_Kernel import IncoherentInelastic_Kernel as f
+    return f(dos)
+
+
 def coherentinelastic_polyxtal_kernel(
     dispersion,
     Ei = 70*meV, max_omega = 55 *meV, max_Q = 12 / angstrom,
@@ -76,6 +83,15 @@ def periodicdispersion_fromidf( datapath ):
     reciprocalcell = [ bi for bi,n in Qaxes ]
     
     return periodicdispersion(dispersion, reciprocalcell)
+
+
+def dos_fromidf(datapath):
+    from mccomponents.sample.idf import readDOS
+    e,Z = readDOS(datapath)
+    from histogram import histogram
+    doshist = histogram( 'dos', [ ('energy', e, 'meV') ], data = Z )
+    from .LinearlyInterpolatedDOS import LinearlyInterpolatedDOS as f
+    return f(doshist)
     
 
 import ComputationEngineRendererExtension
