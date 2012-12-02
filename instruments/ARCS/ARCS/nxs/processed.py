@@ -28,9 +28,11 @@ mantid GUI, and we were able to reduce the simulated
 data to I(Q,E) with expected results.
 """
 
-def write(events, nxsfile):
+def write(events, tofbinsize, nxsfile):
+    # tofbinsize must be in the unit of microsecond
     data = convert(events)
-    _write(nxsfile, *data)
+    data['tofbinsize'] = tofbinsize
+    _write(nxsfile, **data)
     return
 
 
@@ -53,13 +55,22 @@ def convert(events):
     tof = events['tofChannelNo'] # XXX: tof unit?
     weights = events['p']
     
-    return indices, pulse_time, tof, weights
+    return {
+        'indices': indices,
+        'pulse_time': pulse_time,
+        'tof': tof,
+        'weights': weights,
+        }
 
 
 import os
 from mcvine.deployment_info import mcvinedir
 nxs_template = os.path.join(mcvinedir, 'share', 'mcvine', 'instruments', 'ARCS', 'arcs-events-template.nxs')
-def _write(path, indices, pulse_time, tof, weights):
+def _write(
+    path,
+    indices=None, pulse_time=None,
+    tof=None, tofbinsize=None,
+    weights=None):
     """write "processed" ARCS nexus file given relevant data
     """
     import shutil
@@ -70,7 +81,7 @@ def _write(path, indices, pulse_time, tof, weights):
     e = f['mantid_workspace_1']['event_workspace']
     e['indices'] = indices
     e['pulsetime'] = pulse_time
-    e['tof'] = np.array(tof, dtype="double")
+    e['tof'] = np.array(tof, dtype="double") * tofbinsize
     e['weights'] = weights
     f.close()
     return

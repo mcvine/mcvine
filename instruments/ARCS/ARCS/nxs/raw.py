@@ -16,7 +16,7 @@
 This module helps creating "raw" ARCS nexus file.
 """
 
-def write(events, path):
+def write(events, tofbinsize, path):
     import shutil, sys
     shutil.copyfile(nxs_template, path)
     import time; time.sleep(0.5)

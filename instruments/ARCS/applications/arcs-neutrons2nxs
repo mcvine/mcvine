@@ -14,6 +14,7 @@ Examples:
 
  $ arcs-neutrons2nxs --neutrons=scattered-neutrons-example
 """
+tofbinsize = 0.1 # microsecond
 
 
 # application 
@@ -25,7 +26,7 @@ class App(AppBase):
         import pyre.inventory
         neutrons = pyre.inventory.str('neutrons', default='neutrons.dat')
         nxs = pyre.inventory.str('nxs', default='arcs-sim.nxs')
-        workdir = pyre.inventory.str('workdir', default='work')
+        workdir = pyre.inventory.str('workdir', default='work-arcs-neutrons2nxs')
 
         
     def main(self):
@@ -48,7 +49,8 @@ def run(neutrons, nxs, workdir):
 
 
 def event2nxs(eventdat, nxs, workdir):
-    cmd = 'arcs-events2nxs --events=%s --nxs=%s' % (eventdat, nxs)
+    cmd = 'arcs-events2nxs --events=%s --nxs=%s --tofbinsize=%s' % (
+        eventdat, nxs, tofbinsize)
     execute(cmd, workdir)
     return
 
@@ -85,7 +87,7 @@ def sendneutronstodetsys(
         'source': 'NeutronFromStorage',
         'detsys': 'DetectorSystemFromXml',
         'output-dir': 'out',
-        'detsys.tofparams': '0,0.02,1e-6',
+        'detsys.tofparams': '0,0.02,%s' % (1e-6*tofbinsize,), 
         'detsys.instrumentxml': arcsxml,
         'detsys.eventsdat': 'events.dat',
         'ncount': ncount,
