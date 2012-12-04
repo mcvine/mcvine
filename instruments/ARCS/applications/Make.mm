@@ -47,9 +47,11 @@ EXPORT_BINS = \
 	arcs_beam \
 	arcs-compute-IQE-resolution \
 	arcs-events2nxs \
+	arcs-events2iqe-directly \
 	arcs_moderator2sample \
 	arcs-m2s \
 	arcs-neutrons2nxs \
+	arcs-extract-iqe-from-nxs \
 
 
 export:: export-binaries release-binaries export-package-python-modules #export-docs
