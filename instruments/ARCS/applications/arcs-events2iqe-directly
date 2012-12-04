@@ -20,7 +20,6 @@ Examples:
 import pyre.units.length
 import pyre.units.energy
 import pyre.units.time
-tofbinsize = 0.1 # microsecond
 npixels = 117760 # number of pixels for ARCS
 mod_period=0.015*pyre.units.time.s # moderator period
 mod2sample=13.6*pyre.units.length.meter
@@ -35,6 +34,7 @@ class App(AppBase):
         import pyre.inventory
         events = pyre.inventory.str('events', default='events.dat')
 
+        tofbinsize = pyre.inventory.float('tofbinsize', default=0.1) # unit: microsecond
         Ei = pyre.inventory.float('Ei', default=100)
         Eaxis = pyre.inventory.array('Eaxis', default=(-50,50,1.))
         Qaxis = pyre.inventory.array('Qaxis', default=(0,11, 0.1))
@@ -47,11 +47,13 @@ class App(AppBase):
     def main(self):
         events = self.inventory.events; events = os.path.abspath(events)
         # workdir = self.inventory.workdir; workdir = os.path.abspath(workdir)
+        tofbinsize = self.inventory.tofbinsize
         Ei = self.inventory.Ei
         Qaxis= self.inventory.Qaxis
         Eaxis = self.inventory.Eaxis
         pixelpositionsfile = self.inventory.pixelpositionsfile
-        iqe = reduceToIQE(events, Qaxis, Eaxis, Ei, pixelpositionsfile)
+        iqe = reduceToIQE(
+            events, tofbinsize, Qaxis, Eaxis, Ei, pixelpositionsfile)
 
         out = self.inventory.out
         import histogram.hdf as hh
@@ -65,7 +67,7 @@ class App(AppBase):
 
 # main methods
 def reduceToIQE(
-    eventsfile, Qaxis, Eaxis, Ei,
+    eventsfile, tofbinsize, Qaxis, Eaxis, Ei,
     pixelpositionsfile='pixelID2position.bin',
     solidanglesfile='solidangles.bin',
     ):
