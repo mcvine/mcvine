@@ -74,7 +74,7 @@ const
 mccomponents::kernels::phonon::IncoherentInelastic::float_t
 mccomponents::kernels::phonon::IncoherentInelastic::
 Details::zero
-= 1e-5;
+= 1e-1;
 
 
 
