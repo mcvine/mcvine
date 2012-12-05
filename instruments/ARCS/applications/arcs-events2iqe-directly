@@ -35,6 +35,7 @@ class App(AppBase):
         events = pyre.inventory.str('events', default='events.dat')
 
         tofbinsize = pyre.inventory.float('tofbinsize', default=0.1) # unit: microsecond
+        t0 = pyre.inventory.float('t0', default=0) # unit: microsecond
         Ei = pyre.inventory.float('Ei', default=100)
         Eaxis = pyre.inventory.array('Eaxis', default=(-50,50,1.))
         Qaxis = pyre.inventory.array('Qaxis', default=(0,11, 0.1))
@@ -48,12 +49,13 @@ class App(AppBase):
         events = self.inventory.events; events = os.path.abspath(events)
         # workdir = self.inventory.workdir; workdir = os.path.abspath(workdir)
         tofbinsize = self.inventory.tofbinsize
+        t0 = self.inventory.t0
         Ei = self.inventory.Ei
         Qaxis= self.inventory.Qaxis
         Eaxis = self.inventory.Eaxis
         pixelpositionsfile = self.inventory.pixelpositionsfile
         iqe = reduceToIQE(
-            events, tofbinsize, Qaxis, Eaxis, Ei, pixelpositionsfile)
+            events, tofbinsize, t0, Qaxis, Eaxis, Ei, pixelpositionsfile)
 
         out = self.inventory.out
         import histogram.hdf as hh
@@ -67,7 +69,7 @@ class App(AppBase):
 
 # main methods
 def reduceToIQE(
-    eventsfile, tofbinsize, Qaxis, Eaxis, Ei,
+    eventsfile, tofbinsize, t0, Qaxis, Eaxis, Ei,
     pixelpositionsfile='pixelID2position.bin',
     solidanglesfile='solidangles.bin',
     ):
@@ -87,7 +89,7 @@ def reduceToIQE(
         Ei=Ei*pyre.units.energy.meV,
         Qaxis = Qaxis, Eaxis = Eaxis,
         tofUnit=tofbinsize*pyre.units.time.microsecond,
-        toffset=0*pyre.units.time.s,
+        toffset=t0*pyre.units.time.microsecond,
         tofmax=mod_period,
         )
     return iqe
