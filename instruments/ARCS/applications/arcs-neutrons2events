@@ -31,6 +31,10 @@ class App(AppBase):
     def main(self):
         neutrons = self.inventory.neutrons; neutrons = os.path.abspath(neutrons)
         workdir = self.inventory.workdir; workdir = os.path.abspath(workdir)
+        if os.path.exists(workdir):
+            raise IOError("%s already exists" % workdir)
+        os.makedirs(workdir)
+        
         nodes = self.inventory.nodes
         run(neutrons, workdir, nodes=nodes)
         return
