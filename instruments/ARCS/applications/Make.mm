@@ -50,6 +50,7 @@ EXPORT_BINS = \
 	arcs-events2iqe-directly \
 	arcs_moderator2sample \
 	arcs-m2s \
+	arcs-neutrons2events \
 	arcs-neutrons2nxs \
 	arcs-extract-iqe-from-nxs \
 
