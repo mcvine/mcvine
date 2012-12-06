@@ -51,7 +51,9 @@ def run(neutrons, nxs, type, workdir):
 
 
 def event2nxs(eventdat, nxs, type, workdir):
-    cmd = 'arcs-events2nxs --events=%(eventdat)s --type=%(type)s --nxs=%(nxs)s --tofbinsize=%(tofbinsize)s' % locals()
+    d = dict(globals())
+    d.update(locals())
+    cmd = 'arcs-events2nxs --events=%(eventdat)s --type=%(type)s --nxs=%(nxs)s --tofbinsize=%(tofbinsize)s' % d
     execute(cmd, workdir)
     return
 
