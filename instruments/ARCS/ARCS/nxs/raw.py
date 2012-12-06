@@ -25,7 +25,12 @@ def write(events, tofbinsize, path):
     entry = f['entry']
 
     # XXX: hack
-    etz_attrs = {'units': 'second', 'offset': '2012-08-23T11:23:53.833508666-04:00', 'offset_seconds': 714583433, 'offset_nanoseconds': 833508666}
+    etz_attrs = {
+        'units': 'second',
+        'offset': '2012-08-23T11:23:53.833508666-04:00',
+        'offset_seconds': 714583433,
+        'offset_nanoseconds': 833508666,
+        }
     
     for bank in range(nbanks):
         # print bank
@@ -45,7 +50,7 @@ def write(events, tofbinsize, path):
         # bank events directory 
         be = entry['bank%s_events' % (bank+1)]
         be['event_id'] = bevts['pixelID']
-        be['event_time_offset'] = np.array(bevts['tofChannelNo'], dtype='float32')
+        be['event_time_offset'] = np.array(bevts['tofChannelNo'], dtype='float32') * tofbinsize
         be['event_time_offset'].attrs['units'] = 'microsecond'
         be['event_weight'] = np.array(bevts['p'], dtype='float32')
         be['event_index'] = np.array([0, len(bevts)], dtype='uint64')
