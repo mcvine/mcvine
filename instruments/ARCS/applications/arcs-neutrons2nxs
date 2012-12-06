@@ -26,6 +26,7 @@ class App(AppBase):
         import pyre.inventory
         neutrons = pyre.inventory.str('neutrons', default='neutrons.dat')
         nxs = pyre.inventory.str('nxs', default='arcs-sim.nxs')
+        type = pyre.inventory.str('type', default='raw')
         workdir = pyre.inventory.str('workdir', default='work-arcs-neutrons2nxs')
 
         
@@ -33,7 +34,8 @@ class App(AppBase):
         neutrons = self.inventory.neutrons; neutrons = os.path.abspath(neutrons)
         nxs = self.inventory.nxs; nxs = os.path.abspath(nxs)
         workdir = self.inventory.workdir; workdir = os.path.abspath(workdir)
-        run(neutrons, nxs, workdir)
+        type = self.inventory.type
+        run(neutrons, nxs, type, workdir)
         return
 
 
@@ -42,15 +44,14 @@ class App(AppBase):
     
 
 # main methods
-def run(neutrons, nxs, workdir):
+def run(neutrons, nxs, type, workdir):
     eventdat = sendneutronstodetsys(neutronfile=neutrons, workdir=os.path.join(workdir, 'todetsys'))
-    event2nxs(eventdat, nxs, workdir)
+    event2nxs(eventdat, nxs, type, workdir)
     return
 
 
-def event2nxs(eventdat, nxs, workdir):
-    cmd = 'arcs-events2nxs --events=%s --nxs=%s --tofbinsize=%s' % (
-        eventdat, nxs, tofbinsize)
+def event2nxs(eventdat, nxs, type, workdir):
+    cmd = 'arcs-events2nxs --events=%(eventdat)s --type=%(type)s --nxs=%(nxs)s --tofbinsize=%(tofbinsize)s' % locals()
     execute(cmd, workdir)
     return
 
@@ -97,6 +98,8 @@ def sendneutronstodetsys(
         args['mpirun.nodes'] = nodes
     cmd += ['--%s=%s' % (k,v) for k,v in args.iteritems()]
     cmd = ' '.join(cmd)
+    run_sh = os.path.join(workdir, 'run.sh')
+    open(run_sh, 'w').write(cmd)
     execute(cmd, workdir)
 
     # events.dat
