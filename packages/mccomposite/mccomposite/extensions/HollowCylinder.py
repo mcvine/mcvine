@@ -37,7 +37,7 @@ def onHollowCylinder(self, hollowCylinder):
         raise RuntimeError, msg
 
     h = hollowCylinder.height
-    if r1 == 0:
+    if r1 == 0*r1:
         shape = cylinder(r2, h)
     else:
         shape = subtract( cylinder( r2, h ), cylinder(r1,h) )
