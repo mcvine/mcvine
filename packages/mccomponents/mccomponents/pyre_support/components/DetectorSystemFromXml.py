@@ -93,7 +93,7 @@ class DetectorSystemFromXml(ParallelComponent, AbstractComponent):
             self.mpiBarrier()
         # merge and normalize neutron files
         if context.mpiRank == 0:
-            import time; time.sleep(5)
+            import time; time.sleep(10)
             self._merge_and_normalize()
         return
 
