@@ -12,7 +12,7 @@ convert scattereed neutrons to nexus file.
 
 Examples:
 
- $ arcs-neutrons2nxs --neutrons=scattered-neutrons-example
+ $ arcs-neutrons2nxs --neutrons=scattered-neutrons-example --nodes=2
 """
 tofbinsize = 0.1 # microsecond
 
@@ -53,7 +53,7 @@ class App(AppBase):
 def run(neutrons, nxs, type, workdir, nodes):
     import time
     eventdat = sendneutronstodetsys(neutronfile=neutrons, workdir=os.path.join(workdir, 'todetsys'), nodes=nodes)
-    time.sleep(1)
+    time.sleep(10)
     event2nxs(eventdat, nxs, type, workdir)
     return
 
