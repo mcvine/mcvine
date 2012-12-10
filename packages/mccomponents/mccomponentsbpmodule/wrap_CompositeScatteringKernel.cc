@@ -27,7 +27,7 @@ namespace wrap_mccomponents {
 
     kernel_wrapper<mccomponents::CompositeScatteringKernel>::wrap
       ("CompositeScatteringKernel", 
-       init<const mccomponents::CompositeScatteringKernel::kernels_t &>()
+       init<const mccomponents::CompositeScatteringKernel::kernels_t &, bool>()
        [with_custodian_and_ward<1,2>()]
        )
       ;
