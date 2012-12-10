@@ -110,7 +110,11 @@ mccomponents::kernels::phonon::IncoherentElastic::scattering_coefficient
 ( const neutron_t & ev )
 {
   float_t ret = m_total_scattering_xs/m_uc_vol;
-  // std::cout << "scattering_coefficient: " << ret << std::endl;
+  /*
+  std::cout << "m_total_scattering_xs=" << m_total_scattering_xs << ", "
+	    << "m_uc_vol=" << m_uc_vol << ", ";
+  std::cout << "scattering_coefficient: " << ret << std::endl;
+  */
   // convert to m**-1
   return ret * 1.e2;
 }
