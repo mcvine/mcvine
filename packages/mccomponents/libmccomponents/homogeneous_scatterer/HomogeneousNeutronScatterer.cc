@@ -169,8 +169,16 @@ mccomponents::HomogeneousNeutronScatterer::interact_path1(mcni::Neutron::Event &
   if (r >= absorption_mark) {
     // scattering
     double x = math::random(0, distance);
-    double prob = sigma * distance * std::exp( -(mu+sigma) * x );
-    ev.probability *= prob * (sum_of_weights/m_weights.scattering);
+    double atten = std::exp( -(mu+sigma) * x );
+    double prob = sigma * distance * atten;
+    prob *= sum_of_weights/m_weights.scattering;
+    /*
+    std::cout << "sigma, distance, attenuation: "
+	      << sigma << ", " << distance << ", " << atten
+	      << "prob factor: " << prob 
+	      << std::endl;
+    */
+    ev.probability *= prob;
     propagate( ev, x/velocity );
     m_kernel.scatter( ev );
     mcni::Neutron::Event save = ev;
