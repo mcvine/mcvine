@@ -22,8 +22,9 @@ struct mccomponents::CompositeScatteringKernel::Details{
 
 // meta-methods
 mccomponents::CompositeScatteringKernel::CompositeScatteringKernel
-( const kernels_t & kernels )
+( const kernels_t & kernels, bool average )
   : m_kernels(kernels),
+    m_average(average),
     m_details(new Details)
 {
 }
@@ -41,6 +42,7 @@ mccomponents::CompositeScatteringKernel::absorption_coefficient
   double ret = 0.;
   for (size_t i=0; i<m_kernels.size(); i++) 
     ret += m_kernels[i]->absorption_coefficient( ev );
+  if (m_average) ret/=m_kernels.size();
   return ret;
 }
 
@@ -51,6 +53,7 @@ mccomponents::CompositeScatteringKernel::scattering_coefficient
   double ret = 0.;
   for (size_t i=0; i<m_kernels.size(); i++) 
     ret += m_kernels[i]->scattering_coefficient( ev );
+  if (m_average) ret/=m_kernels.size();
   return ret;
 }
 
