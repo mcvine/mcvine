@@ -17,8 +17,9 @@ from Kernel import Kernel
 class CompositeKernel(Kernel):
     
 
-    def __init__(self):
+    def __init__(self, average=None):
         self._elements = []
+        self.average = average
         return
 
 

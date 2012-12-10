@@ -37,7 +37,7 @@ class KernelComputationEngineRenderer( AbstractVisitor ):
             ckernels.append( ckernel )
             continue
 
-        return factory.compositekernel( ckernels )
+        return factory.compositekernel( ckernels, composite.average )
 
     
     def onHomogeneousScatterer(self, scatterer):

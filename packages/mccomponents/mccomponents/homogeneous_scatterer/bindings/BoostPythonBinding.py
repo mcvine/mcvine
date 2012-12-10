@@ -31,8 +31,8 @@ class BoostPythonBinding(base, Interface):
         return binding.srandom( seed )
     
 
-    def compositekernel(self, kernels):
-        return binding.CompositeScatteringKernel( kernels )
+    def compositekernel(self, kernels, average):
+        return binding.CompositeScatteringKernel( kernels, average )
 
 
     def kernelcontainer(self, size = 0):

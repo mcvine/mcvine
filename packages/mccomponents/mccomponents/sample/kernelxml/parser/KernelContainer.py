@@ -14,7 +14,10 @@
 
 from AbstractNode import AbstractNode
 
-
+# KernelContainer is just an alias of CompositKernel
+# why not just reuse the CompositKernel parser node?
+# the implementation here is different from CompositKernel,
+# and it reuses the implementation methods in AbstractNode
 class KernelContainer(AbstractNode):
 
 
@@ -34,8 +37,12 @@ class KernelContainer(AbstractNode):
         = onKernelContainer = AbstractNode.onElement
 
     def elementFactory(self, *args, **kwds):
+        average = kwds.get('average')
+        if average:
+            average = average.lower() in ['1', 'on', 'yes', 'true']
+            kwds['average'] = average
         from mccomponents.sample import kernelcontainer
-        return kernelcontainer( )
+        return kernelcontainer(*args, **kwds)
 
     pass # end of KernelContainer
     
