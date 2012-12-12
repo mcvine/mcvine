@@ -13,10 +13,11 @@
 
 
 #include <cmath>
-#include "mccomponents/kernels/sample/ConstantEnergyTransferKernel.h"
-#include "mccomponents/exception.h"
 #include "mcni/math/number.h"
 #include "mccomponents/math/random.h"
+#include "mccomponents/math/random/geometry.h"
+#include "mccomponents/kernels/sample/ConstantEnergyTransferKernel.h"
+#include "mccomponents/exception.h"
 
 
 #ifdef DEBUG
@@ -98,22 +99,16 @@ mccomponents::kernels::ConstantEnergyTransferKernel::scatter
   // final velocity magnitude
   double vf = conversion::E2v( Ef );
 
-  // theta, phi
-  double theta = math::random(0, mcni::PI);
-  double phi = math::random(0, mcni::PI*2);
-
-  // scattered neutron velocity vector
-  double vx = vf*sin(theta)*cos(phi);
-  double vy = vf*sin(theta)*sin(phi);
-  double vz = vf*cos(theta);
+  // pick direction
+  typedef mcni::Vector3<double> V3d;
+  V3d dir_f;
+  math::choose_direction(dir_f); dir_f.normalize();
 
   // adjust probability of neutron event
-  // normalization factor is 2pi*pi/4pi = pi/2
-  ev.probability *= sin(theta) * (mcni::PI/2);
+  // ev.probability *= 1;
 
-  typedef mcni::Vector3<double> V3d;
-  V3d vfv(vx,vy,vz);
-  state.velocity = vfv;
+  // adjust velocity
+  state.velocity = dir_f * vf;
 }
 
 
