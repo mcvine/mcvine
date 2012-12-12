@@ -129,7 +129,11 @@ namespace mccomposite {
 
     tofs_t tofs = forward_intersect( ev, shape );
 
-    if (tofs.size()==0) throw Exception( "no intersection" );
+    if (tofs.size()==0) {
+      std::ostringstream oss;
+      oss << "no intersection between " << ev << " and " << shape;
+      throw Exception(oss.str().c_str());
+    }
 
     // inside, easy
     if (location == geometry::Locator::inside)
