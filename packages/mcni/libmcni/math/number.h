@@ -12,6 +12,7 @@ namespace mcni {
   const double PI=3.1415926535897932384626;
 
   const double DEG2RAD = PI/180.;
+
 }
 
 #endif// MCNI_MATH_NUMBER_H 
