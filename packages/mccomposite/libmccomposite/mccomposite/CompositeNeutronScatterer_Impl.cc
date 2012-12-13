@@ -12,6 +12,11 @@
 //
 
 // #define DEBUG
+// #define DEBUG_MULTIPLESCATTERING
+
+#ifdef DEBUG
+#define DEBUG_MULTIPLESCATTERING
+#endif
 
 #include <vector>
 #include "mccomposite/CompositeNeutronScatterer_Impl.h"
@@ -379,8 +384,12 @@ mccomposite::CompositeNeutronScatterer_Impl::scatterM
   using namespace geometry;
   typedef int index_t;
   
-#ifdef DEBUG
+#ifdef DEBUG_MULTIPLESCATTERING
   journal::debug_t debug( jrnltag );
+  debug << journal::at(__HERE__)
+	<< "entering scatterM: "
+	<< "event:" << ev
+	<< journal::endl;
 #endif
   
   mcni::Neutron::Events scattered;
@@ -393,6 +402,14 @@ mccomposite::CompositeNeutronScatterer_Impl::scatterM
     
     mcni::Neutron::Events scattered2;
     
+#ifdef DEBUG_MULTIPLESCATTERING
+    debug << journal::at(__HERE__)
+	  << "in 'while loop' #" << nloop << journal::newline
+	  << "input neutron events:"
+	  << scattered
+	  << journal::endl;
+#endif
+
     for (size_t i=0; i<scattered.size(); i++) {
       
       // for each event
@@ -405,7 +422,7 @@ mccomposite::CompositeNeutronScatterer_Impl::scatterM
       // if not, it should be let go.
       
       if (is_exiting( ev, m_shape ) ) {
-#ifdef DEBUG
+#ifdef DEBUG_MULTIPLESCATTERING
 	debug << journal::at(__HERE__)
 	      << "this neutron is going out: " << ev 
 	      << journal::endl;
@@ -413,7 +430,7 @@ mccomposite::CompositeNeutronScatterer_Impl::scatterM
 	evts.push_back( ev ); continue; 
       }
       
-#ifdef DEBUG
+#ifdef DEBUG_MULTIPLESCATTERING
       debug << journal::at(__HERE__)
 	    << "this neutron needs further scattering: " << ev 
 	    << journal::endl;
@@ -430,6 +447,14 @@ mccomposite::CompositeNeutronScatterer_Impl::scatterM
     // so that scattered contains the new neutrons that need to 
     // be further scattered
     scattered.swap( scattered2 );
+
+#ifdef DEBUG_MULTIPLESCATTERING
+    debug << journal::at(__HERE__)
+	  << "in 'while loop' #" << nloop << journal::newline
+	  << "output neutron events:"
+	  << scattered
+	  << journal::endl;
+#endif
   }
   
   return;
