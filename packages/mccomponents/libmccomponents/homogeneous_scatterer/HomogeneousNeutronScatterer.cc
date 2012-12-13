@@ -17,6 +17,8 @@
 #include "mccomponents/math/random.h"
 
 
+// #define DEBUG
+
 #ifdef DEBUG
 #include "portinfo"
 #include "journal/debug.h"
@@ -172,12 +174,12 @@ mccomponents::HomogeneousNeutronScatterer::interact_path1(mcni::Neutron::Event &
     double atten = std::exp( -(mu+sigma) * x );
     double prob = sigma * distance * atten;
     prob *= sum_of_weights/m_weights.scattering;
-    /*
+#ifdef DEBUG
     std::cout << "sigma, distance, attenuation: "
 	      << sigma << ", " << distance << ", " << atten
 	      << "prob factor: " << prob 
 	      << std::endl;
-    */
+#endif
     ev.probability *= prob;
     propagate( ev, x/velocity );
     m_kernel.scatter( ev );
