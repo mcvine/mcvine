@@ -1,3 +1,17 @@
+Attention
+!!!!!!!!!
+Actually these scripts here are obsolete.
+We don't need generic instruments. 
+Just use mcvine-create-instrument-simulation-application to
+create instruments and run them.
+
+We should migrate the examples in this directory somewhere else,
+and then remove this directory.
+
+
+Obsolete
+!!!!!!!!
 Generic instrument simulation scripts. 
 These scripts can be used to quickly run simulations,
 and be used for quick tests.
+
