@@ -388,6 +388,7 @@ INITIALIZE
 %{
   Nq = 0;
   isrect = 0;
+  my_s_v2_sum = 0;
   columns = XtalData_formats[ format ];
   int i;
   struct line_data *L;
