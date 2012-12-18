@@ -32,6 +32,7 @@
 #include "journal/debug.h"
 #endif
 
+#include "mcni/math/func.h"
 #include "mccomponents/physics/constants.h"
 #include "mccomponents/math/random/geometry.h"
 #include "mccomponents/kernels/sample/phonon/IncoherentInelastic.h"
@@ -74,7 +75,7 @@ const
 mccomponents::kernels::phonon::IncoherentInelastic::float_t
 mccomponents::kernels::phonon::IncoherentInelastic::
 Details::zero
-= 1e-1;
+= 1e-2;
 
 
 
@@ -228,6 +229,11 @@ mccomponents::kernels::phonon::IncoherentInelastic::scatter
   // +/- phonon energy
   float_t  omega = E_i - E_f; 
 
+  // avoid divide by zero
+  if (std::abs(omega) < m_details->zero*m_max_phonon_energy) 
+    omega = mcni::sgn(omega) * m_details->zero*m_max_phonon_energy;
+  
+
   // vf
   namespace conversion = mcni::neutron_units_conversion;
   float_t v_f_l = conversion::E2v( E_f );
@@ -279,10 +285,7 @@ mccomponents::kernels::phonon::IncoherentInelastic::scatter
   prob *= therm_factor;
   prob *= (*m_dos)( std::abs(omega) ); //  *m_dos_norm_factor; this is no longer necessary. dos() method is require to be normalized
 
-  if (std::abs(omega) < m_details->zero*m_max_phonon_energy) 
-    prob = 0.0;
-  else
-    prob *= conversion::k2E(Q_l)/std::abs(omega);
+  prob *= conversion::k2E(Q_l)/std::abs(omega);
 
 #ifdef DEEPDEBUG
   debug << journal::at(__HERE__)
@@ -293,13 +296,6 @@ mccomponents::kernels::phonon::IncoherentInelastic::scatter
 	<< "k2E(Q_l)/abs(omega)=" << conversion::k2E(Q_l)/std::abs(omega) << ","
 	<< "m_dos( abs(omega) )=" << (*m_dos)( std::abs(omega) ) << ","
 	<< "therm_factor=" << therm_factor << ","
-	<< journal::endl;
-#endif
-
-
-#ifdef DEEPDEBUG
-  debug << journal::at(__HERE__)
-	<< "*** prob = " << prob << ", "
 	<< "Q=" << Q_l << ", "
 	<< "omega=" << omega << ", "
 	<< journal::endl;
