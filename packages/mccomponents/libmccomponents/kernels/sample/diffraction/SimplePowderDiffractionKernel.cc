@@ -3,6 +3,7 @@
 // Li Li
 // Jiao Lin
 //
+// The implementation here is following that of PowderN component in mcstas.
 
 
 #include <cmath>
