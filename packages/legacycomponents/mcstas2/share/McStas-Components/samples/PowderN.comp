@@ -474,6 +474,10 @@ INITIALIZE
       my_s_v2_sum+=my_s_v2[i];
       q_v[i] = L[i].q*K2V;
       w_v[i] = L[i].w;
+#ifdef DEBUG
+      printf("PowderN: %d: my_s_v2, q_v, w_v = %d: %g, %g, %g\n", 
+             i, my_s_v2[i], q_v[i], w_v[i]);
+#endif
     }
   }
 
@@ -651,7 +655,10 @@ TRACE
 	      
 
 	      l_1 = v*(t3 - t2 + t1 - t0); /* Length to exit */
-	      
+#ifdef DEBUG
+	      printf("my_s_n=%g, my_a_v=%g, v=%g, my_s=%g\n", 
+		     my_s_n, my_a_v, v, my_s);
+#endif
 	      pmul  = Nq*l_full*my_s_n*exp(-(my_a_v/v+my_s)*(l+l_1))/(1-(frac+tfrac));
 	      /* Correction in case of d_phi focusing - BUT only when d_phi != 0 */
 	      if (d_phi) pmul *= alpha/PI;
