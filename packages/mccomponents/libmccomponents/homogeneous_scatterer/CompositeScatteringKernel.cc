@@ -65,7 +65,7 @@ void mccomponents::CompositeScatteringKernel::scatter
   size_t index = size_t( math::random(0,n) );
   
   ev.probability *= n;
-  ev.probability *= m_kernels[index]->scattering_coefficient( ev ) / scattering_coefficient(ev);
+  
   m_kernels[index]->scatter( ev );
 }
 
@@ -77,7 +77,7 @@ void mccomponents::CompositeScatteringKernel::absorb
   size_t index = size_t( math::random(0,n) );
   
   ev.probability *= n;
-  ev.probability *= m_kernels[index]->absorption_coefficient( ev ) / absorption_coefficient(ev);
+  
   m_kernels[index]->absorb( ev );
 }
 
