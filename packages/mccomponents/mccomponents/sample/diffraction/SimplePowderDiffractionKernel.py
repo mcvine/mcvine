@@ -50,19 +50,7 @@ class Data:
     incoherent_cross_section = 0
 
 
-class Peak:
-
-    q = 0
-    F_squared = 0
-    multiplicity = 0
-    intrinsic_line_width = 0
-    DebyeWaller_factor = 0
-    
-    def __init__(self, **kwds):
-        for k, v in kwds.iteritems():
-            setattr(self, k, v)
-            continue
-        return
+from .powder import Peak
 
 
 # version

@@ -2,21 +2,19 @@
 #
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
-#                                 Jiao Lin
+#                               Michael A.G. Aivazis
 #                        California Institute of Technology
-#                        (C) 2006-2010  All Rights Reserved
+#                        (C) 1998-2004  All Rights Reserved
 #
 # <LicenseText>
 #
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 PROJECT = mccomponents
-PACKAGE = sample/diffraction
+PACKAGE = sample/diffraction/parsers
+
 
 BUILD_DIRS = \
-	bindings \
-	parsers \
-	xml \
 
 RECURSE_DIRS = $(BUILD_DIRS)
 
@@ -24,10 +22,10 @@ RECURSE_DIRS = $(BUILD_DIRS)
 #
 
 all: export
-	BLD_ACTION="all" $(MM) recurse
 
 tidy::
 	BLD_ACTION="tidy" $(MM) recurse
+
 
 
 #--------------------------------------------------------------------------
@@ -35,17 +33,19 @@ tidy::
 # export
 
 EXPORT_PYTHON_MODULES = \
-	ComputationEngineRendererExtension.py \
-	SimplePowderDiffractionKernel.py \
+	laz.py \
 	__init__.py \
-	powder.py \
-	units.py \
 
 
 export:: export-package-python-modules 
+	BLD_ACTION="export" $(MM) recurse
+
+
+#include doxygen/default.def
+#docs: export-doxygen-docs
 
 
 # version
-# $Id$
+# $Id: Make.mm 601 2010-10-03 19:55:29Z linjiao $
 
 # End of file
