@@ -13,6 +13,8 @@
 
 """
 parsers for diffraction data laz file
+
+adapted from VULCAN/applications/peak_generator.py
 """
 
 
