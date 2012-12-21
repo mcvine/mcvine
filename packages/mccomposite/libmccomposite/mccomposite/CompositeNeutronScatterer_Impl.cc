@@ -88,9 +88,6 @@ namespace mccomposite {
 }
 
 
-const int mccomposite::CompositeNeutronScatterer_Impl::max_scattering_loops = 8;
-
-
 struct mccomposite::CompositeNeutronScatterer_Impl::Details {
   
   // meta-methods

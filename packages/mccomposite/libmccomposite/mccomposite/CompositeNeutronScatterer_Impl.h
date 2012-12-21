@@ -29,7 +29,7 @@ namespace mccomposite{
   struct CompositeNeutronScatterer_Impl{
 
     // const data
-    static const int max_scattering_loops;
+    unsigned int max_scattering_loops;
     
     // types
     typedef AbstractNeutronScatterer scatterer_interface;
@@ -50,7 +50,7 @@ namespace mccomposite{
     
     double calculate_attenuation
     ( const mcni::Neutron::Event &ev, const geometry::Position &end);
-    
+
     // data
     const AbstractShape &m_shape;
     const scatterercontainer_t & m_scatterers;

@@ -79,6 +79,8 @@ namespace mccomposite{
     virtual double calculate_attenuation
     ( const mcni::Neutron::Event &ev, const geometry::Position &end);
 
+    virtual void set_max_multiple_scattering_number(unsigned int N);
+
   private:
 
     std::auto_ptr<CompositeNeutronScatterer_Impl> m_impl;
