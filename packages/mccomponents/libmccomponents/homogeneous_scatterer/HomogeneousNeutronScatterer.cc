@@ -33,7 +33,7 @@ namespace mccomponents {
 
 
 const double mccomponents::HomogeneousNeutronScatterer::minimum_neutron_event_probability = 1.e-20;
-const int mccomponents::HomogeneousNeutronScatterer::max_scattering_loops=8;
+const int mccomponents::HomogeneousNeutronScatterer::max_scattering_loops=3;
 
 
 mccomponents::HomogeneousNeutronScatterer::~HomogeneousNeutronScatterer
@@ -397,6 +397,10 @@ mccomponents::HomogeneousNeutronScatterer::calculate_attenuation
   return std::exp( - (mu+sigma) * length );
 }
 
+void
+mccomponents::HomogeneousNeutronScatterer::print(std::ostream &os) const {
+  os << "mccomponents::HomogeneousNeutronScatterer(shape=" << shape() << ")";
+}
 
 // version
 // $Id$

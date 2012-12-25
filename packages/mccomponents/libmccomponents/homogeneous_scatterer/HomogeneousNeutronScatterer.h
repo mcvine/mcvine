@@ -84,6 +84,8 @@ namespace mccomponents{
     virtual double calculate_attenuation
     ( const mcni::Neutron::Event &ev, const mccomposite::geometry::Position &end);
 
+    virtual void print(std::ostream &os) const;
+
   private:
     
     // helpers
