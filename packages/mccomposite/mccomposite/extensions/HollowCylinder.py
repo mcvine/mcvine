@@ -40,7 +40,7 @@ def onHollowCylinder(self, hollowCylinder):
     if r1 == 0*r1:
         shape = cylinder(r2, h)
     else:
-        shape = subtract( cylinder( r2, h ), cylinder(r1,h) )
+        shape = subtract( cylinder( r2, h ), cylinder(r1,h*2) )
     return shape.identify(self)
 
 
