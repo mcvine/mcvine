@@ -21,7 +21,7 @@ mccomposite::CompositeNeutronScatterer::CompositeNeutronScatterer
   : base_t( shape ),
     m_impl( new CompositeNeutronScatterer_Impl( shape, scatterers, geometer ) )
 {
-  set_max_multiple_scattering_number(4); // default max number of times of scattering
+  set_max_multiple_scattering_number(5); // default max number of times of scattering
 }
 
 
@@ -70,6 +70,11 @@ mccomposite::CompositeNeutronScatterer::set_max_multiple_scattering_number
 (unsigned int N)
 {
   m_impl->max_scattering_loops = N;
+}
+
+void
+mccomposite::CompositeNeutronScatterer::print(std::ostream &os) const {
+  os << "mccomposite::CompositeNeutronScatterer()";
 }
 
 

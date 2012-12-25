@@ -81,6 +81,8 @@ namespace mccomposite{
 
     virtual void set_max_multiple_scattering_number(unsigned int N);
 
+    virtual void print(std::ostream &os) const;
+
   private:
 
     std::auto_ptr<CompositeNeutronScatterer_Impl> m_impl;
