@@ -82,6 +82,15 @@ mccomposite::AbstractNeutronScatterer::interactM_path1
   return ret;
 }
 
+void
+mccomposite::AbstractNeutronScatterer::print(std::ostream &os) const {
+  os << "mccomposite::AbstractNeutronScatterer()";
+}
+
+std::ostream & operator<< (std::ostream &os, const mccomposite::AbstractNeutronScatterer & scatterer)
+{
+  scatterer.print(os);
+}
 
 
 // version

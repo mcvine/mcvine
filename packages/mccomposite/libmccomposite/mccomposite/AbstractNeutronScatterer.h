@@ -77,6 +77,8 @@ namespace mccomposite{
     /// my shape
     const AbstractShape & shape() const;
     
+    virtual void print(std::ostream &os) const;
+    
   private:
     // data
     const AbstractShape & m_shape;
@@ -84,8 +86,11 @@ namespace mccomposite{
     struct Details;
     std::auto_ptr< Details > m_details;
   };
-  
+
 } // mccomposite
+
+std::ostream & operator<< (std::ostream &os, const mccomposite::AbstractNeutronScatterer & scatterer);
+  
 
 #include "AbstractNeutronScatterer.icc"
 
