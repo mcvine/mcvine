@@ -79,7 +79,7 @@ namespace mccomposite{
     virtual double calculate_attenuation
     ( const mcni::Neutron::Event &ev, const geometry::Position &end);
 
-    virtual void set_max_multiple_scattering_number(unsigned int N);
+    virtual void set_max_multiplescattering_loops_among_scatterers(unsigned int N);
 
     virtual void print(std::ostream &os) const;
 

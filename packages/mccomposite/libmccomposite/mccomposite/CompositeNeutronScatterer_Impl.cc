@@ -34,7 +34,7 @@ namespace mccomposite {
   namespace CompositeNeutronScatterer_ImplDetails{
     
     char jrnltag[] = "CompositeNeutronScatterer_Impl";
-    
+
     ///to save the temp shapes
     struct TempShapes {
       
@@ -142,10 +142,13 @@ struct mccomposite::CompositeNeutronScatterer_Impl::Details {
 mccomposite::CompositeNeutronScatterer_Impl::CompositeNeutronScatterer_Impl
 ( const AbstractShape & shape, const scatterercontainer_t & scatterers, 
   const geometer_t & geometer )
-  : m_shape( shape ),
-    m_scatterers( scatterers ),
-    m_geometer( geometer ),
-    m_details( new Details(*this) )
+  : 
+  max_multiplescattering_loops_among_scatterers(5),
+  max_multiplescattering_loops_interactM_path1(2),
+  m_shape( shape ),
+  m_scatterers( scatterers ),
+  m_geometer( geometer ),
+  m_details( new Details(*this) )
 {
   for (size_t scatterer_index = 0; scatterer_index<m_scatterers.size(); 
        scatterer_index++) {
@@ -247,7 +250,7 @@ mccomposite::CompositeNeutronScatterer_Impl::interactM_path1
 
   int nloop = 0;
   
-  while (to_be_scattered.size()>0 && nloop++<max_scattering_loops) {
+  while (to_be_scattered.size()>0 && nloop++<max_multiplescattering_loops_interactM_path1) {
     
 #ifdef DEBUG
     debug << journal::at(__HERE__)
@@ -300,7 +303,9 @@ mccomposite::CompositeNeutronScatterer_Impl::interactM_path1
 #ifdef DEBUG
       debug << journal::at(__HERE__);
       if (newly_scattered.size()) {
-	debug << "After interactM_path1, got "
+	debug << "After interactM_path1 by scatterer ";
+	debug << scatterer;
+	debug << ", got "
 	      << newly_scattered.size()
 	      << " new neutrons: "
 	      << journal::newline;
@@ -395,11 +400,13 @@ mccomposite::CompositeNeutronScatterer_Impl::scatterM
   scatterer_interface::InteractionType itype;
   
   int nloop = 0;
-  while (scattered.size()>0 && nloop<max_scattering_loops) {
+  // this is the loop that neutrons got bounced among scatterers
+  // this is not the loop neutrons got bounced inside one scatterer.
+  while (scattered.size()>0 && nloop++<max_multiplescattering_loops_among_scatterers) {
     
     mcni::Neutron::Events scattered2;
     
-#ifdef DEBUG_MULTIPLESCATTERING
+#ifdef DEBUG_MULTIPLESCATTERING2
     debug << journal::at(__HERE__)
 	  << "in 'while loop' #" << nloop << journal::newline
 	  << "input neutron events:"
@@ -414,12 +421,12 @@ mccomposite::CompositeNeutronScatterer_Impl::scatterM
 
       // if the neutron is not moving, we don't have a way to deal with it
       if (! is_moving( ev ) ) continue;
-      
+
       // find out if it intersects with this scatterer
       // if not, it should be let go.
       
       if (is_exiting( ev, m_shape ) ) {
-#ifdef DEBUG_MULTIPLESCATTERING
+#ifdef DEBUG_MULTIPLESCATTERING2
 	debug << journal::at(__HERE__)
 	      << "this neutron is going out: " << ev 
 	      << journal::endl;
@@ -427,7 +434,7 @@ mccomposite::CompositeNeutronScatterer_Impl::scatterM
 	evts.push_back( ev ); continue; 
       }
       
-#ifdef DEBUG_MULTIPLESCATTERING
+#ifdef DEBUG_MULTIPLESCATTERING2
       debug << journal::at(__HERE__)
 	    << "this neutron needs further scattering: " << ev 
 	    << journal::endl;
@@ -436,6 +443,33 @@ mccomposite::CompositeNeutronScatterer_Impl::scatterM
       // try to scatter the neutron 
       itype = interactM_path1( ev, scattered2 );
       
+#ifdef DEBUG_MULTIPLESCATTERING2
+      debug << journal::at(__HERE__)
+	    << "interactM_path1"
+	    << "scattered event " << ev 
+	    << "into " << scattered2
+	    << journal::endl;
+#endif
+      // if there is an event that does not really get scattered
+      // we have a problem
+      if (scattered2.size()==1) {
+	mcni::Neutron::Event & ev2 = scattered2[0];
+	// no worry about divide by zero, we test that above
+	if (std::abs(ev2.probability-ev.probability)/ev.probability < 1e-5) {
+	  // XXX: this is hackish. solve the problem
+	  // XXX: by propagating neutron forward a little bit
+	  propagate(ev2, 1e-7);
+	}
+
+#ifdef DEBUG_MULTIPLESCATTERING2
+	debug << journal::at(__HERE__)
+	      << "after ajdustment, interactM_path1"
+	      << "scattered event " << ev 
+	      << "into " << scattered2
+	      << journal::endl;
+#endif
+      }
+
       // absorbed. nothing to do
       if (itype == scatterer_interface::absorption) continue;
     }
@@ -452,6 +486,20 @@ mccomposite::CompositeNeutronScatterer_Impl::scatterM
 	  << scattered
 	  << journal::endl;
 #endif
+  } // end of while loop 
+  
+  // there could be left-over neutrons 
+  // we just propagate them out of this scatterer and add attenuation
+  for (int i=0; i<scattered.size(); i++) {
+    // 1. save the neutron
+    mcni::Neutron::Event save = scattered[i];
+    mcni::Neutron::Event &ev = scattered[i];
+    // 2. propagate out
+    propagate_out( ev, m_shape );
+    // 3. compute attenuation
+    double attenuation = calculate_attenuation( save, ev.state.position );
+    ev.probability *= attenuation;
+    evts.push_back(ev);
   }
   
   return;

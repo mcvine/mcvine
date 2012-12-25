@@ -29,7 +29,6 @@ namespace mccomposite{
   struct CompositeNeutronScatterer_Impl{
 
     // const data
-    unsigned int max_scattering_loops;
     
     // types
     typedef AbstractNeutronScatterer scatterer_interface;
@@ -52,6 +51,8 @@ namespace mccomposite{
     ( const mcni::Neutron::Event &ev, const geometry::Position &end);
 
     // data
+    unsigned int max_multiplescattering_loops_among_scatterers;
+    unsigned int max_multiplescattering_loops_interactM_path1;
     const AbstractShape &m_shape;
     const scatterercontainer_t & m_scatterers;
     std::vector< const AbstractShape * > m_shapes;
