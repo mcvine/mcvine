@@ -26,7 +26,7 @@ class App(AppBase):
         nxs = pyre.inventory.str('nxs', default='arcs-sim.nxs')
         use_ei_guess = pyre.inventory.bool('use_ei_guess', default=True)
         ei_guess = pyre.inventory.float('ei_guess', default=100)
-        qaxis = pyre.inventory.list('qaxis', default=(0,13,0.1))
+        qaxis = pyre.inventory.array('qaxis', default=(0,13,0.1))
         out = pyre.inventory.str('out', default='iqe.nxs')
 
 
@@ -35,7 +35,7 @@ class App(AppBase):
         use_ei_guess = self.inventory.use_ei_guess
         ei_guess = self.inventory.ei_guess
         qmin, qmax, dq = self.inventory.qaxis
-        qaxis = qmin, dq, qmax
+        qaxis = (qmin, dq, qmax)
         outfile = self.inventory.out 
         d = {
             'nxsfile': nxs,
