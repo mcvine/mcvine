@@ -93,7 +93,8 @@ namespace mccomponents{
 	std::vector <float_t> m_relAccessibleReciVol_arr;
 	float_t m_Qcutoff;
 
-	float_t m_tot_scattering_cross_section;
+	float_t m_total_scattering_xs;
+	float_t m_total_absorption_xs;
 	
 	size_t m_nMCsteps_to_calc_RARV;
 	float_t m_epsilon;
