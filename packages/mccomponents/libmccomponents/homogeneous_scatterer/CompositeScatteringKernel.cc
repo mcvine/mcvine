@@ -42,7 +42,10 @@ mccomponents::CompositeScatteringKernel::absorption_coefficient
   double ret = 0.;
   for (size_t i=0; i<m_kernels.size(); i++) 
     ret += m_kernels[i]->absorption_coefficient( ev );
-  if (m_average) ret/=m_kernels.size();
+  
+  // always average the absorption coefficient??????????????
+  ret/=m_kernels.size();
+  
   return ret;
 }
 
