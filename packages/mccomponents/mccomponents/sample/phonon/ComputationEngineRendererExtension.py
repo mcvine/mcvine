@@ -49,10 +49,8 @@ class ComputationEngineRendererExtension:
                 scatterer.__class__.__name__, scatterer.name )
 
         # environment temperature
-        #environment = scatterer.environment
-        #temperature = environment.temperature
-        temperature = 300
-
+        temperature = getTemperature(scatterer)
+        
         # total mass of unitcell. for DW calculator. this might be reimplemented later.
         # mass = sum( [ site.getAtom().mass for site in unitcell ] )
         mass = sum( [ atom.mass for atom in unitcell ] )
@@ -138,9 +136,7 @@ class ComputationEngineRendererExtension:
                 scatterer.__class__.__name__, scatterer.name )
 
         # environment temperature
-        #environment = scatterer.environment
-        #temperature = environment.temperature
-        temperature = 300
+        temperature = getTemperature(scatterer)
 
         # total mass of unitcell. for DW calculator. this might be reimplemented later.
         # mass = sum( [ site.getAtom().mass for site in unitcell ] )
