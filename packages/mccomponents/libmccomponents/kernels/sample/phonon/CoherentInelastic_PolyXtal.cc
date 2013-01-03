@@ -16,6 +16,11 @@
 #include <cassert>
 #include "journal/warning.h"
 
+
+// XXX
+// #define DEEPDEBUG
+
+
 #ifdef DEEPDEBUG
 #define __DEBUG__PHNN__COHINEL_POLY__
 #endif
@@ -125,6 +130,8 @@ const
   float_t sin_theta = sqrt(1-cos_theta_sq);
   // == phi ==
   float_t phi = math::random(0, 2*physics::pi);
+  // adjust probability
+  prob *= 2*physics::pi;
 
   // == coordinate system ==
   K_t e1 = v_i; e1.normalize();
@@ -145,7 +152,6 @@ const
     + sin_theta*sin(phi) * e3
     + cos_theta * e1;
   v_f = v_f *  v_f_l;
-  //  prob *= ??? // need a factor here
 }
 
 
@@ -413,8 +419,8 @@ mccomponents::kernels::phonon::CoherentInelastic_PolyXtal::scatter
   const V_t &v_i   = ns.velocity;
   
   // we need to manipulate the neutron probability. get the reference here.
-  float_t               &prob = ev.probability; 
-
+  float_t &prob = ev.probability; 
+  
   /* initial velocity magnitude */
   float_t v_i_l = v_i.length();
   // initial energy
@@ -501,7 +507,8 @@ mccomponents::kernels::phonon::CoherentInelastic_PolyXtal::scatter
 
   if (E_i > omega) prob *= 2.0; // two choices of E_f: E_f>E_i or E_f<E_i
 
-  prob /= m_uc_vol;
+  // uc vol should be in scattering_coefficient, not here
+  // prob /= m_uc_vol;
 #ifdef DEEPDEBUG
   debug << journal::at(__HERE__)
 	<< "prob = " << prob 
@@ -513,15 +520,24 @@ mccomponents::kernels::phonon::CoherentInelastic_PolyXtal::scatter
   // It should include the debye-waller factor
   // but for now, we will consider dw factor to be constant
   // and put it in later.
+  // note: std::norm is the squared quantity
   float_t norm_of_slsum = std::norm
     (sum_of_scattering_length<complex_t, K_t, epsilon_t, atom_t, atoms_t, dispersion_t>
      (Q, branch, m_atoms, m_disp)
      );
-  // convert unit of scattering length to meter from fm
-  norm_of_slsum /= 1e30;
+  // convert unit of scattering length to meter
+  // scattering length is in fm (AtomicScatterer.h)
+  // Q is in Angstrom
+  norm_of_slsum *= 1e-30;
+  
   // divide this quautity by \sigma_coh because we want a normalized
-  // value
+  // value. this quantity is similar to Q**2
   norm_of_slsum /= (m_total_scattering_xs*1e-28);
+#ifdef DEEPDEBUG
+  debug << journal::at(__HERE__)
+	<< "norm_of_slsum = " << norm_of_slsum
+	<< journal::endl;
+#endif
   // convert the q**2 in that term to be in energy unit (meV), which
   // will cancel with meV unit of phonon energy
   prob *= conversion::ksquare2E( norm_of_slsum );
@@ -562,7 +578,7 @@ mccomponents::kernels::phonon::CoherentInelastic_PolyXtal::scatter
 	<< "prob = " << prob 
 	<< journal::endl;
 #endif
-  prob *= m_Qcutoff * m_Qcutoff * m_Qcutoff * 8.0;
+  prob *= m_Qcutoff * m_Qcutoff * m_Qcutoff * 8.0; // this is the size of the reciprocal space in which Q points are picked
 #ifdef DEEPDEBUG
   debug << journal::at(__HERE__)
 	<< "prob = " << prob 
@@ -574,7 +590,9 @@ mccomponents::kernels::phonon::CoherentInelastic_PolyXtal::scatter
 	<< "prob = " << prob 
 	<< journal::endl;
 #endif
-  prob /= 8*physics::pi;
+  // prob /= 8*physics::pi;
+  // prob *= 4*physics::pi;
+  prob /= 2;
 #ifdef DEEPDEBUG
   debug << journal::endl;
 #endif

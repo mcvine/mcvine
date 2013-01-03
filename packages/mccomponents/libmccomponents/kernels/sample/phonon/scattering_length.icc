@@ -40,7 +40,7 @@ template <typename complex_t, typename K_t, typename epsilon_t,
     const atom_t & atom = atoms[i];
     
     complex_t qdotd = (Q|atom.position);
-    ret += atom.coherent_scattering_length/std::sqrt(atom.mass) \
+    ret += atom.coherent_scattering_length/std::sqrt(2*atom.mass) \
       * std::exp( cI * qdotd ) * qdote;
   }
 
