@@ -50,15 +50,18 @@ class SampleAssembly2CompositeScatterer:
         compositeScatterer = mccomposite.composite( )
 
         for scatterer in sampleassembly.elements():
+            if scatterer.__class__.__name__ == 'Environment':
+                # environment not a scatterer
+                continue
             s = scatterer.identify(self)
             p = lg.position( scatterer )
             o = lg.orientation( scatterer )
             compositeScatterer.addElement( s, p, o )
             continue
-
+        
         return compositeScatterer
-
-
+    
+    
     def onHomogeneousScatterer(self, scatterer ):
         import mccomponents.homogeneous_scatterer as hs
         s = hs.homogeneousScatterer( scatterer.shape(), kernel = None )

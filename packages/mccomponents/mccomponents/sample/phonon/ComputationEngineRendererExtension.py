@@ -78,17 +78,17 @@ class ComputationEngineRendererExtension:
         '''handler to create c++ instance of phonon coherent inelastic polyxtal
         scattering kernel.
         '''
-        # get unit cell
+        # scatterer
         scatterer = kernel.scatterer_origin
+
+        # temperature
+        temperature = getTemperature(scatterer)
+        
+        # get unit cell
         try: unitcell = scatterer.phase.unitcell
         except AttributeError, err:
             raise "Cannot obtain unitcell from scatterer %s, %s" % (
                 scatterer.__class__.__name__, scatterer.name )
-
-        # environment temperature
-        #environment = scatterer.environment
-        #temperature = environment.temperature
-        temperature = 300
 
         # total mass of unitcell. for DW calculator. this might be reimplemented later.
         # mass = sum( [ site.getAtom().mass for site in unitcell ] )
@@ -195,6 +195,32 @@ class ComputationEngineRendererExtension:
 
     pass # end of ComputationEngineRendererExtension
 
+
+
+def getTemperature(scatterer):
+    # environment temperature
+    # desired implementation:
+    # environment = scatterer.environment
+    # temperature = environment.temperature
+
+    # sample assembly
+    # XXX: probably should be a loop until it gets to the root
+    sampleassembly = scatterer.parent()
+    # check sampleassembly
+    from sampleassembly.elements.SampleAssembly import SampleAssembly
+    if sampleassembly is not None and not isinstance(sampleassembly, SampleAssembly):
+        raise RuntimeError("%s is not a sampleassembly" % (sampleassembly,))
+    # get sample environment if sampleassembly exists
+    environ = sampleassembly.getEnvironment() \
+              if sampleassembly is not None \
+              else None
+
+    # get temperature if sample environment exists
+    from . import units
+    temperature = environ.temperature()/units.temperature.K \
+                  if environ is not None \
+                  else 300
+    return temperature
 
 
 def register( type, renderer_handler_method, override = False ):
