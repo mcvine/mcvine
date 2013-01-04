@@ -59,7 +59,7 @@ EXPORT_PYAPPS = \
 	mcvine-debye-waller-core-from-phonon-dos \
 
 
-EXPORT_BINS = $(EXPORT_PYAPPS) # $(PROJ_CPPEXE) 
+EXPORT_BINS = $(EXPORT_PYAPPS) $(PROJ_CPPEXE) 
 
 export-binaries:: $(EXPORT_BINS)
 
