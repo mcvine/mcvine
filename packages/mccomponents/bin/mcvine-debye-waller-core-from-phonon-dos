@@ -42,7 +42,7 @@ The input phonon DOS is in 2-col ascii format.
 
 """
 
-def loadDOS(f):
+def loadDOS_from2colascii(f):
     from mcni.utils.constants import hbar, e
     from math import pi
     # constant to convert frequency on terahertz to energy in meV
@@ -63,6 +63,31 @@ def loadDOS(f):
         [('energy', es, 'meV')],
         Is)
     return h
+
+
+def loadDOS_fromidf(path):
+    from mccomponents.sample.idf import readDOS
+    e, Z = readDOS(path)
+    import histogram
+    h = histogram.histogram(
+        'dos', 
+        [('energy', e, 'meV')],
+        Z)
+    return h
+
+
+def loadDOS(path):
+    import os
+    ext = os.path.splitext(path)[-1]
+    if ext == '.idf'or path == 'DOS':
+        format = 'idf'
+    elif ext == '.dat':
+        format = '2colascii'
+    else:
+        raise NotImplementedError("unknown file format: %s" % path)
+    
+    handler = eval('loadDOS_from%s' % format)
+    return handler(path)
 
 
 def compute(dos, mass, temperature, nsampling):
@@ -90,6 +115,12 @@ class App(AppBase):
         temperature = self.inventory.temperature
         nsampling = self.inventory.nsampling
         dos = loadDOS(self.inventory.dos)
+        
+        # save DOS as a "histogram"
+        print "saving dos to a histogram h5 file"
+        import histogram.hdf as hh
+        hh.dump(dos, 'dos-hist.h5')
+        #
         core = compute(dos, mass, temperature, nsampling)
         print "Debye-Waller factor core (unit: angstrom**2):"
         print core
