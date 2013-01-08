@@ -156,7 +156,7 @@ mccomponents::kernels::E_Q_Kernel<E_Q_functor_t, S_Q_functor_t>\
   double vz = vf*cost;
   
   // adjust probability of neutron event
-  // ev.probability *= 1.;
+  ev.probability *= m_S(Q) * (vf/vi);
   
   typedef mcni::Vector3<double> V3d;
   V3d vfv(vx,vy,vz);
