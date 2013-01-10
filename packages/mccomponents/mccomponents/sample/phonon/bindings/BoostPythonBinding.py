@@ -271,7 +271,7 @@ class New:
         atoms = [ self.atomicscatterer_fromSite( site ) for site in unitcell ]
         atom_vector = b.vector_AtomicScatterer(0)
         for atom in atoms: atom_vector.append( atom )
-
+        
         return b.Phonon_CoherentInelastic_PolyXtal_kernel(
             dispersion, atom_vector, unitcell_vol, dw_calctor,
             temperature, Ei, max_omega, max_Q,

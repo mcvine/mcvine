@@ -29,8 +29,8 @@ class E_Q_Kernel(Kernel):
   Inputs:
     E_Q: E(Q) function. str
     S_Q: S(Q) function. str
-    Qmin, Qmax: Q range. angstrom**-1
-    absorption_coefficient, scattering_coefficient: m*-1
+    Qmin, Qmax: Q range. should have units attached. usually angstrom**-1
+    absorption_coefficient, scattering_coefficient. should have units attached. usually m*-1
     '''
         self.E_Q = E_Q
         self.S_Q = S_Q
