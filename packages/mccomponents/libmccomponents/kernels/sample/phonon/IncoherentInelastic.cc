@@ -195,7 +195,7 @@ mccomponents::kernels::phonon::IncoherentInelastic::scatter
   const V_t v_i   = ns.velocity;
   
   // we need to manipulate the neutron probability. get the reference here.
-  float_t               &prob = ev.probability; 
+  float_t &prob = ev.probability; 
 
   /* initial velocity magnitude */
   float_t v_i_l = v_i.length();
