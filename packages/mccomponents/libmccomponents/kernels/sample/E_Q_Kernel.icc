@@ -109,6 +109,25 @@ mccomponents::kernels::E_Q_Kernel<E_Q_functor_t, S_Q_functor_t>\
 }
 
 
+/*
+ * original intergration is over solid angle
+ * here we need integration over Q magnitude
+ *  
+ * dEf dOmega = hbar**2 / (m*kf) d^3 kf
+ * d^3 kf = d^3Q = Q**2 dQ dOmega_Q = Q**2 dQ sin(theta) d(theta) d(phi)
+ * phi does not matter, integrate it first
+ * dEf dOmega integrated over phi = 2*pi * (hbar*Q)**2 / (m*kf) * dQ * sin(theta) d(theta)
+ * Since 
+ * kf**2 = ki**2 + Q**2 - 2*ki*Q*cos(theta)
+ * sin(theta) d(theta) = - d(cos(theta)) = d(kf**2)/(2kiQ)
+ * There is a delta function in S(Q,E): delta(E-E(Q))
+ * or delta(Ef + E(Q) - Ei)
+ * so after integration over Ef, got
+ * 2pi * (hbar*Q)**2 / (m*kf) * dQ * (2*m/hbar**2) /(2kiQ) = 2pi * Q / kf / ki * dQ
+ * Q*dQ/(kf*ki) * 2pi
+ * we need factor Q*Q_range / (kf*ki) * 2pi
+ */
+
 template< typename E_Q_functor_t, typename S_Q_functor_t>
 void
 mccomponents::kernels::E_Q_Kernel<E_Q_functor_t, S_Q_functor_t>\
@@ -129,6 +148,10 @@ mccomponents::kernels::E_Q_Kernel<E_Q_functor_t, S_Q_functor_t>\
   
   // compute E from Q
   double E = m_E(Q);
+
+#ifdef DEBUG
+  std::cout << "E,Q=" << E << ", " << Q << std::endl;
+#endif
   
   // final energy
   double Ef = Ei-E;
@@ -154,9 +177,17 @@ mccomponents::kernels::E_Q_Kernel<E_Q_functor_t, S_Q_functor_t>\
   double vx = vf*sint*cos(phi);
   double vy = vf*sint*sin(phi);
   double vz = vf*cost;
-  
+ 
+#ifdef DEBUG
+  std::cout << "S,vf/vi=" << m_S(Q) << ", " << vf/vi << std::endl;
+#endif
   // adjust probability of neutron event
   ev.probability *= m_S(Q) * (vf/vi);
+  // we need to divide by 4pi (we are calculating integrated sigma, which is \int (vf/vi)*S/(4pi)
+  ev.probability /= 4 * mcni::PI;
+  // additional factor from integration over Q instead of solid angle
+  // see above
+  ev.probability *= Q*(m_Qmax-m_Qmin) / (kf*ki) * 2*mcni::PI;
   
   typedef mcni::Vector3<double> V3d;
   V3d vfv(vx,vy,vz);
