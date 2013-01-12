@@ -17,6 +17,23 @@ This module helps creating "raw" ARCS nexus file.
 """
 
 def write(events, tofbinsize, path):
+    """ write neutron events into a ARCS nexus file
+    The events is a numpy array of "event" records. 
+    An event record has three fields:
+      * pixelID
+      * tofChannelNo
+      * p
+
+    tofbinsize * tofChannelNo is the tof for the bin
+    path is the output path
+    """
+
+    # implementation details
+    # -1. h5py is used for handling the file.
+    # 0. make a new file by first copying a template file to a new file, and then adding new data
+    # 1. events are splitted to banks and saved. for a bank, all events are in bank{i}_events
+    # 2. any bank must have at least one event. if there are no events, we must assign fake ones
+    
     import shutil, sys
     shutil.copyfile(nxs_template, path)
     import time; time.sleep(0.5)
