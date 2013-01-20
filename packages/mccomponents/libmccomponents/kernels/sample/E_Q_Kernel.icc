@@ -21,6 +21,9 @@
 #include "mccomponents/exception.h"
 #include "mcni/math/number.h"
 #include "mccomponents/math/random.h"
+#include "mccomponents/math/random/geometry.h"
+#include "mccomponents/math/Functor.h"
+#include "mccomponents/math/rootfinding.h"
 
 
 #ifdef DEBUG
@@ -33,12 +36,56 @@ struct
 mccomponents::kernels::E_Q_Kernel<E_Q_functor_t, S_Q_functor_t>\
 :: Details {
 
+  typedef mccomponents::kernels::E_Q_Kernel<E_Q_functor_t, S_Q_functor_t> \
+    kernel_t;
+    
 #ifdef DEBUG
   const static char jrnltag[];
   journal::debug_t debug;
-  Details() : debug( jrnltag ) {}
 #endif
+  Details(kernel_t &i_kernel) 
+    :
+    kernel(&i_kernel)
+    ,root_finder(1e-6)
+    ,roots_finder(root_finder, 10000)
+#ifdef DEBUG
+    ,debug( jrnltag )
+#endif
+    {}
 
+  kernel_t * kernel;
+  math::Algorithms::Bracketing::Ridder::ZRidd root_finder;
+  math::FindRootsEvenly roots_finder;
+
+};
+
+
+template< typename E_Q_functor_t>
+struct E_q_minus_deltaE: public mccomponents::math::Functor {
+    
+  typedef double float_t;
+    
+  E_q_minus_deltaE(E_Q_functor_t &i_E_Q, float_t i_cos_t, float_t i_Ei)
+    :
+    Ei(i_Ei)
+    ,cos_t(i_cos_t)
+    ,E_Q(i_E_Q)
+  {
+    ki = mcni::neutron_units_conversion::E2k(Ei);
+  }
+    
+  float_t evaluate(float_t Q) const {
+    // Q**2 - ki**2 - kf**2 + 2*ki*kf*cos(theta)
+    // ki is constant
+    // kf**2 = 2m/hbar**2 * Ef, where Ef = Ei - E(Q)
+    float_t Ef = Ei - E_Q(Q);
+    float_t kf = mcni::neutron_units_conversion::E2k(Ef);
+    return Q*Q - ki*ki - kf*kf + 2*ki*kf* cos_t;
+  }
+    
+  float_t ki, Ei;
+  float_t cos_t;
+  E_Q_functor_t &E_Q;  
 };
 
 
@@ -64,7 +111,7 @@ mccomponents::kernels::E_Q_Kernel<E_Q_functor_t, S_Q_functor_t>\
     m_Qmax(Qmax),
     m_absorption_coefficient( absorption_coefficient ),
     m_scattering_coefficient( scattering_coefficient ),
-    m_details( new Details )
+    m_details( new Details(*this) )
 {
   if (m_Qmin<0) {
     std::cerr << "Qmin must be not negative. Got " << m_Qmin << std::endl;
@@ -109,25 +156,6 @@ mccomponents::kernels::E_Q_Kernel<E_Q_functor_t, S_Q_functor_t>\
 }
 
 
-/*
- * original intergration is over solid angle
- * here we need integration over Q magnitude
- *  
- * dEf dOmega = hbar**2 / (m*kf) d^3 kf
- * d^3 kf = d^3Q = Q**2 dQ dOmega_Q = Q**2 dQ sin(theta) d(theta) d(phi)
- * phi does not matter, integrate it first
- * dEf dOmega integrated over phi = 2*pi * (hbar*Q)**2 / (m*kf) * dQ * sin(theta) d(theta)
- * Since 
- * kf**2 = ki**2 + Q**2 - 2*ki*Q*cos(theta)
- * sin(theta) d(theta) = - d(cos(theta)) = d(kf**2)/(2kiQ)
- * There is a delta function in S(Q,E): delta(E-E(Q))
- * or delta(Ef + E(Q) - Ei)
- * so after integration over Ef, got
- * 2pi * (hbar*Q)**2 / (m*kf) * dQ * (2*m/hbar**2) /(2kiQ) = 2pi * Q / kf / ki * dQ
- * Q*dQ/(kf*ki) * 2pi
- * we need factor Q*Q_range / (kf*ki) * 2pi
- */
-
 template< typename E_Q_functor_t, typename S_Q_functor_t>
 void
 mccomponents::kernels::E_Q_Kernel<E_Q_functor_t, S_Q_functor_t>\
@@ -142,56 +170,54 @@ mccomponents::kernels::E_Q_Kernel<E_Q_functor_t, S_Q_functor_t>\
   double vi = state.velocity.length();
   // incident neutron energy
   double Ei = conversion::v2E( vi );
-
-  // randomly pick momentum transfer
-  double Q = math::random(m_Qmin, m_Qmax);
   
-  // compute E from Q
-  double E = m_E(Q);
+  // randomly pick scattering direction
+  typedef mcni::Vector3<double> V3d;
+  V3d dir; math::choose_direction( dir );
+  
+  // compute cos(theta)
+  V3d ei = state.velocity; ei.normalize();
+  double cos_t = (ei|dir);
 
+  // find Ef
+  // .. construct functor to find solution
+  E_q_minus_deltaE<E_Q_functor_t> eqmd(m_E, cos_t, Ei);
+  // .. solve 
+  std::vector<double> Q_list = m_details->roots_finder.solve( m_Qmin, m_Qmax, eqmd);
+  // .. randomly choose Q
+  size_t nq = Q_list.size();
+  if (nq<1) {
+    std::cerr
+      << "E_Q_Kernel::scatter: failed to find solution for Q. skip."
+      << "Ei=" << Ei << "," << "cos(theta)=" << cos_t
+      << std::endl;
+    ev.probability = -1;
+    return;
+  }
+  int index=0;
+  if (nq>1) index = (int)math::random(0, nq);
+  double Q = Q_list[index];
+  // .. get E from Q
+  double E = m_E(Q);
+  // .. final energy
+  double Ef = Ei - E;
+  
 #ifdef DEBUG
   std::cout << "E,Q=" << E << ", " << Q << std::endl;
 #endif
   
-  // final energy
-  double Ef = Ei-E;
-
   // final velocity magnitude
   double vf = conversion::E2v( Ef );
   
-  // theta, phi
-  double ki = conversion::v2k* vi;
-  double kf = conversion::v2k* vf;
-  double cost = (ki*ki+kf*kf-Q*Q)/(2*ki*kf);
-  double cost2 = cost*cost;
-  if (cost2>1) {
-    // Ei is too small and we have a problem
-    // no scattering
-    return;
-  }
-  double sint = std::sqrt(1-cost2);
-  // 
-  double phi = math::random(0, mcni::PI*2);
-  
-  // scattered neutron velocity vector
-  double vx = vf*sint*cos(phi);
-  double vy = vf*sint*sin(phi);
-  double vz = vf*cost;
+  // final velocity vector
+  V3d vfv = dir * vf;
+  state.velocity = vfv;
  
 #ifdef DEBUG
   std::cout << "S,vf/vi=" << m_S(Q) << ", " << vf/vi << std::endl;
 #endif
   // adjust probability of neutron event
   ev.probability *= m_S(Q) * (vf/vi);
-  // we need to divide by 4pi (we are calculating integrated sigma, which is \int (vf/vi)*S/(4pi)
-  ev.probability /= 4 * mcni::PI;
-  // additional factor from integration over Q instead of solid angle
-  // see above
-  ev.probability *= Q*(m_Qmax-m_Qmin) / (kf*ki) * 2*mcni::PI;
-  
-  typedef mcni::Vector3<double> V3d;
-  V3d vfv(vx,vy,vz);
-  state.velocity = vfv;
 }
 
 
