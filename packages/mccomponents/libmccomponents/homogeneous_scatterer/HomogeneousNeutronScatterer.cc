@@ -11,6 +11,7 @@
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //
 
+
 #include "mccomponents/homogeneous_scatterer/HomogeneousNeutronScatterer.h"
 #include "mccomponents/homogeneous_scatterer/AbstractScatteringKernel.h"
 #include "mccomposite/neutron_propagation.h"
@@ -18,12 +19,16 @@
 
 
 // #define DEBUG
+// #define DEBUG2  // for debugging distribution of random x (position along path)
 
 #ifdef DEBUG
 #include "portinfo"
 #include "journal/debug.h"
 #endif
 
+#ifdef DEBUG2
+#include "mcni/neutron/units_conversion.h"
+#endif
 
 namespace mccomponents {
   namespace HomogeneousNeutronScatterer_Impl {
@@ -172,6 +177,17 @@ mccomponents::HomogeneousNeutronScatterer::interact_path1(mcni::Neutron::Event &
     // scattering
     double x = math::random(0, distance);
     double atten = std::exp( -(mu+sigma) * x );
+    /*
+      // alternative implementation
+    double t = sigma + mu;
+    double x;
+    if (t*distance<1e-6) 
+      x = math::random(0, distance);
+    else
+      x = - log(1-math::random(0, 1-exp(-t*distance)))/t;
+    double atten = 1;
+    */
+      
     double prob = sigma * distance * atten;
     prob *= sum_of_weights/m_weights.scattering;
 #ifdef DEBUG
@@ -180,14 +196,43 @@ mccomponents::HomogeneousNeutronScatterer::interact_path1(mcni::Neutron::Event &
 	      << "prob factor: " << prob 
 	      << std::endl;
 #endif
+#ifdef DEBUG2
+    typedef mcni::Vector3<double> V3d;
+    std::cout 
+      << "p0=" << ev.probability << ", "
+      << "distance=" << distance << ", "
+      << "x=" << x << ", "
+      << "atten=" << atten << ", "
+      ;
+#endif
     ev.probability *= prob;
+#ifdef DEBUG2
+    std::cout << "p1=" << ev.probability << ",";
+    V3d vi = ev.state.velocity;
+#endif
     propagate( ev, x/velocity );
     m_kernel.scatter( ev );
+#ifdef DEBUG2
+    V3d vf = ev.state.velocity;
+    V3d vQ = vi - vf;
+    double Q = mcni::neutron_units_conversion::v2k * vQ.length();
+    std::cout
+      << "p2=" << ev.probability << ","
+      << "Q=" << Q << ","
+      ;
+#endif
     mcni::Neutron::Event save = ev;
     if (ev.probability <=0) 
       return base_t::absorption;
     propagate_to_next_exiting_surface( ev, shape() );
-    ev.probability *= calculate_attenuation( save, ev.state.position );
+    double atten2 = calculate_attenuation( save, ev.state.position );
+    ev.probability *= atten2;
+#ifdef DEBUG2
+    std::cout 
+      << "atten2=" << atten2 << ","
+      << "p3=" << ev.probability << "," 
+      << std::endl;
+#endif
     return base_t::scattering;
   }
   
