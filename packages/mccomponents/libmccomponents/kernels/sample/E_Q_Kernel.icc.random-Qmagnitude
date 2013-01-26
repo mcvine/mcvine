@@ -135,6 +135,7 @@ mccomponents::kernels::E_Q_Kernel<E_Q_functor_t, S_Q_functor_t>\
  * 2pi * (hbar*Q)**2 / (m*kf) * dQ * (2*m/hbar**2) /(2kiQ) = 2pi * Q / kf / ki * dQ
  * Q*dQ/(kf*ki) * 2pi
  * we need factor Q*Q_range / (kf*ki) * 2pi
+ *
  */
 
 template< typename E_Q_functor_t, typename S_Q_functor_t>
@@ -143,6 +144,10 @@ mccomponents::kernels::E_Q_Kernel<E_Q_functor_t, S_Q_functor_t>\
 ::scatter
 ( mcni::Neutron::Event & ev )
 {
+  /*
+    the implemenation here is mostly good, but need more careful
+    treatment regarding invalid Q values in the given Q range
+   */
   namespace conversion = mcni::neutron_units_conversion;
 
   // input neutron state
