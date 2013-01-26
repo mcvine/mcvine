@@ -23,6 +23,9 @@
 #include "mccomponents/math/random.h"
 
 
+// debug
+// #define DEBUG
+
 #ifdef DEBUG
 #include "journal/debug.h"
 #endif
@@ -39,6 +42,7 @@ mccomponents::kernels::E_Q_Kernel<E_Q_functor_t, S_Q_functor_t>\
   Details() : debug( jrnltag ) {}
 #endif
 
+  const static double m_epsilon;
 };
 
 
@@ -48,6 +52,11 @@ const char
 mccomponents::kernels::E_Q_Kernel<E_Q_functor_t, S_Q_functor_t>\
 ::Details::jrnltag[] = "E_Q_Kernel";
 #endif
+
+
+template< typename E_Q_functor_t, typename S_Q_functor_t>
+const double mccomponents::kernels::E_Q_Kernel<E_Q_functor_t, S_Q_functor_t> \
+::Details::m_epsilon = 1e-4;
 
 
 template< typename E_Q_functor_t, typename S_Q_functor_t>
@@ -156,6 +165,11 @@ mccomponents::kernels::E_Q_Kernel<E_Q_functor_t, S_Q_functor_t>\
   // final energy
   double Ef = Ei-E;
 
+  if (Ef<0) {
+      ev.probability = -1;
+      return;
+  }
+
   // final velocity magnitude
   double vf = conversion::E2v( Ef );
   
@@ -174,9 +188,25 @@ mccomponents::kernels::E_Q_Kernel<E_Q_functor_t, S_Q_functor_t>\
   double phi = math::random(0, mcni::PI*2);
   
   // scattered neutron velocity vector
-  double vx = vf*sint*cos(phi);
-  double vy = vf*sint*sin(phi);
-  double vz = vf*cost;
+  // == coordinate system ==
+  typedef mcni::Vector3<double> V3d;
+  V3d e1 = state.velocity; e1.normalize();
+  // if e1 is not in z-direction
+  // we set e2 to be the cross product of e1 and (0,0,1)
+  // if e1 is right on the z-direction, that means e1 = (0,0,1)
+  // and we set e2 = (1,0,0) or whatever
+  V3d e2;
+  if (std::abs(e1.x)>m_details->m_epsilon || std::abs(e1.y)>m_details->m_epsilon) { 
+    e2 = V3d(0,0,1) * e1; e2.normalize();
+  } else {
+    e2 = V3d(1,0,0);
+  }
+  V3d e3 = e1 * e2;
+  // == v_f ==
+  V3d v_f = sint*cos(phi) * e2 
+    + sint*sin(phi) * e3
+    + cost * e1;
+  v_f = v_f * vf;
  
 #ifdef DEBUG
   std::cout << "S,vf/vi=" << m_S(Q) << ", " << vf/vi << std::endl;
@@ -187,11 +217,9 @@ mccomponents::kernels::E_Q_Kernel<E_Q_functor_t, S_Q_functor_t>\
   ev.probability /= 4 * mcni::PI;
   // additional factor from integration over Q instead of solid angle
   // see above
-  ev.probability *= Q*(m_Qmax-m_Qmin) / (kf*ki) * 2*mcni::PI;
+  ev.probability *=  Q*(m_Qmax-m_Qmin) / (kf*ki) * 2*mcni::PI;
   
-  typedef mcni::Vector3<double> V3d;
-  V3d vfv(vx,vy,vz);
-  state.velocity = vfv;
+  state.velocity = v_f;
 }
 
 
