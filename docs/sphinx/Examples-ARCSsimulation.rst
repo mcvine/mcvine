@@ -200,6 +200,10 @@ See how many neutrons are there::
 Tutorial 2: Compute resolution function in Q,E space
 ----------------------------------------------------
 
+.. note:
+ This should still work, but a quicker way is to first run arcs_beam
+ simulation, and then run arcs-compute-IQE-resolution simulation.
+
 Quick Overview
 """"""""""""""
 
@@ -318,6 +322,38 @@ where
 
 Commands
 --------
+
+.. _arcs_beam:
+
+arcs_beam
+"""""""""
+
+Compute neutrons at the sample position of ARCS beam.
+
+::
+
+ $ arcs_beam -h
+
+to find help
+
+.. _arcs-iqeres:
+
+arcs-compute-IQE-resolution
+"""""""""""""""""""""""""""
+
+Compute I(Q,E) resolution function.
+
+::
+ $ arcs-compute-IQE-resolution --ncount=1e7 --nodes=10 --Ei=100 --Q=6  --E=20 --dQ=2 --dE=10 --mod2sample=/path/to/mod2sample
+
+* ncount: Monte Carlo counts
+* nodes: number of nodes
+* Ei: nominal incident energy (meV)
+* Q, E: momentum and energy transfer at which the resolution is calculated
+* dQ, dE: range of momentum and energy transfer in which the resolution function is computed
+* mod2sample: the path in which the moderator-to-sample simulation was performed.
+
+
 
 arcs-neutrons2nxs
 """""""""""""""""
