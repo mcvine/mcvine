@@ -5,6 +5,15 @@ Simulate ARCS beam.
 
 It is a wrapper of arcs-m2s and convenient tools to 
 compute monitor spectra and others.
+
+Example:
+
+ $ arcs_beam --fermi_chopper=700-1.5-SMI --fermi_nu=600 --T0_nu=60 --E=600 --ncount=1e8
+
+For more details of cmd line parameters, run:
+
+ $ arcs_beam --help-properties
+
 """
 
 import os, time
