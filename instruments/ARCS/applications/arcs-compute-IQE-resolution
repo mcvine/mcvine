@@ -63,6 +63,7 @@ def run(
 
     # reduce events to S(Q,E)
     eventsdat = 'out/events.dat'
+    dQ/=2.; dE/=2.
     Qaxis = Q-dQ, Q+dQ, dQ/50.
     Eaxis = E-dE, E+dE, dE/50.
     Ei, toffset = getEiToffset(mod2sample)
@@ -181,7 +182,9 @@ def _computeAverageEnergy(ienergyh5=None, mod2sample_outdir=None):
     return e
 
 
-
+app_help = """
+%s --ncount=1e7 --nodes=10 --Ei=100 --Q=6  --E=20 --dQ=1 --dE=10 --mod2sample=/path/to/mod2sample
+""" % appname
 from pyre.applications.Script import Script as AppBase
 class App(AppBase):
 
@@ -198,6 +201,10 @@ class App(AppBase):
         dE = pyre.inventory.float('dE', default=0)
         mod2sample = pyre.inventory.str('mod2sample', default='../mod2sample')
 
+
+    def help(self):
+        print app_help
+
         
     def main(self):
         ncount = self.inventory.ncount
@@ -208,6 +215,8 @@ class App(AppBase):
         dQ = self.inventory.dQ
         dE = self.inventory.dE
         mod2sample = self.inventory.mod2sample
+        import os
+        mod2sample = os.path.expanduser(mod2sample)
         
         if Ei == 0:
             Ei = None
