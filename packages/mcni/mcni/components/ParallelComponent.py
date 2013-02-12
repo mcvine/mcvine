@@ -40,9 +40,8 @@ class ParallelComponent(object):
     '''
 
     try:
-        import mpi
-        world = mpi.world()
-        mpiRank = world.rank; mpiSize = world.size
+        from mcni.utils import mpi
+        mpiRank = mpi.rank; mpiSize = mpi.size
         if mpiSize <= 1:
             mpiSize = 1
             parallel = False
@@ -74,25 +73,11 @@ class ParallelComponent(object):
 
 
     def mpiSendStr( self, s, peer, tag):
-        world = self.world
-        port = world.port(peer=peer, tag=tag)
-        msg = "Machine %s: sending string of length %d to peer %s with tag %s" % (
-            self.mpiRank, len(s), peer, tag) 
-        port.send(s)
-        msg = "Machine %s: sent string of length %d to peer %s with tag %s" % (
-            self.mpiRank, len(s), peer, tag) 
-        info.log( msg )
-        return
-
+        return self.mpi.sendStr(s, peer, tag)
+    
 
     def mpiReceiveStr(self, peer, tag):
-        world = self.world
-        port = world.port(peer=peer, tag=tag)
-        s = port.receive()
-        msg = "Machine %s: received string of length %d from peer %s with tag %s" % (
-            self.mpiRank, len(s), peer, tag)
-        info.log( msg )
-        return s
+        return self.mpi.receiveStr(peer, tag)
 
 
     def mpiBarrier(self):
@@ -109,10 +94,6 @@ class ParallelComponent(object):
     
 
     pass # end of ParallelComponent
-
-
-import cPickle as pickle
-
 
 
 # version

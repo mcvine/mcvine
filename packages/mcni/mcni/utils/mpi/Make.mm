@@ -10,11 +10,11 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 PROJECT = mcni
-PACKAGE = utils
+PACKAGE = utils/mpi
 
 
 BUILD_DIRS = \
-	mpi \
+
 
 RECURSE_DIRS = $(BUILD_DIRS)
 
@@ -36,9 +36,8 @@ update: clean
 
 EXPORT_PYTHON_MODULES = \
 	__init__.py \
-	constants.py \
-	conversion.py \
-	mpiutil.py \
+	use_pyre.py \
+	use_mpi4py.py \
 
 
 export:: export-package-python-modules

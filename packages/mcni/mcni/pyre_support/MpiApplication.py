@@ -17,29 +17,18 @@
 ##  1. use mpich2 launcher
 
 
-try:
-    from mpi.Application import Application as base
-    usempi = True
-except ImportError:
-    import warnings
-    msg = "mpi python module not available. parallel simulation is not supported"
-    warnings.warn( msg )
-    from pyre.applications.Script import Script as base
-    usempi = False
+from .MpiAppBase import Application as base
 
 
 # check whether mpi is really available by checking the size
 # of the mpi world
-if usempi:
-    import mpi
-    size = mpi.world().size
-    if size <=0:
-        msg = (
-            "The size of the mpi world is 0. "
-            "It could be the mpi binding of mcvine is not compiled correctly. "
-            "Or mpi daemon is not started."
-            )
-        raise RuntimeError, msg
+from ..utils import mpi
+world = mpi.world
+usempi = True
+if world is None:
+    usempi = False
+# elif mpi.size < 2:
+#    usempi = False
 
 
 class Application(base):
@@ -54,7 +43,7 @@ class Application(base):
     if usempi:
         def _defaults(self):
             base._defaults(self)
-            from LauncherMPICH2 import LauncherMPICH2
+            from .LauncherMPICH2 import LauncherMPICH2
             self.inventory.launcher = LauncherMPICH2()
             return
 
@@ -63,6 +52,7 @@ class Application(base):
         self._debug.log("%s: onServer" % self.name)
 
         launcher = self.inventory.launcher
+        launcher.nodes = 2
         launched = launcher.launch()
         if not launched:
             raise RuntimeError, "application not launched"
