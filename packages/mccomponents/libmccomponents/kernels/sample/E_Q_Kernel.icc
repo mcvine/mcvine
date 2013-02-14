@@ -191,7 +191,6 @@ mccomponents::kernels::E_Q_Kernel<E_Q_functor_t, S_Q_functor_t>\
       << "E_Q_Kernel::scatter: failed to find solution for Q. skip."
       << "Ei=" << Ei << "," << "cos(theta)=" << cos_t
       << std::endl;
-    ev.probability = -1;
     return;
   }
   int index=0;
@@ -201,6 +200,11 @@ mccomponents::kernels::E_Q_Kernel<E_Q_functor_t, S_Q_functor_t>\
   double E = m_E(Q);
   // .. final energy
   double Ef = Ei - E;
+  
+  if (Ef<0) {
+    // should not proceed. non-physical
+    return;
+  }
   
 #ifdef DEBUG
   std::cout << "E,Q=" << E << ", " << Q << std::endl;
