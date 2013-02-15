@@ -65,9 +65,9 @@ class TestCase(unittest.TestCase):
             '--dump-pml',
             '--overwrite-datafiles',
             ]
-
+        
         instrument.run()
-
+        
         sys.argv = save
         return
 
@@ -91,7 +91,7 @@ class TestCase(unittest.TestCase):
         temp = min(psutil.TOTAL_PHYMEM/2, (psutil.avail_phymem() + psutil.avail_virtmem())*0.7)
         temp = int(temp)
         from mcni.neutron_storage.idfneutron import ndblsperneutron
-        max = int(temp/ndblsperneutron/8/100) * 100
+        max = int(temp/ndblsperneutron/8/100/mpiSize) * 100
         
         instrument.inventory.ncount = ncount = 1e9
         self.assertEqual(instrument._getBufferSize(), max)
@@ -202,6 +202,7 @@ def main():
 
 
 if __name__ == "__main__":
+    unittest.main()
     main()
     
 # version

@@ -39,6 +39,9 @@ class TestCase(unittest.TestCase):
             raise RuntimeError, "%r failed" % cmd
         
         # make sure the final result is normalized
+        # the probability should be 1 since it is first normalized by mc count
+        # and then scaled by # of neutrons in the storage, which
+        # equals to mc count in this case
         from mcni.neutron_storage import readneutrons_asnpyarr
         neutrons = readneutrons_asnpyarr(outfile)
         self.assertEqual(len(neutrons), ncount)
@@ -46,7 +49,7 @@ class TestCase(unittest.TestCase):
                     0., 0., 3000.,
                     0., 1.,
                     0.,
-                    1/ncount]
+                    1]
         for n in neutrons:
             self.assert_((n==expected).all())
             continue
@@ -70,7 +73,7 @@ class TestCase(unittest.TestCase):
                     0., 0., 3000.,
                     0., 1.,
                     0.,
-                    1/ncount]
+                    1]
         for n in neutrons:
             self.assert_((n==expected).all())
             continue
@@ -95,7 +98,8 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    unittest.main()
+    # main()
     
 # version
 __id__ = "$Id$"
