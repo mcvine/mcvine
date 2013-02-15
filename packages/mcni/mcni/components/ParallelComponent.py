@@ -62,14 +62,11 @@ class ParallelComponent(object):
     
 
     def mpiSend( self, obj, peer, tag):
-        s = pickle.dumps( obj )
-        return self.mpiSendStr( s, peer, tag )
+        return self.mpi.send(obj, peer, tag)
 
 
     def mpiReceive(self, peer, tag):
-        s = self.mpiReceiveStr( peer, tag )
-        obj = pickle.loads( s )
-        return obj
+        return self.mpi.receive(peer, tag)
 
 
     def mpiSendStr( self, s, peer, tag):
