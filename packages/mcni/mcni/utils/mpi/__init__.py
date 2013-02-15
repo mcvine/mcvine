@@ -37,7 +37,7 @@ if mpi_binding_choice:
 else:
     b = _find_mpi_binding()
 if b:
-    names = ['size', 'rank', 'world', 'send', 'receive']
+    names = ['size', 'rank', 'world', 'send', 'receive', 'sendStr', 'receiveStr']
     for name in names:
         exp = '%s = b.%s' % (name, name)
         exec exp
