@@ -36,9 +36,12 @@ EXPORT_PYTHON_MODULES = \
 	ConsoleNeutronTracer.py \
 	Instrument.py \
 	Geometer.py \
+	LauncherBase.py \
 	LauncherMPICH2.py \
+	LauncherSerial.py \
 	List.py \
 	MpiApplication.py \
+	MpiAppBase.py \
 	NeutronComponentFacility.py \
 	NeutronTracerFacility.py \
 	NoNeutronTracer.py \

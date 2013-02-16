@@ -107,6 +107,8 @@ class TestCase(unittest.TestCase):
         # Hits monitor
         (xw, yh)    = (0.1, 0.1)
         position    = "(0,0,1),(0,0,0)"
+        outdir = 'out-test_sizes-hits'
+        histfile = '%s/iw2.h5' % outdir
         cmd = cmd_fmt % (xw, yh, position, outdir)
         if os.system(cmd):
             raise RuntimeError, "%r failed" % cmd
@@ -132,7 +134,8 @@ def main():
     
     
 if __name__ == "__main__":
-    main()
+    unittest.main()
+    # main()
     
 # version
 __id__ = "$Id: MultiMonitors_TestCase.py 659 2010-10-24 18:20:07Z linjiao $"

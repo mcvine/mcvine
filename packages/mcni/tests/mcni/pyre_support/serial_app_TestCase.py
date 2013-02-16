@@ -16,28 +16,39 @@
 import unittestX as unittest
 import journal
 
-debug = journal.debug( "BoostPython_TestCase" )
-warning = journal.warning( "BoostPython_TestCase" )
+debug = journal.debug( "mcni.pyre_support.test" )
+warning = journal.warning( "mcni.pyre_support.test" )
+
 
 
 class TestCase(unittest.TestCase):
 
+
     def test(self):
-        'mccomponents.homogeneous_scatterer: Boost python binding'
-        from mccomponents.homogeneous_scatterer.bindings import get
-        bp = get('BoostPython')
-        
-        kernels = bp.kernelcontainer( )
-        average = False
-        ck = bp.compositekernel( kernels, average )
-
-        cylinder = bp.cylinder( 0.02, 0.1 )
-
-        #this scatterer does not really have a kernel
-        hs = bp.homogeneousscatterer( cylinder, ck, (0,1,0) )
+        'mcni.pyre_support: a simple pyre simulation app'
+        instrument = App('test-serial-app')
+        instrument.testFacility = self
+        instrument.run()
         return
     
+        
     pass  # end of TestCase
+
+
+
+from mcni.pyre_support.MpiApplication import Application as base
+class App(base):
+
+    class Inventory( base.Inventory ):
+
+        import pyre.inventory
+        pass # end of Inventory
+
+
+    def main(self):
+        super(App, self).main()
+        print "in app.main()"
+        return
 
 
 
@@ -45,19 +56,18 @@ def pysuite():
     suite1 = unittest.makeSuite(TestCase)
     return unittest.TestSuite( (suite1,) )
 
-
 def main():
     #debug.activate()
-    #journal.debug("mccomposite.geometry.ArrowIntersector").activate()
-    #journal.debug("mccomposite.geometry.Locator").activate()
-    #journal.debug("CompositeNeutronScatterer_Impl").activate()
+    import journal
+    journal.info('mpirun').activate()
     pytests = pysuite()
     alltests = unittest.TestSuite( (pytests, ) )
     res = unittest.TextTestRunner(verbosity=2).run(alltests)
     import sys; sys.exit(not res.wasSuccessful())
 
-    
-    
+    return
+
+
 if __name__ == "__main__":
     main()
     

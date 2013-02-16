@@ -20,7 +20,7 @@ import unittest
 class TestCase(unittest.TestCase):
 
 
-    def _test(self):
+    def test(self):
         "ARCS detector system. Neutrons shotting at one single pixel."
         cmd = './sd'
         import os
@@ -32,6 +32,24 @@ class TestCase(unittest.TestCase):
         # print events
         # print events['p'].sum()
         p = events['p'].sum()
+        print p
+        self.assert_(p>0.9 and p<1)
+        return
+
+
+    def test1a(self):
+        "ARCS detector system. Neutrons shotting at one single pixel."
+        cmd = './sd --mpirun.nodes=2  --output-dir=out1a'
+        import os
+        if os.system(cmd):
+            raise RuntimeError, "%s failed" % cmd
+        eventdata = 'out1a/events.dat'
+        from mccomponents.detector.event_utils import readEvents
+        events = readEvents(eventdata)
+        # print events
+        # print events['p'].sum()
+        p = events['p'].sum()
+        print p
         self.assert_(p>0.9 and p<1)
         return
 
@@ -69,7 +87,8 @@ def main():
     
     
 if __name__ == "__main__":
-    main()
+    unittest.main()
+    # main()
     
 # version
 __id__ = "$Id: homogeneous_scatterer_TestCase.py 601 2010-10-03 19:55:29Z linjiao $"
