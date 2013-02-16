@@ -49,8 +49,9 @@ class App(base):
 
     def main(self):
         super(App, self).main()
-        from mcni.utils.mpi import rank, send, receive
-        print "in app.main(): mode=%s, rank=%s" % (
+        from mcni.utils.mpi import world, size, rank, send, receive
+        print "in app.main(): mpi world %s, size %s" % (world, size)
+        print "mode=%s, rank=%s" % (
             self.inventory.mode, rank)
         
         send(rank, 1-rank, tag=100)
@@ -58,6 +59,8 @@ class App(base):
         print "my rank: %s, received from %s: %s(%s)" % (
             rank, 1-rank, received, type(received))
         
+        self.testFacility.assertEqual(1-rank, received)
+        self.testFacility.assertEqual(type(received), int)
         return
 
     
