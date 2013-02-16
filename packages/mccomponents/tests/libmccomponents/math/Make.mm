@@ -22,10 +22,11 @@ PROJ_CPPTESTS = \
 	test_random \
 	test_rootfinding \
 	test_Fx_fromExpr \
+	test_Fxyz_fromExpr \
 
 
 PROJ_TESTS = $(PROJ_PYTESTS) $(PROJ_CPPTESTS)
-PROJ_LIBRARIES = -L$(BLD_LIBDIR) -ljournal -lmcni -lmccomposite -lmccomponents -lfparser
+PROJ_LIBRARIES = -L$(BLD_LIBDIR) -lmccomponents -lmccomposite -lmcni -ljournal -lfparser
 
 # directory structure
 
@@ -66,6 +67,9 @@ test_fparser: test_fparser.cc
 
 test_Fx_fromExpr: test_Fx_fromExpr.cc
 	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ test_Fx_fromExpr.cc $(PROJ_LIBRARIES)
+
+test_Fxyz_fromExpr: test_Fxyz_fromExpr.cc
+	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ test_Fxyz_fromExpr.cc $(PROJ_LIBRARIES)
 
 
 # version
