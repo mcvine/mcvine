@@ -48,6 +48,7 @@ export:: export-package-headers
 EXPORT_HEADERS = \
 	Functor.h \
 	Fx_fromExpr.h \
+	Fxyz_fromExpr.h \
 	misc.h \
 	random.h \
 	rootfinding.h \
