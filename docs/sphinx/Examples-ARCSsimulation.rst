@@ -200,7 +200,7 @@ See how many neutrons are there::
 Tutorial 2: Compute resolution function in Q,E space
 ----------------------------------------------------
 
-.. note:
+.. note::
  This should still work, but a quicker way is to first run arcs_beam
  simulation, and then run arcs-compute-IQE-resolution simulation.
 
@@ -329,8 +329,12 @@ arcs_beam
 """""""""
 
 Compute neutrons at the sample position of ARCS beam.
+The neutrons computed will be saved in a file, which
+can be reused to simulate sample scattering.
+So make sure to keep those neutron files somewhere,
+and usually you don't want to delete them.
 
-::
+Run ::
 
  $ arcs_beam -h
 
@@ -343,7 +347,13 @@ arcs-compute-IQE-resolution
 
 Compute I(Q,E) resolution function.
 
-::
+To run this simulation, you will need to compute neutrons at
+sample position for ARCS. This can be done by running
+the :ref:`arcs_beam <arcs_beam>` command.
+
+
+Example command::
+
  $ arcs-compute-IQE-resolution --ncount=1e7 --nodes=10 --Ei=100 --Q=6  --E=20 --dQ=2 --dE=10 --mod2sample=/path/to/mod2sample
 
 * ncount: Monte Carlo counts
