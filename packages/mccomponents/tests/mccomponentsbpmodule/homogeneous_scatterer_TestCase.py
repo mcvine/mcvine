@@ -24,7 +24,7 @@ import mcni
 from mccomposite import mccompositebp 
 from mccomponents import mccomponentsbp
 
-class homogeneous_scatterer_TestCase(unittest.TestCase):
+class TestCase(unittest.TestCase):
 
     def testHomogeneousNeutronScatterer(self):
         'HomogeneousNeutronScatterer'
@@ -52,8 +52,10 @@ class homogeneous_scatterer_TestCase(unittest.TestCase):
 
         kernels = mccomponentsbp.pointer_vector_Kernel(0)
         kernels.append( printer )
-
-        kernelcomposite = mccomponentsbp.CompositeScatteringKernel( kernels )
+        
+        average=False
+        kernelcomposite = mccomponentsbp.CompositeScatteringKernel( 
+            kernels, average)
 
         mcweights = mccomponentsbp.MCWeights_AbsorptionScatteringTransmission()
         scatterer = mccomponentsbp.HomogeneousNeutronScatterer(
@@ -96,11 +98,11 @@ class homogeneous_scatterer_TestCase(unittest.TestCase):
         self.assert_( r32 == r12 )
         return
 
-    pass  # end of homogeneous_scatterer_TestCase
+    pass  # end of TestCase
 
     
 def pysuite():
-    suite1 = unittest.makeSuite(homogeneous_scatterer_TestCase)
+    suite1 = unittest.makeSuite(TestCase)
     return unittest.TestSuite( (suite1,) )
 
 def main():
@@ -113,7 +115,8 @@ def main():
     
     
 if __name__ == "__main__":
-    main()
+    unittest.main()
+    # main()
     
 # version
 __id__ = "$Id$"

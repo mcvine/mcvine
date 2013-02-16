@@ -26,9 +26,10 @@ class TestCase(unittest.TestCase):
         'mccomponents.homogeneous_scatterer: Boost python binding'
         from mccomponents.homogeneous_scatterer.bindings import get
         bp = get('BoostPython')
-
+        
         kernels = bp.kernelcontainer( )
-        ck = bp.compositekernel( kernels )
+        average = False
+        ck = bp.compositekernel( kernels, average )
 
         cylinder = bp.cylinder( 0.02, 0.1 )
 
