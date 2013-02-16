@@ -29,3 +29,9 @@ Test whether mpi4py is available::
  $ mpirun -n 2 python -c "from mpi4py import MPI; print MPI.COMM_WORLD.Get_size()"
 
 If it prints out "0" and "1" (in any order), pyre mpi is good.
+
+
+Debug
+-----
+
+$ <simapp> --journal.info.mpirun --journal.debug.mpirun
