@@ -21,13 +21,15 @@ PROJ_PYTESTS =  #alltests.py
 PROJ_CPPTESTS = \
 	test_Broadened_E_Q_Kernel \
 	test_E_Q_Kernel \
+	test_E_vQ_Kernel \
 	test_SQkernel \
 	test_SQAdaptor \
 	test_SQE_fromexpression \
 
 
 PROJ_TESTS = $(PROJ_PYTESTS) $(PROJ_CPPTESTS)
-PROJ_LIBRARIES = -L$(BLD_LIBDIR) -ljournal -lmcni -lmccomposite -lmccomponents -lfparser
+# PROJ_LIBRARIES = -L$(BLD_LIBDIR) -ljournal -lmcni -lmccomposite -lmccomponents -lfparser
+PROJ_LIBRARIES = -L$(BLD_LIBDIR) -lmccomponents -lmccomposite -lmcni -ljournal -lfparser
 # PROJ_CXX_DEFINES += DEEPDEBUG
 
 
@@ -80,6 +82,9 @@ test_Broadened_E_Q_Kernel: test_Broadened_E_Q_Kernel.cc
 
 test_E_Q_Kernel: test_E_Q_Kernel.cc
 	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ test_E_Q_Kernel.cc $(PROJ_LIBRARIES)
+
+test_E_vQ_Kernel: test_E_vQ_Kernel.cc
+	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ test_E_vQ_Kernel.cc $(PROJ_LIBRARIES)
 
 
 
