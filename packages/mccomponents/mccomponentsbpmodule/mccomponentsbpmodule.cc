@@ -4,7 +4,7 @@
 //
 //                                   Jiao Lin
 //                      California Institute of Technology
-//                      (C) 2005-2007 All Rights Reserved
+//                      (C) 2005-2013 All Rights Reserved
 //
 // {LicenseText}
 //
