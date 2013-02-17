@@ -1,0 +1,240 @@
+// -*- C++ -*-
+//
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//
+//                                   Jiao Lin
+//                      California Institute of Technology
+//                      (C) 2006-2013  All Rights Reserved
+//
+// {LicenseText}
+//
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//
+
+
+
+#ifndef MCCOMPONENTS_KERNELS_E_VQ_KERNEL_H
+#error E_VQ_Kernel.icc not meaningful outside E_VQ_Kernel.h
+#endif
+
+#include <cmath>
+#include "mccomponents/exception.h"
+#include "mcni/math/number.h"
+#include "mccomponents/math/random.h"
+#include "mccomponents/math/random/geometry.h"
+#include "mccomponents/math/Functor.h"
+#include "mccomponents/math/rootfinding.h"
+
+
+#ifdef DEBUG
+#include "journal/debug.h"
+#endif
+
+
+template< typename E_vQ_functor_t, typename S_vQ_functor_t>
+struct 
+mccomponents::kernels::E_vQ_Kernel<E_vQ_functor_t, S_vQ_functor_t>\
+:: Details {
+
+  typedef mccomponents::kernels::E_vQ_Kernel<E_vQ_functor_t, S_vQ_functor_t> \
+    kernel_t;
+    
+#ifdef DEBUG
+  const static char jrnltag[];
+  journal::debug_t debug;
+#endif
+  
+  Details(kernel_t &i_kernel) 
+    :
+    kernel(&i_kernel)
+    ,root_finder(1e-6)
+    ,roots_finder(root_finder, 10000)
+#ifdef DEBUG
+    ,debug( jrnltag )
+#endif
+    {}
+
+  kernel_t * kernel;
+  math::Algorithms::Bracketing::Ridder::ZRidd root_finder;
+  math::FindRootsEvenly roots_finder;
+
+};
+
+
+template< typename E_vQ_functor_t>
+struct E_vq_minus_deltaE: public mccomponents::math::Functor {
+    
+  typedef double float_t;
+  typedef mcni::Vector3<float_t> v3_t;
+    
+  // i_E_vQ: E(vector Q)
+  // i_ukf: unit vector for kf
+  // i_vki: ki vector
+  E_vq_minus_deltaE
+  (E_vQ_functor_t &i_E_vQ, const v3_t &i_ukf, 
+   float_t i_Ei, const v3_t &i_vki)
+    :
+    Ei(i_Ei)
+    ,vki(i_vki)
+    ,ukf(i_ukf)
+    ,E_vQ(i_E_vQ)
+  {
+  }
+    
+  float_t evaluate(float_t kf) const {
+    // kf vector
+    v3_t vkf = ukf * kf;
+    // Q vector
+    v3_t vQ = vki - vkf;
+    // Ef
+    float_t Ef = mcni::neutron_units_conversion::k2E(kf);
+    // energy of exciton
+    float_t E = E_vQ(vQ.x, vQ.y, vQ.z);
+    // should be the same as the energy difference
+    // of incident and scattered neutron
+    return Ei - Ef - E;
+  }
+  
+  float_t Ei;
+  v3_t vki, ukf;
+  E_vQ_functor_t &E_vQ;  
+};
+
+
+#ifdef DEBUG
+template< typename E_vQ_functor_t, typename S_vQ_functor_t>
+const char 
+mccomponents::kernels::E_vQ_Kernel<E_vQ_functor_t, S_vQ_functor_t>\
+::Details::jrnltag[] = "E_vQ_Kernel";
+#endif
+
+
+template< typename E_vQ_functor_t, typename S_vQ_functor_t>
+mccomponents::kernels::E_vQ_Kernel<E_vQ_functor_t, S_vQ_functor_t>\
+::E_vQ_Kernel
+(const E_vQ_functor_t & E_vQ, 
+ const S_vQ_functor_t & S_vQ,
+ double Emax,
+ double absorption_coefficient,
+ double scattering_coefficient)
+  : m_E(E_vQ),
+    m_S(S_vQ),
+    m_Emax(Emax),
+    m_absorption_coefficient( absorption_coefficient ),
+    m_scattering_coefficient( scattering_coefficient ),
+    m_details( new Details(*this) )
+{
+}
+
+
+template< typename E_vQ_functor_t, typename S_vQ_functor_t>
+double
+mccomponents::kernels::E_vQ_Kernel<E_vQ_functor_t, S_vQ_functor_t>\
+::absorption_coefficient(const mcni::Neutron::Event & ev )
+{
+  // this is a simplified model
+  return m_absorption_coefficient;
+}
+
+
+template< typename E_vQ_functor_t, typename S_vQ_functor_t>
+double
+mccomponents::kernels::E_vQ_Kernel<E_vQ_functor_t, S_vQ_functor_t>\
+::scattering_coefficient(const mcni::Neutron::Event & ev )
+{
+
+  // this is a simplified model
+  return m_scattering_coefficient;
+}
+
+
+template< typename E_vQ_functor_t, typename S_vQ_functor_t>
+void
+mccomponents::kernels::E_vQ_Kernel<E_vQ_functor_t, S_vQ_functor_t>\
+::absorb
+( mcni::Neutron::Event & ev )
+{
+}
+
+
+template< typename E_vQ_functor_t, typename S_vQ_functor_t>
+void
+mccomponents::kernels::E_vQ_Kernel<E_vQ_functor_t, S_vQ_functor_t>\
+::scatter
+( mcni::Neutron::Event & ev )
+{
+  namespace conversion = mcni::neutron_units_conversion;
+  typedef mcni::Vector3<double> V3d;
+
+  // input neutron state
+  mcni::Neutron::State & state = ev.state;
+  // incident neutron velocity
+  V3d vvi = state.velocity;
+  double vi = vvi.length();
+  // ki vector
+  V3d vki = conversion::v2k * vvi;
+  
+  // incident neutron energy
+  double Ei = conversion::v2E( vi );
+  
+  // randomly pick scattering direction
+  V3d ukf; math::choose_direction(ukf);
+  
+  // find kf
+#ifdef DEBUG
+  std::cout << "kf unit vector: " << ukf
+	    << ", Ei: " << Ei
+	    << ", vki: " << vki
+	    << std::endl;
+#endif
+  // .. construct functor to find solution
+  E_vq_minus_deltaE<E_vQ_functor_t> eqmd
+    (m_E, ukf, Ei, vki);
+  // .. min/max kf
+  double min_kf = conversion::E2k(std::max(0., Ei-m_Emax));
+  double max_kf = conversion::E2k(Ei);
+  // .. solve 
+  std::vector<double> kf_list = m_details->roots_finder.solve\
+    (min_kf, max_kf, eqmd);
+  // .. randomly choose Q
+  size_t nkf = kf_list.size();
+  if (nkf<1) {
+    std::cerr
+      << "E_vQ_Kernel::scatter: failed to find solution for kf. skip."
+      << "Ei=" << Ei
+      << std::endl;
+    return;
+  }
+  int index=0;
+  if (nkf>1) index = (int)math::random(0, nkf);
+  double kf = kf_list[index];
+  // kf vector
+  V3d vkf = ukf * kf;
+  // Q vector
+  V3d vQ = vki - vkf;
+  
+#ifdef DEBUG
+  double Ef = conversion::k2E(kf);
+  double E = Ei - Ef;
+  std::cout << "E,Q=" << E << ", " << vQ << std::endl;
+#endif
+  
+  // final velocity vector
+  V3d vvf = conversion::k2v * vkf;
+  state.velocity = vvf;
+  
+  // 
+  double S = m_S(vQ.x, vQ.y, vQ.z);
+  double kf_over_ki = kf/vki.length();
+#ifdef DEBUG
+  std::cout << "S,vf/vi=" << S << ", " << kf_over_ki << std::endl;
+#endif
+  // adjust probability of neutron event
+  ev.probability *= S * kf_over_ki;
+}
+
+
+// version
+// $Id$
+
+// End of file 
