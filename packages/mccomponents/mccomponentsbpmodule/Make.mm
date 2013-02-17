@@ -33,6 +33,7 @@ PROJ_SRCS = \
 	wrap_ConstantEnergyTransferKernel.cc \
 	wrap_ConstantQEKernel.cc \
 	wrap_E_Q_Kernel.cc \
+	wrap_E_vQ_Kernel.cc \
 	wrap_Broadened_E_Q_Kernel.cc \
 	wrap_SQEkernel.cc \
 	wrap_SQkernel.cc \

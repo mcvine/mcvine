@@ -16,6 +16,7 @@
 
 
 #include "wrap_E_Q_Kernel.h"
+#include "wrap_E_vQ_Kernel.h"
 #include "wrap_Broadened_E_Q_Kernel.h"
 
 
@@ -62,6 +63,7 @@ namespace wrap_mccomponents{
 
   struct Wrap_E_Q_Kernel;
   struct Wrap_Broadened_E_Q_Kernel;
+  struct Wrap_E_vQ_Kernel;
 }
 
 
@@ -118,6 +120,7 @@ BOOST_PYTHON_MODULE(mccomponentsbp)
 
   Wrap_E_Q_Kernel wrap_e_q_kernel;
   Wrap_Broadened_E_Q_Kernel wrap_broadened_e_q_kernel;
+  Wrap_E_vQ_Kernel wrap_e_vq_kernel;
 }
 
 
