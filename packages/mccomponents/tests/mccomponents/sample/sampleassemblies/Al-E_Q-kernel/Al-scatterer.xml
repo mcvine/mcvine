@@ -6,7 +6,7 @@
 <homogeneous_scatterer mcweights="0, 1, 0">
   
   <E_Q_Kernel 
-     E_Q="Q*Q/3.5" 
+     E_Q="30+5*sin(Q)" 
      S_Q="1" 
      Qmin="0./angstrom"
      Qmax="10./angstrom"

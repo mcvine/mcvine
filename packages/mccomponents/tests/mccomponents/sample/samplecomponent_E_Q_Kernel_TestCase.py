@@ -25,7 +25,7 @@ class TestCase(unittest.TestCase):
         import mcni
         from mcni.utils import conversion
 
-        ei = 600
+        ei = 60
         vil = conversion.e2v(ei)
         vi = (0,0,vil)
         neutron = mcni.neutron( 
@@ -37,7 +37,7 @@ class TestCase(unittest.TestCase):
         
         from mccomponents.sample import samplecomponent
         component2 = samplecomponent( 'Al', 'sampleassemblies/Al-E_Q-kernel/sampleassembly.xml' )
-        E_Q = 'Q*Q/3.5' # in sampleassemblies/Al-E_Q-kernel/Al-scatterer.xml
+        E_Q = '30+5*sin(Q)' # in sampleassemblies/Al-E_Q-kernel/Al-scatterer.xml
 
         instrument = mcni.instrument( [component1, component2] )
         
@@ -54,7 +54,8 @@ class TestCase(unittest.TestCase):
 
         import numpy.linalg as nl
         import numpy as np
-        for i in range(10):
+        from math import sin
+        for i in range(N):
             neutron = neutrons[i]
             vf = np.array(neutron.state.velocity)
             diffv = vi - vf
@@ -63,6 +64,7 @@ class TestCase(unittest.TestCase):
             E = ei - ef
             # print E, Q, neutron
             E1 = eval(E_Q)
+            # print E, E1
             self.assertAlmostEqual(E, E1)
             continue
 
