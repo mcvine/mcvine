@@ -90,6 +90,16 @@ class Renderer(base):
         return
     
     
+    def onE_Q_vKernel(self, kernel):
+        E_Q = kernel.E_Q
+        S_Q = kernel.S_Q
+        Emax = kernel.Emax
+        self._write('<E_Q_Kernel E_Q="%s" S_Q="%s" Emax="%s">' % (
+                E_Q, S_Q, Emax))
+        self._write('</E_Q_Kernel>')
+        return
+
+
     def onConstantQEKernel(self, kernel):
         E = kernel.E; Q = kernel.Q
         self._write('<ConstantQEKernel momentum-transfer="%s" energy-transfer="%s">' % (

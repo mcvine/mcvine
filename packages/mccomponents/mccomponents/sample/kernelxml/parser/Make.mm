@@ -30,6 +30,7 @@ EXPORT_PYTHON_MODULES = \
 	ConstantQEKernel.py \
 	Document.py \
 	E_Q_Kernel.py \
+	E_vQ_Kernel.py \
 	GridSQE.py \
 	SQE_fromexpression.py \
 	HomogeneousScatterer.py \

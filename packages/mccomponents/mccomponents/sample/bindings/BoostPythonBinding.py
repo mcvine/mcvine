@@ -140,6 +140,27 @@ class New:
             absorption_coefficient, scattering_coefficient)
 
 
+    def E_vQ_Kernel(
+        self,
+        E_Q, S_Q='1', 
+        Emax = 10.,
+        absorption_coefficient=1., scattering_coefficient=1.
+        ):
+        '''
+        S(Q,E) = S(E) * delta(E-E(Q))
+
+        E_Q: E(Q). str. ex: sin(Qx+Qy+Qz)
+        S_Q: S(Q). str. ex: 1.
+        Emax: meV
+        absorption_coefficient: absorption coefficient (m**-1)
+        scattering_coefficient: scattering coefficient (m**-1)
+        '''
+        return b.create_E_vQ_Kernel(
+            E_Q, S_Q,
+            Emax,
+            absorption_coefficient, scattering_coefficient)
+
+
     def constantQEKernel(self, Q, E, absorption_cross_section, scattering_cross_section):
         '''constantqekernel: a kernel scatters isotropically with fixed momentum and energy transfer
 

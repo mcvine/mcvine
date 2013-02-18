@@ -234,6 +234,40 @@ class ComputationEngineRendererExtension:
         return self.factory.Broadened_E_Q_Kernel(E_Q, S_Q, sigma_Q, Qmin, Qmax, abs, sctt)
 
 
+    def onE_vQ_Kernel(self, kernel):
+        t = kernel
+
+        # cross section related
+        abs = t.absorption_coefficient
+        sctt = t.scattering_coefficient
+
+        if abs is None or sctt is None:
+            #need to get cross section from sample assembly representation
+            # svn://danse.us/inelastic/sample/.../sampleassembly
+            #origin is a node in the sample assembly representation
+            #
+            #scatterer_origin is assigned to kernel when a kernel is
+            #constructed from kernel xml.
+            #see sampleassembly_support.SampleAssembly2CompositeScatterer for details.
+            origin = t.scatterer_origin
+            from sampleassembly import cross_sections
+            abs, inc, coh = cross_sections(origin, include_density=True)
+            sctt = inc + coh
+            pass
+        
+        abs, sctt = self._unitsRemover.remove_unit( (abs, sctt), 1./units.length.meter )
+
+        # functors
+        E_Q = kernel.E_Q
+        S_Q = kernel.S_Q
+
+        # Emax
+        Emax = self._unitsRemover.remove_unit(
+            kernel.Emax, units.energy.meV)
+        
+        return self.factory.E_vQ_Kernel(E_Q, S_Q, Emax, abs, sctt)
+
+
     def onKernelContainer(self, kernelcontainer):
         #each kernel needs to know its scatterer origin.
         for kernel in kernelcontainer.elements():
