@@ -36,7 +36,6 @@ class TestCase(unittest.TestCase):
         E, An_set = computeAnESet(N=5, E=dos.energy, g=dos.I, beta=beta, dE=dE)
         import pylab
         for An in An_set:
-            print An
             pylab.plot(E, An)
             continue
         pylab.show()
@@ -47,8 +46,12 @@ class TestCase(unittest.TestCase):
         from dos import loadDOS
         dos = loadDOS()
         E = dos.energy; g = dos.I
+        # expand E a bit
         dE = E[1] - E[0]
-        print len(E)
+        E = numpy.arange(E[0], 70, dE)
+        g = numpy.concatenate((g, numpy.zeros(len(E)-len(g))))
+        int_g = numpy.sum(g) * dE
+        g/=int_g
         
         Q = numpy.arange(0, 10, 0.1)
         dQ = Q[1] - Q[0]
@@ -62,17 +65,22 @@ class TestCase(unittest.TestCase):
         Q, E, S_set= computeSQESet(5, Q, dQ, E, dE, M, g, beta)
 
         import histogram as H, histogram.hdf as hh
+        def save(S, name):
+            h = H.histogram(
+                name,
+                [('Q', Q, 'angstrom**-1'),
+                 ('E', E, 'meV')],
+                S)
+            hh.dump(h, '%s.h5' % (name,))
+            return
         import pylab
         for i, Sn in enumerate(S_set):
             # pylab.imshow(Sn.T)
             # pylab.show()
-            h = H.histogram(
-                'S%s' % (i+1),
-                [('Q', Q, 'angstrom**-1'),
-                 ('E', E, 'meV')],
-                Sn)
-            hh.dump(h, 'S%s.h5' % (i+1))
+            save(Sn, 'S%s' % (i+1))
             continue
+        summed = S_set.sum(axis=0)
+        save(summed, 'S')
         return
         
         
