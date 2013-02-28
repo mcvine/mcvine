@@ -72,12 +72,12 @@ def computeAnESet(N, E,g, beta, dE):
     ANE.append(A1E)
     
     for i in range(2,N+1): 
-        ANE.append(AnE_n_1(ANE[0], ANE[-1], dE))
+        ANE.append(AnE_from_n_1(ANE[0], ANE[-1], dE))
         continue
     return E, np.array(ANE)
 
 
-def AnE_n_1(A1E, Anm1E, dE):
+def AnE_from_n_1(A1E, Anm1E, dE):
     """compute A_n(E) from A_{n-1}(E)
 
     A_n(E) = A1 (convolve) A_{n-1}
@@ -91,7 +91,10 @@ def AnE_n_1(A1E, Anm1E, dE):
     res = np.inner(M,Y)
     res *= dE
     start = len(A1E)/2+1
-    return res[start:start + len(A1E)]
+    t = res[start:start + len(A1E)]
+    # XXX: normalize?
+    # t/= t.sum()
+    return t
 
 
 def convMatrix(y):
@@ -125,6 +128,8 @@ def computeA1E(E,g, beta, dE):
     z = zero_ind
     # remove NaN
     t[z] = 2.0*( t[z+1] + ( t[z+1] - t[z+2] ) ) # XXX: why 2.0* ?
+    # XXX: normalize?
+    # t /= t.sum()
     return E, t
 
 
@@ -156,6 +161,8 @@ def gamma0(E, g, beta, dE):
     beta: 1/kBT
     dE:  delta E in E array
     """
+    dos_integrated = np.sum(g)*dE
+    assert abs(dos_integrated - 1) < 1e-3
     f = coth(beta * E/2.) * g/E * dE
     f[0] = f[1] + (f[1] - f[2] ) # Define unidentified value, i.e. initial value.
     return np.sum(f)
@@ -172,7 +179,7 @@ def DWExp(Q, M, E,g, beta, dE):
 def recoilE(Q, M):
     """compute recoil energy E_r(Q)
     """
-    return J2meV * ( h_b*Q/A2m )**2.0 / 2.0 /M
+    return J2meV * ( h_b*Q/A2m )**2.0 / 2.0 / (M*amu)
 
 
 """ 
