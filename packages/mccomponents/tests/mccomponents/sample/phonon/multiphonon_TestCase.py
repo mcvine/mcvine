@@ -65,14 +65,7 @@ class TestCase(unittest.TestCase):
         Q, E, S_set= computeSQESet(5, Q, dQ, E, dE, M, g, beta)
 
         import histogram as H, histogram.hdf as hh
-        def save(S, name):
-            h = H.histogram(
-                name,
-                [('Q', Q, 'angstrom**-1'),
-                 ('E', E, 'meV')],
-                S)
-            hh.dump(h, '%s.h5' % (name,))
-            return
+        def save(S, name): saveSQE(Q,E,S,name)
         import pylab
         for i, Sn in enumerate(S_set):
             # pylab.imshow(Sn.T)
@@ -83,8 +76,31 @@ class TestCase(unittest.TestCase):
         save(summed, 'S')
         return
         
+
+    def test3(self):
+        from dos import loadDOS
+        dos = loadDOS()
+        assert dos.__class__.__name__ == 'Histogram', "%s is not a histogram" % (dos,)
+        E = dos.energy
+        g = dos.I
+        from mccomponents.sample.phonon.multiphonon import sqe
+        Q, E, S = sqe(E,g)
+        saveSQE(Q,E,S, 'S_2..5')
+        return
+        
         
     pass  # end of TestCase
+
+
+import histogram as H, histogram.hdf as hh
+def saveSQE(Q, E, S, name):
+    h = H.histogram(
+        name,
+        [('Q', Q, 'angstrom**-1'),
+         ('E', E, 'meV')],
+        S)
+    hh.dump(h, '%s.h5' % (name,))
+    return
 
 
 def pysuite():
