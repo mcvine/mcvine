@@ -25,6 +25,50 @@ Max Kresch's original multiphonon code.
 """
 
 
+def sqe(E, g, Qmax=None, Qmin=0, dQ=None, T=300, M=50, N=5):
+    """compute sum of multiphonon SQE from dos
+    S = \sum_{i=2,N} S_i(Q,E)
+    
+    Note: single phonon scattering is not included. only 2-phonons and up
+    
+    E,g: input DOS data
+    energy axis is inferred from input DOS data
+    Q axis is defined by Qmax, Qmin, and dQ
+    T: temperature (Kelvin)
+    M: atomic mass 
+    N: maximum number of order for multi-phonon scattering
+    """
+    dos_sample = len(E)
+    e0 = E[0]
+    de = E[1] - E[0]
+    emax = E[-1]
+    # expand E
+    E = np.arange(e0, e0+de*3*dos_sample, de)
+    g = np.concatenate((g, np.zeros(len(E)-len(g))))
+    # normalize
+    int_g = np.sum(g) * de
+    g/=int_g
+    # Q axis
+    if Qmax is None:
+        from mcni.utils import conversion
+        Qmax = conversion.e2k(emax) * 1.5
+    if dQ is None:
+        dQ = (Qmax-Qmin)/200
+    Q = np.arange(Qmin, Qmax, dQ)
+    
+    # beta
+    kelvin2mev = 0.0862
+    beta = 1./(T*kelvin2mev)
+    
+    # compute S
+    from mccomponents.sample.phonon.multiphonon import computeSQESet
+    Q, E, S_set= computeSQESet(N, Q, dQ, E, de, M, g, beta)
+    
+    # sum over 2..N
+    S = S_set[1:].sum(axis=0)
+    return Q, E, S
+
+
 def computeSQESet(N, Q,dQ, E,dE, M, g, beta):
     """compute the set of S(Q,E) for n in [1,N]
     Q, dQ: Q axis
