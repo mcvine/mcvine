@@ -24,6 +24,7 @@ class Document(base):
         'Phonon_IncoherentInelastic_Kernel',
         'Phonon_CoherentInelastic_PolyXtal_Kernel',
         'Phonon_CoherentInelastic_SingleXtal_Kernel',
+        'MultiPhonon_Kernel',
         'LinearlyInterpolatedDispersion',
         'LinearlyInterpolatedDOS',
         ]

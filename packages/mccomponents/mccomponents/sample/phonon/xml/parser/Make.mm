@@ -39,6 +39,7 @@ EXPORT_PYTHON_MODULES = \
 	KernelContainer.py \
 	LinearlyInterpolatedDispersion.py \
 	LinearlyInterpolatedDOS.py \
+	MultiPhonon_Kernel.py \
 	Phonon_IncoherentElastic_Kernel.py \
 	Phonon_IncoherentInelastic_Kernel.py \
 	Phonon_CoherentInelastic_PolyXtal_Kernel.py \

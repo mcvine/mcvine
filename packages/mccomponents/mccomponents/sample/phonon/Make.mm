@@ -47,6 +47,7 @@ EXPORT_PYTHON_MODULES = \
 	DispersionOnGrid.py \
 	LinearlyInterpolatedDOS.py \
 	LinearlyInterpolatedDispersionOnGrid.py \
+	MultiPhonon_Kernel.py \
 	NdArray.py \
 	__init__.py \
 	multiphonon.py \

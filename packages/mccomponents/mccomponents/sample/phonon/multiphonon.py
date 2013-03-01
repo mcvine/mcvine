@@ -51,7 +51,7 @@ def sqe(E, g, Qmax=None, Qmin=0, dQ=None, T=300, M=50, N=5):
     # Q axis
     if Qmax is None:
         from mcni.utils import conversion
-        Qmax = conversion.e2k(emax) * 1.5
+        Qmax = conversion.e2k(emax) * 3
     if dQ is None:
         dQ = (Qmax-Qmin)/200
     Q = np.arange(Qmin, Qmax, dQ)

@@ -168,6 +168,74 @@ class ComputationEngineRendererExtension:
             )
 
 
+    def onMultiPhonon_Kernel(self, kernel):
+        '''handler to create c++ instance of multiphonon
+        scattering kernel.
+        It actually computes a S(Q,E) histogram for the multiphonon
+        scattering, and then use SQEKernel plus GridSQE to do the job.
+        '''
+        # scatterer
+        scatterer = kernel.scatterer_origin
+        
+        # environment temperature
+        temperature = getTemperature(scatterer)
+        
+        # phonon dos
+        try:
+            dos = kernel.dos
+        except AttributeError:
+            raise NotImplementedError, "Should implement a way to extract dos"
+
+        dos = dos.doshist
+        assert dos.__class__.__name__ == 'Histogram', \
+            "%s is not a histogram" % (dos,)
+        
+        # get unit cell
+        try: unitcell = scatterer.phase.unitcell
+        except AttributeError, err:
+            raise "Cannot obtain unitcell from scatterer %s, %s" % (
+                scatterer.__class__.__name__, scatterer.name )
+
+        # total mass of unitcell. for DW calculator. this might be reimplemented later.
+        # mass = sum( [ site.getAtom().mass for site in unitcell ] )
+        mass = sum( [ atom.mass for atom in unitcell ] )
+        # XXX: need to be more careful with mass
+        
+        # sqe
+        from .multiphonon import sqe
+        q,e,s = sqe(
+            dos.energy, dos.I, 
+            # Qmax=Qmax,  # XXX should support option Qmax
+            T = temperature,
+            M = mass, N = 5,
+            )
+        import histogram as H
+        sqehist = H.histogram(
+            'S',
+            [('Q', q, 'angstrom**-1'),
+             ('energy', e, 'meV')],
+            s)
+
+        from mccomponents import sample
+        # grid sqe
+        gsqe = sample.gridsqe(sqehist)
+        # q and e range
+        from .units import energy, length
+        qrange = q[0]/length.angstrom, q[-1]/length.angstrom
+        erange = e[0]*energy.meV, e[-1]*energy.meV
+        # kernel
+        sqekernel = sample.sqekernel(
+            # XXX: we may want to support more options
+            # XXX: like absorption_cross_section and scattering_cross_section
+            # XXX: or absorption_coefficient ...
+            SQE = gsqe,
+            Qrange = qrange, Erange = erange,
+            )
+        sqekernel.scatterer_origin = scatterer
+        # 
+        return sqekernel.identify(self)
+
+
     def onLinearlyInterpolatedDispersionOnGrid(self, dispersion):
         natoms = dispersion.nAtoms
         Qaxes = dispersion.Qaxes
