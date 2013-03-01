@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE scatterer>
+
+<!-- weights: absorption, scattering, transmission -->
+<homogeneous_scatterer mcweights="0, 1, 0">
+  
+  <MultiPhonon_Kernel>
+    <LinearlyInterpolatedDOS idf-data-path="dos.idf"/>
+  </MultiPhonon_Kernel>
+  
+</homogeneous_scatterer>
