@@ -133,8 +133,9 @@ mccomponents::kernels::SQEkernel::scatter
   // !!!!!!!!!
   // need normalization factor here
   // XXX: Qmin Qmax???
-  ev.probability *= m_sqe(Q,E) * Q * (Qmax-Qmin)/(m_Qmax-m_Qmin) * (Emax-Emin)/(m_Emax-m_Emin);
-
+  // ev.probability *= m_sqe(Q,E) * Q * (Qmax-Qmin)/(m_Qmax-m_Qmin) * (Emax-Emin)/(m_Emax-m_Emin);
+  ev.probability *= m_sqe(Q,E) * Q * (m_Qmax-m_Qmin) * (m_Emax-m_Emin) / (2*ki*ki);
+  
   // figure out the direction of the out-going neutron
   double cost = (kf*kf + ki*ki - Q*Q)/2/kf/ki;
 
@@ -156,9 +157,9 @@ mccomponents::kernels::SQEkernel::scatter
   } else {
     e2 = V3d(1,0,0);
   }
-
+  
   V3d e3 = e1 * e2;
-
+  
   V3d ekf = e1*cost + e2*sint*cosp + e3 *sint*sinp;
   
 #ifdef DEBUG
