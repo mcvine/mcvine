@@ -22,9 +22,11 @@ class MultiPhonon_Kernel(AbstractNode):
     
 
     def elementFactory( self, **kwds ):
+        Qmax = kwds.get('Qmax')
+        if Qmax: Qmax = self._parse(Qmax)
         from mccomponents.sample.phonon \
              import multiphonon_kernel as f
-        return f(None)
+        return f(Qmax=Qmax)
     
 
     def onDOS(self, dos):

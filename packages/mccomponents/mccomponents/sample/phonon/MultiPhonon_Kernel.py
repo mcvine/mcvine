@@ -23,10 +23,12 @@ class MultiPhonon_Kernel(base):
     
     def __init__(
         self,
-        dos,
+        dos=None,
+        Qmax=None,
         ):
         base.__init__(self, dispersion=None)
         self.dos = dos
+        self.Qmax = Qmax
         return
     
 

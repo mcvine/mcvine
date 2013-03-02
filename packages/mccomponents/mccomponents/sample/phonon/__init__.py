@@ -18,10 +18,10 @@ angstrom = units.length.angstrom
 
 
 def multiphonon_kernel(
-    dos
+    **kwds
     ):
     from MultiPhonon_Kernel import MultiPhonon_Kernel as f
-    return f( dos )
+    return f(**kwds)
 
 
 def incoherentelastic_kernel(

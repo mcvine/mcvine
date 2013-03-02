@@ -200,12 +200,18 @@ class ComputationEngineRendererExtension:
         # mass = sum( [ site.getAtom().mass for site in unitcell ] )
         mass = sum( [ atom.mass for atom in unitcell ] )
         # XXX: need to be more careful with mass
+
+        # Qmax
+        from .units import energy, length
+        Qmax = kernel.Qmax
+        if Qmax:
+            Qmax = Qmax * length.angstrom
         
         # sqe
         from .multiphonon import sqe
         q,e,s = sqe(
             dos.energy, dos.I, 
-            # Qmax=Qmax,  # XXX should support option Qmax
+            Qmax=Qmax,
             T = temperature,
             M = mass, N = 5,
             )
@@ -220,7 +226,6 @@ class ComputationEngineRendererExtension:
         # grid sqe
         gsqe = sample.gridsqe(sqehist)
         # q and e range
-        from .units import energy, length
         qrange = q[0]/length.angstrom, q[-1]/length.angstrom
         erange = e[0]*energy.meV, e[-1]*energy.meV
         # kernel
