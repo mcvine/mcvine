@@ -137,7 +137,7 @@ def AnE_from_n_1(A1E, Anm1E, dE):
     start = len(A1E)/2+1
     t = res[start:start + len(A1E)]
     # XXX: normalize?
-    # t/= t.sum()
+    t/= t.sum() * dE
     return t
 
 
