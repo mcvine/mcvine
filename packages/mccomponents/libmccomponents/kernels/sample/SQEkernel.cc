@@ -54,7 +54,8 @@ mccomponents::kernels::SQEkernel::SQEkernel
     m_Emin(Emin), m_Emax(Emax), m_DE(Emax-Emin),
     m_sqe(sqe),
     m_details( new Details )
-{}
+{
+}
 
 
 double
@@ -130,12 +131,17 @@ mccomponents::kernels::SQEkernel::scatter
 #endif
 
   // adjust probability of neutron event
-  // !!!!!!!!!
-  // need normalization factor here
-  // XXX: Qmin Qmax???
-  // ev.probability *= m_sqe(Q,E) * Q * (Qmax-Qmin)/(m_Qmax-m_Qmin) * (Emax-Emin)/(m_Emax-m_Emin);
-  ev.probability *= m_sqe(Q,E) * Q * (m_Qmax-m_Qmin) * (m_Emax-m_Emin) / (2*ki*ki);
-  
+  ev.probability *= m_sqe(Q,E) * Q * (Qmax-Qmin) * (Emax-Emin) / (2*ki*ki);
+#ifdef DEBUG
+  m_details->debug 
+    << journal::at(__HERE__)
+    << Q << ", " << E << ", "
+    << Qmin << ", " << Qmax << ", "
+    << Emin << ", " << Emax << ", "
+    << ki << ", "
+    << m_sqe(Q,E)
+    << journal::endl;
+#endif
   // figure out the direction of the out-going neutron
   double cost = (kf*kf + ki*ki - Q*Q)/2/kf/ki;
 
