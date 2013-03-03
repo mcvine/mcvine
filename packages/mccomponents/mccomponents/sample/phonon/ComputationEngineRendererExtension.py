@@ -199,6 +199,7 @@ class ComputationEngineRendererExtension:
         # total mass of unitcell. for DW calculator. this might be reimplemented later.
         # mass = sum( [ site.getAtom().mass for site in unitcell ] )
         mass = sum( [ atom.mass for atom in unitcell ] )
+        mass/=len(unitcell)
         # XXX: need to be more careful with mass
 
         # Qmax
