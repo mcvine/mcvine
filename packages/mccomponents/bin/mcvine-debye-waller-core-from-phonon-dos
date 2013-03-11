@@ -37,12 +37,12 @@ Inputs are:
 
 The input phonon DOS is in 2-col ascii format.
 
-* x: phonon frequency in TeraHertz
+* x: phonon frequency in TeraHertz or meV
 * y: DOS
 
 """
 
-def loadDOS_from2colascii(f):
+def loadDOS_from2colascii(f, xaxis=None):
     from mcni.utils.constants import hbar, e
     from math import pi
     # constant to convert frequency on terahertz to energy in meV
@@ -54,29 +54,28 @@ def loadDOS_from2colascii(f):
         if line.startswith('#'): continue
         line = line.strip()
         e, I = line.split()
-        es.append(float(e)*toenergy)
+        es.append(float(e))
         Is.append(float(I))
         continue
-    import histogram
-    h = histogram.histogram(
-        'dos', 
-        [('energy', es, 'meV')],
-        Is)
-    return h
+    import numpy as np
+    e = np.array(es)
+    Z = np.array(Is)
+    if xaxis == 'TeraHz':
+        e *= toenergy
+    elif xaxis == 'meV':
+        pass
+    else:
+        raise NotImplementedError
+    return e, Z
 
 
-def loadDOS_fromidf(path):
+def loadDOS_fromidf(path, **kwds):
     from mccomponents.sample.idf import readDOS
     e, Z = readDOS(path)
-    import histogram
-    h = histogram.histogram(
-        'dos', 
-        [('energy', e, 'meV')],
-        Z)
-    return h
+    return e, Z
 
 
-def loadDOS(path):
+def loadDOS(path, **kwds):
     import os
     ext = os.path.splitext(path)[-1]
     if ext == '.idf'or path == 'DOS':
@@ -87,7 +86,82 @@ def loadDOS(path):
         raise NotImplementedError("unknown file format: %s" % path)
     
     handler = eval('loadDOS_from%s' % format)
-    return handler(path)
+    e,Z = handler(path, **kwds)
+    dE = e[1] - e[0]
+    # XXX: hack
+    # Z = smooth(Z, window_len=21)
+    # XXX
+    Z /= Z.sum() * dE
+    import histogram
+    h = histogram.histogram(
+        'dos', 
+        [('energy', e, 'meV')],
+        Z)
+    # histogram.plot(h)
+    return h
+
+
+# copied from
+# http://www.scipy.org/Cookbook/SignalSmooth
+def smooth(x,window_len=11,window='hanning'):
+    """smooth the data using a window with requested size.
+    
+    This method is based on the convolution of a scaled window with the signal.
+    The signal is prepared by introducing reflected copies of the signal 
+    (with the window size) in both ends so that transient parts are minimized
+    in the begining and end part of the output signal.
+    
+    input:
+        x: the input signal 
+        window_len: the dimension of the smoothing window; should be an odd integer
+        window: the type of window from 'flat', 'hanning', 'hamming', 'bartlett', 'blackman'
+            flat window will produce a moving average smoothing.
+
+    output:
+        the smoothed signal
+        
+    example:
+
+    t=linspace(-2,2,0.1)
+    x=sin(t)+randn(len(t))*0.1
+    y=smooth(x)
+    
+    see also: 
+    
+    numpy.hanning, numpy.hamming, numpy.bartlett, numpy.blackman, numpy.convolve
+    scipy.signal.lfilter
+ 
+    TODO: the window parameter could be the window itself if an array instead of a string
+    NOTE: length(output) != length(input), to correct this: return y[(window_len/2-1):-(window_len/2)] instead of just y.
+    """
+    import numpy
+    
+    if x.ndim != 1:
+        raise ValueError, "smooth only accepts 1 dimension arrays."
+
+    if x.size < window_len:
+        raise ValueError, "Input vector needs to be bigger than window size."
+
+
+    if window_len<3:
+        return x
+
+
+    if not window in ['flat', 'hanning', 'hamming', 'bartlett', 'blackman']:
+        raise ValueError, "Window is on of 'flat', 'hanning', 'hamming', 'bartlett', 'blackman'"
+
+
+    s=numpy.r_[x[window_len-1:0:-1],x,x[-1:-window_len:-1]]
+    #print(len(s))
+    if window == 'flat': #moving average
+        w=numpy.ones(window_len,'d')
+    else:
+        w=eval('numpy.'+window+'(window_len)')
+
+    y=numpy.convolve(w/w.sum(),s,mode='valid')
+    return y[(window_len/2-1):-(window_len/2)-1]
+    return y
+
 
 
 def compute(dos, mass, temperature, nsampling):
@@ -96,6 +170,22 @@ def compute(dos, mass, temperature, nsampling):
     bpdos = b.dos_fromhistogram(dos)
     bpdw = b.dwfromDOS(bpdos, mass, temperature, nsampling)
     return bpdw.core()
+
+
+def compute2(dos, mass, temperature):
+    from mccomponents.sample.phonon.multiphonon import gamma0, DWExp
+    E = dos.energy
+    Z = dos.I
+    kelvin2mev = 0.0862
+    beta = 1./(temperature*kelvin2mev)
+    dE = E[1]-E[0]
+    g0 = gamma0(E, Z, beta, dE)
+    from mcni.utils import conversion as C
+    r = g0 * C.k2e(1) / mass
+    import numpy
+    r2 = DWExp(numpy.array([1]), mass, E, Z, beta, dE)[0]
+    assert (r2-r)/r < .02
+    return r
 
 
 from pyre.applications.Script import Script as AppBase
@@ -108,21 +198,24 @@ class App(AppBase):
         temperature = pyre.inventory.float('T', default=300)
         nsampling = pyre.inventory.int('nsampling', default=100)
         dos = pyre.inventory.str('dos', default='V-dos.dat')
+        dos_xaxis = pyre.inventory.str('dos-x', default='TeraHz')
         
         
     def main(self):
         mass = self.inventory.mass
         temperature = self.inventory.temperature
         nsampling = self.inventory.nsampling
-        dos = loadDOS(self.inventory.dos)
-        
+        dos = loadDOS(self.inventory.dos, xaxis = self.inventory.dos_xaxis)
         # save DOS as a "histogram"
-        print "saving dos to a histogram h5 file"
+        dos_out = 'dos-hist.h5'
+        print "saving dos to a histogram h5 file: %s" % dos_out
         import histogram.hdf as hh
-        hh.dump(dos, 'dos-hist.h5')
+        hh.dump(dos, dos_out)
         #
         core = compute(dos, mass, temperature, nsampling)
         print "Debye-Waller factor core (unit: angstrom**2):"
+        core2 = compute2(dos, mass, temperature)
+        assert (core2-core)/core2 < 0.02
         print core
         return
     
