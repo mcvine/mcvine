@@ -35,32 +35,34 @@ void DANSE::phonon::DWFromDOS<FloatType>::calc_DW_core
 
 
 #ifdef DEBUG
-  journal::info_t info_DW("Debye Waller");
-  journal::debug_t debug_DW("Debye Waller");
-  journal::warning_t warning_DW("Debye Waller");
+  journal::info_t info_DW("debye-waller");
+  journal::debug_t debug_DW("debye-waller");
+  journal::warning_t warning_DW("debye-waller");
 #endif
   m_core = 0.;
   float_t norm_fac=0.;
 
   using physics::BoseEinsteinDistribution;
   const float_t & wmin = m_dos.emin(), wmax = m_dos.emax();
-  float_t dw = (wmax-wmin)/m_nSample;
+  float_t dw = (wmax-wmin)/(m_nSample-1 + .00000001);
   float_t w, Z;
-
+  float_t f[m_nSample];
+  int index_first_nonzero_w = -1;
+  
   for (size_t i=0; i<m_nSample; i++) {
     w = dw * i + wmin;
     Z = m_dos( w );
-    if (w==0) {
-      //assert(Z==0); continue;
-      if (Z!=0) {
-#ifdef DEBUG
-	warning_DW<< journal::at(__HERE__)
-		  << "w=0, Z!=0" << journal::endl;
-#endif
-      }
+    // if w is too smal, we ingore it to avoid divergence
+    // we will compute its contribution by interpolation
+    // see below after this for loop
+    if (w < wmax/m_nSample/100.) {
       continue;
     }
-    m_core += (2*BoseEinsteinDistribution(w, T_in_Kelvin)+1)/w*Z;
+    if (index_first_nonzero_w == -1) 
+      index_first_nonzero_w = i;
+    
+    f[i] = (2*BoseEinsteinDistribution(w, T_in_Kelvin)+1)/w*Z;
+    m_core += f[i];
     norm_fac += Z;
 #ifdef DEBUG
     debug_DW  << journal::at(__HERE__)
@@ -72,7 +74,20 @@ void DANSE::phonon::DWFromDOS<FloatType>::calc_DW_core
 	      << journal::endl;
 #endif
   }
-
+  // compute the contribution at w=0, by interpolating
+  // from the values near w=0
+  if (index_first_nonzero_w == -1) {
+    std::cerr << "DWFromDOS: failed. DOS is invalid (don't have data for w>0)"
+	      << std::endl;
+    throw;
+  }
+  // f(0) = f(x1) - x1*(f(x2)-f(x1))/(x2-x1)
+  float_t f0 = f[index_first_nonzero_w]				\
+    - (dw*index_first_nonzero_w+wmin)				\
+    * (f[index_first_nonzero_w+1] - f[index_first_nonzero_w])	\
+    / dw;
+  m_core += f0;
+  
   using physics::e;
   m_core /= e*1e-3;
   m_core /= norm_fac; // now core = \int Z(w)*(2<n>+1)/(hbar*w) dw
