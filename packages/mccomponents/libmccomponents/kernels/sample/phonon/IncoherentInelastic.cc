@@ -257,6 +257,7 @@ mccomponents::kernels::phonon::IncoherentInelastic::scatter
 	<< "v_Q=" << v_Q << ","
 	<< "omega =" << omega << ","
 	<< "Q =" << Q << ","
+	<< "T =" << m_Temperature << ","
 	<< journal::endl;
 #endif
 
