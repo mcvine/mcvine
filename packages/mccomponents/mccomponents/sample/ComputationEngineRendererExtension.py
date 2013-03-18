@@ -182,8 +182,9 @@ class ComputationEngineRendererExtension:
             sctt = inc + coh
             pass
         
-        abs, sctt = self._unitsRemover.remove_unit( (abs, sctt), 1./units.length.meter )
-
+        abs, sctt = self._unitsRemover.remove_unit(
+            (abs, sctt), 1./units.length.meter )
+        
         # functors
         E_Q = kernel.E_Q
         S_Q = kernel.S_Q
