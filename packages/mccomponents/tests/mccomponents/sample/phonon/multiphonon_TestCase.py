@@ -29,13 +29,18 @@ class TestCase(unittest.TestCase):
     def test1(self):
         from dos import loadDOS
         dos = loadDOS()
-        dE = dos.energy[1] - dos.energy[0]
+        E = dos.energy
+        dE = E[1] - E[0]
         g = dos.I
+        # expand E a bit
+        E = numpy.arange(E[0], 70, dE)
+        g = numpy.concatenate((g, numpy.zeros(len(E)-len(g))))
+
         g/=g.sum()*dE
         from mccomponents.sample.phonon.multiphonon import computeAnESet
         kelvin2mev = 0.0862
         beta = 1./(300*kelvin2mev)
-        E, An_set = computeAnESet(N=5, E=dos.energy, g=g, beta=beta, dE=dE)
+        E, An_set = computeAnESet(N=5, E=E, g=g, beta=beta, dE=dE)
         import pylab
         for An in An_set:
             pylab.plot(E, An)
