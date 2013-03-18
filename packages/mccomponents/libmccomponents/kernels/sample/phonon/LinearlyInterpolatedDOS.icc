@@ -106,6 +106,8 @@ DANSE::phonon::LinearlyInterpolatedDOS<FloatType, Array_1D>::LinearlyInterpolate
     m_Z[i] /= area;
   }
 
+  // compute second order derivative at E=0
+  _compute_sod();
 }
 
 
@@ -119,6 +121,45 @@ DANSE::phonon::LinearlyInterpolatedDOS<FloatType, Array_1D>::~LinearlyInterpolat
 #endif
 }
 
+
+template <typename FloatType, typename Array_1D>
+FloatType
+DANSE::phonon::LinearlyInterpolatedDOS<FloatType, Array_1D>::sod
+()
+const
+{
+  return m_sod;
+}
+
+
+#include "mccomponents/math/regression/linear1.h"
+
+template <typename FloatType, typename Array_1D>
+void
+DANSE::phonon::LinearlyInterpolatedDOS<FloatType, Array_1D>::_compute_sod
+()
+{
+  FloatType c, R2;
+  int N = 90; // XXX: hack
+  FloatType x[N], y[N];
+  for (int i=0; i<N; i++) {
+    x[i] = m_e0 + m_de * i;
+    x[i] *= x[i];
+    y[i] = m_Z[i];
+  }
+  mccomponents::math::linear_regression1
+    (x, y, N, c, R2);
+  
+  if (R2<.9) {
+    std::cerr << "LinearlyInterpolatedDOS: failed to fit first "
+	      << N 
+	      << " points of DOS curve to parabolic with R2>=0.9"
+	      << std::endl;
+    throw;
+  }
+
+  m_sod = c;
+}
 
 template <typename FloatType, typename Array_1D>
 FloatType

@@ -61,6 +61,7 @@ namespace DANSE{ namespace phonon {
       ~LinearlyInterpolatedDOS();
 
       // methods
+      virtual FLT sod() const;
       FLT value( const FLT & e ) const;
 
     private:
@@ -69,6 +70,9 @@ namespace DANSE{ namespace phonon {
       std::auto_ptr< Details > m_details;
       array_t m_Z;
       float_t m_e0, m_de, m_n, m_e1;
+      float_t m_sod;
+
+      void _compute_sod();
     };
 
 }} // DANSE::phonon

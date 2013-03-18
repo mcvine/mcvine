@@ -50,6 +50,9 @@ namespace DANSE{ namespace phonon {
     FLT emin() const { return m_emin; }
     FLT emax() const { return m_emax; }
 
+    // second order derivative at E=0
+    virtual FLT sod() const = 0;
+
     // 
     FLT operator () ( const FLT & e ) const {
       if (e<m_emin or e> m_emax) {
