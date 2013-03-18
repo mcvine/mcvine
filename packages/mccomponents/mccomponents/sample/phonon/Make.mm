@@ -52,6 +52,7 @@ EXPORT_PYTHON_MODULES = \
 	__init__.py \
 	multiphonon.py \
 	units.py \
+	utils.py \
 
 
 export:: export-package-python-modules 
