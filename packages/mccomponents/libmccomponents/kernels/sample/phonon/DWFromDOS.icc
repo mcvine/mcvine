@@ -62,8 +62,11 @@ void DANSE::phonon::DWFromDOS<FloatType>::calc_DW_core
       index_first_nonzero_w = i;
     
     f[i] = (2*BoseEinsteinDistribution(w, T_in_Kelvin)+1)/w*Z;
-    m_core += f[i];
-    norm_fac += Z;
+    float_t frac = 1;
+    if (i==m_nSample-1)
+      frac = 0.5;
+    m_core += f[i] * frac;
+    norm_fac += Z * frac;
 #ifdef DEBUG
     debug_DW  << journal::at(__HERE__)
 	      << "w=" <<w << ","
@@ -73,6 +76,7 @@ void DANSE::phonon::DWFromDOS<FloatType>::calc_DW_core
 	      << "norm_fac=" <<norm_fac << ","
 	      << journal::endl;
 #endif
+    // std::cout << f[i] << std::endl;
   }
   // compute the contribution at w=0, by interpolating
   // from the values near w=0
@@ -86,11 +90,14 @@ void DANSE::phonon::DWFromDOS<FloatType>::calc_DW_core
     - (dw*index_first_nonzero_w+wmin)				\
     * (f[index_first_nonzero_w+1] - f[index_first_nonzero_w])	\
     / dw;
-  m_core += f0;
+  m_core += f0 / 2;
+  // 
+  norm_fac += m_dos(0) / 2;
   
   using physics::e;
   m_core /= e*1e-3;
-  m_core /= norm_fac; // now core = \int Z(w)*(2<n>+1)/(hbar*w) dw
+  // m_core /= norm_fac; // now core = \int Z(w)*(2<n>+1)/(hbar*w) dw
+  m_core *= dw;
   
 #ifdef DEBUG
   debug_DW  << journal::at(__HERE__)
