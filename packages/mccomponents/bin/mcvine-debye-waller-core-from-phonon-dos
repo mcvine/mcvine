@@ -42,6 +42,9 @@ The input phonon DOS is in 2-col ascii format.
 
 """
 
+import numpy as np
+
+
 def loadDOS_from2colascii(f, xaxis=None):
     from mcni.utils.constants import hbar, e
     from math import pi
@@ -57,7 +60,6 @@ def loadDOS_from2colascii(f, xaxis=None):
         es.append(float(e))
         Is.append(float(I))
         continue
-    import numpy as np
     e = np.array(es)
     Z = np.array(Is)
     if xaxis == 'TeraHz':
@@ -89,6 +91,8 @@ def loadDOS(path, **kwds):
     e,Z = handler(path, **kwds)
     dE = e[1] - e[0]
     # XXX: hack
+    # Z = smooth(Z, window_len=21)
+    # Z = smooth(Z, window_len=21)
     # Z = smooth(Z, window_len=21)
     # XXX
     Z /= Z.sum() * dE
@@ -182,9 +186,30 @@ def compute2(dos, mass, temperature):
     g0 = gamma0(E, Z, beta, dE)
     from mcni.utils import conversion as C
     r = g0 * C.k2e(1) / mass
+    # calling DWExp directly. they should give the same results
+    r2 = DWExp(np.array([1]), mass, E, Z, beta, dE)[0]
+    assert abs(r2-r)/r < .02
+    return r
+
+
+def compute2a(dos, mass, temperature, nsampling):
+    from mccomponents.sample.phonon.multiphonon import gamma0, DWExp
+    E = dos.energy
+    Z = dos.I
+    Emax = E[-1]
+    E1 = np.arange(0, Emax+Emax/(nsampling-1e-5), Emax/(nsampling-1))
+    Z1 = np.interp(E1, E, Z)
+    E,Z = E1,Z1
+    Z /= Z.sum() * (E[1]-E[0])
+    kelvin2mev = 0.0862
+    beta = 1./(temperature*kelvin2mev)
+    dE = E[1]-E[0]
+    g0 = gamma0(E, Z, beta, dE)
+    from mcni.utils import conversion as C
+    r = g0 * C.k2e(1) / mass
     import numpy
     r2 = DWExp(numpy.array([1]), mass, E, Z, beta, dE)[0]
-    assert (r2-r)/r < .02
+    assert abs(r2-r)/r < .02
     return r
 
 
@@ -206,6 +231,16 @@ class App(AppBase):
         temperature = self.inventory.temperature
         nsampling = self.inventory.nsampling
         dos = loadDOS(self.inventory.dos, xaxis = self.inventory.dos_xaxis)
+        # fit low E region to parabolic
+        from mccomponents.sample.phonon.utils import fitparabolic, ParabolicFittingError
+        E = dos.energy; g = dos.I
+        try:
+            E,g = fitparabolic(E,g)
+        except ParabolicFittingError:
+            g = smooth(g, window_len=21)
+            E,g = fitparabolic(E,g)
+        g /= g.sum() * (E[1] - E[0])
+        dos.I[:] = g
         # save DOS as a "histogram"
         dos_out = 'dos-hist.h5'
         print "saving dos to a histogram h5 file: %s" % dos_out
@@ -213,9 +248,12 @@ class App(AppBase):
         hh.dump(dos, dos_out)
         #
         core = compute(dos, mass, temperature, nsampling)
-        print "Debye-Waller factor core (unit: angstrom**2):"
         core2 = compute2(dos, mass, temperature)
-        assert (core2-core)/core2 < 0.02
+        core2a = compute2a(dos, mass, temperature, nsampling)
+        print "Debye-Waller factor core (unit: angstrom**2):"
+        assert abs(core2-core)/core2 < 0.02
+        assert abs(core2a-core)/core2 < 0.02
+        core = (core+core2+core2a)/3
         print core
         return
     
