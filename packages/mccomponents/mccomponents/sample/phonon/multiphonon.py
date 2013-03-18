@@ -205,11 +205,65 @@ def gamma0(E, g, beta, dE):
     beta: 1/kBT
     dE:  delta E in E array
     """
+    assert abs(E[0]) < 1e-7 # E[0] must be 0
     dos_integrated = np.sum(g)*dE
     assert abs(dos_integrated - 1) < 1e-3
-    f = coth(beta * E/2.) * g/E * dE
-    f[0] = f[1] + (f[1] - f[2] ) # Define unidentified value, i.e. initial value.
-    return np.sum(f)
+    # compute function to integrate
+    f = coth(beta * E/2.) * g/E
+    # f[0] would be nan, replace that with "extrapolation"
+    f[0] = f[1] - (f[2] - f[1])
+    return np.sum(f) * dE 
+
+
+# this is an implementation that tries to deal with
+# low E part differently. 
+# later we decided that it is better to just replace
+# the lowe E part with a parabolic. 
+# see implementation in mcvine-debye-waller-core-from-phonon-dos
+def gamma0a(E, g, beta, dE):
+    """Compute gamma0
+    gamma0 = \int coth(E/2kBT) g(E)/E dE
+
+    E,g: numpy arrays of energies and density of states
+         it must be normalized
+    beta: 1/kBT
+    dE:  delta E in E array
+    """
+    dos_integrated = np.sum(g)*dE
+    assert abs(dos_integrated - 1) < 1e-3
+    # when E is small, we need special treatment
+    # .. find a reasonable threshold
+    E_threshold = 0.1/beta
+    E_threshold = max(E_threshold, dE*0.5)
+    E_threshold = min(E_threshold, E[-1]*0.25)
+    # .. for E > threshold, we can just integrate
+    bigE = E>E_threshold
+    E1 = E[bigE]; g1 = g[bigE]
+    f = coth(beta * E1/2.) * g1/E1
+    
+    # for E < threshold, we fit the g(E) as a parabolic
+    # and compute 
+    smallE = E<=E_threshold
+    # .. we need enough points to make a good fit
+    # .. 10 is kind of random
+    if smallE.sum() < 10:
+        E2 = E[1:11]; g2 = g[1:11]
+    else:
+        E2 = E[smallE]; g2 = g[smallE]
+    # .. not fit
+    d2gdE2 = fitparabolic(E2, g2)
+    # .. compute contribution at E=0
+    atzero = 2 * d2gdE2 / beta
+    # import pylab
+    # pylab.plot(np.concatenate(([atzero], f)))
+    # pylab.show()
+    # the final result is a sum of two terms
+    return atzero * (E1[0] - dE/2) + np.sum(f) * dE 
+
+
+def fitparabolic(x,y):
+    x2 = x*x
+    return (x2*y).sum()/(x2*x2).sum()
 
 
 def DWExp(Q, M, E,g, beta, dE):
