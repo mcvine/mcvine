@@ -14,17 +14,15 @@
 include local.def
 
 PROJECT = mccomponents
-PACKAGE = math
+PACKAGE = math/regression
 
 
 PROJ_TMPDIR = $(BLD_TMPDIR)/$(PROJECT)/$(PACKAGE)
 
+
 # directory structure
 
 BUILD_DIRS = \
-	fparser \
-	random \
-	regression \
 
 OTHER_DIRS = \
 
@@ -41,22 +39,16 @@ tidy::
 clean::
 	BLD_ACTION="clean" $(MM) recurse
 
-
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
 export:: export-package-headers
 
 EXPORT_HEADERS = \
-	Functor.h \
-	Fx_fromExpr.h \
-	Fxyz_fromExpr.h \
-	misc.h \
-	random.h \
-	rootfinding.h \
+	linear1.h \
 
 
 # version
-# $Id$
+# $Id: Make.mm 1155 2011-05-24 19:41:17Z linjiao $
 
 #
 # End of file
