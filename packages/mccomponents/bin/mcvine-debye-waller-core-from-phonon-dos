@@ -43,6 +43,7 @@ The input phonon DOS is in 2-col ascii format.
 """
 
 import numpy as np
+import histogram
 
 
 def loadDOS_from2colascii(f, xaxis=None):
@@ -96,7 +97,6 @@ def loadDOS(path, **kwds):
     # Z = smooth(Z, window_len=21)
     # XXX
     Z /= Z.sum() * dE
-    import histogram
     h = histogram.histogram(
         'dos', 
         [('energy', e, 'meV')],
@@ -234,13 +234,24 @@ class App(AppBase):
         # fit low E region to parabolic
         from mccomponents.sample.phonon.utils import fitparabolic, ParabolicFittingError
         E = dos.energy; g = dos.I
+        # .. in crease number of points if necessary
+        if len(E) < 400:
+            dE = E[-1]/400.
+            E1 = np.arange(0, E[-1], dE)
+            g1 = np.interp(E1, E, g)
+            E, g = E1, g1
+        # .. fit parabolic
         try:
             E,g = fitparabolic(E,g)
         except ParabolicFittingError:
             g = smooth(g, window_len=21)
             E,g = fitparabolic(E,g)
         g /= g.sum() * (E[1] - E[0])
-        dos.I[:] = g
+        # create new dos hist
+        dos = histogram.histogram(
+            'dos', 
+            [('energy', E, 'meV')],
+            g)
         # save DOS as a "histogram"
         dos_out = 'dos-hist.h5'
         print "saving dos to a histogram h5 file: %s" % dos_out
