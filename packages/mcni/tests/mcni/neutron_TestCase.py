@@ -37,11 +37,28 @@ class TestCase(unittest.TestCase):
         
     def test2(self):
         "neutron"
+        # creating instances
         from mcni import neutron
         n = neutron(r=(0,0,0), v=(0,0,3000))
         n = neutron(r=(0,0,0), v=(0,0,3000), time=1000.)
         n = neutron(r=(0,0,0), v=(0,0,3000), time=1000., prob=10.)
         n = neutron(r=(0,0,0), v=(0,0,3000), s=(0,1), time=1000., prob=10.)
+        # printing
+        print n
+        print n.state
+        print n.state.velocity
+        # setting values
+        n.state.position = mcni.position(1,2,3)
+        self.assertEqual(tuple(n.state.position), (1,2,3))
+        n.state.velocity = mcni.velocity(1,2,3)
+        self.assertEqual(tuple(n.state.velocity), (1,2,3))
+        n.state.spin = mcni.spin(1,0)
+        self.assertEqual(n.state.spin.s1, 1)
+        self.assertEqual(n.state.spin.s2, 0)
+        n.time = 999
+        self.assertEqual(n.time, 999)
+        n.probability = 888
+        self.assertEqual(n.probability, 888)
         return
 
 
@@ -161,7 +178,8 @@ def main():
     
     
 if __name__ == "__main__":
-    main()
+    unittest.main()
+    # main()
     
 # version
 __id__ = "$Id: mcni_TestCase.py 1126 2011-04-10 03:05:40Z linjiao $"
