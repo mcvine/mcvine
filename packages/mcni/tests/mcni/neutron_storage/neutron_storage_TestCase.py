@@ -19,6 +19,7 @@ import journal
 debug = journal.debug( "mcni.neutron_storage.test" )
 warning = journal.warning( "mcni.neutron_storage.test" )
 
+import mcni.neutron_storage as mns
 
 
 class TestCase(unittest.TestCase):
@@ -26,17 +27,33 @@ class TestCase(unittest.TestCase):
 
     def test(self):
         'neutron_storage'
-        from mcni.neutron_storage import load, dump
         import mcni
         neutrons = mcni.neutron_buffer( 7 )
         neutrons[5] = mcni.neutron( v = (8,9,10) )
-        dump(neutrons, 'neutrons.dat')
-        neutrons1 = load( 'neutrons.dat' )
+        mns.dump(neutrons, 'neutrons.dat')
+        neutrons1 = mns.load( 'neutrons.dat' )
         n5 = neutrons1[5]
         v = n5.state.velocity
         self.assertAlmostEqual( v[0], 8 )
         self.assertAlmostEqual( v[1], 9 )
         self.assertAlmostEqual( v[2], 10 )
+        return
+        
+
+    def test2(self):
+        'normalize'
+        import mcni
+        neutrons = mcni.neutron_buffer( 10 )
+        for n in neutrons:
+            n.probability = 1
+            continue
+        out = 'tmp-nst-test2.ns'
+        mns.dump(neutrons, out)
+        mns.normalize(out, 10.)
+        neutrons2 = mns.load(out)
+        for n in neutrons2:
+            self.assertAlmostEqual(n.probability, .1)
+            continue
         return
         
     pass  # end of TestCase
