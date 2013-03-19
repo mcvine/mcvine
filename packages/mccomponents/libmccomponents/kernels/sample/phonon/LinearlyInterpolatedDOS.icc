@@ -141,7 +141,7 @@ DANSE::phonon::LinearlyInterpolatedDOS<FloatType, Array_1D>::_compute_sod
 {
   FloatType c, R2;
   int N = 90; // XXX: hack
-  FloatType x[N], y[N];
+  FloatType *x = new FloatType[N], *y = new FloatType[N];
   for (int i=0; i<N; i++) {
     x[i] = m_e0 + m_de * i;
     x[i] *= x[i];
@@ -159,6 +159,7 @@ DANSE::phonon::LinearlyInterpolatedDOS<FloatType, Array_1D>::_compute_sod
   }
 
   m_sod = c;
+  delete [] x; delete [] y;
 }
 
 template <typename FloatType, typename Array_1D>
