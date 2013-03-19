@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+OUT=out-incoh-el
+
+rm -rf $OUT
+./SSD.py --sample.xml=sampleassemblies/incoh-el/sampleassembly.xml --ncount=1e6 --buffer_size=100000 --output-dir=$OUT
+
