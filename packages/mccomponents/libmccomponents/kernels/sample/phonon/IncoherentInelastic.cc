@@ -230,10 +230,8 @@ mccomponents::kernels::phonon::IncoherentInelastic::scatter
   float_t  omega = E_i - E_f; 
 
   // avoid divide by zero
-  if (std::abs(omega) < m_details->zero*m_max_phonon_energy) 
-    omega = mcni::sgn(omega) * m_details->zero*m_max_phonon_energy;
+  bool small_omega = std::abs(omega) < m_details->zero*m_max_phonon_energy;
   
-
   // vf
   namespace conversion = mcni::neutron_units_conversion;
   float_t v_f_l = conversion::E2v( E_f );
@@ -266,6 +264,7 @@ mccomponents::kernels::phonon::IncoherentInelastic::scatter
 
   // thermal factor
   float_t therm_factor = phonon_bose_factor( omega, m_Temperature );
+  float_t beta = 1./(m_Temperature * physics::Kelvin2meV);
 
   // debye waller factor	  
   float_t DW = exp( -m_DW_calc->DW( Q_l ) );
@@ -283,11 +282,36 @@ mccomponents::kernels::phonon::IncoherentInelastic::scatter
   prob /= m_Mass;
   prob *= v_f_l/v_i_l;
   prob *= DW;
-  prob *= therm_factor;
-  prob *= (*m_dos)( std::abs(omega) ); //  *m_dos_norm_factor; this is no longer necessary. dos() method is require to be normalized
+  if (small_omega) {
+    // with omega --> 0
+    // therm_factor --> 1/(beta E)
+    // dos --> sod * E**2
+    prob *= m_dos->sod() / beta * conversion::k2E(Q_l);
+  } else {
+    prob *= therm_factor;
+    prob *= (*m_dos)( std::abs(omega) ); //  *m_dos_norm_factor; this is no longer necessary. dos() method is require to be normalized
+    prob *= conversion::k2E(Q_l)/std::abs(omega);
+  }
 
-  prob *= conversion::k2E(Q_l)/std::abs(omega);
-
+  if (prob != prob) {
+    std::cerr 
+      << "* prob = " << prob << ","
+      << "small_omega = " << small_omega << ", "
+      << "dos sod = " << m_dos->sod() << ", "
+      << "beta = " << beta << ", "
+      << "energy of Q in meV" << conversion::k2E(Q_l) << ", "
+      << "e_range = " << e_range << ", "
+      << "v_f_l/v_i_l=" << v_f_l/v_i_l << ","
+      << "m_Mass=" << m_Mass << ","
+      << "DW=" << DW << ","
+      << "k2E(Q_l)/abs(omega)=" << conversion::k2E(Q_l)/std::abs(omega) << ","
+      << "m_dos( abs(omega) )=" << (*m_dos)( std::abs(omega) ) << ","
+      << "therm_factor=" << therm_factor << ","
+      << "Q=" << Q_l << ", "
+      << "omega=" << omega << ", "
+      << std::endl;
+    throw;
+  }
 #ifdef DEEPDEBUG
   debug << journal::at(__HERE__)
 	<< "* prob = " << prob << ","
