@@ -23,7 +23,11 @@ namespace mccomponents { namespace kernels { namespace phonon {
       unsigned int pick_phonon_branch( size_t n_br );
 
       /// bose distribution 
-      double phonon_bose_factor( double omega, double T );
+      /// energy: unit meV
+      /// T: unit kelvin
+      /// phonon creation: e^(beta E)/(e^(beta E) - 1)
+      /// phonon annhilation: 1/(e^(beta E) - 1)
+      double phonon_bose_factor( double energy, double T );
 
   
 }}} // mccomponents::kernels::phonon

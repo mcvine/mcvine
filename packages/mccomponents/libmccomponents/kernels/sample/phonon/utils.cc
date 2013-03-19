@@ -26,15 +26,15 @@ unsigned int mccomponents::kernels::phonon::pick_phonon_branch( size_t n_br )
   return (unsigned int)std::floor( math::random(0, n_br) );
 }
 
-double mccomponents::kernels::phonon::phonon_bose_factor(double omega, double T)
+double mccomponents::kernels::phonon::phonon_bose_factor(double energy, double T)
 {
   using physics::BoseEinsteinDistribution;
   double bose_factor;
-  if (omega == 0.0) bose_factor = 1;
+  if (energy == 0.0) bose_factor = 1;
   else {
-    if (omega>0.0) bose_factor = 1.0;
+    if (energy>0.0) bose_factor = 1.0;
     else bose_factor = 0.0;
-    bose_factor += BoseEinsteinDistribution(std::abs(omega),T);
+    bose_factor += BoseEinsteinDistribution(std::abs(energy),T);
   }
   return bose_factor;
 }
