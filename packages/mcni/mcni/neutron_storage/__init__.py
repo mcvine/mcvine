@@ -28,15 +28,60 @@ def merge( *args, **kwds ):
     return
 
 
-def normalize(neutronsfile, N):
+def normalize(neutronsfile, N, output=None):
     """normalize the neutrons in the given file by the factor N"""
-    from idf_usenumpy import read, write
-    neutrons = read(neutronsfile)
-    if neutrons is None:
-        return
+    # create a temporary output file
+    import os
+    if not output:
+        import tempfile
+        pdir = os.path.dirname(neutronsfile)
+        fd, tmpout = tempfile.mkstemp(dir=pdir)
+        os.close(fd)
+        os.remove(tmpout)
+    else:
+        tmpout = None
+    #
+    _normalize(neutronsfile, N, output=tmpout or output)
+    #
+    if tmpout:
+        os.rename(tmpout, neutronsfile)
+    return
 
-    neutrons[:,-1]/=N
-    write(neutrons, neutronsfile)
+
+def _normalize(input, N, output):
+    """normalize the neutrons in the given file by the factor N
+    and save it in the output
+    """
+    import os
+    input = os.path.abspath(input)
+    output = os.path.abspath(output)
+    # guards
+    assert input != output
+    if os.path.exists(output):
+        raise IOError('%s already exists' % output)
+    # total # of neutrons
+    remain = count(input)
+    # output storage
+    out = storage(output, mode='w')
+    # input storage
+    input = storage(input)
+    #
+    chunk = int(1e6)
+    # 
+    from mcni import neutron_buffer
+    nb = neutron_buffer(0)
+    while remain:
+        n = min(remain, chunk)
+        # read
+        neutrons = input.read(n, asnpyarr=True)
+        # normalize
+        neutrons[:, -1] /= N
+        # write
+        nb.from_npyarr(neutrons)
+        out.write(nb)
+        #
+        remain -= n
+        continue
     return
 
 
@@ -114,8 +159,8 @@ def neutrons_as_npyarr( neutrons ):
 
 
 import numpy
-from idfneutron import ndblsperneutron
-
+from .idfneutron import ndblsperneutron
+from .idf_usenumpy import count
 from mcni.bindings import current as binding
 
 
