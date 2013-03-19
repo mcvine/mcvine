@@ -82,9 +82,9 @@ void wrap_neutron()
     ("NeutronState", 
      init< const r_t &, const v_t &, const Spin &> ( )
      )
-    .def_readonly("position", &State::position)
-    .def_readonly("velocity", &State::velocity)
-    .def_readonly("spin", &State::spin)
+    .def_readwrite("position", &State::position)
+    .def_readwrite("velocity", &State::velocity)
+    .def_readwrite("spin", &State::spin)
     ;
   
 
@@ -93,8 +93,8 @@ void wrap_neutron()
      init< const State &, double, double> ()
      )
     .def_readonly("state", &Event::state)
-    .def_readonly("probability", &Event::probability)
-    .def_readonly("time", &Event::time)
+    .def_readwrite("probability", &Event::probability)
+    .def_readwrite("time", &Event::time)
     .def("energy", &Event::energy)
     .def("__str__", &NeutronEvent_str)
     ;
