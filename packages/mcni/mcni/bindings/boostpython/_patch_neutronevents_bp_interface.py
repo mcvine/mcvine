@@ -1,7 +1,7 @@
 
 ## patch the interface of Neutron::Events boost python binding
 
-from mcni.mcnibp import vector_Event
+from mcni.mcnibp import vector_Event, Position_double, Velocity_double, NeutronState, NeutronSpin
 
 
 original__str__ = vector_Event.__str__
@@ -10,7 +10,23 @@ def __str__(self):
     return ', '.join( [ '%s' % n for n in self ] )
 
 vector_Event.__str__ = __str__
-    
+
+
+def vector3_str(self):
+    return str(list(self))
+Position_double.__str__ = Velocity_double.__str__ = vector3_str
+Position_double.__repr__ = Velocity_double.__repr__ = vector3_str
+
+
+def spin_str(self):
+    return '(%s, %s)' % (self.s1, self.s2)
+NeutronSpin.__str__ = NeutronSpin.__repr__ = spin_str
+
+
+def state_str(self):
+    return "State(position=%r, velocity=%r, spin=%r)" % (
+        self.position, self.velocity, self.spin)
+NeutronState.__str__ = state_str
 
 
 from mcni.mcnibp import NeutronEventBuffer
