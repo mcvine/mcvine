@@ -36,7 +36,7 @@
         <component name="source">
             <property name="position">[0.0, 0.0, 0.0]</property>
             <property name="energy">0.0</property>
-            <property name="velocity">[0.0, 0.0, 3000.0]</property>
+            <property name="velocity">[0.0, 0.0, 3388.034]</property>
             <property name="probability">1.0</property>
             <property name="time">0.0</property>
         </component>
