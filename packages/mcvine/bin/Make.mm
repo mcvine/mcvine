@@ -62,6 +62,7 @@ EXPORT_BINS = \
 	mcvine-reduce-eventdata-to-ipixtof \
 	mcvine-reduce-eventdata-to-itof \
 	mcvine-simulation-get-progress \
+	mcvine-spe2sqehist \
 
 
 export:: export-binaries release-binaries export-package-python-modules #export-docs
