@@ -69,19 +69,20 @@ def load(input):
         errors.append(errline)
         
         continue
-    import numpy as np
     print '  done.'
     return np.array(Q), np.array(E), np.array(intensities), np.array(errors)
 
-
+import numpy as np
+    
 def run(input, output):
-    Q, E, I, E2 = load(input)
+    Q, E, I, Error = load(input)
+    I[I==-1e20] = np.nan # dave mslice convention: nan converted to -1e20
     import histogram as H, histogram.hdf as hh
     axes = [
         ('Q', Q, 'angstrom**-1'),
         ('E', E, 'meV'),
         ]
-    h = H.histogram('I(Q,E)', axes, I, E2) 
+    h = H.histogram('I(Q,E)', axes, I, Error**2)
     print '* writing histogram'
     hh.dump(h, output)
     print '  done.'
