@@ -39,10 +39,25 @@ int test1()
 }
 
 
+int test2()
+{
+  std::string function = "ModBessellType1(1, x)";
+  std::cout << "* Testing " << function << std::endl;
+
+  mccomponents::math::Fx_fromExpr f(function);
+
+  assertAlmostEqual(f(0), 0);
+  assertAlmostEqual(f(1), 0.56515910399248);
+  assertAlmostEqual(f(2), 1.59063685463732);
+  return 0;
+}
+
+
 int main()
 {
   std::cout << "== Fx_fromExpr tests ==" << std::endl;
   if (test1()) return 1;
+  if (test2()) return 1;
   std::cout << "* All tests passed" << std::endl;
   return 0;
 }

@@ -26,7 +26,7 @@ PROJ_CPPTESTS = \
 
 
 PROJ_TESTS = $(PROJ_PYTESTS) $(PROJ_CPPTESTS)
-PROJ_LIBRARIES = -L$(BLD_LIBDIR) -lmccomponents -lmccomposite -lmcni -ljournal -lfparser
+PROJ_LIBRARIES = -L$(BLD_LIBDIR) -lmccomponents -lmccomposite -lmcni -ljournal -lfparser -lgsl -lgslcblas
 
 # directory structure
 
