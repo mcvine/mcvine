@@ -13,6 +13,7 @@
 PROJECT = mcvine/instruments/SEQUOIA
 
 BUILD_DIRS = \
+	sequoia_analyze_beam \
 	sequoia-moderator2sample \
 
 OTHER_DIRS = \

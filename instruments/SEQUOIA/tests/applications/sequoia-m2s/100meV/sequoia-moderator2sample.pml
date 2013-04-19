@@ -379,43 +379,43 @@
             <property name="adjustable_slits">(relative((0.0, 0.0, 18.25), to='mod'), relative((0, 0, 0), to='mod'))</property>
             <property name="shutter_guide">(relative((0.0, 0.0, 2.2988), to='mod'), relative((0, 0, 0), to='mod'))</property>
             <property name="transformer">coordinate-system-transformer</property>
-            <property name="guide3">(relative((0.0, 0.0, 5.1639999999999997), to='mod'), relative((0, 0, 0), to='mod'))</property>
-            <property name="guide29">(relative((0.0, 0.0, 18.260400000000001), to='mod'), relative((0, 0, 0), to='mod'))</property>
+            <property name="guide3">(relative((0.0, 0.0, 5.164), to='mod'), relative((0, 0, 0), to='mod'))</property>
+            <property name="guide29">(relative((0.0, 0.0, 18.2604), to='mod'), relative((0, 0, 0), to='mod'))</property>
             <property name="guide21">(relative((0.0, 0.0, 14.436), to='mod'), relative((0, 0, 0), to='mod'))</property>
-            <property name="guide20">(relative((0.0, 0.0, 13.944000000000001), to='mod'), relative((0, 0, 0), to='mod'))</property>
+            <property name="guide20">(relative((0.0, 0.0, 13.944), to='mod'), relative((0, 0, 0), to='mod'))</property>
             <property name="guide23">(relative((0.0, 0.0, 15.42), to='mod'), relative((0, 0, 0), to='mod'))</property>
             <property name="mod">(relative((0.0, 0.0, 0.0), to='arm1'), relative((0, 0, 0), to='arm1'))</property>
             <property name="guide25">(relative((0.0, 0.0, 16.404), to='mod'), relative((0, 0, 0), to='mod'))</property>
-            <property name="guide24">(relative((0.0, 0.0, 15.912000000000001), to='mod'), relative((0, 0, 0), to='mod'))</property>
-            <property name="guide27">(relative((0.0, 0.0, 17.388000000000002), to='mod'), relative((0, 0, 0), to='mod'))</property>
-            <property name="guide26">(relative((0.0, 0.0, 16.896000000000001), to='mod'), relative((0, 0, 0), to='mod'))</property>
-            <property name="recorder">(relative((0.0, 0.0, 20.0), to='mod'), relative((0, 0, 0), to='mod'))</property>
+            <property name="guide24">(relative((0.0, 0.0, 15.912), to='mod'), relative((0, 0, 0), to='mod'))</property>
+            <property name="guide27">(relative((0.0, 0.0, 17.388), to='mod'), relative((0, 0, 0), to='mod'))</property>
+            <property name="guide26">(relative((0.0, 0.0, 16.896), to='mod'), relative((0, 0, 0), to='mod'))</property>
+            <property name="recorder">(relative((0.0, 0.0, 19.9), to='mod'), relative((0, 0, 0), to='mod'))</property>
             <property name="fermi_chopp">(relative((0.0, 0.0, 18.0), to='mod'), relative((0, 0, 0), to='mod'))</property>
             <property name="t0_chopp">(relative((0.0, 0.0, 10.0), to='mod'), relative((0, 0, 0), to='mod'))</property>
-            <property name="guide8">(relative((0.0, 0.0, 7.5739999999999998), to='mod'), relative((0, 0, 0), to='mod'))</property>
-            <property name="guide9">(relative((0.0, 0.0, 8.0559999999999992), to='mod'), relative((0, 0, 0), to='mod'))</property>
-            <property name="guide6">(relative((0.0, 0.0, 6.6100000000000003), to='mod'), relative((0, 0, 0), to='mod'))</property>
-            <property name="guide7">(relative((0.0, 0.0, 7.0919999999999996), to='mod'), relative((0, 0, 0), to='mod'))</property>
-            <property name="guide4">(relative((0.0, 0.0, 5.6459999999999999), to='mod'), relative((0, 0, 0), to='mod'))</property>
-            <property name="guide5">(relative((0.0, 0.0, 6.1280000000000001), to='mod'), relative((0, 0, 0), to='mod'))</property>
-            <property name="guide2">(relative((0.0, 0.0, 4.6820000000000004), to='mod'), relative((0, 0, 0), to='mod'))</property>
+            <property name="guide8">(relative((0.0, 0.0, 7.574), to='mod'), relative((0, 0, 0), to='mod'))</property>
+            <property name="guide9">(relative((0.0, 0.0, 8.056), to='mod'), relative((0, 0, 0), to='mod'))</property>
+            <property name="guide6">(relative((0.0, 0.0, 6.61), to='mod'), relative((0, 0, 0), to='mod'))</property>
+            <property name="guide7">(relative((0.0, 0.0, 7.092), to='mod'), relative((0, 0, 0), to='mod'))</property>
+            <property name="guide4">(relative((0.0, 0.0, 5.646), to='mod'), relative((0, 0, 0), to='mod'))</property>
+            <property name="guide5">(relative((0.0, 0.0, 6.128), to='mod'), relative((0, 0, 0), to='mod'))</property>
+            <property name="guide2">(relative((0.0, 0.0, 4.682), to='mod'), relative((0, 0, 0), to='mod'))</property>
             <property name="E_det">(relative((0.0, 0.0, 1.99), to='fermi_chopp'), relative((0, 0, 0), to='fermi_chopp'))</property>
-            <property name="core_ves">(relative((0.0, 0.0, 1.0105999999999999), to='mod'), relative((0, 0, 0), to='mod'))</property>
-            <property name="guide1">(relative((0.0, 0.0, 4.2000000000000002), to='mod'), relative((0, 0, 0), to='mod'))</property>
-            <property name="guide34">(relative((0.0, 0.0, 19.416399999999999), to='mod'), relative((0, 0, 0), to='mod'))</property>
-            <property name="guide22">(relative((0.0, 0.0, 14.928000000000001), to='mod'), relative((0, 0, 0), to='mod'))</property>
-            <property name="guide32">(relative((0.0, 0.0, 18.956900000000001), to='mod'), relative((0, 0, 0), to='mod'))</property>
+            <property name="core_ves">(relative((0.0, 0.0, 1.0106), to='mod'), relative((0, 0, 0), to='mod'))</property>
+            <property name="guide1">(relative((0.0, 0.0, 4.2), to='mod'), relative((0, 0, 0), to='mod'))</property>
+            <property name="guide34">(relative((0.0, 0.0, 19.4164), to='mod'), relative((0, 0, 0), to='mod'))</property>
+            <property name="guide22">(relative((0.0, 0.0, 14.928), to='mod'), relative((0, 0, 0), to='mod'))</property>
+            <property name="guide32">(relative((0.0, 0.0, 18.9569), to='mod'), relative((0, 0, 0), to='mod'))</property>
             <property name="guide31">(relative((0.0, 0.0, 18.4984), to='mod'), relative((0, 0, 0), to='mod'))</property>
-            <property name="Monitor1">(relative((0.0, 0.0, 18.260000000000002), to='mod'), relative((0, 0, 0), to='mod'))</property>
+            <property name="Monitor1">(relative((0.0, 0.0, 18.26), to='mod'), relative((0, 0, 0), to='mod'))</property>
             <property name="arm1">((0.0, 0.0, 0.0), (0, 0, 0))</property>
-            <property name="guide18">(relative((0.0, 0.0, 12.960000000000001), to='mod'), relative((0, 0, 0), to='mod'))</property>
+            <property name="guide18">(relative((0.0, 0.0, 12.96), to='mod'), relative((0, 0, 0), to='mod'))</property>
             <property name="guide19">(relative((0.0, 0.0, 13.452), to='mod'), relative((0, 0, 0), to='mod'))</property>
-            <property name="guide14">(relative((0.0, 0.0, 10.992000000000001), to='mod'), relative((0, 0, 0), to='mod'))</property>
+            <property name="guide14">(relative((0.0, 0.0, 10.992), to='mod'), relative((0, 0, 0), to='mod'))</property>
             <property name="guide15">(relative((0.0, 0.0, 11.484), to='mod'), relative((0, 0, 0), to='mod'))</property>
-            <property name="guide16">(relative((0.0, 0.0, 11.976000000000001), to='mod'), relative((0, 0, 0), to='mod'))</property>
+            <property name="guide16">(relative((0.0, 0.0, 11.976), to='mod'), relative((0, 0, 0), to='mod'))</property>
             <property name="guide17">(relative((0.0, 0.0, 12.468), to='mod'), relative((0, 0, 0), to='mod'))</property>
-            <property name="guide10">(relative((0.0, 0.0, 8.5380000000000003), to='mod'), relative((0, 0, 0), to='mod'))</property>
-            <property name="guide11">(relative((0.0, 0.0, 9.0199999999999996), to='mod'), relative((0, 0, 0), to='mod'))</property>
+            <property name="guide10">(relative((0.0, 0.0, 8.538), to='mod'), relative((0, 0, 0), to='mod'))</property>
+            <property name="guide11">(relative((0.0, 0.0, 9.02), to='mod'), relative((0, 0, 0), to='mod'))</property>
             <property name="guide13">(relative((0.0, 0.0, 10.5), to='mod'), relative((0, 0, 0), to='mod'))</property>
         </component>
 
@@ -878,7 +878,7 @@
 <!-- version-->
 <!-- $Id$-->
 
-<!-- Generated automatically by Renderer on Thu Jun 16 21:47:48 2011-->
+<!-- Generated automatically by Renderer on Fri Apr 19 08:59:00 2013-->
 
 <!-- End of file -->
 <!-- 

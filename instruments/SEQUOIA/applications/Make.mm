@@ -43,6 +43,8 @@ EXPORT_PYTHON_MODULES = \
 
 
 EXPORT_BINS = \
+	sequoia_analyze_beam \
+	sequoia_beam \
 	sequoia-moderator2sample \
 	sequoia-m2s \
 

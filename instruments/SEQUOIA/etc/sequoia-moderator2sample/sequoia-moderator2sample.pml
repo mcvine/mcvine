@@ -84,7 +84,7 @@
       <property name="guide34">relative((0.0, 0.0, 19.4164), to="mod"),relative((0, 0, 0), to="mod")</property>
       <property name="E_det">relative((0.0, 0.0, 1.99), to="fermi_chopp"),relative((0, 0, 0), to="fermi_chopp")</property>
       <!-- 20.0254 is the nominal position of sample -->
-      <property name="recorder">relative((0.0, 0.0, 20.), to="mod"),relative((0, 0, 0), to="mod")</property>
+      <property name="recorder">relative((0.0, 0.0, 19.9), to="mod"),relative((0, 0, 0), to="mod")</property>
       <property name="t_mon2">relative((0.0, 0.0, 29.0032), to="mod"),relative((0, 0, 0), to="mod")</property>
     </component>
     
