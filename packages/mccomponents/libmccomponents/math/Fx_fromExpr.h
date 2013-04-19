@@ -20,11 +20,21 @@
 #include <vector>
 #include "mcni/test/exception.h"
 #include "fparser/fparser.hh"
-
+#include <gsl/gsl_sf_bessel.h>
 
 namespace mccomponents {
 
   namespace math {
+
+    class ModBessellType1:
+      public FunctionParser::FunctionWrapper
+    {
+    public:
+      virtual double callFunction(const double* values)
+      {
+        return gsl_sf_bessel_In(int(values[0]), values[1]);
+      }
+    };
 
     /// f(x) from a expr string
     /// Usage:
@@ -40,6 +50,7 @@ namespace mccomponents {
       // meta methods
       Fx_fromExpr ( const std::string & expr, std::string arg="x")
       {
+	m_fparser.AddFunctionWrapper("ModBessellType1", ModBessellType1(), 2);
 	std::string vars = arg;
 	int res = m_fparser.Parse(expr, vars);
 	if (res >=0 ) {
