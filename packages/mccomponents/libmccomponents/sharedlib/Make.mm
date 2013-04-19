@@ -31,6 +31,7 @@ all: $(PROJ_SAR) export
 
 PROJ_SRCS = \
 	HomogeneousNeutronScatterer.cc \
+	Fx_fromExpr.cc \
 	random.cc \
 	rootfinding.cc \
 	Functor.cc \
@@ -70,6 +71,9 @@ PROJ_TIDY += $(PROJ_SRCS)
 
 HomogeneousNeutronScatterer.cc: ../homogeneous_scatterer/HomogeneousNeutronScatterer.cc
 	cp ../homogeneous_scatterer/HomogeneousNeutronScatterer.cc .
+
+Fx_fromExpr.cc: ../math/Fx_fromExpr.cc
+	cp ../math/Fx_fromExpr.cc .
 
 random.cc: ../math/random.cc
 	cp ../math/random.cc .
