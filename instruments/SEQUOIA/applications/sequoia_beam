@@ -39,7 +39,9 @@ class App(base):
             'fermi_chopper', default='100-2.03-AST')
         fermi_chopper.meta['tip'] = 'The choice of fermi chopper'
         fermi_chopper.validator = pyre.inventory.choice(
-            ['100-2.03-AST', '700-3.56-AST']
+            ['100-2.03-AST', '700-3.56-AST',
+             '700-0.5-AST', # from ARCS
+             ]
             )
         
         fermi_nu = pyre.inventory.float('fermi_nu', default=600)
