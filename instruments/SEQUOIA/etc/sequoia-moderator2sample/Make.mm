@@ -25,10 +25,10 @@ all: export
 
 EXPORT_ETC = \
 	sequoia-moderator2sample.pml \
-	fermichopper-1.odb \
-	fermichopper-1.pml \
-	fermichopper-2.odb \
-	fermichopper-2.pml \
+	fermichopper-700-3.56-AST.odb \
+	fermichopper-700-3.56-AST.pml \
+	fermichopper-100-2.03-AST.odb \
+	fermichopper-100-2.03-AST.pml \
 
 
 export:: export-etc

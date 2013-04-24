@@ -21,12 +21,12 @@ class App(base):
 
         import pyre.inventory
         
-        fermi_chopper = pyre.inventory.int(
-            'fermi_chopper', default=1)
+        fermi_chopper = pyre.inventory.str(
+            'fermi_chopper', default='100-2.03-AST')
         fermi_chopper.meta['tip'] = 'fermi chopper choice'
         fermi_chopper.meta[base.inventory_item_signature] = True
         fermi_chopper.validator = pyre.inventory.choice(
-            [1, 2]
+            ['100-2.03-AST', '700-3.56-AST']
             )
         
         fermi_nu = pyre.inventory.float('fermi_nu', default=600)
