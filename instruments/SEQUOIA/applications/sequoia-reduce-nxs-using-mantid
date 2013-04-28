@@ -1,0 +1,100 @@
+#!/usr/bin/env python
+
+
+__doc__ = """
+reduce SEQUOIA nxs to I(Q,E) using mantid
+
+Examples:
+
+ $ sequoia-reduce-nxs-using-mantid --nxs=simulated.nxs --ei_guess=100 --qaxis=0,13,0.1 --out=iqe.nxs
+
+"""
+
+
+cmd_help = __doc__
+appname = 'sequoia-reduce-nxs-using-mantid'
+
+
+import os
+from mcvine.deployment_info import mcvinedir
+default_mcvine_idfpath = os.path.join(mcvinedir, 'share', 'mcvine', 'instruments', 'SEQUOIA', 'SEQUOIA_Definition-mcvine.xml')
+
+
+# application 
+from pyre.applications.Script import Script as AppBase
+class App(AppBase):
+
+    class Inventory(AppBase.Inventory):
+
+        import pyre.inventory
+        nxs = pyre.inventory.str('nxs', default='sequoia-sim.nxs')
+        idf = pyre.inventory.str('idf', default=default_mcvine_idfpath)
+        use_ei_guess = pyre.inventory.bool('use_ei_guess', default=True)
+        ei_guess = pyre.inventory.float('ei_guess', default=100)
+        qaxis = pyre.inventory.array('qaxis', default="(0,13,0.1)")
+        out = pyre.inventory.str('out', default='iqe.nxs')
+
+    def main(self):
+        nxs = self.inventory.nxs
+        use_ei_guess = self.inventory.use_ei_guess
+        ei_guess = self.inventory.ei_guess
+        qmin, qmax, dq = self.inventory.qaxis
+        qaxis = (qmin, dq, qmax)
+        outfile = self.inventory.out 
+        idfpath = self.inventory.idf
+        
+        d = {
+            'nxsfile': nxs,
+            'idfpath': idfpath,
+            'use_ei_guess': use_ei_guess,
+            'ei_guess': ei_guess,
+            'qaxis': qaxis,
+            'outfile': outfile,
+            }
+        run(**d)
+        return
+
+
+    def help(self):
+        print cmd_help
+    
+
+
+def run(nxsfile, idfpath, use_ei_guess, ei_guess, qaxis, outfile):
+    from mantid.simpleapi import DgsReduction, SofQW3, SaveNexus, LoadInstrument, Load
+    
+    workspace = Load(nxsfile)
+    LoadInstrument(workspace, idfpath)
+    
+    DgsReduction(
+        SampleInputWorkspace = workspace,
+        IncidentEnergyGuess=ei_guess,
+        UseIncidentEnergyGuess=use_ei_guess,
+        OutputWorkspace='reduced',
+        )
+    SofQW3(
+        InputWorkspace='reduced',
+        OutputWorkspace='iqw',
+        QAxisBinning=qaxis,
+        EMode='Direct',
+        )
+    SaveNexus(
+        InputWorkspace='iqw',
+        Filename = outfile,
+        Title = 'iqw',
+        )
+    return
+
+
+def main():
+    app = App(appname)
+    app.run()
+    return
+
+
+
+interactive = False
+
+if __name__ == '__main__': 
+    interactive = True
+    main()

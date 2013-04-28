@@ -50,6 +50,7 @@ EXPORT_BINS = \
 	sequoia-m2s \
 	sequoia-neutrons2events \
 	sequoia-neutrons2nxs \
+	sequoia-reduce-nxs-using-mantid \
 
 
 export:: export-binaries release-binaries export-package-python-modules #export-docs
