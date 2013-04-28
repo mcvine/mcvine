@@ -33,15 +33,6 @@ def run(eventfile, tofbinsize, nxsfile, type):
     return
 
 
-# constants
-mod2sample_distance = 13.6
-
-import pyre.units.length
-import pyre.units.energy
-import pyre.units.time
-mod2sample=13.6*pyre.units.length.meter
-mod_period=0.015*pyre.units.time.s # moderator period
-
 
 from pyre.applications.Script import Script as AppBase
 class App(AppBase):
