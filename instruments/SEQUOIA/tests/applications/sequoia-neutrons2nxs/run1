@@ -1,0 +1,3 @@
+#!/usr/bin/env sh
+
+sequoia-neutrons2nxs --neutrons=scattered-neutrons-example --nodes=2
