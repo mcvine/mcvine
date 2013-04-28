@@ -45,8 +45,11 @@ EXPORT_PYTHON_MODULES = \
 EXPORT_BINS = \
 	sequoia_analyze_beam \
 	sequoia_beam \
+	sequoia-events2nxs \
 	sequoia-moderator2sample \
 	sequoia-m2s \
+	sequoia-neutrons2events \
+	sequoia-neutrons2nxs \
 
 
 export:: export-binaries release-binaries export-package-python-modules #export-docs

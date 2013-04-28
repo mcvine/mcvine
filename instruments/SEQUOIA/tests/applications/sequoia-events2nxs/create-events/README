@@ -1,4 +1,4 @@
-The simulation here sends neutrons to arcs detector system.
+The simulation here sends neutrons to sequoia detector system.
 
 The neutrons were simulated from an artificial sample 
 that scatters only to one particular angle (on a cone).
@@ -7,10 +7,6 @@ That simulation was done with incident energy 700meV.
 The sample was a "resolution sample", which only scatters neutrons
 to Q = 10 angstrom**-1 and E = 100 meV.
 
-The detector system is specified by ARCS.xml. Please note 
-that this ARCS.xml is different from the one in instruments/ARCS/resources.
-The reason is the nexus "processed" file for ARCS has a different
-convention of counting pixels than the original counting scheme
-defined by Rick's data acquisition team.
+The detector system is specified by SEQUOIA.xml. 
 
 To run this simulation, run command "run".

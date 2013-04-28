@@ -11,11 +11,11 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 PROJECT = mcvine
-PACKAGE = instruments/SEQUOIA
+PACKAGE = instruments/SEQUOIA/nxs
 
 
 BUILD_DIRS = \
-	nxs \
+
 
 RECURSE_DIRS = $(BUILD_DIRS)
 
@@ -35,12 +35,8 @@ tidy::
 # export
 
 EXPORT_PYTHON_MODULES = \
-	Instrument.py \
-	_utils.py \
 	__init__.py \
-	fermichopper.py \
-	moderator.py \
-	t0chopper.py \
+	raw.py \
 
 
 export:: export-package-python-modules 
@@ -52,6 +48,6 @@ docs: export-doxygen-docs
 
 
 # version
-# $Id$
+# $Id: Make.mm 1205 2011-06-15 19:38:36Z linjiao $
 
 # End of file

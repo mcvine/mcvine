@@ -29,8 +29,8 @@
         </component>
 
         <component name="detsys">
-            <property name="tofparams">0,0.02,1e-6</property>
-            <property name="instrumentxml">ARCS.xml</property>
+            <property name="tofparams">0,0.02,1e-7</property>
+            <property name="instrumentxml">SEQUOIA.xml</property>
             <property name="eventsdat">events.dat</property>
         </component>
 
@@ -46,11 +46,5 @@
 <!-- version-->
 <!-- $Id$-->
 
-<!-- Generated automatically by Renderer on Thu Jun 17 21:02:19 2010-->
-
 <!-- End of file -->
-<!-- 
- automatically created by the following command:
- $ sd -h -source=NeutronFromStorage -detsys=DetectorSystemFromXml -dump-pml=yes
--->
 
