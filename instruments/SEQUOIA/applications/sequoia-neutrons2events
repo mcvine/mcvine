@@ -10,10 +10,21 @@ Examples:
  $ sequoia-neutrons2nxs --neutrons=scattered-neutrons-example
 """
 
+__implementation__ = """
+This script runs a mcvine instrument simulation script consisting
+of two components, a neutron player and a detector system.
+
+The neutron player replay the neutrons stored in a neutron
+storage. Those neutrons were scattered off of a sample
+in SEQUOIA beam.
+
+The detector system is of SEQUOIA.
+
+"""
+
 
 appname = 'sequoia-neutrons2events'
 cmd_help = __doc__
-tofbinsize = 0.1 # microsecond
 
 
 # application 
@@ -26,6 +37,8 @@ class App(AppBase):
         neutrons = pyre.inventory.str('neutrons', default='neutrons.dat')
         workdir = pyre.inventory.str('workdir', default='work-sequoia-neutrons2events')
         nodes = pyre.inventory.int('nodes', default=0)
+        
+        tofbinsize = pyre.inventory.float('tofbinsize', default=0.1) # microsecond
 
         
     def main(self):
@@ -36,7 +49,8 @@ class App(AppBase):
         os.makedirs(workdir)
         
         nodes = self.inventory.nodes
-        run(neutrons, workdir, nodes=nodes)
+        tofbinsize = self.inventory.tofbinsize
+        run(neutrons, workdir, nodes=nodes, tofbinsize=tofbinsize)
         return
 
 
@@ -52,7 +66,7 @@ def run(neutrons, workdir, **kwds):
 
 def sendneutronstodetsys(
     neutronfile=None, scattering_rundir=None, nodes=None, ncount=None,
-    workdir = None,
+    workdir = None, tofbinsize = None,
     ):
     """
     run a simulation to send neutrons to det system
