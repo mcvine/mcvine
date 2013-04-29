@@ -84,8 +84,13 @@ namespace mccomposite {
     // if neutron is already inside the shape
     // throw exception
     geometry::Locator::Location location = locate(ev, shape);
-    if (location==geometry::Locator::inside)
-      throw Exception("neutron is already inside the shape");
+    if (location==geometry::Locator::inside) {
+      std::ostringstream oss;
+      oss << "event " << ev
+	  << " is already inside shape " << shape
+	  << ", so we cannot propagate it to next incident surface";
+      throw Exception(oss.str());
+    }
     
     // get intersections
     tofs_t tofs = forward_intersect( ev, shape );
