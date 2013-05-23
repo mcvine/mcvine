@@ -617,15 +617,6 @@
       <property name="d">0</property>
     </component>
     
-    <component name="fermi_chopp">
-      <property name="ymax">.0325</property>
-      <property name="len">0.10</property>
-      <property name="bw">0.0005</property>
-      <property name="w">0.06</property>
-      <property name="delta">0.0</property>
-      <property name="ymin">-.0325</property>
-    </component>
-    
     <component name="adjustable_slits">
     </component>
     

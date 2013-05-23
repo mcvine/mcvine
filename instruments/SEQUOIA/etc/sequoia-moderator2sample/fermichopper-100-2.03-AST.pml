@@ -22,7 +22,7 @@ Description: ???
 
 -->
 
-        <component name="fermichopper-2">
+        <component name="fermichopper-100-2.03-AST">
 	  
 	  <!-- dimensions -->
 	    <property name="len">0.10</property>
