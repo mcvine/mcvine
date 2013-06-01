@@ -45,6 +45,14 @@ class TestCase(unittest.TestCase):
         mcvine.listcomponentsincategory('sources')
         return
 
+
+    def test3(self):
+        "mcvine: units"
+        from mcvine import units
+        self.assertEqual(units.meter, units.m)
+        self.assertEqual(units.meter, units.parse('meter'))
+        return
+
     
     pass  # end of TestCase
 
