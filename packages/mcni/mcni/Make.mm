@@ -21,6 +21,7 @@ BUILD_DIRS = \
 	neutron_storage  \
 	pyre_components  \
 	pyre_support  \
+	pyre_units_ext \
 	utils  \
 
 RECURSE_DIRS = $(BUILD_DIRS)
