@@ -24,9 +24,18 @@ class IncoherentInelastic_Kernel(base):
     def __init__(
         self,
         dos,
+        average_mass = 0., scattering_xs = 0., absorption_xs = 0.
         ):
+        """
+        average_mass, scattering_xs, absorption_xs: 
+            if 0, will compute from unitcell
+            otherwise, must have appropriate units attached
+        """
         base.__init__(self, dispersion=None)
         self.dos = dos
+        self.average_mass = average_mass
+        self.scattering_xs = scattering_xs
+        self.absorption_xs = absorption_xs
         return
     
 

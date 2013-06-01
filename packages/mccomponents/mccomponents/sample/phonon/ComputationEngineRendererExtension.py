@@ -29,7 +29,7 @@ class ComputationEngineRendererExtension:
                 scatterer.__class__.__name__, scatterer.name )
 
         # additional kernel parameters
-        AA= units.length.angstrom
+        AA= units.angstrom
         dw_core = kernel.dw_core / AA**2
         
         return self.factory.phonon_incoherentelastic_kernel(
@@ -53,7 +53,13 @@ class ComputationEngineRendererExtension:
         
         # total mass of unitcell. for DW calculator. this might be reimplemented later.
         # mass = sum( [ site.getAtom().mass for site in unitcell ] )
-        mass = sum( [ atom.mass for atom in unitcell ] )
+        average_mass = kernel.average_mass
+        if not average_mass:
+            mass = sum( [ atom.mass for atom in unitcell ] )
+            average_mass = mass/len(unitcell)
+        else:
+            average_mass = average_mass/units.u
+            
         # currently we need dos to calculate DW
         try:
             dos = kernel.dos
@@ -64,12 +70,18 @@ class ComputationEngineRendererExtension:
         # c object of DW calculator
         nsampling = 100
         cdw_calculator = self.factory.dwfromDOS(
-            cdos, mass, temperature, nsampling )
-
+            cdos, average_mass, temperature, nsampling )
+        
         # additional kernel parameters
+        scattering_xs = kernel.scattering_xs/units.barn \
+            if kernel.scattering_xs else 0.
+        absorption_xs = kernel.absorption_xs/units.barn \
+            if kernel.absorption_xs else 0.
         
         return self.factory.phonon_incoherentinelastic_kernel(
-            unitcell, cdos, cdw_calculator, temperature)
+            unitcell, cdos, cdw_calculator, temperature,
+            ave_mass = average_mass, 
+            scattering_xs = scattering_xs, absorption_xs = absorption_xs)
 
 
     def onPhonon_CoherentInelastic_PolyXtal_Kernel(self, kernel):
@@ -90,7 +102,7 @@ class ComputationEngineRendererExtension:
 
         # total mass of unitcell. for DW calculator. this might be reimplemented later.
         # mass = sum( [ site.getAtom().mass for site in unitcell ] )
-        mass = sum( [ atom.mass for atom in unitcell ] )
+        mass = sum( [ atom.mass for atom in unitcell ] ) / len(unitcell)
         # currently we need dos to calculate DW
         try:
             dos = kernel.dispersion.dos
@@ -109,8 +121,8 @@ class ComputationEngineRendererExtension:
         nMCsteps_to_calc_RARV = kernel.nMCsteps_to_calc_RARV
         cdispersion = kernel.dispersion.identify(self)
 
-        meV= units.energy.meV
-        angstrom = units.length.angstrom
+        meV= units.meV
+        angstrom = units.angstrom
         Ei = Ei/meV
         max_omega = max_omega/meV
         max_Q = max_Q * angstrom
@@ -140,7 +152,7 @@ class ComputationEngineRendererExtension:
 
         # total mass of unitcell. for DW calculator. this might be reimplemented later.
         # mass = sum( [ site.getAtom().mass for site in unitcell ] )
-        mass = sum( [ atom.mass for atom in unitcell ] )
+        mass = sum( [ atom.mass for atom in unitcell ] ) / len(unitcell)
         # currently we need dos to calculate DW
         try:
             dos = kernel.dispersion.dos
@@ -158,7 +170,7 @@ class ComputationEngineRendererExtension:
         #
         cdispersion = kernel.dispersion.identify(self)
         
-        # meV= units.energy.meV
+        # meV= units.meV
         # Ei = Ei/meV
         
         return self.factory.phonon_coherentinelastic_singlextal_kernel(
@@ -203,10 +215,9 @@ class ComputationEngineRendererExtension:
         # XXX: need to be more careful with mass
 
         # Qmax
-        from .units import energy, length
         Qmax = kernel.Qmax
         if Qmax:
-            Qmax = Qmax * length.angstrom
+            Qmax = Qmax * units.angstrom
         
         # sqe
         from .multiphonon import sqe
@@ -227,8 +238,8 @@ class ComputationEngineRendererExtension:
         # grid sqe
         gsqe = sample.gridsqe(sqehist)
         # q and e range
-        qrange = q[0]/length.angstrom, q[-1]/length.angstrom
-        erange = e[0]*energy.meV, e[-1]*energy.meV
+        qrange = q[0]/units.angstrom, q[-1]/units.angstrom
+        erange = e[0]*units.meV, e[-1]*units.meV
         # kernel
         sqekernel = sample.sqekernel(
             # XXX: we may want to support more options
@@ -286,8 +297,7 @@ def getTemperature(scatterer):
               else None
 
     # get temperature if sample environment exists
-    from . import units
-    temperature = environ.temperature()/units.temperature.K \
+    temperature = environ.temperature()/units.K \
                   if environ is not None \
                   else 300
     return temperature
@@ -320,7 +330,7 @@ from mccomponents.homogeneous_scatterer import registerRendererExtension
 registerRendererExtension( ComputationEngineRendererExtension )
 
 
-import units
+from mcvine import units
 
 
 # version

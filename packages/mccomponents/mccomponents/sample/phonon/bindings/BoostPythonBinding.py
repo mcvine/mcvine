@@ -237,6 +237,7 @@ class New:
         unitcell, 
         dos, dw_calctor,
         temperature,
+        ave_mass = 0., scattering_xs = 0., absorption_xs = 0.,
         ):
 
         # unitcell_vol = unitcell.getVolume()
@@ -252,7 +253,8 @@ class New:
         return b.Phonon_IncoherentInelastic_kernel(
             atom_vector, unitcell_vol,
             dos, dw_calctor,
-            temperature)
+            temperature,
+            ave_mass, scattering_xs, absorption_xs)
 
 
     def phonon_coherentinelastic_polyxtal_kernel(

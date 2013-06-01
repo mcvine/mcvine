@@ -25,7 +25,7 @@ Max Kresch's original multiphonon code.
 """
 
 
-def sqe(E, g, Qmax=None, Qmin=0, dQ=None, T=300, M=50, N=5):
+def sqe(E, g, Qmax=None, Qmin=0, dQ=None, T=300, M=50, N=5, starting_order=2):
     """compute sum of multiphonon SQE from dos
     S = \sum_{i=2,N} S_i(Q,E)
     
@@ -37,6 +37,7 @@ def sqe(E, g, Qmax=None, Qmin=0, dQ=None, T=300, M=50, N=5):
     T: temperature (Kelvin)
     M: atomic mass 
     N: maximum number of order for multi-phonon scattering
+    starting_order: 2: start with 2 phonon scattering
     """
     dos_sample = len(E)
     e0 = E[0]
@@ -65,7 +66,7 @@ def sqe(E, g, Qmax=None, Qmin=0, dQ=None, T=300, M=50, N=5):
     Q, E, S_set= computeSQESet(N, Q, dQ, E, de, M, g, beta)
     
     # sum over 2..N
-    S = S_set[1:].sum(axis=0)
+    S = S_set[starting_order-1:].sum(axis=0)
     return Q, E, S
 
 

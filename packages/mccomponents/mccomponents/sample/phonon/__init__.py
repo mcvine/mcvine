@@ -32,10 +32,10 @@ def incoherentelastic_kernel(
 
 
 def incoherentinelastic_kernel(
-    dos
+    dos, **kwds
     ):
     from IncoherentInelastic_Kernel import IncoherentInelastic_Kernel as f
-    return f(dos)
+    return f(dos, **kwds)
 
 
 def coherentinelastic_polyxtal_kernel(
