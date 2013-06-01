@@ -43,6 +43,7 @@
 #include "mccomponents/kernels/sample/phonon/generateQ.h"
 
 
+
 // all methods that are only to help implementation are in class "Details"
 struct mccomponents::kernels::phonon::IncoherentInelastic::Details {
 
@@ -64,6 +65,12 @@ struct mccomponents::kernels::phonon::IncoherentInelastic::Details {
   /// Ei+omega or Ei-omega?
   float_t
   pick_Ef( float_t &prob_factor, float_t Ei, float_t max_omega) const;
+
+  /// get mass and cross sections
+  void
+  get_mass_and_xs
+  (const atoms_t &atoms, float_t &mass, 
+   float_t &scattering_xs, float_t &absorption_xs);
 };
 
 
@@ -107,13 +114,44 @@ Details::pick_Ef
 }
   
   
+void
+mccomponents::kernels::phonon::IncoherentInelastic::
+Details::get_mass_and_xs
+(const atoms_t &atoms, float_t &mass, 
+ float_t &scattering_xs, float_t &absorption_xs)
+{
+#ifdef DEBUG
+  journal::debug_t debug(jrnltag);
+  debug << "atoms=";
+  for (size_t i = 0; i< atoms.size(); i++)
+    debug  << atoms[i] << journal::newline;
+  debug << journal::endl;
+  
+#endif
+  
+  mass = 0;
+  scattering_xs = 0;
+  absorption_xs = 0;
+  
+  for (size_t i=0; i<atoms.size(); i++) {
+    mass += atoms[i].mass;
+    scattering_xs += atoms[i].incoherent_cross_section;
+    absorption_xs += atoms[i].absorption_cross_section;
+  }
+  mass /= atoms.size(); // average
+}
+
+
+
 mccomponents::kernels::phonon::IncoherentInelastic::
 IncoherentInelastic
 (const atoms_t &atoms,
  float_t unitcell_vol,
  dos_t & dos,
  dwcalculator_t & dw_calctor,
- float_t temperature
+ float_t temperature,
+ float_t ave_mass, 
+ float_t scattering_xs, float_t absorption_xs
  ) 
   : m_atoms( atoms ),
     m_uc_vol( unitcell_vol ),
@@ -123,33 +161,15 @@ IncoherentInelastic
     m_max_phonon_energy( dos.emax() ),
     m_details( new Details(*this) )
 {
-  
-#ifdef DEBUG
-  journal::debug_t debug(m_details->jrnltag);
-  debug << "m_atoms=";
-  for (size_t i = 0; i< m_atoms.size(); i++)
-    debug  << m_atoms[i] << journal::newline;
-  debug << journal::endl;
-  
-#endif
-
-  // compute average mass
-  m_Mass = 0;
-  for (size_t i=0; i<m_atoms.size(); i++) {
-    m_Mass += m_atoms[i].mass;
-  }
-  m_Mass /= m_atoms.size();
-
-  // calculate the total cross sections
-  m_total_scattering_xs = 0;
-  for (size_t i=0; i<m_atoms.size(); i++) {
-    m_total_scattering_xs += m_atoms[i].incoherent_cross_section;
-  }
-
-  m_total_absorption_xs = 0;
-  for (size_t i=0; i<m_atoms.size(); i++) {
-    m_total_absorption_xs += m_atoms[i].absorption_cross_section;
-  }
+  m_details->get_mass_and_xs
+    (m_atoms, m_Mass, m_total_scattering_xs, m_total_absorption_xs);
+  // 
+  if (ave_mass > 0.)
+    m_Mass = ave_mass;
+  if (scattering_xs > 0.)
+    m_total_scattering_xs = scattering_xs;
+  if (absorption_xs > 0.)
+    m_total_absorption_xs = absorption_xs;
 }
 
 

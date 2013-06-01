@@ -57,13 +57,18 @@ namespace mccomponents{
 	   dos           density of states
 	   dw_calctor    debye waller factor calculator
 	   temperature   temperature. unit: K
+	   ave_mass      average mass of atoms in the unit cell. if 0, will compute from "atoms"
+	   scattering_xs total scattering cross section. if 0, will compute from "atoms"
+	   absorption_xs total absorption cross section. if 0, will compute from "atoms"
 	*/
 	IncoherentInelastic
 	(const atoms_t &atoms,
 	 float_t unitcell_vol,
 	 dos_t & dos,
 	 dwcalculator_t & dw_calctor,
-	 float_t temperature
+	 float_t temperature,
+	 float_t ave_mass = 0., 
+	 float_t scattering_xs = 0., float_t absorption_xs = 0.
 	 ) ;
 	
 	virtual float_t absorption_coefficient( const neutron_t & ev );
