@@ -68,6 +68,11 @@ class _units(object):
     def __getattr__(self, key):
         return self.parser.parse(key)
 
+    
+    def parse(self, s):
+        return self.parser.parse(s)
+
+
 units = _units()
 # done with units here
 
