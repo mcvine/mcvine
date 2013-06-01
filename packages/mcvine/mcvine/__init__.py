@@ -53,6 +53,26 @@ def componentinfo(type, category=None, supplier=None):
 import component_suppliers
 
 
+# create a convenient instance for handling units
+# so that users can do:
+# >>> from mcvine import units
+# >>> units.meter
+class _units(object):
+
+    def __init__(self):
+        from mcni.units import parser
+        self.parser = parser()
+        return
+    
+    
+    def __getattr__(self, key):
+        return self.parser.parse(key)
+
+units = _units()
+# done with units here
+
+
+
 __all__ = [
     'simulate', 'geometer', 'instrument', 'neutron_buffer', 'neutron',
     'componentinfo', 'componentfactory',
