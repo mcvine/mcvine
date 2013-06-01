@@ -36,7 +36,10 @@ namespace wrap_mccomponents {
 	w_t::float_t, // unitcell_vol. AA**3
 	w_t::dos_t &, // DOS
 	w_t::dwcalculator_t &, // Debye Waller calculator
-	w_t::float_t // temperature. K
+	w_t::float_t, // temperature. K
+	w_t::float_t, // average mass. atomic weight. default 0
+	w_t::float_t, // total scattering xs. barn. default 0
+	w_t::float_t  // total absorption xs. barn. default 0
 	> ()
 	[with_custodian_and_ward<1,2,
 	 with_custodian_and_ward<1,4,
