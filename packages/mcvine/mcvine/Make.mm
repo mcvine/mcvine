@@ -14,6 +14,7 @@ PROJECT = mcvine
 
 BUILD_DIRS = \
 	applications \
+	cli \
 	instruments \
 	pyre_support \
 	scripts \

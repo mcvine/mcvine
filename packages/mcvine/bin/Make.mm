@@ -43,6 +43,7 @@ EXPORT_PYTHON_MODULES = \
 
 
 EXPORT_BINS = \
+	mcvine \
 	mcvine-check-iqe \
 	mcvine-check-angular-distribution \
 	mcvine-create-instrument-simulation-application \
