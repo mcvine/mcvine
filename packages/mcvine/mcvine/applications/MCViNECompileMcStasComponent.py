@@ -11,6 +11,9 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
 
+import warnings
+warnings.warn('This script is obsolete. Please use command "mcvine mcstas compilecomponent"')
+
 from pyre.applications.Script import Script
 
 class Application(Script):

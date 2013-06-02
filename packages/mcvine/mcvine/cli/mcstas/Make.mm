@@ -10,12 +10,10 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 PROJECT = mcvine
-PACKAGE = cli
+PACKAGE = cli/mcstas
 
 
 BUILD_DIRS = \
-	mcstas \
-	sampleassembly \
 
 
 RECURSE_DIRS = $(BUILD_DIRS)
@@ -38,9 +36,8 @@ update: clean
 
 EXPORT_PYTHON_MODULES = \
 	__init__.py \
+	compilecomponent.py \
 	help.py \
-	mcvine.py \
-	sampleassembly.py \
 
 
 export:: export-package-python-modules

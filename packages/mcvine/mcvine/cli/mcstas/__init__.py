@@ -12,16 +12,10 @@
 #
 
 
-__doc__ = """
-command line interface
-"""
+name = 'mcstas'
 
 
-name = 'mcvine'
-
-
-def run(action, *args, **opts):
-    mod = importActionHandler(action)
+def run(mod, *args, **opts):
     return mod.run(*args, **opts)
 
 
@@ -29,42 +23,36 @@ def importActionHandler(action):
     code = 'from . import %s' % action
     exec(code)
     mod = locals()[action]
+    if mod is None:
+        raise ImportError(action)
     return mod
 
 
-def main():
+def parse_cmdline():
     import sys
-    if len(sys.argv) <= 1:
+    if len(sys.argv) <= 2:
         action = 'help'
     else:
-        action = sys.argv[1]
+        action = sys.argv[2]
 
     if action in ['-h', '--help']:
         action = 'help'
 
-    if action not in commands:
+    if action not in actions:
         print ()
-        print ("Invalid command: %s" % action)
+        print ("Invalid action: %s" % action)
         action = 'help'
     
     mod = importActionHandler(action)
     args, kwds = mod.parse_cmdline()
     
-    mod.run(*args, **kwds)
-    return
+    return [mod] + args, kwds
 
 
-public_commands = [
-    'mcstas',
-    'sampleassembly',
+actions = [
+    'compilecomponent',
     'help',
     ]
-
-hidden_commands = [
-    ]
-
-
-commands = public_commands + hidden_commands
 
 
 # version
