@@ -79,9 +79,12 @@ def loadDOS_fromidf(path, **kwds):
 
 
 def loadDOS(path, **kwds):
-    import os
+    import os, warnings
     ext = os.path.splitext(path)[-1]
-    if ext == '.idf'or path == 'DOS':
+    if os.path.basename(path) == 'DOS':
+        warnings.warn('DOS file %s assumed to be in idf format' % path)
+        format = 'idf'
+    elif ext == '.idf':
         format = 'idf'
     elif ext == '.dat':
         format = '2colascii'
@@ -145,6 +148,14 @@ def compute2a(dos, mass, temperature, nsampling):
     return r
 
 
+help_msg = """%(cmd)s
+
+%(cmd)s -m=<mass>  -T=<temperature>  -dos=<dosfile>
+
+""" % {
+    'cmd': 'mcvine-debye-waller-core-from-phonon-dos'
+    }
+
 from pyre.applications.Script import Script as AppBase
 class App(AppBase):
 
@@ -156,6 +167,10 @@ class App(AppBase):
         nsampling = pyre.inventory.int('nsampling', default=100)
         dos = pyre.inventory.str('dos', default='V-dos.dat')
         dos_xaxis = pyre.inventory.str('dos-x', default='TeraHz')
+
+        
+    def help(self):
+        print help_msg
         
         
     def main(self):
