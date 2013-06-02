@@ -23,6 +23,7 @@ Contents:
    Extend
    Problems
    FAQ
+   CLI
    DeveloperGuide
 
 ..   Demos
