@@ -18,7 +18,7 @@ actionname = 'check'
 
 import os
 def run(xml, **kwds):
-    import mccomponents.sample.phonon.xml
+    # import mccomponents.sample.phonon.xml
     from mccomponents.sample import samplecomponent
     samplecomponent("s", xml)
     return
