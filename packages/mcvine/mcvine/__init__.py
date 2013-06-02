@@ -38,21 +38,7 @@ Example 2: find out the types of components in 'sources' category
 """
 
 
-from mcni import simulate, geometer, instrument, neutron_buffer, neutron, \
-    componentfactory, findcomponentfactory, \
-    listallcomponentcategories, listcomponentsincategory
-
-
-def componentinfo(type, category=None, supplier=None):
-    from mcni._find_component import find
-    type, category, supplier = find(type, category=category, supplier=supplier)
-    from mcni import componentinfo
-    return  componentinfo(type=type, category=category, supplier=supplier)
-
-
-import component_suppliers
-
-
+# ----------------------------------------------------------------------
 # create a convenient instance for handling units
 # so that users can do:
 # >>> from mcvine import units
@@ -75,6 +61,22 @@ class _units(object):
 
 units = _units()
 # done with units here
+# ----------------------------------------------------------------------
+
+
+from mcni import simulate, geometer, instrument, neutron_buffer, neutron, \
+    componentfactory, findcomponentfactory, \
+    listallcomponentcategories, listcomponentsincategory
+
+
+def componentinfo(type, category=None, supplier=None):
+    from mcni._find_component import find
+    type, category, supplier = find(type, category=category, supplier=supplier)
+    from mcni import componentinfo
+    return  componentinfo(type=type, category=category, supplier=supplier)
+
+
+import component_suppliers
 
 
 
