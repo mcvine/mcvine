@@ -92,11 +92,15 @@ def periodicdispersion_fromidf( datapath ):
     return periodicdispersion(dispersion, reciprocalcell)
 
 
-def dos_fromidf(datapath):
+def doshist_fromidf(datapath):
     from mccomponents.sample.idf import readDOS
     e,Z = readDOS(datapath)
     from histogram import histogram
-    doshist = histogram( 'dos', [ ('energy', e, 'meV') ], data = Z )
+    return histogram( 'dos', [ ('energy', e, 'meV') ], data = Z )
+    
+
+def dos_fromidf(datapath):
+    doshist = doshist_fromidf(datapath)
     from .LinearlyInterpolatedDOS import LinearlyInterpolatedDOS as f
     return f(doshist)
     
