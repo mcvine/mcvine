@@ -32,7 +32,9 @@ namespace wrap_mccomponents {
 	init<
 	const w_t::atoms_t &, // atoms
 	w_t::float_t, // unitcell_vol. AA**3
-	w_t::float_t // dw_core. AA**2
+	w_t::float_t, // dw_core. AA**2
+	w_t::float_t, // scattering_xs. barn
+	w_t::float_t  // absorption_xs. barn
 	> ()
 	[with_custodian_and_ward<1,2> () ]
 	)
