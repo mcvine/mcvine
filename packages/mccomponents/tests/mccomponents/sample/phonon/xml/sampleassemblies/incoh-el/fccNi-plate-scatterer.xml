@@ -5,7 +5,23 @@
 <!-- weights: absorption, scattering, transmission -->
 <homogeneous_scatterer mcweights="0, 1, 0">
   
-  <Phonon_IncoherentElastic_Kernel dw_core='0.1*angstrom**2'>
+  <!--
+  IncoherentElastic kernel
+  dw_core: could be computed from DOS
+  scattering_xs and absorption_xs: optional. if not set, they will
+    be computed from unitcell info in Ni.xyz
+    here we set scattering_xs to 18.5 barn, the total scattering cross
+    section that is the sum of incoherent and coherent scattering cross
+    sections. This way, we can use the incoherent kernel to approximate
+    the total scattering.
+    Note: be very careful when customizing cross sections.
+      They are the total scattering cross sections from
+      the whole unit cell.
+  -->
+  <Phonon_IncoherentElastic_Kernel 
+      dw_core='0.1*angstrom**2' 
+      scattering_xs="18.5*barn"
+      >
   </Phonon_IncoherentElastic_Kernel>
   
 </homogeneous_scatterer>

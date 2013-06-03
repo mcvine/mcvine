@@ -5,8 +5,21 @@
 <!-- weights: absorption, scattering, transmission -->
 <homogeneous_scatterer mcweights="0, 1, 0">
   
-  <Phonon_IncoherentInelastic_Kernel>
-    <LinearlyInterpolatedDOS idf-data-path="phonon-dispersion/DOS"/> 
+  <!--
+  IncoherentInelastic kernel
+  average_mass, scattering_xs and absorption_xs: optional. 
+    if not set, they will
+    be computed from unitcell info in Ni.xyz
+    here we set scattering_xs to 18.5 barn, the total scattering cross
+    section that is the sum of incoherent and coherent scattering cross
+    sections. This way, we can use the incoherent kernel to approximate
+    the total scattering.
+    Note: be very careful when customizing cross sections.
+      They are the total scattering cross sections from
+      the whole unit cell.
+  -->
+  <Phonon_IncoherentInelastic_Kernel scattering_xs="18.5*barn" >
+    <LinearlyInterpolatedDOS idf-data-path="phonon-dispersion/DOS" /> 
   </Phonon_IncoherentInelastic_Kernel>
   
 </homogeneous_scatterer>
