@@ -25,10 +25,10 @@ def multiphonon_kernel(
 
 
 def incoherentelastic_kernel(
-    dw_core
+    dw_core, **kwds
     ):
     from IncoherentElastic_Kernel import IncoherentElastic_Kernel as f
-    return f( dw_core )
+    return f( dw_core, **kwds )
 
 
 def incoherentinelastic_kernel(

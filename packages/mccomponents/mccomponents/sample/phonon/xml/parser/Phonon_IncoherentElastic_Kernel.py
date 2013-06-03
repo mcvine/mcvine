@@ -23,10 +23,19 @@ class Phonon_IncoherentElastic_Kernel(AbstractNode):
 
     def elementFactory( self, **kwds ):
         dw_core = self._parse( kwds['dw_core'] )
+
+        def getval(key):
+            v = kwds.get(key)
+            if v: return self._parse(v)
+            return v
+        kargs = dict(
+            scattering_xs = getval('scattering_xs'),
+            absorption_xs = getval('absorption_xs'),
+            )
         
         from mccomponents.sample.phonon \
              import incoherentelastic_kernel as f
-        return f(dw_core)
+        return f(dw_core, **kargs)
     
 
     pass # end of Phonon_IncoherentElastic_Kernel

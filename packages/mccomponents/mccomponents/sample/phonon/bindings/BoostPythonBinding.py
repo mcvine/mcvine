@@ -217,6 +217,7 @@ class New:
     def phonon_incoherentelastic_kernel(
         self,
         unitcell, dw_core,
+        scattering_xs = 0., absorption_xs = 0.,
         ):
 
         # unitcell_vol = unitcell.getVolume()
@@ -229,6 +230,7 @@ class New:
 
         return b.Phonon_IncoherentElastic_kernel(
             atom_vector, unitcell_vol, dw_core,
+            scattering_xs, absorption_xs,
             )
 
     

@@ -32,8 +32,16 @@ class ComputationEngineRendererExtension:
         AA= units.angstrom
         dw_core = kernel.dw_core / AA**2
         
+        # additional kernel parameters
+        scattering_xs = kernel.scattering_xs/units.barn \
+            if kernel.scattering_xs else 0.
+        absorption_xs = kernel.absorption_xs/units.barn \
+            if kernel.absorption_xs else 0.
+        
         return self.factory.phonon_incoherentelastic_kernel(
             unitcell, dw_core,
+            scattering_xs = scattering_xs, 
+            absorption_xs = absorption_xs,
             )
 
 
@@ -77,7 +85,7 @@ class ComputationEngineRendererExtension:
             if kernel.scattering_xs else 0.
         absorption_xs = kernel.absorption_xs/units.barn \
             if kernel.absorption_xs else 0.
-        
+
         return self.factory.phonon_incoherentinelastic_kernel(
             unitcell, cdos, cdw_calculator, temperature,
             ave_mass = average_mass, 

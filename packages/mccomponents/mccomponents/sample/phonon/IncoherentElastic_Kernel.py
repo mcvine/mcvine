@@ -21,9 +21,14 @@ angstrom = units.length.angstrom
 
 class IncoherentElastic_Kernel(base):
 
-    def __init__(self, dw_core):
+    def __init__(
+        self, dw_core,
+        scattering_xs = 0., absorption_xs = 0.,
+        ):
         base.__init__(self, dispersion=None)
         self.dw_core = dw_core
+        self.scattering_xs = scattering_xs
+        self.absorption_xs = absorption_xs
         return
     
 
