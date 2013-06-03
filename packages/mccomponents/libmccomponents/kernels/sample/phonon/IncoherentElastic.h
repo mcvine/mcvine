@@ -57,11 +57,14 @@ namespace mccomponents{
 	   atoms: a list of atoms in the unitcell
 	   unitcell_vol volume of unitcell, units: AA**3
 	   dw_core: Debye Waller 2W = dw_core * Q**2
+	   scattering_xs: total scattering cross section. if 0, will compute from "atoms". unit: barn
+	   absorption_xs: total absorption cross section. if 0, will compute from "atoms". unit: barn
 	*/
 	IncoherentElastic
 	(const atoms_t &atoms,
 	 float_t unitcell_vol,
-	 float_t dw_core 
+	 float_t dw_core, 
+	 float_t scattering_xs = 0., float_t absorption_xs = 0.
 	 );
 	
 	virtual float_t absorption_coefficient( const neutron_t & ev );

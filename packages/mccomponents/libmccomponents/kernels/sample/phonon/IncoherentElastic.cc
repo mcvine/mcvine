@@ -67,7 +67,8 @@ mccomponents::kernels::phonon::IncoherentElastic::
 IncoherentElastic
 ( const atoms_t &atoms,
   float_t unitcell_vol,
-  float_t dw_core
+  float_t dw_core,
+  float_t scattering_xs, float_t absorption_xs
   )
   : m_atoms( atoms ),
     m_uc_vol( unitcell_vol ),
@@ -84,6 +85,12 @@ IncoherentElastic
   for (size_t i=0; i<m_atoms.size(); i++) {
     m_total_absorption_xs += m_atoms[i].absorption_cross_section;
   }
+
+  if (scattering_xs>0.)
+    m_total_scattering_xs = scattering_xs;
+  
+  if (absorption_xs>0.)
+    m_total_absorption_xs = absorption_xs;
 }
 
 
