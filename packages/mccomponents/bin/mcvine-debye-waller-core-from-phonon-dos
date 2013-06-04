@@ -78,6 +78,12 @@ def loadDOS_fromidf(path, **kwds):
     return e, Z
 
 
+def loadDOS_fromh5(path, **kwds):
+    import histogram.hdf as hh
+    h = hh.load(path)
+    return h.axes()[0].binCenters(), h.I
+
+
 def loadDOS(path, **kwds):
     import os, warnings
     ext = os.path.splitext(path)[-1]
@@ -88,6 +94,8 @@ def loadDOS(path, **kwds):
         format = 'idf'
     elif ext == '.dat':
         format = '2colascii'
+    elif ext == '.h5':
+        format = 'h5'
     else:
         raise NotImplementedError("unknown file format: %s" % path)
     
