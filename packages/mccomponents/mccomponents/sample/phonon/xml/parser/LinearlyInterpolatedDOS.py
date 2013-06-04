@@ -22,16 +22,19 @@ class LinearlyInterpolatedDOS(AbstractNode):
 
 
     def elementFactory( self, **kwds ):
-        datapath = kwds.get('idf-data-path')
-        if datapath:
-            pass
+        idfpath = kwds.get('idf-data-path')
+        h5path = kwds.get('histogram-path')
+        
+        if idfpath:
+            from mccomponents.sample.phonon import dos_fromidf
+            return dos_fromidf(idfpath)
+        elif h5path:
+            from mccomponents.sample.phonon import dos_fromh5
+            return dos_fromh5(h5path)
         else:
             raise ValueError, "LinearlyInterpolatedDOS needs path to "\
-                  "idf data files"
+                "idf or histogram data file"            
         
-        from mccomponents.sample.phonon import dos_fromidf
-        return dos_fromidf( datapath )
-
     pass # end of LinearlyInterpolatedDOS
 
 

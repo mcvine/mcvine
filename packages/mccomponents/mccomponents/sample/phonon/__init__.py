@@ -103,6 +103,13 @@ def dos_fromidf(datapath):
     doshist = doshist_fromidf(datapath)
     from .LinearlyInterpolatedDOS import LinearlyInterpolatedDOS as f
     return f(doshist)
+
+
+def dos_fromh5(datapath):
+    import histogram.hdf as hh
+    dos = hh.load(datapath)
+    from .LinearlyInterpolatedDOS import LinearlyInterpolatedDOS as f
+    return f(dos)
     
 
 import ComputationEngineRendererExtension
