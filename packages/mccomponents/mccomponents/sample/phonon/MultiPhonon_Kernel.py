@@ -25,17 +25,20 @@ class MultiPhonon_Kernel(base):
         self,
         dos=None,
         Qmax=None,
+        scattering_xs = None, absorption_xs = None,
         ):
         base.__init__(self, dispersion=None)
         self.dos = dos
         self.Qmax = Qmax
+        self.scattering_xs = scattering_xs
+        self.absorption_xs = absorption_xs
         return
     
-
+    
     def identify(self, visitor):
         return visitor.onMultiPhonon_Kernel(self)
     
-
+    
     pass # end of MultiPhonon_Kernel
 
 

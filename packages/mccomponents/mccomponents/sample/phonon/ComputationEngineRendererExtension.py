@@ -255,6 +255,8 @@ class ComputationEngineRendererExtension:
             # XXX: or absorption_coefficient ...
             SQE = gsqe,
             Qrange = qrange, Erange = erange,
+            absorption_cross_section = kernel.absorption_xs,
+            scattering_cross_section = kernel.scattering_xs,
             )
         sqekernel.scatterer_origin = scatterer
         # 

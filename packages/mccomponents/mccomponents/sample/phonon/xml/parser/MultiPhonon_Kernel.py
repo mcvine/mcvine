@@ -22,11 +22,18 @@ class MultiPhonon_Kernel(AbstractNode):
     
 
     def elementFactory( self, **kwds ):
-        Qmax = kwds.get('Qmax')
-        if Qmax: Qmax = self._parse(Qmax)
+        def getval(key):
+            v = kwds.get(key)
+            if v: return self._parse(v)
+            return v
+        kargs = dict(
+            Qmax = getval('Qmax'),
+            scattering_xs = getval('scattering_xs'),
+            absorption_xs = getval('absorption_xs'),
+            )
         from mccomponents.sample.phonon \
              import multiphonon_kernel as f
-        return f(Qmax=Qmax)
+        return f(**kargs)
     
 
     def onDOS(self, dos):
