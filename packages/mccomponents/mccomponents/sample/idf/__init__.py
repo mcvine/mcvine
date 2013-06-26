@@ -132,16 +132,7 @@ def length( vector ):
     return nl.norm( vector )
 
 
-def _hertz2meV():
-    import units
-    SI = units.SI
-    m = SI.meter; kg = SI.kilogram; s = SI.second
-    hbar = 1.05457148e-34 * m**2 * kg /s
-    hertz = 1 / s
-    meV = units.energy.meV
-    return hbar * hertz / meV
-
-hertz2mev = _hertz2meV()
+from .units import hertz2mev
     
 
 
