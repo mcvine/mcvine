@@ -51,6 +51,7 @@ EXPORT_PYTHON_MODULES = \
 	NdArray.py \
 	__init__.py \
 	multiphonon.py \
+	read_dos.py \
 	units.py \
 	utils.py \
 
