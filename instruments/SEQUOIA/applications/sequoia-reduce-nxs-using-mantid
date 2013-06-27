@@ -59,13 +59,15 @@ class App(AppBase):
         print cmd_help
     
 
-
-def run(nxsfile, idfpath, use_ei_guess, ei_guess, qaxis, outfile):
+# XXX: loading a new idf does not work. see below: the function call to 
+# XXX: LoadInstrument
+# def run(nxsfile, idfpath, use_ei_guess, ei_guess, qaxis, outfile):
+def run(nxsfile, use_ei_guess, ei_guess, qaxis, outfile):
     from mantid.simpleapi import DgsReduction, SofQW3, SaveNexus, LoadInstrument, Load
     
     workspace = Load(nxsfile)
-    LoadInstrument(workspace, idfpath)
-    
+    # XXX: the following line seems to cause trouble. probably a bug in Mantid?
+    # LoadInstrument(workspace, idfpath) 
     DgsReduction(
         SampleInputWorkspace = workspace,
         IncidentEnergyGuess=ei_guess,
