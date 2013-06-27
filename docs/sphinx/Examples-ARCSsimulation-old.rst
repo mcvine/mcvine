@@ -1,4 +1,4 @@
-.. _tutorials-arcs:
+.. _tutorials-arcs-old:
 
 Simulation of ARCS experiments
 ==============================
@@ -35,32 +35,35 @@ Create a directory ::
  $ cd mod2sample
 
 Suppose
-
 * the incident energy to simulate is 100 meV
-* fermi chopper "100-1.5-SMI" is chosen
-* fermi chopper frequency is set to 600 Hz
-* T0 chopper frequency is set to 120 Hz
-* neutron count is 1e8
+* fermi chopper radius is 58.01 cm
+* fermi chopper frequency is 600 Hz
+* T0 chopper frequency is 120 Hz
 
-We can run the arcs beam simulation (from moderator to sample)
+create simulation configuration by::
 
- $ arcs_beam -E=100 -T0_nu=120 -fermi_chopper=100-1.5-SMI -fermi_nu=600 --ncount=1e8
+ $ arcs-m2s -E=100 -T0_nu=120 -fermi_bladeradius=0.5801 -fermi_nu=600 --- -h -dump-pml=yes
+
+This will generate a file "arcs_moderator2sample.pml".
+
+Now we will need a data file that contains Monte-carlo simulated
+neutron profile for the moderator::
+
+ $ ln $MCVINE_DIR/share/mcvine/instruments/ARCS/source_sct521_bu_17_1.dat
+
+Now run the simulation::
+ 
+ $ arcs_moderator2sample.py -ncount=1e8 -buffer_size=10000000
+
+Output: out/mon1-tof.h5
+Plot::
+ 
+ $ PlotHist.py out/mon1-tof.h5
 
 Output: out/neutrons
 See how many neutrons are there::
 
  $ mcvine-neutron-storage-count-neutrons out/neutrons
-
-Output: out/mon1-itof-focused.h5
-Plot::
- 
- $ PlotHist.py out/mon1-tof.h5
-
-Output: out/mon2-itof-focused.h5
-Plot::
- 
- $ PlotHist.py out/mon2-tof.h5
-
 
 Scattering of incident neutrons by sample
 """""""""""""""""""""""""""""""""""""""""
@@ -197,7 +200,124 @@ See how many neutrons are there::
 Tutorial 2: Compute resolution function in Q,E space
 ----------------------------------------------------
 
-See :ref:`Command "arcs-compute-IQE-resolution" <arcs-iqeres>`
+.. note::
+ This should still work, but a quicker way is to first run arcs_beam
+ simulation, and then run arcs-compute-IQE-resolution simulation.
+
+Quick Overview
+""""""""""""""
+
+This example can be found in ::
+
+ $MCVINE_DIR/share/mcvine/instruments/ARCS/simulations/resolution-calculator
+
+To start, make a copy of that directory::
+
+ $ cp -r $MCVINE_DIR/share/mcvine/instruments/ARCS/simulations/resolution-calculator <workdir>
+
+Now cd into it::
+
+ $ cd <workdir>
+
+To run a moderator...sample simulation, cd into mod2sample::
+
+ $ cd mod2sample
+
+Take a look at the "run" script and modify it according to your needs,
+and run it::
+
+ $ ./run
+
+After the simulation, you can find results in directories "out" and 
+"out-analyzer". For example::
+
+ $ PlotHist.py out-analyzer/ienergy.h5
+
+.. figure:: images/ARCS/I_E.png
+   :width: 50%
+
+Next, go to the "QE" directory::
+
+ $ cd ../QE
+
+In this directory you can calculate resolution function for a
+particular Q,E pair of your choice. To do that, take a look
+at the "run" script and modify it to your needs, and run it::
+
+ $ ./run
+
+You should see a I(Q,E) plot after the simulation is done.
+
+.. figure:: images/ARCS/qeres-q10-e100.png
+   :width: 50%
+
+
+More details
+""""""""""""
+
+mod2sample
+''''''''''
+This directory runs the simulation of neutrons 
+emitting from the moderator, going down the stream through
+guides and choppers, until they arrive just before the
+sample position.
+
+The run script reads::
+
+  python run.py  \
+    -Ei=700 \
+    -ncount=1e7 \
+    -nodes=5 \
+    -moderator_erange=660,770 \
+    -fermichopper=700-0.5-AST \
+    -fermi_nu=600 \
+    -T0_nu=120 \
+    -emission_time=-1 \
+    -dry_run=off
+
+
+where
+
+- Ei: nominal incident neutron energy
+- ncount: # of Monte Carlo samples
+- nodes: # of nodes
+- fermichopper: choice of Fermi chopper
+
+
+QE
+'''
+
+In this directory, the neutrons simulated at sample position
+in mod2sample are sent to a sample with delta function like
+scattering kernel at the Q,E given by the user.
+The scattered neutrons are intercepted by virtual ARCS 
+detector system and that generates events to be stored
+in an event-mode data file.
+The data file is then reduced to I(Q,E).
+
+The run script reads::
+
+  python run.py \
+    -ncount=1e6 \
+    -nodes=2 \
+    -Ei=700 \
+    -Q=10 \
+    -dQ=1 \
+    -E=100 \
+    -dE=20 \
+    -mod2sample=../mod2sample \
+
+
+where
+
+- ncount: # of Monte Carlo samples
+- nodes: # of nodes
+- Ei: nominal incident energy
+- Q, E: desired momentum and energy transfer
+- dQ, dE: the momentum and energy ranges in which the
+  reduced I(Q,E) will be
+- mod2sample: the path to the directory where mod2sample simulation
+  were run
 
 
 Commands

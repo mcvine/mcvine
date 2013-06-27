@@ -66,6 +66,8 @@ Example::
         <Register name="Al" position="(0,0,0)" orientation="(0,0,0)"/>
       </LocalGeometer>
 
+      <Environment temperature="300*K"/>
+
     </SampleAssembly>
 
 
@@ -76,6 +78,7 @@ Example::
   * Shape -- can be represented using constructive solid geometery
   * Phase
  * LocalGeometer is geometer. It contains geometrical information of neutron scatterers
+ * Environment: sample environment.
 
 
 .. _scatterer-xml:
