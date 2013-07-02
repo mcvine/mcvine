@@ -14,18 +14,33 @@
 
 """
 This module helps creating "raw" ARCS nexus file.
+
+DASlogs: 
+ * EnergyRequest
+   * average_value
+   * effective_value
+   * maximum_value
+   * minimum_value
+   * value
+
+It is kind of weird there are so many "value" items. But we will
+just set all of them to the same value
 """
 
 def write(events, tofbinsize, path):
     """ write neutron events into a ARCS nexus file
-    The events is a numpy array of "event" records. 
-    An event record has three fields:
-      * pixelID
-      * tofChannelNo
-      * p
 
-    tofbinsize * tofChannelNo is the tof for the bin
-    path is the output path
+    Required parameters
+        events: a numpy array of "event" records. 
+          An event record has three fields:
+            * pixelID
+            * tofChannelNo
+            * p
+
+        tofbinsize * tofChannelNo is the tof for the bin
+
+        path: the output path
+    
     """
 
     # implementation details
@@ -99,6 +114,51 @@ def write(events, tofbinsize, path):
     f.close()
     #
     sys.stdout.write('\n')
+    return
+
+
+def setEnergyRequest(entry, Ei):
+    daslogs = entry['DASlogs']
+    er = daslogs['EnergyRequest']
+    er['average_value'][0] \
+        = er['effective_value'][0] \
+        = er['maximum_value'][0] \
+        = er['minimum_value'][0] \
+        = er['value'][0] \
+        = Ei
+    return
+
+
+def populateMonitors(entry, sim_out):
+    """populate monitor data into an ARCS nexus file
+    
+    entry: nexus "entry"
+    sim_out: moderator2sample ARCS simulation output directory
+      it should contains monitor data files mon?-itof-focused.h5,
+      where ? = 1 and 2
+
+    Limitations:
+      monitor positions are now hard-coded as (from moderator)
+      1: 11.831
+      2: 18.5
+    """
+    import histogram.hdf as hh
+    sample = 13.6
+    dists = [11.831, 18.5]
+    itofpaths = ['mon%s-itof-focused.h5' % i for i in range(1,3)]
+    for i, (dist, itofpath) in enumerate(zip(dists, itofpaths)):
+        # check entry
+        mon_entry = entry['monitor%s' % (i+1)]
+        assert mon_entry['distance'][0] == dist - sample
+        tof_entry = mon_entry['time_of_flight']
+        assert tof_entry[0] == 0. and tof_entry[1] == 1.
+        # data
+        hist = hh.load(itofpath)
+        tofaxis = hist.axisFromName('tof'); tofaxis.changeUnit('microsecond')
+        bb = tofaxis.binBoundaries().asNumarray()
+        tofmin = bb[0]; tofmax = bb[-1]
+        mon_entry['data'][int(tofmin): int(tofmax)] = hist.I
+        continue
     return
 
 

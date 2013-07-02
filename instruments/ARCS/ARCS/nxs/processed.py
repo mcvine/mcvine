@@ -28,7 +28,8 @@ mantid GUI, and we were able to reduce the simulated
 data to I(Q,E) with expected results.
 """
 
-def write(events, tofbinsize, nxsfile):
+# XXX: Ei option not supported yet
+def write(events, tofbinsize, nxsfile, Ei=None):
     # tofbinsize must be in the unit of microsecond
     data = convert(events)
     data['tofbinsize'] = tofbinsize
