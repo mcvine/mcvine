@@ -38,8 +38,14 @@ def nice_dos(E, g):
 
 
 class ParabolicFittingError(Exception): pass
-def fitparabolic(E, g, N=100, minN = 20):
+def fitparabolic(E, g, N=100, minN = 90):
     """fit the near zero portion of the dos curve to parabolic
+    """
+    """
+    NOTE TO DEVELOPER:
+    default minN=90 matches the default requirement for 
+    number of "fittable" points in the low-E region
+    in c++ implementation of DOS curve. 
     """
     def fit(N):
         E1 = E[:N]; g1 = g[:N]
@@ -53,6 +59,7 @@ def fitparabolic(E, g, N=100, minN = 20):
     if badfit:
         # import pylab; pylab.plot(E, g); pylab.show()
         raise ParabolicFittingError("Unable to fit DOS to parabolic")
+    print "DOS: fit first %s points to parbolic" % N
     E1 = E[:N]
     g[:N] = c * E1*E1
     return E,g
