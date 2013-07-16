@@ -40,6 +40,8 @@ class LinearlyInterpolatedDispersionOnGrid(base):
         from histogram import histogram
         if dos:
             e,Z = dos
+            from .utils import nice_dos
+            e, Z = nice_dos(e, Z)
             self.dos = histogram( 'dos', [ ('energy', e, 'meV') ], data = Z )
             pass
         return
