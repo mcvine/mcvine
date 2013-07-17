@@ -1,4 +1,4 @@
-from pyre.units import mass, length, time, pressure, energy, SI, area, temperature
+from pyre.units import mass, length, time, pressure, energy, SI, area, temperature, angle
 from pyre.units import *
 
 from . import pyre_units_ext
