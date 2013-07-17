@@ -27,7 +27,7 @@ It is kind of weird there are so many "value" items. But we will
 just set all of them to the same value
 """
 
-def write(events, tofbinsize, path):
+def write(events, tofbinsize, path, Ei=None):
     """ write neutron events into a ARCS nexus file
 
     Required parameters
@@ -55,6 +55,8 @@ def write(events, tofbinsize, path):
     import h5py
     f = h5py.File(path, 'a')
     entry = f['entry']
+    # Ei
+    if Ei: setEnergyRequest(entry, Ei)
 
     # XXX: hack
     etz_attrs = {
