@@ -27,6 +27,7 @@
 
 
 #include <numeric>
+#include <iostream>
 
 #include "journal/error.h"
 #include "journal/debug.h"
