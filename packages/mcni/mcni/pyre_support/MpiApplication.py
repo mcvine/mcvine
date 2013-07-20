@@ -52,7 +52,6 @@ class Application(base):
         self._debug.log("%s: onServer" % self.name)
 
         launcher = self.inventory.launcher
-        launcher.nodes = 2
         launched = launcher.launch()
         if not launched:
             raise RuntimeError, "application not launched"
