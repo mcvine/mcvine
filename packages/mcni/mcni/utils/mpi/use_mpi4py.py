@@ -18,7 +18,9 @@ def _mpi():
     global size, rank, world
     try:
         from mpi4py import MPI
+        print '* mpi4py available'
     except ImportError:
+        print '* mpi4py NOT available'
         rank = 0
         size = 0
         return
