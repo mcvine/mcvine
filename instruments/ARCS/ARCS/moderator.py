@@ -29,6 +29,8 @@ def estimate_emission_time(neutron_energy):
     ch_y-=0.4189*tanh((ch_x+1.1197)/0.4042)+0.5612; 
     # proton hit -- a few microseconds -- nentron emission. ch_y: fit function?. toffset -- ch_y converted back to time
     t0=pow(10,ch_y)/1.0e6;
+    print 'moderator emission time for neutron of energy %s is %s' % (
+        neutron_energy, t0)
     return t0
     
 
