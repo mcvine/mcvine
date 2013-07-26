@@ -45,3 +45,20 @@ Why do I...
     such as geometer). 
     You may see hints of why some components are not really loaded successfully.
 
+... get MemoryError?
+    You may need to reduce buffer_size. It determines how many neutrons are
+    kept in the memory. To set buffer_size to, say, one million neutrons, do::
+      
+      --buffer_size=1000000
+
+    Optimal buffer_size depends on the memory for the computing nodes.
+    For a machine of 1G memory, the maximum buffer_size would be
+    1e9/100 = 1e7 neutrons.
+    If, however, you are running parallely on a machine of 10 cpus and 2G
+    ram, the maximum buffer_size would be 2e9/100/10 = 2e6.
+    It also depends on factors such as
+    whether the option "multiple-scattering" is turned on.
+    If "multiple-scattering" is on, it is safer to divide the number 
+    you got by another factor of 10.
+    
+    
