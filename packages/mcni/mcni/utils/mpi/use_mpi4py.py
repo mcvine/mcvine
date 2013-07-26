@@ -11,6 +11,7 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
 
+name = 'mpi4py'
 
 from . import info
 
@@ -20,7 +21,7 @@ def _mpi():
         from mpi4py import MPI
         print '* mpi4py available'
     except ImportError:
-        print '* mpi4py NOT available'
+        print '** mpi4py NOT available'
         rank = 0
         size = 0
         return

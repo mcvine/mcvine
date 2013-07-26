@@ -17,7 +17,8 @@ info = journal.info( 'mcni.utils.mpi' )
 
 # 
 import os
-mpi_binding_choice = os.environ.get('MCVINE_MPI_BINDING')
+ENVVAR_BINDING_NAME = 'MCVINE_MPI_BINDING'
+mpi_binding_choice = os.environ.get(ENVVAR_BINDING_NAME)
 
 # methods
 def _find_mpi_binding():
@@ -52,11 +53,14 @@ if b:
         exp = '%s = b.%s' % (name, name)
         exec exp
         continue
+    binding_name = b.name
 else:
+    name = None
     world = None
     size = rank = 0
     send = receive = None
     sendStr = receiveStr = None
+    binding_name = None
 
 
 # version

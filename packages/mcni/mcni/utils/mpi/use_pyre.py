@@ -11,6 +11,7 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
 
+name = 'pyre'
 
 from . import info
 import pickle
@@ -19,7 +20,7 @@ def _mpi():
     global size, rank, world
     try:
         import mpi
-        print "** pyre mpi available"
+        print "* pyre mpi available"
     except ImportError:
         print "** pyre mpi NOT available"
         rank = 0
