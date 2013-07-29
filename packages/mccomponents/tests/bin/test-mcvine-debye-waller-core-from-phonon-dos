@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 mcvine-debye-waller-core-from-phonon-dos --dos=V-dos.dat --m=51 --T=300
+mcvine-debye-waller-core-from-phonon-dos --dos=V-dos.idf --m=51 --T=300
 
 mcvine-debye-waller-core-from-phonon-dos --dos=V-dos.idf --m=51 --T=300  --nsampling=100
 mcvine-debye-waller-core-from-phonon-dos --dos=V-dos.idf --m=51 --T=300  --nsampling=200
