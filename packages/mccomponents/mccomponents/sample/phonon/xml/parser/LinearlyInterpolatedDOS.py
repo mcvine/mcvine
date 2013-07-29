@@ -34,7 +34,7 @@ class LinearlyInterpolatedDOS(AbstractNode):
             return dos_fromh5(h5path)
         elif asciipath:
             from mccomponents.sample.phonon import dos_fromascii
-            return dos_fromascii(h5path)
+            return dos_fromascii(asciipath)
         else:
             raise ValueError, "LinearlyInterpolatedDOS needs path to "\
                 "idf or histogram data file"            
