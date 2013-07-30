@@ -294,6 +294,12 @@ Example::
     <LinearlyInterpolatedDOS idf-data-path="phonon-dispersion/DOS"/> 
   </Phonon_IncoherentInelastic_Kernel>
 
+DOS data can be in different formats:
+
+- idf-data-path
+- ascii-path
+- histogram-path
+
 You could compute phonon DOS from a bvk model
 using the VNF service: https://vnf.caltech.edu
 
