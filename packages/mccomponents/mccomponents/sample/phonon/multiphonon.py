@@ -44,7 +44,7 @@ def sqe(E, g, Qmax=None, Qmin=0, dQ=None, T=300, M=50, N=5, starting_order=2):
     de = E[1] - E[0]
     emax = E[-1]
     # expand E
-    E = np.arange(e0, e0+de*3*dos_sample, de)
+    E = np.arange(e0, e0+de*N*dos_sample, de)
     g = np.concatenate((g, np.zeros(len(E)-len(g))))
     # normalize
     int_g = np.sum(g) * de
