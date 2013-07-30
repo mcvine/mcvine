@@ -217,11 +217,14 @@ class ComputationEngineRendererExtension:
                 scatterer.__class__.__name__, scatterer.name )
 
         # total mass of unitcell. for DW calculator. this might be reimplemented later.
-        # mass = sum( [ site.getAtom().mass for site in unitcell ] )
-        mass = sum( [ atom.mass for atom in unitcell ] )
-        mass/=len(unitcell)
-        # XXX: need to be more careful with mass
-
+        # ???
+        average_mass = kernel.average_mass
+        if not average_mass:
+            mass = sum( [ atom.mass for atom in unitcell ] )
+            average_mass = mass/len(unitcell)
+        else:
+            average_mass = average_mass/units.u
+            
         # Qmax
         Qmax = kernel.Qmax
         if Qmax:
@@ -233,7 +236,7 @@ class ComputationEngineRendererExtension:
             dos.energy, dos.I, 
             Qmax=Qmax,
             T = temperature,
-            M = mass, N = 5,
+            M = average_mass, N = 5,
             )
         import histogram as H
         sqehist = H.histogram(
@@ -241,7 +244,7 @@ class ComputationEngineRendererExtension:
             [('Q', q, 'angstrom**-1'),
              ('energy', e, 'meV')],
             s)
-
+        
         from mccomponents import sample
         # grid sqe
         gsqe = sample.gridsqe(sqehist)

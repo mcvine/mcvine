@@ -28,6 +28,7 @@ class MultiPhonon_Kernel(AbstractNode):
             return v
         kargs = dict(
             Qmax = getval('Qmax'),
+            average_mass = getval('average_mass'),
             scattering_xs = getval('scattering_xs'),
             absorption_xs = getval('absorption_xs'),
             )
