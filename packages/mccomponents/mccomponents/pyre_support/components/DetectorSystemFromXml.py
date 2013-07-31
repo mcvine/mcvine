@@ -95,8 +95,19 @@ class DetectorSystemFromXml(ParallelComponent, AbstractComponent):
         if context.mpiRank == 0:
             # XXX: wait for all other nodes to finish
             # XXX: this is a naive implementation
-            import time; time.sleep(120)
-            self._merge_and_normalize()
+            import time
+            N = 4; i = 0; wait = 60
+            while i < N:
+                print ("* wait %s seconds ..." % wait)
+                time.sleep(wait)
+                try:
+                    self._merge_and_normalize()
+                except Storage_MCsample_Mismatch:
+                    i += 1; wait *= 2
+                    continue
+                else:
+                    break
+                continue
         return
 
 
@@ -145,6 +156,7 @@ class DetectorSystemFromXml(ParallelComponent, AbstractComponent):
     pass # end of Source
 
 
+class Storage_MCsample_Mismatch(Exception): pass
 def merge_and_normalize(
     outputdir='out',
     eventsdat='events.dat',
@@ -157,9 +169,10 @@ def merge_and_normalize(
     pattern = os.path.join(outputdir, '*', filename)
     eventdatfiles = glob.glob(pattern)
     n_mcsamples = n_mcsamples_files(outputdir)
-    assert len(eventdatfiles) == n_mcsamples, \
-        "neutron storage files %s does not match #mcsample files %s" %(
-        len(eventdatfiles), n_mcsamples)
+    if len(eventdatfiles) != n_mcsamples:
+        msg = "neutron storage files %s does not match #mcsample files %s" %(
+            len(eventdatfiles), n_mcsamples)
+        raise Storage_MCsample_Mismatch(msg)
     if not eventdatfiles:
         return
 
