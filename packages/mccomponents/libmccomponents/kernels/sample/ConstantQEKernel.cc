@@ -99,7 +99,7 @@ mccomponents::kernels::ConstantQEKernel::scatter
   double cost = (ki*ki+kf*kf-m_Q*m_Q)/(2*ki*kf);
   double sint = std::sqrt(1-cost*cost);
   // 
-  double phi = math::random(0, mcni::PI*2);
+  double phi = math::random(0., mcni::PI*2);
   
   // scattered neutron velocity vector
   double vx = vf*sint*cos(phi);

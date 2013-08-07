@@ -147,7 +147,7 @@ const
 	<< journal::endl;
 #endif
   // choose a root (length of vf)
-  int index=(int)mccomponents::math::random(0, nf);
+  size_t index=mccomponents::math::random(size_t(0), nf);
   float_t v_f_l = vf_list[index];
 #ifdef DEBUG
   debug << journal::at(__HERE__)

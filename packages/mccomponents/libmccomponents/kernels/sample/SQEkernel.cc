@@ -147,7 +147,7 @@ mccomponents::kernels::SQEkernel::scatter
 
   double sint = sqrt(1-cost*cost);
 
-  double phi = math::random(0, 2 * physics::pi);
+  double phi = math::random(0., 2 * physics::pi);
 
   double cosp = cos(phi), sinp = sin(phi);
 

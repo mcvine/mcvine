@@ -124,7 +124,7 @@ mccomponents::HomogeneousNeutronScatterer::interact_path1(mcni::Neutron::Event &
   double absorption_mark = transmission_mark + m_weights.absorption;
   double sum_of_weights = absorption_mark + m_weights.scattering;
 
-  double r = math::random(0, sum_of_weights);
+  double r = math::random(0., sum_of_weights);
   
 #ifdef DEBUG
   debug << journal::at(__HERE__) 
@@ -144,7 +144,7 @@ mccomponents::HomogeneousNeutronScatterer::interact_path1(mcni::Neutron::Event &
   
   if (r >= transmission_mark && r < absorption_mark ) {
     // absorption
-    double x = math::random(0, distance);
+    double x = math::random(0., distance);
     double prob = mu * distance * std::exp( -(mu+sigma) * x );
 #ifdef DEBUG
   debug << journal::at(__HERE__) 
@@ -175,16 +175,16 @@ mccomponents::HomogeneousNeutronScatterer::interact_path1(mcni::Neutron::Event &
 
   if (r >= absorption_mark) {
     // scattering
-    double x = math::random(0, distance);
+    double x = math::random(0., distance);
     double atten = std::exp( -(mu+sigma) * x );
     /*
       // alternative implementation
     double t = sigma + mu;
     double x;
     if (t*distance<1e-6) 
-      x = math::random(0, distance);
+      x = math::random(0., distance);
     else
-      x = - log(1-math::random(0, 1-exp(-t*distance)))/t;
+      x = - log(1-math::random(0., 1-exp(-t*distance)))/t;
     double atten = 1;
     */
       
@@ -331,7 +331,7 @@ mccomponents::HomogeneousNeutronScatterer::_interactM1
 
   // scattering
   ev1 = original;
-  double x = math::random(0, distance);
+  double x = math::random(0., distance);
   double prob = sigma * distance * std::exp( -(mu+sigma) * x );
   ev1.probability *= prob;
   propagate( ev1, x/velocity );

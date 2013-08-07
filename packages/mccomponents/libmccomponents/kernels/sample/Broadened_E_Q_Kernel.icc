@@ -154,7 +154,7 @@ mccomponents::kernels::Broadened_E_Q_Kernel<E_Q_functor_t, S_Q_functor_t, Sigma_
   }
   double sint = std::sqrt(1-cost2);
   // 
-  double phi = math::random(0, mcni::PI*2);
+  double phi = math::random(0., mcni::PI*2);
   
   // scattered neutron velocity vector
   double vx = vf*sint*cos(phi);

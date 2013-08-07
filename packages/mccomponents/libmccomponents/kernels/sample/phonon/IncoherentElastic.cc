@@ -141,8 +141,8 @@ mccomponents::kernels::phonon::IncoherentElastic::scatter
   double vi = state.velocity.length();
 
   // theta, phi
-  double theta = math::random(0, mcni::PI);
-  double phi = math::random(0, mcni::PI*2);
+  double theta = math::random(0., mcni::PI);
+  double phi = math::random(0., mcni::PI*2);
 
   // Q 
   namespace conversion = mcni::neutron_units_conversion;

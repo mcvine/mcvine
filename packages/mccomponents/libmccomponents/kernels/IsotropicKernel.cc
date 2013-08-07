@@ -86,8 +86,8 @@ mccomponents::kernels::IsotropicKernel::scatter
   double vi = state.velocity.length();
 
   // theta, phi
-  double theta = math::random(0, mcni::PI);
-  double phi = math::random(0, mcni::PI*2);
+  double theta = math::random(0., mcni::PI);
+  double phi = math::random(0., mcni::PI*2);
 
 #ifdef DEBUG
   m_details->debug

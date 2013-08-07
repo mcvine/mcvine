@@ -193,8 +193,8 @@ mccomponents::kernels::E_Q_Kernel<E_Q_functor_t, S_Q_functor_t>\
       << std::endl;
     return;
   }
-  int index=0;
-  if (nq>1) index = (int)math::random(0, nq);
+  size_t index=0;
+  if (nq>1) index = math::random(size_t(0), nq);
   double Q = Q_list[index];
   // .. get E from Q
   double E = m_E(Q);

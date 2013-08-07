@@ -23,7 +23,7 @@
 
 unsigned int mccomponents::kernels::phonon::pick_phonon_branch( size_t n_br )
 {
-  return (unsigned int)std::floor( math::random(0, n_br) );
+  return (unsigned int)(math::random(size_t(0), n_br) );
 }
 
 double mccomponents::kernels::phonon::phonon_bose_factor(double energy, double T)

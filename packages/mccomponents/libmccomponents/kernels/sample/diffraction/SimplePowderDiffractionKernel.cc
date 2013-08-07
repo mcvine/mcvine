@@ -230,13 +230,13 @@ mccomponents::kernels::SimplePowderDiffractionKernel::scatter
     if (Npeaks > 0)
     {
         if (Npeaks > 1)
-            peakindex=floor(math::random(0,Npeaks));  /* select a diffraction order */
+	    peakindex=math::random(size_t(0),Npeaks);  /* select a diffraction order */
         else
             peakindex = 0;
 
         if (w_v[peakindex])
         {
-            arg = q_v[peakindex]*(1+w_v[peakindex]*math::random(-1,1))/(2.0*v); /* XXX: Implement "randnorm()",  normal*/
+            arg = q_v[peakindex]*(1+w_v[peakindex]*math::random(-1.,1.))/(2.0*v); /* XXX: Implement "randnorm()",  normal*/
         }
         else
             arg = q_v[peakindex]/(2.0*v);
@@ -264,7 +264,7 @@ mccomponents::kernels::SimplePowderDiffractionKernel::scatter
             /* Focusing */
             alpha = abs(alpha);
             /* Trick to get scattering for pos/neg theta's */
-            alpha0= 2*math::random(0,1)*alpha;
+            alpha0= 2*math::random(0.,1.)*alpha;
 
             if (alpha0 > alpha)
             {
@@ -277,7 +277,7 @@ mccomponents::kernels::SimplePowderDiffractionKernel::scatter
         }
         else
         {
-            alpha0 = PI*math::random(-1,1);
+            alpha0 = PI*math::random(-1.,1.);
         }
 
         /* now find a nearly vertical rotation axis:

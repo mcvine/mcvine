@@ -129,7 +129,7 @@ const
   }
   float_t sin_theta = sqrt(1-cos_theta_sq);
   // == phi ==
-  float_t phi = math::random(0, 2*physics::pi);
+  float_t phi = math::random(0., 2*physics::pi);
   // adjust probability
   prob *= 2*physics::pi;
 

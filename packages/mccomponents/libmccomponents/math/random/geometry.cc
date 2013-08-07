@@ -46,8 +46,8 @@ mccomponents::math::choose_direction
   double solidangle = 2*PI*(1 - costheta_max);
 
   // choose theta and phi
-  double theta = acos (random(costheta_max, 1));
-  double phi = random(0, 2 * PI);
+  double theta = acos (random(costheta_max, 1.));
+  double phi = random(0., 2 * PI);
 
   // choose normal vector
   V3 n;
@@ -72,10 +72,10 @@ mccomponents::math::choose_direction
 {
   using mcni::PI;
   using namespace std;
-  double costheta = random(-1, 1);
+  double costheta = random(-1., 1.);
   double theta = acos(costheta);
   double sintheta = sin(theta);
-  double phi = random(0, 2 * PI);
+  double phi = random(0., 2 * PI);
   dir.x = sintheta*cos(phi);
   dir.y = sintheta*sin(phi);
   dir.z = costheta;
