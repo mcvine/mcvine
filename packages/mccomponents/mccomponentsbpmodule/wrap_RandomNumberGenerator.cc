@@ -24,7 +24,7 @@ namespace wrap_mccomponents {
     using namespace boost::python;
 
     def( "srandom", &mccomponents::math::srandom );
-    def( "random", &mccomponents::math::random );
+    def( "random", &mccomponents::math::random_DD );
   }
 }
 
