@@ -133,9 +133,11 @@ class Instrument( AppInitMixin, CompositeNeutronComponentMixin, base, ParallelCo
         n = int(self.ncount / self.buffer_size)
         assert n>0, 'ncount should be larger than buffer_size: ncount=%s, buffer_size=%s' % (self.ncount, self.buffer_size)
         
-        info = journal.info('instrument')
+        from mcni import journal
+        logger = journal.logger(
+            'info', 'instrument', header='', footer='', format='-> %s')
         for i in range(n):
-            info.log(" * mpi node %s at loop %s" % (self.mpiRank, i))
+            logger("mpi node %s at loop %s" % (self.mpiRank, i))
             neutrons = mcni.neutron_buffer( self.buffer_size )
             context.iteration_no = i
             mcni.simulate( instrument, geometer, neutrons, context=context)
@@ -143,7 +145,7 @@ class Instrument( AppInitMixin, CompositeNeutronComponentMixin, base, ParallelCo
         
         remain = int(self.ncount % self.buffer_size)
         if remain:
-            info.log(" * mpi node %s at last loop" % (self.mpiRank,))
+            logger("mpi node %s at last loop" % (self.mpiRank,))
             neutrons = mcni.neutron_buffer(remain)
             context.iteration_no = n
             mcni.simulate( instrument, geometer, neutrons, context=context)

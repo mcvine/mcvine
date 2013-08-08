@@ -72,7 +72,9 @@ class SimulationNode(Connectable):
 
 
     def _createProcessor(self, name, process, tracer):
-        import journal
+        from mcni import journal
+        logger = journal.logger(
+            'info', 'instrument', header='', footer='', format=' | %s')
         def _(neutrons):
             if tracer:
                 tracer(neutrons,  context=before(self))
@@ -80,7 +82,7 @@ class SimulationNode(Connectable):
             neutrons2 = neutrons.snapshot(len(neutrons))
             # need to swap with the orignal neutron buffer
             neutrons.swap(neutrons2)
-            journal.info('instrument').log(" * %s processing ..." % name)
+            logger(" %s processing ..." % name)
             process(neutrons)
             if tracer:
                 tracer(neutrons,  context=processed(self))
