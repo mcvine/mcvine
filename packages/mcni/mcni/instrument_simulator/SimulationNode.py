@@ -38,7 +38,8 @@ class SimulationNode(Connectable):
         process = self.component.process
         if context.multiple_scattering and hasattr(self.component, 'processM'):
             process = self.component.processM
-        self.processor = self._createProcessor(process, tracer=context.tracer)
+        self.processor = self._createProcessor(
+            component.name, process, tracer=context.tracer)
         
         return
 
@@ -70,7 +71,8 @@ class SimulationNode(Connectable):
         return
 
 
-    def _createProcessor(self, process, tracer):
+    def _createProcessor(self, name, process, tracer):
+        import journal
         def _(neutrons):
             if tracer:
                 tracer(neutrons,  context=before(self))
@@ -78,6 +80,7 @@ class SimulationNode(Connectable):
             neutrons2 = neutrons.snapshot(len(neutrons))
             # need to swap with the orignal neutron buffer
             neutrons.swap(neutrons2)
+            journal.info('instrument').log(" * %s processing ..." % name)
             process(neutrons)
             if tracer:
                 tracer(neutrons,  context=processed(self))
