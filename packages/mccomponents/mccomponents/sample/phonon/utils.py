@@ -21,8 +21,8 @@ import numpy as np
 
 def nice_dos(E, g):
     # .. in crease number of points if necessary
-    if len(E) < 400:
-        dE = E[-1]/400.
+    if len(E) < 500:
+        dE = E[-1]/500.
         E1 = np.arange(0, E[-1], dE)
         g1 = np.interp(E1, E, g)
         E, g = E1, g1
@@ -38,7 +38,7 @@ def nice_dos(E, g):
 
 
 class ParabolicFittingError(Exception): pass
-def fitparabolic(E, g, N=100, minN = 90):
+def fitparabolic(E, g, N=100, minN = 20):
     """fit the near zero portion of the dos curve to parabolic
     """
     """
