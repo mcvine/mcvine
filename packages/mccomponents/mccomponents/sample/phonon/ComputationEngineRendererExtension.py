@@ -12,6 +12,8 @@
 #
 
 
+import journal
+
 nsampling = 100
 
 class ComputationEngineRendererExtension:
@@ -236,7 +238,7 @@ class ComputationEngineRendererExtension:
             dos.energy, dos.I, 
             Qmax=Qmax,
             T = temperature,
-            M = average_mass, N = 10,
+            M = average_mass, N = 8,
             )
         import histogram as H
         sqehist = H.histogram(
@@ -244,6 +246,7 @@ class ComputationEngineRendererExtension:
             [('Q', q, 'angstrom**-1'),
              ('energy', e, 'meV')],
             s)
+        journal.debug("phonon").log("computed multiphonon sqe")
         
         from mccomponents import sample
         # grid sqe
