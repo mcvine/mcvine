@@ -63,7 +63,8 @@ class Generator:
                 for arg in arguments:
                     exec _trait_str( arg ) in locals()
                     continue
-                del arg
+                if 'arg' in locals():
+                    del arg
                 pass
 
             
