@@ -4,7 +4,7 @@
 #
 #                                   Jiao Lin
 #                      California Institute of Technology
-#                      (C) 2006-2010  All Rights Reserved
+#                      (C) 2006-2013  All Rights Reserved
 #
 # {LicenseText}
 #
@@ -45,18 +45,14 @@ Example 2: find out the types of components in 'sources' category
 # >>> units.meter
 class _units(object):
 
-    def __init__(self):
-        from mcni.units import parser
-        self.parser = parser()
-        return
-    
-    
     def __getattr__(self, key):
-        return self.parser.parse(key)
+        from mcni.units import parser_singleton as parser
+        return parser.parse(key)
 
     
     def parse(self, s):
-        return self.parser.parse(s)
+        from mcni.units import parser_singleton as parser
+        return parser.parse(s)
 
 
 units = _units()
