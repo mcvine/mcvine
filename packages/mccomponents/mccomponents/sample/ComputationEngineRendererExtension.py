@@ -204,7 +204,7 @@ class ComputationEngineRendererExtension:
         # cross section related
         abs = t.absorption_coefficient
         sctt = t.scattering_coefficient
-
+        
         if abs is None or sctt is None:
             #need to get cross section from sample assembly representation
             # svn://danse.us/inelastic/sample/.../sampleassembly
@@ -219,9 +219,10 @@ class ComputationEngineRendererExtension:
             sctt = inc + coh
             pass
         
-        abs, sctt = self._unitsRemover.remove_unit( (abs, sctt), 1./units.length.meter )
-
-        # functors
+        abs, sctt = self._unitsRemover.remove_unit(
+            (abs, sctt), 1./units.length.meter )
+        
+        # functors for S(Q,E)
         E_Q = kernel.E_Q
         S_Q = kernel.S_Q
         sigma_Q = kernel.sigma_Q
@@ -232,7 +233,8 @@ class ComputationEngineRendererExtension:
         Qmax = self._unitsRemover.remove_unit(
             kernel.Qmax, 1./units.length.angstrom)
         
-        return self.factory.Broadened_E_Q_Kernel(E_Q, S_Q, sigma_Q, Qmin, Qmax, abs, sctt)
+        return self.factory.Broadened_E_Q_Kernel(
+            E_Q, S_Q, sigma_Q, Qmin, Qmax, abs, sctt)
 
 
     def onE_vQ_Kernel(self, kernel):

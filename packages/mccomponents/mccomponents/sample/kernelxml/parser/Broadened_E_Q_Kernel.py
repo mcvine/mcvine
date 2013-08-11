@@ -29,8 +29,19 @@ class Broadened_E_Q_Kernel(AbstractNode):
         sigma_Q = str(kwds['sigma_Q'])
         Qmin = self._parse( kwds['Qmin'] )
         Qmax = self._parse( kwds['Qmax'] )
+
+        absorption_coefficient = kwds.get('absorption_coefficient')
+        if absorption_coefficient:
+            absorption_coefficient = self._parse(absorption_coefficient)
+
+        scattering_coefficient = kwds.get('scattering_coefficient')
+        if scattering_coefficient:
+            scattering_coefficient = self._parse(scattering_coefficient)
+            
         return broadened_E_Q_Kernel(
             E_Q=E_Q, S_Q=S_Q, sigma_Q=sigma_Q, Qmin=Qmin, Qmax=Qmax
+            absorption_coefficient = absorption_coefficient,
+            scattering_coefficient = scattering_coefficient,
             )
     
     
