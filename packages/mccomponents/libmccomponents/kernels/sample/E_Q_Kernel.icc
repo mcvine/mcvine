@@ -18,6 +18,7 @@
 #endif
 
 #include <cmath>
+#include <algorithm>
 #include "mccomponents/exception.h"
 #include "mcni/math/number.h"
 #include "mccomponents/math/random.h"
@@ -93,6 +94,16 @@ mccomponents::kernels::E_Q_Kernel<E_Q_functor_t, S_Q_functor_t>\
 	      << m_Qmax << ")." << std::endl;
     throw;
   }
+  // compute Emin and Emax
+  // this assumes that the E(Q) curve is smooth and does not have spikes
+  const size_t N = 100; // # of data points
+  double E[N], dQ = (Qmax-Qmin)/N;
+  for (size_t i=0; i<N; i++) {
+    double Q = m_Qmin + dQ * i;
+    E[i] = m_E(Q);
+  }
+  std::sort(E, E+N);
+  m_Emin = E[0]; m_Emax = E[N-1];
 }
 
 
@@ -140,6 +151,8 @@ mccomponents::kernels::E_Q_Kernel<E_Q_functor_t, S_Q_functor_t>\
   double vi = state.velocity.length();
   // incident neutron energy
   double Ei = conversion::v2E( vi );
+  // if Ei is too small, no scattering
+  if (Ei < m_Emin) return;
   
   // randomly pick scattering direction
   typedef mcni::Vector3<double> V3d;

@@ -70,6 +70,7 @@ namespace mccomponents {
       S_Q_functor_t m_S;
       Sigma_Q_functor_t m_sigma;
       double m_Qmin, m_Qmax;
+      double m_Emin, m_Emax;
       double m_absorption_coefficient, m_scattering_coefficient;
       // impl details
       struct Details;

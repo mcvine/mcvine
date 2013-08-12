@@ -92,6 +92,17 @@ mccomponents::kernels::Broadened_E_Q_Kernel<E_Q_functor_t, S_Q_functor_t, Sigma_
 	      << m_Qmax << ")." << std::endl;
     throw;
   }
+  // compute Emin and Emax
+  // this assumes that the E(Q) curve is smooth and does not have spikes
+  const size_t N = 100; // # of data points
+  double Emin[N], Emax[N], dQ = (Qmax-Qmin)/N;
+  for (size_t i=0; i<N; i++) {
+    double Q = m_Qmin + dQ * i;
+    Emin[i] = m_E(Q) - m_sigma(Q)*3;
+    Emax[i] = m_E(Q) + m_sigma(Q)*3;
+  }
+  std::sort(Emin, Emin+N); std::sort(Emax, Emax+N);
+  m_Emin = Emin[0]; m_Emax = Emax[N-1];
 }
 
 
