@@ -32,8 +32,8 @@ class ComputationEngineRendererExtension:
         s = sqehist.data().storage().asNumarray()
         
         return self.factory.gridsqe(
-            qbegin, qend, qstep,
-            ebegin, eend, estep,
+            qbegin, qend+0.01*qstep, qstep,
+            ebegin, eend+0.01*estep, estep,
             s )
 
 
