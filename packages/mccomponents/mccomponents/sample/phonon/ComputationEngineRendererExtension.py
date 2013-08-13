@@ -238,7 +238,7 @@ class ComputationEngineRendererExtension:
             dos.energy, dos.I, 
             Qmax=Qmax,
             T = temperature,
-            M = average_mass, N = 8,
+            M = average_mass, N = kernel.Nmax,
             )
         import histogram as H
         sqehist = H.histogram(

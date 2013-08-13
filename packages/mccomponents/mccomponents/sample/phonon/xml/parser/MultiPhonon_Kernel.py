@@ -26,11 +26,14 @@ class MultiPhonon_Kernel(AbstractNode):
             v = kwds.get(key)
             if v: return self._parse(v)
             return v
+        Nmax = kwds.get('Nmax')
+        if Nmax: Nmax = int(Nmax)
         kargs = dict(
             Qmax = getval('Qmax'),
             average_mass = getval('average_mass'),
             scattering_xs = getval('scattering_xs'),
             absorption_xs = getval('absorption_xs'),
+            Nmax = Nmax,
             )
         from mccomponents.sample.phonon \
              import multiphonon_kernel as f

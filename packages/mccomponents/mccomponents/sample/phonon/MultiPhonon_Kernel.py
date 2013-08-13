@@ -27,6 +27,7 @@ class MultiPhonon_Kernel(base):
         Qmax=None,
         scattering_xs = None, absorption_xs = None,
         average_mass = None,
+        Nmax = None,
         ):
         base.__init__(self, dispersion=None)
         self.dos = dos
@@ -34,6 +35,7 @@ class MultiPhonon_Kernel(base):
         self.average_mass = average_mass
         self.scattering_xs = scattering_xs
         self.absorption_xs = absorption_xs
+        self.Nmax = Nmax or 8
         return
     
     
