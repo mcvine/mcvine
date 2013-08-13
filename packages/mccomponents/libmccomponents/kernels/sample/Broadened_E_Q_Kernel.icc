@@ -18,6 +18,7 @@
 #endif
 
 #include <cmath>
+#include <algorithm>
 #include "mccomponents/exception.h"
 #include "mcni/math/number.h"
 #include "mccomponents/math/random.h"
@@ -53,6 +54,9 @@ mccomponents::kernels::Broadened_E_Q_Kernel<E_Q_functor_t, S_Q_functor_t, Sigma_
   // components
   math::Algorithms::Bracketing::Ridder::ZRidd root_finder;
   math::FindRootsEvenly roots_finder;
+  
+  // data
+  const static double m_epsilon;
 };
 
 
@@ -62,6 +66,10 @@ const char
 mccomponents::kernels::Broadened_E_Q_Kernel<E_Q_functor_t, S_Q_functor_t, Sigma_Q_functor_t>\
 ::Details::jrnltag[] = "Broadened_E_Q_Kernel";
 #endif
+
+template< typename E_Q_functor_t, typename S_Q_functor_t, typename Sigma_Q_functor_t>
+const double mccomponents::kernels::Broadened_E_Q_Kernel<E_Q_functor_t, S_Q_functor_t, Sigma_Q_functor_t> \
+::Details::m_epsilon = 1e-4;
 
 
 template< typename E_Q_functor_t, typename S_Q_functor_t, typename Sigma_Q_functor_t>
@@ -150,78 +158,74 @@ mccomponents::kernels::Broadened_E_Q_Kernel<E_Q_functor_t, S_Q_functor_t, Sigma_
   double vi = state.velocity.length();
   // incident neutron energy
   double Ei = conversion::v2E( vi );
+  // XXX: if Ei is too small no scattering
+  if (Ei<m_Emin) return;
   
-  // randomly pick scattering direction
-  typedef mcni::Vector3<double> V3d;
+  // pick Q and E
+  size_t count = 0; double E = Ei+1, Q;
+  while (count++ < 100 && E>=Ei) {
+    // randomly pick momentum transfer
+    Q = math::random(m_Qmin, m_Qmax);
   
-  // find Ef
-  size_t nq = 0, count = 0, index=-1;
-  double Q; V3d dir;
-  while (!nq && count++<100) {
-    // randomly choose a direction
-    math::choose_direction( dir );
-    // compute cos(theta)
-    V3d ei = state.velocity; ei.normalize();
-    double cos_t = (ei|dir);
-    // construct functor to find solution
-    E_q_minus_deltaE<E_Q_functor_t> eqmd(m_E, cos_t, Ei);
-    // solve 
-    std::vector<double> _Q_list = m_details->roots_finder.solve( m_Qmin, m_Qmax, eqmd);
-    // hack: the current solver may give fake roots
-    size_t _nq = _Q_list.size(); nq=0;
-    double Q_list[_nq];
-    for (int i=0; i<_nq; i++) {
-      if (std::abs(eqmd.evaluate(_Q_list[i])) < 1e-7) {
-	Q_list[nq++] = _Q_list[i];
-      }
-    }
-    // .. randomly choose Q
-    if (nq>1) index = math::random(size_t(0), nq);
-    else if (nq==1) index = 0;
-    if (nq) Q = Q_list[index];
-  }
-  // if cannot find solution in several iterations
-  if (nq<1) {
-    std::cerr
-      << "E_Q_Kernel::scatter: failed to find solution for Q. skip."
-      << "Ei=" << Ei
-      << std::endl;
-    return;
-  }
-  // .. get E from Q
-  double E = m_E(Q);
-  // randomly pick energy deviation following gaussian(normal) distribution
-  double dE = mccomponents::math::normal_distrib_rand() * m_sigma(Q);
-  E += dE;
-  // .. final energy
-  double Ef = Ei - E;
+    // randomly pick energy deviation following gaussian(normal) distribution
+    double dE = mccomponents::math::normal_distrib_rand() * m_sigma(Q);
   
-  if (Ef<0) {
-    // should not proceed. non-physical
-    std::cerr
-      << "E_Q_Kernel::scatter: failed to apply broadening"
-      << "Ei=" << Ei << ","
-      << "E=" << E
-      << std::endl;
-    return;
+    // compute E from Q and deviation
+    E = m_E(Q) + dE;
   }
   
-#ifdef DEBUG
-  std::cout << "E,Q=" << E << ", " << Q << std::endl;
-#endif
+  // final energy
+  double Ef = Ei-E;
   
   // final velocity magnitude
   double vf = conversion::E2v( Ef );
   
-  // final velocity vector
-  V3d vfv = dir * vf;
-  state.velocity = vfv;
- 
-#ifdef DEBUG
-  std::cout << "S,vf/vi=" << m_S(Q) << ", " << vf/vi << std::endl;
-#endif
+  // theta, phi
+  double ki = conversion::v2k* vi;
+  double kf = conversion::v2k* vf;
+  double cost = (ki*ki+kf*kf-Q*Q)/(2*ki*kf);
+  double cost2 = cost*cost;
+  if (cost2>1) {
+    // Ei is too small and we have a problem
+    // no scattering
+    std::cerr << "Broadened_E_Q_Kernel::scatter: should not reach here" << std::endl;
+    return;
+  }
+  double sint = std::sqrt(1-cost2);
+  // 
+  double phi = math::random(0., mcni::PI*2);
+  
+  // scattered neutron velocity vector
+  typedef mcni::Vector3<double> V3d;
+  V3d e1 = state.velocity; e1.normalize();
+  // if e1 is not in z-direction
+  // we set e2 to be the cross product of e1 and (0,0,1)
+  // if e1 is right on the z-direction, that means e1 = (0,0,1)
+  // and we set e2 = (1,0,0) or whatever
+  V3d e2;
+  if (std::abs(e1.x)>m_details->m_epsilon || std::abs(e1.y)>m_details->m_epsilon) { 
+    e2 = V3d(0,0,1) * e1; e2.normalize();
+  } else {
+    e2 = V3d(1,0,0);
+  }
+  V3d e3 = e1 * e2;
+  // == v_f ==
+  V3d v_f = sint*cos(phi) * e2 
+    + sint*sin(phi) * e3
+    + cost * e1; // direction
+  v_f = v_f * vf; // with right magnitude
+  
   // adjust probability of neutron event
   ev.probability *= m_S(Q) * (vf/vi);
+  // we need to divide by 4pi (we are calculating integrated sigma, which is \int (vf/vi)*S/(4pi)
+  ev.probability /= 4 * mcni::PI;
+  // additional factor from integration over Q instead of solid angle
+  // see above
+  // XXX: this is not entirely correct since we are not adjusting m_Qmax and m_Qmin
+  // XXX: according to Ei. 
+  ev.probability *=  Q*(m_Qmax-m_Qmin) / (kf*ki) * 2*mcni::PI; 
+  
+  state.velocity = v_f;
 }
 
 
