@@ -28,9 +28,13 @@
 #include "mccomponents/math/rootfinding.h"
 
 
+#define DEBUG
 #ifdef DEBUG
 #include "journal/debug.h"
 #endif
+
+
+#define checkNAN(name, x)   if ((x)!=(x)) std::cerr << name << " is nan" << std::endl;
 
 
 template< typename E_Q_functor_t, typename S_Q_functor_t, typename Sigma_Q_functor_t>
@@ -47,7 +51,7 @@ mccomponents::kernels::Broadened_E_Q_Kernel<E_Q_functor_t, S_Q_functor_t, Sigma_
     root_finder(1e-6)
     ,roots_finder(root_finder, 10000)
 #ifdef DEBUG
-    ,debug( jrnltag ) {}
+    ,debug( jrnltag )
 #endif
   {}
   
@@ -69,7 +73,7 @@ mccomponents::kernels::Broadened_E_Q_Kernel<E_Q_functor_t, S_Q_functor_t, Sigma_
 
 template< typename E_Q_functor_t, typename S_Q_functor_t, typename Sigma_Q_functor_t>
 const double mccomponents::kernels::Broadened_E_Q_Kernel<E_Q_functor_t, S_Q_functor_t, Sigma_Q_functor_t> \
-::Details::m_epsilon = 1e-4;
+::Details::m_epsilon = 1e-1;
 
 
 template< typename E_Q_functor_t, typename S_Q_functor_t, typename Sigma_Q_functor_t>
@@ -162,8 +166,8 @@ mccomponents::kernels::Broadened_E_Q_Kernel<E_Q_functor_t, S_Q_functor_t, Sigma_
   if (Ei<m_Emin) return;
   
   // pick Q and E
-  size_t count = 0; double E = Ei+1, Q;
-  while (count++ < 100 && E>=Ei) {
+  size_t count = 0; double E = Ei+1, Q, Ef, vf, ki, kf, cost, cost2=0;
+  while (count++ < 100) {
     // randomly pick momentum transfer
     Q = math::random(m_Qmin, m_Qmax);
   
@@ -172,26 +176,49 @@ mccomponents::kernels::Broadened_E_Q_Kernel<E_Q_functor_t, S_Q_functor_t, Sigma_
   
     // compute E from Q and deviation
     E = m_E(Q) + dE;
+    Ef = Ei - E;
+    // bad E, continue
+    if (Ef <= 0) continue;
+    
+    // final velocity magnitude
+    vf = conversion::E2v( Ef );
+    // theta
+    ki = conversion::v2k* vi;
+    kf = conversion::v2k* vf;
+    cost = (ki*ki+kf*kf-Q*Q)/(2*ki*kf);
+    cost2 = cost*cost;
+    // bad theta, continue
+    if (cost2>1) continue;
+    
+    // good here
+    break;
   }
-  
-  // final energy
-  double Ef = Ei-E;
-  
-  // final velocity magnitude
-  double vf = conversion::E2v( Ef );
-  
-  // theta, phi
-  double ki = conversion::v2k* vi;
-  double kf = conversion::v2k* vf;
-  double cost = (ki*ki+kf*kf-Q*Q)/(2*ki*kf);
-  double cost2 = cost*cost;
-  if (cost2>1) {
-    // Ei is too small and we have a problem
-    // no scattering
-    std::cerr << "Broadened_E_Q_Kernel::scatter: should not reach here" << std::endl;
+  if (count >= 100) {
+    std::cerr << "failed to find suitable Q and E: Ei=" << Ei << std::endl;
     return;
   }
+  if (Ef <= 0 || cost2>1) {
+    std::cerr << "should not reach here." << std::endl;
+    throw;
+  }
+  
+#ifdef DEBUG
+    if (cost != cost) {
+      std::cerr 
+	<< "cost is nan. " 
+	<< "E=" << E << ", Ef=" << Ef
+	<< ", ki=" << ki << ", kf=" << kf 
+	<< ", Q=" << Q;
+    }
+#endif
+    
   double sint = std::sqrt(1-cost2);
+#ifdef DEBUG
+  checkNAN("sint", sint);
+#endif
+  if (sint != sint) {
+    std::cerr << "cos(theta)**2=" << cost2 << std::endl;
+  }
   // 
   double phi = math::random(0., mcni::PI*2);
   
@@ -206,7 +233,7 @@ mccomponents::kernels::Broadened_E_Q_Kernel<E_Q_functor_t, S_Q_functor_t, Sigma_
   if (std::abs(e1.x)>m_details->m_epsilon || std::abs(e1.y)>m_details->m_epsilon) { 
     e2 = V3d(0,0,1) * e1; e2.normalize();
   } else {
-    e2 = V3d(1,0,0);
+    e2 = V3d(1,0,0) * e1; e2.normalize();
   }
   V3d e3 = e1 * e2;
   // == v_f ==
@@ -224,6 +251,10 @@ mccomponents::kernels::Broadened_E_Q_Kernel<E_Q_functor_t, S_Q_functor_t, Sigma_
   // XXX: this is not entirely correct since we are not adjusting m_Qmax and m_Qmin
   // XXX: according to Ei. 
   ev.probability *=  Q*(m_Qmax-m_Qmin) / (kf*ki) * 2*mcni::PI; 
+
+  checkNAN("probability", ev.probability);
+  checkNAN("vf", vf);
+  checkNAN("phi", phi);
   
   state.velocity = v_f;
 }
