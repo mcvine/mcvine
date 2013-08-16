@@ -11,7 +11,7 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
 
-PROJECT = mcvine/HYSPEC
+PROJECT = mcvine/HYSPEC/tests
 
 
 PROJ_TIDY += *.log *.tmp
@@ -20,11 +20,6 @@ PROJ_TIDY += *.log *.tmp
 
 BUILD_DIRS = \
 	HYSPEC \
-	applications \
-	etc \
-	resources \
-	simulations \
-	tests \
 
 OTHER_DIRS = \
 

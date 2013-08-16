@@ -36,6 +36,7 @@ tidy::
 EXPORT_PYTHON_MODULES = \
 	Instrument.py \
 	__init__.py \
+	instrument_spec.py \
 
 
 export:: export-package-python-modules 

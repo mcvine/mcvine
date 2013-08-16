@@ -4,7 +4,7 @@
 from mcvine.applications.InstrumentBuilder import build
 components = [
     'moderator', 
-    'mon0_tof',
+    'mon0_tof', 'mon0_total',
     # ------- The guide in the shutter (G1A) & biological shield (G1B, G1C) -----
     'g1a_guide',
     # ------- The guide in the biological shield & chopper cave (G1B, G1C) ------
@@ -15,7 +15,7 @@ components = [
     'g2_curved_guide',
     # ----------- The components between the curved guide and box B -------------
     'g3_guide', 'shutter2_guide', 'shutter2_valve_guide', 
-    'valve_mon1_guide', 'mon1_tof', 'mon1_total',, 'mon1_t1b_guide',
+    'valve_mon1_guide', 'mon1_tof', 'mon1_total', 'mon1_t1b_guide',
     # -------------------------------- Chopper box B ----------------------------
     't1b_chopper', 't1b_t2_guide', 't2_fermi',
     't2_mon2_guide', 'mon2_tof', 'mon2_total',

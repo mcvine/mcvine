@@ -1,0 +1,126 @@
+#!/usr/bin/env python
+
+"""
+This script wraps hyspec_moderator2sample.
+The 'hyspec_moderator2sample' is a instrument simulation script 
+with a list of components from moderator to sample (just before sample).
+There are quite a few components and configuring it could be
+troublesome.
+This script is a wrapper. Its interface is simpler: there are less
+than ten parameters to set. And this script computes parameters
+of some components such as phase of fermi chopper based on user's
+inputs here.
+"""
+
+
+from mcvine.applications.SuperAppBase import SuperAppBase as base
+
+class App(base):
+
+    class Inventory(base.Inventory):
+
+        import pyre.inventory
+        
+        Edes = pyre.inventory.float('Edes', default=20)
+        Edes.meta[base.inventory_item_signature] = True
+        
+        E_min = pyre.inventory.float('E_min', default=10)
+        E_min.meta[base.inventory_item_signature] = True
+        E_max = pyre.inventory.float('E_max', default=30)
+        E_max.meta[base.inventory_item_signature] = True
+        
+        toffset = pyre.inventory.unit("toffset", default=None)
+        toffset.meta[base.inventory_item_signature] = True
+
+        freq = pyre.inventory.float('freq', default=100)
+        freq.meta[base.inventory_item_signature] = True
+        
+        LMS = pyre.inventory.float('LMS', default=1.8)
+        LMS.meta[base.inventory_item_signature] = True
+        
+        iv = pyre.inventory.float('iv', default=-1)
+        iv.meta[base.inventory_item_signature] = True
+        
+        dry_run = pyre.inventory.bool('dry_run', default=False)
+        dry_run.meta[base.inventory_item_signature] = True
+
+        pass # end of Inventory
+    
+    
+    def runApp(
+        self, 
+        Edes = None, E_min = None, E_max = None,
+        toffset = None,
+        freq = None,
+        LMS = None,
+        iv = None,
+        dry_run = False,
+        ):
+        
+        #
+        # emission_time = self.inventory.emission_time
+        if emission_time < 0: emission_time = None
+        else:emission_time *= 1.e-6
+        from mcvine.instruments.HYSPEC import t0chopper, fermichopper
+        t0phase = t0chopper.phase(E, 8.77, emission_time=emission_time)
+        fermiphase = fermichopper.phase(E, 11.61, emission_time=emission_time)
+
+        # set the fermi chopper component
+        # see ../etc/hyspec_moderator2sample
+        fermichopper_name = 'fermichopper-%s' % fermi_chopper
+
+        # 
+        opts = {
+            # fermi chopper
+            'fermichopper': fermichopper_name,
+            'fermichopper.nu': fermi_nu,
+            'fermichopper.tc': fermiphase,
+            # T0
+            't0chopper.nu': T0_nu,
+            't0chopper.tc': t0phase,
+            # moderator
+            'moderator.Emin': Emin,
+            'moderator.Emax': Emax,
+            }
+        
+        # this is only for advanced users: fermi chopper blade radius
+        if fermi_bladeradius>0:
+            opts['fermichopper.blader'] = fermi_bladeradius
+            
+        import sys
+        addOptions(opts, sys.argv)
+
+        if dry_run:
+            print sys.argv
+        
+        else:
+            from mcvine.instruments.HYSPEC.Instrument import Instrument
+            instrument = Instrument('hyspec_moderator2sample')
+            instrument.run()
+        
+        return
+
+
+def addOptions(opts, argv):
+    for k, v in opts.iteritems():
+        if hasOpt(k, argv): continue
+        argv.append('-%s=%s' % (k,v))
+        continue
+    return argv
+
+
+def hasOpt(key, argv):
+    for arg in argv:
+        if arg.startswith('-%s=' % key) \
+                or arg.startswith('--%s=' % key):
+            return True
+        continue
+    return False
+
+
+def main():
+    app = App('hyspec-m2s')
+    return app.run()
+
+
+if __name__ == '__main__': main()
