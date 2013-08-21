@@ -1,3 +1,4 @@
+# this is obsolete. see HYSPEC/resources/hyspec_moderator2sample.instr
 
 def computeOptions(
     Edes = None, E_min = None, E_max = None,
@@ -283,16 +284,19 @@ def computeOptions(
     if(iv > 0.1) : R_vert = iv 
     R_horz = 10000.0 ; 
     
-    class r:
-        moderator = dict(
-            Emin = E_min,
-            Emax = E_max,
-            )
-        mon0_tof = dict(
+    components = [
+        ('moderator',  
+         dict(
+             Emin = E_min,
+             Emax = E_max,
+             ),
+         )
+        ('mon0_tof',
+         dict(
             tmin = t_mon0_min,
             tmax = t_mon0_min,
             z = POS_G1A-0.002,
-            )
+            ),
         mon0_total = dict(
             z = POS_G1A-0.001,
             )
@@ -308,6 +312,7 @@ def computeOptions(
             l = LEN_G1C,
             z = POS_G1C,
             )
+        
     return
 
 
