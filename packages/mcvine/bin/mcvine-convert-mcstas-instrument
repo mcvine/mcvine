@@ -134,17 +134,73 @@ class InstrumentConfiguratorRenderer(object):
         self._reps = []
         self._indlevel = 0
         self._indstr = '  '
-        self._write('#!/usr/bin/env python')
-        self._write('')
-        self._write('# %s' % instrument.name)
-        self._write('')
+        w = self._write
+        w('#!/usr/bin/env python')
+        w('')
+        w('# %s' % instrument.name)
+        w('')
+        # components and config method
         self.onInstrument(instrument)
-        self._write('')
-        self._write('def main():')
+        w('')
+        # App
+        w('from pyre.applications.Script import Script as base')
+        w('class App(base):')
         self._indent()
-        self._write('config()')
-        self._outdent()
-        self._write("if __name__=='__main__': main()")
+        w('class Inventory(base.Inventory):')
+        self._indent()
+        w('import pyre.inventory')
+        _typedict = {
+            'string': 'str',
+            'char *': 'str',
+            'double': 'float',
+            '': 'float',
+            'boolean': 'bool',
+            }
+        def _convertTypeStr(k):
+            if k in _typedict: return _typedict[k]
+            return k
+        for p in instrument.parameters:
+            type = _convertTypeStr(p['type'])
+            d = dict(
+                name = p['name'],
+                type = type,
+                default = p['value']
+                )
+            w('%(name)s = pyre.inventory.%(type)s("%(name)s", default="%(default)s")' % d)
+            continue
+        w('pass # Inventory')
+        self._outdent() # Inventory
+        
+        w('def main(self, *args, **kwds):')
+        self._indent()
+        w('d={}')
+        for p in instrument.parameters:
+            w('d["%(name)s"] = self.inventory.%(name)s' % p)
+            continue
+        w('config(**d)')
+        w('return')
+        self._outdent() # App.main
+        
+        w('def help(self):')
+        self._indent() # App.help
+        w('import sys, os')
+        w('h = os.path.basename(sys.argv[0]) + "  "')
+        w('print h,')
+        s = ' '.join(
+            ['--%s=%s' % (p['name'], p['value'])
+             for p in instrument.parameters
+             ])
+        w('print "%s"' % s)
+        self._outdent() # App.help
+        
+        self._outdent() # App
+        
+        w('def main():')
+        self._indent()
+        w('App("config-%s").run()' % instrument.name)
+        self._outdent() # main
+        
+        w("if __name__=='__main__': main()")
         return self._reps
     
 
@@ -153,7 +209,7 @@ class InstrumentConfiguratorRenderer(object):
             self.onComponent(comp)
             continue
         w = self._write
-        w('def config(%s):' % instrument.parameters)
+        w('def config(%s):' % _formatParamStr(instrument.parameters))
         self._indent()
         for l in instrument.init.splitlines():
             w(l)
@@ -203,6 +259,14 @@ class InstrumentConfiguratorRenderer(object):
     def _indent(self): self._indlevel += 1
     def _outdent(self): self._indlevel -= 1
 
+
+def _formatParamStr(params):
+    l = []
+    for p in params:
+        s = '%s=%s' % (p['name'], p['value'])
+        l.append(s)
+        continue
+    return ', '.join(l)
 
 from mcvine.instrument.pml import PmlRenderer
 

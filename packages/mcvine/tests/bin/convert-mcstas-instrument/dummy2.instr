@@ -1,6 +1,6 @@
 DEFINE INSTRUMENT dummy2(
        Edes=20, E_min=10, E_max=30, toffset_us=-1.0, freq=180, LMS=1.8, iv=-1.0, 
-       Heusler=False, LM3S = 0.72)
+       boolean Heusler=False, LM3S = 0.72)
 
 DECLARE
 %{
