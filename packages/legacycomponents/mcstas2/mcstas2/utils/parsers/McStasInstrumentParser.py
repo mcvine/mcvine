@@ -95,6 +95,7 @@ NO_BRACKETS     = '[^()]*'              # No brackets
 PARAMETERS      = '(%s)' % NO_BRACKETS  # Component parameters
 COMPONENT       = "%s=%s\(%s\)(.*)" %(NAME, NAME, PARAMETERS)  # Component
 VECVAL          = "([^,\)]+)"             # Vector's value
+VECVAL          = "(.*)"             # Vector's value
 VECTOR          = "\(%s,%s,%s\)" % (VECVAL, VECVAL, VECVAL) # Vector
 VECTOR_F        = "(\([^\)]*\))"
 POSITION        = "AT%s%s%s(RELATIVE|ABSOLUTE)%s([^ ]*)" % (SPACES, VECTOR, SPACES, SPACES)
@@ -114,6 +115,9 @@ ifelse  = lambda a,b,c: (b,c)[not a]    # C ternary operator '?:'
 
 class Instrument:
 
+    name = None
+    parameters = None
+    init = None
     components = None
 
 
@@ -131,9 +135,15 @@ class McStasInstrumentParser(object):
 
     def parse(self, text):
         "Parses text and return a list of component dictionaries"
+        #
+        instrument = Instrument()
         # Remove comments
         text         = self._removeComments(text)
         compSplits   = text.split("COMPONENT")   # Split by component parts
+        header       = compSplits[0]
+        # get instrument info
+        instrument.name, instrument.parameters, instrument.init = \
+            self._parseHeader(header)
         compSplits   = compSplits[1:]             # Skip 0 part (should not have components)
 
         # Go over the component strings and populate components
@@ -162,10 +172,23 @@ class McStasInstrumentParser(object):
             comp.orientation = tuple(rotation)
             comp.extra       = m[3]
 
-        instrument = Instrument()
         instrument.components = components
         return instrument
 
+    
+    def _parseHeader(self, header):
+        instr_def, b = header.split('DECLARE')
+        d, instr_def = instr_def.split('INSTRUMENT')
+        assert d.strip() == 'DEFINE'
+        p = re.compile('\((.*?)\)', re.DOTALL)
+        params = p.findall(instr_def)[0]
+        params = ''.join([l.strip() for l in params.strip().splitlines()])
+        name, e = instr_def.split('(')
+        p = re.compile("INITIALIZE\n%{.*%}", re.DOTALL)
+        init = p.findall(b)[0]
+        init = '\n'.join(init.splitlines()[2:-1])
+        return name, params, init
+    
 
     def _params(self, text):
         "Returns dictionary of parameters"
@@ -228,7 +251,7 @@ class McStasInstrumentParser(object):
         first   = parts[0]      # First word
         if first == "":
             return None
-
+        
         key     = first.upper()
         return (key, line)
 
@@ -274,7 +297,7 @@ class McStasInstrumentParser(object):
             try:
                 return float(v)
             except:
-                return '{'+str(v)+'}'
+                return v
         (x, y, z)   = map(_cast, mm[:3])
 
         relation    = mm[3].upper()
