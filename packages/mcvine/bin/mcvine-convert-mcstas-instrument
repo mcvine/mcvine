@@ -4,7 +4,7 @@
 #
 #                                   Jiao Lin
 #                      California Institute of Technology
-#                      (C) 2006-2010  All Rights Reserved
+#                      (C) 2006-2013  All Rights Reserved
 #
 # {LicenseText}
 #
@@ -38,7 +38,6 @@ class App(Script):
         instrname, ext = os.path.splitext(fname)
 
         instrument.name = instrname
-
         try:
             self._render(instrument)
         except:
@@ -59,8 +58,37 @@ class App(Script):
 
 
     def _render(self, instrument):
+        self._dumpAsJsonStr(instrument)
         self._createInstrumentScript(instrument)
-        self._createPml(instrument)
+        self._createInstrumentConfigurator(instrument)
+        return
+
+    
+    def _dumpAsJsonStr(self, instrument):
+        def comp2dict(comp):
+            return dict(
+                type = comp.type,
+                name = comp.name,
+                parameters = comp.parameters,
+                position = comp.position,
+                orientation = comp.orientation,
+                )
+        def instr2dict(inst):
+            return [comp2dict(c) for c in inst.components]
+        data = instr2dict(instrument)
+        import json
+        out = '%s.json' % instrument.name
+        json.dump(data, open(out, 'wt'))
+        print '* generated instrument description in "%s"' % out
+        return
+
+    
+    def _createInstrumentConfigurator(self, instrument):
+        text = InstrumentConfiguratorRenderer().render(instrument)
+        text = '\n'.join(text)
+        out = 'config-%s.py' % instrument.name
+        open(out, 'w').write(text)
+        print '* generated instrument configurator "%s"' % out
         return
 
 
@@ -78,6 +106,9 @@ class App(Script):
 
 
     def _createPml(self, instrument):
+        # obsolete
+        # this is not the best way to create pml
+        # plan: create the application code
         out = '%s.pml' % instrument.name
         if os.path.exists(out):
             os.remove(out)
@@ -91,110 +122,72 @@ class App(Script):
     pass
 
 
-
-class PmlRenderer(object):
-
+class InstrumentConfiguratorRenderer(object):
 
     def render(self, instrument):
         self._reps = []
         self._indlevel = 0
         self._indstr = '  '
-        self._write('<?xml version="1.0"?>')
-        self._write('<inventory>')
-        self._indent()
+        self._write('#/usr/bin/env python')
+        self._write('')
+        self._write('# %s' % instrument.name)
+        self._write('')
         self.onInstrument(instrument)
+        self._write('')
+        self._write('def main():')
+        self._indent()
+        self._write('config()')
         self._outdent()
-        self._write('</inventory>')
+        self._write("if __name__=='__main__': main()")
         return self._reps
     
 
     def onInstrument(self, instrument):
-        self._write('<component name="%s">' % instrument.name)
+        for comp in instrument.components:
+            self.onComponent(comp)
+            continue
+        w = self._write
+        w('def config(%s):' % instrument.parameters)
         self._indent()
-
-        self._property('sequence', ','.join([c.name for c in instrument.components]))
-        for c in instrument.components:
-            self._property(c.name, c.type)
+        for l in instrument.init.splitlines():
+            w(l)
             continue
-
-        self.onGeometer(instrument)
-        self._write('')
-
-        self._property('multiple-scattering', 'off')
-        
-        self._property('ncount', "1e6")
-        self._property('buffer_size', 100000)
-        
-        self._property('output-dir', 'out')
-        self._property('overwrite-datafiles', 'off')
-        self._write('')
-
-        for c in instrument.components:
-            self.onComponent(c)
-            self._write('')
-            continue
-        
+        w(
+            'components = [%s()]' % ', '.join(
+                [c.name for c in instrument.components])
+            )
+        w('from mcvine.instrument.pml import set_instrument_parameters, PmlRenderer')
+        w('class instrument: pass')
+        w('instrument.name=%r' % instrument.name)
+        w('instrument.components=components')
+        w('set_instrument_parameters(instrument, locals())')
+        w('from mcvine.instrument.pml import PmlRenderer')
+        w('renderer = PmlRenderer()')
+        w("text = '\\n'.join(renderer.render(instrument))")
+        w("pml = '%s.pml'" % instrument.name)
+        w("open(pml, 'wt').write(text)")
+        w('return')
         self._outdent()
-        self._write('</component>')
-        return
-
-
-    def onGeometer(self, instrument):
-        self._write('<component name="geometer">')
-        self._indent()
-        for c in instrument.components:
-            k = c.name
-            v = self._geometerEntry(c.position, c.orientation)
-            self._property(k,v)
-            continue
-        self._outdent()
-        self._write('</component>')
         return
 
 
     def onComponent(self, component):
-        self._write('<component name="%s">' % component.name)
+        self._write('class %s(object):' % component.name)
         self._indent()
-        for k,v in component.parameters.iteritems():
-            v = self._formatValue(v)
+        for k,v in component.__dict__.iteritems():
+            if k.startswith('_'): continue
             self._property(k,v)
             continue
         self._outdent()
-        self._write('</component>')
+        self._write('')
         return
 
     
-    def _formatValue(self, value):
-        "value might actually be c variable. here we add a mark for that"
-        try:
-            eval(value)
-            return value
-        except:
-            return '{'+value+'}'
-
-
-    def _geometerEntry(self, position, orientation):
-        position = self._coord(position)
-        orientation = self._coord(orientation)
-        return ','.join((position, orientation))
-
-
-    def _coord(self, coord):
-        v, relation, to = coord
-        if relation.lower() == 'absolute' or \
-                relation.lower() == 'relation' and to.lower() == 'absolute':
-            return str(v)
-        else:
-            assert relation.lower() == 'relative'
-            return 'relative(%s, to="%s")' % (v, to)
-
-
     def _property(self, k, v):
-        t = '<property name="%s">%s</property>' % (k,v)
-        self._write(t)
+        self._write('%s=%r' % (k,v))
         return
 
-
+    
     def _write(self, text):
         t = self._indlevel * self._indstr + text
         self._reps.append(t)
@@ -205,6 +198,7 @@ class PmlRenderer(object):
     def _outdent(self): self._indlevel -= 1
 
 
+from mcvine.instrument.pml import PmlRenderer
 
 import os
 

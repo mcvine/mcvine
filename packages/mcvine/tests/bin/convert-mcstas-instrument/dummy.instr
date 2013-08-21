@@ -3,7 +3,7 @@
 *************************************/
 
 
-DEFINE INSTRUMENT test() 
+DEFINE INSTRUMENT test(Emin=10) 
 DECLARE
 %{ 
 %}
