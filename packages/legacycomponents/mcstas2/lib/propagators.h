@@ -67,6 +67,7 @@ inline void prop_dt
 }
 
 
+/* ----------------------------  prop_z0  ------------------------------ */
 inline void prop_z0_nogravity
 (double &x, double &y, double &z, 
  const double &vx, const double &vy, const double &vz,
@@ -78,8 +79,6 @@ inline void prop_z0_nogravity
   dt = -z/vz;
   prop_dt_nogravity( dt, x,y,z, vx,vy,vz, t );
 }
-
-
 
 inline void prop_z0_withgravity
 (const double &Ax, const double &Ay, const double &Az,
@@ -94,7 +93,6 @@ inline void prop_z0_withgravity
   else {ABSORB;return;}
 }
 
-
 inline void prop_z0
 (const mcstas2::Component & comp,
  double &x, double &y, double &z, 
@@ -107,6 +105,47 @@ inline void prop_z0
   if (comp.gravityIsOn()) prop_z0_withgravity( g.x, g.y, g.z, x,y,z, vx,vy,vz, p, t);
   else prop_z0_nogravity( x,y,z, vx,vy,vz, p, t ); 
 }
+
+
+/* ----------------------------  prop_x0  ------------------------------ */
+inline void prop_x0_nogravity
+(double &x, double &y, double &z, 
+ const double &vx, const double &vy, const double &vz,
+ double &p,
+ double & t)
+{
+  double dt;
+  if(vx == 0) { ABSORB; return; }
+  dt = -x/vx;
+  prop_dt_nogravity( dt, x,y,z, vx,vy,vz, t );
+}
+
+inline void prop_x0_withgravity
+(const double &Ax, const double &Ay, const double &Az,
+ double &x, double &y, double &z, 
+ double &vx, double &vy, double &vz,
+ double &p,
+ double & t)
+{
+  double dt;
+  if (plane_intersect_Gfast(&dt, -Ax/2, -vx, -x) && dt>0) 
+    prop_dt_withgravity(dt, Ax, Ay, Az, x,y,z, vx,vy,vz, t); 
+  else {ABSORB;return;}
+}
+
+inline void prop_x0
+(const mcstas2::Component & comp,
+ double &x, double &y, double &z, 
+ double &vx, double &vy, double &vz,
+ double &p,
+ double &t)
+{
+  const mcstas2::Gravity & g = comp.gravity();
+
+  if (comp.gravityIsOn()) prop_x0_withgravity( g.x, g.y, g.z, x,y,z, vx,vy,vz, p, t);
+  else prop_x0_nogravity( x,y,z, vx,vy,vz, p, t ); 
+}
+
 
 
 #define vec_prod(x, y, z, x1, y1, z1, x2, y2, z2) \

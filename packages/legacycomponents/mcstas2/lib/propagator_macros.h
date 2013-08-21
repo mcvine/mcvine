@@ -39,6 +39,12 @@
   } while(0)
 
 
+#define PROP_X0 \
+  do { \
+    prop_x0((*this), x,y,z, vx,vy,vz, p,t);	\
+  } while(0)
+
+
 /*
 Coords coords_set(MCNUM x, MCNUM y, MCNUM z);
 Coords coords_get(Coords a, MCNUM *x, MCNUM *y, MCNUM *z);
