@@ -18,8 +18,8 @@ template = '''
 def factory( %(ctor_kwds)s ):
     from mcstas2.bindings import boostpython
     from mcstas2.mcstas2bp import McStasComponentAsMcniComponent as component
-    from %(bindingmodulename)s import %(component)s as f
-    return component( f( %(ctor_args)s ) )
+    from %(bindingmodulename)s import %(component)s as _factory_mcvine
+    return component( _factory_mcvine( %(ctor_args)s ) )
 
 from mcstas2.utils.parsers.ComponentInfo import ComponentInfo, Parameter
 %(component_info)s
