@@ -84,10 +84,16 @@ class App(Script):
 
     
     def _createInstrumentConfigurator(self, instrument):
+        # render
         text = InstrumentConfiguratorRenderer().render(instrument)
         text = '\n'.join(text)
-        out = 'config-%s.py' % instrument.name
+        # write out
+        out = 'config-%s' % instrument.name
         open(out, 'w').write(text)
+        # make executable
+        import os, stat
+        path = os.path.abspath(out); os.chmod(path, stat.S_IRWXU)
+        # done
         print '* generated instrument configurator "%s"' % out
         return
 
@@ -128,7 +134,7 @@ class InstrumentConfiguratorRenderer(object):
         self._reps = []
         self._indlevel = 0
         self._indstr = '  '
-        self._write('#/usr/bin/env python')
+        self._write('#!/usr/bin/env python')
         self._write('')
         self._write('# %s' % instrument.name)
         self._write('')

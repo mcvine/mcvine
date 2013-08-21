@@ -1,0 +1,33 @@
+DEFINE INSTRUMENT dummy2(
+       Edes=20, E_min=10, E_max=30, toffset_us=-1.0, freq=180, LMS=1.8, iv=-1.0, 
+       Heusler=False, LM3S = 0.72)
+
+DECLARE
+%{
+%}
+
+INITIALIZE
+%{  
+t_mon0_min = 1000.
+t_mon0_max = 3000.
+%}   
+
+TRACE
+COMPONENT arm1 = Arm()
+AT (0,0,0) ABSOLUTE
+
+COMPONENT Mon0_toF = TOF_monitor2(
+    xmin=-0.03, xmax=0.03, ymin=-0.100, ymax=0.100,
+    tmin=t_mon0_min, tmax=t_mon0_max, nchan=1000, filename="Mon0_ToF.dat")
+AT (0, 0, LMS-0.2) RELATIVE arm1 
+ROTATED (0,0,0) RELATIVE arm1
+
+
+COMPONENT recorder = Arm()
+  AT (0, 0, (LMS-0.05)) RELATIVE arm1
+
+
+END
+
+
+
