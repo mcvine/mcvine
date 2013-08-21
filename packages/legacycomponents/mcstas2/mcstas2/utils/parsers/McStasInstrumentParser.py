@@ -177,13 +177,20 @@ class McStasInstrumentParser(object):
 
     
     def _parseHeader(self, header):
+        # DEFINE INSTRUMENT clause
         instr_def, b = header.split('DECLARE')
         d, instr_def = instr_def.split('INSTRUMENT')
         assert d.strip() == 'DEFINE'
+        # parameters of instrument
         p = re.compile('\((.*?)\)', re.DOTALL)
         params = p.findall(instr_def)[0]
         params = ''.join([l.strip() for l in params.strip().splitlines()])
+        from .McStasComponentParser import McStasComponentParser
+        cp = McStasComponentParser()
+        params = cp._defParams(params)
+        # name of instrumentt
         name, e = instr_def.split('(')
+        # INITIALIZE section
         p = re.compile("INITIALIZE\n%{.*%}", re.DOTALL)
         init = p.findall(b)[0]
         init = '\n'.join(init.splitlines()[2:-1])
