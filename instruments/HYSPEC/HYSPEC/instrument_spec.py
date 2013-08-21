@@ -282,6 +282,32 @@ def computeOptions(
     if(iv > -0.1 and iv < 0.1): R_vert = 10000.0
     if(iv > 0.1) : R_vert = iv 
     R_horz = 10000.0 ; 
+    
+    class r:
+        moderator = dict(
+            Emin = E_min,
+            Emax = E_max,
+            )
+        mon0_tof = dict(
+            tmin = t_mon0_min,
+            tmax = t_mon0_min,
+            z = POS_G1A-0.002,
+            )
+        mon0_total = dict(
+            z = POS_G1A-0.001,
+            )
+        g1a_guide = dict(
+            l = LEN_G1A,
+            z = POS_G1A,
+            )
+        g1b_guide = dict(
+            l = LEN_G1B,
+            z = POS_G1B,
+            )
+        g1c_guide = dict(
+            l = LEN_G1C,
+            z = POS_G1C,
+            )
     return
 
 
