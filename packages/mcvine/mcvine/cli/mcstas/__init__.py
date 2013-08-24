@@ -45,12 +45,12 @@ def parse_cmdline():
     
     mod = importActionHandler(action)
     args, kwds = mod.parse_cmdline()
-    
     return [mod] + args, kwds
 
 
 actions = [
     'compilecomponent',
+    'convertinstrument',
     'help',
     ]
 
