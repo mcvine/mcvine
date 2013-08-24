@@ -11,6 +11,8 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
 
+# this is obsolete
+
 from pyre.applications.Script import Script
 
 class App(Script):
@@ -23,6 +25,11 @@ class App(Script):
 
 
     def __init__(self, name='mcvine-convert-mcstas-instrument'):
+        import warnings
+        warnings.warn(
+            "This app is deprecated. Use $ mcvine mcstas convertinstrument", 
+            category = DeprecationWarning,
+            )
         super(App, self).__init__(name)
         return
 
