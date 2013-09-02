@@ -447,7 +447,7 @@ class Instrument( AppInitMixin, CompositeNeutronComponentMixin, base, ParallelCo
         for name in self.inventory.sequence:
             comp = components[name]
             pairs = getComponentPropertyNameTipPairs(comp)
-            pairs = [ ('%s.%s' % (name, n), '<%s>' % tip) for n, tip in pairs]
+            pairs = [ ('%s.%s' % (name, n), '<%s>' % (tip,)) for n, tip in pairs]
             opts += pairs
             continue
         l = [s] + ['  --%s=%s' % (k,v) for k, v in opts]
