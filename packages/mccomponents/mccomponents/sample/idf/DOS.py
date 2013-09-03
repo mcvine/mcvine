@@ -9,8 +9,15 @@ intSize = calcsize('<i')
 dubSize = calcsize('<d')
 strSize = calcsize('<s')
 
-def write(E,DOS,filename='DOS',comment=''):
+def write(E,DOS,filename='DOS',comment='', E_unit='TeraHz'):
     """Takes numpy DOS in with shape (N_e) and writes to binary file."""
+    if E_unit == 'TeraHz':
+        pass
+    elif E_unit == 'meV':
+        from .units import hertz2mev
+        E = E/hertz2mev
+    else:
+        raise NotImplementedError("energy unit: %s" % E_unit)
     f=open(filename,'w')
     f.write(pack('<64s','DOS'))
     f.write(pack('<i',version))
