@@ -15,7 +15,8 @@ def write(E,DOS,filename='DOS',comment='', E_unit='TeraHz'):
         pass
     elif E_unit == 'meV':
         from .units import hertz2mev
-        E = E/hertz2mev
+        from math import pi
+        E = E/hertz2mev/1e12/2/pi
     else:
         raise NotImplementedError("energy unit: %s" % E_unit)
     f=open(filename,'w')
