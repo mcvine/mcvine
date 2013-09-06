@@ -38,6 +38,7 @@ EXPORT_PYTHON_MODULES = \
 	Instrument.py \
 	_utils.py \
 	__init__.py \
+	beam_postprocessing.py \
 	fermichopper.py \
 	moderator.py \
 	t0chopper.py \

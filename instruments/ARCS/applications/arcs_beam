@@ -17,6 +17,8 @@ For more details of cmd line parameters, run:
 """
 
 import os, time
+from mcvine.instruments.ARCS import beam_postprocessing as bpp
+
 
 from pyre.applications.Script import Script as base
 class App(base):
@@ -63,132 +65,11 @@ class App(base):
         self._run_arcs_m2s()
         # run the simulation from mod to sample
         self._run_beam()
-        # compute flux at sample position and make sure flux is nonzero
-        flux = self._computeFlux()
-        # computed spectra for real monitors
-        self._computeFocusedSpectraForRealMonitors()
-        # simulate spectra for fake monitors at sample position
-        self._runMonitorsAtSample()
-        # move neutrons to output dir
-        self._moveNeutronsToOutputDir()
-        # compute average incident energy at sample
-        energy = self._computeAverageEnergy()
-        # compute fwhm of energy spetrum at sample
-        fwhm = self._computeFWHM()
-        fwhm *= 1e6 # convert to microsecond
-        props = {
-            'flux': '%s counts per 34kJ pulse' % flux,
-            'average energy': '%s meV' % energy,
-            'tof fwhm': '%s microsecond' % fwhm,
-            }
-        open(os.path.join(self.out, 'props.json'), 'w').write(str(props))
+        # postprocessing
+        bpp.run(self.m2sout, self.out, self.inventory.E)
         return
 
 
-    def _computeFlux(self):
-        f = os.path.join(self.m2sout, 'neutrons')
-        from mcni.neutron_storage.idf_usenumpy import totalintensity, count
-        I = totalintensity(f)
-        if I == 0:
-            raise RuntimeError, "There is no neutrons at sample position. Please increase ncount"
-        # one MC run corresponds to 34kJ/pulse
-        # this is the flux if the power is at 34kJ/pulse
-        # unit: 1/34kJ pulse
-        # every neutron in the storage represents one 34kJ pulse. so 
-        # we need to normalize by number of events in the storage
-        nevts = count(f)
-        flux = I/nevts
-        return flux
-    
-    
-    def _computeAverageEnergy(self):
-        from histogram.hdf import load
-        h = load(os.path.join(self.out, 'ienergy.h5'), 'ienergy')
-        e = (h.energy * h.I).sum()/h.I.sum()
-        return e
-
-
-    def _computeFWHM(self):
-        from histogram.hdf import load
-        import numpy as np
-        itof = load(os.path.join(self.out, 'itof.h5'), 'itof')
-        max = itof.I.max()
-        indmax = np.where(itof.I==max)[0][0]
-        left = itof.I[:indmax]
-        right = itof.I[indmax:]
-        leftindex = np.where(left > max/2)[0][0]
-        rightindex = np.where(right > max/2)[0][-1] + indmax
-        fwhm = (rightindex-leftindex) * (itof.tof[1]-itof.tof[0])
-        return fwhm
-
-
-    def _moveNeutronsToOutputDir(self):
-        os.rename(
-            os.path.join(self.m2sout, 'neutrons'),
-            os.path.join(self.out, 'neutrons'),
-            )
-        return
-
-
-    def _runMonitorsAtSample(self):
-        E = self.inventory.E
-        from mcni.utils.conversion import e2v
-        v = e2v(E)
-        from pyre.units.time import second
-        L = 13.6
-        t = L/v
-
-        neutronfile = os.path.join(self.m2sout, 'neutrons')
-        from mcni.neutron_storage.idf_usenumpy import count
-        n = count(neutronfile)
-
-        cmd = ['arcs_analyze_beam']
-        cmd += ['--output-dir=%s' % self.out]
-        cmd += ['--ncount=%s' % n]
-        cmd += ['--buffer_size=%s' % min(n, 1e6)]
-        cmd += ['--source.path=%s' % neutronfile]
-        # fix monitor params that depend on incident energy
-        cmd += ['--monitor.mtof.tofmin=%s' % (t*0.9)]
-        cmd += ['--monitor.mtof.tofmax=%s' % (t*1.1)]
-        cmd += ['--monitor.mtof.ntof=%s' % (1000)]
-        cmd += ['--monitor.menergy.energymin=%s' % (E*0.9)]
-        cmd += ['--monitor.menergy.energymax=%s' % (E*1.1)]
-        cmd += ['--monitor.menergy.nenergy=%s' % (1000)]
-        cmd = ' '.join(cmd)
-        print 'Running beam monitors...'
-        self._exec(cmd)
-        print 'done.'
-        time.sleep(1)
-        return
-
-
-    def _computeFocusedSpectraForRealMonitors(self):
-        E = self.inventory.E
-        from mcni.utils.conversion import e2v
-        v = e2v(E)
-        from pyre.units.time import second
-        import histogram.hdf as hh, histogram as H
-        
-        m1 = hh.load(os.path.join(self.m2sout, 'mon1-tof.h5'), 'I(tof)')
-        L1 = 11.831
-        t1 = L1/v #* second
-        m1p = m1[(t1*0.9, t1*1.1)]
-        m1pc = H.histogram('I(tof)', m1p.axes(), data=m1p.I, errors=m1p.E2)
-        m1pc.setAttribute('title', 'Monitor 1 I(tof)')
-
-        hh.dump(m1pc, os.path.join(self.out, 'mon1-itof-focused.h5'), '/', 'c')
-
-        m2 = hh.load(os.path.join(self.m2sout, 'mon2-tof.h5'), 'I(tof)')
-        L2 = 18.5
-        t2 = L2/v #* second
-        m2p = m2[(t2*0.9, t2*1.1)]
-        m2pc = H.histogram('I(tof)', m2p.axes(), data=m2p.I, errors=m2p.E2)
-        m2pc.setAttribute('title', 'Monitor 2 I(tof)')
-
-        hh.dump(m2pc, os.path.join(self.out, 'mon2-itof-focused.h5'), '/', 'c')
-        return
-
-    
     def _run_arcs_m2s(self):
         cmd = ['arcs-m2s']
         keys = [
@@ -202,7 +83,7 @@ class App(base):
         cmd += ['--- -dump-pml=yes', '-h'] # , '>arcs-m2s.log']
         cmd = ' '.join(cmd)
         print 'Generating pml for arcs beam instrument...'
-        self._exec(cmd)
+        bpp._exec(cmd)
         print 'done.'
         time.sleep(1)
         return
@@ -220,7 +101,7 @@ class App(base):
             )
         cmd += ['-moderator.S_filename=%s' % moddat]
         cmd = ' '.join(cmd)
-        self._exec(cmd)
+        bpp._exec(cmd)
         return
 
 
@@ -233,13 +114,6 @@ class App(base):
         return ['-%s=%s' % (k,v) for k,v in kwds.iteritems()]
     
     
-    def _exec(self, cmd):
-        print " -> running %s..." % cmd
-        import os
-        if os.system(cmd):
-            raise RuntimeError, "%s failed" % cmd
-
-        
 def main():
     app = App('arcs_beam')
     app.run()
