@@ -101,6 +101,7 @@ class App(base):
             )
         cmd += ['-moderator.S_filename=%s' % moddat]
         cmd = ' '.join(cmd)
+        open('run-m2s.sh', 'wt').write(cmd) # save the running command
         bpp._exec(cmd)
         return
 
