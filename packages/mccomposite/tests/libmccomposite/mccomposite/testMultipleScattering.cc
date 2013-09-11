@@ -129,28 +129,33 @@ void test6()
   ev.time = 0;
   ev.probability = 1.;
 
+  std::cout << ">> test6: " << std::endl << std::endl;
   mcni::Neutron::Events evts;
+  std::cout << "**interactM_path1: " << std::endl;
+  std::cout << ": ev=" << ev << std::endl  <<std::endl;
   cs.interactM_path1( ev, evts ) ;
+  std::cout << ": evts=" << std::endl;
   for (size_t i=0; i<evts.size(); i++)
     std::cout <<  evts[i] << std::endl;
+  std::cout << std::endl <<std::endl;
 
   assert (evts.size() == 1);
   assert (std::abs(evts[0].state.position.z+2) < 1.e-5 );
   assert (evts[0].time == 3);
 
   evts.clear();
-  std::cout << "scatterM" << std::endl;
-  std::cout << "ev=" << ev <<std::endl;
+  std::cout << "** scatterM" << std::endl;
+  std::cout << "ev=" << ev << std::endl  <<std::endl;
   cs.scatterM( ev, evts ) ;
   std::cout << "evts=" << std::endl;
   for (size_t i=0; i<evts.size(); i++)
     std::cout <<  evts[i] << std::endl;
-  std::cout << std::endl;
+  std::cout << std::endl <<std::endl;
   assert (evts.size() == 2);
-  assert (evts[0].state.position.z == 2.1 );
-  assert (evts[0].time == 7.1);
+  mcni::assertAlmostEqual(evts[0].state.position.z, 2.1, 1e-7, 1e-7);
+  mcni::assertAlmostEqual(evts[0].time, 7.1, 1e-6, 1e-6);
   assert (evts[0].state.velocity.z == 1);
-  assert (evts[1].state.position.x == 2.1 );
+  mcni::assertAlmostEqual(evts[1].state.position.x, 2.1, 1e-7, 1e-7);
   assert (evts[1].state.velocity.x == 1);
 }
 
@@ -158,6 +163,7 @@ void test6()
 // a box and a spherical shell. both forward and satter the neutron.
 void test7()
 {
+  std::cout << ">> test7: " << std::endl;
   using namespace mccomposite;
 
   geometry::Box box(1,1,1);
@@ -185,9 +191,13 @@ void test7()
   ev.probability = 1.;
 
   mcni::Neutron::Events evts;
+  std::cout << "**interactM_path1: " << std::endl;
+  std::cout << ": ev=" << ev << std::endl  <<std::endl;
   cs.interactM_path1( ev, evts ) ;
+  std::cout << ": evts=" << std::endl;
   for (size_t i=0; i<evts.size(); i++)
     std::cout <<  evts[i] << std::endl;
+  std::cout << std::endl << std::endl;
 
   assert (evts.size() == 2);
   assert (std::abs(evts[0].state.position.z+2) < 1.e-5 );
@@ -195,11 +205,16 @@ void test7()
 
   evts.clear();
 
+  std::cout << "** scatterM: " << std::endl;
+  std::cout << ": ev=" << ev << std::endl  <<std::endl;
   cs.scatterM( ev, evts ) ;
+  std::cout << ": evts=" << std::endl;
+  for (size_t i=0; i<evts.size(); i++)
+    std::cout <<  evts[i] << std::endl;
+  std::cout << std::endl << std::endl;
   // there must be five neutrons
   // four of them going to x direction, one of them going to z direction
   // this is fun!
-  std::cout << evts << std::endl;
   assert (evts.size() == 5);
 }
 
