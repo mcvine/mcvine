@@ -45,7 +45,7 @@ mccomponents::detector::Z2Channel::operator()
 {
   double z = ( (neutron_coords-m_channel0Coords) | m_axisDirection );
   
-  int n = z/m_pixelheight + 0.5;
+  int n = floor(z/m_pixelheight + 0.5);
   
   if (n < 0 or n >= m_npixels) return -1;
   
