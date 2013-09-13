@@ -13,6 +13,8 @@
 
 
 
+standalone = True
+
 import unittestX as unittest
 import journal
 
@@ -36,10 +38,11 @@ def onNeutronPrinter(self, printer):
 def neutronprinter(self):
     from neutron_printer3 import cKernel
     return cKernel( )
-# 4. register the new class and handlers
-hs.register (
-    NeutronPrinter, onNeutronPrinter,
-    {'BoostPythonBinding':neutronprinter} )
+# 4. method to register the new class and handlers
+def register():
+    hs.register (
+        NeutronPrinter, onNeutronPrinter,
+        {'BoostPythonBinding':neutronprinter} )
 
 class homogeneous_scatterer_TestCase(unittest.TestCase):
 
@@ -82,6 +85,7 @@ class homogeneous_scatterer_TestCase(unittest.TestCase):
         for i in range(10):
             ev = mcni.neutron( r = (0,0,-5), v = (0,0,1) )
             cscatterer.scatter(ev)
+            print ev
             continue
         return
     
@@ -128,6 +132,7 @@ def main():
     #journal.debug("mccomposite.geometry.ArrowIntersector").activate()
     #journal.debug("mccomposite.geometry.Locator").activate()
     #journal.debug("CompositeNeutronScatterer_Impl").activate()
+    register()
     pytests = pysuite()
     alltests = unittest.TestSuite( (pytests, ) )
     res = unittest.TextTestRunner(verbosity=2).run(alltests)
