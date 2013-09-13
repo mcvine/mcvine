@@ -107,6 +107,7 @@ def mkDOS():
     de = 0.5
     n = 100
     Z = N.arange(0,1,0.01)
+    Z = Z ** 2
     return b.linearlyinterpolateddos(e0, de, n, Z)
 
 
