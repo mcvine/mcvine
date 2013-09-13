@@ -12,6 +12,8 @@
 #
 
 
+skip = True
+
 
 import unittestX as unittest
 import journal
@@ -27,6 +29,7 @@ class TestCase(unittest.TestCase):
 
 
     def test1(self):
+        "multiphonon.computeAnESet: UN N dos"
         dos = readdos()
         E = dos.energy
         dE = E[1] - E[0]
@@ -49,13 +52,14 @@ class TestCase(unittest.TestCase):
         
         
     def test2(self):
+        "multiphonon.sqe: UN N dos"
         dos = readdos()
         E = dos.energy
         dE = E[1] - E[0]
         g = dos.I
         #
         from mccomponents.sample.phonon.multiphonon import sqe
-        q,e,i = sqe(E, g, T=5, M=14, N=10, Qmax=45.)
+        q,e,i = sqe(E, g, T=5, M=14, N=7, Qmax=45.)
         from histogram import plot, histogram
         axes = [('Q', q, 'angstrom**-1'), ('E', e, 'meV')]
         iqe = histogram('iqe', axes, i)

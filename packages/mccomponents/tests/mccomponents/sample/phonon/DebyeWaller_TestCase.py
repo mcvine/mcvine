@@ -29,15 +29,19 @@ class TestCase(unittest.TestCase):
     def test1(self):
         from dos import loadDOS
         dos = loadDOS()
+        # from histogram import plot
+        # plot(dos)
+        
+        # create c object
         from mccomponents.sample.phonon.bindings.BoostPythonBinding  import New
         b = New()
         bpdos = b.dos_fromhistogram(dos)
-
+        
         mass = 51
         temperature = 300
         nsampling = 100
         bpdw = b.dwfromDOS(bpdos, mass, temperature, nsampling)
-        self.assertAlmostEqual(bpdw.core(), 0.00669632)
+        self.assertAlmostEqual(bpdw.core(), 0.0067, places=4)
         return
         
         

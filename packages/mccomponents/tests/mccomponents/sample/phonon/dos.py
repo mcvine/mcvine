@@ -14,26 +14,16 @@
 
 def loadDOS():
     f = 'V-dos.dat'
-    from mcni.utils.constants import hbar, e
-    from math import pi
-    # constant to convert frequency on terahertz to energy in meV
-    toenergy = hbar * 1e12 * 2*pi / e * 1e3
-    
-    lines = open(f).readlines()
-    es, Is = [], []
-    for line  in lines:
-        if line.startswith('#'): continue
-        line = line.strip()
-        e, I = line.split()
-        es.append(float(e)*toenergy)
-        Is.append(float(I))
-        continue
-    import histogram
-    h = histogram.histogram(
+    from mccomponents.sample.phonon.read_dos import doshist_fromascii
+    dos = doshist_fromascii(f)
+    from mccomponents.sample.phonon.utils import nice_dos
+    E,g = nice_dos(dos.energy, dos.I)
+    import histogram as H
+    dos = H.histogram(
         'dos', 
-        [('energy', es, 'meV')],
-        Is)
-    return h
+        [('energy', E, 'meV')],
+        g)
+    return dos
     
 
 # version

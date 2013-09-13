@@ -12,6 +12,8 @@
 #
 
 
+interactive = False
+
 
 import unittestX as unittest
 import journal
@@ -27,6 +29,7 @@ class TestCase(unittest.TestCase):
 
 
     def test1(self):
+        "mccomponents.sample.phonon.multiphonon.computeAnESet"
         from dos import loadDOS
         dos = loadDOS()
         E = dos.energy
@@ -41,15 +44,17 @@ class TestCase(unittest.TestCase):
         kelvin2mev = 0.0862
         beta = 1./(300*kelvin2mev)
         E, An_set = computeAnESet(N=5, E=E, g=g, beta=beta, dE=dE)
-        import pylab
-        for An in An_set:
-            pylab.plot(E, An)
-            continue
-        pylab.show()
+        if interactive:
+            import pylab
+            for An in An_set:
+                pylab.plot(E, An)
+                continue
+            pylab.show()
         return
         
         
     def test2(self):
+        "mccomponents.sample.phonon.multiphonon.computeSQESet"
         from dos import loadDOS
         dos = loadDOS()
         E = dos.energy; g = dos.I
@@ -85,6 +90,7 @@ class TestCase(unittest.TestCase):
         
 
     def test3(self):
+        "mccomponents.sample.phonon.multiphonon.sqe"
         from dos import loadDOS
         dos = loadDOS()
         assert dos.__class__.__name__ == 'Histogram', "%s is not a histogram" % (dos,)
@@ -127,6 +133,7 @@ def main():
     
     
 if __name__ == "__main__":
+    interactive = True
     unittest.main()
     #  main()
     

@@ -26,6 +26,7 @@ import numpy
 class TestCase(unittest.TestCase):
 
     def test1(self):
+        "mccomponents.sample.phonon.multiphonon.DWExp"
         from mccomponents.sample.phonon.multiphonon import DWExp
         from dos2 import loadDOS
         E, g = loadDOS()
