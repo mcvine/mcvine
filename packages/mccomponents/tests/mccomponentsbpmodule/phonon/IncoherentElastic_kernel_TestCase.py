@@ -30,11 +30,13 @@ class TestCase(unittest.TestCase):
         atoms = mccomponentsbp.vector_AtomicScatterer(5)
         unitcell_vol = 30
         dw_core = 0.1
+        scattering_xs = absorption_xs = 0
 
         kernel = mccomponentsbp.Phonon_IncoherentElastic_kernel(
             atoms,
             unitcell_vol,
             dw_core,
+            scattering_xs, absorption_xs,
             )
             
         return
