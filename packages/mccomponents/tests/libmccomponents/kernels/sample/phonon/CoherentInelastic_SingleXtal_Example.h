@@ -26,9 +26,10 @@ namespace test {
       w_t::atoms_t atoms;
       w_t::float_t mass(10), coherent_scattering_length(sqrt(5)), 
 	coherent_cross_section(5);
-      w_t::atom_t atom
-	( w_t::R_t(0,0,0), mass, 
-	  coherent_scattering_length, coherent_cross_section );
+      w_t::atom_t atom;
+      atom.mass = mass; atom.position = w_t::R_t(0,0,0);
+      atom.coherent_cross_section = coherent_cross_section;
+      atom.coherent_scattering_length = coherent_scattering_length;
 
       for (unsigned int i=0; i<5; i++)
 	atoms.push_back( atom );
