@@ -32,7 +32,11 @@ PROJ_CPPTESTS = test_LinearlyInterpolatedGridData_3D \
 
 
 PROJ_TESTS = $(PROJ_PYTESTS) $(PROJ_CPPTESTS)
-PROJ_LIBRARIES = -L$(BLD_LIBDIR) -lmccomponents -lmccomposite -lmcni -ljournal -lfparser
+PROJ_LIBRARIES = -L$(BLD_LIBDIR) \
+	-lmccomponents -lmccomposite -lmcni \
+	-lfparser \
+	-lgsl -lgslcblas -L$(GSL_LIBDIR) \
+	-ljournal
 PROJ_CXX_DEFINES += DEEPDEBUG USE_DANSE_NAMESPACE
 
 
