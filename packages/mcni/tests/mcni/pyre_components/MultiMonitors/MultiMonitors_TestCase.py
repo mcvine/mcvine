@@ -15,6 +15,7 @@
 standalone = True
 
 
+import time
 import unittestX as unittest
 
 class TestCase(unittest.TestCase):
@@ -81,6 +82,7 @@ class TestCase(unittest.TestCase):
  --journal.debug.monitor \
 '''
         execute(cmd)
+        time.sleep(5)
 
         # the flux from source is 1/(s*cm**2*st)
         # each round the neutron intensity is
