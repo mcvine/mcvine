@@ -78,7 +78,7 @@ class TestCase(unittest.TestCase):
 
         import histogram as H, histogram.hdf as hh
         def save(S, name): saveSQE(Q,E,S,name)
-        import pylab
+        # import pylab
         for i, Sn in enumerate(S_set):
             # pylab.imshow(Sn.T)
             # pylab.show()
@@ -97,7 +97,7 @@ class TestCase(unittest.TestCase):
         E = dos.energy
         g = dos.I
         from mccomponents.sample.phonon.multiphonon import sqe
-        Q, E, S = sqe(E,g)
+        Q, E, S = sqe(E,g, N=4)
         saveSQE(Q,E,S, 'S_2..5')
         return
         
