@@ -39,7 +39,7 @@ class Broadened_E_Q_Kernel(AbstractNode):
             scattering_coefficient = self._parse(scattering_coefficient)
             
         return broadened_E_Q_Kernel(
-            E_Q=E_Q, S_Q=S_Q, sigma_Q=sigma_Q, Qmin=Qmin, Qmax=Qmax
+            E_Q=E_Q, S_Q=S_Q, sigma_Q=sigma_Q, Qmin=Qmin, Qmax=Qmax,
             absorption_coefficient = absorption_coefficient,
             scattering_coefficient = scattering_coefficient,
             )
