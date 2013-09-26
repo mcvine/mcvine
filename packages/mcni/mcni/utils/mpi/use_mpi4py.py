@@ -14,14 +14,15 @@
 name = 'mpi4py'
 
 from . import info
+import sys
 
 def _mpi():
     global size, rank, world
     try:
         from mpi4py import MPI
-        print '* mpi4py available'
+        sys.stderr.write( '* mpi4py available\n' )
     except ImportError:
-        print '** mpi4py NOT available'
+        sys.stderr.write( '** mpi4py NOT available\n' )
         rank = 0
         size = 0
         return

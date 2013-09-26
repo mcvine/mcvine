@@ -20,9 +20,9 @@ def _mpi():
     global size, rank, world
     try:
         import mpi
-        print "* pyre mpi available"
+        sys.stderr.write( "* pyre mpi available\n" )
     except ImportError:
-        print "** pyre mpi NOT available"
+        sys.stderr.write( "** pyre mpi NOT available\n" )
         rank = 0
         return
     world = mpi.world()
