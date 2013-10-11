@@ -14,7 +14,7 @@
 name = 'pyre'
 
 from . import info
-import pickle
+import pickle, sys
 
 def _mpi():
     global size, rank, world
