@@ -59,6 +59,14 @@ class SampleAssembly2CompositeScatterer:
             compositeScatterer.addElement( s, p, o )
             continue
         
+        attrs = sampleassembly.attributes
+        getval = lambda x: attrs.get(x) if attrs.has(x) else None
+        compositeScatterer.setMultipleScatteringParams(
+            max_multiplescattering_loops_among_scatterers = \
+                getval('max_multiplescattering_loops_among_scatterers'),
+            max_multiplescattering_loops_interactM_path1 = \
+                getval('max_multiplescattering_loops_interactM_path1'),
+            )
         return compositeScatterer
     
     
