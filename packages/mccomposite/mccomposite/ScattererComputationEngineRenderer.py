@@ -78,7 +78,14 @@ class ScattererComputationEngineRenderer( AbstractVisitor, ShapeComputationEngin
 
         cshape = composite.shape().identify(self)
 
-        ret =  factory.compositescatterer( cshape, cscatterers, cgeometer )
+        kwds = dict(
+            max_multiplescattering_loops_among_scatterers \
+                = composite.max_multiplescattering_loops_among_scatterers,
+            max_multiplescattering_loops_interactM_path1 \
+                = composite.max_multiplescattering_loops_interactM_path1,
+            )
+        ret =  factory.compositescatterer(
+            cshape, cscatterers, cgeometer, **kwds)
         return ret
 
 

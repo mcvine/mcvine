@@ -72,6 +72,27 @@ mccomposite::CompositeNeutronScatterer::set_max_multiplescattering_loops_among_s
   m_impl->max_multiplescattering_loops_among_scatterers = N;
 }
 
+unsigned int
+mccomposite::CompositeNeutronScatterer::get_max_multiplescattering_loops_among_scatterers
+()
+{
+  return m_impl->max_multiplescattering_loops_among_scatterers;
+}
+
+void
+mccomposite::CompositeNeutronScatterer::set_max_multiplescattering_loops_interactM_path1
+(unsigned int N)
+{
+  m_impl->max_multiplescattering_loops_interactM_path1 = N;
+}
+
+unsigned int
+mccomposite::CompositeNeutronScatterer::get_max_multiplescattering_loops_interactM_path1
+()
+{
+  return m_impl->max_multiplescattering_loops_interactM_path1;
+}
+
 void
 mccomposite::CompositeNeutronScatterer::print(std::ostream &os) const {
   os << "mccomposite::CompositeNeutronScatterer()";

@@ -344,6 +344,7 @@ mccomposite::CompositeNeutronScatterer_Impl::interactM_path1
       for (size_t new_neutron_index = 0; new_neutron_index < newly_scattered.size();
 	   new_neutron_index++ ) {
 	const mcni::Neutron::Event & ev = newly_scattered[new_neutron_index];
+	
 #ifdef DEBUG
 	debug << new_neutron_index << ": " << ev << journal::newline;
 #endif

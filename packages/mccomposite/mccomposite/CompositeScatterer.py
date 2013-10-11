@@ -16,11 +16,31 @@
 class CompositeScatterer:
     
 
-    def __init__(self, shape = None):
+    def __init__(
+        self, shape = None,
+        max_multiplescattering_loops_among_scatterers = None,
+        max_multiplescattering_loops_interactM_path1 = None,
+        ):
         from Geometer import Geometer
         self.geometer = Geometer()
         self._elements = []
         self._shape = shape
+        self.setMultipleScatteringParams(
+            max_multiplescattering_loops_interactM_path1 = \
+                max_multiplescattering_loops_interactM_path1,
+            max_multiplescattering_loops_among_scatterers = \
+                max_multiplescattering_loops_among_scatterers
+            )
+        return
+    
+
+    def setMultipleScatteringParams(
+        self, 
+        max_multiplescattering_loops_among_scatterers = None,
+        max_multiplescattering_loops_interactM_path1 = None,
+        ):
+        self.max_multiplescattering_loops_among_scatterers = max_multiplescattering_loops_among_scatterers or 5
+        self.max_multiplescattering_loops_interactM_path1 = max_multiplescattering_loops_interactM_path1 or 2
         return
 
 

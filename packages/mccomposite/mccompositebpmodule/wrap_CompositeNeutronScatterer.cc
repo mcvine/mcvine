@@ -22,17 +22,28 @@ namespace wrap_mccomposite {
   {
 
     using namespace mccomposite::boostpython_binding;
+    typedef CompositeNeutronScatterer w_t;
 
-    scatterer_wrapper<CompositeNeutronScatterer>::wrap
+    scatterer_wrapper<w_t>::wrap
       ("CompositeNeutronScatterer", 
 
        init< const AbstractShape &, 
-       const CompositeNeutronScatterer::scatterercontainer_t &, 
-       const CompositeNeutronScatterer::geometer_t &> 
+       const w_t::scatterercontainer_t &, 
+       const w_t::geometer_t &> 
        () 
        [with_custodian_and_ward<1,2,
 	with_custodian_and_ward<1,3,
 	with_custodian_and_ward<1,4> > > () ]
+       )
+      .add_property
+      ("max_multiplescattering_loops_among_scatterers", 
+       &w_t::get_max_multiplescattering_loops_among_scatterers,
+       &w_t::set_max_multiplescattering_loops_among_scatterers
+       )
+      .add_property
+      ("max_multiplescattering_loops_interactM_path1",
+       &w_t::get_max_multiplescattering_loops_interactM_path1,
+       &w_t::set_max_multiplescattering_loops_interactM_path1
        )
       ;
 

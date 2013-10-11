@@ -19,8 +19,8 @@ class ScattererComputationEngineFactory(object):
         self.orientationconvention = orientationconvention
         return
 
-    def composite(self, shape, elements, geometer):
-        return self.binding.composite( shape, elements, geometer )
+    def composite(self, shape, elements, geometer, **kwds):
+        return self.binding.composite( shape, elements, geometer, **kwds)
 
 
     def scatterercontainer(self):

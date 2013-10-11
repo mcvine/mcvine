@@ -21,8 +21,15 @@ class BoostPythonBinding(base, Interface):
     '''factory class of boost python computing engine of scatterers
     '''
 
-    def compositescatterer(self, shape, elements, geometer):
-        return binding.CompositeNeutronScatterer( shape, elements, geometer )
+    def compositescatterer(
+        self, shape, elements, geometer,
+        max_multiplescattering_loops_among_scatterers = 5,
+        max_multiplescattering_loops_interactM_path1 = 2,
+        ):
+        cns = binding.CompositeNeutronScatterer( shape, elements, geometer )
+        cns.max_multiplescattering_loops_among_scatterers = max_multiplescattering_loops_among_scatterers
+        cns.max_multiplescattering_loops_interactM_path1 = max_multiplescattering_loops_interactM_path1
+        return cns
 
 
     def scatterercontainer(self):
