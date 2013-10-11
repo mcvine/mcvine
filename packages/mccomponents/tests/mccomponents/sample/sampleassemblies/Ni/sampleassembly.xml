@@ -2,7 +2,11 @@
 
 <!DOCTYPE SampleAssembly>
 
-<SampleAssembly name="Ni">
+<SampleAssembly 
+    name="Ni" 
+    max_multiplescattering_loops_among_scatterers="5"
+    max_multiplescattering_loops_interactM_path1="3"
+    >
   
   <PowderSample name='Ni plate' type='sample'>
     <Shape>
