@@ -40,7 +40,7 @@ class CompositeScatterer:
         max_multiplescattering_loops_interactM_path1 = None,
         ):
         self.max_multiplescattering_loops_among_scatterers = max_multiplescattering_loops_among_scatterers or 5
-        self.max_multiplescattering_loops_interactM_path1 = max_multiplescattering_loops_interactM_path1 or 2
+        self.max_multiplescattering_loops_interactM_path1 = max_multiplescattering_loops_interactM_path1 or 1
         return
 
 
