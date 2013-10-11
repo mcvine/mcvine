@@ -424,6 +424,9 @@ mccomponents::HomogeneousNeutronScatterer::interactM_path1
     to_be_scattered2.swap( to_be_scattered );
     
   } // while there are still neutrons to be scattered
+  
+  for (int i=0; i<to_be_scattered.size(); i++)
+    evts.push_back(to_be_scattered[i]);
   return base_t::scattering;
 }
 
