@@ -374,6 +374,22 @@ mccomposite::CompositeNeutronScatterer_Impl::interactM_path1
     // be further scattered
     to_be_scattered.swap( to_be_scattered2 );
   }
+
+  // there could be left-over neutrons 
+  // we just propagate them to the next out-surface
+  for (int i=0; i<to_be_scattered.size(); i++) {
+    // 1. save the neutron
+    mcni::Neutron::Event save = to_be_scattered[i];
+    mcni::Neutron::Event &ev = to_be_scattered[i];
+    // 2. propagate out
+    propagate_to_next_exiting_surface( ev, m_shape );
+    // 3. compute attenuation
+    double attenuation = calculate_attenuation( save, ev.state.position );
+    ev.probability *= attenuation;
+    evts.push_back(ev);
+  }
+  
+  // 
   if (evts.size() == 0) return scatterer_interface::absorption;
   return scatterer_interface::scattering;
 }
