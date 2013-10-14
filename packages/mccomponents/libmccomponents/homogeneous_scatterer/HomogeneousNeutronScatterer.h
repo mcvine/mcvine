@@ -35,9 +35,11 @@ namespace mccomponents{
   class HomogeneousNeutronScatterer: public AbstractNeutronScatterer {
   public:
 
-    //static data
+    // data
     static const double minimum_neutron_event_probability;
-    static const int max_scattering_loops;
+    
+    // properties
+    int max_scattering_loops;
 
     //types
     typedef AbstractNeutronScatterer base_t;

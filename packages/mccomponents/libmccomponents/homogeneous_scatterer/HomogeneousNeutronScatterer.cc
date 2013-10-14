@@ -38,7 +38,6 @@ namespace mccomponents {
 
 
 const double mccomponents::HomogeneousNeutronScatterer::minimum_neutron_event_probability = 1.e-20;
-const int mccomponents::HomogeneousNeutronScatterer::max_scattering_loops=3;
 
 
 mccomponents::HomogeneousNeutronScatterer::~HomogeneousNeutronScatterer
@@ -51,6 +50,7 @@ mccomponents::HomogeneousNeutronScatterer::HomogeneousNeutronScatterer
 ( const AbstractShape & shape, AbstractScatteringKernel & kernel,
   const Weights & weights)
   : base_t( shape ),
+    max_scattering_loops(1),
     m_kernel( kernel ),
     m_weights( weights )
 {
@@ -62,6 +62,7 @@ mccomponents::HomogeneousNeutronScatterer::HomogeneousNeutronScatterer
   const Weights & weights,
   double seed)
   : base_t( shape ),
+    max_scattering_loops(1),
     m_kernel( kernel ),
     m_weights( weights )
 {
