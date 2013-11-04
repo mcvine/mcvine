@@ -202,7 +202,7 @@ mccomponents::kernels::phonon::IncoherentInelastic::scattering_coefficient
 
 
 void
-mccomponents::kernels::phonon::IncoherentInelastic::scatter
+mccomponents::kernels::phonon::IncoherentInelastic::S
 ( neutron_t & ev ) 
 {
   namespace conversion = mcni::neutron_units_conversion;

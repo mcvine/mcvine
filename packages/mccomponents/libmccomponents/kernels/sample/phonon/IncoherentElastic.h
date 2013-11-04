@@ -16,7 +16,7 @@
 #define PHONON_INCOHERENTELASTIC_H
 
 #include <memory>
-#include "AbstractScatteringKernel.h"
+#include "KernelBase.h"
 #include "AtomicScatterer.h"
 #include "vector3.h"
 
@@ -37,7 +37,7 @@ namespace mccomponents{
     namespace phonon{
 
       //! incoherent elastic phonon scattering.
-      class IncoherentElastic : public AbstractScatteringKernel {
+      class IncoherentElastic : public KernelBase {
       public:
 	// typedefs
 	typedef double float_t;
@@ -69,7 +69,7 @@ namespace mccomponents{
 	
 	virtual float_t absorption_coefficient( const neutron_t & ev );
 	virtual float_t scattering_coefficient( const neutron_t & ev );
-	virtual void scatter( neutron_t & ev );
+	virtual void S( neutron_t & ev );
 	virtual void absorb( neutron_t & ev );
 
       private:

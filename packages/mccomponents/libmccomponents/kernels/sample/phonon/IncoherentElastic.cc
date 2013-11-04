@@ -128,7 +128,7 @@ mccomponents::kernels::phonon::IncoherentElastic::scattering_coefficient
 
 
 void
-mccomponents::kernels::phonon::IncoherentElastic::scatter
+mccomponents::kernels::phonon::IncoherentElastic::S
 ( neutron_t & ev ) 
 {
 #ifdef DEBUG

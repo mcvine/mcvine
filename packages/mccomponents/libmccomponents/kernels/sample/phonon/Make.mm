@@ -55,6 +55,7 @@ EXPORT_HEADERS = \
 	CoherentInelastic_SingleXtal.h \
 	IncoherentElastic.h \
 	IncoherentInelastic.h \
+	KernelBase.h \
 	DWFromDOS.h \
 	DWFromDOS.icc \
 	LinearlyInterpolatableAxis.h \

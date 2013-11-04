@@ -73,7 +73,7 @@ mccomponents::kernels::IsotropicKernel::absorb
 
 
 void
-mccomponents::kernels::IsotropicKernel::scatter
+mccomponents::kernels::IsotropicKernel::S
 ( mcni::Neutron::Event & ev )
 {
 #ifdef DEBUG
@@ -108,7 +108,10 @@ mccomponents::kernels::IsotropicKernel::scatter
   typedef mcni::Vector3<double> V3d;
   V3d vf(vx,vy,vz);
   state.velocity = vf;
-
+  
+  // adjust probability
+  ev.probability *= this->scattering_coefficient(ev);
+  
 #ifdef DEBUG
   m_details->debug
     << "out" << ev

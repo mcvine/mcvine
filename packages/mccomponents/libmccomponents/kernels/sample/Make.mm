@@ -58,6 +58,7 @@ EXPORT_HEADERS = \
 	E_Q_Kernel_helpers.h \
 	E_vQ_Kernel.h \
 	E_vQ_Kernel.icc \
+	KernelBase.h \
 	SQAdaptor.h \
 	SQkernel.h \
 	SQEkernel.h \

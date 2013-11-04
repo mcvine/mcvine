@@ -17,7 +17,7 @@
 
 
 #include <memory>
-#include "AbstractScatteringKernel.h"
+#include "KernelBase.h"
 
 
 namespace mccomponents {
@@ -33,7 +33,7 @@ namespace mccomponents {
 
     /// scattering kernel of S(Q,E).
     /// S(Q,E) kernel where Q is scalar.
-    class SQEkernel : public AbstractScatteringKernel {
+    class SQEkernel : public KernelBase {
     public:
       
       // meta methods
@@ -48,7 +48,7 @@ namespace mccomponents {
       // methods
       virtual double absorption_coefficient( const mcni::Neutron::Event & ev );
       virtual double scattering_coefficient( const mcni::Neutron::Event & ev );
-      virtual void scatter( mcni::Neutron::Event & ev );
+      virtual void S( mcni::Neutron::Event & ev );
       virtual void absorb( mcni::Neutron::Event & ev );
       
     private:
