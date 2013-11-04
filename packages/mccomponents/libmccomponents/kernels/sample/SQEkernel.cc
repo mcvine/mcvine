@@ -61,9 +61,9 @@ mccomponents::kernels::SQEkernel::SQEkernel
 double
 mccomponents::kernels::SQEkernel::absorption_coefficient(const mcni::Neutron::Event & ev )
 {
-  // !!!!!!!!!!!!!!!!
-  // we need better implementation here
-  return m_absorption_cross_section/m_uc_vol;
+  float_t v = ev.state.velocity.length();
+  float_t ret = m_absorption_cross_section/m_uc_vol * (2200/v);
+  return ret;
 }
 
 
