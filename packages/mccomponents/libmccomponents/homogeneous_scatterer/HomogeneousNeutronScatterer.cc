@@ -189,7 +189,12 @@ mccomponents::HomogeneousNeutronScatterer::interact_path1(mcni::Neutron::Event &
     double atten = 1;
     */
       
-    double prob = sigma * distance * atten;
+    // double prob = sigma * distance * atten;
+    // Nov 2013: sigma of scattering is scattering-event-dependent,
+    //           so it should be only calculated in kernel.scatter method
+    //           there is a difference between sigma for attenuation computation
+    //           and sigma for scattering.
+    double prob = distance * atten;
     prob *= sum_of_weights/m_weights.scattering;
 #ifdef DEBUG
     std::cout << "sigma, distance, attenuation: "
@@ -333,7 +338,12 @@ mccomponents::HomogeneousNeutronScatterer::_interactM1
   // scattering
   ev1 = original;
   double x = math::random(0., distance);
-  double prob = sigma * distance * std::exp( -(mu+sigma) * x );
+  // double prob = sigma * distance * std::exp( -(mu+sigma) * x );
+  // Nov 2013: sigma of scattering is scattering-event-dependent,
+  //           so it should be only calculated in kernel.scatter method
+  //           there is a difference between sigma for attenuation computation
+  //           and sigma for scattering.
+  double prob = distance * std::exp( -(mu+sigma) * x );
   ev1.probability *= prob;
   propagate( ev1, x/velocity );
 #ifdef DEBUG
