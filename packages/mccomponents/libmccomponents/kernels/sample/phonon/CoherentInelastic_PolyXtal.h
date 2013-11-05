@@ -16,7 +16,7 @@
 #define PHONON_COHERENTINELASTIC_POLYXTAL_H
 
 #include <memory>
-#include "AbstractScatteringKernel.h"
+#include "KernelBase.h"
 #include "AtomicScatterer.h"
 #include "vector3.h"
 
@@ -36,7 +36,7 @@ namespace mccomponents{
     namespace phonon{
 
       //! coherent inelastic phonon scattering. polycrystalline sample.
-      class CoherentInelastic_PolyXtal : public AbstractScatteringKernel {
+      class CoherentInelastic_PolyXtal : public KernelBase {
       public:
 	// typedefs
 	typedef double float_t;
@@ -77,7 +77,7 @@ namespace mccomponents{
 	
 	virtual float_t absorption_coefficient( const neutron_t & ev );
 	virtual float_t scattering_coefficient( const neutron_t & ev );
-	virtual void scatter( neutron_t & ev );
+	virtual void S( neutron_t & ev );
 	virtual void absorb( neutron_t & ev );
 
       private:

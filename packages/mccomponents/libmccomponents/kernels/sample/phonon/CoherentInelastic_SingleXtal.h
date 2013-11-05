@@ -17,7 +17,7 @@
 
 
 #include <memory>
-#include "AbstractScatteringKernel.h"
+#include "KernelBase.h"
 #include "AtomicScatterer.h"
 #include "vector3.h"
 
@@ -49,7 +49,7 @@ namespace mccomponents{
     namespace phonon{
 
       //! coherent inelastic phonon scattering. single crystal sample.
-      class CoherentInelastic_SingleXtal : public AbstractScatteringKernel {
+      class CoherentInelastic_SingleXtal : public KernelBase {
       public:
 	
 	// typedefs
@@ -84,7 +84,7 @@ namespace mccomponents{
 
 	virtual float_t absorption_coefficient( const neutron_t & ev );
 	virtual float_t scattering_coefficient( const neutron_t & ev );
-	virtual void scatter( neutron_t & ev ) {pick_a_final_state(ev);}
+	virtual void S( neutron_t & ev ) {pick_a_final_state(ev);}
 	virtual void absorb( neutron_t & ev );
 	
       private:

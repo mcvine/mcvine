@@ -198,7 +198,7 @@ mccomponents::kernels::SimplePowderDiffractionKernel::absorb
 
 
 void
-mccomponents::kernels::SimplePowderDiffractionKernel::scatter
+mccomponents::kernels::SimplePowderDiffractionKernel::S
 ( mcni::Neutron::Event & ev )
 {
     

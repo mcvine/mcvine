@@ -13,7 +13,7 @@
 
 
 #include <memory>
-#include "mccomponents/homogeneous_scatterer/AbstractScatteringKernel.h"
+#include "KernelBase.h"
 
 
 namespace mccomponents {
@@ -22,7 +22,7 @@ namespace mccomponents {
 
     class SimplePowderDiffractionData;
     
-    class SimplePowderDiffractionKernel : public AbstractScatteringKernel {
+    class SimplePowderDiffractionKernel : public KernelBase {
     public:
       
       // typedefs
@@ -39,7 +39,7 @@ namespace mccomponents {
       // methods
       virtual double absorption_coefficient( const mcni::Neutron::Event & ev );
       virtual double scattering_coefficient( const mcni::Neutron::Event & ev );
-      virtual void scatter( mcni::Neutron::Event & ev );
+      virtual void S( mcni::Neutron::Event & ev );
       virtual void absorb( mcni::Neutron::Event & ev );
       
     private:

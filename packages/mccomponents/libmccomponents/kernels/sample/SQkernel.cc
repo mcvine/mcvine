@@ -79,7 +79,7 @@ mccomponents::kernels::SQkernel::absorb
 
 
 void
-mccomponents::kernels::SQkernel::scatter
+mccomponents::kernels::SQkernel::S
 ( mcni::Neutron::Event & ev )
 {
   typedef mcni::Neutron::State::position_t position_t;

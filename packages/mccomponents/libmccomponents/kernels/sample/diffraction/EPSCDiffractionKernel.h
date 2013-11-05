@@ -1,9 +1,10 @@
-//
+// -*- C++ -*-
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //
 //                               Alex Dementsov
+//                                 Jiao Lin
 //                      California Institute of Technology
-//                        (C) 2009  All Rights Reserved
+//                      (C) 2009-2013  All Rights Reserved
 //
 // {LicenseText}
 //
@@ -14,7 +15,7 @@
 
 
 #include <memory>
-#include "mccomponents/homogeneous_scatterer/AbstractScatteringKernel.h"
+#include "KernelBase.h"
 
 
 namespace mccomponents {
@@ -22,7 +23,7 @@ namespace mccomponents {
   namespace kernels {
 
 
-    class EPSCDiffractionKernel : public AbstractScatteringKernel {
+    class EPSCDiffractionKernel : public KernelBase {
     public:
 
       // constructor
@@ -31,9 +32,9 @@ namespace mccomponents {
       // methods
       virtual double absorption_coefficient( const mcni::Neutron::Event & ev );
       virtual double scattering_coefficient( const mcni::Neutron::Event & ev );
-      virtual void scatter( mcni::Neutron::Event & ev );
+      virtual void S( mcni::Neutron::Event & ev );
       virtual void absorb( mcni::Neutron::Event & ev );
-
+      
     private:
       // data
       double m_absorption_cross_section, m_scattering_cross_section;

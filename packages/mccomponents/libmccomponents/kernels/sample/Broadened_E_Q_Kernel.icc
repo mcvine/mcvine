@@ -151,7 +151,7 @@ mccomponents::kernels::Broadened_E_Q_Kernel<E_Q_functor_t, S_Q_functor_t, Sigma_
 template< typename E_Q_functor_t, typename S_Q_functor_t, typename Sigma_Q_functor_t>
 void
 mccomponents::kernels::Broadened_E_Q_Kernel<E_Q_functor_t, S_Q_functor_t, Sigma_Q_functor_t>\
-::scatter
+::S
 ( mcni::Neutron::Event & ev )
 {
   namespace conversion = mcni::neutron_units_conversion;

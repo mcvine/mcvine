@@ -182,7 +182,7 @@ mccomponents::kernels::EPSCDiffractionKernel::absorb
 
 
 void
-mccomponents::kernels::EPSCDiffractionKernel::scatter
+mccomponents::kernels::EPSCDiffractionKernel::S
 ( mcni::Neutron::Event & ev )
 {
 #ifdef DEBUG

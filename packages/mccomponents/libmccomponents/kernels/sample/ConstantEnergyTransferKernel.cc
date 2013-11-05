@@ -77,7 +77,7 @@ mccomponents::kernels::ConstantEnergyTransferKernel::absorb
 
 
 void
-mccomponents::kernels::ConstantEnergyTransferKernel::scatter
+mccomponents::kernels::ConstantEnergyTransferKernel::S
 ( mcni::Neutron::Event & ev )
 {
   namespace conversion = mcni::neutron_units_conversion;

@@ -160,7 +160,7 @@ mccomponents::kernels::E_vQ_Kernel<E_vQ_functor_t, S_vQ_functor_t>\
 template< typename E_vQ_functor_t, typename S_vQ_functor_t>
 void
 mccomponents::kernels::E_vQ_Kernel<E_vQ_functor_t, S_vQ_functor_t>\
-::scatter
+::S
 ( mcni::Neutron::Event & ev )
 {
   namespace conversion = mcni::neutron_units_conversion;

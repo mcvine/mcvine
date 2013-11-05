@@ -406,7 +406,7 @@ mccomponents::kernels::phonon::CoherentInelastic_PolyXtal::scattering_coefficien
 
 
 void
-mccomponents::kernels::phonon::CoherentInelastic_PolyXtal::scatter
+mccomponents::kernels::phonon::CoherentInelastic_PolyXtal::S
 ( neutron_t & ev ) 
 {
   namespace conversion = mcni::neutron_units_conversion;
