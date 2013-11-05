@@ -109,9 +109,6 @@ mccomponents::kernels::IsotropicKernel::S
   V3d vf(vx,vy,vz);
   state.velocity = vf;
   
-  // adjust probability
-  ev.probability *= this->scattering_coefficient(ev);
-  
 #ifdef DEBUG
   m_details->debug
     << "out" << ev
