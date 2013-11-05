@@ -40,7 +40,13 @@ namespace mccomponents {
       virtual double absorption_coefficient( const mcni::Neutron::Event & ev )=0;
       virtual double scattering_coefficient( const mcni::Neutron::Event & ev )=0;
       virtual void scatter( mcni::Neutron::Event & ev )
-      {S(ev); ev.probability *= scattering_coefficient(ev);}
+      {
+	S(ev);
+	if (ev.probability>0) {
+	  double sigma = scattering_coefficient(ev);
+	  ev.probability *= sigma;
+	}
+      }
       
       virtual void absorb( mcni::Neutron::Event & ev )=0;
       
