@@ -112,9 +112,9 @@ class ComputationEngineRendererExtension:
 
     def onConstantEnergyTransferKernel(self, kernel):
         t = kernel
-
-        abs = t.absorption_cross_section
-        sctt = t.scattering_cross_section
+        
+        abs = t.absorption_coefficient
+        sctt = t.scattering_coefficient
 
         if abs is None or sctt is None:
             #need to get cross section from sample assembly representation
@@ -125,8 +125,8 @@ class ComputationEngineRendererExtension:
             #constructed from kernel xml.
             #see sampleassembly_support.SampleAssembly2CompositeScatterer for details.
             origin = t.scatterer_origin
-            from sampleassembly import cross_sections
-            abs, inc, coh = cross_sections( origin )
+            from sampleassembly import compute_absorption_and_scattering_coeffs
+            abs, inc, coh = compute_absorption_and_scattering_coeffs( origin )
             sctt = inc + coh
             pass
         

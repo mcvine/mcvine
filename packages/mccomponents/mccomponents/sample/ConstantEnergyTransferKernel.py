@@ -20,17 +20,17 @@ class ConstantEnergyTransferKernel(Kernel):
 
     def __init__(self, 
                  E = None,
-                 absorption_cross_section = None,
-                 scattering_cross_section = None,
+                 absorption_coefficient = None,
+                 scattering_coefficient = None,
                  ):
         '''new ConstantEnergyTransferKernel
   Inputs:
     E: energy transfer
-    absorption_cross_section, scattering_cross_section: cross sections
+    absorption_coefficient, scattering_coefficient: cross sections
     '''
         self.E = E
-        self.absorption_cross_section = absorption_cross_section
-        self.scattering_cross_section = scattering_cross_section
+        self.absorption_coefficient = absorption_coefficient
+        self.scattering_coefficient = scattering_coefficient
         return
         
     def identify(self, visitor): return visitor.onConstantEnergyTransferKernel(self)

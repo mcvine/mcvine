@@ -42,11 +42,11 @@ const char mccomponents::kernels::ConstantEnergyTransferKernel::Details::jrnltag
 
 mccomponents::kernels::ConstantEnergyTransferKernel::ConstantEnergyTransferKernel
 ( double E, 
-  double absorption_cross_section,
-  double scattering_cross_section)
+  double absorption_coefficient,
+  double scattering_coefficient)
   : m_E(E),
-    m_absorption_cross_section( absorption_cross_section ),
-    m_scattering_cross_section( scattering_cross_section ),
+    m_absorption_coefficient( absorption_coefficient ),
+    m_scattering_coefficient( scattering_coefficient ),
     m_details( new Details )
 {}
 
@@ -54,9 +54,8 @@ mccomponents::kernels::ConstantEnergyTransferKernel::ConstantEnergyTransferKerne
 double
 mccomponents::kernels::ConstantEnergyTransferKernel::absorption_coefficient(const mcni::Neutron::Event & ev )
 {
-  // !!!!!!!!!!!!!!!!
-  // we need better implementation here
-  return m_absorption_cross_section;
+  float_t v = ev.state.velocity.length();
+  return m_absorption_coefficient * (2200/v);
 }
 
 
@@ -65,7 +64,7 @@ mccomponents::kernels::ConstantEnergyTransferKernel::scattering_coefficient(cons
 {
   // !!!!!!!!!!!!!!!!
   // we need better implementation here
-  return m_scattering_cross_section;
+  return m_scattering_coefficient;
 }
 
 
