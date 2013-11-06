@@ -16,8 +16,10 @@ from mccomposite.Scatterer import Scatterer
 
 class HomogeneousScatterer(Scatterer):
 
-    def __init__(self, shape, kernel,
-                 mcweights = (1,1,1)):
+    def __init__(
+        self, shape, kernel,
+        mcweights = (1,1,1),
+        ):
         '''create a new homogeneous scatterer
         
     shape: geometric shape
