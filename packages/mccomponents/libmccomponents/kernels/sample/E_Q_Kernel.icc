@@ -112,7 +112,6 @@ double
 mccomponents::kernels::E_Q_Kernel<E_Q_functor_t, S_Q_functor_t>\
 ::absorption_coefficient(const mcni::Neutron::Event & ev )
 {
-  // this is a simplified model
   float_t v = ev.state.velocity.length();
   return m_absorption_coefficient * (2200/v);
 }
