@@ -102,7 +102,7 @@ namespace mccomponents{
 	dwcalculator_t *m_DW_calc;
 	float_t m_Temperature;
 	float_t m_uc_vol;
-	float_t m_tot_scattering_cross_section;
+	float_t m_tot_scattering_xs, m_tot_absorption_xs;
     
 	// root finding facility
 	const rootsfinder_t & m_roots_finder;

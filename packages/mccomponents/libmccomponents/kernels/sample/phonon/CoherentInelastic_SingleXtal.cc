@@ -76,11 +76,15 @@ mccomponents::kernels::phonon::CoherentInelastic_SingleXtal::CoherentInelastic_S
 #endif
   
   // calculate the total scattering cross section  
-  m_tot_scattering_cross_section = 0;
+  m_tot_scattering_xs = 0;
   for (size_t i=0; i<m_atoms.size(); i++) {
-    m_tot_scattering_cross_section += m_atoms[i].coherent_cross_section;
+    m_tot_scattering_xs += m_atoms[i].coherent_cross_section;
   }
   
+  m_tot_absorption_xs = 0;
+  for (size_t i=0; i<m_atoms.size(); i++) {
+    m_tot_absorption_xs += m_atoms[i].absorption_cross_section;
+  }
 }
 
 
@@ -281,7 +285,7 @@ mccomponents::kernels::phonon::CoherentInelastic_SingleXtal::pick_a_final_state
   norm_of_slsum /= 1e30;
   // divide this quautity by \sigma_coh because we want a normalized
   // value
-  norm_of_slsum /= (m_tot_scattering_cross_section*1e-28);
+  norm_of_slsum /= (m_tot_scattering_xs*1e-28);
   // convert the q**2 in that term to be in energy unit (meV), which
   // will cancel with meV unit of phonon energy
   prob_factors.push_back(neutron_units_conversion::ksquare2E( norm_of_slsum ));
@@ -329,8 +333,9 @@ mccomponents::kernels::phonon::CoherentInelastic_SingleXtal::float_t
 mccomponents::kernels::phonon::CoherentInelastic_SingleXtal::absorption_coefficient
 ( const neutron_t & ev )
 {
-  //!!!!!! must reimplement this !!!!
-  return scattering_coefficient( ev );
+  float_t ret = m_tot_absorption_xs/m_uc_vol*1.e2;
+  float_t v = ev.state.velocity.length();
+  return ret * (2200/v);
 }
 
 
@@ -338,7 +343,7 @@ mccomponents::kernels::phonon::CoherentInelastic_SingleXtal::float_t
 mccomponents::kernels::phonon::CoherentInelastic_SingleXtal::scattering_coefficient
 ( const neutron_t & ev )
 {
-  float_t ret = m_tot_scattering_cross_section/m_uc_vol;
+  float_t ret = m_tot_scattering_xs/m_uc_vol;
   // convert to m**-1
   return ret * 1.e2;
 }
