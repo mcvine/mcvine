@@ -40,12 +40,12 @@ const char mccomponents::kernels::SQkernel::Details::jrnltag[] = "SQkernel";
 
 
 mccomponents::kernels::SQkernel::SQkernel
-( double absorption_cross_section,
-  double scattering_cross_section,
+( double absorption_coefficient,
+  double scattering_coefficient,
   const sample::AbstractSQ & sq, 
   double Qmin, double Qmax)
-  : m_absorption_cross_section( absorption_cross_section ),
-    m_scattering_cross_section( scattering_cross_section ),
+  : m_absorption_coefficient( absorption_coefficient ),
+    m_scattering_coefficient( scattering_coefficient ),
     m_epsilon(1.e-10),
     m_Qmin(Qmin), m_Qmax(Qmax), m_DQ(Qmax-Qmin),
     m_sq(sq),
@@ -56,18 +56,15 @@ mccomponents::kernels::SQkernel::SQkernel
 double
 mccomponents::kernels::SQkernel::absorption_coefficient(const mcni::Neutron::Event & ev )
 {
-  // !!!!!!!!!!!!!!!!
-  // we need better implementation here
-  return m_absorption_cross_section;
+  float_t v = ev.state.velocity.length();
+  return m_absorption_coefficient * (2200/v);
 }
 
 
 double
 mccomponents::kernels::SQkernel::scattering_coefficient(const mcni::Neutron::Event & ev )
 {
-  // !!!!!!!!!!!!!!!!
-  // we need better implementation here
-  return m_scattering_cross_section;
+  return m_scattering_coefficient;
 }
 
 

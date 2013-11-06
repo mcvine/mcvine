@@ -38,8 +38,8 @@ namespace mccomponents {
       
       // meta methods
       //! ctor
-      SQkernel( double absorption_cross_section,
-		double scattering_cross_section,
+      SQkernel( double absorption_coefficient,
+		double scattering_coefficient,
 		const sample::AbstractSQ & sq, 
 		double Qmin, double Qmax);
       
@@ -51,7 +51,7 @@ namespace mccomponents {
       
     private:
       // data
-      double m_absorption_cross_section, m_scattering_cross_section;
+      double m_absorption_coefficient, m_scattering_coefficient;
       double m_epsilon;
       double m_Qmin, m_Qmax, m_DQ;
       const sample::AbstractSQ & m_sq;
