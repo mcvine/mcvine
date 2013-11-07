@@ -37,8 +37,8 @@ namespace mccomponents {
       //! ctor
       ConstantQEKernel
       ( double Q, double E, 
-	double absorption_cross_section,
-	double scattering_cross_section);
+	double absorption_coefficient,
+	double scattering_coefficient);
       
       // methods
       virtual double absorption_coefficient( const mcni::Neutron::Event & ev );
@@ -48,7 +48,7 @@ namespace mccomponents {
       
     private:
       // data
-      double m_Q, m_E, m_absorption_cross_section, m_scattering_cross_section;
+      double m_Q, m_E, m_absorption_coefficient, m_scattering_coefficient;
       // impl details
       struct Details;
       std::auto_ptr<Details> m_details;

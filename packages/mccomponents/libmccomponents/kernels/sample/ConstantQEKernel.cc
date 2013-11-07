@@ -41,11 +41,11 @@ const char mccomponents::kernels::ConstantQEKernel::Details::jrnltag[] = "Consta
 
 mccomponents::kernels::ConstantQEKernel::ConstantQEKernel
 ( double Q, double E, 
-  double absorption_cross_section,
-  double scattering_cross_section)
+  double absorption_coefficient,
+  double scattering_coefficient)
   : m_Q(Q), m_E(E),
-    m_absorption_cross_section( absorption_cross_section ),
-    m_scattering_cross_section( scattering_cross_section ),
+    m_absorption_coefficient( absorption_coefficient ),
+    m_scattering_coefficient( scattering_coefficient ),
     m_details( new Details )
 {}
 
@@ -53,18 +53,15 @@ mccomponents::kernels::ConstantQEKernel::ConstantQEKernel
 double
 mccomponents::kernels::ConstantQEKernel::absorption_coefficient(const mcni::Neutron::Event & ev )
 {
-  // !!!!!!!!!!!!!!!!
-  // we need better implementation here
-  return m_absorption_cross_section;
+  float_t v = ev.state.velocity.length();
+  return m_absorption_coefficient * (2200/v);
 }
 
 
 double
 mccomponents::kernels::ConstantQEKernel::scattering_coefficient(const mcni::Neutron::Event & ev )
 {
-  // !!!!!!!!!!!!!!!!
-  // we need better implementation here
-  return m_scattering_cross_section;
+  return m_scattering_coefficient;
 }
 
 
