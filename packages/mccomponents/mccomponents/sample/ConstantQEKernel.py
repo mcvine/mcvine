@@ -21,19 +21,19 @@ class ConstantQEKernel(Kernel):
     def __init__(self, 
                  Q = None,
                  E = None,
-                 absorption_cross_section = None,
-                 scattering_cross_section = None,
+                 absorption_coefficient = None,
+                 scattering_coefficient = None,
                  ):
         '''new ConstantQEKernel
   Inputs:
     Q: momentum transfer
     E: energy transfer
-    absorption_cross_section, scattering_cross_section: cross sections
+    absorption_coefficient, scattering_coefficient: cross sections
     '''
         self.Q = Q
         self.E = E
-        self.absorption_cross_section = absorption_cross_section
-        self.scattering_cross_section = scattering_cross_section
+        self.absorption_coefficient = absorption_coefficient
+        self.scattering_coefficient = scattering_coefficient
         return
         
     def identify(self, visitor): return visitor.onConstantQEKernel(self)

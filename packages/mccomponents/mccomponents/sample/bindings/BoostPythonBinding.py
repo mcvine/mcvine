@@ -161,15 +161,15 @@ class New:
             absorption_coefficient, scattering_coefficient)
 
 
-    def constantQEKernel(self, Q, E, absorption_cross_section, scattering_cross_section):
+    def constantQEKernel(self, Q, E, absorption_coefficient, scattering_coefficient):
         '''constantqekernel: a kernel scatters isotropically with fixed momentum and energy transfer
 
         Q: momentum transfer
         E: energy transfer
-        absorption_cross_section: absorption cross section
-        scattering_cross_section: scattering cross section
+        absorption_coefficient: absorption coefficient (m**-1)
+        scattering_coefficient: scattering coefficient (m**-1)
         '''
-        return b.ConstantQEKernel(Q, E, absorption_cross_section, scattering_cross_section)
+        return b.ConstantQEKernel(Q, E, absorption_coefficient, scattering_coefficient)
 
     
     pass # end of BoostPythonBinding

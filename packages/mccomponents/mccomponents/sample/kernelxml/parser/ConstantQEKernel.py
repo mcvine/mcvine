@@ -24,7 +24,17 @@ class ConstantQEKernel(AbstractNode):
         from mccomponents.sample import constantQEKernel
         E = self._parse( kwds['energy-transfer'] )
         Q = self._parse( kwds['momentum-transfer'] )
-        return constantQEKernel(Q, E)
+
+        absorption_coefficient = kwds.get('absorption_coefficient')
+        if absorption_coefficient:
+            absorption_coefficient = self._parse(absorption_coefficient)
+            
+        scattering_coefficient = kwds.get('scattering_coefficient')
+        if scattering_coefficient:
+            scattering_coefficient = self._parse(scattering_coefficient)
+            
+        return constantQEKernel(
+            Q, E, absorption_coefficient, scattering_coefficient)
     
     
     pass # end of ConstantQEKernel
