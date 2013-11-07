@@ -49,7 +49,10 @@ class KernelComputationEngineRenderer( AbstractVisitor ):
 
         mcweights = scatterer.mcweights
 
-        return factory.homogeneousscatterer( cshape, ckernel, mcweights )
+        max_multiplescattering_loops = scatterer.max_multiplescattering_loops
+        
+        return factory.homogeneousscatterer( 
+            cshape, ckernel, mcweights, max_multiplescattering_loops )
     
 
     pass # end of KernelComputationEngineRenderer

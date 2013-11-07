@@ -19,6 +19,7 @@ class HomogeneousScatterer(Scatterer):
     def __init__(
         self, shape, kernel,
         mcweights = (1,1,1),
+        max_multiplescattering_loops = 5,
         ):
         '''create a new homogeneous scatterer
         
@@ -29,6 +30,7 @@ class HomogeneousScatterer(Scatterer):
         Scatterer.__init__(self, shape)
         self._kernel = kernel
         self.mcweights = mcweights
+        self.max_multiplescattering_loops = max_multiplescattering_loops
         return
     
     

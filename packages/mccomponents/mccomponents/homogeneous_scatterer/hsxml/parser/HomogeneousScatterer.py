@@ -24,12 +24,19 @@ class HomogeneousScatterer(base):
     
     def __init__(self, document, attributes):
         base.__init__(self, document)
+        
+        # mcweights
         mcweights = attributes.get( 'mcweights' )
         if mcweights:
             mcweights = self._parse( mcweights )
         else:
             mcweights = 0, 1, 0
         self._mcweights = mcweights
+        
+        # max_multiplescattering_loops
+        mml = attributes.get('max_multiplescattering_loops')
+        if mml: mml = int(mml)
+        self._max_multiplescattering_loops = mml
         return
 
 
@@ -40,11 +47,14 @@ class HomogeneousScatterer(base):
         #
         kernel = self._kernel
         mcweights = self._mcweights
+        max_multiplescattering_loops = self._max_multiplescattering_loops
         
         from mccomponents.homogeneous_scatterer import homogeneousScatterer
         scatterer = homogeneousScatterer(
             shape, kernel,
-            mcweights = mcweights )
+            mcweights = mcweights,
+            max_multiplescattering_loops = max_multiplescattering_loops,
+            )
         
         #parent is the Document node. 
         parent.document = scatterer
