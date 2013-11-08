@@ -23,8 +23,8 @@ namespace wrap_mccomponents {
   {
 
     using namespace mccomposite::boostpython_binding;
-
-    scatterer_wrapper<mccomponents::HomogeneousNeutronScatterer>::wrap
+    typedef mccomponents::HomogeneousNeutronScatterer w_t;
+    scatterer_wrapper<w_t>::wrap
       ("HomogeneousNeutronScatterer", 
 
        init< 
@@ -45,6 +45,7 @@ namespace wrap_mccomponents {
 	    [with_custodian_and_ward<1,2,
 	     with_custodian_and_ward<1,3
 	     > > () ] )
+      .def_readwrite("max_multiplescattering_loops", &w_t::max_scattering_loops)
       ;
 
     
