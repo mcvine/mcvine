@@ -25,7 +25,11 @@ def componentinfo(*args, **kwds):
     
     # find the component factory and instantiate a componnet
     from mcni._find_component import find
-    type, category, supplier = find(type, category=category, supplier=supplier)
+    found = find(type, category=category, supplier=supplier)
+    if found is None:
+        msg = "Failed to find component (type=%s, category=%s, supplier=%s)" % (type, category, supplier)
+        raise RuntimeError, msg
+    type, category, supplier = found
     factory = componentfactory(type=type, category=category, supplier=supplier)
     if hasattr(factory, 'factoryfactory'):
         factory = factory(*args, **kwds)
