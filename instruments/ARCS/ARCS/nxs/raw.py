@@ -94,10 +94,11 @@ def write(events, tofbinsize, path, Ei=None):
         etz_attrs['target'] = '/entry/instrument/bank%s/event_time_zero' % (bank+1)
         for k,v in etz_attrs.items(): etz.attrs[k] = v
         
-        # XXX: should this be a float and the sum of all weights?
-        # XXX: michael reuter said this is not really used
-        # be['total_counts'][0] = len(bevts)
-
+        # Rev1316, 2012, michael reuter said this is not really used
+        # Oct 2013: michael reuter said this is used, and it should be the
+        #   number of counts, not the sum of the probabilities
+        be['total_counts'][0] = len(bevts)
+        
         # bank directory
         b = entry['bank%s' % (bank+1)]
         # XXX: should this be float array?
