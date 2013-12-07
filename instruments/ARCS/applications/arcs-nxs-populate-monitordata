@@ -31,17 +31,16 @@ class App(AppBase):
         
     def main(self):
         sim_out = self.inventory.mod2sample
-        entry = self._nxs_entry()
+        f = self._nxs_file()
+        entry = f['entry']
         from mcvine.instruments.ARCS.nxs.raw import populateMonitors
         populateMonitors(entry, sim_out)
         return
     
     
-    def _nxs_entry(self):
+    def _nxs_file(self):
         import h5py
-        f = h5py.File(self.inventory.nxs, 'a')
-        entry = f['entry']
-        return entry
+        return h5py.File(self.inventory.nxs, 'a')
 
 
     def help(self):
