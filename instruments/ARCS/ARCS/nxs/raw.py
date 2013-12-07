@@ -145,10 +145,13 @@ def populateMonitors(entry, sim_out):
       1: 11.831
       2: 18.5
     """
-    import histogram.hdf as hh
+    import histogram.hdf as hh, numpy as np
     sample = 13.6
     dists = [11.831, 18.5]
-    itofpaths = ['mon%s-itof-focused.h5' % i for i in range(1,3)]
+    itofpaths = [
+        os.path.join(sim_out, 'mon%s-itof-focused.h5' % i)
+        for i in range(1,3)
+        ]
     for i, (dist, itofpath) in enumerate(zip(dists, itofpaths)):
         # check entry
         mon_entry = entry['monitor%s' % (i+1)]
@@ -160,7 +163,9 @@ def populateMonitors(entry, sim_out):
         tofaxis = hist.axisFromName('tof'); tofaxis.changeUnit('microsecond')
         bb = tofaxis.binBoundaries().asNumarray()
         tofmin = bb[0]; tofmax = bb[-1]
-        mon_entry['data'][int(tofmin): int(tofmax)] = hist.I
+        # XXX quick hack: convert data to integer
+        # XXX is it possible for Mantid to support float monitor data?
+        mon_entry['data'][int(tofmin): int(tofmax)] = np.array(hist.I, int)
         continue
     return
 
