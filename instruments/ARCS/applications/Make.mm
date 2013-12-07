@@ -52,6 +52,7 @@ EXPORT_BINS = \
 	arcs-m2s \
 	arcs-neutrons2events \
 	arcs-neutrons2nxs \
+	arcs-nxs-populate-monitordata \
 	arcs-reduce-nxs-using-mantid \
 	arcs-extract-iqe-from-nxs \
 

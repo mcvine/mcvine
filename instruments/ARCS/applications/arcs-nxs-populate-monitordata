@@ -1,0 +1,57 @@
+#!/usr/bin/env python
+
+
+"""
+populate monitor data from mod2sample simulation folder
+to simulated ARCS nxs file.
+"""
+
+
+appname = 'arcs-nxs-populate-monitordata'
+cmd_help = """
+populate monitor data from mod2sample simulation folder
+to simulated ARCS nxs file.
+
+Examples:
+
+ $ arcs-nxs-populate-monitordata --mod2sample=mod2sample-out-dir --nxs=arcs-sim.nxs
+"""
+
+
+# application 
+from pyre.applications.Script import Script as AppBase
+class App(AppBase):
+
+    class Inventory(AppBase.Inventory):
+
+        import pyre.inventory
+        mod2sample = pyre.inventory.str('mod2sample', default='mod2sample')
+        nxs = pyre.inventory.str('nxs', default='arcs-sim.nxs')
+        
+        
+    def main(self):
+        sim_out = self.inventory.mod2sample
+        entry = self._nxs_entry()
+        from mcvine.instruments.ARCS.nxs.raw import populateMonitors
+        populateMonitors(entry, sim_out)
+        return
+    
+    
+    def _nxs_entry(self):
+        import h5py
+        f = h5py.File(self.inventory.nxs, 'a')
+        entry = f['entry']
+        return entry
+
+
+    def help(self):
+        print cmd_help
+    
+
+def main():
+    app = App(appname)
+    app.run()
+    return
+
+
+if __name__ == '__main__': main()
