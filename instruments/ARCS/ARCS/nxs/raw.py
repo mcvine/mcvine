@@ -139,7 +139,7 @@ def populateEiData(entry, sim_out):
     import histogram.hdf as hh, numpy as np
     ienergy_h5 = os.path.join(sim_out, 'ienergy.h5')
     ie = hh.load(ienergy_h5)
-    E = (ie.energy * ie.I).sum() / ie.I.sum()
+    Ei = (ie.energy * ie.I).sum() / ie.I.sum()
     #
     setEnergyRequest(entry, Ei)
     populateMonitors(entry, sim_out)
