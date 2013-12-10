@@ -1,0 +1,53 @@
+#!/usr/bin/env python
+
+
+appname = 'arcs-nxs-populate-Eidata'
+cmd_help = """
+populate data reelated to Ei computatio
+from mod2sample simulation folder
+to simulated ARCS nxs file.
+
+Examples:
+
+ $ arcs-nxs-populate-Eidata --mod2sample=mod2sample-out-dir --nxs=arcs-sim.nxs
+
+"""
+__doc__ = cmd_help
+
+
+# application 
+from pyre.applications.Script import Script as AppBase
+class App(AppBase):
+
+    class Inventory(AppBase.Inventory):
+
+        import pyre.inventory
+        mod2sample = pyre.inventory.str('mod2sample', default='mod2sample')
+        nxs = pyre.inventory.str('nxs', default='arcs-sim.nxs')
+        
+        
+    def main(self):
+        sim_out = self.inventory.mod2sample
+        f = self._nxs_file()
+        entry = f['entry']
+        from mcvine.instruments.ARCS.nxs.raw import populateEiData
+        populateEiData(entry, sim_out)
+        return
+    
+    
+    def _nxs_file(self):
+        import h5py
+        return h5py.File(self.inventory.nxs, 'a')
+
+
+    def help(self):
+        print cmd_help
+    
+
+def main():
+    app = App(appname)
+    app.run()
+    return
+
+
+if __name__ == '__main__': main()
