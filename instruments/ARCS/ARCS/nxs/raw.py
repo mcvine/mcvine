@@ -120,7 +120,40 @@ def write(events, tofbinsize, path, Ei=None):
     return
 
 
+def populateEiData(entry, sim_out):
+    """populate data related to Ei computation into an ARCS nexus file.
+    This includes the monitor data and DASlog/EnergyRequest
+    
+    entry: nexus "entry"
+    sim_out: moderator2sample ARCS simulation output directory
+      it should contains monitor data files mon?-itof-focused.h5,
+      where ? = 1 and 2, and ienergy.h5
+
+    Limitations:
+      monitor positions are now hard-coded as (from moderator)
+      1: 11.831
+      2: 18.5
+      need to make sure it matches what mantid is using
+    """
+    # compute average Ei
+    import histogram.hdf as hh, numpy as np
+    ienergy_h5 = os.path.join(sim_out, 'ienergy.h5')
+    ie = hh.load(ienergy_h5)
+    E = (ie.energy * ie.I).sum() / ie.I.sum()
+    #
+    setEnergyRequest(entry, Ei)
+    populateMonitors(entry, sim_out)
+    return
+
+
 def setEnergyRequest(entry, Ei):
+    """set energy request value into an ARCS nexus file
+    
+    entry: nexus "entry"
+    Ei: unit meV
+    
+    caveat: the nexus template file should already have /entry/DASlogs/EnergyRequest which contains the appropriate sub-datasets with correct attributes.
+    """
     daslogs = entry['DASlogs']
     er = daslogs['EnergyRequest']
     er['average_value'][0] \
