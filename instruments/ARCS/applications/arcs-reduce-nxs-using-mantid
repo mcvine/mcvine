@@ -24,8 +24,8 @@ class App(AppBase):
 
         import pyre.inventory
         nxs = pyre.inventory.str('nxs', default='arcs-sim.nxs')
-        use_ei_guess = pyre.inventory.bool('use_ei_guess', default=True)
-        ei_guess = pyre.inventory.float('ei_guess', default=100)
+        use_ei_guess = pyre.inventory.bool('use_ei_guess', default=False)
+        ei_guess = pyre.inventory.float('ei_guess', default=0)
         qaxis = pyre.inventory.array('qaxis', default=(0,13,0.1))
         out = pyre.inventory.str('out', default='iqe.nxs')
 
@@ -34,6 +34,8 @@ class App(AppBase):
         nxs = self.inventory.nxs
         use_ei_guess = self.inventory.use_ei_guess
         ei_guess = self.inventory.ei_guess
+        if ei_guess > 0:
+            use_ei_guess = True
         qmin, qmax, dq = self.inventory.qaxis
         qaxis = (qmin, dq, qmax)
         outfile = self.inventory.out 
@@ -53,15 +55,21 @@ class App(AppBase):
     
 
 
-def run(nxsfile, use_ei_guess, ei_guess, qaxis, outfile):
+def run(nxsfile, qaxis, outfile, use_ei_guess=False, ei_guess=None):
     from mantid.simpleapi import DgsReduction, SofQW3, SaveNexus
-
-    DgsReduction(
-        SampleInputFile=nxsfile,
-        IncidentEnergyGuess=ei_guess,
-        UseIncidentEnergyGuess=use_ei_guess,
-        OutputWorkspace='reduced',
-        )
+    if use_ei_guess:
+        DgsReduction(
+            SampleInputFile=nxsfile,
+            IncidentEnergyGuess=ei_guess,
+            UseIncidentEnergyGuess=use_ei_guess,
+            OutputWorkspace='reduced',
+            )
+    else:
+        DgsReduction(
+            SampleInputFile=nxsfile,
+            OutputWorkspace='reduced',
+            )
+        
     SofQW3(
         InputWorkspace='reduced',
         OutputWorkspace='iqw',
