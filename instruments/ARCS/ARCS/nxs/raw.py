@@ -196,9 +196,16 @@ def populateMonitors(entry, sim_out):
         tofaxis = hist.axisFromName('tof'); tofaxis.changeUnit('microsecond')
         bb = tofaxis.binBoundaries().asNumarray()
         tofmin = bb[0]; tofmax = bb[-1]
-        # XXX quick hack: convert data to integer
-        # XXX is it possible for Mantid to support float monitor data?
-        mon_entry['data'][int(tofmin): int(tofmax)] = np.array(hist.I, int)
+        # XXX Michael Reuter said that float array is OK.
+        # change array to double
+        N = len(mon_entry['data'])
+        del mon_entry['data']
+        mon_entry['data'] = np.zeros(N, dtype="double")
+        # set attributes
+        mon_entry['data'].attrs['signal'] = 1
+        mon_entry['data'].attrs['axes'] = 'time_of_flight'
+        # set data
+        mon_entry['data'][int(tofmin): int(tofmax)] = hist.I
         continue
     return
 
