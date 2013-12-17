@@ -12,7 +12,7 @@ def extract(inpath, outpath):
     dq = q[1] - q[0]
     qq = (q+dq/2.)[:-1]
     I = np.array(np.array(w['values']))
-    I[I!=I] = 0
+    # I[I!=I] = 0
     E2 = np.array(np.array(w['errors'])**2)
     import histogram as H
     iqe = H.histogram('iqe', [('Q',qq,  'angstrom**-1'), ('energy', ee, 'meV')], data=I, errors = E2)
