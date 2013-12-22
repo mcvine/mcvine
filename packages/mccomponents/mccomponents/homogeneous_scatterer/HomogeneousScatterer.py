@@ -20,6 +20,7 @@ class HomogeneousScatterer(Scatterer):
         self, shape, kernel,
         mcweights = (1,1,1),
         max_multiplescattering_loops = 5,
+        packing_factor = 1.,
         ):
         '''create a new homogeneous scatterer
         
@@ -31,6 +32,7 @@ class HomogeneousScatterer(Scatterer):
         self._kernel = kernel
         self.mcweights = mcweights
         self.max_multiplescattering_loops = max_multiplescattering_loops
+        self.packing_factor = packing_factor
         return
     
     

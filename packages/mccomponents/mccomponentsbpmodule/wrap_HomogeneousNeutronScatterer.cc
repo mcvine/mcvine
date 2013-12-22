@@ -46,6 +46,7 @@ namespace wrap_mccomponents {
 	     with_custodian_and_ward<1,3
 	     > > () ] )
       .def_readwrite("max_multiplescattering_loops", &w_t::max_scattering_loops)
+      .def_readwrite("packing_factor", &w_t::packing_factor)
       ;
 
     

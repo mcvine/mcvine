@@ -37,6 +37,11 @@ class HomogeneousScatterer(base):
         mml = attributes.get('max_multiplescattering_loops')
         if mml: mml = int(mml)
         self._max_multiplescattering_loops = mml
+        
+        # packing_factor
+        pf = attributes.get('packing_factor')
+        if pf: pf = int(float)
+        self._packing_factor = pf
         return
 
 
@@ -48,12 +53,14 @@ class HomogeneousScatterer(base):
         kernel = self._kernel
         mcweights = self._mcweights
         max_multiplescattering_loops = self._max_multiplescattering_loops
+        packing_factor = self._packing_factor
         
         from mccomponents.homogeneous_scatterer import homogeneousScatterer
         scatterer = homogeneousScatterer(
             shape, kernel,
             mcweights = mcweights,
             max_multiplescattering_loops = max_multiplescattering_loops,
+            packing_factor = packing_factor,
             )
         
         #parent is the Document node. 

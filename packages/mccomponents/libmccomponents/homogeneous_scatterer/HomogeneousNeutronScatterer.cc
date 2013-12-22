@@ -51,6 +51,7 @@ mccomponents::HomogeneousNeutronScatterer::HomogeneousNeutronScatterer
   const Weights & weights)
   : base_t( shape ),
     max_scattering_loops(1),
+    packing_factor(1.),
     m_kernel( kernel ),
     m_weights( weights )
 {
@@ -63,6 +64,7 @@ mccomponents::HomogeneousNeutronScatterer::HomogeneousNeutronScatterer
   double seed)
   : base_t( shape ),
     max_scattering_loops(1),
+    packing_factor(1.),
     m_kernel( kernel ),
     m_weights( weights )
 {
@@ -110,9 +112,9 @@ mccomponents::HomogeneousNeutronScatterer::interact_path1(mcni::Neutron::Event &
   double distance = tof*ev.state.velocity.length();
   
   // absorption
-  double mu = m_kernel.absorption_coefficient( ev );
+  double mu = m_kernel.absorption_coefficient( ev ) * packing_factor;
   // scattering
-  double sigma = m_kernel.scattering_coefficient( ev );
+  double sigma = m_kernel.scattering_coefficient( ev ) * packing_factor;
 
   // probability of three interaction types happening
   double transmission_prob = std::exp( -(mu+sigma)*distance );
@@ -218,6 +220,7 @@ mccomponents::HomogeneousNeutronScatterer::interact_path1(mcni::Neutron::Event &
 #endif
     propagate( ev, x/velocity );
     m_kernel.scatter( ev );
+    ev.probability *= packing_factor;
 #ifdef DEBUG2
     V3d vf = ev.state.velocity;
     V3d vQ = vi - vf;
@@ -296,9 +299,9 @@ mccomponents::HomogeneousNeutronScatterer::_interactM1
   double distance = tof*original.state.velocity.length();
   
   // absorption
-  double mu = m_kernel.absorption_coefficient( original );
+  double mu = m_kernel.absorption_coefficient( original ) * packing_factor;
   // scattering
-  double sigma = m_kernel.scattering_coefficient( original );
+  double sigma = m_kernel.scattering_coefficient( original ) * packing_factor;
 
   // probability of three interaction types happening
   double transmission_prob = std::exp( -(mu+sigma)*distance );
@@ -353,6 +356,7 @@ mccomponents::HomogeneousNeutronScatterer::_interactM1
 	  << journal::endl;
 #endif
   m_kernel.scatter( ev1 );
+  ev1.probability *= packing_factor;
 #ifdef DEBUG
     debug << journal::at(__HERE__)
 	  << "* Scattering continue 1: event scattered " << ev1
@@ -450,8 +454,8 @@ mccomponents::HomogeneousNeutronScatterer::calculate_attenuation
 
   double length = (end-start).length();
 
-  double mu = m_kernel.absorption_coefficient( ev );
-  double sigma = m_kernel.scattering_coefficient( ev );
+  double mu = m_kernel.absorption_coefficient( ev ) * packing_factor;
+  double sigma = m_kernel.scattering_coefficient( ev ) * packing_factor;
 
   return std::exp( - (mu+sigma) * length );
 }

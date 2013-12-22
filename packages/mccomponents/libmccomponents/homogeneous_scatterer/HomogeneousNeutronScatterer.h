@@ -40,6 +40,7 @@ namespace mccomponents{
     
     // properties
     int max_scattering_loops;
+    float packing_factor;
 
     //types
     typedef AbstractNeutronScatterer base_t;
