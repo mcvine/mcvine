@@ -109,9 +109,12 @@ class FindKernelsFromXMLs:
         xmlfilename = '%s-scatterer.xml' % name
         from kernelxml import parse_file
         mcscatterer = parse_file( xmlfilename )
-
+        
+        # DEV NOTES: need to transfer all properties 
         # transfer weights
         scatterer.mcweights = mcscatterer.mcweights
+        scatterer.max_multiplescattering_loops = mcscatterer.max_multiplescattering_loops
+        scatterer.packing_factor = mcscatterer.packing_factor
                                                                
         # transfer shape if necessary
         shape = mcscatterer.shape()

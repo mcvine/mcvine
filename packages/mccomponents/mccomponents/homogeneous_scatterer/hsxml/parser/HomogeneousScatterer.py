@@ -40,7 +40,7 @@ class HomogeneousScatterer(base):
         
         # packing_factor
         pf = attributes.get('packing_factor')
-        if pf: pf = int(float)
+        if pf: pf = float(pf)
         self._packing_factor = pf
         return
 
