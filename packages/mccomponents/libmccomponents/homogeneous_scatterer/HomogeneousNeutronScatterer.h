@@ -40,6 +40,7 @@ namespace mccomponents{
     
     // properties
     int max_scattering_loops;
+    double min_neutron_probability;
     float packing_factor;
 
     //types

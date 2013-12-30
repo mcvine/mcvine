@@ -51,6 +51,7 @@ mccomponents::HomogeneousNeutronScatterer::HomogeneousNeutronScatterer
   const Weights & weights)
   : base_t( shape ),
     max_scattering_loops(1),
+    min_neutron_probability(0),
     packing_factor(1.),
     m_kernel( kernel ),
     m_weights( weights )
@@ -64,6 +65,7 @@ mccomponents::HomogeneousNeutronScatterer::HomogeneousNeutronScatterer
   double seed)
   : base_t( shape ),
     max_scattering_loops(1),
+    min_neutron_probability(0),
     packing_factor(1.),
     m_kernel( kernel ),
     m_weights( weights )
@@ -398,6 +400,10 @@ mccomponents::HomogeneousNeutronScatterer::interactM_path1
     for (size_t neutron_index = 0; neutron_index < to_be_scattered.size(); neutron_index++) {
       
       const mcni::Neutron::Event & ev1 = to_be_scattered[neutron_index];
+      
+      // if neutron probability is low, skip
+      if (ev1.probability >= 0 && ev1.probability < min_neutron_probability)
+	continue;
       
       scattered.clear();
       // interact once
