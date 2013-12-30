@@ -83,6 +83,7 @@ class ScattererComputationEngineRenderer( AbstractVisitor, ShapeComputationEngin
                 = composite.max_multiplescattering_loops_among_scatterers,
             max_multiplescattering_loops_interactM_path1 \
                 = composite.max_multiplescattering_loops_interactM_path1,
+            min_neutron_probability = composite.min_neutron_probability,
             )
         ret =  factory.compositescatterer(
             cshape, cscatterers, cgeometer, **kwds)

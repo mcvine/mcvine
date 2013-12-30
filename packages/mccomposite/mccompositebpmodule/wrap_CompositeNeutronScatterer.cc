@@ -45,6 +45,11 @@ namespace wrap_mccomposite {
        &w_t::get_max_multiplescattering_loops_interactM_path1,
        &w_t::set_max_multiplescattering_loops_interactM_path1
        )
+      .add_property
+      ("min_neutron_probability",
+       &w_t::get_min_neutron_probability,
+       &w_t::set_min_neutron_probability
+       )
       ;
 
   }

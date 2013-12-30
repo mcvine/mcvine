@@ -20,6 +20,7 @@ class CompositeScatterer:
         self, shape = None,
         max_multiplescattering_loops_among_scatterers = None,
         max_multiplescattering_loops_interactM_path1 = None,
+        min_neutron_probability = None,
         ):
         from Geometer import Geometer
         self.geometer = Geometer()
@@ -29,7 +30,8 @@ class CompositeScatterer:
             max_multiplescattering_loops_interactM_path1 = \
                 max_multiplescattering_loops_interactM_path1,
             max_multiplescattering_loops_among_scatterers = \
-                max_multiplescattering_loops_among_scatterers
+                max_multiplescattering_loops_among_scatterers,
+            min_neutron_probability = min_neutron_probability,
             )
         return
     
@@ -38,9 +40,11 @@ class CompositeScatterer:
         self, 
         max_multiplescattering_loops_among_scatterers = None,
         max_multiplescattering_loops_interactM_path1 = None,
+        min_neutron_probability = None,
         ):
         self.max_multiplescattering_loops_among_scatterers = max_multiplescattering_loops_among_scatterers or 5
         self.max_multiplescattering_loops_interactM_path1 = max_multiplescattering_loops_interactM_path1 or 1
+        self.min_neutron_probability = min_neutron_probability or 0.
         return
 
 

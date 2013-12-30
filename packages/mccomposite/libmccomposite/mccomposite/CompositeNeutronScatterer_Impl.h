@@ -35,6 +35,7 @@ namespace mccomposite{
     typedef scatterer_interface::InteractionType InteractionType;
     typedef Geometer<AbstractNeutronScatterer> geometer_t;
     typedef std::vector<AbstractNeutronScatterer *> scatterercontainer_t;
+    typedef double float_t;
 
     // meta-methods
     CompositeNeutronScatterer_Impl
@@ -53,6 +54,8 @@ namespace mccomposite{
     // data
     unsigned int max_multiplescattering_loops_among_scatterers;
     unsigned int max_multiplescattering_loops_interactM_path1;
+    float_t min_neutron_probability;
+    
     const AbstractShape &m_shape;
     const scatterercontainer_t & m_scatterers;
     std::vector< const AbstractShape * > m_shapes;

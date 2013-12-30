@@ -25,10 +25,12 @@ class BoostPythonBinding(base, Interface):
         self, shape, elements, geometer,
         max_multiplescattering_loops_among_scatterers = 5,
         max_multiplescattering_loops_interactM_path1 = 2,
+        min_neutron_probability = 0,
         ):
         cns = binding.CompositeNeutronScatterer( shape, elements, geometer )
         cns.max_multiplescattering_loops_among_scatterers = max_multiplescattering_loops_among_scatterers
         cns.max_multiplescattering_loops_interactM_path1 = max_multiplescattering_loops_interactM_path1
+        cns.min_neutron_probability = min_neutron_probability
         return cns
 
 

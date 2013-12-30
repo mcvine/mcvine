@@ -269,6 +269,10 @@ mccomposite::CompositeNeutronScatterer_Impl::interactM_path1
 	    << "now dealing with neutron " << ev
 	    << journal::endl;
 #endif
+      // if the neutron probability is too low, skip
+      if (ev.probability >= 0 && ev.probability < min_neutron_probability)
+	continue;
+      
       // find out if it hits a scatterer
       index_t scatterer_index = find_1st_hit<index_t>
 	( ev.state.position, ev.state.velocity, m_shapes );
@@ -431,11 +435,17 @@ mccomposite::CompositeNeutronScatterer_Impl::scatterM
 	  << journal::endl;
 #endif
 
+    // loop over neutrons and compute scattered and transmitted
+    // neutrons and put them into scattered2
     for (size_t i=0; i<scattered.size(); i++) {
       
       // for each event
       const mcni::Neutron::Event & ev = scattered[i];
 
+      // if the neutron probability is low, skip
+      if (ev.probability >= 0 && ev.probability < min_neutron_probability)
+	continue;
+      
       // if the neutron is not moving, we don't have a way to deal with it
       if (! is_moving( ev ) ) continue;
 

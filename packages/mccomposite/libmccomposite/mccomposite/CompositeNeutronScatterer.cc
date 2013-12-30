@@ -22,6 +22,8 @@ mccomposite::CompositeNeutronScatterer::CompositeNeutronScatterer
     m_impl( new CompositeNeutronScatterer_Impl( shape, scatterers, geometer ) )
 {
   set_max_multiplescattering_loops_among_scatterers(5); // default max number of times of scattering
+  set_max_multiplescattering_loops_interactM_path1(1);
+  set_min_neutron_probability(0);
 }
 
 
@@ -91,6 +93,20 @@ mccomposite::CompositeNeutronScatterer::get_max_multiplescattering_loops_interac
 ()
 {
   return m_impl->max_multiplescattering_loops_interactM_path1;
+}
+
+void
+mccomposite::CompositeNeutronScatterer::set_min_neutron_probability
+(float_t p)
+{
+  m_impl->min_neutron_probability = p;
+}
+
+mccomposite::CompositeNeutronScatterer::float_t
+mccomposite::CompositeNeutronScatterer::get_min_neutron_probability
+()
+{
+  return m_impl->min_neutron_probability;
 }
 
 void
