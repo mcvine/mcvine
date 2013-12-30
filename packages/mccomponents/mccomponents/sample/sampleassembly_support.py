@@ -66,6 +66,7 @@ class SampleAssembly2CompositeScatterer:
                 getval('max_multiplescattering_loops_among_scatterers'),
             max_multiplescattering_loops_interactM_path1 = \
                 getval('max_multiplescattering_loops_interactM_path1'),
+            min_neutron_probability = getval('min_neutron_probability'),
             )
         return compositeScatterer
     
@@ -114,6 +115,7 @@ class FindKernelsFromXMLs:
         # transfer weights
         scatterer.mcweights = mcscatterer.mcweights
         scatterer.max_multiplescattering_loops = mcscatterer.max_multiplescattering_loops
+        scatterer.min_neutron_probability = mcscatterer.min_neutron_probability
         scatterer.packing_factor = mcscatterer.packing_factor
                                                                
         # transfer shape if necessary

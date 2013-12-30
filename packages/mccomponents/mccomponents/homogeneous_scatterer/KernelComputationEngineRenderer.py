@@ -50,12 +50,13 @@ class KernelComputationEngineRenderer( AbstractVisitor ):
         mcweights = scatterer.mcweights
 
         max_multiplescattering_loops = scatterer.max_multiplescattering_loops
-        
+        min_neutron_probability = scatterer.min_neutron_probability
         packing_factor = scatterer.packing_factor
         
         return factory.homogeneousscatterer( 
             cshape, ckernel, mcweights, 
-            max_multiplescattering_loops, packing_factor)
+            max_multiplescattering_loops, min_neutron_probability, 
+            packing_factor)
     
 
     pass # end of KernelComputationEngineRenderer

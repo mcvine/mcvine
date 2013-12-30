@@ -41,11 +41,12 @@ class BoostPythonBinding(base, Interface):
 
     def homogeneousscatterer(
         self, shape, kernel, weights, 
-        max_multiplescattering_loops, packing_factor,
+        max_multiplescattering_loops, min_neutron_probability, packing_factor,
         ):
         cweights = binding.MCWeights_AbsorptionScatteringTransmission( *weights )
         engine = binding.HomogeneousNeutronScatterer(shape, kernel, cweights )
         engine.max_multiplescattering_loops = max_multiplescattering_loops
+        engine.min_neutron_probability = min_neutron_probability
         engine.packing_factor = packing_factor
         return engine
     

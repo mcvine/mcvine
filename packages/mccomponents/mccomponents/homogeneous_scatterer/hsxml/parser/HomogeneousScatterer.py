@@ -38,6 +38,11 @@ class HomogeneousScatterer(base):
         if mml: mml = int(mml)
         self._max_multiplescattering_loops = mml
         
+        # min_neutron_probability
+        mnp = attributes.get('min_neutron_probability')
+        if mnp: mnp = float(mnp)
+        self._min_neutron_probability = mnp
+        
         # packing_factor
         pf = attributes.get('packing_factor')
         if pf: pf = float(pf)
@@ -53,6 +58,7 @@ class HomogeneousScatterer(base):
         kernel = self._kernel
         mcweights = self._mcweights
         max_multiplescattering_loops = self._max_multiplescattering_loops
+        min_neutron_probability = self._min_neutron_probability
         packing_factor = self._packing_factor
         
         from mccomponents.homogeneous_scatterer import homogeneousScatterer
@@ -60,6 +66,7 @@ class HomogeneousScatterer(base):
             shape, kernel,
             mcweights = mcweights,
             max_multiplescattering_loops = max_multiplescattering_loops,
+            min_neutron_probability = min_neutron_probability,
             packing_factor = packing_factor,
             )
         
