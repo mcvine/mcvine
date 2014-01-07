@@ -19,8 +19,8 @@ class HomogeneousScatterer(Scatterer):
     def __init__(
         self, shape, kernel,
         mcweights = (1,1,1),
-        max_multiplescattering_loops = 5,
-        min_neutron_probability = 0.,
+        max_multiplescattering_loops = None,
+        min_neutron_probability = None,
         packing_factor = 1.,
         ):
         '''create a new homogeneous scatterer
@@ -32,9 +32,9 @@ class HomogeneousScatterer(Scatterer):
         Scatterer.__init__(self, shape)
         self._kernel = kernel
         self.mcweights = mcweights
-        self.max_multiplescattering_loops = max_multiplescattering_loops
-        self.min_neutron_probability = min_neutron_probability
-        self.packing_factor = packing_factor
+        self.max_multiplescattering_loops = 5 if max_multiplescattering_loops is None else max_multiplescattering_loops
+        self.min_neutron_probability = 0. if min_neutron_probability is None else min_neutron_probability
+        self.packing_factor = 1. if packing_factor is None else packing_factor
         return
     
     
