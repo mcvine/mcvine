@@ -3,21 +3,17 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
 #                                Jiao Lin
-#                     (C) 2006-2010 All Rights Reserved
+#                     (C) 2006-2014 All Rights Reserved
 #
 # <LicenseText>
 #
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 PROJECT = mcvine
-PACKAGE = cli
+PACKAGE = cli/kernel
 
 
 BUILD_DIRS = \
-	mcstas \
-	mpi \
-	sampleassembly \
-	kernel \
 
 
 RECURSE_DIRS = $(BUILD_DIRS)
@@ -40,9 +36,8 @@ update: clean
 
 EXPORT_PYTHON_MODULES = \
 	__init__.py \
+	simiqe.py \
 	help.py \
-	mcvine.py \
-	sampleassembly.py \
 
 
 export:: export-package-python-modules
@@ -50,6 +45,6 @@ export:: export-package-python-modules
 
 
 # version
-# $Id: Make.mm 601 2010-10-03 19:55:29Z linjiao $
+# $Id$
 
 # End of file
