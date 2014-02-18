@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE scatterer>
+
+<!-- mcweights: monte-carlo weights for 3 possible processes:
+     absorption, scattering, transmission -->
+<homogeneous_scatterer mcweights="0, 1, 0">
+
+  <Phonon_CoherentInelastic_PolyXtal_Kernel Ei='116.5*meV' max-omega='45*meV' max-Q='16.5*angstrom**-1' nMCsteps_to_calc_RARV='10000' >
+    <LinearlyInterpolatedDispersion idf-data-path="Al-phonons"/>
+  </Phonon_CoherentInelastic_PolyXtal_Kernel>
+    
+</homogeneous_scatterer>
