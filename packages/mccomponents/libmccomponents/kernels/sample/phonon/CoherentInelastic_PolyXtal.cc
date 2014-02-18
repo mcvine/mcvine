@@ -131,7 +131,7 @@ const
   // == phi ==
   float_t phi = math::random(0., 2*physics::pi);
   // adjust probability
-  prob *= 2*physics::pi;
+  // prob *= 2*physics::pi;
 
   // == coordinate system ==
   K_t e1 = v_i; e1.normalize();

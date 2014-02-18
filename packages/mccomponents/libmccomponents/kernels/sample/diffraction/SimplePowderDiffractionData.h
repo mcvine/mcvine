@@ -55,6 +55,8 @@ namespace mccomponents {
       double number_of_atoms;
       // absorption cross section per unit cell at 2200m/s [barns]
       double absorption_cross_section;
+      // coherent cross section per unit cell [barns]
+      double coherent_cross_section;
       // incoherent cross section per unit cell [barns]
       double incoherent_cross_section;
 

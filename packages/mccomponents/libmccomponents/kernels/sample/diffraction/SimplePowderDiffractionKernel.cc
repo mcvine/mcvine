@@ -37,8 +37,10 @@ struct mccomponents::kernels::SimplePowderDiffractionKernel::Details {
   
   double absorption_cross_section;
   double incoherent_cross_section;
+  double coherent_cross_section;
   
   double absorption_coeff;
+  double scattering_coeff;
   double *q_v, *w_v, *my_s_v2;
   size_t Npeaks;
   double unitcell_volume;
@@ -52,7 +54,7 @@ struct mccomponents::kernels::SimplePowderDiffractionKernel::Details {
   ~Details();
 
   // methods
-  double scattering_coefficient(const mcni::Neutron::Event & ev );
+  double scattering_xs(const mcni::Neutron::Event & ev );
 
 };
 
@@ -91,9 +93,11 @@ mccomponents::kernels::SimplePowderDiffractionKernel::Details::Details
     {
       my_s_v2[i] = 4*PI*PI*PI*pack
 	*(peaks[i].DebyeWaller_factor ? peaks[i].DebyeWaller_factor : 1)
-	/(unitcell_volume*unitcell_volume*v2k*v2k)
+	/ unitcell_volume
+	/(v2k*v2k)
 	*(peaks[i].multiplicity * peaks[i].F_squared / peaks[i].q)
-	*XsectionFactor;      /* Is not yet divided by v^2 */
+	*XsectionFactor; 
+      // unit is cross_section * v**2
 
       /* Squires [3.103] */
       q_v[i] = peaks[i].q*k2v;
@@ -116,8 +120,10 @@ mccomponents::kernels::SimplePowderDiffractionKernel::Details::Details
   //total_scattering_coeff = total_scattering_cross_section/unitcell_volume * 100; // converted to 1/meter
   absorption_cross_section = pack * data.absorption_cross_section; // barn
   absorption_coeff = absorption_cross_section/unitcell_volume * 100; // converted to 1/meter
+  scattering_coeff = pack * data.coherent_cross_section/unitcell_volume * 100; // converted to 1/meter
   
   incoherent_cross_section = data.incoherent_cross_section;
+  coherent_cross_section = data.coherent_cross_section;
   
   /*
   // Is not yet divided by v 
@@ -136,7 +142,7 @@ mccomponents::kernels::SimplePowderDiffractionKernel::Details::~Details()
 
 
 double
-mccomponents::kernels::SimplePowderDiffractionKernel::Details::scattering_coefficient
+mccomponents::kernels::SimplePowderDiffractionKernel::Details::scattering_xs
 (const mcni::Neutron::Event & ev)
 {
   //add all the available scattering crossing together
@@ -182,7 +188,7 @@ mccomponents::kernels::SimplePowderDiffractionKernel::absorption_coefficient(con
 double
 mccomponents::kernels::SimplePowderDiffractionKernel::scattering_coefficient(const mcni::Neutron::Event & ev )
 {
-  double ret = m_details->scattering_coefficient(ev);
+  double ret = m_details->scattering_coeff;
 #ifdef DEBUG
   debug << "scattering_coefficient:" << ret << journal::endl;
 #endif
@@ -243,7 +249,7 @@ mccomponents::kernels::SimplePowderDiffractionKernel::S
 
 	// be very careful here
         scatter_intensity= my_s_v2[peakindex]/(v*v); // this is the cross section for this peak
-	scatter_intensity/= m_details->scattering_coefficient(ev); // need to normalize by total diffraction xs
+	scatter_intensity/= m_details->scattering_xs(ev); // need to normalize by total diffraction xs
 	scatter_intensity*=Npeaks; // from randomly choosing one peak
 	
         theta = asin(arg);
