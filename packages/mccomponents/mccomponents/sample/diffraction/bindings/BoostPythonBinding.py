@@ -35,7 +35,8 @@ class New:
             'Dd_over_d', 'DebyeWaller_factor',
             'density', 'atomic_weight',
             'unitcell_volume', 'number_of_atoms',
-            'absorption_cross_section', 'incoherent_cross_section',
+            'absorption_cross_section',
+            'incoherent_cross_section', 'coherent_cross_section',
             ]
         for prop in props:
             val = getattr(data, prop)
@@ -47,7 +48,7 @@ class New:
             bpeak = self.simplepowderdiffractionpeak(peak)
             bdata.peaks.append(bpeak)
             continue
-        
+    
         bkernel = b.SimplePowderDiffractionKernel(bdata)
         return bkernel
     

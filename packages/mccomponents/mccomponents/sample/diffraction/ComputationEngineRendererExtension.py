@@ -62,6 +62,7 @@ class ComputationEngineRendererExtension:
         debug.log('cross sections: abs: %s, inc: %s, coh: %s' % (abs, inc, coh))
         data.absorption_cross_section = abs/units.area.barn
         data.incoherent_cross_section = inc/units.area.barn
+        data.coherent_cross_section = coh/units.area.barn
         
         # 
         data.peaks = kernel.peaks
