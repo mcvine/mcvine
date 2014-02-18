@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE scatterer>
+
+<!-- mcweights: monte-carlo weights for 3 possible processes:
+     absorption, scattering, transmission -->
+<homogeneous_scatterer mcweights="0, 1, 0">
+
+  <!--
+  IncoherentInelastic kernel
+  average_mass, scattering_xs and absorption_xs: optional. 
+    if not set, they will
+    be computed from unitcell info in Al.xyz
+    here we set scattering_xs to 10 barn
+  -->
+  <Phonon_IncoherentInelastic_Kernel scattering_xs="10*barn" absorption_xs="0*barn" >
+    <LinearlyInterpolatedDOS idf-data-path="Al-phonons/DOS" /> 
+  </Phonon_IncoherentInelastic_Kernel>
+  
+</homogeneous_scatterer>
