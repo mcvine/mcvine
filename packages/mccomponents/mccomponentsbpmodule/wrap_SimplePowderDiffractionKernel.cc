@@ -47,6 +47,7 @@ namespace wrap_mccomponents {
       .def_readwrite("atomic_weight", &Data::atomic_weight)
       .def_readwrite("number_of_atoms", &Data::number_of_atoms)
       .def_readwrite("absorption_cross_section", &Data::absorption_cross_section)
+      .def_readwrite("coherent_cross_section", &Data::coherent_cross_section)
       .def_readwrite("incoherent_cross_section", &Data::incoherent_cross_section)
       .def_readwrite("peaks", &Data::peaks)
       ;
