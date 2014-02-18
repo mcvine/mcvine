@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE scatterer>
+
+<!-- mcweights: monte-carlo weights for 3 possible processes:
+     absorption, scattering, transmission -->
+<homogeneous_scatterer mcweights="0, 1, 0">
+
+  <!--
+  IncoherentElastic kernel
+  dw_core: could be computed from DOS
+  scattering_xs and absorption_xs: optional. if not set, they will
+    be computed from unitcell info in Ni.xyz
+  -->
+  <Phonon_IncoherentElastic_Kernel 
+      dw_core='0.01154*angstrom**2' 
+      scattering_xs="10*barn"
+      absorption_xs="0*barn"
+      >
+  </Phonon_IncoherentElastic_Kernel>
+  
+</homogeneous_scatterer>
