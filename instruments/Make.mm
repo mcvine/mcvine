@@ -19,6 +19,7 @@ BUILD_DIRS = \
 	ARCS \
 	SANS \
 	SEQUOIA \
+	HYSPEC \
 	SMARTS \
 	VULCAN \
 	generic \
