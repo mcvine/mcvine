@@ -2,20 +2,20 @@
 #
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
-#                                    Jiao Lin
+#                               Michael A.G. Aivazis
 #                        California Institute of Technology
-#                        (C) 2006-2013  All Rights Reserved
+#                        (C) 1998-2004  All Rights Reserved
 #
 # <LicenseText>
 #
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 PROJECT = mcvine
-PACKAGE = instruments/HYSPEC
+PACKAGE = instruments/HYSPEC/nxs
 
 
 BUILD_DIRS = \
-	nxs \
+
 
 RECURSE_DIRS = $(BUILD_DIRS)
 
@@ -35,9 +35,8 @@ tidy::
 # export
 
 EXPORT_PYTHON_MODULES = \
-	Instrument.py \
 	__init__.py \
-	instrument_spec.py \
+	raw.py \
 
 
 export:: export-package-python-modules 
@@ -49,6 +48,6 @@ docs: export-doxygen-docs
 
 
 # version
-# $Id$
+# $Id: Make.mm 1205 2011-06-15 19:38:36Z linjiao $
 
 # End of file
