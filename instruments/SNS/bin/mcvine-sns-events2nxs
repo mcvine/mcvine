@@ -1,0 +1,16 @@
+#!/usr/bin/env python
+
+
+appname = 'mcvine-sns-events2nxs'
+
+# application 
+from mcvine.instruments.SNS.applications.Events2NXS as base
+class App(base):
+    pass
+
+def main():
+    app = App(appname)
+    app.run()
+    return
+
+if __name__ == '__main__': main()

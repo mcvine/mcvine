@@ -2,25 +2,21 @@
 #
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
-#                                    Jiao Lin
+#                               Michael A.G. Aivazis
 #                        California Institute of Technology
-#                        (C) 2008-2014  All Rights Reserved
+#                        (C) 1998-2004  All Rights Reserved
 #
 # <LicenseText>
 #
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
 
-PROJECT = mcvine/SNS
-
-
-PROJ_TIDY += *.log *.tmp
+PROJECT = mcvine/instruments/SNS
+PACKAGE = bin
 
 # directory structure
 
 BUILD_DIRS = \
-	SNS \
-	bin \
 
 OTHER_DIRS = \
 
@@ -29,7 +25,7 @@ RECURSE_DIRS = $(BUILD_DIRS) $(OTHER_DIRS)
 #--------------------------------------------------------------------------
 #
 
-all:
+all: export
 	BLD_ACTION="all" $(MM) recurse
 
 distclean::
@@ -41,10 +37,25 @@ clean::
 tidy::
 	BLD_ACTION="tidy" $(MM) recurse
 
-docs::
-	BLD_ACTION="docs" $(MM) recurse
+
+
+EXPORT_PYTHON_MODULES = \
+
+
+EXPORT_BINS = \
+	mcvine-sns-neutrons2events \
+	mcvine-sns-events2nxs \
+
+
+export:: export-binaries release-binaries # export-package-python-modules #export-docs
+
+
+include doxygen/default.def
+docs: export-doxygen-docs
+
+
 
 # version
-# $Id$
+# $Id: Make.mm 1733 2013-12-10 14:12:41Z linjiao $
 
 # End of file

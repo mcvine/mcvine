@@ -40,10 +40,16 @@ class App(AppBase):
 
         import pyre.inventory
         neutrons = pyre.inventory.str('neutrons', default='neutrons.dat')
-        workdir = pyre.inventory.str('workdir', default='work-sequoia-neutrons2events')
+        workdir = pyre.inventory.str('workdir', default='work-neutrons2events')
         nodes = pyre.inventory.int('nodes', default=0)
         
         tofbinsize = pyre.inventory.float('tofbinsize', default=0.1) # microsecond
+        
+        # instrument name. if given, assume instrument xml (danse) is 
+        # at $MCVINE_DIR/share/mcvine/instruments/<instrument>/<instrument>.xml.fornxs
+        instrument = pyre.instrument.str('instrument') 
+        
+        # path instrument.xml.fornxs (danse). this overrides the instrument option
         detsys = pyre.inventory.str('detsys') # detector system xml path
 
         
@@ -57,6 +63,13 @@ class App(AppBase):
         nodes = self.inventory.nodes
         tofbinsize = self.inventory.tofbinsize
         detsys = self.inventory.detsys
+        if not detsys:
+            instrument = self.instrument
+            if not instrument:
+                raise RuntimeError("Please specify instrument name or path to <instrument>.xml.fornxs")
+            detsys = os.path.join(
+                mcvinedir, 'share', 'mcvine', 'instruments', 
+                instrument, '%s.xml.fornxs' % instrument)
         run(neutrons, workdir, 
             nodes=nodes, tofbinsize=tofbinsize, detsys=detsys)
         return
