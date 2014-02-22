@@ -289,6 +289,7 @@ def config(Edes=20., E_min=10., E_max=30., Ortho30=False, toffset_us=-1.0, freq=
   
   from math import sqrt, pi as PI, asin
   from mcni.utils.conversion import SE2V
+  import os
   
   # 
   
@@ -380,10 +381,15 @@ def config(Edes=20., E_min=10., E_max=30., Ortho30=False, toffset_us=-1.0, freq=
   
   LSD = 4.5 ;
   
+  moddatadir = os.path.join(
+      os.environ['MCVINE_DIR'], 'share', 'mcvine',
+      'instruments', 'HYSPEC',
+      'mcstas',
+      )
   if Ortho30:
-      sourcename= "SNS_TD_30o70p_fit_fit.dat"
+      sourcename= os.path.join(moddatadir, "SNS_TD_30o70p_fit_fit.dat")
   else:
-      sourcename= "SNS_TD_0o100p_fit_fit.dat"
+      sourcename= os.path.join(moddatadir, "SNS_TD_0o100p_fit_fit.dat")
       pass
   # 
   

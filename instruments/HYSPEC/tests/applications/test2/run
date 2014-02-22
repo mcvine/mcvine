@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+config-hyspec_moderator2sample   --Edes=7. --E_min=4. --E_max=11. --freq=180 --LMS=1.8 --iv=-1.0 --Heusler=False --LM3S=0.72
+hyspec_moderator2sample --ncount=1e5

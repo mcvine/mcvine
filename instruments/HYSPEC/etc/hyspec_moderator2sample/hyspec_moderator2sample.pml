@@ -92,7 +92,7 @@
       <property name="height">0.12</property>
       <property name="tinmin">0</property>
       <property name="sample_E">2</property>
-      <property name="S_filename">SNS_TD_0o100p_fit_fit.dat</property>
+      <property name="S_filename">/home/linjiao/dv/danse/mcvine-releaser/EXPORT/share/mcvine/instruments/HYSPEC/mcstas/SNS_TD_0o100p_fit_fit.dat</property>
       <property name="xw">0.04</property>
       <property name="Emax">30.0</property>
       <property name="sample_t">1</property>
