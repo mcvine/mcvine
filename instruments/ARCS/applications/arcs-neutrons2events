@@ -129,16 +129,6 @@ import os, subprocess as sp
 #
 arcsxml = os.path.join(mcvinedir, 'share', 'mcvine', 'instruments', 'ARCS', 'ARCS.xml.fornxs')
 
-# constants
-mod2sample_distance = 13.6
-import pyre.units.length
-import pyre.units.energy
-import pyre.units.time
-npixels = 117760 # number of pixels for ARCS
-mod2sample=13.6*pyre.units.length.meter
-mod_period=0.015*pyre.units.time.s # moderator period
-
-
 
 def main():
     app = App(appname)
