@@ -1,3 +1,10 @@
 HYSPEC instrument 
 
+Special optical components are needed.
+Do
+
+cd resources/mcstas/adapted
+for i in *.comp; do \
+    mcvine-compile-mcstas-component --filename=$i --category=optics ; \
+done
 
