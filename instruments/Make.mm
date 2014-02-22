@@ -16,6 +16,7 @@ PROJECT = mcvine
 # directory structure
 
 BUILD_DIRS = \
+	SNS \
 	ARCS \
 	SANS \
 	SEQUOIA \
