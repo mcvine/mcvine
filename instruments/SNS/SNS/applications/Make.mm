@@ -35,6 +35,7 @@ tidy::
 
 EXPORT_PYTHON_MODULES = \
 	Neutrons2Events.py \
+	Events2NXS.py \
 	__init__.py \
 
 

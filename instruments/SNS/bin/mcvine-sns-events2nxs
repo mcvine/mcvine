@@ -4,7 +4,7 @@
 appname = 'mcvine-sns-events2nxs'
 
 # application 
-from mcvine.instruments.SNS.applications.Events2NXS as base
+from mcvine.instruments.SNS.applications.Events2NXS import App as base
 class App(base):
     pass
 

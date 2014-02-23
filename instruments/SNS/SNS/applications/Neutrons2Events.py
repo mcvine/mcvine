@@ -35,23 +35,24 @@ cmd_help = __doc__
 # application 
 from pyre.applications.Script import Script as AppBase
 class App(AppBase):
-
+    
     class Inventory(AppBase.Inventory):
-
+        
         import pyre.inventory
         neutrons = pyre.inventory.str('neutrons', default='neutrons.dat')
         workdir = pyre.inventory.str('workdir', default='work-neutrons2events')
         nodes = pyre.inventory.int('nodes', default=0)
         
         tofbinsize = pyre.inventory.float('tofbinsize', default=0.1) # microsecond
+        tofmax = pyre.inventory.float('tofmax', default=0.2) # second
         
         # instrument name. if given, assume instrument xml (danse) is 
         # at $MCVINE_DIR/share/mcvine/instruments/<instrument>/<instrument>.xml.fornxs
-        instrument = pyre.instrument.str('instrument') 
+        instrument = pyre.inventory.str('instrument') 
         
         # path instrument.xml.fornxs (danse). this overrides the instrument option
         detsys = pyre.inventory.str('detsys') # detector system xml path
-
+        
         
     def main(self):
         neutrons = self.inventory.neutrons; neutrons = os.path.abspath(neutrons)
@@ -62,16 +63,17 @@ class App(AppBase):
         
         nodes = self.inventory.nodes
         tofbinsize = self.inventory.tofbinsize
+        tofmax = self.inventory.tofmax
         detsys = self.inventory.detsys
         if not detsys:
-            instrument = self.instrument
+            instrument = self.inventory.instrument
             if not instrument:
                 raise RuntimeError("Please specify instrument name or path to <instrument>.xml.fornxs")
             detsys = os.path.join(
                 mcvinedir, 'share', 'mcvine', 'instruments', 
-                instrument, '%s.xml.fornxs' % instrument)
+                instrument.upper(), '%s.xml.fornxs' % instrument)
         run(neutrons, workdir, 
-            nodes=nodes, tofbinsize=tofbinsize, detsys=detsys)
+            nodes=nodes, tofbinsize=tofbinsize, tofmax=tofmax, detsys=detsys)
         return
 
 
@@ -87,12 +89,14 @@ def run(neutrons, workdir, **kwds):
 
 def sendneutronstodetsys(
     neutronfile=None, scattering_rundir=None, nodes=None, ncount=None,
-    workdir = None, tofbinsize = None, detsys = None,
+    workdir = None, tofbinsize = None, tofmax=None, detsys = None,
     ):
     """
     run a simulation to send neutrons to det system
     
     workdir: directory where the simulation is run
+    tofmax: unit: second
+    tofbinsize: unit: microsecond
     """
     # create workdir if it does not exist
     if not os.path.exists(workdir):
@@ -117,7 +121,7 @@ def sendneutronstodetsys(
         'source': 'NeutronFromStorage',
         'detsys': 'DetectorSystemFromXml',
         'output-dir': 'out',
-        'detsys.tofparams': '0,0.02,%s' % (1e-6*tofbinsize,), 
+        'detsys.tofparams': '0,%s,%s' % (tofmax, 1e-6*tofbinsize,), 
         'detsys.instrumentxml': detsys,
         'detsys.eventsdat': 'events.dat',
         'ncount': ncount,

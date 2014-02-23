@@ -1,4 +1,4 @@
-# -*- Python -*-
+#!/usr/bin/env python
 #
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
@@ -39,7 +39,8 @@ class App(AppBase):
         nxs = pyre.inventory.str('nxs', default='sim.nxs')
         type = pyre.inventory.str('type', default='raw')
         workdir = pyre.inventory.str('workdir', default='work-neutrons2nxs')
-        instrument = pyre.instrument.str('instrument')
+        instrument = pyre.inventory.str('instrument')
+        
         
     def main(self):
         neutrons = self.inventory.neutrons; neutrons = os.path.abspath(neutrons)
@@ -100,6 +101,13 @@ def execute(cmd, workdir):
         raise RuntimeError, "%r failed" % cmd
     return
 
+
+def main():
+    app = App(name='mcvine-sns-neutrons2nxs')
+    app.run()
+    return
+
+if __name__ == '__main__': main()
 
 #
 # version
