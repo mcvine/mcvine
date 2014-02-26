@@ -14,8 +14,6 @@
   -->
   <Phonon_IncoherentElastic_Kernel 
       dw_core='0.01154*angstrom**2' 
-      scattering_xs="10*barn"
-      absorption_xs="0*barn"
       >
   </Phonon_IncoherentElastic_Kernel>
   

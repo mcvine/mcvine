@@ -6,7 +6,7 @@
   
   <PowderSample name="Al" type="sample">
     <Shape>
-      <cylinder radius="1*cm" height="10*cm" />
+      <block thickness=".1*mm" width=".1*mm" height=".1*mm" />
     </Shape>
     <Phase type="crystal">
       <ChemicalFormula>Al</ChemicalFormula>

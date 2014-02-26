@@ -20,7 +20,7 @@
         <property name="multiple-scattering">off</property>
 	
         <property name="sequence">['source', 'sample', 'detector']</property>
-        <facility name="source">sources/Source_simple</facility>
+        <facility name="source">sources/MonochromaticSource</facility>
         <facility name="sample">samples/SampleAssemblyFromXml</facility>
         <facility name="detector">monitors/IQE_monitor</facility>
 	
@@ -33,19 +33,14 @@
         </component>
 
         <component name="source">
-            <property name="name">source_simple</property>
-            <property name="radius">0.05</property>
+            <property name="probability">1</property>
             <property name="width">0.0</property>
             <property name="height">0.0</property>
-            <property name="dist">10.0</property>
-            <property name="xw">0.05</property>
-            <property name="yh">0.05</property>
-            <property name="flux">1.0</property>
-            <property name="E0">60.0</property>
-            <property name="dE">1.0</property>
-            <property name="gauss">0</property>
-            <property name="Lambda0">0.0</property>
-            <property name="dLambda">0.0</property>
+            <property name="energy">60.0</property>
+            <property name="energy-width">0</property>
+            <property name="time">0</property>
+            <property name="position">0,0,0</property>
+            <property name="velocity">0,0,1</property>
         </component>
 
         <component name="sample">

@@ -14,7 +14,7 @@ plot-iq: iq.h5
 	PlotHist.py iq.h5
 
 total-scattered-int: iq.h5
-	python -c "import histogram.hdf as hh; iq=hh.load('iq.h5'); print iq[(0.2,None)].I.sum()"
+	@python -c "import histogram.hdf as hh; iq=hh.load('iq.h5'); print iq[(0.2,None)].I.sum()"
 
 
 
