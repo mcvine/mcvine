@@ -14,11 +14,11 @@ plot-iq: iq.h5
 	PlotHist.py iq.h5
 
 total-scattered-int: iq.h5
-	@python -c "import histogram.hdf as hh; iq=hh.load('iq.h5'); print iq[(0.5,None)].I.sum()"
+	python -c "import histogram.hdf as hh; iq=hh.load('iq.h5'); print iq[(0.5,None)].I.sum()"
 
 
 
-out/iqe.h5: ssd ssd.pml sampleassembly
+out/iqe.h5: ssd ssd.pml 
 	./ssd --ncount=1e7
 
 iqe.h5: out/iqe.h5

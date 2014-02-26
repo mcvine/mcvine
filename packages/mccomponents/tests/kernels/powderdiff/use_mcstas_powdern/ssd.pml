@@ -21,7 +21,7 @@
 	
         <property name="sequence">['source', 'sample', 'detector']</property>
         <facility name="source">sources/MonochromaticSource</facility>
-        <facility name="sample">samples/SampleAssemblyFromXml</facility>
+        <facility name="sample">samples/PowderN</facility>
         <facility name="detector">monitors/IQE_monitor</facility>
 	
         <property name="tracer">no-neutron-tracer</property>
@@ -43,8 +43,37 @@
             <property name="velocity">0,0,1</property>
         </component>
 
+
         <component name="sample">
-            <property name="xml">sampleassembly/sampleassembly.xml</property>
+            <property name="name">powdern</property>
+            <property name="DW">0.0</property>
+            <property name="Delta_d">0.0</property>
+            <property name="d_phi">0.0</property> <!-- for det focusing. 0: no focusing -->
+
+            <property name="radius">0.0</property>
+            <property name="radius_i">0.0</property>
+            <property name="h">0.</property>
+            <property name="xwidth">0.0001</property>
+            <property name="yheight">0.0001</property>
+            <property name="zthick">0.0001</property>
+            <property name="xwidth_i">0.0</property>
+            <property name="yheight_i">0.0</property>
+            <property name="zthick_i">0.0</property>
+
+            <property name="Vc">16.6</property> <!-- 4.04932**3/4 -->
+            <property name="sigma_abs">0.231</property>
+            <property name="sigma_inc">0.0</property>
+            <property name="reflections">Al.laz</property>
+            <property name="format">3</property> <!-- laz -->
+
+            <property name="concentric">0.0</property>
+            <property name="frac">0.0</property>
+            <property name="tfrac">0.1</property>
+            <property name="weight">0.0</property>
+            <property name="nb_atoms">1.0</property>
+            <property name="density">0.0</property>
+            <property name="barns">1.0</property>
+            <property name="pack">1.0</property>
         </component>
 	
         <component name="detector">
