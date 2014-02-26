@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+echo -n "powder diffraction (sigma_coh=1.495): "
+cd powderdiff && make total-scattered-int && cd ..
+
+
+echo -n "incoherent: (sigma_inc=0.0082)"
+cd incoh-el && make total-scattered-int && cd ..
+
