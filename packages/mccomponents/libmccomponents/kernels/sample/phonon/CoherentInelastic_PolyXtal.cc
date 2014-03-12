@@ -359,6 +359,9 @@ CoherentInelastic_PolyXtal
   for (size_t i=0; i<m_atoms.size(); i++) {
     m_total_scattering_xs += m_atoms[i].coherent_cross_section;
   }
+#ifdef DEBUG
+  debug << "m_total_scattering_xs:" << m_total_scattering_xs << journal::newline;
+#endif
   
   m_total_absorption_xs = 0;
   for (size_t i=0; i<m_atoms.size(); i++) {
@@ -374,6 +377,13 @@ CoherentInelastic_PolyXtal
   m_relAccessibleReciVol_arr = 
     m_details->calc_relAccessibleReciVol_MC
     ( m_nMCsteps_to_calc_RARV, m_disp, m_Qcutoff, m_Ei);
+
+#ifdef DEBUG
+  for (int i=0; i<m_disp.nBranches(); i++)
+    debug << "m_relAccessibleReciVol_arr:" << m_relAccessibleReciVol_arr[i] << journal::newline;
+  debug << journal::endl;
+#endif
+
 }
 
 
@@ -411,7 +421,7 @@ mccomponents::kernels::phonon::CoherentInelastic_PolyXtal::S
 {
   namespace conversion = mcni::neutron_units_conversion;
 
-#ifdef DEEPDEBUG
+#ifdef __DEBUG__PHNN__COHINEL_POLY__
   journal::debug_t debug(m_details->jrnltag);
 #endif
 
@@ -487,7 +497,8 @@ mccomponents::kernels::phonon::CoherentInelastic_PolyXtal::S
   float_t therm_factor = phonon_bose_factor( omega, m_Temperature );
 #ifdef DEEPDEBUG
   debug << journal::at(__HERE__)
-	<< "thermal factor = " << therm_factor
+	<< "omega = " << omega << ", "
+	<< "thermal factor = " << therm_factor << ", "
 	<< journal::endl;
 #endif
 
@@ -528,19 +539,20 @@ mccomponents::kernels::phonon::CoherentInelastic_PolyXtal::S
   // convert unit of scattering length to meter
   // scattering length is in fm (AtomicScatterer.h)
   // Q is in Angstrom
-  norm_of_slsum *= 1e-30;
-  
+  // pi is necessary to math cross section. see next line of code
+  norm_of_slsum *= 1e-30 * 4*physics::pi;
   // divide this quautity by \sigma_coh because we want a normalized
   // value. this quantity is similar to Q**2
   norm_of_slsum /= (m_total_scattering_xs*1e-28);
-#ifdef DEEPDEBUG
+#ifdef DEBUG
   debug << journal::at(__HERE__)
-	<< "norm_of_slsum = " << norm_of_slsum
+	<< "norm_of_slsum = " << norm_of_slsum << ", "
+	<< "ksquare2E(norm_of_slsum) = " << conversion::ksquare2E(norm_of_slsum * norm_of_slsum )
 	<< journal::endl;
 #endif
   // convert the q**2 in that term to be in energy unit (meV), which
   // will cancel with meV unit of phonon energy
-  prob *= conversion::ksquare2E( norm_of_slsum );
+  prob *= conversion::ksquare2E( norm_of_slsum*norm_of_slsum);
 
 #ifdef DEEPDEBUG
   debug << journal::at(__HERE__)
@@ -590,9 +602,7 @@ mccomponents::kernels::phonon::CoherentInelastic_PolyXtal::S
 	<< "prob = " << prob 
 	<< journal::endl;
 #endif
-  // prob /= 8*physics::pi;
-  // prob *= 4*physics::pi;
-  prob /= 2;
+  prob /= 8*physics::pi;
 #ifdef DEEPDEBUG
   debug << journal::endl;
 #endif
