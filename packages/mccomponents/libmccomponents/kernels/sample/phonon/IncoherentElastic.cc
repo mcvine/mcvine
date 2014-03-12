@@ -91,6 +91,11 @@ IncoherentElastic
   
   if (absorption_xs>0.)
     m_total_absorption_xs = absorption_xs;
+
+#ifdef DEBUG  
+  std::cout << "total scattering xs" << m_total_scattering_xs << std::endl;
+  std::cout << "total absorption_xs" << m_total_absorption_xs << std::endl;
+#endif
 }
 
 
