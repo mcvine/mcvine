@@ -60,19 +60,20 @@ struct mccomponents::kernels::phonon::CoherentInelastic_PolyXtal::Details {
   (float_t & prob, 
    V_t & v_f,
    V_t v_i, float_t v_f_l, float_t v_Q_l) const;
-
+  
+  /// pick a Q. this method generates a Q vector, which may or may
+  /// not be valid.
+  void pickQ(float_t, K_t &) const; 
+  
   /// knowing vi's length, having chosen the phonon branch,
   /// choose a Q so that the phonon in the chose branch at Q can scatter 
   /// the incident neutron. This is only good for polycrystal
   void   pick_a_valid_Q_vector
   (K_t &Q, float_t &v_Q_l, float_t &E_f, float_t &v_f_l,
-   float_t Qcutoff, float_t E_i, float_t v_i_l, unsigned int branch) const;
+   float_t E_i, float_t v_i_l, unsigned int branch) const;
 
-  /// calculate relative acceisible reciprocal volumn
-  std::vector<float_t> 
-  calc_relAccessibleReciVol_MC
-  (size_t numMCsteps, const dispersion_t &disp, float_t Qcutoff, float_t E_i) const;
-
+  /// calculate acceisible reciprocal volumn
+  float_t calc_AccessibleReciVol (float_t E_i) const;
 
   // data
   w_t & kernel;
@@ -157,9 +158,24 @@ const
 
 void
 mccomponents::kernels::phonon::CoherentInelastic_PolyXtal::
+Details::pickQ
+(float_t Ei, K_t &Q)
+const
+{
+  namespace conversion = mcni::neutron_units_conversion;
+  float_t Qmax = conversion::E2k( Ei )
+    + conversion::E2k( Ei + kernel.m_max_omega);
+  
+  Q = Q_inCube<K_t, float_t>( Qmax );
+  return;
+}
+
+
+void
+mccomponents::kernels::phonon::CoherentInelastic_PolyXtal::
 Details::pick_a_valid_Q_vector
 (K_t &Q, float_t &v_Q_l, float_t &E_f, float_t &v_f_l,
- float_t Qcutoff, float_t E_i, float_t v_i_l,  unsigned int branch) 
+ float_t E_i, float_t v_i_l,  unsigned int branch) 
   const
 {
   namespace conversion = mcni::neutron_units_conversion;
@@ -167,7 +183,7 @@ Details::pick_a_valid_Q_vector
   float_t omega;
   do {
     // pick Q
-    Q = Q_inCube<K_t, float_t>( Qcutoff );
+    pickQ(E_i, Q);
     v_Q_l = conversion::k2v*Q.length();
     // == phonon energy  ==
     omega = kernel.m_disp.energy( branch, Q );
@@ -227,88 +243,17 @@ Details::pick_Ef
 }
   
   
-std::vector<mccomponents::kernels::phonon::CoherentInelastic_PolyXtal::float_t>
+mccomponents::kernels::phonon::CoherentInelastic_PolyXtal::float_t
 mccomponents::kernels::phonon::CoherentInelastic_PolyXtal::
-Details::calc_relAccessibleReciVol_MC
-(size_t numMCsteps,
- const dispersion_t &disp,
- float_t Qcutoff, float_t E_i) const
+Details::calc_AccessibleReciVol
+(float_t Ei) const
 {
-  if (numMCsteps<1000) {
-    journal::warning_t warning(jrnltag);
-    warning << journal::at(__HERE__)
-	    << "*** Number of MC steps must be larger than 1000 to obtain reliable results!" 
-	    << journal::endl;
-    //throw;
-  }
-    
-  float_t omega;
-  K_t Q;
-  float_t v_Q_l;
-  float_t E_f, v_f_l;
-  unsigned int branch;
-  size_t n_brs = disp.nBranches();
-  
   namespace conversion = mcni::neutron_units_conversion;
-  float_t v_i_l = conversion::E2v(E_i);
-  
-  // simulation results to be saved in these arrays
-  // the first dimension for the cases E_i > E_f and E_i < E_f
-  // the second dimension for phonon branches
-  std::vector<size_t> N(n_brs);
-  std::vector<size_t> valid_N(n_brs);
-
-  // the simulation loop
-  for (size_t step = 0; step < numMCsteps; step++)  {
-    // pick Q
-    Q = Q_inCube<K_t, float_t>( Qcutoff );
-    v_Q_l = conversion::k2v*Q.length();
-    // pick branch
-    branch = pick_phonon_branch( n_brs );
-    // == phonon energy  ==
-    omega = disp.energy( branch, Q );
-    // == gain energy or lose energy ==
-    E_f = pick_Ef( E_i, omega);
-    
-    v_f_l = conversion::E2v(E_f);
-    
-    // debug
-#ifdef DEEPDEBUG
-    journal::debug_t debug(jrnltag);
-    debug << journal::at(__HERE__)
-	  << "Q = " << Q << "; "
-	  << "v_Q_l = " << v_Q_l << "; "
-	  << "omega = " << omega << "; "
-	  << "E_f = " << E_f << "; "
-	  << "v_f_l = " << v_f_l << "; "
-	  << journal::endl; 
-#endif 
-    // increment the cooresponding bins
-    N[branch]++;
-    
-    // test if the selected Q vector is good
-    if ( v_Q_l<std::abs(v_i_l-v_f_l) || v_Q_l>v_i_l+v_f_l ) {
-      // not good
-    } else {
-      //good
-      valid_N[branch]++;
-    }
-  }
-  
-  // results
-  std::vector<float_t> res(n_brs);
-  
-  for (size_t br = 0; br<n_brs; br++) {
-    res[br] = 1.0*valid_N[br]/N[br];
-    
-#ifdef DEEPDEBUG
-    journal::debug_t debug(jrnltag);
-    debug << journal::at(__HERE__)
-	  << "phonon branch " << br
-	  << "ratio = " << res[br] 
-	  << journal::endl; 
-#endif 
-  }
+  float_t q = conversion::E2k(kernel.m_max_omega);
+  float_t ki = conversion::E2k(Ei);
+  float_t x = ki/q;
+  float_t Q1 = ki + conversion::E2k(Ei + kernel.m_max_omega / (1+7.6*pow(x,4)));
+  float_t res = 4./3.*physics::pi*Q1*Q1*Q1;
   return res;
 }
 
@@ -317,22 +262,18 @@ mccomponents::kernels::phonon::CoherentInelastic_PolyXtal::
 CoherentInelastic_PolyXtal
 ( const dispersion_t &disp,
   const atoms_t &atoms,
-  float_t unitcell_vol,
+  const R_t &a, const R_t &b, const R_t &c,
   dwcalculator_t & dw_calctor,
   float_t temperature,
-  float_t Ei, float_t max_omega, 
-  float_t max_Q,
-  size_t nMCsteps_to_calc_RARV,
+  float_t max_omega, 
   float_t min_omega,
   float_t epsilon) 
 
   : m_disp( disp ),
     m_atoms( atoms ),
+    m_a(a), m_b(b), m_c(c),
     m_DW_calc( &dw_calctor ),
     m_Temperature( temperature ),
-    m_uc_vol( unitcell_vol ),
-    m_Ei(Ei),
-    m_nMCsteps_to_calc_RARV(nMCsteps_to_calc_RARV),
     m_min_omega(min_omega),
     m_epsilon( epsilon ),
     m_details( new Details(*this) )
@@ -353,7 +294,11 @@ CoherentInelastic_PolyXtal
   debug << journal::endl;
   
 #endif
-
+  
+  // unit cell vol
+  m_uc_vol = a|(b*c);
+  if (m_uc_vol < 0) m_uc_vol *= -1;
+  
   // calculate the total scattering cross section
   m_total_scattering_xs = 0;
   for (size_t i=0; i<m_atoms.size(); i++) {
@@ -367,23 +312,6 @@ CoherentInelastic_PolyXtal
   for (size_t i=0; i<m_atoms.size(); i++) {
     m_total_absorption_xs += m_atoms[i].absorption_cross_section;
   }
-
-  namespace conversion = mcni::neutron_units_conversion;
-
-  if (max_Q>0) m_Qcutoff = max_Q;
-  else m_Qcutoff = conversion::E2k( m_Ei )
-	 +conversion::E2k( m_Ei + m_max_omega); 
-  // initialize the array of relative accessible reciprocal space volume
-  m_relAccessibleReciVol_arr = 
-    m_details->calc_relAccessibleReciVol_MC
-    ( m_nMCsteps_to_calc_RARV, m_disp, m_Qcutoff, m_Ei);
-
-#ifdef DEBUG
-  for (int i=0; i<m_disp.nBranches(); i++)
-    debug << "m_relAccessibleReciVol_arr:" << m_relAccessibleReciVol_arr[i] << journal::newline;
-  debug << journal::endl;
-#endif
-
 }
 
 
@@ -451,7 +379,7 @@ mccomponents::kernels::phonon::CoherentInelastic_PolyXtal::S
   K_t Q;
   float_t v_Q_l, E_f, v_f_l;
   m_details->pick_a_valid_Q_vector
-    ( Q, v_Q_l, E_f, v_f_l, m_Qcutoff, E_i, v_i_l, branch);
+    ( Q, v_Q_l, E_f, v_f_l, E_i, v_i_l, branch);
   float_t  omega = E_i - E_f;
 
 #ifdef DEEPDEBUG
@@ -559,6 +487,12 @@ mccomponents::kernels::phonon::CoherentInelastic_PolyXtal::S
 	<< "prob = " << prob 
 	<< journal::endl;
 #endif
+  prob /= std::abs(omega);
+#ifdef DEEPDEBUG
+  debug << journal::at(__HERE__)
+	<< "prob = " << prob 
+	<< journal::endl;
+#endif
   
   prob *= DW;
 #ifdef DEEPDEBUG
@@ -578,31 +512,27 @@ mccomponents::kernels::phonon::CoherentInelastic_PolyXtal::S
 	<< "prob = " << prob 
 	<< journal::endl;
 #endif
-  prob /= std::abs(omega);
-#ifdef DEEPDEBUG
-  debug << journal::at(__HERE__)
-	<< "prob = " << prob 
-	<< journal::endl;
-#endif
   prob *= 1/(k_i_l)/(k_f_l)/(Q_l);
 #ifdef DEEPDEBUG
   debug << journal::at(__HERE__)
 	<< "prob = " << prob 
 	<< journal::endl;
 #endif
-  prob *= m_Qcutoff * m_Qcutoff * m_Qcutoff * 8.0; // this is the size of the reciprocal space in which Q points are picked
+  prob *= m_details->calc_AccessibleReciVol(E_i); // reciprocal volume
 #ifdef DEEPDEBUG
   debug << journal::at(__HERE__)
 	<< "prob = " << prob 
 	<< journal::endl;
 #endif
-  prob *= m_relAccessibleReciVol_arr[branch];
 #ifdef DEEPDEBUG
   debug << journal::at(__HERE__)
 	<< "prob = " << prob 
 	<< journal::endl;
 #endif
   prob /= 8*physics::pi;
+  
+  // this is still mysterious
+  prob *= 2;
 #ifdef DEEPDEBUG
   debug << journal::endl;
 #endif

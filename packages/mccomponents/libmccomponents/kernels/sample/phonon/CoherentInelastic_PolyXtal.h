@@ -54,24 +54,19 @@ namespace mccomponents{
 	//! ctor
 	/*!
 	  parameters
-	   Ei          incident neutron energy
 	   max_omega   maximum phonon energy
-	   max_Q       maximum phonon Q
-	   unitcell_vol volume of unitcell, units: AA**3
+	   a,b,c       lattice vectors
 	   dw_calctor  debye waller factor calculator
 	   temperature temperature. unit: K
-	   nMCsteps_to_calc_RARV 
 	   epsilon     small number to avoid divide by 0 error
 	*/
 	CoherentInelastic_PolyXtal
 	( const dispersion_t &disp,
 	  const atoms_t &atoms,
-	  float_t unitcell_vol,
+	  const R_t &a, const R_t &b, const R_t &c,
 	  dwcalculator_t & dw_calctor,
 	  float_t temperature,
-	  float_t Ei, float_t max_omega, 
-	  float_t max_Q,
-	  size_t nMCsteps_to_calc_RARV,
+	  float_t max_omega,
 	  float_t min_omega = 0.01,
 	  float_t epsilon = 1.e-10 ) ;
 	
@@ -85,21 +80,18 @@ namespace mccomponents{
 	// data
 	const dispersion_t & m_disp;
 	atoms_t m_atoms;
+	R_t m_a, m_b, m_c;
 	dwcalculator_t *m_DW_calc;
 	float_t m_Temperature;
 	float_t m_uc_vol;
 	
-	float_t m_Ei, m_max_omega, m_min_omega;
-	std::vector <float_t> m_relAccessibleReciVol_arr;
-	float_t m_Qcutoff;
-
+	float_t m_max_omega, m_min_omega;
+	
 	float_t m_total_scattering_xs;
 	float_t m_total_absorption_xs;
 	
-	size_t m_nMCsteps_to_calc_RARV;
 	float_t m_epsilon;
-
-
+	
 	// implementation details
 	struct Details;
 	std::auto_ptr<Details> m_details;
