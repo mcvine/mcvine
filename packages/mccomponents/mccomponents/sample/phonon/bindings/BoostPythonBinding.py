@@ -263,13 +263,16 @@ class New:
         self,
         dispersion, dw_calctor,
         unitcell, 
-        temperature, Ei,  max_omega, max_Q,
-        nMCsteps_to_calc_RARV, seed = None):
+        temperature, max_omega,
+        ):
 
         # unitcell_vol = unitcell.getVolume()
-        unitcell_vol = unitcell.lattice.getVolume()
-        unitcell_vol = float(unitcell_vol)
-
+        lattice = unitcell.lattice
+        base = lattice.base
+        aa = self.vector3(base[0])
+        bb = self.vector3(base[1])
+        cc = self.vector3(base[2])
+        
         temperature = float(temperature)
         
         atoms = [ self.atomicscatterer_fromSite( site ) for site in unitcell ]
@@ -277,9 +280,10 @@ class New:
         for atom in atoms: atom_vector.append( atom )
         
         return b.Phonon_CoherentInelastic_PolyXtal_kernel(
-            dispersion, atom_vector, unitcell_vol, dw_calctor,
-            temperature, Ei, max_omega, max_Q,
-            nMCsteps_to_calc_RARV)
+            dispersion, atom_vector, aa, bb, cc,
+            dw_calctor,
+            temperature, max_omega,
+            )
 
 
     def phonon_coherentinelastic_singlextal_kernel(

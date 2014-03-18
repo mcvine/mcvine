@@ -22,16 +22,15 @@ class Phonon_CoherentInelastic_PolyXtal_Kernel(AbstractNode):
     
 
     def elementFactory( self, **kwds ):
-        Ei = self._parse( kwds['Ei'] )
+        # Ei = self._parse( kwds['Ei'] )
         max_omega = self._parse( kwds['max-omega'] )
-        max_Q = self._parse( kwds['max-Q'] )
-        nMCsteps_to_calc_RARV = int( kwds['nMCsteps_to_calc_RARV'] )
+        # max_Q = self._parse( kwds['max-Q'] )
+        # nMCsteps_to_calc_RARV = int( kwds['nMCsteps_to_calc_RARV'] )
         
         from mccomponents.sample.phonon \
              import coherentinelastic_polyxtal_kernel as f
-        return f(
-            None,
-            Ei, max_omega, max_Q, nMCsteps_to_calc_RARV)
+        return f(None, max_omega = max_omega)
+            # Ei, max_omega, max_Q, nMCsteps_to_calc_RARV)
 
 
     def onDispersion(self, dispersion):

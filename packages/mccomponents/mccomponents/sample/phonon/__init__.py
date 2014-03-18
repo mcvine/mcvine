@@ -39,11 +39,9 @@ def incoherentinelastic_kernel(
 
 
 def coherentinelastic_polyxtal_kernel(
-    dispersion,
-    Ei = 70*meV, max_omega = 55 *meV, max_Q = 12 / angstrom,
-    nMCsteps_to_calc_RARV = 10000):
+    dispersion, **kwds):
     from CoherentInelastic_PolyXtal_Kernel import CoherentInelastic_PolyXtal_Kernel as f
-    return f( dispersion, Ei, max_omega, max_Q, nMCsteps_to_calc_RARV )
+    return f( dispersion, **kwds)
 
 
 def coherentinelastic_singlextal_kernel(
