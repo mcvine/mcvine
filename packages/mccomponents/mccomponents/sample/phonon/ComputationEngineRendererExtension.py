@@ -125,27 +125,28 @@ class ComputationEngineRendererExtension:
             cdos, mass, temperature, nsampling )
 
         # additional kernel parameters
-        Ei = kernel.Ei
+        # Ei = kernel.Ei
         max_omega = kernel.max_omega
-        max_Q = kernel.max_Q
-        nMCsteps_to_calc_RARV = kernel.nMCsteps_to_calc_RARV
+        # max_Q = kernel.max_Q
+        # nMCsteps_to_calc_RARV = kernel.nMCsteps_to_calc_RARV
         cdispersion = kernel.dispersion.identify(self)
 
         meV= units.meV
         angstrom = units.angstrom
-        Ei = Ei/meV
+        # Ei = Ei/meV
         max_omega = max_omega/meV
-        max_Q = max_Q * angstrom
-
-        seed = kernel.seed
+        # max_Q = max_Q * angstrom
+        
+        # seed = kernel.seed
         
         return self.factory.phonon_coherentinelastic_polyxtal_kernel(
             cdispersion, cdw_calculator,
             unitcell, 
-            temperature, Ei,  max_omega, max_Q,
-            nMCsteps_to_calc_RARV,
-            seed)
-
+            temperature, max_omega,
+            # Ei,  max_omega, max_Q,
+            # nMCsteps_to_calc_RARV,
+            # seed)
+            )
 
     def onPhonon_CoherentInelastic_SingleXtal_Kernel(self, kernel):
         '''handler to create c++ instance of phonon coherent inelastic single crystal scattering kernel.
