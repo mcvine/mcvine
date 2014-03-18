@@ -105,7 +105,11 @@ DANSE::phonon::LinearlyInterpolatedGridData_3D<Array_3D, FloatType, Size>::opera
   Size nx1 = nx+1, ny1 = ny+1, nz1 = nz+1;
 
   FloatType 
-    u000 = getitem<dataarray_t, index_t, FloatType>( m_dataarray, nx, ny, nz ),
+    u000 = getitem<dataarray_t, index_t, FloatType>( m_dataarray, nx, ny, nz );
+  // hack
+  return u000;
+  
+  FloatType
     u100 = getitem<dataarray_t, index_t, FloatType>( m_dataarray, nx1,ny, nz ),
     u010 = getitem<dataarray_t, index_t, FloatType>( m_dataarray, nx, ny1,nz ),
     u001 = getitem<dataarray_t, index_t, FloatType>( m_dataarray, nx, ny, nz1 ),
@@ -113,7 +117,7 @@ DANSE::phonon::LinearlyInterpolatedGridData_3D<Array_3D, FloatType, Size>::opera
     u101 = getitem<dataarray_t, index_t, FloatType>( m_dataarray, nx1,ny, nz1 ),
     u110 = getitem<dataarray_t, index_t, FloatType>( m_dataarray, nx1,ny1,nz ),
     u111 = getitem<dataarray_t, index_t, FloatType>( m_dataarray, nx1,ny1,nz1 );
-    
+  
   return interp3D_01<FloatType>
     (  u000,  u100,  u010,  u001,
        u011,  u101,  u110,  u111,
