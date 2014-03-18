@@ -274,6 +274,7 @@ CoherentInelastic_PolyXtal
     m_a(a), m_b(b), m_c(c),
     m_DW_calc( &dw_calctor ),
     m_Temperature( temperature ),
+    m_max_omega(max_omega),
     m_min_omega(min_omega),
     m_epsilon( epsilon ),
     m_details( new Details(*this) )
