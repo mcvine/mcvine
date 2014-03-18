@@ -34,16 +34,14 @@ namespace wrap_mccomponents {
 	init<
 	const w_t::dispersion_t &,
 	const w_t::atoms_t &,
-	w_t::float_t,
+	const w_t::R_t &, const w_t::R_t &, const w_t::R_t &,
 	w_t::dwcalculator_t & ,
 	w_t::float_t,
-	w_t::float_t, w_t::float_t, 
-	w_t::float_t,
-	size_t
+	w_t::float_t
 	> ()
 	[with_custodian_and_ward<1,2,
 	 with_custodian_and_ward<1,3,
-	 with_custodian_and_ward<1,5 > > > () ]
+	 with_custodian_and_ward<1,7 > > > () ]
 	)
       ;
     
