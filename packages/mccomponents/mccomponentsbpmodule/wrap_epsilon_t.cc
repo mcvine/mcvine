@@ -21,10 +21,11 @@ namespace wrap_mccomponents {
   {
     typedef std::complex<Float> complex_t;
     typedef mcni::Vector3<complex_t> w_t;
-    
+
+    // wrap Vector3<complex_<float>>
     std::string name = "epsilon_";
     name += floattypename;
-    wrap::wrap_Vector3<w_t>( name.c_str() );
+    wrap::wrap_Vector3<complex_t>( name.c_str() );
   }
 
   void wrap_epsilon_t( )
