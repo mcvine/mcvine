@@ -460,7 +460,7 @@ mccomponents::kernels::phonon::CoherentInelastic_PolyXtal::S
   // It should include the debye-waller factor
   // but for now, we will consider dw factor to be constant
   // and put it in later.
-  // note: std::norm is the squared quantity
+  // *** NOTE ***: std::norm is the squared quantity
   float_t norm_of_slsum = std::norm
     (sum_of_scattering_length<complex_t, K_t, epsilon_t, atom_t, atoms_t, dispersion_t>
      (Q, branch, m_atoms, m_disp)
@@ -473,15 +473,9 @@ mccomponents::kernels::phonon::CoherentInelastic_PolyXtal::S
   // divide this quautity by \sigma_coh because we want a normalized
   // value. this quantity is similar to Q**2
   norm_of_slsum /= (m_total_scattering_xs*1e-28);
-#ifdef DEBUG
-  debug << journal::at(__HERE__)
-	<< "norm_of_slsum = " << norm_of_slsum << ", "
-	<< "ksquare2E(norm_of_slsum) = " << conversion::ksquare2E(norm_of_slsum * norm_of_slsum )
-	<< journal::endl;
-#endif
   // convert the q**2 in that term to be in energy unit (meV), which
   // will cancel with meV unit of phonon energy
-  prob *= conversion::ksquare2E( norm_of_slsum*norm_of_slsum);
+  prob *= conversion::ksquare2E(norm_of_slsum);
 
 #ifdef DEEPDEBUG
   debug << journal::at(__HERE__)
@@ -532,8 +526,6 @@ mccomponents::kernels::phonon::CoherentInelastic_PolyXtal::S
 #endif
   prob /= 8*physics::pi;
   
-  // this is still mysterious
-  prob *= 2;
 #ifdef DEEPDEBUG
   debug << journal::endl;
 #endif
