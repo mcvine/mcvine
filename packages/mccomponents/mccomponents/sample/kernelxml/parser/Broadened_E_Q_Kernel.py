@@ -12,8 +12,7 @@
 #
 
 
-from .AbstractNode import debug
-from .KernelNode import KernelNode as base
+from .KernelNode import KernelNode as base, debug
 
 
 class Broadened_E_Q_Kernel(base):

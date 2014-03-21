@@ -12,15 +12,15 @@
 #
 
 
-from AbstractNode import AbstractNode, debug
+from .KernelNode import KernelNode as base, debug
 
 
-class IsotropicKernel(AbstractNode):
+class IsotropicKernel(base):
 
 
     tag = "IsotropicKernel"
 
-    def elementFactory( self, **kwds ):
+    def createKernel( self, **kwds ):
         from mccomponents.sample import isotropickernel
         return isotropickernel()
 

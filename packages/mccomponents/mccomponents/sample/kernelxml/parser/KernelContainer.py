@@ -12,13 +12,13 @@
 #
 
 
-from AbstractNode import AbstractNode
+from .KernelNode import KernelNode as base, debug
 
 # KernelContainer is just an alias of CompositKernel
 # why not just reuse the CompositKernel parser node?
 # the implementation here is different from CompositKernel,
 # and it reuses the implementation methods in AbstractNode
-class KernelContainer(AbstractNode):
+class KernelContainer(base):
 
 
     tag = "KernelContainer"
@@ -36,7 +36,7 @@ class KernelContainer(AbstractNode):
         = onSQEkernel \
         = onKernelContainer = AbstractNode.onElement
 
-    def elementFactory(self, *args, **kwds):
+    def createKernel(self, *args, **kwds):
         average = kwds.get('average')
         if average:
             average = average.lower() in ['1', 'on', 'yes', 'true']

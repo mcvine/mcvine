@@ -12,15 +12,15 @@
 #
 
 
-from AbstractNode import AbstractNode, debug
+from .KernelNode import KernelNode as base, debug
 
 
-class SQEkernel(AbstractNode):
+class SQEkernel(base):
 
 
     tag = "SQEkernel"
 
-    def elementFactory( self, **kwds ):
+    def createKernel( self, **kwds ):
         Qrange = self._parse( kwds['Q-range'] )
         Erange = self._parse( kwds['energy-range'] )
 
