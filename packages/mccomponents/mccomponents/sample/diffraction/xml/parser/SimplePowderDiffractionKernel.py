@@ -12,16 +12,16 @@
 #
 
 
-from AbstractNode import AbstractNode, debug
+from .KernelNode import KernelNode as base, debug
 
 
-class SimplePowderDiffractionKernel(AbstractNode):
+class SimplePowderDiffractionKernel(base):
 
 
     tag = "SimplePowderDiffractionKernel"
     
 
-    def elementFactory( self, **kwds ):
+    def createKernel( self, **kwds ):
         Dd_over_d = self._parse( kwds['Dd_over_d'] )
         DebyeWaller_factor = self._parse( kwds['DebyeWaller_factor'] )
 
