@@ -115,6 +115,9 @@ an Al-scatterer.xml file ::
 Kernels
 =======
 
+.. note::
+   Developers: please also read :ref:`Kernel implementation <kernel-implementation>`.
+
 .. _kernel_isotropic:
 
 Isotropic
