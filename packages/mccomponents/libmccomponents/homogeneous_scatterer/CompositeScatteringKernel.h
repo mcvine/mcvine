@@ -28,11 +28,13 @@ namespace mccomponents{
     //types
     typedef AbstractScatteringKernel base_t;
     typedef std::vector<AbstractScatteringKernel *> kernels_t;
+    typedef std::vector<double> weights_t;
     
     // meta-methods
     // average: if set: average scattering and absorption coefficients instead of sum
     CompositeScatteringKernel 
-    ( const kernels_t & kernels, bool average=0);
+    ( const kernels_t & kernels, const weights_t & weights,
+      bool average=0);
     virtual ~CompositeScatteringKernel();
 
     // methods
@@ -46,6 +48,7 @@ namespace mccomponents{
     // data
     const kernels_t & m_kernels;
     bool m_average;
+    weights_t m_weights;
     struct Details;
     std::auto_ptr<Details> m_details;
   };
