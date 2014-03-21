@@ -14,7 +14,7 @@ def main():
     getinel = lambda iqe: iqe[(2.5, 7.), ()].sum('Q')
     coh_inel = getinel(iqe1)
     incoh_inel = getinel(iqe2) 
-    pl.plot(coh_inel.energy, 0.9*coh_inel.I/sigma_coh, 'r')
+    pl.plot(coh_inel.energy, coh_inel.I/sigma_coh, 'r')
     pl.plot(incoh_inel.energy, incoh_inel.I/sigma_inc, 'g')
     pl.show()
     return
