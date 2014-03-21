@@ -25,9 +25,14 @@ namespace wrap_mccomponents {
     using namespace boost::python;
     using namespace mccomponents::boostpython_binding;
 
-    kernel_wrapper<mccomponents::CompositeScatteringKernel>::wrap
+    typedef mccomponents::CompositeScatteringKernel w_t;
+    
+    kernel_wrapper<w_t>::wrap
       ("CompositeScatteringKernel", 
-       init<const mccomponents::CompositeScatteringKernel::kernels_t &, bool>()
+       init
+       <const w_t::kernels_t &,
+       const w_t::weights_t &,
+       bool>()
        [with_custodian_and_ward<1,2>()]
        )
       ;
