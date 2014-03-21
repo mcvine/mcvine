@@ -12,15 +12,16 @@
 #
 
 
-from AbstractNode import AbstractNode, debug
+from .AbstractNode import debug
+from .KernelNode import KernelNode as base
 
 
-class ConstantQEKernel(AbstractNode):
+class ConstantQEKernel(base):
 
 
     tag = "ConstantQEKernel"
 
-    def elementFactory( self, **kwds ):
+    def createKernel( self, **kwds ):
         from mccomponents.sample import constantQEKernel
         E = self._parse( kwds['energy-transfer'] )
         Q = self._parse( kwds['momentum-transfer'] )

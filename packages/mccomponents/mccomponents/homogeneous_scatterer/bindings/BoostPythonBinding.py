@@ -31,8 +31,8 @@ class BoostPythonBinding(base, Interface):
         return binding.srandom( seed )
     
 
-    def compositekernel(self, kernels, average):
-        return binding.CompositeScatteringKernel( kernels, average )
+    def compositekernel(self, kernels, weights, average):
+        return binding.CompositeScatteringKernel( kernels, weights, average )
 
 
     def kernelcontainer(self, size = 0):
@@ -49,6 +49,10 @@ class BoostPythonBinding(base, Interface):
         engine.min_neutron_probability = min_neutron_probability
         engine.packing_factor = packing_factor
         return engine
+    
+    
+    def vector_double(self, size):
+        return binding.vector_double(size)
     
 
     pass # end of BoostPythonBinding

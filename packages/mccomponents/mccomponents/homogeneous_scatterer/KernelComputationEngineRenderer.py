@@ -32,12 +32,25 @@ class KernelComputationEngineRenderer( AbstractVisitor ):
         elements = composite.elements()
         
         ckernels = factory.kernelcontainer()
-        for element in elements:
+        cweights = factory.binding.vector_double(len(elements))
+        for index, element in enumerate(elements):
             ckernel = element.identify(self) 
             ckernels.append( ckernel )
+            w = getattr(element, 'weight', None)
+            if w is None:
+                import warnings
+                scatterer = element.scatterer_origin
+                scatterer = str(scatterer).split(':')[0]
+                warnings.warn(
+                    'kernel %s of %s does not define its weight' % (
+                        element.__class__.__name__, scatterer,
+                        )
+                    )
+            cweights[index] = w or 1.
+            print "weight: ", cweights[index]
             continue
 
-        return factory.compositekernel( ckernels, composite.average )
+        return factory.compositekernel( ckernels, cweights, composite.average )
 
     
     def onHomogeneousScatterer(self, scatterer):

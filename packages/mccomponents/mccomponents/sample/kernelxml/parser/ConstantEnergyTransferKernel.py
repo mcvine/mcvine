@@ -12,15 +12,16 @@
 #
 
 
-from AbstractNode import AbstractNode, debug
+from .AbstractNode import debug
+from .KernelNode import KernelNode as base
 
 
-class ConstantEnergyTransferKernel(AbstractNode):
+class ConstantEnergyTransferKernel(base):
 
 
     tag = "ConstantEnergyTransferKernel"
 
-    def elementFactory( self, **kwds ):
+    def createKernel( self, **kwds ):
         from mccomponents.sample import constantEnergyTransferKernel
         E = self._parse( kwds['energy-transfer'] )
         

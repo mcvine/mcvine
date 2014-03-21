@@ -12,15 +12,16 @@
 #
 
 
-from AbstractNode import AbstractNode, debug
+from .AbstractNode import debug
+from .KernelNode import KernelNode as base
 
 
-class Broadened_E_Q_Kernel(AbstractNode):
+class Broadened_E_Q_Kernel(base):
 
 
     tag = "Broadened_E_Q_Kernel"
 
-    def elementFactory( self, **kwds ):
+    def createKernel( self, **kwds ):
         from mccomponents.sample import broadened_E_Q_Kernel
         # E_Q = self._parse( kwds['E_Q'] )
         # S_Q = self._parse( kwds['S_Q'] )

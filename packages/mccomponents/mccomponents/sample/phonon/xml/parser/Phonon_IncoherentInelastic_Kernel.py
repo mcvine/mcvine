@@ -12,16 +12,17 @@
 #
 
 
-from AbstractNode import AbstractNode, debug
+from .AbstractNode import debug
+from ....kernelxml.parser.KernelNode import KernelNode as base
 
 
-class Phonon_IncoherentInelastic_Kernel(AbstractNode):
+class Phonon_IncoherentInelastic_Kernel(base):
 
 
     tag = "Phonon_IncoherentInelastic_Kernel"
     
 
-    def elementFactory( self, **kwds ):
+    def createKernel( self, **kwds ):
         def getval(key):
             v = kwds.get(key)
             if v: return self._parse(v)

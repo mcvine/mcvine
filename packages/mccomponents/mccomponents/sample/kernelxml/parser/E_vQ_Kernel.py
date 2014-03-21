@@ -12,15 +12,16 @@
 #
 
 
-from AbstractNode import AbstractNode, debug
+from .AbstractNode import debug
+from .KernelNode import KernelNode as base
 
 
-class E_vQ_Kernel(AbstractNode):
+class E_vQ_Kernel(base):
 
 
     tag = "E_vectorQ_Kernel"
 
-    def elementFactory( self, **kwds ):
+    def createKernel( self, **kwds ):
         from mccomponents import sample
         E_Q = str(kwds['E_Q'])
         S_Q = str(kwds['S_Q'])

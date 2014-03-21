@@ -12,34 +12,30 @@
 #
 
 
-from AbstractNode import AbstractNode, debug
+from .AbstractNode import debug
+from ....kernelxml.parser.KernelNode import KernelNode as base
 
 
-class Phonon_CoherentInelastic_PolyXtal_Kernel(AbstractNode):
+class Phonon_CoherentInelastic_PolyXtal_Kernel(base):
 
 
     tag = "Phonon_CoherentInelastic_PolyXtal_Kernel"
     
 
-    def elementFactory( self, **kwds ):
-        # Ei = self._parse( kwds['Ei'] )
+    def createKernel( self, **kwds ):
         max_omega = self._parse( kwds['max-omega'] )
-        # max_Q = self._parse( kwds['max-Q'] )
-        # nMCsteps_to_calc_RARV = int( kwds['nMCsteps_to_calc_RARV'] )
-        
         from mccomponents.sample.phonon \
              import coherentinelastic_polyxtal_kernel as f
         return f(None, max_omega = max_omega)
-            # Ei, max_omega, max_Q, nMCsteps_to_calc_RARV)
-
-
+    
+    
     def onDispersion(self, dispersion):
         self.element.dispersion = dispersion
         return
-
-
+    
+    
     onPeriodicDispersion = onDispersion
-
+    
     pass # end of Phonon_CoherentInelastic_PolyXtal_Kernel
 
 
