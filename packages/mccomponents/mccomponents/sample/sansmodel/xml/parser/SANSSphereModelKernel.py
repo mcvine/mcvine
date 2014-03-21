@@ -12,16 +12,16 @@
 #
 
 
-from AbstractNode import AbstractNode, debug
+from .KernelNode import KernelNode as base, debug
 
 
-class SANSSphereModelKernel(AbstractNode):
+class SANSSphereModelKernel(base):
 
 
     tag = "SANSSphereModelKernel"
 
 
-    def elementFactory( self, **kwds ):
+    def createKernel( self, **kwds ):
         scale = kwds.get('scale')
         radius = kwds.get('radius')
         contrast = kwds.get('contrast')
