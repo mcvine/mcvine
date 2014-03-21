@@ -12,8 +12,7 @@
 #
 
 
-from .AbstractNode import debug
-from ....kernelxml.parser.KernelNode import KernelNode as base
+from .KernelNode import KernelNode as base, debug
 
 
 class Phonon_CoherentInelastic_PolyXtal_Kernel(base):

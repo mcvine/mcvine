@@ -34,6 +34,7 @@ tidy::
 
 EXPORT_PYTHON_MODULES = \
 	AbstractNode.py \
+	KernelNode.py \
 	Document.py \
 	HomogeneousScatterer.py \
 	KernelContainer.py \

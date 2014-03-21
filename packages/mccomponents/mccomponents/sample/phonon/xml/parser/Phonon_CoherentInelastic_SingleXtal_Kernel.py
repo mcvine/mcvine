@@ -12,16 +12,16 @@
 #
 
 
-from AbstractNode import AbstractNode, debug
+from .KernelNode import KernelNode as base, debug
 
 
-class Phonon_CoherentInelastic_SingleXtal_Kernel(AbstractNode):
+class Phonon_CoherentInelastic_SingleXtal_Kernel(base):
 
 
     tag = "Phonon_CoherentInelastic_SingleXtal_Kernel"
     
 
-    def elementFactory( self, **kwds ):
+    def createKernel( self, **kwds ):
         from mccomponents.sample.phonon \
              import coherentinelastic_singlextal_kernel as f
         return f(None)

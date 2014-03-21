@@ -12,8 +12,7 @@
 #
 
 
-from .AbstractNode import debug
-from ....kernelxml.parser.KernelNode import KernelNode as base
+from .KernelNode import KernelNode as base, debug
 
 
 class Phonon_IncoherentInelastic_Kernel(base):
@@ -21,7 +20,7 @@ class Phonon_IncoherentInelastic_Kernel(base):
 
     tag = "Phonon_IncoherentInelastic_Kernel"
     
-
+    
     def createKernel( self, **kwds ):
         def getval(key):
             v = kwds.get(key)

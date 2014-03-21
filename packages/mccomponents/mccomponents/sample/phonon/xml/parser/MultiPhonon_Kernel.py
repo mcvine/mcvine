@@ -12,16 +12,16 @@
 #
 
 
-from AbstractNode import AbstractNode, debug
+from .KernelNode import KernelNode as base, debug
 
 
-class MultiPhonon_Kernel(AbstractNode):
+class MultiPhonon_Kernel(base):
 
 
     tag = "MultiPhonon_Kernel"
     
 
-    def elementFactory( self, **kwds ):
+    def createKernel( self, **kwds ):
         def getval(key):
             v = kwds.get(key)
             if v: return self._parse(v)

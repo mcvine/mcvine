@@ -12,16 +12,16 @@
 #
 
 
-from AbstractNode import AbstractNode, debug
+from .KernelNode import KernelNode as base, debug
 
 
-class Phonon_IncoherentElastic_Kernel(AbstractNode):
+class Phonon_IncoherentElastic_Kernel(base):
 
 
     tag = "Phonon_IncoherentElastic_Kernel"
     
 
-    def elementFactory( self, **kwds ):
+    def createKernel( self, **kwds ):
         dw_core = self._parse( kwds['dw_core'] )
 
         def getval(key):
