@@ -34,7 +34,7 @@ class KernelContainer(base):
         = onConstantQEKernel = onConstantEnergyTransferKernel \
         = onE_Q_Kernel = onBroadened_E_Q_Kernel \
         = onSQEkernel \
-        = onKernelContainer = AbstractNode.onElement
+        = onKernelContainer = base.onElement
 
     def createKernel(self, *args, **kwds):
         average = kwds.get('average')

@@ -12,7 +12,7 @@
 #
 
 
-from ....kernelxml.parser.KernelNode import KernelNode as base, debug
+from ....kernelxml.parser.KernelNode import KernelNode, debug
 
 # version
 __id__ = "$Id$"
