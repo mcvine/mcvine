@@ -17,9 +17,10 @@ from Kernel import Kernel
 class CompositeKernel(Kernel):
     
 
-    def __init__(self, average=None):
+    def __init__(self, average=None, weight=None):
         self._elements = []
         self.average = average
+        # weight is already handled by mccomponents.sample.kernelxml.parser.KernelNode
         return
 
 
