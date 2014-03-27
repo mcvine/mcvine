@@ -46,7 +46,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'mcvine'
-copyright = u'2006-2011, Jiao Lin, Alexander Dementsov, Michael Aivazis, and Brent Fultz'
+copyright = u'2006-2014, Jiao Lin, Michael Aivazis, and Brent Fultz'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
