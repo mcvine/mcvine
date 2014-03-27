@@ -16,6 +16,7 @@ Getting Started
 More infomation
 ---------------
 
+* :ref:`Publications <publications>`
 * `The user mailing list <http://groups.google.com/group/mcvine-users>`_
 * `The developer mailing list <http://groups.google.com/group/mcvine-dev>`_
 * `Roadmap <http://danse.us/trac/MCViNE/roadmap>`_
