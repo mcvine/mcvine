@@ -47,6 +47,7 @@ EXPORT_PYTHON_MODULES = \
 	NeutronToStorage.py \
 	NeutronsOnCone_FixedQE.py \
 	ParallelComponent.py \
+	RadialCollimator.py \
 	Registry.py \
 	RegistryBase.py \
 	__init__.py \

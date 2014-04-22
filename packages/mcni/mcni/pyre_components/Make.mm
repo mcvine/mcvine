@@ -37,6 +37,7 @@ EXPORT_PYTHON_MODULES = \
 	NeutronPrinter.py \
 	NeutronToStorage.py \
 	NeutronsOnCone_FixedQE.py \
+	RadialCollimator.py \
 	Registry.py \
 	__init__.py \
 	beam_analyzer.py \
