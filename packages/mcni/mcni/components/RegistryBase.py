@@ -108,7 +108,7 @@ class RegistryBase:
                 repo, type )
             try:
                 module = __import__( modulename, {}, {}, [''] )
-            except:
+            except ImportError:
                 continue
 
         if module:
