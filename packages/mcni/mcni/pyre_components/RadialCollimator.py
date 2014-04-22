@@ -29,7 +29,7 @@ class RadialCollimator( AbstractComponent ):
         height2 = pinv.float("height2", default=0.5)
         theta1 = pinv.float("theta1", default=0)
         theta2 = pinv.float("theta2", default=180)
-        dtheta = pinv2.float("dtheta", default=1)
+        dtheta = pinv.float("dtheta", default=1)
         pass
     
 
