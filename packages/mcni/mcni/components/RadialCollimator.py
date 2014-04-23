@@ -91,7 +91,7 @@ def test():
     coll = RadialCollimator(
         name="collimator",
         radius1=0.308, height1=0.6, radius2=0.462, height2=0.6,
-        theta1=-20*DEG2RAD, theta2=150*DEG2RAD, 
+        theta1=-30*DEG2RAD, theta2=150*DEG2RAD, 
         dtheta=1.6*DEG2RAD)
     def check(neutron, absorbed):
         neutrons.resize(1, neutron)
@@ -100,6 +100,10 @@ def test():
         assert len(neutrons) == (not absorbed)
         return
     
+    check(neutron(r=(0,0,0), v=(-0.9,0,1.732), prob=1), False)
+    check(neutron(r=(0,0,0), v=(-1.1,0,1.732), prob=1), True)
+    check(neutron(r=(0,0,0), v=(0,-0.3,0.463), prob=1), False)
+    check(neutron(r=(0,0,0), v=(0,-0.3,0.461), prob=1), True)
     check(neutron(r=(0,0,0), v=(0,0.3,0.463), prob=1), False)
     check(neutron(r=(0,0,0), v=(0,0.3,0.461), prob=1), True)
     check(neutron(r=(0,0,0), v=(0.1,0.3,0.45), prob=1), True)
@@ -112,7 +116,8 @@ def test():
     check(neutron(r=(0.001,0,0), v=(0,0,1000), prob=1), False)
     check(neutron(r=(0.01,0,0), v=(0,0,1000), prob=1), False)
     check(neutron(r=(0.03,0,0), v=(0,0,1000), prob=1), True)
-    check(neutron(r=(0.02,0,0), v=(0,0,1000), prob=1), False)
+    check(neutron(r=(0.025,0,0), v=(0,0,1000), prob=1), True)
+    check(neutron(r=(0.015,0,0), v=(0,0,1000), prob=1), True)
     check(neutron(r=(0.1,0,0), v=(0,10,0), prob=1), True)
     for i in range(10):
         check(neutron(r=(0,0,0), v=(1,0,i), prob=1), False)
