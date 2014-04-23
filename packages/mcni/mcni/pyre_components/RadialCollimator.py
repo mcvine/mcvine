@@ -45,12 +45,13 @@ class RadialCollimator( AbstractComponent ):
     def _init(self):
         AbstractComponent._init(self)
         from math import pi
+        si = self.inventory
         self.engine = enginefactory(
             self.name,
-            self.radius1, self.height1,
-            self.radius2, self.height2,
-            self.theta1/180*pi, self.theta2/180*pi,
-            self.dtheta/180*pi,
+            si.radius1, si.height1,
+            si.radius2, si.height2,
+            si.theta1/180*pi, si.theta2/180*pi,
+            si.dtheta/180*pi,
             )
         return
 

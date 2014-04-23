@@ -22,7 +22,6 @@ class RadialCollimator( AbstractComponent ):
     def process(self, neutrons):
         if not len(neutrons):
             return
-        
         from mcni.neutron_storage import neutrons_as_npyarr, ndblsperneutron
         arr = neutrons_as_npyarr(neutrons)
         arr.shape = -1, ndblsperneutron
@@ -35,10 +34,10 @@ class RadialCollimator( AbstractComponent ):
         #
         x1,y1,z1 = self.intersectCylinder(
             (z,x,y), (vz,vx,vy), (self.radius1, self.height1))
-        theta1 = np.atan(x1,y1) 
+        theta1 = np.arctan2(y1,x1) 
         x2,y2,z2 = self.intersectCylinder(
             (z,x,y), (vz,vx,vy), (self.radius2, self.height2))
-        theta2 = np.atan(x2,y2)
+        theta2 = np.arctan2(y2,x2)
         good = (x1==x1) \
             * (z1<self.height1/2.) * (z1>-self.height1/2.) \
             * (z2<self.height2/2.) * (z2>-self.height2/2.) \
@@ -75,13 +74,56 @@ class RadialCollimator( AbstractComponent ):
         A = vx*vx + vy*vy
         B = 2*(x*vx + y*vy)
         C = x*x + y*y - radius*radius
-        import numpy as np
         t = (np.sqrt(B*B-4*A*C) - B)/2/A
         return x+vx*t, y+vy*t, z+vz*t
     
     
     pass # end of MonochromaticSource
 
+
+import numpy as np
+
+
+def test():
+    DEG2RAD = np.pi/180
+    from mcni import neutron_buffer, neutron
+    neutrons = neutron_buffer(1)
+    coll = RadialCollimator(
+        name="collimator",
+        radius1=0.308, height1=0.6, radius2=0.462, height2=0.6,
+        theta1=-20*DEG2RAD, theta2=150*DEG2RAD, 
+        dtheta=1.6*DEG2RAD)
+    def check(neutron, absorbed):
+        neutrons.resize(1, neutron)
+        neutrons[0] = neutron
+        coll.process(neutrons)
+        assert len(neutrons) == (not absorbed)
+        return
+    
+    check(neutron(r=(0,0,0), v=(0,0.3,0.463), prob=1), False)
+    check(neutron(r=(0,0,0), v=(0,0.3,0.461), prob=1), True)
+    check(neutron(r=(0,0,0), v=(0.1,0.3,0.45), prob=1), True)
+    check(neutron(r=(0,0,0), v=(0.1,0.3,0.462), prob=1), False)
+    check(neutron(r=(0,0,0), v=(0,0,1000), prob=1), False)
+    check(neutron(r=(0,0,0), v=(1000,0,0), prob=1), False)
+    check(neutron(r=(0,0,0), v=(1000,0,-1000), prob=1), False)
+    check(neutron(r=(0,0,0), v=(0,0,-1000), prob=1), True)
+    check(neutron(r=(0.1,0,0), v=(0,0,1000), prob=1), True)
+    check(neutron(r=(0.001,0,0), v=(0,0,1000), prob=1), False)
+    check(neutron(r=(0.01,0,0), v=(0,0,1000), prob=1), False)
+    check(neutron(r=(0.03,0,0), v=(0,0,1000), prob=1), True)
+    check(neutron(r=(0.02,0,0), v=(0,0,1000), prob=1), False)
+    check(neutron(r=(0.1,0,0), v=(0,10,0), prob=1), True)
+    for i in range(10):
+        check(neutron(r=(0,0,0), v=(1,0,i), prob=1), False)
+    for i in range(1,10):
+        check(neutron(r=(0,0,0), v=(i,0,-1), prob=1), False)
+        continue
+    return
+
+
+if __name__ == '__main__': test()
+    
 
 # version
 __id__ = "$Id$"
