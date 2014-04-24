@@ -32,12 +32,13 @@ class RadialCollimator( AbstractComponent ):
         p = arr[:,9]
         
         #
+        theta_osc = self.oscillation * np.random.rand(len(neutrons))
         x1,y1,z1 = self.intersectCylinder(
             (z,x,y), (vz,vx,vy), (self.radius1, self.height1))
-        theta1 = np.arctan2(y1,x1) 
+        theta1 = np.arctan2(y1,x1)  + theta_osc
         x2,y2,z2 = self.intersectCylinder(
             (z,x,y), (vz,vx,vy), (self.radius2, self.height2))
-        theta2 = np.arctan2(y2,x2)
+        theta2 = np.arctan2(y2,x2) + theta_osc
         good = (x1==x1) \
             * (z1<self.height1/2.) * (z1>-self.height1/2.) \
             * (z2<self.height2/2.) * (z2>-self.height2/2.) \
@@ -55,7 +56,7 @@ class RadialCollimator( AbstractComponent ):
         self, name, 
         radius1, height1, radius2, height2,
         theta1, theta2, 
-        dtheta):
+        dtheta, oscillation=0):
         self.name = name
         self.radius1 = radius1
         self.radius2 = radius2
@@ -64,6 +65,7 @@ class RadialCollimator( AbstractComponent ):
         self.theta1 = theta1
         self.theta2 = theta2
         self.dtheta = dtheta
+        self.oscillation = oscillation
         return
     
     

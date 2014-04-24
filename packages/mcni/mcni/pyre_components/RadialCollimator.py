@@ -30,6 +30,7 @@ class RadialCollimator( AbstractComponent ):
         theta1 = pinv.float("theta1", default=0)
         theta2 = pinv.float("theta2", default=180)
         dtheta = pinv.float("dtheta", default=1)
+        oscillation = pinv.float("oscillation", default=1)
         pass
     
 
@@ -51,7 +52,8 @@ class RadialCollimator( AbstractComponent ):
             si.radius1, si.height1,
             si.radius2, si.height2,
             si.theta1/180*pi, si.theta2/180*pi,
-            si.dtheta/180*pi,
+            si.dtheta/180*pi, 
+            si.oscillation/180*pi,
             )
         return
 
