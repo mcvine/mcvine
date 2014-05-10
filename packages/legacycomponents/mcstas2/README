@@ -1,0 +1,9 @@
+MCViNE adapation of McStas library
+----------------------------------
+
+This sub-package helps wrap McStas components so that they can
+be used in MCViNE.
+
+For more information about McStas: http://mcstas.org/
+
+For more information about how MCViNE uses McStas components, see MCViNE documentation.
