@@ -22,6 +22,8 @@
 #define MCCOMPONENTS_KERNELS_KERNELBASE_H
 
 
+#include <iostream>
+#include <typeinfo>
 #include "mccomponents/homogeneous_scatterer/AbstractScatteringKernel.h"
 
 
@@ -42,6 +44,18 @@ namespace mccomponents {
       virtual void scatter( mcni::Neutron::Event & ev )
       {
 	S(ev);
+	// check velocity and make sure it is sane
+	typedef mcni::Vector3<double> V3d;
+	V3d& vel = ev.state.velocity;
+	if (vel.x!=vel.x || vel.y!=vel.y || vel.z!= vel.z) {
+	  std::cerr << "In kernel " << typeid(*this).name()
+		    << ", neutron velocity turns invalid: "
+		    << ev
+		    << std::endl;
+	  // invalidate the neutron
+	  ev.probability = -1;
+	}
+	
 	if (ev.probability>0) {
 	  double sigma = scattering_coefficient(ev);
 	  ev.probability *= sigma;
