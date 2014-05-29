@@ -47,7 +47,7 @@ namespace mccomponents {
 	// check velocity and make sure it is sane
 	typedef mcni::Vector3<double> V3d;
 	V3d& vel = ev.state.velocity;
-	if (vel.x!=vel.x || vel.y!=vel.y || vel.z!= vel.z) {
+	if (ev.probability >= 0 && (vel.x!=vel.x || vel.y!=vel.y || vel.z!= vel.z)) {
 	  std::cerr << "In kernel " << typeid(*this).name()
 		    << ", neutron velocity turns invalid: "
 		    << ev
