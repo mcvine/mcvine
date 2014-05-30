@@ -40,7 +40,10 @@ class App(AppBase):
         type = pyre.inventory.str('type', default='raw')
         workdir = pyre.inventory.str('workdir', default='work-neutrons2nxs')
         instrument = pyre.inventory.str('instrument')
-        
+        z_rotation = pyre.inventory.float('z_rotation', default=0)
+        z_rotation.help = 'rotation angle (degree) around z (vertical) applied to detector system'
+        detsys = pyre.inventory.str('detsys', default=None)
+        detsys.help = "path instrument.xml.fornxs (danse). this overrides the instrument option. should not need this normally"
         
     def main(self):
         neutrons = self.inventory.neutrons; neutrons = os.path.abspath(neutrons)
@@ -53,7 +56,9 @@ class App(AppBase):
         type = self.inventory.type
         nodes = self.inventory.nodes
         instrument = self.inventory.instrument
-        run(neutrons, nxs, type, workdir, nodes, instrument)
+        detsys = self.inventory.detsys
+        z_rotation = self.inventory.z_rotation
+        run(neutrons, nxs, type, workdir, nodes, instrument, z_rotation, detsys)
         return
     
 
@@ -62,9 +67,9 @@ class App(AppBase):
     
 
 # main methods
-def run(neutrons, nxs, type, workdir, nodes, instrument):
+def run(neutrons, nxs, type, workdir, nodes, instrument, z_rotation, detsys):
     import time
-    eventdat = sendneutronstodetsys(neutronfile=neutrons, workdir=os.path.join(workdir, 'todetsys'), nodes=nodes, instrument=instrument)
+    eventdat = sendneutronstodetsys(neutronfile=neutrons, workdir=os.path.join(workdir, 'todetsys'), nodes=nodes, instrument=instrument, z_rotation=z_rotation, detsys=detsys)
     time.sleep(10)
     event2nxs(eventdat, nxs, type, workdir, instrument)
     return
@@ -75,9 +80,13 @@ def sendneutronstodetsys(
     nodes=None,
     workdir = None,
     instrument = None,
+    z_rotation = None,
+    detsys = None,
     ):
     d = locals()
-    cmd = 'mcvine-sns-neutrons2events --neutrons=%(neutronfile)s --nodes=%(nodes)s --workdir=%(workdir)s --instrument=%(instrument)s' % d
+    cmd = 'mcvine-sns-neutrons2events --neutrons=%(neutronfile)s --nodes=%(nodes)s --workdir=%(workdir)s --instrument=%(instrument)s --z_rotation=%(z_rotation)s' % d
+    if detsys:
+        cmd += ' --detsys=%(detsys)s' % d
     execute(cmd, os.curdir)
     return os.path.join(workdir, 'out', 'events.dat')
 

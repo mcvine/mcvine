@@ -52,7 +52,7 @@ class App(AppBase):
         
         # path instrument.xml.fornxs (danse). this overrides the instrument option
         detsys = pyre.inventory.str('detsys') # detector system xml path
-        
+        z_rotation = pyre.inventory.float('z_rotation') # rotation around z (vertical) applied to detector system
         
     def main(self):
         neutrons = self.inventory.neutrons; neutrons = os.path.abspath(neutrons)
@@ -73,7 +73,8 @@ class App(AppBase):
                 mcvinedir, 'share', 'mcvine', 'instruments', 
                 instrument.upper(), '%s.xml.fornxs' % instrument)
         run(neutrons, workdir, 
-            nodes=nodes, tofbinsize=tofbinsize, tofmax=tofmax, detsys=detsys)
+            nodes=nodes, tofbinsize=tofbinsize, tofmax=tofmax, 
+            detsys=detsys, z_rotation=z_rotation)
         return
 
 
@@ -90,6 +91,7 @@ def run(neutrons, workdir, **kwds):
 def sendneutronstodetsys(
     neutronfile=None, scattering_rundir=None, nodes=None, ncount=None,
     workdir = None, tofbinsize = None, tofmax=None, detsys = None,
+    z_rotation = None,
     ):
     """
     run a simulation to send neutrons to det system
@@ -97,6 +99,8 @@ def sendneutronstodetsys(
     workdir: directory where the simulation is run
     tofmax: unit: second
     tofbinsize: unit: microsecond
+    
+    z_rotation: angle of rotation applied to the detector system around z axis (vertical). unit: degree
     """
     # create workdir if it does not exist
     if not os.path.exists(workdir):
@@ -124,6 +128,7 @@ def sendneutronstodetsys(
         'detsys.tofparams': '0,%s,%s' % (tofmax, 1e-6*tofbinsize,), 
         'detsys.instrumentxml': detsys,
         'detsys.eventsdat': 'events.dat',
+        'geometer.detsys': '(0,0,0), (0, %s, 0)' % z_rotation or 0,
         'ncount': ncount,
         'source.path': neutronfile,
         }
