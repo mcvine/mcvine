@@ -25,7 +25,10 @@ Max Kresch's original multiphonon code.
 """
 
 
-def sqe(E, g, Qmax=None, Qmin=0, dQ=None, T=300, M=50, N=5, starting_order=2):
+def sqe(
+    E, g, Qmax=None, Qmin=0, dQ=None,
+    T=300, M=50, N=5, starting_order=2, Emax=None,
+    ):
     """compute sum of multiphonon SQE from dos
     S = \sum_{i=2,N} S_i(Q,E)
     
@@ -44,7 +47,8 @@ def sqe(E, g, Qmax=None, Qmin=0, dQ=None, T=300, M=50, N=5, starting_order=2):
     de = E[1] - E[0]
     emax = E[-1]
     # expand E
-    E = np.arange(e0, e0+de*N*dos_sample, de)
+    Emax = Emax or e0+de*3*dos_sample
+    E = np.arange(e0, Emax, de)
     g = np.concatenate((g, np.zeros(len(E)-len(g))))
     # normalize
     int_g = np.sum(g) * de
@@ -62,12 +66,37 @@ def sqe(E, g, Qmax=None, Qmin=0, dQ=None, T=300, M=50, N=5, starting_order=2):
     beta = 1./(T*kelvin2mev)
     
     # compute S
-    from mccomponents.sample.phonon.multiphonon import computeSQESet
-    Q, E, S_set= computeSQESet(N, Q, dQ, E, de, M, g, beta)
+    S = None
+    for i, (Q,E,S1) in enumerate(iterSQESet(N, Q, dQ, E, de, M, g, beta)):
+        if i < starting_order - 1: continue
+        if S is None: S = S1; continue
+        S += S1
+        continue
     
     # sum over 2..N
-    S = S_set[starting_order-1:].sum(axis=0)
+    # S = S_set[starting_order-1:].sum(axis=0)
     return Q, E, S
+
+
+def iterSQESet(N, Q,dQ, E,dE, M, g, beta):
+    """iterate over the set of S(Q,E) for n in [1,N]
+    Q, dQ: Q axis
+    E, dE: E axis
+    M: mass
+    g: phonon DOS for the given E
+    beta: 1/(kBT)
+    """
+
+    E2, AnE_set = computeAnESet(N, E,g, beta, dE)
+    
+    DW2 = DWExp(Q, M, E,g, beta, dE)
+    SnQ_set = computeSnQSet(N, DW2)
+    
+    sqe = []
+    for S, A in zip(SnQ_set, AnE_set):
+        yield Q, E2, np.outer(S, A)
+        continue
+    return
 
 
 def computeSQESet(N, Q,dQ, E,dE, M, g, beta):
@@ -112,14 +141,14 @@ def computeSNQ(DW2,N):
 def computeAnESet(N, E,g, beta, dE):
     """compute the set of An(E) for n in [1,N]
     """
-    ANE = []
     E, A1E = computeA1E(E,g, beta, dE)
-    ANE.append(A1E)
+    ANE = np.zeros((N,) + A1E.shape, dtype=A1E.dtype)
+    ANE[0] = A1E
     
     for i in range(2,N+1): 
-        ANE.append(AnE_from_n_1(ANE[0], ANE[-1], dE))
+        ANE[i-1] = AnE_from_n_1(ANE[0], ANE[i-2], dE)
         continue
-    return E, np.array(ANE)
+    return E, ANE
 
 
 def AnE_from_n_1(A1E, Anm1E, dE):
@@ -132,8 +161,9 @@ def AnE_from_n_1(A1E, Anm1E, dE):
     y = np.zeros( 3*len(A1E),'d' )
     y = np.concatenate((y, A1E), axis=0)
     y = y[::-1]
-    M = convMatrix(y)
+    M = convMatrix(y) # XXX: this could be big
     res = np.inner(M,Y)
+    del M
     res *= dE
     start = len(A1E)/2+1
     t = res[start:start + len(A1E)]
