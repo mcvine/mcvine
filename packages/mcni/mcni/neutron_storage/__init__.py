@@ -18,12 +18,12 @@
 
 
 def storage( *args, **kwds ):
-    from Storage import Storage
+    from .Storage import Storage
     return Storage( *args, **kwds )
 
 
 def merge( *args, **kwds ):
-    from merge import merge
+    from .merge import merge
     merge( *args, **kwds )
     return
 
@@ -94,7 +94,7 @@ def dump( neutrons, filename ):
 
     arr = neutrons_as_npyarr( neutrons )
     
-    from idf_usenumpy import write
+    from .idf_usenumpy import write
     write( arr, filename )
     return
 
@@ -111,9 +111,9 @@ def load( filename ):
 
 
 def readneutrons_asnpyarr( filename ):
-    from idf_usenumpy import readall
+    from .idf_usenumpy import readall
     filetype, version, comment, neutrons = readall( filename )
-    from idfneutron import version as ver, filetype as ft
+    from .idfneutron import version as ver, filetype as ft
     assert filetype == ft
     assert version == ver
     return neutrons
