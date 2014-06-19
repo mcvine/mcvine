@@ -102,6 +102,34 @@ def write(events, tofbinsize, path):
     return
 
 
+def setDASlogsEntryValue(entry, name, value):
+    daslogs = entry['DASlogs']
+    ds = daslogs[name]
+    ds['average_value'][0] \
+        = ds['effective_value'][0] \
+        = ds['maximum_value'][0] \
+        = ds['minimum_value'][0] \
+        = ds['value'][0] \
+        = value
+    # "EnergyRequest" does not have "requested_value"
+    # other items (s1,s2, etc) have.
+    if not 'request' in name.lower():
+        ds['requested_value'] = value
+    return
+
+
+def setEnergyRequest(entry, Ei):
+    """set energy request value into an ARCS nexus file
+    
+    entry: nexus "entry"
+    Ei: unit meV
+    
+    caveat: the nexus template file should already have /entry/DASlogs/EnergyRequest which contains the appropriate sub-datasets with correct attributes.
+    """
+    setDASlogsEntryValue(entry, 'EnergyRequest', Ei)
+    return
+
+
 bank_id_offset = 1
 pixelsperbank = 8 * 128
 pixel_id_offset = (bank_id_offset-1)*pixelsperbank
