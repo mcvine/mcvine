@@ -70,9 +70,9 @@
       <property name="Aperture1">relative((0.0, 0.0, 1.2000000000000002), to="arm2"),relative((0.0, 0.0, 0.0), to="arm2")</property>
       <property name="Soeller20">relative((0.0, 0.0, 1.3), to="arm2"),relative((0.0, 0.0, 0.0), to="arm2")</property>
       <property name="Aperture2">relative((0.0, 0.0, 1.6), to="arm2"),relative((0.0, 0.0, 0.0), to="arm2")</property>
-      <property name="sample_10x10">relative((0.0, 0.0, 1.7498), to="arm2"),relative((0.0, 0.0, 0.0), to="arm2")</property>
-      <property name="sample_1x1">relative((0.0, 0.0, 1.7499), to="arm2"),relative((0.0, 0.0, 0.0), to="arm2")</property>
-      <property name="recorder">relative((0.0, 0.0, 1.75), to="arm2"),relative((0, 0, 0), to="arm2")</property>
+      <property name="sample_10x10">relative((0.0, 0.0, 1.64980), to="arm2"),relative((0.0, 0.0, 0.0), to="arm2")</property>
+      <property name="sample_1x1">relative((0.0, 0.0, 1.64990), to="arm2"),relative((0.0, 0.0, 0.0), to="arm2")</property>
+      <property name="recorder">relative((0.0, 0.0, 1.650), to="arm2"),relative((0, 0, 0), to="arm2")</property>
     </component>
     
     <property name="multiple-scattering">off</property>

@@ -261,30 +261,32 @@ class Aperture2(object):
 class sample_10x10(object):
   name='sample_10x10'
   parameters={'xmin': '-0.05', 'ymin': '-0.05', 'ymax': '0.05', 'xmax': '0.05'}
-  extra='\n  AT (0, 0, (LMS - 0.05 - 0.0002)) RELATIVE arm2\n  ROTATED (0, 0, 0) RELATIVE arm2\n\n\n'
-  position=((0.0, 0.0, ' (LMS - 0.05 - 0.0002)'), 'relative', 'arm2')
+  extra='\n  AT (0, 0, (LMS - 0.15 - 0.0002)) RELATIVE arm2\n  ROTATED (0, 0, 0) RELATIVE arm2\n\n\n'
+  position=((0.0, 0.0, ' (LMS - 0.15 - 0.0002)'), 'relative', 'arm2')
   type='Monitor'
   orientation=((0.0, 0.0, 0.0), 'relative', 'arm2')
 
 class sample_1x1(object):
   name='sample_1x1'
   parameters={'xmin': '-0.005', 'ymin': '-0.005', 'ymax': '0.005', 'xmax': '0.005'}
-  extra='\n  AT (0, 0, (LMS -0.05 - 0.0001)) RELATIVE arm2\n  ROTATED (0, 0, 0) RELATIVE arm2\n\n'
-  position=((0.0, 0.0, ' (LMS -0.05 - 0.0001)'), 'relative', 'arm2')
+  extra='\n  AT (0, 0, (LMS -0.15 - 0.0001)) RELATIVE arm2\n  ROTATED (0, 0, 0) RELATIVE arm2\n\n'
+  position=((0.0, 0.0, ' (LMS -0.15 - 0.0001)'), 'relative', 'arm2')
   type='Monitor'
   orientation=((0.0, 0.0, 0.0), 'relative', 'arm2')
 
 class recorder(object):
   name='recorder'
   parameters={}
-  extra='\n  AT (0, 0, (LMS-0.05)) RELATIVE arm2\n\nEND\n\n\n\n'
-  position=((0.0, 0.0, ' (LMS-0.05)'), 'relative', 'arm2')
+  extra='\n  AT (0, 0, (LMS-0.15)) RELATIVE arm2\n\nEND\n\n\n\n'
+  position=((0.0, 0.0, ' (LMS-0.15)'), 'relative', 'arm2')
   type='NeutronToStorage'
   orientation=((0, 0, 0), 'relative', 'arm2')
 
 def config(Edes=20., E_min=10., E_max=30., Ortho30=False, toffset_us=-1.0, freq=180, LMS=1.8, iv=-1.0, Heusler=False, LM3S=0.72):
      
   
+     
+     
      
   
   from math import sqrt, pi as PI, asin
@@ -399,6 +401,7 @@ def config(Edes=20., E_min=10., E_max=30., Ortho30=False, toffset_us=-1.0, freq=
       toffset_s = toffset_us / 1000000.0 
       pass
   
+  # not necessarily true
   if (Edes < 60.0) :
       freq_T0 = 30.0; 
   else:
