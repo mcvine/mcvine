@@ -4,6 +4,16 @@ MCViNE adapation of McStas library
 This sub-package helps wrap McStas components so that they can
 be used in MCViNE.
 
+* mcstas2: python modules to adapt McStas components. Original mcvine code
+* lib: mcstas adaptation c/c++ library. Mostly derived from mcstas c code, and some original code.
+* mcstas2bpmodule: bindings of mcstas adaptation c/c++ lib. Original
+* bin: scripts and applications. Original
+* share: adapted mcstas components. Derived from mcstas components.
+* tests: tests. Original
+
+Since McStas is using GPL license (see COPYING.mcstas), this portion of code is
+also under GPL license.
+
 For more information about McStas: http://mcstas.org/
 
 For more information about how MCViNE uses McStas components, see MCViNE documentation.
