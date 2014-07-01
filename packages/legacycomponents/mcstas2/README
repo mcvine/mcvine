@@ -11,8 +11,7 @@ be used in MCViNE.
 * share: adapted mcstas components. Derived from mcstas components.
 * tests: tests. Original
 
-Since McStas is using GPL license (see COPYING.mcstas), this portion of code is
-also under GPL license.
+For license information, see LICENSE.
 
 For more information about McStas: http://mcstas.org/
 
