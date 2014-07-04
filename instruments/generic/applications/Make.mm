@@ -43,6 +43,7 @@ EXPORT_PYTHON_MODULES = \
 
 
 EXPORT_BINS = \
+	mcvine_analyze_beam \
 	SD.py \
 	SSSD.py \
 

@@ -13,8 +13,9 @@
 PROJECT = mcvine/instruments/generic
 
 BUILD_DIRS = \
-    SSSD \
-    SD \
+	mcvine_analyze_beam \
+	SSSD \
+	SD \
 
 OTHER_DIRS = \
 
