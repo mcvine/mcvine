@@ -148,7 +148,7 @@ def setDASlogsEntryValue(entry, name, value):
     # "EnergyRequest" does not have "requested_value"
     # other items (s1,s2, etc) have.
     if not 'request' in name.lower():
-        ds['requested_value'] = value
+        ds['requested_value'][0] = value
     return
 
 

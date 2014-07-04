@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+#rm -rf *out* && hyspec_beam --ncount=4e6
+#cp ../../../resources/hyspec-raw-events-template.nxs sim.nxs
+hyspec-nxs-populate-metadata -mod2sample=out --sample=20 --detector=-30 --nxs=sim.nxs
