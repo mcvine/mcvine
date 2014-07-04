@@ -102,6 +102,40 @@ def write(events, tofbinsize, path):
     return
 
 
+def populateMetadata(entry, sim_out, sample, detector):
+    """populate metadata needed for correct reduction by mantid
+    This includes 
+      * EnergyRequest
+      * msd: LMS
+      * s1: detector vessel angle
+      * s2: sample angle
+      
+    entry: nexus "entry"
+    sim_out: moderator2sample HYSPEC simulation output directory
+    sample: sample angle (degrees)
+    detector: detector angle (degrees)
+
+    Limitations:
+    """
+    # read props 
+    props = os.path.join(sim_out, 'props.json')
+    props = eval(open(props).read())
+    # get values
+    Ei = float(props['average energy'].split()[0])
+    LMS = float(props['monochromator-sample distance'].split()[0])
+    
+    # set energy
+    setEnergyRequest(entry, Ei)
+    
+    # set msd
+    setDASlogsEntryValue(entry, 'msd', LMS*1000) # unit: mm
+    
+    # 
+    setDASlogsEntryValue(entry, 's1', detector)
+    setDASlogsEntryValue(entry, 's2', sample)
+    return
+
+
 def setDASlogsEntryValue(entry, name, value):
     daslogs = entry['DASlogs']
     ds = daslogs[name]
