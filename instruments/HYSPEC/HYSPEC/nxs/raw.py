@@ -107,8 +107,8 @@ def populateMetadata(entry, sim_out, sample, detector):
     This includes 
       * EnergyRequest
       * msd: LMS
-      * s1: detector vessel angle
-      * s2: sample angle
+      * s1: sample angle
+      * s2: detector vessel angle
       
     entry: nexus "entry"
     sim_out: moderator2sample HYSPEC simulation output directory
@@ -131,8 +131,8 @@ def populateMetadata(entry, sim_out, sample, detector):
     setDASlogsEntryValue(entry, 'msd', LMS*1000) # unit: mm
     
     # 
-    setDASlogsEntryValue(entry, 's1', detector)
-    setDASlogsEntryValue(entry, 's2', sample)
+    setDASlogsEntryValue(entry, 's1', sample)
+    setDASlogsEntryValue(entry, 's2', detector)
     return
 
 
