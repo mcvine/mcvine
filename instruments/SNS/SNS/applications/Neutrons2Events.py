@@ -64,6 +64,7 @@ class App(AppBase):
         nodes = self.inventory.nodes
         tofbinsize = self.inventory.tofbinsize
         tofmax = self.inventory.tofmax
+        z_rotation = self.inventory.z_rotation
         detsys = self.inventory.detsys
         if not detsys:
             instrument = self.inventory.instrument
@@ -128,7 +129,7 @@ def sendneutronstodetsys(
         'detsys.tofparams': '0,%s,%s' % (tofmax, 1e-6*tofbinsize,), 
         'detsys.instrumentxml': detsys,
         'detsys.eventsdat': 'events.dat',
-        'geometer.detsys': '(0,0,0), (0, %s, 0)' % z_rotation or 0,
+        'geometer.detsys': '(0,0,0),(0,%s,0)' % (z_rotation or 0,),
         'ncount': ncount,
         'source.path': neutronfile,
         }
