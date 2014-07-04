@@ -32,7 +32,7 @@ class KernelContainer(base):
     
     onIsotropicKernel \
         = onConstantQEKernel = onConstantEnergyTransferKernel \
-        = onE_Q_Kernel = onBroadened_E_Q_Kernel \
+        = onE_Q_Kernel = onBroadened_E_Q_Kernel = onE_vQ_Kernel \
         = onSQEkernel \
         = onKernelContainer = base.onElement
 

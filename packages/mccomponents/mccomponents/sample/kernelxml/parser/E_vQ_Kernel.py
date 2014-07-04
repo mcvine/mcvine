@@ -17,10 +17,10 @@ from .KernelNode import KernelNode as base
 
 
 class E_vQ_Kernel(base):
-
-
-    tag = "E_vectorQ_Kernel"
-
+    
+    
+    tag = "E_vQ_Kernel"
+    
     def createKernel( self, **kwds ):
         from mccomponents import sample
         E_Q = str(kwds['E_Q'])

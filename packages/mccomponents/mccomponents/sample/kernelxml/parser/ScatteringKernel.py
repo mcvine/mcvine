@@ -39,7 +39,7 @@ class ScatteringKernel(Node):
         return
 
     onKernelContainer = onSQEkernel = onIsotropicKernel \
-        = onE_Q_Kernel = onBroadened_E_Q_Kernel \
+        = onE_Q_Kernel = onE_vQ_Kernel = onBroadened_E_Q_Kernel \
         = onConstantEnergyTransferKernel = onConstantQEKernel \
         = on_
     
