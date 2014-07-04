@@ -37,6 +37,7 @@ tidy::
 EXPORT_PYTHON_MODULES = \
 	Instrument.py \
 	__init__.py \
+	beam_postprocessing.py \
 	instrument_spec.py \
 
 

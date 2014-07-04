@@ -45,6 +45,7 @@ EXPORT_PYTHON_MODULES = \
 EXPORT_BINS = \
 	config-hyspec_moderator2sample \
 	hyspec_moderator2sample \
+	hyspec_beam \
 
 
 export:: export-binaries release-binaries export-package-python-modules #export-docs

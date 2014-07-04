@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+rm -rf *out* && hyspec_beam --ncount=1e6
