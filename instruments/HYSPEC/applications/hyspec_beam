@@ -41,8 +41,11 @@ class App(base):
         
         ncount = pyre.inventory.float('ncount', default=1000000)
         ncount.meta['tip'] = 'neutron count'
-
-
+        
+        nodes = pyre.inventory.int('nodes', default=1)
+        nodes.meta['tip'] = '# of mpi nodes'
+        
+        
     m2sout = '_m2sout'
     out = 'out'
     
@@ -82,18 +85,19 @@ class App(base):
 
 
     def _run_beam(self):
-        cmd = ['hyspec_moderator2sample']
-        data = dict(
-            ncount = self.inventory.ncount,
-            )
-        cmd += self._buildCmdOptions(data)
-        cmd += ['-buffer_size=%s' % int(self.inventory.ncount/10)]
-        cmd.append( '--output-dir=%s' % self.m2sout)
         moddat = os.path.join(
             os.environ['MCVINE_DIR'], 'share', 'mcvine',
             'instruments', 'HYSPEC', 'mcstas', 'SNS_TD_30o70p_fit_fit.dat',
             )
-        cmd += ['-moderator.S_filename=%s' % moddat]
+        cmd = ['hyspec_moderator2sample']
+        data = {
+            "ncount": self.inventory.ncount,
+            "buffer_size": int(self.inventory.ncount/5/self.inventory.nodes),
+            "mpirun.nodes": self.inventory.nodes,
+            "output-dir": self.m2sout,
+            'moderator.S_filename': moddat,
+            }
+        cmd += self._buildCmdOptions(data)
         cmd = ' '.join(cmd)
         open('run-m2s.sh', 'wt').write(cmd) # save the running command
         bpp._exec(cmd)
