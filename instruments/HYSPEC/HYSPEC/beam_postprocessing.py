@@ -44,6 +44,7 @@ def run(m2sout, out, Ei, LMS):
         'flux': '%s counts per 34kJ pulse' % flux,
         'average energy': '%s meV' % energy,
         'tof fwhm': '%s microsecond' % fwhm,
+        'monochromator-sample distance': "%s meters" % LMS,
         }
     open(os.path.join(out, 'props.json'), 'w').write(str(props))
     return
