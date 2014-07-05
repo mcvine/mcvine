@@ -49,15 +49,16 @@ class App(AppBase):
         if ei_guess > 0:
             use_ei_guess = True
         
+        powder = self.inventory.powder
         d = {
             'nxsfile': nxs,
             'psi': self.inventory.psi,
             'use_ei_guess': use_ei_guess,
             'ei_guess': ei_guess,
             'speout': self.inventory.speout,
+            'powder': powder,
             }
 
-        powder = self.inventory.powder
         if powder:
             qmin, qmax, dq = self.inventory.qaxis
             qaxis = (qmin, dq, qmax)
