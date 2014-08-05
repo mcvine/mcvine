@@ -6,6 +6,7 @@ Getting Started
 ---------------
 
 .. * :ref:`Demos <demos>`
+* :ref:`Overview <overview>`
 * :ref:`Features <features>`
 * :ref:`Installation <installation>`
 * :ref:`Tutorials <tutorials>`
