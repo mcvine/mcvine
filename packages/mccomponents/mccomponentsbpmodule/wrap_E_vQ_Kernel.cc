@@ -31,7 +31,7 @@ namespace wrap_mccomponents {
   {
     return new kernel_t
       (fxyz_t(E_vQ, "Qx,Qy,Qz"),
-       fxyz_t(S_vQ, "Qx,Qy,Qz"),
+       SvQ_t(S_vQ, "Qx,Qy,Qz,Q,s"),
        Emax,
        absorption_cross_section,
        scattering_cross_section

@@ -47,6 +47,7 @@ EXPORT_HEADERS = \
 	AbstractSQE.h \
 	GridSQE.h \
 	SQE_fromexpression.h \
+	SvQ_fromexpression.h \
 	fxy.h \
 
 

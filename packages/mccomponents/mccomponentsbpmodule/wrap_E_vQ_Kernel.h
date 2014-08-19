@@ -16,6 +16,7 @@
 #include <boost/python.hpp>
 #include "mccomponents/kernels/sample/E_vQ_Kernel.h"
 #include "mccomponents/math/Fxyz_fromExpr.h"
+#include "mccomponents/kernels/sample/SQE/SvQ_fromexpression.h"
 
 
 namespace wrap_mccomponents {
@@ -23,9 +24,10 @@ namespace wrap_mccomponents {
   struct Wrap_E_vQ_Kernel{
 
     typedef mccomponents::math::Fxyz_fromExpr fxyz_t;
-    typedef mccomponents::kernels::E_vQ_Kernel<fxyz_t, fxyz_t> \
+    typedef mccomponents::sample::SvQ_fromExpr SvQ_t;
+    typedef mccomponents::kernels::E_vQ_Kernel<fxyz_t, SvQ_t> \
     kernel_t;
-
+    
     static kernel_t * newKernel
     (const std::string & E_vQ,
      const std::string & S_vQ,
@@ -33,7 +35,7 @@ namespace wrap_mccomponents {
      double absorption_cross_section, 
      double scattering_cross_section
      );
-
+    
     Wrap_E_vQ_Kernel();
 
   };
