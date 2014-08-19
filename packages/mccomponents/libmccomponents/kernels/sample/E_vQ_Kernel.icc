@@ -31,6 +31,12 @@
 #endif
 
 
+namespace mccomponents{
+  namespace kernels{
+    const double ksq2e = mcni::neutron_units_conversion::k2v*mcni::neutron_units_conversion::k2v*mcni::neutron_units_conversion::vsq2e;
+  }
+}
+
 template< typename E_vQ_functor_t, typename S_vQ_functor_t>
 struct 
 mccomponents::kernels::E_vQ_Kernel<E_vQ_functor_t, S_vQ_functor_t>\
@@ -47,8 +53,8 @@ mccomponents::kernels::E_vQ_Kernel<E_vQ_functor_t, S_vQ_functor_t>\
   Details(kernel_t &i_kernel) 
     :
     kernel(&i_kernel)
-    ,root_finder(1e-6)
-    ,roots_finder(root_finder, 10000)
+    ,root_finder(1e-3)
+    ,roots_finder(root_finder, 1000)
 #ifdef DEBUG
     ,debug( jrnltag )
 #endif
@@ -57,7 +63,6 @@ mccomponents::kernels::E_vQ_Kernel<E_vQ_functor_t, S_vQ_functor_t>\
   kernel_t * kernel;
   math::Algorithms::Bracketing::Ridder::ZRidd root_finder;
   math::FindRootsEvenly roots_finder;
-
 };
 
 
@@ -173,6 +178,7 @@ mccomponents::kernels::E_vQ_Kernel<E_vQ_functor_t, S_vQ_functor_t>\
   double vi = vvi.length();
   // ki vector
   V3d vki = conversion::v2k * vvi;
+  double ki = vki.length();
   
   // incident neutron energy
   double Ei = conversion::v2E( vi );
@@ -196,7 +202,7 @@ mccomponents::kernels::E_vQ_Kernel<E_vQ_functor_t, S_vQ_functor_t>\
   // .. solve 
   std::vector<double> kf_list = m_details->roots_finder.solve\
     (min_kf, max_kf, eqmd);
-  // .. randomly choose Q
+  // .. randomly choose kf
   size_t nkf = kf_list.size();
   if (nkf<1) {
     std::cerr
@@ -205,9 +211,20 @@ mccomponents::kernels::E_vQ_Kernel<E_vQ_functor_t, S_vQ_functor_t>\
       << std::endl;
     return;
   }
+  /*
+    std::cout << "nkf=" << nkf << ": ";
+    for (int i = 0; i<nkf; i++)
+    std::cout << kf_list[i] << ", ";
+    std::cout << std::endl;
+  */
   size_t index=0;
   if (nkf>1) index = math::random(size_t(0), nkf);
   double kf = kf_list[index];
+  ev.probability *= nkf;
+  // compute differential
+  double dkf = ki/100, df_dkf = std::abs(eqmd.evaluate(kf+dkf)-eqmd.evaluate(kf-dkf))/2/dkf;
+  ev.probability *= 2 * ksq2e * kf / df_dkf;
+  
   // kf vector
   V3d vkf = ukf * kf;
   // Q vector
