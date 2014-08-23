@@ -18,16 +18,18 @@ class SimplePowderDiffractionKernel(Kernel):
     '''a simple kernel for powder diffraction
     '''
 
-    def __init__(self, Dd_over_d, DebyeWaller_factor, peaks):
+    def __init__(self, Dd_over_d, DebyeWaller_factor, peaks, unitcell_volume=None):
         '''new SimplePowderDiffractionKernel
   Inputs:
     Dd_over_d: relative line width Delta_d/d
     DebyeWaller_factor: Debye-Waller factor
     peaks: data of all powder diffraction peaks. a peak should be an instance of Peak
+    unitcell_volume: unit is \AA^3
     '''
         self.Dd_over_d = Dd_over_d
         self.DebyeWaller_factor = DebyeWaller_factor
         self.peaks = peaks
+        self.unitcell_volume = unitcell_volume
         return
         
     def identify(self, visitor): 

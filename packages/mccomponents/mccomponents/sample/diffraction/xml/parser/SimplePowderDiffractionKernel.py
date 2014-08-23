@@ -24,24 +24,27 @@ class SimplePowderDiffractionKernel(base):
     def createKernel( self, **kwds ):
         Dd_over_d = self._parse( kwds['Dd_over_d'] )
         DebyeWaller_factor = self._parse( kwds['DebyeWaller_factor'] )
-
+        
         peakspath = kwds.get('peaks-py-path')
         lazpath = kwds.get('laz-path')
-
+        
         if peakspath:
             env = {}
             s = open(peakspath).read()
             exec s in env
             peaks = env['peaks']
+            unitcell_volume = env.get('unitcell_volume')
         elif lazpath:
             from mccomponents.sample.diffraction.parsers.laz import parse
-            peaks = parse(open(lazpath).read())
+            laz = parse(open(lazpath).read())
+            peaks = laz.peaks
+            unitcell_volume = laz.lattice.getVolume()
         else:
             raise ValueError, "SimplePowderDiffractionKernel needs path to "\
                   "the peaks datafile (laz or peaks.py)"
         
         from mccomponents.sample.diffraction import simplepowderdiffractionkernel as f
-        return f(Dd_over_d, DebyeWaller_factor, peaks)
+        return f(Dd_over_d, DebyeWaller_factor, peaks, unitcell_volume=unitcell_volume)
 
 
     pass # end of SimplePowderDiffractionKernel

@@ -73,8 +73,12 @@ def parse(text, line_width=0, dw_factor=1):
             )
         peaks.append(peak)
         continue
-
-    return peaks
+    
+    class laz:
+        lattice = lat
+        
+    laz.peaks = peaks
+    return laz
 
 
 def _q(lattice, h, k, l):

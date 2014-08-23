@@ -38,7 +38,8 @@ class ComputationEngineRendererExtension:
         data.Dd_over_d = kernel.Dd_over_d
         #
         #data.unitcell_volume = unitcell.getVolume()
-        data.unitcell_volume = unitcell.lattice.getVolume()
+        data.unitcell_volume = kernel.unitcell_volume or \
+            unitcell.lattice.getVolume()
         debug.log('unitcell volume: %s' % data.unitcell_volume)
         # !!!!!
         # number_of_atoms is not really used in the kernel implementation
