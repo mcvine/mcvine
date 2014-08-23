@@ -80,12 +80,12 @@ IncoherentElastic
   for (size_t i=0; i<m_atoms.size(); i++) {
     m_total_scattering_xs += m_atoms[i].incoherent_cross_section;
   }
-
+  
   m_total_absorption_xs = 0;
   for (size_t i=0; i<m_atoms.size(); i++) {
     m_total_absorption_xs += m_atoms[i].absorption_cross_section;
   }
-
+  
   if (scattering_xs>0.)
     m_total_scattering_xs = scattering_xs;
   
