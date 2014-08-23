@@ -12,7 +12,9 @@
 //
 
 #include <cassert>
+#include <typeinfo>
 #include "mccomposite/mccomposite.h"
+#include "mccomponents/exception.h"
 #include "mccomponents/math/random.h"
 #include "mccomponents/homogeneous_scatterer/CompositeScatteringKernel.h"
 
@@ -29,6 +31,7 @@ struct mccomponents::CompositeScatteringKernel::Details{
 
   // data
   w_t & kernel;
+  int total_scattering_ind;
 };
 
 
@@ -66,6 +69,23 @@ mccomponents::CompositeScatteringKernel::CompositeScatteringKernel
     m_details(new Details(*this))
 {
   assert(m_kernels.size() == m_weights.size());
+  
+  // find if one of the elemental kernel claims it does total scattering
+  // make sure there is at most one such kernel. 
+  // if there is one such kernel, record its index as 
+  // m_details->total_scattering_ind
+  int n_total_scatt = 0, total_scatt_ind = -1;
+  for (int i=0; i<m_kernels.size(); i++) {
+    if (m_kernels[i]->total_scattering()) {
+      n_total_scatt ++; total_scatt_ind = i;
+    }
+    if (n_total_scatt > 1) {
+      std::string m = "more than one kernel have total scattering. should rearrange kernel composite.";
+      throw Exception(m);
+    }
+  }
+  m_details->total_scattering_ind = total_scatt_ind;
+  
   // normalize weights
   double tw = 0;
   for (int i=0; i<m_weights.size(); i++)
@@ -85,8 +105,10 @@ mccomponents::CompositeScatteringKernel::absorption_coefficient
 ( const mcni::Neutron::Event & ev )
 {
   double ret = 0.;
-  for (size_t i=0; i<m_kernels.size(); i++) 
-    ret += m_kernels[i]->absorption_coefficient( ev );
+  for (size_t i=0; i<m_kernels.size(); i++)  {
+    double tmp = m_kernels[i]->absorption_coefficient( ev );
+    ret += tmp;
+  }
   
   // always average the absorption coefficient??????????????
   ret/=m_kernels.size();
@@ -98,9 +120,18 @@ double
 mccomponents::CompositeScatteringKernel::scattering_coefficient
 ( const mcni::Neutron::Event & ev ) 
 {
+  // if one of the element declares that it defines total_scattering
+  // just use that one
+  if (m_details->total_scattering_ind >= 0)
+    return m_kernels[m_details->total_scattering_ind]->scattering_coefficient(ev);
+  
+  // otherwise, accumulate
   double ret = 0.;
-  for (size_t i=0; i<m_kernels.size(); i++) 
-    ret += m_kernels[i]->scattering_coefficient( ev );
+  for (size_t i=0; i<m_kernels.size(); i++) {
+    double c = m_kernels[i]->scattering_coefficient( ev );
+    ret += c;
+  }
+  // if user requested average, do that
   if (m_average) ret/=m_kernels.size();
   return ret;
 }

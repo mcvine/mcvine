@@ -36,6 +36,7 @@ namespace mccomponents {
     /// calculates the scattering coefficient for the given neutron event
     /// unit: 1/meter
     virtual double scattering_coefficient( const mcni::Neutron::Event & ev ) = 0;
+    virtual bool total_scattering() const {return 0;}
     
     /// scatter the given neutron
     /// note: 
@@ -58,7 +59,6 @@ namespace mccomponents {
 
     /// absorb the neutron
     virtual void absorb( mcni::Neutron::Event & ev ) = 0;
-
   };
 
 }
