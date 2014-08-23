@@ -53,7 +53,7 @@ namespace mccomponents {
 	vals[0] = x; vals[1] = y; vals[2] = z;
 	return m_fparser.Eval(vals);
       }
-
+      
       class BadExpression: public mcni::Exception {
       public:
 	BadExpression(const std::string &s) : mcni::Exception(s) {}
