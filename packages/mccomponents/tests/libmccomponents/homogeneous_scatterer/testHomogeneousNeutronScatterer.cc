@@ -312,6 +312,53 @@ void test6()
   std::cout << " - test 6 passed." << std::endl;
 }
 
+// calculate_attenuation
+void test7()
+{
+  using namespace mccomponents;
+  using namespace mccomposite::geometry;
+  
+  Box box1(1,1,1);
+  Box box2(2,2,2);
+  Difference diff(box2, box1);
+  
+  ToX kernel;
+  HomogeneousNeutronScatterer::Weights weights(0, 1, 0);
+  
+  HomogeneousNeutronScatterer scatterer( diff, kernel, weights );
+  
+  mcni::Neutron::Event event;
+  event.state.position = mccomposite::geometry::Position( 0,0, 0);
+  event.state.velocity = mccomposite::geometry::Direction( 0,0, 1);
+  event.probability = 1;
+  mccomposite::geometry::Position end(0,0,4);
+  
+  // start from center, go out
+  assert(std::abs(scatterer.calculate_attenuation(event, end)-0.60653) < 1e-6);
+  
+  // start from outside, go through center
+  event.state.position = mccomposite::geometry::Position( 0,0, -5);
+  assert(std::abs(scatterer.calculate_attenuation(event, end)-std::exp(-1)) < 1e-6);
+  
+  // start from inside right wall, go out
+  event.state.position = mccomposite::geometry::Position( 0,0, 0.75);
+  assert(std::abs(scatterer.calculate_attenuation(event, end)-std::exp(-0.25)) < 1e-6);  
+  
+  // start from inside left wall, go thru and out
+  event.state.position = mccomposite::geometry::Position( 0,0, -0.75);
+  assert(std::abs(scatterer.calculate_attenuation(event, end)-std::exp(-0.75)) < 1e-6);  
+  
+  // go through the side wall in the long way
+  event.state.position = mccomposite::geometry::Position( 0.75,0, -5);
+  assert(std::abs(scatterer.calculate_attenuation(event, end)-std::exp(-2)) < 1e-6); 
+  
+  // fly by the way
+  event.state.position = mccomposite::geometry::Position( 1, 0, -5);
+  assert(std::abs(scatterer.calculate_attenuation(event, end)-1) < 1e-6);
+  
+  std::cout << " - test 7 passed." << std::endl;
+}
+
 
 int main()
 {
@@ -325,6 +372,7 @@ int main()
   test4();
   test5();
   test6();
+  test7();
   return 0;
 }
 
