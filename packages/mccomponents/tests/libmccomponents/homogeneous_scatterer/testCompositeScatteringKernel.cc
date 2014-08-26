@@ -62,7 +62,9 @@ void test1()
   CompositeScatteringKernel::kernels_t kernels;
   kernels.push_back( &kernel1 );
   kernels.push_back( &kernel2 );
-  CompositeScatteringKernel csk( kernels );
+  std::vector<double> weights;
+  weights.push_back(1); weights.push_back(1);
+  CompositeScatteringKernel csk( kernels, weights, 0);
   
   mcni::Neutron::Event event, save;
   save.state.position = mccomposite::geometry::Position( 0,0, -5 );
