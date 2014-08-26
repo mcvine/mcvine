@@ -125,6 +125,10 @@ void test2()
 }
 
 
+// kernels with transmission, absorption, and scattering.
+// Check the fractional distribution among these three processes.
+// A bunch of same neutrons along z direction are
+// sent to a "stick".
 void test3()
 {
   using namespace mccomponents;
