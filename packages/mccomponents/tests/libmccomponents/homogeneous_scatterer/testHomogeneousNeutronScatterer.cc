@@ -48,6 +48,7 @@ public:
     ev.state.velocity.x = 1;
     ev.state.velocity.y = 0;
     ev.state.velocity.z = 0;
+    ev.probability *= scattering_coefficient(ev);
   }
   double absorbed;
   void absorb( mcni::Neutron::Event & ev ) 
@@ -131,7 +132,7 @@ void test3()
   mccomposite::geometry::Box box(0.01,0.01,1);
   ToX kernel;
   HomogeneousNeutronScatterer::Weights weights(0.1, 1, 1);
-
+  
   HomogeneousNeutronScatterer scatterer( box, kernel, weights );
 
   mcni::Neutron::Event event, save;
