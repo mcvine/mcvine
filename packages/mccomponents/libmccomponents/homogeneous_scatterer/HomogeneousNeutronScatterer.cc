@@ -456,13 +456,41 @@ double
 mccomponents::HomogeneousNeutronScatterer::calculate_attenuation
 ( const mcni::Neutron::Event &ev, const mccomposite::geometry::Position &end)
 {
-  const mccomposite::geometry::Position &start = ev.state.position;
-
+  // XXX: should we check end is at the line of progression for the neutron? XXX
+  namespace mcg=mccomposite::geometry;
+  const mcg::Position &start = ev.state.position;
+  typedef typename mcni::Neutron::State::velocity_t V_t;
+  const V_t &vv = ev.state.velocity;
+  double v = vv.length();
+  
+  mcg::ArrowIntersector::distances_t tofs = forward_intersect(mcg::Arrow(start, vv), shape());
   double length = (end-start).length();
-
+  double tofmax = length/v;
+  
+  double prev = 0; length = 0;
+  for (int i=0; i<tofs.size(); i++) {
+    double tof = tofs[i];
+    // assert (tof>0); // should be fine: forward_intersect
+    if (tof > tofmax) tof = tofmax;
+    // middle point
+    double middle = (tof+prev)/2.;
+    mcg::Position p = start + vv*middle;
+    // if middle point is inside, count this segment
+    if (mcg::locate(p, shape() ) == mcg::Locator::inside ) 
+      length += (tof-prev) * v;
+    if (tof > tofmax) break;
+    prev = tof;
+  }
+  
   double mu = m_kernel.absorption_coefficient( ev ) * packing_factor;
   double sigma = m_kernel.scattering_coefficient( ev ) * packing_factor;
-
+  /*
+  std::cout
+    << "v, mu, sigma, length=" 
+    << ev.state.velocity.length() << ", " 
+    << mu << ", " << sigma << ", " << length 
+    << std::endl;
+  */
   return std::exp( - (mu+sigma) * length );
 }
 
