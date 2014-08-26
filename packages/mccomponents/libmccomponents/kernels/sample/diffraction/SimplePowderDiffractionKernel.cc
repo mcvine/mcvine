@@ -7,6 +7,7 @@
 
 
 #include <cmath>
+#include <cassert>
 #include "mccomponents/kernels/sample/diffraction/SimplePowderDiffractionData.h"
 #include "mccomponents/kernels/sample/diffraction/SimplePowderDiffractionKernel.h"
 #include "mccomponents/exception.h"
@@ -104,6 +105,8 @@ mccomponents::kernels::SimplePowderDiffractionKernel::Details::Details
       /*to be updated for size broadening*/
       w_v[i] = peaks[i].intrinsic_line_width;  
 
+      // make sure the list is sorted
+      if (i>0) assert(q_v[i-1] <= q_v[i]);
 #ifdef DEBUG
       debug << i << ": my_s_v2, q_v, w_v=" 
 	    << my_s_v2[i] << ", " << q_v[i] << ", " << w_v[i]
@@ -157,6 +160,7 @@ mccomponents::kernels::SimplePowderDiffractionKernel::Details::scattering_xs
 	//find out the one to be diffracted
 	xs_v2 += this->my_s_v2[i];
     } 
+  // std::cout << "xs_v2=" << xs_v2 << "v=" << v_l << std::endl;
   return xs_v2 / (v_l*v_l); //devided by v**2 at this step
 }
 
@@ -188,7 +192,10 @@ mccomponents::kernels::SimplePowderDiffractionKernel::scattering_coefficient(con
     v0 = m_details->unitcell_volume,
     ret = xs/v0;
 #ifdef DEBUG
-  debug << "scattering_coefficient:" << ret << journal::endl;
+  debug
+    << "xs=" << xs << "v0=" << v0 
+    << "scattering_coefficient:" << ret 
+    << journal::endl;
 #endif
   return ret;
 }
@@ -222,7 +229,6 @@ mccomponents::kernels::SimplePowderDiffractionKernel::scatter
     double theta;
     double alpha0;
     int nx, ny, nz;
-    double scatter_xs;
 
     double v = state.velocity.length();
     /* Make coherent scattering event */
@@ -230,99 +236,109 @@ mccomponents::kernels::SimplePowderDiffractionKernel::scatter
     const double * q_v = m_details->q_v;
     const double * my_s_v2 = m_details->my_s_v2;
 
-    const size_t & Npeaks = m_details->Npeaks;
-    if (Npeaks > 0)
-    {
-        if (Npeaks > 1)
-	    peakindex=math::random(size_t(0),Npeaks);  /* select a diffraction order */
-        else
-            peakindex = 0;
-
-        if (w_v[peakindex])
-        {
-            arg = q_v[peakindex]*(1+w_v[peakindex]*math::random(-1.,1.))/(2.0*v); /* XXX: Implement "randnorm()",  normal*/
-        }
-        else
-            arg = q_v[peakindex]/(2.0*v);
-
-	// be very careful here
-        scatter_xs= my_s_v2[peakindex]/(v*v); // this is the cross section for this peak
-	scatter_xs*=Npeaks; // from randomly choosing one peak
-	
-        theta = asin(arg);
-
-        // Choose point on Debye-Scherrer cone
-        if (m_d_phi)
-        {   // relate height of detector to the height on DS cone
-            arg = sin(m_d_phi*DEG2RAD/2)/sin(2*theta);
-            /* If full Debye-Scherrer cone is within d_phi, don't focus */
-            if (arg < -1 || arg > 1)
-                m_d_phi = 0;
-            else    /* Otherwise, determine alpha to rotate from scattering plane into d_phi focusing area*/
-                alpha = 2*asin(arg);
-        }
-
-        if (m_d_phi)
-        {
-            /* Focusing */
-            alpha = abs(alpha);
-            /* Trick to get scattering for pos/neg theta's */
-            alpha0= 2*math::random(0.,1.)*alpha;
-
-            if (alpha0 > alpha)
-            {
-                alpha0=PI+(alpha0-1.5*alpha);
-            }
-            else
-            {
-                alpha0=alpha0-0.5*alpha;
-            }
-        }
-        else
-        {
-            alpha0 = PI*math::random(-1.,1.);
-        }
-
-        /* now find a nearly vertical rotation axis:
-        * Either
-        *  (v along Z) x (X axis) -> nearly Y axis
-        * Or
-        *  (v along X) x (Z axis) -> nearly Y axis
-        */
-        if ( abs( (ex|state.velocity) ) < abs( (ez|state.velocity) ) )
-        {
-            nx = 1; ny = 0; nz = 0;
-        }
-        else
-        {
-            nx = 0; ny = 0; nz = 1;
-        }
-
-        V_t tmp_v = state.velocity * V_t(nx,ny,nz);
-
-        // vout is incident v rotated by 2*theta around tmp_v
-        V_t vout(state.velocity);
-        rotate(vout, tmp_v, 2*theta);
-
-        /* rotate vout by alpha0 around incident direction (Debye-Scherrer cone) */
-        rotate(vout, state.velocity, alpha0);
-
-        //V_t vtest(vout);
-        //printf("(Vx, Vy, Vz) = (%f, %f, %f)\n", vtest.x, vtest.y, vtest.z);
-
-        // change event
-        ev.state.velocity = vout;
-
-        if (isnan(vout[0]) || isnan(vout[1]) || isnan(vout[2]))
-        {
-            // XXX: Hack, in case the engine is not working rationally, for now let us ignore them
-            ev.probability = -1;
-            return;
-        }
-        ev.probability *= scatter_xs/m_details->unitcell_volume;
-
-    }
+    // if incident energy is too low, no scattering
+    if (v<q_v[0]/2) {ev.probability=-1; return;}
     
+    // find the peak with the largest Q that is still scatterable
+    size_t Npeaks = m_details->Npeaks;
+    for (peakindex=1; peakindex<Npeaks; peakindex++) {
+      if (v<q_v[peakindex]/2) break;
+    }
+    Npeaks = peakindex;
+    
+    if (Npeaks > 1)
+      peakindex=math::random(size_t(0),Npeaks);  /* select a diffraction order */
+    else
+      peakindex = 0;
+
+    if (w_v[peakindex])
+      {
+	arg = q_v[peakindex]*(1+w_v[peakindex]*math::random(-1.,1.))/(2.0*v); /* XXX: Implement "randnorm()",  normal*/
+      }
+    else
+      arg = q_v[peakindex]/(2.0*v);
+
+    // be very careful here
+    double scatter_xs= my_s_v2[peakindex]/(v*v); // this is the cross section for this peak
+    scatter_xs*=Npeaks; // from randomly choosing one peak
+    
+    theta = asin(arg);
+    
+    // Choose point on Debye-Scherrer cone
+    if (m_d_phi)
+      {   // relate height of detector to the height on DS cone
+	arg = sin(m_d_phi*DEG2RAD/2)/sin(2*theta);
+	/* If full Debye-Scherrer cone is within d_phi, don't focus */
+	if (arg < -1 || arg > 1)
+	  m_d_phi = 0;
+	else    /* Otherwise, determine alpha to rotate from scattering plane into d_phi focusing area*/
+	  alpha = 2*asin(arg);
+      }
+    
+    if (m_d_phi)
+      {
+	/* Focusing */
+	alpha = abs(alpha);
+	/* Trick to get scattering for pos/neg theta's */
+	alpha0= 2*math::random(0.,1.)*alpha;
+
+	if (alpha0 > alpha)
+	  {
+	    alpha0=PI+(alpha0-1.5*alpha);
+	  }
+	else
+	  {
+	    alpha0=alpha0-0.5*alpha;
+	  }
+      }
+    else
+      {
+	alpha0 = PI*math::random(-1.,1.);
+      }
+
+    /* now find a nearly vertical rotation axis:
+     * Either
+     *  (v along Z) x (X axis) -> nearly Y axis
+     * Or
+     *  (v along X) x (Z axis) -> nearly Y axis
+     */
+    if ( abs( (ex|state.velocity) ) < abs( (ez|state.velocity) ) )
+      {
+	nx = 1; ny = 0; nz = 0;
+      }
+    else
+      {
+	nx = 0; ny = 0; nz = 1;
+      }
+
+    V_t tmp_v = state.velocity * V_t(nx,ny,nz);
+
+    // vout is incident v rotated by 2*theta around tmp_v
+    V_t vout(state.velocity);
+    rotate(vout, tmp_v, 2*theta);
+
+    /* rotate vout by alpha0 around incident direction (Debye-Scherrer cone) */
+    rotate(vout, state.velocity, alpha0);
+
+    //V_t vtest(vout);
+    //printf("(Vx, Vy, Vz) = (%f, %f, %f)\n", vtest.x, vtest.y, vtest.z);
+
+    // change event
+    ev.state.velocity = vout;
+
+    if (isnan(vout[0]) || isnan(vout[1]) || isnan(vout[2]))
+      {
+	// XXX: Hack, in case the engine is not working rationally, for now let us ignore them
+	ev.probability = -1;
+	return;
+      }
+    ev.probability *= scatter_xs/m_details->unitcell_volume;
+    /*
+    std::cout 
+      << peakindex << ": " 
+      << q_v[peakindex] << ", " << v*2 << ", "
+      << scatter_xs/m_details->unitcell_volume << std::endl;
+    */
 }
 
 
