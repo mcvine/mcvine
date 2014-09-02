@@ -32,10 +32,46 @@ def parse(text, line_width=0, dw_factor=1):
     # text.replace("\r", "")  # Clean from CR  # THIS LINE WAS NOT USEFUL
     
     lines   = text.splitlines()
+    comments = [l for l in lines if l.startswith('#')]
     class laz:
-        lattice = getLattice(lines)
+        lattice = getLattice(comments)
         peaks = getPeaks(text, lattice, line_width=line_width, dw_factor=dw_factor)
+        cross_sections = getCrossSections(comments)
     return laz
+
+
+def getCrossSections(comments):
+    "obtain total cross sections"
+    # This implementation assumes that there are following lines in the laz file
+    # sigma_coh, sigma_inc, sigma_abs, nb_atoms
+    # and use those to compute the total cross sections
+    # It only works for single specie cases
+    
+    # get nb_atoms
+    s = [c for c in comments if c.startswith('# nb_atoms')]
+    if not s: 
+        raise IOError("Comments do not contain number of atoms in unit cell")
+    if len(s) > 1:
+        raise IOError("Comments contain more than one linesfor nb_atoms. Confused")
+    nb_atoms = int(s[0][2:].strip().split()[1])
+    
+    # sigma
+    signature = '# sigma'
+    sigma_comments = [c for c in comments if c.startswith(signature)]
+    assert len(sigma_comments) == 3
+    class xs: pass
+    for l in sigma_comments:
+        l = l[2:].strip()
+        tokens = l.split()
+        name = tokens[0]
+        value = tokens[1]
+        comment = ' '.join(tokens[2:])
+        print name, value, comment
+        assert comment[-6:] == '[barn]'
+        setattr(xs, name[6:], float(value) * nb_atoms)
+        continue
+    # xs.coh, xs.inc, xs.abs
+    return xs
 
 
 def getPeaks(text, lat, line_width=0, dw_factor=1):
