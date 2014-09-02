@@ -30,7 +30,7 @@ class TestCase(unittest.TestCase):
         laz = 'Al.laz'
         text = open(laz).read()
         from mccomponents.sample.diffraction.parsers.laz import parse
-        peaks = parse(text)
+        peaks = parse(text).peaks
         print(peaks)
         return
         
