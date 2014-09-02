@@ -7,6 +7,9 @@
   
   <SimplePowderDiffractionKernel Dd_over_d="1e-5" DebyeWaller_factor="1." peaks-py-path="peaks.py">
   </SimplePowderDiffractionKernel>
+
+  <SimplePowderDiffractionKernel Dd_over_d="1e-5" DebyeWaller_factor="1." laz-path="Al.laz">
+  </SimplePowderDiffractionKernel>
   
 </homogeneous_scatterer>
 
