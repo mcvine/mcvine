@@ -24,11 +24,11 @@ class ComputationEngineRendererExtension:
         '''handler to create c++ instance of a simple powder diffraction kernel.
         '''
         # get unit cell
-        scatterer = kernel.scatterer_origin
-        try: unitcell = scatterer.phase.unitcell
-        except AttributeError, err:
-            raise "Cannot obtain unitcell from scatterer %s, %s" % (
-                scatterer.__class__.__name__, scatterer.name )
+        # scatterer = kernel.scatterer_origin
+        # try: unitcell = scatterer.phase.unitcell
+        # except AttributeError, err:
+        #    raise "Cannot obtain unitcell from scatterer %s, %s" % (
+        #        scatterer.__class__.__name__, scatterer.name )
         
         #
         from SimplePowderDiffractionKernel import Data
@@ -38,8 +38,7 @@ class ComputationEngineRendererExtension:
         data.Dd_over_d = kernel.Dd_over_d
         #
         #data.unitcell_volume = unitcell.getVolume()
-        data.unitcell_volume = kernel.unitcell_volume or \
-            unitcell.lattice.getVolume()
+        data.unitcell_volume = kernel.unitcell_volume
         debug.log('unitcell volume: %s' % data.unitcell_volume)
         # !!!!!
         # number_of_atoms is not really used in the kernel implementation
@@ -58,12 +57,21 @@ class ComputationEngineRendererExtension:
         # needs improvement
         data.DebyeWaller_factor = kernel.DebyeWaller_factor
         
-        from sampleassembly import cross_sections
-        abs, inc, coh = cross_sections( scatterer, include_density=False)
+        # This was the old implementation.
+        # Problem is that the data in the diffraction peaks file (such as laz)
+        # may not match the unit cell choice in the "scatterer" data object,
+        # which usually comes from an xyz file.
+        # from sampleassembly import cross_sections
+        # abs, inc, coh = cross_sections( scatterer, include_density=False)
+        #
+        # The new implementation here assumes the kernel specification
+        # provides these information
+        xs = kernel.cross_sections
+        abs, inc, coh = xs.abs, xs.inc, xs.coh
         debug.log('cross sections: abs: %s, inc: %s, coh: %s' % (abs, inc, coh))
-        data.absorption_cross_section = abs/units.area.barn
-        data.incoherent_cross_section = inc/units.area.barn
-        data.coherent_cross_section = coh/units.area.barn
+        data.absorption_cross_section = abs # /units.area.barn
+        data.incoherent_cross_section = inc # /units.area.barn
+        data.coherent_cross_section = coh # /units.area.barn
         
         # 
         data.peaks = kernel.peaks

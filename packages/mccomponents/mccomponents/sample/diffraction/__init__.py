@@ -18,10 +18,10 @@ angstrom = units.length.angstrom
 
 
 def simplepowderdiffractionkernel(
-    Dd_over_d, DebyeWaller_factor, peaks, unitcell_volume=None
+    Dd_over_d, DebyeWaller_factor, peaks, **kwds
     ):
     from SimplePowderDiffractionKernel import SimplePowderDiffractionKernel as f
-    return f(Dd_over_d, DebyeWaller_factor, peaks, unitcell_volume=unitcell_volume)
+    return f(Dd_over_d, DebyeWaller_factor, peaks, **kwds)
 
 
 import ComputationEngineRendererExtension
