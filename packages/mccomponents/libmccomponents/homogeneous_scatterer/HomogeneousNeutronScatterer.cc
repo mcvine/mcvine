@@ -30,6 +30,7 @@
 #include "mcni/neutron/units_conversion.h"
 #endif
 
+
 namespace mccomponents {
   namespace HomogeneousNeutronScatterer_Impl {
     char jrnltag [] = "HomogeneousNeutronScatterer";
@@ -50,7 +51,7 @@ mccomponents::HomogeneousNeutronScatterer::HomogeneousNeutronScatterer
 ( const AbstractShape & shape, AbstractScatteringKernel & kernel,
   const Weights & weights)
   : base_t( shape ),
-    max_scattering_loops(1),
+    max_scattering_loops(10),
     min_neutron_probability(0),
     packing_factor(1.),
     m_kernel( kernel ),
@@ -391,23 +392,46 @@ mccomponents::HomogeneousNeutronScatterer::interactM_path1
   int nloop = 0;
   while (to_be_scattered.size() && nloop++ < max_scattering_loops) {
 
-//     std::cout << "interactM_path1: "
-// 	      << "to_be_scattered = " << to_be_scattered
-// 	      << std::endl;
+#ifdef DEBUG
+    debug <<  journal::at(__HERE__)
+	  << "interactM_path1: "
+	  << "to_be_scattered = " << to_be_scattered
+	  << journal::endl;
+#endif
     
     mcni::Neutron::Events to_be_scattered2;
 
     for (size_t neutron_index = 0; neutron_index < to_be_scattered.size(); neutron_index++) {
       
       const mcni::Neutron::Event & ev1 = to_be_scattered[neutron_index];
+#ifdef DEBUG
+      debug <<  journal::at(__HERE__)
+	    << "event to scatter is " << ev1
+	    << journal::newline;
+#endif
       
       // if neutron probability is low, skip
-      if (ev1.probability >= 0 && ev1.probability < min_neutron_probability)
+      if (ev1.probability >= 0 && ev1.probability < min_neutron_probability) {
+#ifdef DEBUG
+	debug <<  journal::at(__HERE__)
+	      << "probability too low. skip"
+	      << journal::endl;
+#endif      
 	continue;
+      }
       
       scattered.clear();
       // interact once
       _interactM1( ev1, scattered );
+#ifdef DEBUG
+	debug <<  journal::at(__HERE__)
+	      << "event " << ev1 
+	      << " got scattered into " << scattered
+	      << journal::newline
+	      << "now looping over these new neutrons "
+	      << journal::endl
+	  ;
+#endif      
       
       // loop over scattered neutron and deal with each of them
       for (size_t scattered_neutron_index = 0;
@@ -430,12 +454,24 @@ mccomponents::HomogeneousNeutronScatterer::interactM_path1
 
 	// if it is on border or outside, we are done with it here
 	if (locate(ev2, shape()) != geometry::Locator::inside) {
+#ifdef DEBUG
+	  debug << journal::at(__HERE__)
+		<< "event " << ev2 << " is not inside."
+		<< "It will be saved"
+		<< journal::endl;
+#endif
 	  evts.push_back( ev2 );
 	  continue;
 	}
 	
 	// this means the event is inside the scatterer
 	// add this event to a new "to-be-scattered" list
+#ifdef DEBUG
+	debug << journal::at(__HERE__)
+	      << "event " << ev2 << " is still inside. "
+	      << "It will be scattered again"
+	      << journal::endl;
+#endif
 	to_be_scattered2.push_back( ev2 );
 	
       } // loop over scattered neutrons
@@ -443,11 +479,24 @@ mccomponents::HomogeneousNeutronScatterer::interactM_path1
     } // loop over neutrons to be scattered
     
     to_be_scattered2.swap( to_be_scattered );
+#ifdef DEBUG
+	debug << journal::at(__HERE__)
+	      << "neutrons for next round of scattering: "
+	      << to_be_scattered
+	      << journal::endl;
+#endif
     
   } // while there are still neutrons to be scattered
   
+#ifdef DEBUG
+  debug << journal::at(__HERE__)
+	<< "left over neutrons: "
+	<< to_be_scattered
+	<< journal::endl;
+#endif
   for (int i=0; i<to_be_scattered.size(); i++)
     evts.push_back(to_be_scattered[i]);
+  
   return base_t::scattering;
 }
 
@@ -455,11 +504,12 @@ mccomponents::HomogeneousNeutronScatterer::interactM_path1
 double
 mccomponents::HomogeneousNeutronScatterer::calculate_attenuation
 ( const mcni::Neutron::Event &ev, const mccomposite::geometry::Position &end)
+  const
 {
   // XXX: should we check end is at the line of progression for the neutron? XXX
   namespace mcg=mccomposite::geometry;
   const mcg::Position &start = ev.state.position;
-  typedef typename mcni::Neutron::State::velocity_t V_t;
+  typedef mcni::Neutron::State::velocity_t V_t;
   const V_t &vv = ev.state.velocity;
   double v = vv.length();
   
@@ -489,6 +539,7 @@ mccomponents::HomogeneousNeutronScatterer::calculate_attenuation
     << "v, mu, sigma, length=" 
     << ev.state.velocity.length() << ", " 
     << mu << ", " << sigma << ", " << length 
+    << "shape" << shape()
     << std::endl;
   */
   return std::exp( - (mu+sigma) * length );

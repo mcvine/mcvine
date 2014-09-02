@@ -85,6 +85,7 @@ mccomponents::CompositeScatteringKernel::CompositeScatteringKernel
     }
   }
   m_details->total_scattering_ind = total_scatt_ind;
+  // std::cout << " * In CompositeScatteringKernel ctor, computed total_scattering_ind=" << total_scatt_ind << std::endl;
   
   // normalize weights
   double tw = 0;

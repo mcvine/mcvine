@@ -86,7 +86,7 @@ namespace mccomponents{
     /// Please notice that the attenuation could be due to both the absorption
     /// and the scattering.
     virtual double calculate_attenuation
-    ( const mcni::Neutron::Event &ev, const mccomposite::geometry::Position &end);
+    ( const mcni::Neutron::Event &ev, const mccomposite::geometry::Position &end) const;
 
     virtual void print(std::ostream &os) const;
 
