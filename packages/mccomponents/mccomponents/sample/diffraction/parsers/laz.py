@@ -29,25 +29,19 @@ COMMENT = "(#[^\n]*\n)"  # Python comment
 def parse(text, line_width=0, dw_factor=1):
     """parse given text of laz format and returns a list of peaks
     """
-    text.replace("\r", "")  # Clean from CR
-
+    # text.replace("\r", "")  # Clean from CR  # THIS LINE WAS NOT USEFUL
+    
     lines   = text.splitlines()
-    cell    = lines[1]      # Second lines should have lattice parameters
-    assert cell.startswith('# CELL')
-    cell    = cell.replace("#", "")
-    par     = cell.split()
+    class laz:
+        lattice = getLattice(lines)
+        peaks = getPeaks(text, lattice, line_width=line_width, dw_factor=dw_factor)
+    return laz
 
-    # Parse lattice parameters: a, b, c, alpha, beta, gamma
-    (_a, _b, _c, _alpha, _beta, _gamma) = \
-         (float(par[1]), float(par[2]), float(par[3]),
-          float(par[4]), float(par[5]), float(par[6]))
-    # lattice
-    import matter
-    lat = matter.Lattice(_a, _b, _c, _alpha, _beta, _gamma)
 
+def getPeaks(text, lat, line_width=0, dw_factor=1):
     # peaks records
     peaks = []
-
+    
     p       = re.compile(COMMENT, re.DOTALL)    # Remove comments
     s       = re.sub(p, '', text)
     lines   = s.split("\n")
@@ -74,11 +68,9 @@ def parse(text, line_width=0, dw_factor=1):
         peaks.append(peak)
         continue
     
-    class laz:
-        lattice = lat
-        
-    laz.peaks = peaks
-    return laz
+    # sort peaks by q
+    peaks = sorted(peaks, key=lambda p: p.q)
+    return peaks
 
 
 def _q(lattice, h, k, l):
@@ -89,6 +81,22 @@ def _q(lattice, h, k, l):
     q       = 2*PI*(h*rb[0] + k*rb[1] + l*rb[2])
     return numpy.sqrt(numpy.dot(q,q))
 
+
+def getLattice(lines):
+    # !!! This demands that 2nd line contains lattice parameters
+    cell    = lines[1]      # Second lines should have lattice parameters
+    assert cell.startswith('# CELL')
+    cell    = cell.replace("#", "")
+    par     = cell.split()
+
+    # Parse lattice parameters: a, b, c, alpha, beta, gamma
+    (_a, _b, _c, _alpha, _beta, _gamma) = \
+         (float(par[1]), float(par[2]), float(par[3]),
+          float(par[4]), float(par[5]), float(par[6]))
+    # lattice
+    import matter
+    lat = matter.Lattice(_a, _b, _c, _alpha, _beta, _gamma)
+    return lat
 
 
 # version
