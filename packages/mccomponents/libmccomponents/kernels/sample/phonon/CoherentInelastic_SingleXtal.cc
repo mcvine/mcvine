@@ -163,7 +163,7 @@ const
   v_f.normalize(); v_f = v_f * v_f_l;
   // adjust prob
   prob_factors.push_back(nf);
-
+  
   // calculate Jacobi factor
 #ifdef DEBUG
   debug << journal::at(__HERE__)
@@ -171,8 +171,9 @@ const
 	<< journal::endl;
 #endif
   float_t f1, f2;
-  f1 = omq_m_dE.evaluate( v_f_l-m_DV );
-  f2 = omq_m_dE.evaluate( v_f_l+m_DV );
+  float_t delta_v = m_DV*v_i_l; // m_DV is fractional change
+  f1 = omq_m_dE.evaluate( v_f_l-delta_v );
+  f2 = omq_m_dE.evaluate( v_f_l+delta_v );
 #ifdef DEBUG
   debug << journal::at(__HERE__)
 	<< "f1=" << f1
@@ -181,9 +182,12 @@ const
 #endif
   using namespace mcni::neutron_units_conversion;
   // adjust prob
-  float_t Jacobi = std::abs(f2-f1)/(2*m_DV*k2v);
-  prob_factors.push_back(2*vsquare2E( v_f_l/Jacobi ));
-
+  // float_t Jacobi = std::abs(f2-f1)/(2*delta_v*k2v);
+  float_t Jacobi = std::abs(f2-f1)/(2*delta_v);
+  // prob_factors.push_back(2*vsquare2E( v_f_l/Jacobi ));
+  using mcni::neutron_units_conversion::vsq2e;
+  prob_factors.push_back(2*vsq2e*v_f_l/Jacobi);
+  
 #ifdef DEBUG
   debug << journal::at(__HERE__)
 	<< "probability factors" << prob_factors

@@ -77,7 +77,7 @@ namespace mccomponents{
 	  float_t unitcell_vol,
 	  dwcalculator_t & dw_calctor,
 	  float_t temperature,
-	  float_t deltaV_Jacobi, 
+	  float_t deltaV_Jacobi, // dV = deltaV_Jacobi * v_i 
 	  const rootsfinder_t & roots_finder,
 	  const target_region_t & target_region,
 	  float_t epsilon = 1.e-10 ) ;
