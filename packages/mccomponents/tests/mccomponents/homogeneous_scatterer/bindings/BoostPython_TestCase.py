@@ -29,12 +29,19 @@ class TestCase(unittest.TestCase):
         
         kernels = bp.kernelcontainer( )
         average = False
-        ck = bp.compositekernel( kernels, average )
+        weights = bp.vector_double(0)
+        ck = bp.compositekernel( kernels, weights, average )
 
         cylinder = bp.cylinder( 0.02, 0.1 )
 
         #this scatterer does not really have a kernel
-        hs = bp.homogeneousscatterer( cylinder, ck, (0,1,0) )
+        max_multiplescattering_loops = 3
+        min_neutron_probability = 0.
+        packing_factor = 0.7
+        hs = bp.homogeneousscatterer( 
+            cylinder, ck, (0,1,0),
+            max_multiplescattering_loops, min_neutron_probability, packing_factor
+            )
         return
     
     pass  # end of TestCase
