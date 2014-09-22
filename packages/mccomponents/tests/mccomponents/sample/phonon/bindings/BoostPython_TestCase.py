@@ -85,13 +85,19 @@ class TestCase(unittest.TestCase):
         disp = b.linearlyinterpolateddispersion_3d(nAtoms, Qaxes, eps.I, e.I)
 
         Q = b.vector3
-
-        self.assertAlmostEqual(disp.energy(0, Q(0,0,0)), 0)
-        self.assertAlmostEqual(disp.energy(0, Q(1-1e-5,1-1e-5,0)), 1-1e-5)
-        self.assertAlmostEqual(disp.energy(0, Q(0.5,0.5,0)), 0.5)
-        self.assertAlmostEqual(disp.energy(0, Q(0.5,0,0.5)), 0.5)
-        self.assertAlmostEqual(disp.energy(0, Q(0,0.5,0.5)), 0.5)
-        self.assertAlmostEqual(disp.energy(0, Q(0.5,0.5,1-1e-10)), 1)
+        # these tests failed because we are not doing interpolation
+        # right now since we don't have a good way to do 
+        # it for the polarization vectors.
+        # right now we just take the value of the closest vertex.
+        checkDiff = self.assertAlmostEqual
+        #def checkDiff(a, b):
+        #    print a,b
+        checkDiff(disp.energy(0, Q(0,0,0)), 0)
+        checkDiff(disp.energy(0, Q(1-1e-5,1-1e-5,0)), 1-1e-5)
+        checkDiff(disp.energy(0, Q(0.5,0.5,0)), 0.5)
+        checkDiff(disp.energy(0, Q(0.5,0,0.5)), 0.5)
+        checkDiff(disp.energy(0, Q(0,0.5,0.5)), 0.5)
+        checkDiff(disp.energy(0, Q(0.5,0.5,1-1e-10)), 1)
         return
 
 
