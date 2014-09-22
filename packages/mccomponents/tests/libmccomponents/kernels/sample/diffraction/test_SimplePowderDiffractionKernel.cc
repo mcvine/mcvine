@@ -20,11 +20,11 @@ void test1()
   using namespace mccomponents::kernels;
   
   SimplePowderDiffractionData::Peak peakarr[] = {
-    {3.1353,   3.3,  8, 0, 0},
-    {1.9200,   0.0, 12, 0, 0},
-    {1.6374,   3.2, 24, 0, 0},
+    {1.3576,   6.2,  6, 0, 0},
     {1.5677,   6.3,  8, 0, 0},
-    {1.3576,   6.2,  6, 0, 0}
+    {1.6374,   3.2, 24, 0, 0},
+    {1.9200,   0.0, 12, 0, 0},
+    {3.1353,   3.3,  8, 0, 0}
   };
 
   SimplePowderDiffractionData data;
@@ -55,10 +55,12 @@ void test1()
     
     //cout << ev << endl;
     if (ev.state.velocity.z != vz) {
+#ifdef DEBUG
 	cout << "find one! " << i <<endl;
 	cout << "vx, vy, vz before scattering: " << vx <<" "<< vy << " "<< vz 
 	     << " total: "<< sqrt(vx*vx+vy*vy+vz*vz)<<endl;
 	cout << "after scattering: " << ev << endl;
+#endif
     }
   }
 }
