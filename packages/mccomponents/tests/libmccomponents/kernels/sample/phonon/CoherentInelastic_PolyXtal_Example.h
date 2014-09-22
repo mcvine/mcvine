@@ -15,11 +15,9 @@ namespace test {
     
     typedef CoherentInelastic_PolyXtal w_t;
     
-    w_t::float_t Ei, max_omega, max_Q, temperature;
-    w_t::float_t unitcell_vol;
+    w_t::float_t max_omega, temperature;
+    w_t::float_t a, b, c;
     
-    size_t nMCsteps_to_calc_RARV;
-  
     w_t::atoms_t create_atoms()
     {
       w_t::atoms_t atoms;
@@ -38,21 +36,18 @@ namespace test {
 
     CoherentInelastic_PolyXtal_Example() 
       :
-      Ei( 70 ), max_omega( 60 ), max_Q (13), temperature( 300 ),
-      unitcell_vol( 10 ),
-      nMCsteps_to_calc_RARV( 10000 ),
+      max_omega( 60 ), temperature( 300 ),
+      a(2), b(2), c(2),
       dispersion_example(),
       atoms( create_atoms() ),
       DW_calculator_example(  ),
       kernel
       ( dispersion_example.disp,
 	atoms,
-	unitcell_vol,
+	a, b, c,
 	DW_calculator_example.DW_calculator,
 	temperature,
-	Ei, 
-	max_omega, max_Q,
-	nMCsteps_to_calc_RARV 
+	max_omega
 	)
     {}
     
