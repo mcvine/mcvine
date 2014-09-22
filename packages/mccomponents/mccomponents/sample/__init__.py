@@ -116,9 +116,9 @@ def _import_kernels():
         import phonon.xml
         import diffraction.xml
     except ImportError as e:
-        import warnings
-        s = "kernels not available: phonon, diffraction:\n%s: %s" % (
-            type(e), e)
+        import warnings, traceback
+        s = "kernels not available: phonon, diffraction:\n%s: %s.\n%s" % (
+            type(e), e, traceback.format_exc())
         warnings.warn(s)
     return
 _import_kernels()
