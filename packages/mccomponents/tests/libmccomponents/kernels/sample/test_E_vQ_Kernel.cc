@@ -88,11 +88,12 @@ void test1()
 #ifdef DEBUG
     std::cout << "Q=" << Q << ", "
 	      << "E=" << E << ", "
+	      << "E-5=" << E-5 << ", "
 	      << "n=" << n
 	      << std::endl
 	      << std::endl;
 #endif
-    assert (std::abs(E-5) < 1.e-10);
+    assert (std::abs(E-5) < 1.e-9);
   }
   
 }
@@ -144,11 +145,12 @@ void test2()
 #ifdef DEBUG
     std::cout << "Q=" << Q << ", "
 	      << "E=" << E << ", "
+	      << "E-expectedE=" << E-expectedE << ", "
 	      << "n=" << n
 	      << std::endl
 	      << std::endl;
 #endif
-    assert (std::abs(E-expectedE) < 1.e-10);
+    assert (std::abs(E-expectedE) < 1.e-7);
   }
   
 }
