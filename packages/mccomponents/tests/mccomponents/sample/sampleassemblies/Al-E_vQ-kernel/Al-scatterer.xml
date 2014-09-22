@@ -5,7 +5,7 @@
 <!-- weights: absorption, scattering, transmission -->
 <homogeneous_scatterer mcweights="0, 1, 0">
   
-  <E_vectorQ_Kernel 
+  <E_vQ_Kernel 
      E_Q="20 + 5 * sin(Qx+Qy+Qz)"
      S_Q="1" 
      Emax="30*meV"
