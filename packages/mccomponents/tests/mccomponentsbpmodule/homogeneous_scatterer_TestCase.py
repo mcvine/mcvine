@@ -53,9 +53,12 @@ class TestCase(unittest.TestCase):
         kernels = mccomponentsbp.pointer_vector_Kernel(0)
         kernels.append( printer )
         
+        weights = mccomponentsbp.vector_double(0)
+        weights.append(1.)
+        
         average=False
         kernelcomposite = mccomponentsbp.CompositeScatteringKernel( 
-            kernels, average)
+            kernels, weights, average)
 
         mcweights = mccomponentsbp.MCWeights_AbsorptionScatteringTransmission()
         scatterer = mccomponentsbp.HomogeneousNeutronScatterer(
