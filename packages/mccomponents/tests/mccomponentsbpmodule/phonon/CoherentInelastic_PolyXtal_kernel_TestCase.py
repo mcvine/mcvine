@@ -21,6 +21,7 @@ warning = journal.warning( "CoherentInelastic_PolyXtal_kernel_TestCase" )
 
 
 import mcni
+from mcni import mcnibp
 from mccomposite import mccompositebp 
 from mccomponents import mccomponentsbp
 
@@ -34,8 +35,11 @@ class TestCase(unittest.TestCase):
         dw_calctor = example()
 
         atoms = mccomponentsbp.vector_AtomicScatterer(5)
-
-        unitcell_vol = 30
+        
+        aa = mcnibp.Vector3_double(1,0,0)
+        bb = mcnibp.Vector3_double(0,1,0)
+        cc = mcnibp.Vector3_double(0,0,1)
+        
         temperature = 300
         Ei = 70
         max_omega = 55
@@ -43,13 +47,10 @@ class TestCase(unittest.TestCase):
         nMCsteps_to_calc_RARV = 10000
 
         kernel = mccomponentsbp.Phonon_CoherentInelastic_PolyXtal_kernel(
-            disp, atoms,
-            unitcell_vol,
+            disp, atoms, aa, bb, cc,
             dw_calctor,
             temperature,
-            Ei,  max_omega, 
-            max_Q,
-            nMCsteps_to_calc_RARV,
+            max_omega, 
             )
             
         return
