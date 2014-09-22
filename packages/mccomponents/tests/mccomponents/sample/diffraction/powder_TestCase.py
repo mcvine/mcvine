@@ -12,6 +12,7 @@
 #
 
 
+interactive = False
 
 import unittestX as unittest
 import journal
@@ -57,9 +58,10 @@ class TestCase(unittest.TestCase):
         for i,e in enumerate(Ei):
             xs[i] = total_scattering_cross_section(e, dp)
             continue
-        import pylab
-        pylab.plot(Ei, xs)
-        pylab.show()
+        if interactive:
+            import pylab
+            pylab.plot(Ei, xs)
+            pylab.show()
         return
         
         
@@ -72,6 +74,8 @@ def pysuite():
 
 
 def main():
+    global interactive
+    interactive = True
     #debug.activate()
     #journal.debug('phonon_coherent_inelastic_polyxtal_kernel').activate()
     #journal.debug('random').activate()
