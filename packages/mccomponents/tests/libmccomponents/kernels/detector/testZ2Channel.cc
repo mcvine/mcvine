@@ -26,13 +26,13 @@ void test1()
 
   typedef Z2Channel::vector_t vector_t;
 
-  Z2Channel z2c( 1., 100, vector_t(0,0,1), vector_t(0,0,-0.5) );
+  Z2Channel z2c( 1., 100, vector_t(0,0,1), vector_t(0,0,-0.5 + 0.005) );
 
   assert (z2c( vector_t(0,0,0.0001) ) == 50);
   assert (z2c( vector_t(0,0,0.49999) ) == 99);
-  assert (z2c( vector_t(0,0,-0.5) ) == 0);
-  assert (z2c( vector_t(1,0,-0.5) ) == 0);
-  assert (z2c( vector_t(1,100,-0.5) ) == 0);
+  assert (z2c( vector_t(0,0,-0.49999) ) == 0);
+  assert (z2c( vector_t(1,0,-0.49999) ) == 0);
+  assert (z2c( vector_t(1,100,-0.49999) ) == 0);
   assert (z2c( vector_t(1,100,1.5) ) == -1);
   assert (z2c( vector_t(1,100,-1.5) ) == -1);
   assert (z2c( vector_t(1,100,0.500001) ) == -1);
