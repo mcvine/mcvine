@@ -39,12 +39,13 @@ class KernelComputationEngineRenderer( AbstractVisitor ):
             w = getattr(element, 'weight', None)
             if w is None:
                 import warnings
-                scatterer = element.scatterer_origin
-                scatterer = str(scatterer).split(':')[0]
-                warnings.warn(
-                    'kernel %s of %s does not define its weight' % (
-                        element.__class__.__name__, scatterer,
-                        )
+                scatterer = getattr(element, 'scatterer_origin', None)
+                if scatterer:
+                    scatterer = str(scatterer).split(':')[0]
+                    warnings.warn(
+                        'kernel %s of %s does not define its weight' % (
+                            element.__class__.__name__, scatterer,
+                            )
                     )
             cweights[index] = w or 1.
             print "weight: ", cweights[index]
