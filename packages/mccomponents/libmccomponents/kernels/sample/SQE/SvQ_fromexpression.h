@@ -18,6 +18,7 @@
 
 #include <string>
 #include <vector>
+#include "mcni/math/number.h"
 #include "mcni/test/exception.h"
 #include "fparser/fparser.hh"
 
@@ -48,7 +49,7 @@ namespace mccomponents {
       
       // methods
       virtual inline double operator () ( double x, double y, double z) {
-	static double vals[3];
+	double vals[5];
 	vals[0] = x; vals[1] = y; vals[2] = z;
 	vals[3] = std::sqrt(x*x+y*y+z*z);
 	vals[4] = vals[3]/4./mcni::PI;
@@ -63,7 +64,7 @@ namespace mccomponents {
     private:
       FunctionParser m_fparser;
     } ;
-
+    
   } // math::
 
 } // mccomponents::
