@@ -91,14 +91,14 @@ def makeKernel():
     return b.phonon_coherentinelastic_polyxtal_kernel(
         makeDispersion(), makeDW(),
         makeMatter(),
-        temperature=temperature, Ei=Ei, max_omega=max_omega, max_Q=max_Q,
-        nMCsteps_to_calc_RARV=nMCsteps_to_calc_RARV)
+        temperature=temperature, max_omega=max_omega,
+        )
 
 
 def makeMatter():
     from matter import Structure, Atom, Lattice
     atoms = [Atom('Fe', xyz=(0,0,0)), Atom('Al', xyz=(0.5,0.5,0.5))]
-    lattice = Lattice(base=((1,0,0), (0,1,0), (0,0,1)))
+    lattice = Lattice(base=((1.,0,0), (0,1.,0), (0,0,1.)))
     return Structure(atoms, lattice)
 
 
