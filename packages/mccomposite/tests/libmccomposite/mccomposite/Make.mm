@@ -25,7 +25,7 @@ PROJ_CPPTESTS = \
 	testMultipleScattering \
 
 PROJ_TESTS = $(PROJ_PYTESTS) $(PROJ_CPPTESTS)
-PROJ_LIBRARIES = -L$(BLD_LIBDIR) -ljournal -lmccomposite -lmcni
+PROJ_LIBRARIES = -L$(BLD_LIBDIR) -lmccomposite -lmcni -ljournal
 
 
 #--------------------------------------------------------------------------
