@@ -27,9 +27,9 @@ from mcni.pyre_support.AbstractComponent import AbstractComponent
 class Validator(AbstractComponent):
     
     def process(self, neutrons):
-        print self.name
+        # print self.name
         for n in neutrons:
-            print n
+            # print n
             assert n.state.position[2] == 0
         return neutrons
 

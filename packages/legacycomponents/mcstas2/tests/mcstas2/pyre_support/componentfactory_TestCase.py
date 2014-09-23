@@ -44,7 +44,7 @@ class Instrument(base):
         self.inventory.source = factory('sources', 'Source_simple')('source')
         self.inventory.monitor = factory('monitors', 'E_monitor')('monitor')
 
-        print self.inventory.source
+        # print self.inventory.source
         
         geometer = self.inventory.geometer
 
@@ -89,7 +89,8 @@ def main():
     #debug.activate()
     #journal.debug("CompositeNeutronScatterer_Impl").activate()
     journal.warning('mcstas2.parsers.ComponentInfo').deactivate()
-    journal.debug("mcstas2.pyre_support").activate()
+    # comment out this line to hide the error msg in searching for component
+    journal.debug("mcstas2.pyre_support").activate() 
     import mcstas2.mcstas2bp
     pytests = pysuite()
     alltests = unittest.TestSuite( (pytests, ) )

@@ -23,7 +23,12 @@ class TestCase(unittest.TestCase):
         "parse E_monitor component"
         from mcstas2.utils.parsers import parseComponent
         component = parseComponent( 'E_monitor.comp' )
-        print dir(component)
+        # print dir(component)
+        attrs = [
+            'name', 'full_description', 'simple_description',
+            'initialize', 'trace', 'finalize', 
+            ]
+        for attr in attrs: assert hasattr(component, attr)
 
         self.assertEqual(component.name, 'E_monitor')
         self.assert_(component.copyright.startswith('Kristian Nielsen and Kim Lefmann'))
