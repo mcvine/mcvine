@@ -15,6 +15,8 @@
 #include <cassert>
 #include "mccomponents/kernels/sample/E_Q_Kernel.h"
 
+// #define DEBUG
+
 #ifdef DEBUG
 #include "journal/debug.h"
 #endif
@@ -37,7 +39,7 @@ void test1()
   typedef E_Q_Kernel<E_Q, IdentitySQ> kernel_t;
   typedef mcni::Vector3<double> V3d;
   
-  double Qmin = 0., Qmax = 10.;
+  double Qmin = 0., Qmax = 20;
   double absorption_cross_section = 1.;
   double scattering_cross_section = 1.;
   kernel_t k
@@ -53,7 +55,7 @@ void test1()
   Event ni
     (State
      ( State::position_t(0,0,0), 
-       State::velocity_t(0,0,10000), 
+       State::velocity_t(0,0,8000), 
        State::spin_t() ),
      0, 1.);
 

@@ -25,6 +25,7 @@ PROJ_CPPTESTS = \
 	test_SQkernel \
 	test_SQAdaptor \
 	test_SQE_fromexpression \
+	test_SvQ_fromexpression \
 
 
 PROJ_TESTS = $(PROJ_PYTESTS) $(PROJ_CPPTESTS)
@@ -80,6 +81,9 @@ test_SQAdaptor: test_SQAdaptor.cc
 
 test_SQE_fromexpression: test_SQE_fromexpression.cc
 	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ test_SQE_fromexpression.cc $(PROJ_LIBRARIES)
+
+test_SvQ_fromexpression: test_SvQ_fromexpression.cc
+	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ test_SvQ_fromexpression.cc $(PROJ_LIBRARIES)
 
 test_Broadened_E_Q_Kernel: test_Broadened_E_Q_Kernel.cc
 	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ test_Broadened_E_Q_Kernel.cc $(PROJ_LIBRARIES)

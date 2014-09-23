@@ -46,7 +46,7 @@ void test1()
   typedef Broadened_E_Q_Kernel<E_Q, IdentitySQ, Sigma_Q> kernel_t;
   typedef mcni::Vector3<double> V3d;
   
-  double Qmin = 0., Qmax = 10.;
+  double Qmin = 0., Qmax = 20;
   double absorption_cross_section = 1.;
   double scattering_cross_section = 1.;
   kernel_t k
@@ -63,14 +63,14 @@ void test1()
   Event ni
     (State
      ( State::position_t(0,0,0), 
-       State::velocity_t(0,0,10000), 
+       State::velocity_t(0,0,7750), 
        State::spin_t() ),
      0, 1.);
 
   V3d vi = ni.state.velocity;
   double Ei = conversion::v2E(vi.length());
   
-  for (int i=0; i<100; i++) {
+  for (int i=0; i<10; i++) {
     Event n = ni;
     k.scatter(n);
     V3d vf = n.state.velocity;
