@@ -1,6 +1,64 @@
 Developer Guide
 ===============
 
+Development environemnt
+-----------------------
+
+The following instructions work for ubuntu 14.04LTS 64bit
+
+Basic dev tools
+* svn, git
+* c++ compiler
+
+Dependencies:
+* boost-python, gsl
+* numpy, matplotlib
+* h5py
+* psutil
+
+
+::
+ $ apt-get install subversion git
+ $ apt-get install g++
+ $ apt-get install python-dev libboost-python python-numpy python-matplotlib python-h5py python-psutil
+ $ apt-get install libboost-python1.55.0 libboost-python1.55-dev
+ $ apt-get install libgsl0-dev
+
+Create dev directory::
+
+ $ cd $HOME
+ $ mkdir dv
+ $ cd dv
+
+Get releaser::
+
+ $ svn co svn+ssh://svn@danse.us/buildInelast/mcvine
+
+Get source::
+
+ $ cd mcvine
+ $ ./getsrc.py
+
+Env vars to build::
+ $ export BOOSTPYTHON_DIR=/usr
+ $ export BOOSTPYTHON_LIBDIR=/usr/lib/x86_64-linux-gnu
+
+Build::
+ $ ./build.py
+
+Env vars to use mcvine::
+ $ . ~/dv/mcvine/EXPORT/bin/envs.sh
+
+Run a test::
+ $ cd ~/dv/mcvine/src/mcvine/packages/mcni/tests/mcni
+ $ ./alltests.py
+
+Build during development::
+ $ . ~/dv/mcvine/src/dottools # once for one session
+ $ cd /place/where/code/were/modified
+ $ mm
+
+
 Links
 -----
 
