@@ -36,13 +36,13 @@ namespace wrap_mccomponents {
 	init<
 	const w_t::dispersion_t &,
 	const w_t::atoms_t &,
-	w_t::float_t,
+	w_t::float_t, // uc vol
 	w_t::dwcalculator_t & ,
-	w_t::float_t,
-	w_t::float_t,
+	w_t::float_t, // temperature
+	w_t::float_t, // deltaV_Jacobi
 	const w_t::rootsfinder_t &,
 	const w_t::target_region_t &,
-	w_t::float_t
+	w_t::float_t  // epsilon
 	> ()
 	[with_custodian_and_ward<1,2,
 	 with_custodian_and_ward<1,3,
