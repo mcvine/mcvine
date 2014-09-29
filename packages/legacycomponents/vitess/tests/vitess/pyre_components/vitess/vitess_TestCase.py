@@ -26,7 +26,7 @@ for entry in os.listdir('.'):
     continue
 
 
-import unittestX as unittest
+import unittest
 
 class TestCase(unittest.TestCase):
 
