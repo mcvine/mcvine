@@ -19,7 +19,8 @@
 #include <complex>
 #include "mcni/geometry/Vector3.h"
 #include "histogram/NdArraySlice.h"
-#include "LinearlyInterpolatedGridData_3D.h"
+// #include "LinearlyInterpolatedGridData_3D.h"
+#include "NNGridData_3D.h"
 
 
 namespace DANSE { 
@@ -51,7 +52,8 @@ namespace DANSE {
     private:
       // data
       typedef Histogram::NdArraySlice< array_t > slice_t;
-      typedef LinearlyInterpolatedGridData_3D< slice_t, float_t, index_t> interp_t; 
+      // typedef LinearlyInterpolatedGridData_3D< slice_t, float_t, index_t> interp_t; 
+      typedef NNGridData_3D< slice_t, float_t, index_t> interp_t; 
       ///interp_t1 that holds a slice_t and a interp_t
       struct interp_t1 {
 	slice_t slice;

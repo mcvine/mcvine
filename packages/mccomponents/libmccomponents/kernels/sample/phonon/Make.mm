@@ -69,6 +69,8 @@ EXPORT_HEADERS = \
 	LinearlyInterpolatedDispersionOnGrid_3D.icc \
 	LinearlyInterpolatedPolarizationOnGrid_3D.h \
 	LinearlyInterpolatedPolarizationOnGrid_3D.icc \
+	NNGridData_3D.h \
+	NNGridData_3D.icc \
 	Omega_minus_deltaE.h \
 	TargetCone.h \
 	exception.h \
