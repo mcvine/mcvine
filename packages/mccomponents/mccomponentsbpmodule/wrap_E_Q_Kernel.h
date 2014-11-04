@@ -42,6 +42,6 @@ namespace wrap_mccomponents {
 
 
 // version
-// $Id: wrap_ConstantQEKernel.cc 601 2010-10-03 19:55:29Z linjiao $
+// $Id$
 
 // End of file 
