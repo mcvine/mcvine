@@ -45,6 +45,7 @@ EXPORT_PYTHON_MODULES = \
 	ComputationEngineRendererExtension.py \
 	ConstantEnergyTransferKernel.py \
 	ConstantQEKernel.py \
+	ConstantvQEKernel.py \
 	E_Q_Kernel.py \
 	E_vQ_Kernel.py \
 	GridSQE.py \

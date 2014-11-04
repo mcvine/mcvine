@@ -172,6 +172,20 @@ class New:
         return b.ConstantQEKernel(Q, E, absorption_coefficient, scattering_coefficient)
 
     
+    def constantvQEKernel(self, Q, E, dE, absorption_coefficient, scattering_coefficient):
+        '''constantvqekernel: a kernel scatters with fixed momentum and energy transfer
+
+        Q: momentum transfer, vector
+        E: energy transfer
+        dE: energy broadening
+        absorption_coefficient: absorption coefficient (m**-1)
+        scattering_coefficient: scattering coefficient (m**-1)
+        '''
+        return b.ConstantvQEKernel(
+            Q[0], Q[1], Q[2], E, dE, 
+            absorption_coefficient, scattering_coefficient)
+
+    
     pass # end of BoostPythonBinding
 
 

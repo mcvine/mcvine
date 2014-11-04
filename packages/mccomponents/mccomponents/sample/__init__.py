@@ -78,6 +78,11 @@ def constantQEKernel(*args, **kwds):
     return ConstantQEKernel(*args, **kwds)
 
 
+def constantvQEKernel(*args, **kwds):
+    from ConstantvQEKernel import ConstantvQEKernel
+    return ConstantvQEKernel(*args, **kwds)
+
+
 def make_E_Q_Kernel(*args, **kwds):
     from E_Q_Kernel import E_Q_Kernel as factory
     return factory(*args, **kwds)

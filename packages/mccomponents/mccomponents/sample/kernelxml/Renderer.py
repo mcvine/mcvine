@@ -108,6 +108,15 @@ class Renderer(base):
         return
     
     
+    def onConstantvQEKernel(self, kernel):
+        E = kernel.E; Q = kernel.Q
+        dE = kernel.dE
+        self._write('<ConstantvQEKernel momentum-transfer="%s" energy-transfer="%s" dE="%s">' % (
+                Q, E, dE))
+        self._write('</ConstantvQEKernel>')
+        return
+    
+    
     def onGridSQE(self, gridsqe):
         sqehist = gridsqe.sqehist
         from histogram.hdf import dump

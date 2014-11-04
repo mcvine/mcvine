@@ -160,6 +160,33 @@ class ComputationEngineRendererExtension:
         E = self._unitsRemover.remove_unit(kernel.E, units.energy.meV)
         return self.factory.constantQEKernel(Q, E, abs, sctt)
 
+    
+    def onConstantvQEKernel(self, kernel):
+        t = kernel
+
+        abs = t.absorption_coefficient
+        sctt = t.scattering_coefficient
+
+        if abs is None or sctt is None:
+            #need to get cross section from sample assembly representation
+            # svn://danse.us/inelastic/sample/.../sampleassembly
+            #origin is a node in the sample assembly representation
+            #
+            #scatterer_origin is assigned to kernel when a kernel is
+            #constructed from kernel xml.
+            #see sampleassembly_support.SampleAssembly2CompositeScatterer for details.
+            origin = t.scatterer_origin
+            from sampleassembly import compute_absorption_and_scattering_coeffs
+            abs, inc, coh = compute_absorption_and_scattering_coeffs( origin )
+            sctt = inc + coh
+            pass
+        
+        abs, sctt = self._unitsRemover.remove_unit( (abs, sctt), 1./units.length.meter )
+        Q = kernel.Q
+        E = self._unitsRemover.remove_unit(kernel.E, units.energy.meV)
+        dE = self._unitsRemover.remove_unit(kernel.dE, units.energy.meV)
+        return self.factory.constantvQEKernel(Q, E, dE, abs, sctt)
+
 
     def onE_Q_Kernel(self, kernel):
         t = kernel

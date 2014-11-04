@@ -29,6 +29,7 @@ EXPORT_PYTHON_MODULES = \
 	Broadened_E_Q_Kernel.py \
 	ConstantEnergyTransferKernel.py \
 	ConstantQEKernel.py \
+	ConstantvQEKernel.py \
 	Document.py \
 	E_Q_Kernel.py \
 	E_vQ_Kernel.py \

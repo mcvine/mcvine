@@ -26,7 +26,7 @@ class Document(base):
         'GridSQE',
         'SQE_fromexpression',
         'ConstantEnergyTransferKernel',
-        'ConstantQEKernel',
+        'ConstantQEKernel', 'ConstantvQEKernel',
         'E_Q_Kernel',
         'Broadened_E_Q_Kernel', 
         'E_vQ_Kernel',
