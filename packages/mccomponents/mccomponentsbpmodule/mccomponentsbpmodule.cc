@@ -35,6 +35,7 @@ namespace wrap_mccomponents{
   void wrap_EventModeMCA();
   void wrap_ConstantEnergyTransferKernel();
   void wrap_ConstantQEKernel();
+  void wrap_ConstantvQEKernel();
   void wrap_SQEkernel();
   void wrap_SQkernel();
   void wrap_GridSQE();
@@ -86,6 +87,7 @@ BOOST_PYTHON_MODULE(mccomponentsbp)
 
   wrap_ConstantEnergyTransferKernel();
   wrap_ConstantQEKernel();
+  wrap_ConstantvQEKernel();
   wrap_SQEkernel();
   wrap_SQkernel();
 

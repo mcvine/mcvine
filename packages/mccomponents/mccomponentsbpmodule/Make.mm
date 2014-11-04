@@ -34,6 +34,7 @@ PROJ_SRCS = \
 	wrap_EventModeMCA.cc \
 	wrap_ConstantEnergyTransferKernel.cc \
 	wrap_ConstantQEKernel.cc \
+	wrap_ConstantvQEKernel.cc \
 	wrap_E_Q_Kernel.cc \
 	wrap_E_vQ_Kernel.cc \
 	wrap_Broadened_E_Q_Kernel.cc \
