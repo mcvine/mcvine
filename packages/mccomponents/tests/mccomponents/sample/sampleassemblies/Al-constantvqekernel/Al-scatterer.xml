@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE scatterer>
+
+<!-- weights: absorption, scattering, transmission -->
+<homogeneous_scatterer mcweights="0, 1, 0">
+  
+  <ConstantvQEKernel momentum-transfer="2,0,2" energy-transfer="28*meV" dE=".1*meV">
+  </ConstantvQEKernel>
+  
+</homogeneous_scatterer>
+
