@@ -53,6 +53,7 @@ EXPORT_HEADERS = \
 	Broadened_E_Q_Kernel.h Broadened_E_Q_Kernel.icc \
 	ConstantEnergyTransferKernel.h \
 	ConstantQEKernel.h \
+	ConstantvQEKernel.h \
 	E_Q_Kernel.h \
 	E_Q_Kernel.icc \
 	E_Q_Kernel_helpers.h \
