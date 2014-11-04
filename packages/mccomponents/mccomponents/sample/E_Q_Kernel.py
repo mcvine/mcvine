@@ -47,6 +47,6 @@ class E_Q_Kernel(Kernel):
 
 
 # version
-__id__ = "$Id: ConstantQEKernel.py 601 2010-10-03 19:55:29Z linjiao $"
+__id__ = "$Id$"
 
 # End of file 
