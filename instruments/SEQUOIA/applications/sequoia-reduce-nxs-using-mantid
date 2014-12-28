@@ -28,29 +28,56 @@ class App(AppBase):
 
         import pyre.inventory
         nxs = pyre.inventory.str('nxs', default='sequoia-sim.nxs')
+        psi = pyre.inventory.float('psi', default=0)
+        
         # idf = pyre.inventory.str('idf', default=default_mcvine_idfpath)
         use_ei_guess = pyre.inventory.bool('use_ei_guess', default=True)
-        ei_guess = pyre.inventory.float('ei_guess', default=100)
+        ei_guess = pyre.inventory.float('ei_guess', default=0)
+        
+        powder = pyre.inventory.bool('powder', default=True)
+        powder.meta['tip'] = "if true, I(Q,E) will be computed"
+        
         qaxis = pyre.inventory.array('qaxis', default="(0,13,0.1)")
+        eaxis = pyre.inventory.array('eaxis', default=None)
+        
         out = pyre.inventory.str('out', default='iqe.nxs')
-
+        out.meta['tip'] = "output file for I(Q,E) spectrum. at this point, only valid for powder"
+        
+        speout = pyre.inventory.str('speout', default = 'sim.nxspe')
+        speout.meta['tip'] = "nxspe output file"
+        
     def main(self):
         nxs = self.inventory.nxs
         use_ei_guess = self.inventory.use_ei_guess
         ei_guess = self.inventory.ei_guess
-        qmin, qmax, dq = self.inventory.qaxis
-        qaxis = (qmin, dq, qmax)
-        outfile = os.path.abspath(self.inventory.out)
-        # idfpath = self.inventory.idf
-        
+        if ei_guess > 0:
+            use_ei_guess = True
+            
         d = {
             'nxsfile': nxs,
-            # 'idfpath': idfpath,
+            'psi': self.inventory.psi,
             'use_ei_guess': use_ei_guess,
             'ei_guess': ei_guess,
-            'qaxis': qaxis,
-            'outfile': outfile,
+            'speout': self.inventory.speout,
             }
+
+        powder = self.inventory.powder
+        if powder:
+            qmin, qmax, dq = self.inventory.qaxis
+            qaxis = (qmin, dq, qmax)
+        
+            eaxis = self.inventory.eaxis
+            if eaxis is not None:
+                emin, emax, de = eaxis
+                eaxis = emin, de, emax
+                
+            outfile = os.path.abspath(self.inventory.out)
+            d.update(
+                qaxis = qaxis,
+                eaxis = eaxis,
+                outfile = outfile,
+                )
+        # idfpath = self.inventory.idf
         run(**d)
         return
 
@@ -62,8 +89,22 @@ class App(AppBase):
 # XXX: loading a new idf does not work. see below: the function call to 
 # XXX: LoadInstrument
 # def run(nxsfile, idfpath, use_ei_guess, ei_guess, qaxis, outfile):
-def run(nxsfile, use_ei_guess, ei_guess, qaxis, outfile):
-    from mantid.simpleapi import DgsReduction, SofQW3, SaveNexus, LoadInstrument, Load, MoveInstrumentComponent
+# XXX: Dec 27, 2014. trying to match mcvine-sns-reduce-by-mantid
+# XXX: to introduce new parameters for single crystal reduction
+# XXX: should merge with mcvine-sns-reduce-by-mantid, but
+# XXX: sequoia has a special pre-process step of MoveInstrumentComponent
+# XXX: when later we merge this with mcvine-sns-reduce-by-mantid
+# XXX: a flexible structure to accomodate things like that should
+# XXX: be implemented then.
+def run(
+    nxsfile,
+    speout = None, psi=None,
+    use_ei_guess=False, ei_guess=None,
+    powder=None,
+    eaxis=None, qaxis=None, 
+    outfile=None,
+    ):
+    from mantid.simpleapi import DgsReduction, SofQW3, SaveNexus, SaveNXSPE, LoadInstrument, Load, MoveInstrumentComponent
     
     # load workspace from input nexus file
     workspace = Load(nxsfile)
@@ -82,23 +123,27 @@ def run(nxsfile, use_ei_guess, ei_guess, qaxis, outfile):
         IncidentEnergyGuess=ei_guess,
         UseIncidentEnergyGuess=use_ei_guess,
         OutputWorkspace='reduced',
+        EnergyTransferRange = eaxis,
         )
-    # SaveNexus(
-    #    InputWorkspace='reduced',
-    #    Filename='reduced.nxs',
-    #    Title='reduced',
-    #    )
-    SofQW3(
-        InputWorkspace='reduced',
-        OutputWorkspace='iqw',
-        QAxisBinning=qaxis,
-        EMode='Direct',
+    SaveNXSPE(
+        InputWorkspace = 'reduced',
+        Filename = speout,
+        Efixed = 0,
+        Psi = psi,
+        KiOverKfScaling = True,
         )
-    SaveNexus(
-        InputWorkspace='iqw',
-        Filename = outfile,
-        Title = 'iqw',
-        )
+    if powder:
+        SofQW3(
+            InputWorkspace='reduced',
+            OutputWorkspace='iqw',
+            QAxisBinning=qaxis,
+            EMode='Direct',
+            )
+        SaveNexus(
+            InputWorkspace='iqw',
+            Filename = outfile,
+            Title = 'iqw',
+            )
     return
 
 
