@@ -61,20 +61,20 @@ class App(AppBase):
             'speout': self.inventory.speout,
             }
 
+        eaxis = self.inventory.eaxis
+        if eaxis is not None:
+            emin, emax, de = eaxis
+            eaxis = emin, de, emax
+            d.update(eaxis=eaxis)
+            
         powder = self.inventory.powder
         if powder:
             qmin, qmax, dq = self.inventory.qaxis
             qaxis = (qmin, dq, qmax)
         
-            eaxis = self.inventory.eaxis
-            if eaxis is not None:
-                emin, emax, de = eaxis
-                eaxis = emin, de, emax
-                
             outfile = os.path.abspath(self.inventory.out)
             d.update(
                 qaxis = qaxis,
-                eaxis = eaxis,
                 outfile = outfile,
                 )
         # idfpath = self.inventory.idf
