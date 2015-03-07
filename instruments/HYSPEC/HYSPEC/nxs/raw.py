@@ -43,8 +43,8 @@ def write(events, tofbinsize, path):
 
     # XXX: hack
     etz_attrs = {
-        'units': 'second',
-        'offset': '2012-08-23T11:23:53.833508666-04:00',
+        'units': np.string_('second'),
+        'offset': np.string_('2012-08-23T11:23:53.833508666-04:00'),
         'offset_seconds': 714583433,
         'offset_nanoseconds': 833508666,
         }
@@ -68,13 +68,13 @@ def write(events, tofbinsize, path):
         be = entry['bank%s_events' % (bank+bank_id_offset)]
         be['event_id'] = bevts['pixelID'] + pixel_id_offset
         be['event_time_offset'] = np.array(bevts['tofChannelNo'], dtype='float32') * tofbinsize
-        be['event_time_offset'].attrs['units'] = 'microsecond'
+        be['event_time_offset'].attrs['units'] = np.string_('microsecond')
         be['event_weight'] = np.array(bevts['p'], dtype='float32')
         be['event_index'] = np.array([0, len(bevts)], dtype='uint64')
         be['event_time_zero'] = np.array([0, 1./60], dtype='float64')
         etz = be['event_time_zero']
         # hack
-        etz_attrs['target'] = '/entry/instrument/bank%s/event_time_zero' % (bank+bank_id_offset)
+        etz_attrs['target'] = np.string_('/entry/instrument/bank%s/event_time_zero' % (bank+bank_id_offset))
         for k,v in etz_attrs.items(): etz.attrs[k] = v
         
         # XXX: should this be a float and the sum of all weights?
