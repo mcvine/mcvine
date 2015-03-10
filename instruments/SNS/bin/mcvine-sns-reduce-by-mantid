@@ -59,19 +59,19 @@ class App(AppBase):
             'powder': powder,
             }
 
+        eaxis = self.inventory.eaxis
+        if eaxis is not None:
+            emin, emax, de = eaxis
+            eaxis = emin, de, emax
+            d.update(eaxis=eaxis)
+        
         if powder:
             qmin, qmax, dq = self.inventory.qaxis
             qaxis = (qmin, dq, qmax)
         
-            eaxis = self.inventory.eaxis
-            if eaxis is not None:
-                emin, emax, de = eaxis
-                eaxis = emin, de, emax
-        
             outfile = self.inventory.out 
             d.update(
                 qaxis = qaxis,
-                eaxis = eaxis,
                 outfile = outfile,
                 )
         run(**d)
