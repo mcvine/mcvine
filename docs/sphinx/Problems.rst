@@ -13,3 +13,9 @@ S(Q,E) spectrum is calculated up to 10th order.
 
 
 
+multiphonon S(Q,E) may fail if phonon DOS has too many data points
+------------------------------------------------------------------
+
+Less than 1000 data points should be fine.
+Otherwise, may be out of memory.
+
