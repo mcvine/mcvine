@@ -22,6 +22,46 @@ def storage( *args, **kwds ):
     return Storage( *args, **kwds )
 
 
+def merge_and_normalize(filename, outputs_dir, overwrite_datafiles=True):
+    """merge_and_normalize('scattered-neutrons', 'out')
+    """
+    # find all output files
+    from mcni.components.outputs import n_mcsamples_files, mcs_sum
+    import glob, os
+    pattern = os.path.join(outputs_dir, '*', filename)
+    nsfiles = glob.glob(pattern)
+    n_mcsamples = n_mcsamples_files(outputs_dir)
+    assert len(nsfiles) == n_mcsamples, \
+        "neutron storage files %s does not match #mcsample files %s" %(
+        len(nsfiles), n_mcsamples)
+    if not nsfiles:
+        return None, None
+
+    # output
+    out = os.path.join(outputs_dir, filename)
+    if overwrite_datafiles:
+        if os.path.exists(out):
+            os.remove(out)
+    # merge
+    from mcni.neutron_storage import merge
+    merge(nsfiles, out)
+
+    # number of neutron events totaly in the neutron file
+    from mcni.neutron_storage.idf_usenumpy import count
+    nevts = count(out)
+
+    # load number_of_mc_samples
+    mcs = mcs_sum(outputs_dir)
+
+    # normalization factor. this is a bit tricky!!!
+    nfactor = mcs/nevts
+
+    # normalize
+    from mcni.neutron_storage import normalize
+    normalize(out, nfactor)
+    return
+
+
 def merge( *args, **kwds ):
     from .merge import merge
     merge( *args, **kwds )
