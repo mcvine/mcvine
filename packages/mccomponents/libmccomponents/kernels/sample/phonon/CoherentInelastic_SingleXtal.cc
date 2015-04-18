@@ -43,6 +43,7 @@
 #include "mccomponents/kernels/sample/phonon/Omega_minus_deltaE.h"
 
 
+
 namespace{
   const char * phonon_cohinel_sc_journal_channel = "CoherentInelastic_SingleXtal";
 }
@@ -292,7 +293,7 @@ mccomponents::kernels::phonon::CoherentInelastic_SingleXtal::pick_a_final_state
   norm_of_slsum /= (m_tot_scattering_xs*1e-28);
   // convert the q**2 in that term to be in energy unit (meV), which
   // will cancel with meV unit of phonon energy
-  prob_factors.push_back(neutron_units_conversion::ksquare2E( norm_of_slsum ));
+  prob_factors.push_back(neutron_units_conversion::ksquare2E( norm_of_slsum )/std::abs(omega));
  
   // thermal factor
   float_t therm_factor = kernels::phonon::phonon_bose_factor(omega, m_Temperature);
@@ -315,7 +316,8 @@ mccomponents::kernels::phonon::CoherentInelastic_SingleXtal::pick_a_final_state
 	  << "Q = " << Q << "\n"
 	  << "omega = " << omega << "\n"
 	  << "k_i = " << v_i* neutron_units_conversion::v2k << "\n"
-	  << "k_f = " << v_f* neutron_units_conversion::v2k << journal::endl;
+	  << "k_f = " << v_f* neutron_units_conversion::v2k << 
+      journal::endl;
     for (int i=0; i<prob_factors.size(); i++) {
       debug << " p[" << i << "] = " << prob_factors[i] << "\n";
     }
