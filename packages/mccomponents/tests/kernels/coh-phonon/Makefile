@@ -19,13 +19,13 @@ total-scattered-int: ie.h5
 
 
 out/iqe.h5: ssd ssd.pml sampleassembly
-	./ssd --ncount=1e7
+	rm -rf out && ./ssd --ncount=1e7 --buffer_size=1000000
 
 iqe.h5: out/iqe.h5
 	cp out/iqe.h5 iqe.h5
 
 ie.h5: iqe.h5
-	python -c "import histogram.hdf as hh; iqe=hh.load('iqe.h5'); ie=iqe[(0.2, None), ()].sum('Q'); hh.dump(ie, 'ie.h5')"
+	python -c "import histogram.hdf as hh; iqe=hh.load('iqe.h5'); ie=iqe[(2, 7.5), ()].sum('Q'); hh.dump(ie, 'ie.h5')"
 
 iq.h5: iqe.h5
 	python -c "import histogram.hdf as hh; iqe=hh.load('iqe.h5'); iq=iqe.sum('energy'); hh.dump(iq, 'iq.h5')"
