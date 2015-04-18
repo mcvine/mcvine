@@ -69,6 +69,6 @@ if __name__ == "__main__":
 
     
 # version
-__id__ = "$Id: NDMonitor_TestCase.py 1144 2011-04-28 04:02:13Z linjiao $"
+__id__ = "$Id$"
 
 # End of file 
