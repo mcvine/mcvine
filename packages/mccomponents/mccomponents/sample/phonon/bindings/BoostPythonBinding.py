@@ -86,7 +86,8 @@ class New:
     site: a crystal.Site instance
     '''
         # position = site.getPosition()
-        position = site.xyz
+        position = site.xyz_cartn
+        print "cartesian coordinates of atom:", position
         # atom = site.getAtom()
         atom = site
         mass = atom.mass
@@ -304,8 +305,8 @@ class New:
         for atom in atoms: atom_vector.append( atom )
         
         deltaV_Jacobi = 0.001
-        zridd = b.ZRidd(1) # 0.1 - accuracy of velocity (m/s)
-        rootsfinder = b.FindRootsEvenly(zridd, 5000)
+        zridd = b.ZRidd(10) # 0.1 - accuracy of velocity (m/s)
+        rootsfinder = b.FindRootsEvenly(zridd, 2000)
         targetregion = b.TargetCone(self.vector3(0,0,0),0)
         epsilon = 1.e-10
 
