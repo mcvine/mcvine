@@ -32,11 +32,14 @@ namespace NNGridData_3D_impl{
   {
     Float r = (value-axis.start)/axis.step;
     if ( r<0 || r >= axis.n ) {
+      if (std::abs(r) < 1e-7) r = 0;
+      else {
       std::ostringstream oss;
       oss << "value " << value << " is out of bound: ("
 	  << axis.start << ", " << axis.start + axis.n * axis.step 
 	  << ")" ;
       throw DANSE::phonon::Exception( oss.str() );
+      }
     }
     
     index = std::floor( r );
@@ -101,7 +104,13 @@ DANSE::phonon::NNGridData_3D<Array_3D, FloatType, Size>::operator ()
   value2index_and_remainder(x, m_xaxis, nx, rx);
   value2index_and_remainder(y, m_yaxis, ny, ry);
   value2index_and_remainder(z, m_zaxis, nz, rz);
-  
+  /*
+  std::cout << "x,y,z=" << x << ", " << y << ", " << z 
+	    << "nx,rx=" << nx << ", " << rx
+	    << "ny,ry=" << ny << ", " << ry
+	    << "nz,rz=" << nz << ", " << rz
+	    << std::endl;
+  */
   return getitem<dataarray_t, index_t, FloatType>
     (m_dataarray, nx+(rx>0.5?1:0), ny+(ry>0.5?1:0), nz+(rz>0.5?1:0));
 }
