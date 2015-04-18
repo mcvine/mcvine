@@ -71,6 +71,19 @@ void basicTests()
 }
 
 
+void complexdouble_Tests()
+{
+  // typedef double float_t;
+  typedef std::complex<float_t> complex_t;
+  typedef mcni::Vector3< complex_t > cv_t;
+  cv_t v = cv_t(complex_t(0,1), 0,0);
+  std::cout << (v|v) << std::endl;
+
+  mcni::cVector3 v1 = mcni::cVector3(mcni::Complex(0,1), 0, 0);
+  std::cout << (v1|v1) << std::endl;
+}
+
+
 void memoryTest()
 {
   size_t nlp1 = 5000;
@@ -87,6 +100,7 @@ void memoryTest()
 int main()
 {
   basicTests();
+  complexdouble_Tests();
   //memoryTest();
 }
 
