@@ -11,8 +11,6 @@
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //
 
-
-
 #ifndef PHONON_SCATTERINGLENGTH_H
 #error scattering_length.icc not meaningful outside scattering_length.h
 #else
@@ -41,7 +39,8 @@ template <typename complex_t, typename K_t, typename epsilon_t,
   for ( size_t i=0; i<atoms.size(); i++){
     // (eps.Q)
     epsilon_t eps = dispersion.polarization(branch, i, Q);
-    complex_t qdote = (Q|eps);
+    double epslen = std::sqrt((eps|eps).real());
+    complex_t qdote = (Q|eps)/epslen;
     
     const atom_t & atom = atoms[i];
     
