@@ -46,3 +46,27 @@ This is a quick guide. not very well organized.
 * add a high-level script <instrument>-beam that runs the beam and do beam analysis
 * convert mantid instrument xml file for the instrument to a mcvine instrument, by add an instrument factory to the instrument package
 
+
+xml parsing
+-----------
+is done in several layers.
+
+* sampleassembly: sampleassembly.saxml package
+
+
+geometry
+--------
+sampleassembly.xml
+
+Geometry information is registered into a registry.
+Later when needed, positional and orientational
+information of an object can be requested from the registry.
+
+For example, in mccomponents.sample.sampleassembly_support.onSampleAssembly,
+calls
+
+ lg.position(scatterer)
+ lg.orientation(scatterer)
+
+request the position and orientation of the scatterer.
+
