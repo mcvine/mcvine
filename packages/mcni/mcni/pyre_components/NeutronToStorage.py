@@ -72,11 +72,13 @@ class NeutronToStorage(ParallelComponent, AbstractComponent):
                     self.mpiReceive(i, channel)
         # merge and normalize neutron files
         if context.mpiRank == 0:
+            import time; time.sleep(60)
             self._merge_and_normalize()
         return
 
 
     def _merge_and_normalize(self):
+        # XXX: should rewrite using mcni.neutron_storage.merge_and_normalize
         outdir = self.simulation_context.outputdir
 
         # find all output files
