@@ -1,0 +1,24 @@
+# -*- Python -*-
+#
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#
+#                                   Jiao Lin
+#                      California Institute of Technology
+#                        (C) 2008  All Rights Reserved
+#
+# {LicenseText}
+#
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#
+
+def sample():
+    import mccomponents.sample.phonon.xml
+    from mcni.pyre_support import componentfactory 
+    f = componentfactory( 'samples', 'SampleAssemblyFromXml')
+    return f('fccNi_sample')
+
+
+# version
+__id__ = "$Id$"
+
+# End of file 

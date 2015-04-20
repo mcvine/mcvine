@@ -1,0 +1,7 @@
+This example can simulate ideal S(Q,E) for the LaOFeAs sample.
+The phonon dispersion was calculated from first principle by Olivier. 
+
+Run:
+   $ SSSD.py
+ or 
+   $ run.sh

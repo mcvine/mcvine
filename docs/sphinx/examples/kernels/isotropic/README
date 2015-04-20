@@ -1,0 +1,17 @@
+This example is for elastic isotropic scattering kernel.
+
+To run:
+
+ $ ./run.sh
+
+Instrument:
+
+ MonochromaticSource -> Al sample with isotropic kernel -> PSD 4pi monitor
+
+Result:
+ 
+ Scattered neutrons are istropic and have the exact same energy as the incident neutrons.
+
+Output:
+
+  $ PlotHist.py out/psd4pi.h5

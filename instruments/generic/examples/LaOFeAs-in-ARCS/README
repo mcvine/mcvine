@@ -1,0 +1,10 @@
+This simulation send neutrons saved from another simulation
+(simulation of ARCS instrument and a neutron recorder was
+placed just in front of the sample position)
+to  the sample, and record scattered neutrons.
+
+Requirements:
+
+ - neutrons. We need a symbolic link "ARCS_neutrons_at_sample"
+   pointing to the neutron directory created in the last simulation
+ - phonon dispersion directory 'phonon-dispersion".

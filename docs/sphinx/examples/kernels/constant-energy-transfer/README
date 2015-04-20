@@ -1,0 +1,22 @@
+This example is for constant-energy transfer scattering kernel.
+
+To run:
+
+ $ ./run.sh
+
+Instrument:
+
+ MonochromaticSource -> Al sample with constant energy transfer kernel -> I(Q,E) monitor
+
+Result:
+ 
+ Incident neutrons are all in z direction and have the same energy Ei=100meV.
+ The energy transfer is constant: E=10meV.
+ Scattered neutrons are istropic and have the exact same energy 
+   Ef = Ei - E = 100.-10. = 90. meV
+ The I(Q,E) plot shows one line corresponding to E=10meV.
+
+Output:
+
+  $ PlotHist.py out/iqe.h5
+ 

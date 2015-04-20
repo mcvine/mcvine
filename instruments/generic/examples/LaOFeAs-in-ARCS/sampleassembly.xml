@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE SampleAssembly>
+
+<SampleAssembly name="sampleassembly">
+  
+  <PowderSample name="sample" type='sample'>
+    <Shape>
+      <block width="4*cm" height="3*cm" thickness="0.05*cm" />
+    </Shape>
+    <Phase type="crystal">
+      <ChemicalFormula>LaOFeAs</ChemicalFormula>
+      <xyzfile>LaOFeAs.xyz</xyzfile>
+    </Phase>
+  </PowderSample>
+  
+  <LocalGeometer registry-coordinate-system="InstrumentScientist">
+    <Register name="sample" position="(0,0,0)" orientation="(0,0,45)"/>
+  </LocalGeometer>
+<!--
+  <environment>
+    <temperature>300*K</temperature>
+    <pressure>1.*atm</pressure>
+  </environment>
+-->
+
+</SampleAssembly>

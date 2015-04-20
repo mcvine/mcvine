@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE scatterer>
+
+<!-- weights: absorption, scattering, transmission -->
+<homogeneous_scatterer mcweights="0, 1, 0">
+  
+  <Phonon_CoherentInelastic_PolyXtal_Kernel Ei='70*meV' max-omega='55*meV' max-Q='12*angstrom**-1' nMCsteps_to_calc_RARV='10000' >
+    <LinearlyInterpolatedDispersion idf-data-path="phonon-dispersion"/>
+  </Phonon_CoherentInelastic_PolyXtal_Kernel>
+  
+</homogeneous_scatterer>

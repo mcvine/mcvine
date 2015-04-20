@@ -1,0 +1,22 @@
+This example is for S(Q,E) scattering kernel.
+
+To run:
+
+ $ ./run.sh
+
+Instrument:
+
+ MonochromaticSource -> Al sample with a S(Q,E) kernel -> I(Q,E) monitor
+
+Input:
+
+ I(Q,E) histogram in sampleassembly/sqehist.h5
+ 
+ Can take a look by
+
+  $ PlotHist.py sampleassembly/sqehist.h5
+
+Output:
+
+  $ PlotHist.py out/iqe.h5
+ 

@@ -1,0 +1,11 @@
+
+def detector():
+    from mcstas2.pyre_support import componentfactory
+    f = componentfactory( 'monitors', 'IQE_monitor' )
+    ret = f('iqe_monitor')
+    from mcstas2.pyre_support.monitor_exts import extend
+    extend( ret )
+    return ret
+
+
+if __name__ == '__main__': detector()

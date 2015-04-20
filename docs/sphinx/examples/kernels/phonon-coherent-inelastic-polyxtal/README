@@ -1,0 +1,18 @@
+This example is for coherent inelastic phonon scattering kernel for polycrystalline sample.
+
+To run:
+
+ $ ./run.sh
+
+Instrument:
+
+ MonochromaticSource -> Al sample with a S(Q,E) kernel -> I(Q,E) monitor
+
+Input:
+
+ Phonon dispersions in sampleassembly/phonon-dispersion
+ 
+Output:
+
+  $ PlotHist.py out/iqe.h5
+ 

@@ -1,0 +1,17 @@
+This example is for simple powder diffraction kernel.
+
+To run:
+
+ $ ./run.sh
+
+Instrument:
+
+ MonochromaticSource -> Al sample with a simple powder diffraction kernel -> psd 4pi monitor
+
+Input:
+
+ 
+Output:
+
+  $ PlotHist.py out/psd4pi.h5
+ 
