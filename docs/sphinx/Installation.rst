@@ -13,8 +13,12 @@ Build mcvine from source
 ------------------------
 
 .. note::
-  You may want to read :ref:`platform specific instructions <platform-specific-instructions>`
-  first before you move on.
+   `Docker <https://www.docker.com/>`_ is used to test
+   installation of MCViNE on various Linux systems.
+   Related Dockerfiles can be found in
+   https://github.com/heetuu/mcvine-releaser/tree/master/docker,
+   and they can be used as hints for installing dependencies
+   and then building mcvine.
 
 
 To install mcvine from source, please follow these steps:
@@ -27,20 +31,16 @@ To install mcvine from source, please follow these steps:
 
 Obtain mcvine source
 ^^^^^^^^^^^^^^^^^^^^
-To obtain mcvine source, you can either get it from
-:ref:`danse svn repository <install-src-svn>`
-or 
-:ref:`danse web site <install-src-repo-on-web>`.
+You can obtain 
+:ref:`mcvine source from github <install-src-git>`.
 
+.. _install-src-git:
 
-.. _install-src-svn:
+From github repository
+""""""""""""""""""""""
+Check out MCViNE by ::
 
-Subversion repository
-"""""""""""""""""""""
-If subversion is available in your system and anonymous svn checkout
-is not blocked. You can do ::
-
- $ svn co svn://danse.us/buildInelast/mcvine
+ $ git clone https://github.com/heetuu/mcvine-releaser mcvine
 
 and change into the checked-out directory::
 
@@ -67,29 +67,28 @@ and change into the expanded directory::
 
 Before you install
 ^^^^^^^^^^^^^^^^^^
-You will need a c++ compiler. You may try this command if you use
-a typical linux environment ::
+MCViNE is written in C++ and Python, and it is required
+that the
+following essential development tools are available 
+in your system:
 
- $ g++
+* make
+* gcc c++ compiler
+* python
+* git
 
-Numpy is required, you could test whether it exists in your system by ::
+It also depends on some python packages:
 
- $ python
- >>> import numpy
+* numpy
+* h5py
+* psutil
 
-MCViNE uses python psutil. It can be installed from easy_install::
-
- $ easy_install -U psutil
+and the GNU scientific library (gsl).
 
 Boost python is required for generating python bindings of mcvine c++ libraries.
 You may need to let mcvine installer know about your boost python installation by ::
 
  $ export BOOSTPYTHON_DIR=/path/to/boost/python
-
-If you have installed boost python package using package manager such 
-as apt-get or yum as described in :ref:`platform-specific-instructions`
-to system default directories, mcvine installer should be able to
-find it.
 
 If you want to take advantage of parallel computing, please install
 mpich2. After installation of mpich2, you will need include mpich2 
@@ -97,7 +96,6 @@ executables such as mpicxx in your PATH, so that the following
 command does not complain about "command not found"::
 
  $ mpicxx
-
 
 
 .. _run-install:
@@ -136,12 +134,14 @@ the following::
  $ source <export_root>/bin/envs.sh
  $ mcvine-component-info -type=E_monitor
 
-You should see mcvine starting to compile the mcstas E_monitor
-component (this will happen only once for every type of 
-mcvine-wrapped mcstas component. Built-in mcvine components
-don't need this step) and then show some info about the E_monitor
+.. You should see mcvine 
+.. starting to compile the mcstas E_monitor
+.. component (this will happen only once for every type of 
+.. mcvine-wrapped mcstas component. Built-in mcvine components
+.. don't need this step) and then show some info about the E_monitor
+The 2nd command will print some info about the E_monitor
 component. If you see anything unexpected, there must be some
-problem in the installation; please don't hesitate to post
+problems in the installation; please don't hesitate to post
 a message to the mcvine user discussion group 
 mcvine-users at googlegroups dot com.
 
@@ -169,144 +169,16 @@ By default, however, you don't need to set it and mcvine will try
 to find it in default locations.
 
 
-.. _platform-specific-instructions:
+.. .. _platform-specific-instructions:
 
-Platform specific instructions
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-ubuntu 9.10+
-""""""""""""
-
-Before install mcvine, please install following packages:
-
-* g++
-* python-dev
-* libboost-python1.38 (or other version available for your current ubuntu version)
-* python-numpy
-* python-h5py
-* python-psutil
-
-Optionally
-
-- ... for parallel mcvine
- * mpich2 
- * libmpich2-dev
-
-- ... for installing from svn
- * subversion
-
-
-fedora 14
-"""""""""
-
-Before install mcvine, please install following packages using package manager
-(System->Administration->Add/Remove Software) or yum:
-
-* gcc-c++
-* python-devel
-* hdf5-devel
-* boost-devel, boost-python
-* numpy
-* python-psutil
-
-And then install h5py using easy_install (as super user)::
-
- $ easy_install h5py
-
-
-Optionally
-
-- ... for parallel mcvine
- * mpich2-devel
-
-- ... for installing from svn
- * wget
- * subversion
-
-
-If using mpich2, need to set the following environment variables::
-
- $ export MPI_DIR=/usr/lib/mpich2
- $ export MPI_INCDIR=/usr/include/mpich2-i386
- $ export MPI_LIBDIR=$MPI_DIR/lib
- $ export PATH=$MPI_DIR/bin:$PATH
-
-
-Cent OS 5.5
-"""""""""""
-Before install mcvine, please install following packages using 
-yum:
-
-* gcc-c++
-* hdf5-devel (it is not included in standard package repository, so you will need to download the rpm directly, or add extra repository like rpmforge)
-
-
-python
-''''''
-
-You will need to install python 2.6+ from source (default version in Cent OS 5.5 is 2.4 and it does not work for some dependencies of mcvine):
-
-1. Install zlib development package::
-
- $ yum install zlib-devel
-
-
-2. Download python source tarball from http://python.org and expand::
-
- $ tar xvfz <python-tar-ball>
- $ cd Python-x.x.x
-
-3. Configure python and build and install::
-
- $ ./configure --prefix=<prefix> --with-zlib=/usr/include
- $ make
- $ make install
-
-Then we can install setuptools (easy install) 
-from http://pypi.python.org/pypi/setuptools.
-
-
-numpy
-'''''
-1. Download source tar ball from numpy: http://numpy.org 
-2. Expand::
-
- $ tar xvzf numpy-x.x.x.tar.gz
-
-3. Build and install
-
- $ cd numpy-x.x.x
- $ python setup.py install
-
-
-h5py
-''''
-Install using easy_install::
-
- $ easy_install h5py
-
-psutil
-''''''
-Install using easy_install::
-
- $ easy_install psutil
-
-boost python
-''''''''''''
-
-from source.
-
-
-Optionally
-''''''''''
-
-- ... for parallel mcvine
- * mpich2-devel
-
-- ... for installing from svn
- * subversion
-
-
+.. Platform specific instructions
+.. ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. If using mpich2, need to set the following environment variables::
+.. 
+..  $ export MPI_DIR=/usr/lib/mpich2
+..  $ export MPI_INCDIR=/usr/include/mpich2-i386
+..  $ export MPI_LIBDIR=$MPI_DIR/lib
+..  $ export PATH=$MPI_DIR/bin:$PATH
 
 
 .. _buildnotes:
@@ -364,14 +236,10 @@ Systems tested
 --------------
 
 * Ubuntu 
- - 9.10
- - 10.04
+ - 14.04
 
 * Fedora
- - 14
-
-* RHEL client
- - 5.5
+ - 21
 
 * Cent OS
- - 5.5
+ - 6
