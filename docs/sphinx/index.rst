@@ -24,10 +24,9 @@ The MCViNE :ref:`user documentation <mcvinedocs>` includes
 and
 :ref:`instructions for creating a sample assembly <SampleAssembly>`.
 
-At this point, MCViNE is under the subversion (svn) version control system,
-and anonymous svn access is available at svn://danse.us/MCViNE.
-MCViNE source code is available for online-browsing at 
-`the trac site <http://danse.us/trac/MCViNE>`_.
+At this point, MCViNE is under the git version control system,
+and MCViNE source code is available for online-browsing at 
+`the github site <https://github.com/heetuu/MCViNE>`_.
 
 MCViNE is currently deployed on the analysis computing clusters at the
 Spallation Neutron Source (SNS).

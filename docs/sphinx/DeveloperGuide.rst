@@ -7,8 +7,10 @@ Development environemnt
 The following instructions work for ubuntu 14.04LTS 64bit
 
 Basic dev tools
-* svn, git
+* make
 * c++ compiler
+* python
+* git
 
 Dependencies:
 * boost-python, gsl
@@ -18,7 +20,7 @@ Dependencies:
 
 
 ::
- $ apt-get install subversion git
+ $ apt-get install git
  $ apt-get install g++
  $ apt-get install python-dev libboost-python python-numpy python-matplotlib python-h5py python-psutil
  $ apt-get install libboost-python1.55.0 libboost-python1.55-dev
@@ -32,7 +34,7 @@ Create dev directory::
 
 Get releaser::
 
- $ svn co svn+ssh://svn@danse.us/buildInelast/mcvine
+ $ git clone git@githut.com:heetuu/mcvine-releaser mcvine
 
 Get source::
 
