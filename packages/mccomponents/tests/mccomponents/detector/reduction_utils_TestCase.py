@@ -11,8 +11,12 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
 
+from mcvine.deployment_info import mcvine_resources
+if not mcvine_resources:
+    skip = True
 
-import unittestX as unittest
+
+import unittestX as unittest, os
 
 class TestCase(unittest.TestCase):
 
@@ -21,8 +25,12 @@ class TestCase(unittest.TestCase):
         eventsfile = 'events.dat'
         outfile = 'intensities.dat'
         nevents = 337
-        pixelpositionsfile = 'arcs-pixelID2position.bin'
-        solidanglesfile = 'arcs-solidangles.bin'
+        arcs_res = os.path.join(
+            mcvine_resources, 'instruments/ARCS/resources',)
+        pixelpositionsfile = os.path.join(
+            arcs_res, 'pixelID2position.bin')
+        solidanglesfile = os.path.join(
+            arcs_res, 'solidangles.bin')
         npixels = 117760
         import pyre.units.length
         import pyre.units.energy
