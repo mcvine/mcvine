@@ -17,7 +17,7 @@ standalone = True
 
 
 import unittestX as unittest
-import journal
+import journal, os
 
 
 componentname = 'E_monitor'
@@ -30,6 +30,11 @@ class boostpython_TestCase(unittest.TestCase):
 
     def test(self):
         "codes for boost python binding"
+        # create directory
+        dir = componentname
+        if not os.path.exists(dir):
+            os.makedirs(dir)
+
         from mcstas2.wrappers.binding.boostpython.module_cc import generate
         module_cc = generate( bpbindingname, wrapmethodname, projectpath )
 
@@ -38,7 +43,7 @@ class boostpython_TestCase(unittest.TestCase):
 
         from mcstas2.utils.mills.cxx.factory import createHHandCC
         createHHandCC( klass, projectpath )
-
+        
         ctor = klass.constructors() [0]
         from mcstas2.wrappers.binding.boostpython.wrap_cc import generate
         wrap_cc = generate( klass, projectpath, wrapmethodname)
