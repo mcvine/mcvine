@@ -12,6 +12,15 @@
 #
 
 
+from mcvine.deployment_info import mcvine_resources
+import os
+if not mcvine_resources:
+    skip = True
+else:
+    aluminum_dir = os.path.join(
+        mcvine_resources, "examples", "samples", "aluminum")
+
+
 interactive = False
 
 import unittestX as unittest
@@ -29,14 +38,14 @@ class TestCase(unittest.TestCase):
 
     def test1(self):
         # load peaks
-        laz = 'Al.laz'
+        laz = os.path.join(aluminum_dir, 'powderdiffr', 'Al.laz')
         text = open(laz).read()
         from mccomponents.sample.diffraction.parsers.laz import parse
         peaks = parse(text).peaks
         
         # load structure
         from sampleassembly.crystal.ioutils import xyzfile2unitcell
-        xyz = 'Al.xyz'
+        xyz = os.path.join(aluminum_dir, 'crystal', 'Al.xyz')
         structure = xyzfile2unitcell(xyz)
         
         # diffraction pattern
@@ -51,7 +60,8 @@ class TestCase(unittest.TestCase):
     
     def test2(self):
         from mccomponents.sample.diffraction.powder import loadPattern, total_scattering_cross_section
-        dp = loadPattern("Al.xyz", "Al.laz")
+        dp = loadPattern(os.path.join(aluminum_dir, 'crystal', "Al.xyz"), 
+                         os.path.join(aluminum_dir, 'powderdiffr', "Al.laz"))
         import numpy as np
         Ei = np.arange(5, 100, 1.)
         xs = np.zeros(Ei.size, dtype='d')

@@ -13,6 +13,15 @@
 
 
 
+from mcvine.deployment_info import mcvine_resources
+import os
+if not mcvine_resources:
+    skip = True
+else:
+    aluminum_dir = os.path.join(
+        mcvine_resources, "examples", "samples", "aluminum")
+
+
 import unittestX as unittest
 import journal
 
@@ -27,7 +36,7 @@ class TestCase(unittest.TestCase):
 
 
     def test1(self):
-        laz = 'Al.laz'
+        laz = os.path.join(aluminum_dir, 'powderdiffr', 'Al.laz')
         text = open(laz).read()
         from mccomponents.sample.diffraction.parsers.laz import parse
         peaks = parse(text).peaks
