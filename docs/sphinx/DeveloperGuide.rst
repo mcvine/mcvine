@@ -223,3 +223,22 @@ Shapes
 more shapes: 
 sampleassembly.saxml.parser.Document
 
+
+
+Tests
+-----
+
+Some tests may need data files. 
+These data files are "MCViNE resources": https://github.com/heetuu/mcvine-resources.
+The directory of the MCViNE resources should be assigned to
+env var MCVINE_RESOURCES.
+
+
+Python Tests
+^^^^^^^^^^^^
+To skip a python test from the test harness, put ::
+
+  skip = True
+
+near the top of the test module.
+
