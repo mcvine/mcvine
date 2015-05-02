@@ -45,20 +45,25 @@ Get source::
  $ ./getsrc.py
 
 Env vars to build::
+
  $ export BOOSTPYTHON_DIR=/usr
  $ export BOOSTPYTHON_LIBDIR=/usr/lib/x86_64-linux-gnu
 
 Build::
+
  $ ./build.py
 
 Env vars to use mcvine::
+
  $ . ~/dv/mcvine/EXPORT/bin/envs.sh
 
 Run a test::
+
  $ cd ~/dv/mcvine/src/mcvine/packages/mcni/tests/mcni
  $ ./alltests.py
 
 Build during development::
+
  $ . ~/dv/mcvine/src/dottools # once for one session
  $ cd /place/where/code/were/modified
  $ mm
@@ -118,7 +123,8 @@ The following is a partial definition of an example kernel that scatters neutron
     }; // class SQEkernel
 
 
-Source:
+Source::
+
  - [source:trunk/packages/mccomponents/libmccomponents/kernels/sample/SQEkernel.h Declaration]
  - [source:trunk/packages/mccomponents/libmccomponents/kernels/sample/SQEkernel.cc Definition]
 
@@ -130,12 +136,12 @@ Details:
 
 Create boost python binding
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-To create binding of a new c++ kernel class, you will need to
+To create binding of a new c++ kernel class, you will need to:
 
- 1. write the boost python binding code in a c++ source file
- 1. call this new binding code in your main binding module source file
- 1. update your Make file or Make.mm to include new source
- 1. rebuild binding 
+#. write the boost python binding code in a c++ source file
+#. call this new binding code in your main binding module source file
+#. update your Make file or Make.mm to include new source
+#. rebuild binding 
 
 Boost python binding
 """"""""""""""""""""
