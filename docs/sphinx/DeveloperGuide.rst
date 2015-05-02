@@ -7,12 +7,14 @@ Development environemnt
 The following instructions work for ubuntu 14.04LTS 64bit
 
 Basic dev tools
+
 * make
 * c++ compiler
 * python
 * git
 
 Dependencies:
+
 * boost-python, gsl
 * numpy, matplotlib
 * h5py
@@ -20,6 +22,7 @@ Dependencies:
 
 
 ::
+
  $ apt-get install git
  $ apt-get install g++
  $ apt-get install python-dev libboost-python python-numpy python-matplotlib python-h5py python-psutil
@@ -61,10 +64,21 @@ Build during development::
  $ mm
 
 
-Links
------
+Continuous integration
+----------------------
 
-* automatic build and testing (buildbot): http://bagua.cacr.caltech.edu:50082/
+This is done by using buildbot.
+The source code for buildbot configrations of MCViNE
+is at https://github.com/heetuu/mcvine-buildbot.
+The web interface is at http://buildbot.danse.us:8010/.
+
+
+Deployment testing
+------------------
+
+This is done by using docker.
+Source code: https://github.com/heetuu/mcvine-releaser/tree/master/docker.
+Related: :ref:`installation`.
 
 
 Creating a new scattering kernel for sample
