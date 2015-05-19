@@ -62,12 +62,14 @@ class Application(base):
     def _init(self):
         # if I am not really using mpi, I am a worker
         global usempi
-        if usempi and self.inventory.launcher.nodes == 1:
-            self.inventory.mode = 'worker'
-            usempi = False
-        if not usempi:
-            self.inventory.mode = 'worker'
-        if usempi and not self.inventory.launcher.nodes:
+        if usempi:
+            if self.inventory.launcher.nodes < 2:
+                self.inventory.mode = 'worker'
+                usempi = False
+        else:
+            if self.inventory.launcher.nodes > 1:
+                msg="Requested for parallel computing but mpi is not available"
+                raise RuntimeError(msg)
             self.inventory.mode = 'worker'
 
         super(Application, self)._init()
