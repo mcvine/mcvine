@@ -20,6 +20,10 @@ def _mpi():
     global size, rank, world
     try:
         import mpi
+        if not mpi.inParallel():
+            sys.stderr.write( "** pyre mpi binding: failed to load\n" )
+            rank = 0
+            return
         sys.stderr.write( "* pyre mpi available\n" )
     except ImportError:
         sys.stderr.write( "** pyre mpi NOT available\n" )
