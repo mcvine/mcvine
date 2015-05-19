@@ -11,6 +11,8 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
 
+# !!! OBSOLETE !!!
+
 """
 McStasConverter - converter for McStas components to list of dictionaries.
                   This is a convenient form to create other data structures
