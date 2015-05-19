@@ -53,7 +53,7 @@ class LauncherMPICH2(Launcher):
     
     def _buildArgumentList(self):
         import sys
-
+        
         nodes = self.nodes
         self._debug.log(
             'nodes = %d, self.inventory.nodes = %d' % (
