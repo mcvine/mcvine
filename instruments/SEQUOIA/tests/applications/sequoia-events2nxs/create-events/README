@@ -9,4 +9,4 @@ to Q = 10 angstrom**-1 and E = 100 meV.
 
 The detector system is specified by SEQUOIA.xml. 
 
-To run this simulation, run command "run".
+To run this simulation, first run command "prepare", and then run command "run".
