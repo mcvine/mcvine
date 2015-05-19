@@ -17,7 +17,7 @@ skip = False
 
 
 import unittestX as unittest
-import journal
+import journal, os
 
 
 componentname = 'E_monitor'
@@ -34,6 +34,11 @@ class TestCase(unittest.TestCase):
 
         from mcstas2.utils.parsers import parseComponent
         compinfo = parseComponent( componentfile )
+        
+        # create directory
+        dir = "E_monitor"
+        if not os.path.exists(dir):
+            os.makedirs(dir)
 
         from mcstas2.wrappers.pymodule import generate
         sources = generate( compinfo, bpbindingname, projectpath )

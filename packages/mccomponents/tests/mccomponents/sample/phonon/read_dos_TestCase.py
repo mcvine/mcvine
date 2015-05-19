@@ -12,9 +12,13 @@
 #
 
 
+from mcvine.deployment_info import mcvine_resources
+if not mcvine_resources:
+    skip = True
+
 
 import unittestX as unittest
-import journal
+import journal, os
 
 #debug = journal.debug( "TestCase" )
 #warning = journal.warning( "TestCase" )
@@ -38,7 +42,10 @@ class TestCase(unittest.TestCase):
         
     def test2(self):
         "dos from idf"
-        p = 'V-DOS.idf'
+        # p = 'V-DOS.idf'
+        p = os.path.join(
+            mcvine_resources, "examples", "samples", "vanadium",
+            "phonons", "DOS")
         dos = read_dos.doshist_fromidf(p)
         # H.plot(dos)
         read_dos.dos_fromidf(p)

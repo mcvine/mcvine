@@ -12,9 +12,13 @@
 #
 
 
+from mcvine.deployment_info import mcvine_resources
+if not mcvine_resources:
+    skip = True
+
 
 import unittestX as unittest
-import journal
+import journal, os
 
 
 class TestCase(unittest.TestCase):
@@ -22,7 +26,10 @@ class TestCase(unittest.TestCase):
     def test(self):
         from mcstas2.utils.parsers.McStasInstrumentParser import McStasInstrumentParser
         parser = McStasInstrumentParser()
-        path = '../../../../../../../instruments/VULCAN/resources/vulcan_asbuilt_L2d.instr'
+        path = os.path.join(
+            mcvine_resources, 
+            "instruments/VULCAN/resources/vulcan_asbuilt_L2d.instr"
+            )
         text = open(path).read()
         instrument = parser.parse(text)
         return

@@ -7,12 +7,14 @@ Development environemnt
 The following instructions work for ubuntu 14.04LTS 64bit
 
 Basic dev tools
+
 * make
 * c++ compiler
 * python
 * git
 
 Dependencies:
+
 * boost-python, gsl
 * numpy, matplotlib
 * h5py
@@ -20,6 +22,7 @@ Dependencies:
 
 
 ::
+
  $ apt-get install git
  $ apt-get install g++
  $ apt-get install python-dev libboost-python python-numpy python-matplotlib python-h5py python-psutil
@@ -42,29 +45,45 @@ Get source::
  $ ./getsrc.py
 
 Env vars to build::
+
  $ export BOOSTPYTHON_DIR=/usr
  $ export BOOSTPYTHON_LIBDIR=/usr/lib/x86_64-linux-gnu
 
 Build::
+
  $ ./build.py
 
 Env vars to use mcvine::
+
  $ . ~/dv/mcvine/EXPORT/bin/envs.sh
 
 Run a test::
+
  $ cd ~/dv/mcvine/src/mcvine/packages/mcni/tests/mcni
  $ ./alltests.py
 
 Build during development::
+
  $ . ~/dv/mcvine/src/dottools # once for one session
  $ cd /place/where/code/were/modified
  $ mm
 
 
-Links
------
+Continuous integration
+----------------------
 
-* automatic build and testing (buildbot): http://bagua.cacr.caltech.edu:50082/
+This is done by using buildbot.
+The source code for buildbot configrations of MCViNE
+is at https://github.com/heetuu/mcvine-buildbot.
+The web interface is at http://buildbot.danse.us:8010/.
+
+
+Deployment testing
+------------------
+
+This is done by using docker.
+Source code: https://github.com/heetuu/mcvine-releaser/tree/master/docker.
+Related: :ref:`installation`.
 
 
 Creating a new scattering kernel for sample
@@ -104,7 +123,8 @@ The following is a partial definition of an example kernel that scatters neutron
     }; // class SQEkernel
 
 
-Source:
+Source::
+
  - [source:trunk/packages/mccomponents/libmccomponents/kernels/sample/SQEkernel.h Declaration]
  - [source:trunk/packages/mccomponents/libmccomponents/kernels/sample/SQEkernel.cc Definition]
 
@@ -116,12 +136,12 @@ Details:
 
 Create boost python binding
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-To create binding of a new c++ kernel class, you will need to
+To create binding of a new c++ kernel class, you will need to:
 
- 1. write the boost python binding code in a c++ source file
- 1. call this new binding code in your main binding module source file
- 1. update your Make file or Make.mm to include new source
- 1. rebuild binding 
+#. write the boost python binding code in a c++ source file
+#. call this new binding code in your main binding module source file
+#. update your Make file or Make.mm to include new source
+#. rebuild binding 
 
 Boost python binding
 """"""""""""""""""""
@@ -222,4 +242,23 @@ Shapes
 
 more shapes: 
 sampleassembly.saxml.parser.Document
+
+
+
+Tests
+-----
+
+Some tests may need data files. 
+These data files are "MCViNE resources": https://github.com/heetuu/mcvine-resources.
+The directory of the MCViNE resources should be assigned to
+env var MCVINE_RESOURCES.
+
+
+Python Tests
+^^^^^^^^^^^^
+To skip a python test from the test harness, put ::
+
+  skip = True
+
+near the top of the test module.
 

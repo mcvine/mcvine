@@ -1,1 +1,16 @@
-../../../../../../../examples/samples/vanadium/scatterer-xml/constant-E.xml
+<?xml version="1.0"?>
+
+<!DOCTYPE scatterer>
+
+<!-- weights: absorption, scattering, transmission -->
+<homogeneous_scatterer mcweights="0, 1, 1">
+
+  <KernelContainer>
+
+    <ConstantEnergyTransferKernel energy-transfer="20.0*meV">
+    </ConstantEnergyTransferKernel>
+
+  </KernelContainer>
+  
+</homogeneous_scatterer>
+

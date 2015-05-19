@@ -12,6 +12,10 @@
 #
 
 
+from setup_sampleassemblies import mcvine_resources
+if not mcvine_resources:
+    skip = True
+
 standalone = True
 
 
