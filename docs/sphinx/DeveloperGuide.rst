@@ -1,6 +1,24 @@
 Developer Guide
 ===============
 
+Organization
+------------
+
+* mcvine-releaser:
+  - github url: https://github.com/heetuu/mcvine-releaser
+  - place where dependencies are gathered, sources are check out,
+    products are built, etc.
+  - sub directories:
+    - src: sources
+    - EXPORT: build products such as shared libraries, python modules, scripts
+  - more details in README.md of the releaser
+* mcvine-resources:
+  - resources needed by some mcvine applications etc
+  - usually don't change over time. new files are added into it.
+  - path specified by MCVINE_RESOURCES
+  - examples should be explicitly versioned?
+
+
 Development environemnt
 -----------------------
 
