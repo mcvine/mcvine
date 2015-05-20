@@ -223,9 +223,10 @@ class App(base):
         cmd += self._buildCmdFromInventory(keys)
         cmd += ['-buffer_size=%s' % int(self.inventory.ncount/10)]
         cmd.append( '--output-dir=%s' % self.m2sout)
+        from mcvine import resources as res
         moddat = os.path.join(
-            os.environ['MCVINE_DIR'], 'share', 'mcvine',
-            'instruments', 'SEQUOIA', 'source_sct521_bu_17_1.dat',
+            res.instrument('SEQUOIA'), 'resources',
+            'source_sct521_bu_17_1.dat',
             )
         cmd += ['-mod.S_filename=%s' % moddat]
         cmd = ' '.join(cmd)

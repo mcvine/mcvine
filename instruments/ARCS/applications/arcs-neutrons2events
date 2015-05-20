@@ -123,11 +123,12 @@ def execute(cmd, workdir):
 
 
 import numpy as np
-from mcvine.deployment_info import mcvinedir
+from mcvine import resources
 import os, subprocess as sp
 
 #
-arcsxml = os.path.join(mcvinedir, 'share', 'mcvine', 'instruments', 'ARCS', 'ARCS.xml.fornxs')
+arcsxml = os.path.join(
+    resources.instrument('ARCS'), 'resources', 'ARCS.xml.fornxs')
 
 
 def main():

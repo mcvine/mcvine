@@ -160,7 +160,8 @@ def _init(dir):
     # mcvine export root
     export_root = os.environ['MCVINE_DIR']
     # arcs resource directory
-    res_dir = os.path.join(export_root, 'share', 'mcvine', 'instruments', 'ARCS')
+    from mcvine import resources
+    res_dir = os.path.join(resources.instrument('ARCS'), resources)
     # src
     src = os.path.join(res_dir, appname)
     # 

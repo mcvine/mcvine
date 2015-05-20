@@ -137,11 +137,12 @@ def execute(cmd, workdir):
 
 
 import numpy as np
-from mcvine.deployment_info import mcvinedir
+from mcvine import resources as res
 import os, subprocess as sp
 
 #
-sequoiaxml = os.path.join(mcvinedir, 'share', 'mcvine', 'instruments', 'SEQUOIA', 'sequoia.xml.fornxs')
+sequoiaxml = os.path.join(
+    res.instrument('SEQUOIA'), 'resources', 'sequoia.xml.fornxs')
 
 
 def main():

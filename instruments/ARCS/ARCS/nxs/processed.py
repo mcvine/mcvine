@@ -65,8 +65,9 @@ def convert(events):
 
 
 import os
-from mcvine.deployment_info import mcvinedir
-nxs_template = os.path.join(mcvinedir, 'share', 'mcvine', 'instruments', 'ARCS', 'arcs-events-template.nxs')
+from mcvine import resources
+nxs_template = os.path.join(
+    resources.instrument('ARCS'), 'resources', 'arcs-events-template.nxs')
 def _write(
     path,
     indices=None, pulse_time=None,

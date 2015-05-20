@@ -85,9 +85,10 @@ class App(base):
 
 
     def _run_beam(self):
+        from mcvine import resources as res
         moddat = os.path.join(
-            os.environ['MCVINE_DIR'], 'share', 'mcvine',
-            'instruments', 'HYSPEC', 'mcstas', 'SNS_TD_30o70p_fit_fit.dat',
+            res.instrument('HYSPEC'), 'resources',
+            'mcstas', 'SNS_TD_30o70p_fit_fit.dat',
             )
         cmd = ['hyspec_moderator2sample']
         data = {

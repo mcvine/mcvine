@@ -95,9 +95,10 @@ class App(base):
         cmd += self._buildCmdFromInventory(keys)
         cmd += ['-buffer_size=%s' % int(self.inventory.ncount/10)]
         cmd.append( '--output-dir=%s' % self.m2sout)
+        from mcvine import resources
         moddat = os.path.join(
-            os.environ['MCVINE_DIR'], 'share', 'mcvine',
-            'instruments', 'ARCS', 'source_sct521_bu_17_1.dat',
+            resources.instrument('ARCS'), 'resources',
+            'source_sct521_bu_17_1.dat',
             )
         cmd += ['-moderator.S_filename=%s' % moddat]
         cmd = ' '.join(cmd)

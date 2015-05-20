@@ -214,8 +214,9 @@ nbanks = 38+39+38
 pixelsperbank = 8 * 128
 npixels = nbanks * pixelsperbank
 import os
-from mcvine.deployment_info import mcvinedir
-nxs_template = os.path.join(mcvinedir, 'share', 'mcvine', 'instruments', 'ARCS', 'arcs-raw-events-template.nxs')
+from mcvine import resources
+nxs_template = os.path.join(
+    resources.instrument('ARCS'), 'resources', 'arcs-raw-events-template.nxs')
 import numpy as np
 
 

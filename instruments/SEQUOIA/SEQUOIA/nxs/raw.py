@@ -108,8 +108,10 @@ pixel_id_offset = (bank_id_offset-1)*pixelsperbank
 nbanks = 37+39+37
 npixels = nbanks * pixelsperbank
 import os
-from mcvine.deployment_info import mcvinedir
-nxs_template = os.path.join(mcvinedir, 'share', 'mcvine', 'instruments', 'SEQUOIA', 'sequoia-raw-events-template.nxs')
+from mcvine import resources as res
+nxs_template = os.path.join(
+    res.instrument('SEQUOIA'), 'resources',
+    'sequoia-raw-events-template.nxs')
 import numpy as np
 
 

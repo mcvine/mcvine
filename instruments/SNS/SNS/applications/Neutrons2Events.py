@@ -47,7 +47,7 @@ class App(AppBase):
         tofmax = pyre.inventory.float('tofmax', default=0.2) # second
         
         # instrument name. if given, assume instrument xml (danse) is 
-        # at $MCVINE_DIR/share/mcvine/instruments/<instrument>/<instrument>.xml.fornxs
+        # at $MCVINE_RESOURCES/instruments/<instrument>/resources/<instrument>.xml.fornxs
         instrument = pyre.inventory.str('instrument') 
         
         # path instrument.xml.fornxs (danse). this overrides the instrument option
@@ -70,9 +70,11 @@ class App(AppBase):
             instrument = self.inventory.instrument
             if not instrument:
                 raise RuntimeError("Please specify instrument name or path to <instrument>.xml.fornxs")
+            from mcvine import resources
             detsys = os.path.join(
-                mcvinedir, 'share', 'mcvine', 'instruments', 
-                instrument.upper(), '%s.xml.fornxs' % instrument)
+                resources.instrument(instrument.upper()), 
+                'resources',
+                '%s.xml.fornxs' % instrument)
         run(neutrons, workdir, 
             nodes=nodes, tofbinsize=tofbinsize, tofmax=tofmax, 
             detsys=detsys, z_rotation=z_rotation)
@@ -168,7 +170,6 @@ def execute(cmd, workdir):
 
 
 import numpy as np
-from mcvine.deployment_info import mcvinedir
 import os, subprocess as sp
 
 #
