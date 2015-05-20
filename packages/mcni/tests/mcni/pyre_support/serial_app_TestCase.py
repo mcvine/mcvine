@@ -25,7 +25,7 @@ class TestCase(unittest.TestCase):
 
 
     def test(self):
-        'mcni.pyre_support: a simple pyre simulation app'
+        'mcni.pyre_support: serial_app'
         instrument = App('test-serial-app')
         instrument.testFacility = self
         instrument.run()

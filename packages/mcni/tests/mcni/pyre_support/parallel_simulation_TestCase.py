@@ -25,7 +25,7 @@ class TestCase(unittest.TestCase):
 
 
     def test(self):
-        'mcni.pyre_support: a simple pyre simulation app'
+        'mcni.pyre_support: parallel simulation'
         instrument = Instrument('parallel_simulation_TestCase')
         instrument.testFacility = self
         instrument.run()

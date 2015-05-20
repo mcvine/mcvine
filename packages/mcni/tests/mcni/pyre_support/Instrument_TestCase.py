@@ -26,7 +26,7 @@ class TestCase(unittest.TestCase):
 
 
     def test(self):
-        'mcni.pyre_support: a simple pyre simulation app'
+        'mcni.pyre_support: Instrument'
         instrument = Instrument('test')
         instrument.testFacility = self
 
@@ -73,7 +73,7 @@ class TestCase(unittest.TestCase):
 
 
     def test2(self):
-        "Instrument: _getBufferSize"
+        "mcni.pyre_support.Instrument: _getBufferSize"
         instrument = Instrument('t')
         
         # for lower values of ncount, buffer_size=ncount/mpisize/DEFAULT_NUMBER_SIM_LOOPS

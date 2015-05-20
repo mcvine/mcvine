@@ -30,7 +30,7 @@ class TestCase(unittest.TestCase):
 
 
     def test(self):
-        'mcni.pyre_support: a simple pyre simulation app'
+        'mcni.pyre_support: output_dir_option'
 
         if os.path.exists( outdir ):
             import shutil

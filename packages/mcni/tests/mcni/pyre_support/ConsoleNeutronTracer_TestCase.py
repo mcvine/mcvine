@@ -26,7 +26,7 @@ class TestCase(unittest.TestCase):
 
 
     def test(self):
-        'mcni.pyre_support: a simple pyre simulation app'
+        'mcni.pyre_support: ConsoleNeutronTracer'
         instrument = Instrument('test')
         instrument.testFacility = self
 
