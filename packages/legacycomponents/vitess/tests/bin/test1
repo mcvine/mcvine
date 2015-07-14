@@ -1,3 +1,5 @@
 vitess2mcvine ../../../mcstas2/tests/vitess-IO/output.vitess neutrons.mcvine
 
 python -c "from mcni.neutron_storage import load; n = load('neutrons.mcvine'); print n[0]"
+# output should be similar to 
+# Neutron( state=NeutronState( position=(0.0022783,-0.0628855,-2), velocity=(33.9074,20.9442,1534.2), spin=(0, 0) ), time=0, probability=0.0313736 )
