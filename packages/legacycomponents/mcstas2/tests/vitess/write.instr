@@ -1,0 +1,32 @@
+DEFINE INSTRUMENT write()
+
+DECLARE 	        
+%{			
+%}			
+
+INITIALIZE
+%{
+%}
+
+
+TRACE
+COMPONENT arm1 = Progress_bar()
+AT(0,0,0) ABSOLUTE
+
+COMPONENT source=Source_simple(
+	  radius=0.1, dist=2, focus_xw=.1, focus_yh=.1, E0=14, dE=2)
+AT(0,0,0) RELATIVE arm1 
+
+
+COMPONENT vitessout = Vitess_output(
+	  filename="output.vitess", bufsize=10000)
+AT (0,0,2) RELATIVE arm1
+
+FINALLY
+%{
+  printf("*********Summary************************\n");
+%}
+END
+
+
+
