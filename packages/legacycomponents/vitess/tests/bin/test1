@@ -1,0 +1,3 @@
+vitess2mcvine ../../../mcstas2/tests/vitess-IO/output.vitess neutrons.mcvine
+
+python -c "from mcni.neutron_storage import load; n = load('neutrons.mcvine'); print n[0]"

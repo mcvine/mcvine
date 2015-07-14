@@ -6,6 +6,7 @@ PROJECT = vitess
 # directory structure
 
 BUILD_DIRS = \
+	bin \
 	lib \
 	vitess \
 	vitessbpmodule \
