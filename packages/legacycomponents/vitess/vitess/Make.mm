@@ -35,6 +35,7 @@ tidy::
 EXPORT_PYTHON_MODULES = \
 	Component.py \
 	__init__.py \
+	convert_neutrons.py \
 
 EXPORT_BINS = \
 
