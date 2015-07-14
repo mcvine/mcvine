@@ -26,8 +26,8 @@ def convert(ifile, ofile):
     # get vitess neutrons
     vns = vitessneutrons = np.memmap(ifile, dtype=vitess_neutron)
     # convert
-    from vitess.convert_neutrons import vitess2mcvine
-    arr = vitess2mcvine(vns)
+    from vitess.convert_neutrons import vitess2mcvine_npyarr
+    arr = vitess2mcvine_npyarr(vns)
     # save
     from mcni.neutron_storage.idf_usenumpy import write
     write(arr, ofile)

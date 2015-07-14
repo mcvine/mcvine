@@ -5,7 +5,10 @@
 
 
 import numpy as np
-def vitess2mcvine(vns):
+def vitess2mcvine_npyarr(vns):
+    """convert vitess neutron numpy array 
+    into mcvine neutron numpy array
+    """
     # output array
     from mcni.neutron_storage import ndblsperneutron
     arr = np.zeros((vns.size, ndblsperneutron))
