@@ -25,36 +25,9 @@ assert vitess_neutron.itemsize == 120
 def convert(ifile, ofile):
     # get vitess neutrons
     vns = vitessneutrons = np.memmap(ifile, dtype=vitess_neutron)
-    # create buffer for mcvine neutrons
-    N, = vns.shape
-    mns = mcvineneutrons = mcni.neutron_buffer(N)
-    # , and convert to numpy array
-    from mcni.neutron_storage import neutrons_as_npyarr, ndblsperneutron
-    arr = neutrons_as_npyarr(mns)
-    arr.shape = -1, ndblsperneutron
-    # manipulate the array
-    x = arr[:,0]; y = arr[:,1]; z = arr[:,2]
-    vx = arr[:,3]; vy = arr[:,4]; vz = arr[:,5]
-    s1 = arr[:,6]; s2 = arr[:,7];
-    t = arr[:,8];
-    p = arr[:,9]
-    
-    # cm -> m
-    x[:] = 0.01*vns['Position'][:, 1]
-    y[:] = 0.01*vns['Position'][:, 2]
-    z[:] = 0.01*vns['Position'][:, 0]
-    # speed
-    lambda1 = vns['Wavelength']
-    v = 3956.0346/lambda1; 
-    vx[:] = v*vns['Vector'][:, 1]
-    vy[:] = v*vns['Vector'][:, 2]
-    vz[:] = v*vns['Vector'][:, 0]
-    # XXX: ignore spin for now
-    # micro second -> second
-    t[:] = 0.001*vns['Time']
-    #
-    p[:] = vns['Probability']
-    
+    # convert
+    from vitess.convert_neutrons import vitess2mcvine
+    arr = vitess2mcvine(vns)
     # save
     from mcni.neutron_storage.idf_usenumpy import write
     write(arr, ofile)
