@@ -2,30 +2,24 @@
 #
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
-#                               Michael A.G. Aivazis
+#                                   Jiao Lin
 #                        California Institute of Technology
-#                        (C) 1998-2005  All Rights Reserved
+#                        (C) 2006-2013  All Rights Reserved
 #
 # <LicenseText>
 #
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
 
-PROJECT = mcvine
+PROJECT = mcvine/CNCS
+
+
+PROJ_TIDY += *.log *.tmp
 
 # directory structure
 
 BUILD_DIRS = \
-	SNS \
-	ARCS \
-	SANS \
-	SEQUOIA \
-	HYSPEC \
 	CNCS \
-	SMARTS \
-	VULCAN \
-	generic \
-
 
 OTHER_DIRS = \
 
@@ -45,6 +39,9 @@ clean::
 
 tidy::
 	BLD_ACTION="tidy" $(MM) recurse
+
+docs::
+	BLD_ACTION="docs" $(MM) recurse
 
 # version
 # $Id$
