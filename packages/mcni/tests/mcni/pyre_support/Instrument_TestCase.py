@@ -92,17 +92,17 @@ class TestCase(unittest.TestCase):
         temp = int(temp)
         from mcni.neutron_storage.idfneutron import ndblsperneutron
         max = int(temp/ndblsperneutron/8/100/mpiSize) * 100
-        
+
         instrument.inventory.ncount = ncount = 1e9
-        self.assertEqual(instrument._getBufferSize(), max)
+        self.assert_(instrument._getBufferSize() <= max)
         
         instrument.inventory.ncount = ncount = 2e9
-        self.assertEqual(instrument._getBufferSize(), max)
+        self.assert_(instrument._getBufferSize() <= max)
 
         # if user set a too high number for buffer size, it is ignored
         instrument.inventory.ncount = ncount = 2e9
         instrument.inventory.buffer_size = 2e9
-        self.assertEqual(instrument._getBufferSize(), max)
+        self.assert_(instrument._getBufferSize() <= max)
 
         # if user set a too low value for buffer_size, a warning would be issued
         instrument.inventory.ncount = 1e8

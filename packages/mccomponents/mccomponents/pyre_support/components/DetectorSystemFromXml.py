@@ -96,7 +96,7 @@ class DetectorSystemFromXml(ParallelComponent, AbstractComponent):
             # XXX: wait for all other nodes to finish
             # XXX: this is a naive implementation
             import time
-            N = 4; i = 0; wait = 60
+            N = 4; i = 0; wait = 10
             while i < N:
                 print ("* wait %s seconds ..." % wait)
                 time.sleep(wait)

@@ -12,6 +12,7 @@
 #
 
 
+standalone = True
 
 import unittestX as unittest
 import journal
@@ -20,7 +21,7 @@ debug = journal.debug( "geometry_TestCase" )
 warning = journal.warning( "geometry_TestCase" )
 
 
-import mccomposite.geometry as geometry, mcni
+import mcni, mccomposite.geometry as geometry
 primitives = geometry.primitives
 operations = geometry.operations
 

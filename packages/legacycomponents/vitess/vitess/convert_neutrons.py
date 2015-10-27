@@ -5,6 +5,27 @@
 
 
 import numpy as np
+
+
+# Important: align should be on
+vitess_neutron = np.dtype([
+    ('TotalID', [
+        ('IDGrp', '2c'),
+        ('IDNo', 'uint64'),
+        ]),
+    ('Debug', 'c'),
+    ('Color', 'i2'),
+    ('Time', 'f8'),
+    ('Wavelength', 'f8'),
+    ('Probability', 'f8'),
+    ('Position', '3f8'),
+    ('Vector', '3f8'),
+    ('Spin', '3f8'),
+    ], align=True)
+assert vitess_neutron.itemsize == 120
+
+
+
 def vitess2mcvine_npyarr(vns):
     """convert vitess neutron numpy array 
     into mcvine neutron numpy array
