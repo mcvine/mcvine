@@ -1,0 +1,373 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Tutorials – basics &mdash; mcvine 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="mcvine 1.0 documentation" href="index.html" /> 
+  </head>
+  <body>
+<div class="header">  
+<table><tr>
+<!--
+<td>
+<div style="text-align: left; padding: 7px 7px 10px 10px">
+<a href="index.html"><img src="_static/mcvine.png" border="0" alt="py4sci"
+  height="80"/></a>
+</div>
+</td>
+-->
+<td style="padding: 0pt 0pt 1em 1em;">
+<h1 class="banner" style="color:white; font-size:2em; text-align:left">MCViNE</h1>
+<h2 class="banner-note" style="color:lightgrey; font-size:1.5em; margin:0">Monte Carlo VIrtual Neutron Experiment</h2>
+</td>
+</tr>
+</table>
+</div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="index.html">home</a>|&nbsp;</li>
+        <li><a href="search.html">search</a>|&nbsp;</li>
+        <li><a href="Documentation.html">MCViNE documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Tutorials &#8211; basics</a><ul>
+<li><a class="reference internal" href="#create-and-run-your-instrument-simulation-application">Create and run your instrument simulation application</a><ul>
+<li><a class="reference internal" href="#create-instrument-simulation-application">Create instrument simulation application</a><ul>
+<li><a class="reference internal" href="#instrument-consists-of-a-list-of-components">Instrument consists of a list of components</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#types-of-components">Types of components</a></li>
+<li><a class="reference internal" href="#positions-of-components">Positions of components</a></li>
+<li><a class="reference internal" href="#configurations-of-components">Configurations of components</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/Tutorials-basics.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="tutorials-basics">
+<span id="id1"></span><h1>Tutorials &#8211; basics<a class="headerlink" href="#tutorials-basics" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="create-and-run-your-instrument-simulation-application">
+<span id="create-sim-app"></span><h2>Create and run your instrument simulation application<a class="headerlink" href="#create-and-run-your-instrument-simulation-application" title="Permalink to this headline">¶</a></h2>
+<p>By going through this tutorial you can get to know</p>
+<ul class="simple">
+<li>the structure
+of mcvine instrument simulation application and the component chain</li>
+<li>utilities to find out about available neutron component</li>
+<li>options that affect behavior of instrument simulations</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Experimental: you could also create your simulation application online at
+<a class="reference external" href="http://vnf-dev.caltech.edu/mcvine">http://vnf-dev.caltech.edu/mcvine</a></p>
+</div>
+<div class="section" id="create-instrument-simulation-application">
+<h3>Create instrument simulation application<a class="headerlink" href="#create-instrument-simulation-application" title="Permalink to this headline">¶</a></h3>
+<p>The command in mcvine to create an instrument simulation application
+is &#8220;mcvine-create-instrument-simulation-application&#8221;.
+To start, try</p>
+<div class="highlight-python"><div class="highlight"><pre>$ mcvine-create-instrument-simulation-application -h
+</pre></div>
+</div>
+<p>It will prints out some simple help about how to run this command.</p>
+<div class="section" id="instrument-consists-of-a-list-of-components">
+<h4>Instrument consists of a list of components<a class="headerlink" href="#instrument-consists-of-a-list-of-components" title="Permalink to this headline">¶</a></h4>
+<p>To create a mcvine simulation application named &#8220;test&#8221; with two components, source and monitor,
+do</p>
+<div class="highlight-python"><div class="highlight"><pre>$ mcvine-create-instrument-simulation-application  --name=test --components=source,monitor
+</pre></div>
+</div>
+<p>A python application will be created and named &#8220;test&#8221;.</p>
+<p>You can find out how to run this simulation application by</p>
+<div class="highlight-python"><div class="highlight"><pre>$ ./test -h
+</pre></div>
+</div>
+<p>which outputs:</p>
+<div class="highlight-python"><div class="highlight"><pre>------------------------------------------------------------
+* Instrument simulation application &#39;test&#39;
+------------------------------------------------------------
+* Sequence of components:
+   [source] --&gt; [monitor]
+------------------------------------------------------------
+* Command:
+ $ test  \
+  --multiple-scattering=&lt;if true, enable multiple scattering&gt; \
+  --buffer_size=&lt;size of neutron buffer. This is for optimizing the preformance of the simulation. When it is too large, it will occupy too much memory. When it is too small, the simulation will be slow. If you are not sure, please just leave it unset so that the default value will be used.&gt; \
+  --output-dir=&lt;output directory&gt; \
+  --ncount=&lt;number of total neutrons generated by source&gt; \
+  --overwrite-datafiles=&lt;overwrite data files?&gt; \
+  --geometer.source=&lt;position&gt;,&lt;orientation&gt; \
+  --geometer.monitor=&lt;position&gt;,&lt;orientation&gt; \
+  --source=&lt;component type&gt; \
+  --monitor=&lt;component type&gt;
+------------------------------------------------------------
+</pre></div>
+</div>
+<p>Now, you can run this instrument by specifying more details of the instrument.
+For example:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ ./test --source=MonochromaticSource --monitor=E_monitor
+</pre></div>
+</div>
+<p>will run a simulation of an instrument with two components:</p>
+<ul class="simple">
+<li>source: MonochromaticSource</li>
+<li>monitor: E_monitor</li>
+</ul>
+<p>You can save your configuration of the simulation application to a file so that
+it is easier to rerun it. For example:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ ./test --source=MonochromaticSource --monitor=E_monitor --dump-pml
+</pre></div>
+</div>
+<p>will create a file &#8220;test.pml&#8221; in the current working directory.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">A pml file generated by the &#8211;dump-pml command line option
+contains the most current simulation configuraton.
+With its existence in the working directory, you can
+further fine-tune your simulation configuration and/or run it.
+A pml file is a xml file and it is quite easy to read using
+any text viewer/editor.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If you run &#8211;dump-pml again,
+the old &#8220;test.pml&#8221; will be copied to a file named like &#8220;test.pml.saved-&lt;time&gt;&#8221;,
+and the &#8220;test.pml&#8221; will be overwritten.</p>
+</div>
+<p>With this configuration file at the current working directory, you don&#8217;t
+need to specify the same configuration again. For example, this command</p>
+<div class="highlight-python"><div class="highlight"><pre>$ ./test -h
+</pre></div>
+</div>
+<p>now gives the following help message that includes knowledge
+of what the types of the components in the instrument component chain
+are:</p>
+<div class="highlight-python"><div class="highlight"><pre>------------------------------------------------------------
+* Instrument simulation application &#39;test&#39;
+------------------------------------------------------------
+* Sequence of components:
+   [source(sources/MonochromaticSource)] --&gt; [monitor(monitors/E_monitor)]
+------------------------------------------------------------
+* Command:
+ $ test  \
+  --multiple-scattering=&lt;if true, enable multiple scattering&gt; \
+  --buffer_size=&lt;size of neutron buffer. This is for optimizing the preformance of the simulation. When it is too large, it will occupy too much memory. When it is too small, the simulation will be slow. If you are not sure, please just leave it unset so that the default value will be used.&gt; \
+  --output-dir=&lt;output directory&gt; \
+  --ncount=&lt;number of total neutrons generated by source&gt; \
+  --overwrite-datafiles=&lt;overwrite data files?&gt; \
+  --geometer.source=&lt;position&gt;,&lt;orientation&gt; \
+  --geometer.monitor=&lt;position&gt;,&lt;orientation&gt; \
+  --source=&lt;component type&gt; \
+  --monitor=&lt;component type&gt; \
+  --source.probability=&lt;probabliity of neutrons. unit: 1&gt; \
+  --source.position=&lt;position of neutrons. unit: m&gt; \
+  --source.energy=&lt;energy of the neutron. if &quot;energy&quot; is given, the neutron velocity will be computed so that the energy of the neutron will be the given value of energy,and the moving direction will be determined by the &quot;velocity&quot; vector&gt; \
+  --source.time=&lt;time of flight for neutrons. unit: s&gt; \
+  --source.velocity=&lt;velocity of neutrons. unit: m/s. Note: if energy is nonzero, the magnitude of the velocity is set by energy&gt; \
+  --monitor.Emin=&lt;Minimum energy to detect (meV) &gt; \
+  --monitor.Emax=&lt;Maximum energy to detect (meV) &gt; \
+  --monitor.filename=&lt;Name of file in which to store the detector image (text) &gt; \
+  --monitor.nchan=&lt;Number of energy channels (1) &gt; \
+  --monitor.xmax=&lt;Upper x bound of detector opening (m) &gt; \
+  --monitor.xmin=&lt;Lower x bound of detector opening (m) &gt; \
+  --monitor.ymin=&lt;Lower y bound of detector opening (m) &gt; \
+  --monitor.ymax=&lt;Upper y bound of detector opening (m) &gt;
+------------------------------------------------------------
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="types-of-components">
+<h3>Types of components<a class="headerlink" href="#types-of-components" title="Permalink to this headline">¶</a></h3>
+<p>You already see that we can specify what each of the components
+in the component chain are.
+The way we set the source component to a monochromatic source is by</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="o">--</span><span class="n">source</span><span class="o">=</span><span class="n">MonochromaticSource</span>
+</pre></div>
+</div>
+<p>And similarly, we can set the monitor</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="o">--</span><span class="n">monitor</span><span class="o">=</span><span class="n">E_monitor</span>
+</pre></div>
+</div>
+<p>To find out what are the component types you can use, run</p>
+<div class="highlight-python"><div class="highlight"><pre>$ mcvine-list-components
+</pre></div>
+</div>
+<p>You can also tell the command to list components in specific category. For example</p>
+<div class="highlight-python"><div class="highlight"><pre>$ mcvine-list-components --category=monitors
+</pre></div>
+</div>
+<p>To find out more information about a specific component you are interested in,
+run</p>
+<div class="highlight-python"><div class="highlight"><pre>$ mcvine-component-info --type=&lt;component-type&gt;
+</pre></div>
+</div>
+<p>For example:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ mcvine-component-info --type=E_monitor
+</pre></div>
+</div>
+</div>
+<div class="section" id="positions-of-components">
+<h3>Positions of components<a class="headerlink" href="#positions-of-components" title="Permalink to this headline">¶</a></h3>
+<p>Now, you could specify the position and orientation of a component by referring to &#8220;geometer&#8221;</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="o">--</span><span class="n">geometer</span><span class="o">.</span><span class="n">monitor</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>The syntax is actually</p>
+<div class="highlight-python"><div class="highlight"><pre>--geometer.monitor=&lt;position&gt;,&lt;orientation&gt;
+</pre></div>
+</div>
+<p>Position is a 3-vector, and the unit is meter.
+Orientation is a 3-vector that denotes three consecutive rotations along
+x, y, and z axes.
+The unit is degrees.</p>
+<p>More details can found in <a class="reference internal" href="Fundamentals.html#fundamentals-instrument-positioning-of-components"><em>Positioning of Components</em></a>.</p>
+</div>
+<div class="section" id="configurations-of-components">
+<h3>Configurations of components<a class="headerlink" href="#configurations-of-components" title="Permalink to this headline">¶</a></h3>
+<p>Each component has several parameters that define the scattering properties of the
+component. To find out the parameters for a component, use the command
+&#8220;mcvine-component-info&#8221;</p>
+<div class="highlight-python"><div class="highlight"><pre>$ mcvine-component-info --type=E_monitor
+</pre></div>
+</div>
+<p>The output would be</p>
+<div class="highlight-python"><div class="highlight"><pre>======================================================================
+E_monitor: Energy-sensitive monitor.
+----------------------------------------------------------------------
+A square single monitor that measures the energy of the incoming neutrons.
+
+ Example: E_monitor(name, xmin=-0.1, xmax=0.1, ymin=-0.1, ymax=0.1, Emin=1, Emax=50, nchan=20, filename=&quot;Output.nrj&quot;)
+
+
+----------------------------------------------------------------------
+Parameters:
+  * Emin: Minimum energy to detect (meV)
+  * Emax: Maximum energy to detect (meV)
+  * filename: Name of file in which to store the detector image (text)
+  * nchan: Number of energy channels (1)
+  * xmax: Upper x bound of detector opening (m)
+  * xmin: Lower x bound of detector opening (m)
+  * ymin: Lower y bound of detector opening (m)
+  * ymax: Upper y bound of detector opening (m)
+======================================================================
+</pre></div>
+</div>
+<p>If you want to change parameter &#8220;nchan&#8221;, for example, you will need</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="o">--</span><span class="n">monitor</span><span class="o">.</span><span class="n">nchan</span><span class="o">=</span><span class="mi">10</span>
+</pre></div>
+</div>
+<p>So here is what you may want to do when you run your simulation:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ ./test --monitor.nchan=10
+</pre></div>
+</div>
+<p>You can also see what  are the current parameters for the monitor by:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ ./test --monitor.help-properties
+</pre></div>
+</div>
+<p>Let us do a more careful configuration of the simulation and save
+it:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ ./test --source.energy=60 \
+  --monitor.Emin=50 --monitor.Emax=70 --monitor.nchan=200 \
+  --dump-pml
+</pre></div>
+</div>
+<p>And then we can run it for a little while:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ ./test -ncount=1e4
+</pre></div>
+</div>
+<p>When this command is run, output files will be generated
+in a directory specified by option &#8220;&#8211;output-dir&#8221; which by default
+is &#8220;out&#8221;. For this simulation, you should see a new file
+&#8220;out/IE.h5&#8221;.
+You can run command</p>
+<div class="highlight-python"><div class="highlight"><pre>$ PlotHist.py out/IE.h5
+</pre></div>
+</div>
+<p>to see the output histogram.</p>
+<a class="reference internal image-reference" href="_images/I(E).png"><img alt="_images/I(E).png" src="_images/I(E).png" style="width: 400px;" /></a>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="index.html">home</a>|&nbsp;</li>
+        <li><a href="search.html">search</a>|&nbsp;</li>
+        <li><a href="Documentation.html">MCViNE documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2006-2015, Jiao Lin, Michael Aivazis, and Brent Fultz.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

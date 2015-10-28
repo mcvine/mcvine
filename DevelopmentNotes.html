@@ -1,0 +1,184 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Development notes &mdash; mcvine 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="mcvine 1.0 documentation" href="index.html" /> 
+  </head>
+  <body>
+<div class="header">  
+<table><tr>
+<!--
+<td>
+<div style="text-align: left; padding: 7px 7px 10px 10px">
+<a href="index.html"><img src="_static/mcvine.png" border="0" alt="py4sci"
+  height="80"/></a>
+</div>
+</td>
+-->
+<td style="padding: 0pt 0pt 1em 1em;">
+<h1 class="banner" style="color:white; font-size:2em; text-align:left">MCViNE</h1>
+<h2 class="banner-note" style="color:lightgrey; font-size:1.5em; margin:0">Monte Carlo VIrtual Neutron Experiment</h2>
+</td>
+</tr>
+</table>
+</div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="index.html">home</a>|&nbsp;</li>
+        <li><a href="search.html">search</a>|&nbsp;</li>
+        <li><a href="Documentation.html">MCViNE documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Development notes</a><ul>
+<li><a class="reference internal" href="#sns-instruments">SNS instruments</a><ul>
+<li><a class="reference internal" href="#nexus">Nexus</a></li>
+<li><a class="reference internal" href="#add-an-instrument">Add an instrument</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#xml-parsing">xml parsing</a></li>
+<li><a class="reference internal" href="#geometry">geometry</a></li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/DevelopmentNotes.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="development-notes">
+<h1>Development notes<a class="headerlink" href="#development-notes" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="sns-instruments">
+<h2>SNS instruments<a class="headerlink" href="#sns-instruments" title="Permalink to this headline">¶</a></h2>
+<p>They are in instruments/.</p>
+<p>There are now ARCS, SEQUOIA, and HYSPEC.</p>
+<p>ARCS and SEQUOIA were built earlier, and was translated from mcstas
+instrument to pyre script mostly by hand.</p>
+<p>HYSPEC app was built by using a different approach.
+First the mcstas instrument was modified slightly by translating
+the c code at the intialize section to python, and then the mcstas
+instrument is compiled into a mcvine application and an accompanying
+configuratoin script.
+This approach probably should be favored in the long run.</p>
+<p>After a beam simulation, a beam analysis is carried out.
+ARCS and SEQUOIA has its own script for that, but they are really
+not different form each other.</p>
+<p>Generic beam analyzer script: mcvine_analyze_beam
+Make sure to set position of source and monitor correctly.</p>
+<div class="section" id="nexus">
+<h3>Nexus<a class="headerlink" href="#nexus" title="Permalink to this headline">¶</a></h3>
+<p>Simulation nexus outputs are created using templates derived from experimental
+nexus files.</p>
+<p>ARCS: arcs-neutrons2nxs
+SEQUOIA: sequoia-neutrons2nxs
+HYSPEC and others: mcvine-sns-neutrons2nxs (instruments/SNS/bin)</p>
+</div>
+<div class="section" id="add-an-instrument">
+<h3>Add an instrument<a class="headerlink" href="#add-an-instrument" title="Permalink to this headline">¶</a></h3>
+<p>This is a quick guide. not very well organized.</p>
+<ul class="simple">
+<li>convert mcstas instrument to python scripts (see script &#8220;convert&#8221; in HYSPEC/resources)</li>
+<li>add a high-level script &lt;instrument&gt;-beam that runs the beam and do beam analysis</li>
+<li>convert mantid instrument xml file for the instrument to a mcvine instrument, by add an instrument factory to the instrument package</li>
+</ul>
+</div>
+</div>
+<div class="section" id="xml-parsing">
+<h2>xml parsing<a class="headerlink" href="#xml-parsing" title="Permalink to this headline">¶</a></h2>
+<p>is done in several layers.</p>
+<ul class="simple">
+<li>sampleassembly: sampleassembly.saxml package</li>
+</ul>
+</div>
+<div class="section" id="geometry">
+<h2>geometry<a class="headerlink" href="#geometry" title="Permalink to this headline">¶</a></h2>
+<p>sampleassembly.xml</p>
+<p>Geometry information is registered into a registry.
+Later when needed, positional and orientational
+information of an object can be requested from the registry.</p>
+<p>For example, in mccomponents.sample.sampleassembly_support.onSampleAssembly,
+calls</p>
+<blockquote>
+<div>lg.position(scatterer)
+lg.orientation(scatterer)</div></blockquote>
+<p>request the position and orientation of the scatterer.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="index.html">home</a>|&nbsp;</li>
+        <li><a href="search.html">search</a>|&nbsp;</li>
+        <li><a href="Documentation.html">MCViNE documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2006-2015, Jiao Lin, Michael Aivazis, and Brent Fultz.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

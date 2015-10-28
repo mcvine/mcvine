@@ -1,1 +1,189 @@
-First commit
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>MCViNE: Monte Carlo VItual Neutron Experiment &mdash; mcvine 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="mcvine 1.0 documentation" href="#" /> 
+  </head>
+  <body>
+<div class="header">  
+<table><tr>
+<!--
+<td>
+<div style="text-align: left; padding: 7px 7px 10px 10px">
+<a href="#"><img src="_static/mcvine.png" border="0" alt="py4sci"
+  height="80"/></a>
+</div>
+</td>
+-->
+<td style="padding: 0pt 0pt 1em 1em;">
+<h1 class="banner" style="color:white; font-size:2em; text-align:left">MCViNE</h1>
+<h2 class="banner-note" style="color:lightgrey; font-size:1.5em; margin:0">Monte Carlo VIrtual Neutron Experiment</h2>
+</td>
+</tr>
+</table>
+</div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="#">home</a>|&nbsp;</li>
+        <li><a href="search.html">search</a>|&nbsp;</li>
+        <li><a href="Documentation.html">MCViNE documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="#">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">MCViNE: Monte Carlo VItual Neutron Experiment</a><ul>
+<li><a class="reference internal" href="#getting-started">Getting Started</a></li>
+<li><a class="reference internal" href="#more-infomation">More infomation</a></li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/index.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="mcvine-monte-carlo-vitual-neutron-experiment">
+<h1>MCViNE: Monte Carlo VItual Neutron Experiment<a class="headerlink" href="#mcvine-monte-carlo-vitual-neutron-experiment" title="Permalink to this headline">¶</a></h1>
+<p>MCViNE is
+a versatile Monte Carlo neutron ray-tracing program
+that provides researchers with tools for performing
+computer modeling and simulations that mirror real
+neutron scattering experiments.</p>
+<p>Currently MCViNE software is only available for the Linux platform,
+which was selected because other tools for scientific computing, including
+molecular dynamics and ab initio simulations, use this platform.
+Detailed installation instructions for MCViNE are available at
+<a class="reference internal" href="Installation.html#installation"><em>Installation</em></a>.
+Building the source is driven by a python script, but the underlying
+build engine is based on gnu make.</p>
+<p>The MCViNE <a class="reference internal" href="Documentation.html#mcvinedocs"><em>user documentation</em></a> includes
+<a class="reference internal" href="Philosophy.html#philosophy"><em>explanations of MCViNE concepts</em></a>,
+<a class="reference internal" href="Tutorials.html#tutorials"><em>tutorials</em></a>,
+<a class="reference internal" href="Components.html#components"><em>usage of neutron components</em></a>,
+and
+<a class="reference internal" href="SampleAssembly.html#sampleassembly"><em>instructions for creating a sample assembly</em></a>.</p>
+<p>At this point, MCViNE is under the git version control system,
+and MCViNE source code is available for online-browsing at
+<a class="reference external" href="https://github.com/heetuu/MCViNE">the github site</a>.</p>
+<p>MCViNE is currently deployed on the analysis computing clusters at the
+Spallation Neutron Source (SNS).
+Any SNS user can use MCViNE at analysis.sns.gov after running an
+environment setup script.</p>
+<p>There are many functionalities available in the MCViNE package,
+so novice users may find it difficult to navigate through the user
+documentation and learn how to perform MCViNE simulations for their needs.
+To make MCViNE more readily accessible to non-expert users,
+we are experimenting with
+<a class="reference internal" href="Workflows.html#workflows"><em>workflow templates</em></a>.
+Users can easily clone workflows from the templates
+and customize them by modifying sample specification and simulation
+parameters.
+Output of a workflow usually includes
+the simulated scattered neutrons,
+the simulated event-mode NeXus file,
+and the reduced I(Q, E) file.</p>
+<p>The MCViNE software is an open source software and is freely
+available.
+More details about the conditions of use and license can be found
+<a class="reference external" href="http://danse.us/trac/MCViNE/wiki/license">here</a>.
+Feedback to the MCViNE developers can be provided through the
+<a class="reference external" href="http://groups.google.com/group/mcvine-users">MCViNE user mailing list</a>.</p>
+<div class="section" id="getting-started">
+<h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference internal" href="Introduction.html#features"><em>Features</em></a></li>
+<li><a class="reference internal" href="Installation.html#installation"><em>Installation</em></a></li>
+<li><a class="reference internal" href="Tutorials.html#tutorials"><em>Tutorials</em></a></li>
+<li><a class="reference internal" href="Documentation.html#mcvinedocs"><em>Documentation</em></a></li>
+<li><a class="reference internal" href="FAQ.html#faq"><em>FAQ</em></a></li>
+</ul>
+</div>
+<div class="section" id="more-infomation">
+<h2>More infomation<a class="headerlink" href="#more-infomation" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference internal" href="Publications.html#publications"><em>Publications</em></a></li>
+<li><a class="reference external" href="http://groups.google.com/group/mcvine-users">The user mailing list</a></li>
+<li><a class="reference external" href="http://groups.google.com/group/mcvine-dev">The developer mailing list</a></li>
+<li><a class="reference external" href="http://danse.us/trac/MCViNE/roadmap">Roadmap</a></li>
+<li><a class="reference external" href="http://danse.us/trac/MCViNE">The MCViNE project</a></li>
+<li><a class="reference external" href="http://danse.us">The DANSE project</a></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="#">home</a>|&nbsp;</li>
+        <li><a href="search.html">search</a>|&nbsp;</li>
+        <li><a href="Documentation.html">MCViNE documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2006-2015, Jiao Lin, Michael Aivazis, and Brent Fultz.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

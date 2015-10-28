@@ -1,0 +1,180 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Workflows &mdash; mcvine 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="mcvine 1.0 documentation" href="index.html" /> 
+  </head>
+  <body>
+<div class="header">  
+<table><tr>
+<!--
+<td>
+<div style="text-align: left; padding: 7px 7px 10px 10px">
+<a href="index.html"><img src="_static/mcvine.png" border="0" alt="py4sci"
+  height="80"/></a>
+</div>
+</td>
+-->
+<td style="padding: 0pt 0pt 1em 1em;">
+<h1 class="banner" style="color:white; font-size:2em; text-align:left">MCViNE</h1>
+<h2 class="banner-note" style="color:lightgrey; font-size:1.5em; margin:0">Monte Carlo VIrtual Neutron Experiment</h2>
+</td>
+</tr>
+</table>
+</div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="index.html">home</a>|&nbsp;</li>
+        <li><a href="search.html">search</a>|&nbsp;</li>
+        <li><a href="Documentation.html">MCViNE documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/Workflows.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="workflows">
+<span id="id1"></span><h1>Workflows<a class="headerlink" href="#workflows" title="Permalink to this headline">¶</a></h1>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Under construction.</p>
+</div>
+<p>The basic procedure of using a workflow template is:</p>
+<ul class="simple">
+<li>copy the template (a directory of the workflow control file,
+scripts and input files) to a working directory</li>
+<li>make changes to the sample assembly (a directory)</li>
+<li>run the workflow</li>
+</ul>
+<p>The main task for the MCViNE workflow user is ususally simplified
+to setting up the sample assembly.
+A sample assembly in MCViNE is specified by a directory of xml files
+and associated data files.
+One xml file named <a href="#id2"><span class="problematic" id="id3">``</span></a>sampleassembly.xml&#8217;&#8217; always exists and it is the
+leading specification file.
+For each scatterer in the sample assembly, there is one xml file named
+as <a href="#id4"><span class="problematic" id="id5">``</span></a>&lt;name&gt;-scatterer.xml&#8217;&#8216;.</p>
+<p>The following is a simplified sampleassembly.xml for
+a sample assembly consisting of one single
+vanadium plate</p>
+<div class="highlight-python"><div class="highlight"><pre>&lt;SampleAssembly name=&quot;bcc V powder sample assembly&quot; &gt;
+
+&lt;PowderSample name=&quot;V&quot; type=&quot;sample&quot;&gt;
+  &lt;Shape&gt;
+    &lt;block width=&quot;50*mm&quot; height=&quot;50*mm&quot; thickness=&quot;1.2*mm&quot; /&gt;
+  &lt;/Shape&gt;
+&lt;/PowderSample&gt;
+
+&lt;LocalGeometer&gt;
+  &lt;Register name=&quot;V&quot; position=&quot;(0,0,0)&quot; orientation=&quot;(0,0,45)&quot;/&gt;
+&lt;/LocalGeometer&gt;
+
+&lt;/SampleAssembly&gt;
+</pre></div>
+</div>
+<p>The vanadium plate is specified as a powder sample named <a href="#id6"><span class="problematic" id="id7">``</span></a>V&#8217;&#8217;
+with a <a href="#id8"><span class="problematic" id="id9">``</span></a>block&#8217;&#8217; of given dimensions, oriented at 45 degree away from the
+default position perpendicular to the beam.</p>
+<p>Since the vanadium plate scatterer is named <a href="#id10"><span class="problematic" id="id11">``</span></a>V&#8217;&#8217; in sampleassembly.xml,
+MCViNE expects a <a href="#id12"><span class="problematic" id="id13">``</span></a>V-scatterer.xml&#8217;&#8217; to describe
+scattering properties of that scatterer:</p>
+<div class="highlight-python"><div class="highlight"><pre>&lt;homogeneous_scatterer max_multiplescattering_loops=&quot;4&quot; &gt;
+
+ &lt;KernelContainer average=&quot;yes&quot;&gt;
+
+   &lt;Phonon_IncoherentElastic_Kernel dw_core=&#39;0.007014*angstrom**2&#39;/&gt;
+
+   &lt;Phonon_IncoherentInelastic_Kernel&gt;
+     &lt;LinearlyInterpolatedDOS idf-data-path=&quot;V-phonons/DOS&quot;/&gt;
+   &lt;/Phonon_IncoherentInelastic_Kernel&gt;
+
+   &lt;MultiPhonon_Kernel Qmax=&quot;20/angstrom&quot;&gt;
+     &lt;LinearlyInterpolatedDOS idf-data-path=&quot;V-phonons/DOS&quot;/&gt;
+   &lt;/MultiPhonon_Kernel&gt;
+
+ &lt;/KernelContainer&gt;
+
+&lt;/homogeneous_scatterer&gt;
+</pre></div>
+</div>
+<p>The user specifies the scattering function of the V scatterer
+by choosing scattering kernels to be put into V-scatterer.xml,
+and setting parameters for the chosen kernels.</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="index.html">home</a>|&nbsp;</li>
+        <li><a href="search.html">search</a>|&nbsp;</li>
+        <li><a href="Documentation.html">MCViNE documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2006-2015, Jiao Lin, Michael Aivazis, and Brent Fultz.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

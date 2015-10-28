@@ -1,0 +1,407 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Developer Guide &mdash; mcvine 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="mcvine 1.0 documentation" href="index.html" /> 
+  </head>
+  <body>
+<div class="header">  
+<table><tr>
+<!--
+<td>
+<div style="text-align: left; padding: 7px 7px 10px 10px">
+<a href="index.html"><img src="_static/mcvine.png" border="0" alt="py4sci"
+  height="80"/></a>
+</div>
+</td>
+-->
+<td style="padding: 0pt 0pt 1em 1em;">
+<h1 class="banner" style="color:white; font-size:2em; text-align:left">MCViNE</h1>
+<h2 class="banner-note" style="color:lightgrey; font-size:1.5em; margin:0">Monte Carlo VIrtual Neutron Experiment</h2>
+</td>
+</tr>
+</table>
+</div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="index.html">home</a>|&nbsp;</li>
+        <li><a href="search.html">search</a>|&nbsp;</li>
+        <li><a href="Documentation.html">MCViNE documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Developer Guide</a><ul>
+<li><a class="reference internal" href="#organization">Organization</a></li>
+<li><a class="reference internal" href="#development-environemnt">Development environemnt</a></li>
+<li><a class="reference internal" href="#continuous-integration">Continuous integration</a></li>
+<li><a class="reference internal" href="#deployment-testing">Deployment testing</a></li>
+<li><a class="reference internal" href="#creating-a-new-scattering-kernel-for-sample">Creating a new scattering kernel for sample</a><ul>
+<li><a class="reference internal" href="#write-c-class">Write c++ class</a></li>
+<li><a class="reference internal" href="#create-boost-python-binding">Create boost python binding</a><ul>
+<li><a class="reference internal" href="#boost-python-binding">Boost python binding</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#create-python-handlers">Create python handlers</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#legacy-monte-carlo-neutron-scattering-simulation-packages-based-on-pipeline-structure">Legacy Monte Carlo Neutron Scattering Simulation Packages based on pipeline structure</a></li>
+<li><a class="reference internal" href="#mcstas">McStas</a></li>
+<li><a class="reference internal" href="#shapes">Shapes</a></li>
+<li><a class="reference internal" href="#tests">Tests</a><ul>
+<li><a class="reference internal" href="#python-tests">Python Tests</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/DeveloperGuide.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="developer-guide">
+<h1>Developer Guide<a class="headerlink" href="#developer-guide" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="organization">
+<h2>Organization<a class="headerlink" href="#organization" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p class="first">mcvine-releaser:
+- github url: <a class="reference external" href="https://github.com/heetuu/mcvine-releaser">https://github.com/heetuu/mcvine-releaser</a>
+- place where dependencies are gathered, sources are check out,</p>
+<blockquote>
+<div><p>products are built, etc.</p>
+</div></blockquote>
+<ul class="simple">
+<li>sub directories:
+- src: sources
+- EXPORT: build products such as shared libraries, python modules, scripts</li>
+<li>more details in README.md of the releaser</li>
+</ul>
+</li>
+<li><p class="first">mcvine-resources:
+- resources needed by some mcvine applications etc
+- usually don&#8217;t change over time. new files are added into it.
+- path specified by MCVINE_RESOURCES
+- examples should be explicitly versioned?</p>
+</li>
+</ul>
+</div>
+<div class="section" id="development-environemnt">
+<h2>Development environemnt<a class="headerlink" href="#development-environemnt" title="Permalink to this headline">¶</a></h2>
+<p>The following instructions work for ubuntu 14.04LTS 64bit</p>
+<p>Basic dev tools</p>
+<ul class="simple">
+<li>make</li>
+<li>c++ compiler</li>
+<li>python</li>
+<li>git</li>
+</ul>
+<p>Dependencies:</p>
+<ul class="simple">
+<li>boost-python, gsl</li>
+<li>numpy, matplotlib</li>
+<li>h5py</li>
+<li>psutil</li>
+</ul>
+<div class="highlight-python"><div class="highlight"><pre>$ apt-get install git
+$ apt-get install g++
+$ apt-get install python-dev libboost-python python-numpy python-matplotlib python-h5py python-psutil
+$ apt-get install libboost-python1.55.0 libboost-python1.55-dev
+$ apt-get install libgsl0-dev
+</pre></div>
+</div>
+<p>Create dev directory:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ cd $HOME
+$ mkdir dv
+$ cd dv
+</pre></div>
+</div>
+<p>Get releaser:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git clone git@githut.com:heetuu/mcvine-releaser mcvine
+</pre></div>
+</div>
+<p>Get source:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ cd mcvine
+$ ./getsrc.py
+</pre></div>
+</div>
+<p>Env vars to build:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ export BOOSTPYTHON_DIR=/usr
+$ export BOOSTPYTHON_LIBDIR=/usr/lib/x86_64-linux-gnu
+</pre></div>
+</div>
+<p>Build:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ ./build.py
+</pre></div>
+</div>
+<p>Env vars to use mcvine:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ . ~/dv/mcvine/EXPORT/bin/envs.sh
+</pre></div>
+</div>
+<p>Run a test:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ cd ~/dv/mcvine/src/mcvine/packages/mcni/tests/mcni
+$ ./alltests.py
+</pre></div>
+</div>
+<p>Build during development:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ . ~/dv/mcvine/src/dottools # once for one session
+$ cd /place/where/code/were/modified
+$ mm
+</pre></div>
+</div>
+</div>
+<div class="section" id="continuous-integration">
+<h2>Continuous integration<a class="headerlink" href="#continuous-integration" title="Permalink to this headline">¶</a></h2>
+<p>This is done by using buildbot.
+The source code for buildbot configrations of MCViNE
+is at <a class="reference external" href="https://github.com/heetuu/mcvine-buildbot">https://github.com/heetuu/mcvine-buildbot</a>.
+The web interface is at <a class="reference external" href="http://buildbot.danse.us:8010/">http://buildbot.danse.us:8010/</a>.</p>
+</div>
+<div class="section" id="deployment-testing">
+<h2>Deployment testing<a class="headerlink" href="#deployment-testing" title="Permalink to this headline">¶</a></h2>
+<p>This is done by using docker.
+Source code: <a class="reference external" href="https://github.com/heetuu/mcvine-releaser/tree/master/docker">https://github.com/heetuu/mcvine-releaser/tree/master/docker</a>.
+Related: <a class="reference internal" href="Installation.html#installation"><em>Installation</em></a>.</p>
+</div>
+<div class="section" id="creating-a-new-scattering-kernel-for-sample">
+<h2>Creating a new scattering kernel for sample<a class="headerlink" href="#creating-a-new-scattering-kernel-for-sample" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="write-c-class">
+<h3>Write c++ class<a class="headerlink" href="#write-c-class" title="Permalink to this headline">¶</a></h3>
+<p>Inherit from AbstractScatteringKernel and implement new kernel.</p>
+<p>The following is a partial definition of an example kernel that scatters neutrons according to a S(Q,E) function supplied by user:</p>
+<div class="highlight-python"><div class="highlight"><pre>/// scattering kernel of S(Q,E).
+/// S(Q,E) kernel where Q is scalar.
+class SQEkernel : public AbstractScatteringKernel {
+public:
+
+  // meta methods
+  //! ctor
+  SQEkernel( double scattering_cross_section,
+             double density,
+             const sample::AbstractSQE &amp; sqe,
+             double Qmin, double Qmax,
+             double Emin, double Emax) ;
+
+  // methods
+  virtual double absorption_coefficient( const mcni::Neutron::Event &amp; ev );
+  virtual double scattering_coefficient( const mcni::Neutron::Event &amp; ev );
+  virtual void scatter( mcni::Neutron::Event &amp; ev );
+  virtual void absorb( mcni::Neutron::Event &amp; ev );
+
+private:
+  // data
+  ...
+
+}; // class SQEkernel
+</pre></div>
+</div>
+<p>Source:</p>
+<div class="highlight-python"><div class="highlight"><pre>- [source:trunk/packages/mccomponents/libmccomponents/kernels/sample/SQEkernel.h Declaration]
+- [source:trunk/packages/mccomponents/libmccomponents/kernels/sample/SQEkernel.cc Definition]
+</pre></div>
+</div>
+<p>Details:</p>
+<blockquote>
+<div><ul class="simple">
+<li>add header file to Make.mm at the same directory</li>
+<li>add cc file to Make.mm at libmccomponents/sharedlib</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="create-boost-python-binding">
+<h3>Create boost python binding<a class="headerlink" href="#create-boost-python-binding" title="Permalink to this headline">¶</a></h3>
+<p>To create binding of a new c++ kernel class, you will need to:</p>
+<ol class="arabic simple">
+<li>write the boost python binding code in a c++ source file</li>
+<li>call this new binding code in your main binding module source file</li>
+<li>update your Make file or Make.mm to include new source</li>
+<li>rebuild binding</li>
+</ol>
+<div class="section" id="boost-python-binding">
+<h4>Boost python binding<a class="headerlink" href="#boost-python-binding" title="Permalink to this headline">¶</a></h4>
+<p>Boost python binding can be added to directory mccomponents/mccomponentsbpmodule.</p>
+<p>The following is an example:</p>
+<div class="highlight-python"><div class="highlight"><pre>// headers for the new kernel
+#include &quot;mccomponents/kernels/sample/AbstractSQE.h&quot;
+#include &quot;mccomponents/kernels/sample/SQEkernel.h&quot;
+// header for binding
+#include &quot;mccomponents/boostpython_binding/wrap_kernel.h&quot;
+
+namespace wrap_mccomponents {
+
+  void wrap_SQEkernel()
+  {
+    using namespace boost::python;
+    using namespace mccomponents::boostpython_binding;
+    using namespace mccomponents::sample;
+
+    typedef mccomponents::kernels::SQEkernel w_t; // The class to bind
+
+    kernel_wrapper&lt;w_t&gt;::wrap
+      (&quot;SQEkernel&quot;,  // name of the class accessible in python
+       init&lt;double, double,  // the constructor. just copy the constructor argument types here
+       const AbstractSQE &amp;,
+       double, double, double, double&gt; ()
+       [with_custodian_and_ward&lt;1,4&gt; () // with_custodian_and_ward to connect life time of objects (more about this in ???)
+       ]
+       )
+      ;
+  }
+}
+</pre></div>
+</div>
+<p>Please note that here that kernel_wrapper&lt;w_t&gt;::wrap is a shortcut
+for wrapping a kernel.</p>
+</div>
+</div>
+<div class="section" id="create-python-handlers">
+<h3>Create python handlers<a class="headerlink" href="#create-python-handlers" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Binding wrapper: new method in module mccomponents.sample.bindings.BoostPythonBinding</li>
+<li>python class for the kernel: new module in subpackage mccomponents.sample (don&#8217;t forget Make.mm)</li>
+<li>factory method for the kernel: new method in subpackage mccomponents.sample (__init__.py)</li>
+<li>handler for computation engine renderer: new method in mccomponents.sample.ComputationEngineRendererExtension</li>
+<li>xml handler: in subpackage mccomponents.sample.kernelxml</li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li>Renderer (new handler method)</li>
+<li>parser.Document (new stub)</li>
+<li>parser.HomogeneousScatterer (new handler method)</li>
+<li>parser.KernelContainer (new handler method)</li>
+<li>parser.ScateringKernel (new handler method)</li>
+<li>parser.&lt;kernel-name&gt; (new module)</li>
+<li>parser/Make.mm (new entry for the new kernel module)</li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li>test case: new module in mccomponents/tests/sample</li>
+</ul>
+<p>The steps presented here are good for more-or-less generic sample kernels.
+It is desirable in many cases to group kernels into subpackages of
+mccomponents.sample, for example, mccomponents.sample.phonons.</p>
+</div>
+</div>
+<div class="section" id="legacy-monte-carlo-neutron-scattering-simulation-packages-based-on-pipeline-structure">
+<span id="wrap-legacy-packages"></span><h2>Legacy Monte Carlo Neutron Scattering Simulation Packages based on pipeline structure<a class="headerlink" href="#legacy-monte-carlo-neutron-scattering-simulation-packages-based-on-pipeline-structure" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">To see how to use components from legacy packages,
+please refer to <a class="reference internal" href="Components.html#mcstas-comp-lib"><em>McStas component librarry</em></a> and <a class="reference internal" href="Components.html#vitess-comp-lib"><em>Vitess component librarry</em></a>.</p>
+</div>
+<p>Please read <a class="reference internal" href="Philosophy.html#philosophy"><em>Concepts</em></a>
+to get a feeling of the architecture and design of mcvine.</p>
+<p>MCViNE is compatible with other pipeline-based Monte Carlo
+neutron scattering simulation packages.
+The basic idea is to wrap legacy components in python to
+be compatible with the mcvine neutron component interface.</p>
+</div>
+<div class="section" id="mcstas">
+<span id="wrap-mcstas"></span><h2>McStas<a class="headerlink" href="#mcstas" title="Permalink to this headline">¶</a></h2>
+<p>In mcstas, each component is written in c language with some extra
+paragraphs written in mcstas meta language.</p>
+<p>To wrap a mcstas componet in mcvine, mcvine parses the component file
+to extract information about the component such as name, help text,
+type and default value for parameters, and code blocks for intialization,
+finalization, and neutron-processing, and build a c++ class from it,
+and then use boost python to bind the c++ class to python, and finally
+add a python wrapper on top of the python binding.</p>
+</div>
+<div class="section" id="shapes">
+<h2>Shapes<a class="headerlink" href="#shapes" title="Permalink to this headline">¶</a></h2>
+<p>more shapes:
+sampleassembly.saxml.parser.Document</p>
+</div>
+<div class="section" id="tests">
+<h2>Tests<a class="headerlink" href="#tests" title="Permalink to this headline">¶</a></h2>
+<p>Some tests may need data files.
+These data files are &#8220;MCViNE resources&#8221;: <a class="reference external" href="https://github.com/heetuu/mcvine-resources">https://github.com/heetuu/mcvine-resources</a>.
+The directory of the MCViNE resources should be assigned to
+env var MCVINE_RESOURCES.</p>
+<div class="section" id="python-tests">
+<h3>Python Tests<a class="headerlink" href="#python-tests" title="Permalink to this headline">¶</a></h3>
+<p>To skip a python test from the test harness, put</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">skip</span> <span class="o">=</span> <span class="bp">True</span>
+</pre></div>
+</div>
+<p>near the top of the test module.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="index.html">home</a>|&nbsp;</li>
+        <li><a href="search.html">search</a>|&nbsp;</li>
+        <li><a href="Documentation.html">MCViNE documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2006-2015, Jiao Lin, Michael Aivazis, and Brent Fultz.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

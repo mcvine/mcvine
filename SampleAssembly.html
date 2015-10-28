@@ -1,0 +1,438 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Sample Assembly &mdash; mcvine 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="mcvine 1.0 documentation" href="index.html" /> 
+  </head>
+  <body>
+<div class="header">  
+<table><tr>
+<!--
+<td>
+<div style="text-align: left; padding: 7px 7px 10px 10px">
+<a href="index.html"><img src="_static/mcvine.png" border="0" alt="py4sci"
+  height="80"/></a>
+</div>
+</td>
+-->
+<td style="padding: 0pt 0pt 1em 1em;">
+<h1 class="banner" style="color:white; font-size:2em; text-align:left">MCViNE</h1>
+<h2 class="banner-note" style="color:lightgrey; font-size:1.5em; margin:0">Monte Carlo VIrtual Neutron Experiment</h2>
+</td>
+</tr>
+</table>
+</div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="index.html">home</a>|&nbsp;</li>
+        <li><a href="search.html">search</a>|&nbsp;</li>
+        <li><a href="Documentation.html">MCViNE documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Sample Assembly</a><ul>
+<li><a class="reference internal" href="#use-sample-assembly-in-your-simulation-application">Use sample assembly in your simulation application</a></li>
+<li><a class="reference internal" href="#files">Files</a><ul>
+<li><a class="reference internal" href="#the-main-sample-assembly-xml-file">The main sample assembly xml file</a></li>
+<li><a class="reference internal" href="#scatterer-xml">Scatterer xml</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#kernels">Kernels</a><ul>
+<li><a class="reference internal" href="#isotropic">Isotropic</a></li>
+<li><a class="reference internal" href="#constant-energy-transfer">Constant energy transfer</a></li>
+<li><a class="reference internal" href="#constant-q-e">Constant Q,E</a></li>
+<li><a class="reference internal" href="#s-q-e">S(Q,E)</a></li>
+<li><a class="reference internal" href="#simple-powder-diffraction-experimental">Simple powder diffraction (experimental)</a></li>
+<li><a class="reference internal" href="#incoherent-inelastic-phonon-scattering-for-polycrystal">Incoherent inelastic phonon scattering for polycrystal</a></li>
+<li><a class="reference internal" href="#coherent-inelastic-phonon-scattering-for-polycrystal">Coherent inelastic phonon scattering for polycrystal</a></li>
+<li><a class="reference internal" href="#coherent-inelastic-phonon-scattering-for-single-crysal-experimental">Coherent inelastic phonon scattering for single crysal (experimental)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/SampleAssembly.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="sample-assembly">
+<span id="sampleassembly"></span><h1>Sample Assembly<a class="headerlink" href="#sample-assembly" title="Permalink to this headline">¶</a></h1>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last"><a class="reference external" href="http://dev.danse.us/packages/mcvine-examples.tgz">The examples tar ball</a>
+contains several examples introduced here.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>Tutorials:</p>
+<ul class="last simple">
+<li><a class="reference internal" href="Tutorials-SampleAssembly.html#tutorials-sampleassembly"><em>Start from here</em></a></li>
+<li><a class="reference internal" href="Tutorials-PowderKernel.html#tutorials-powder-kernel"><em>Sample with powder diffraction kernel</em></a></li>
+</ul>
+</div>
+<div class="section" id="use-sample-assembly-in-your-simulation-application">
+<h2>Use sample assembly in your simulation application<a class="headerlink" href="#use-sample-assembly-in-your-simulation-application" title="Permalink to this headline">¶</a></h2>
+<p>The component type for sample assembly is &#8220;SampleAssemblyFromXml&#8221;:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="o">--</span><span class="n">sample</span><span class="o">=</span><span class="n">SampleAssemblyFromXml</span>
+</pre></div>
+</div>
+<p>The only parameter for this component is the path to the xml file:</p>
+<div class="highlight-python"><div class="highlight"><pre>--sample.xml=&lt;xmlfilepath&gt;
+</pre></div>
+</div>
+</div>
+<div class="section" id="files">
+<h2>Files<a class="headerlink" href="#files" title="Permalink to this headline">¶</a></h2>
+<p>A sample assembly consists of several files.</p>
+<ul class="simple">
+<li><a class="reference internal" href="#sampleassembly-main-xml"><em>The main xml file</em></a>.
+That is the file referred to by the &#8220;xml&#8221; parameter
+of the SampleAssemblyFromXml component.</li>
+<li>One xml file for each neutron scatterer in the sample assembly.</li>
+</ul>
+<div class="section" id="the-main-sample-assembly-xml-file">
+<span id="sampleassembly-main-xml"></span><h3>The main sample assembly xml file<a class="headerlink" href="#the-main-sample-assembly-xml-file" title="Permalink to this headline">¶</a></h3>
+<p>It contains information about the shapes and materials of the neutron scatterers</p>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre>&lt;?xml version=&quot;1.0&quot;?&gt;
+
+&lt;!DOCTYPE SampleAssembly&gt;
+
+&lt;SampleAssembly name=&quot;Al&quot;&gt;
+
+  &lt;PowderSample name=&quot;Al&quot; type=&quot;sample&quot;&gt;
+    &lt;Shape&gt;
+      &lt;block width=&quot;6*cm&quot; height=&quot;10*cm&quot; thickness=&quot;1*cm&quot; /&gt;
+    &lt;/Shape&gt;
+    &lt;Phase type=&quot;crystal&quot;&gt;
+      &lt;ChemicalFormula&gt;Al&lt;/ChemicalFormula&gt;
+      &lt;xyzfile&gt;Al.xyz&lt;/xyzfile&gt;
+    &lt;/Phase&gt;
+  &lt;/PowderSample&gt;
+
+  &lt;LocalGeometer registry-coordinate-system=&quot;InstrumentScientist&quot;&gt;
+    &lt;Register name=&quot;Al&quot; position=&quot;(0,0,0)&quot; orientation=&quot;(0,0,0)&quot;/&gt;
+  &lt;/LocalGeometer&gt;
+
+  &lt;Environment temperature=&quot;300*K&quot;/&gt;
+
+&lt;/SampleAssembly&gt;
+</pre></div>
+</div>
+<ul class="simple">
+<li>The outmost tag is always &#8220;SampleAssembly&#8221;.</li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li>The next level consists of one or more neutron scatterers and one geometer.</li>
+<li>PowderSample is a neutron scatterer. Its name is important (see <a class="reference internal" href="#scatterer-xml"><em>Scatterer xml</em></a>).</li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li>Inside a neutron scatterer we need to specify its shape and material</li>
+<li>Shape &#8211; can be represented using constructive solid geometery</li>
+<li>Phase</li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li>LocalGeometer is geometer. It contains geometrical information of neutron scatterers</li>
+<li>Environment: sample environment.</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="scatterer-xml">
+<span id="id1"></span><h3>Scatterer xml<a class="headerlink" href="#scatterer-xml" title="Permalink to this headline">¶</a></h3>
+<p>A neutron scatterer is always assigned with a unique name inside the sample assembly xml
+file. There must be one file named &lt;scatterer-name&gt;-scatteer.xml in the same directory
+where the sample assembly xml is.</p>
+<p>In the above example for sample assembly, there is one scatterer &#8220;Al&#8221;. Therefore,
+there must be
+an Al-scatterer.xml file</p>
+<div class="highlight-python"><div class="highlight"><pre>&lt;?xml version=&quot;1.0&quot;?&gt;
+
+&lt;!DOCTYPE scatterer&gt;
+
+&lt;!-- weights: absorption, scattering, transmission --&gt;
+&lt;homogeneous_scatterer mcweights=&quot;0, 1, 0&quot;&gt;
+
+  &lt;SimplePowderDiffractionKernel Dd_over_d=&quot;1e-5&quot; DebyeWaller_factor=&quot;1&quot; peaks-py-path=&quot;peaks.py&quot;&gt;
+  &lt;/SimplePowderDiffractionKernel&gt;
+
+&lt;/homogeneous_scatterer&gt;
+</pre></div>
+</div>
+<ul class="simple">
+<li>A neutron scatterer xml file starts with a tag for the type of the scatterer.
+Currently the only type is &#8220;homogeneous_scatterer&#8221;</li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li>Inside a scatterer tag, there is one kernel tag. See <a class="reference internal" href="#kernel-types"><em>types of kernels</em></a>.</li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="kernels">
+<span id="kernel-types"></span><h2>Kernels<a class="headerlink" href="#kernels" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Developers: please also read <a class="reference internal" href="KernelImplementation.html#kernel-implementation"><em>Kernel implementation</em></a>.</p>
+</div>
+<div class="section" id="isotropic">
+<span id="kernel-isotropic"></span><h3>Isotropic<a class="headerlink" href="#isotropic" title="Permalink to this headline">¶</a></h3>
+<p>This kernel elastically and isotropically scatters neutrons
+to all 4pi solid angle.</p>
+<p>Parameters: None</p>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre>&lt;IsotropicKernel/&gt;
+</pre></div>
+</div>
+<p>You can find a full example in directory &#8220;kernels/isotropic&#8221; in
+<a class="reference external" href="http://dev.danse.us/packages/mcvine-examples.tgz">the examples tar ball</a></p>
+<p>Running it will generate the following plot (a mostly uniform distribution of
+intensities in 4pi solid angle):</p>
+<div class="figure">
+<a class="reference internal image-reference" href="_images/isotropickernel-psd4pimonitor.png"><img alt="_images/isotropickernel-psd4pimonitor.png" src="_images/isotropickernel-psd4pimonitor.png" style="width: 50%;" /></a>
+</div>
+</div>
+<div class="section" id="constant-energy-transfer">
+<span id="kernel-constant-energy-transfer"></span><h3>Constant energy transfer<a class="headerlink" href="#constant-energy-transfer" title="Permalink to this headline">¶</a></h3>
+<p>This kernel scatters neutrons with a constant energy
+transfer</p>
+<div class="math">
+<p><span class="math">E_{f} = E_{i} - E_{constant}</span></p>
+</div><p>The scattered neutrons goes
+to all 4pi solid angle isotropically.</p>
+<p>This kernel is mostly for testing purpose and resolution study.</p>
+<p>Parameters:</p>
+<ul class="simple">
+<li>energy-transfer: The energy transfer.</li>
+</ul>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre>&lt;ConstantEnergyTransferKernel energy-transfer=&quot;10*meV&quot;/&gt;
+</pre></div>
+</div>
+<p>You can find a full example in directory &#8220;kernels/constant-energy-transfer&#8221; in
+<a class="reference external" href="http://dev.danse.us/packages/mcvine-examples.tgz">the examples tar ball</a></p>
+<p>Running it will generate the following plot:</p>
+<div class="figure">
+<a class="reference internal image-reference" href="_images/constant-energy-transfer-kernel-iqe.png"><img alt="_images/constant-energy-transfer-kernel-iqe.png" src="_images/constant-energy-transfer-kernel-iqe.png" style="width: 50%;" /></a>
+</div>
+</div>
+<div class="section" id="constant-q-e">
+<span id="kernel-constant-qe"></span><h3>Constant Q,E<a class="headerlink" href="#constant-q-e" title="Permalink to this headline">¶</a></h3>
+<p>This kernel scatters neutrons with constant energy
+transfer and constant momentum transfer (magnitude)</p>
+<div class="math">
+<p><span class="math">E_{f} = E_{i} - E_{constant}</span></p>
+</div><div class="math">
+<p><span class="math">\vec{Q}_{f} = \vec{Q}_{i} - \vec{Q}</span></p>
+</div><p>where</p>
+<div class="math">
+<p><span class="math">|\vec{Q}| = Q_{constant}</span></p>
+</div><p>This kernel is mostly for testing purpose and resolution study.</p>
+<p>Parameters:</p>
+<ul class="simple">
+<li>energy-transfer: The energy transfer</li>
+<li>momentum-transfer: The momentum transfer</li>
+</ul>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre>&lt;ConstantQEKernel momentum-transfer=&quot;3/angstrom&quot; energy-transfer=&quot;30*meV&quot;/&gt;
+</pre></div>
+</div>
+<p>You can find a full example in directory &#8220;kernels/constant-qe-transfer&#8221; in
+<a class="reference external" href="http://dev.danse.us/packages/mcvine-examples.tgz">the examples tar ball</a></p>
+<p>Running it will generate the following plot:</p>
+<div class="figure">
+<a class="reference internal image-reference" href="_images/constant-qe-transfer-kernel-iqe.png"><img alt="_images/constant-qe-transfer-kernel-iqe.png" src="_images/constant-qe-transfer-kernel-iqe.png" style="width: 50%;" /></a>
+</div>
+</div>
+<div class="section" id="s-q-e">
+<span id="kernel-sqe"></span><h3>S(Q,E)<a class="headerlink" href="#s-q-e" title="Permalink to this headline">¶</a></h3>
+<p>This kernel scatters neutrons according to a <span class="math">S(|\vec{Q}|,E)</span> input.</p>
+<p>Parameters:</p>
+<ul class="simple">
+<li>Q-range: The momentum transfer range</li>
+<li>energy-transfer: The energy transfer range</li>
+</ul>
+<p>Elements:</p>
+<ul class="simple">
+<li>GridSQE</li>
+</ul>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre>&lt;SQEkernel Q-range=&#39;0*angstrom**-1,12.*angstrom**-1&#39; energy-range=&#39;-48*meV,48*meV&#39;&gt;
+  &lt;GridSQE histogram-hdf-path=&quot;sqehist.h5/S(Q,E)&quot; auto-normalization=&quot;1&quot; /&gt;
+&lt;/SQEkernel&gt;
+</pre></div>
+</div>
+<p>You can find a full example in directory &#8220;kernels/sqe&#8221; in
+<a class="reference external" href="http://dev.danse.us/packages/mcvine-examples.tgz">the examples tar ball</a></p>
+<p>Running it will generate the following plot:</p>
+<div class="figure">
+<a class="reference internal image-reference" href="_images/iqekernel-iqemonitor.png"><img alt="_images/iqekernel-iqemonitor.png" src="_images/iqekernel-iqemonitor.png" style="width: 50%;" /></a>
+</div>
+<p>The input for this simulation is an artifical I(Q,E):</p>
+<div class="figure">
+<a class="reference internal image-reference" href="_images/iqekernel-iqeinput.png"><img alt="_images/iqekernel-iqeinput.png" src="_images/iqekernel-iqeinput.png" style="width: 50%;" /></a>
+</div>
+</div>
+<div class="section" id="simple-powder-diffraction-experimental">
+<span id="kernel-simplepowderdiffr"></span><h3>Simple powder diffraction (experimental)<a class="headerlink" href="#simple-powder-diffraction-experimental" title="Permalink to this headline">¶</a></h3>
+<p>This kernel is for powder diffraction.</p>
+<p>Parameters:</p>
+<ul class="simple">
+<li>Dd_over_d</li>
+<li>DebyeWaller_factor</li>
+<li>peaks-py-path</li>
+</ul>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre>&lt;SimplePowderDiffractionKernel Dd_over_d=&quot;1e-5&quot; DebyeWaller_factor=&quot;1.&quot; peaks-py-path=&quot;peaks.py&quot;/&gt;
+</pre></div>
+</div>
+<p>You can find a full example in directory &#8220;kernels/simple-powder-diffraction&#8221; in
+<a class="reference external" href="http://dev.danse.us/packages/mcvine-examples.tgz">the examples tar ball</a></p>
+<p>Running it will generate the following plot:</p>
+<div class="figure">
+<a class="reference internal image-reference" href="_images/simplepowderdiffraction-kernel-psd4pi.png"><img alt="_images/simplepowderdiffraction-kernel-psd4pi.png" src="_images/simplepowderdiffraction-kernel-psd4pi.png" style="width: 50%;" /></a>
+</div>
+</div>
+<div class="section" id="incoherent-inelastic-phonon-scattering-for-polycrystal">
+<span id="kernel-incoh-inel-phonon-polyxtal"></span><h3>Incoherent inelastic phonon scattering for polycrystal<a class="headerlink" href="#incoherent-inelastic-phonon-scattering-for-polycrystal" title="Permalink to this headline">¶</a></h3>
+<p>This kernel is for incoherent inelastic phonon scattering for polycrystalline sample.</p>
+<p>Parameters:</p>
+<ul class="simple">
+<li>average_mass: average mass of atoms in unit cell</li>
+<li>scattering_xs: total scattering cross section of a unit cell</li>
+<li>absorption_xs: total absorption cross section of a unit cell</li>
+</ul>
+<p>Elements:</p>
+<ul class="simple">
+<li>LinearlyInterpolatedDOS</li>
+</ul>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre>&lt;Phonon_IncoherentInelastic_Kernel&gt;
+  &lt;LinearlyInterpolatedDOS idf-data-path=&quot;phonon-dispersion/DOS&quot;/&gt;
+&lt;/Phonon_IncoherentInelastic_Kernel&gt;
+</pre></div>
+</div>
+<p>DOS data can be in different formats:</p>
+<ul class="simple">
+<li>idf-data-path</li>
+<li>ascii-path</li>
+<li>histogram-path</li>
+</ul>
+<p>You could compute phonon DOS from a bvk model
+using the VNF service: <a class="reference external" href="https://vnf.caltech.edu">https://vnf.caltech.edu</a></p>
+</div>
+<div class="section" id="coherent-inelastic-phonon-scattering-for-polycrystal">
+<span id="kernel-coh-inel-phonon-polyxtal"></span><h3>Coherent inelastic phonon scattering for polycrystal<a class="headerlink" href="#coherent-inelastic-phonon-scattering-for-polycrystal" title="Permalink to this headline">¶</a></h3>
+<p>This kernel is for coherent inelastic phonon scattering for polycrystalline sample.</p>
+<p>Parameters:</p>
+<ul class="simple">
+<li>Ei: nominal incident energy</li>
+<li>max-omega: maximum energy transfer</li>
+<li>max-Q: maximum momentum transfer</li>
+</ul>
+<p>Elements:</p>
+<ul class="simple">
+<li>LinearlyInterpolatedDispersion</li>
+</ul>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre>&lt;Phonon_CoherentInelastic_PolyXtal_Kernel Ei=&#39;70*meV&#39; max-omega=&#39;55*meV&#39; max-Q=&#39;12*angstrom**-1&#39; nMCsteps_to_calc_RARV=&#39;10000&#39; &gt;
+  &lt;LinearlyInterpolatedDispersion idf-data-path=&quot;phonon-dispersion&quot;/&gt;
+&lt;/Phonon_CoherentInelastic_PolyXtal_Kernel&gt;
+</pre></div>
+</div>
+<p>You can find a full example in directory &#8220;kernels/phonon-coherent-inelastic-polyxtal&#8221; in
+<a class="reference external" href="http://dev.danse.us/packages/mcvine-examples.tgz">the examples tar ball</a></p>
+<p>Running it will generate the following plot:</p>
+<div class="figure">
+<a class="reference internal image-reference" href="_images/coh-inel-phonon-polyxtal-kernel-iqe.png"><img alt="_images/coh-inel-phonon-polyxtal-kernel-iqe.png" src="_images/coh-inel-phonon-polyxtal-kernel-iqe.png" style="width: 50%;" /></a>
+</div>
+<p>You could compute phonon dispersion from a bvk model
+using the VNF service: <a class="reference external" href="https://vnf.caltech.edu">https://vnf.caltech.edu</a></p>
+</div>
+<div class="section" id="coherent-inelastic-phonon-scattering-for-single-crysal-experimental">
+<span id="kernel-coh-inel-phonon-singlextal"></span><h3>Coherent inelastic phonon scattering for single crysal (experimental)<a class="headerlink" href="#coherent-inelastic-phonon-scattering-for-single-crysal-experimental" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="index.html">home</a>|&nbsp;</li>
+        <li><a href="search.html">search</a>|&nbsp;</li>
+        <li><a href="Documentation.html">MCViNE documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2006-2015, Jiao Lin, Michael Aivazis, and Brent Fultz.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

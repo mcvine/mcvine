@@ -1,0 +1,435 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Kernel implementation &mdash; mcvine 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="mcvine 1.0 documentation" href="index.html" /> 
+  </head>
+  <body>
+<div class="header">  
+<table><tr>
+<!--
+<td>
+<div style="text-align: left; padding: 7px 7px 10px 10px">
+<a href="index.html"><img src="_static/mcvine.png" border="0" alt="py4sci"
+  height="80"/></a>
+</div>
+</td>
+-->
+<td style="padding: 0pt 0pt 1em 1em;">
+<h1 class="banner" style="color:white; font-size:2em; text-align:left">MCViNE</h1>
+<h2 class="banner-note" style="color:lightgrey; font-size:1.5em; margin:0">Monte Carlo VIrtual Neutron Experiment</h2>
+</td>
+</tr>
+</table>
+</div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="index.html">home</a>|&nbsp;</li>
+        <li><a href="search.html">search</a>|&nbsp;</li>
+        <li><a href="Documentation.html">MCViNE documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Kernel implementation</a><ul>
+<li><a class="reference internal" href="#basics">Basics</a></li>
+<li><a class="reference internal" href="#isotropic-kernel">Isotropic kernel</a></li>
+<li><a class="reference internal" href="#s-q-e-kernel">S(Q,E) kernel</a></li>
+<li><a class="reference internal" href="#coherent-inelastic-phonon-kernel-for-powder-sample">Coherent inelastic phonon kernel for powder sample</a></li>
+<li><a class="reference internal" href="#one-phonon-coherent-inelastic-scattering-single-crystal">One-phonon coherent inelastic scattering, single crystal</a></li>
+<li><a class="reference internal" href="#scattering-from-single-crystal-analytical-dispersion-function">Scattering from single crystal analytical dispersion function</a></li>
+<li><a class="reference internal" href="#advanced-topics">Advanced topics</a></li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/KernelImplementation.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="kernel-implementation">
+<span id="id1"></span><h1>Kernel implementation<a class="headerlink" href="#kernel-implementation" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="basics">
+<h2>Basics<a class="headerlink" href="#basics" title="Permalink to this headline">¶</a></h2>
+<p>Kernel represents a kind of scattering mechanism for a homogeneous
+neutron scatterer.</p>
+<p>Mainly we are concerned with two methods for the scattering kernel:</p>
+<ul class="simple">
+<li>scattering_coefficient(neutron)</li>
+<li>S(neutron)</li>
+</ul>
+<p>The method scattering_coefficient(neutron) can be computed as
+<span class="math">\sigma / v_0</span>, where <span class="math">\sigma</span> is the total cross section
+of a unit cell and <span class="math">v_0</span> is the unit cell volume,
+if the material is crystalline.</p>
+<p>The method S(neutron) resembles the dynamic structure factor
+<span class="math">S({\bold Q}, E)</span>.
+In this method, we need to choose a scattering direction and
+its speed, and adjust the probability of the neutron
+according to the dynamic structure factor.
+It is useful to remember that the dynamic structure factor
+is concerned with the orientation and energy distribution
+of the scattered neutrons, while the total amount of scattering
+is determined by the cross section, which is already taken
+care of by the scattering_coefficient method.
+Another useful fact is when the scattering is isotropic,
+<span class="math">S({\bold Q})=1</span>.
+The method S(neutron) is more complicated than just
+computing <span class="math">S({\bold Q}, E)</span>, however.
+It involves Monte Carlo selection and the random variables
+are usually not simply <span class="math">\bold Q</span> and <span class="math">E</span>.</p>
+<p>In the following, typical implementations for some
+kernels are documented.</p>
+</div>
+<div class="section" id="isotropic-kernel">
+<h2>Isotropic kernel<a class="headerlink" href="#isotropic-kernel" title="Permalink to this headline">¶</a></h2>
+<p>Isotropic kernel can be useful for testing purpose.
+And it could be a good approximation for incoherent
+scattering at low temperature.</p>
+<p>The implementation is easy: just generate
+randomly and uniformly neutrons in all <span class="math">4\pi</span>
+solid angle.</p>
+</div>
+<div class="section" id="s-q-e-kernel">
+<h2>S(Q,E) kernel<a class="headerlink" href="#s-q-e-kernel" title="Permalink to this headline">¶</a></h2>
+<p>This kernel works with scalar Q instead of <span class="math">\bold Q</span>
+vector, meaning it is most useful for powder studies.</p>
+<p>Start from the definition of dynamic structure factor:</p>
+<div class="math">
+<p><span class="math">\frac{d^2 \sigma}{d\Omega dE_f} =
+\frac{\sigma}{4\pi}
+\frac{k_f}{k_i}
+N S(Q,E)</span></p>
+</div><p>The integrated scattering intensity for a chosen <span class="math">Q</span>
+and <span class="math">E</span> is at a cone, or we can write</p>
+<div class="math">
+<p><span class="math">\frac{\sigma}{4\pi}
+d\Omega
+\frac{k_f}{k_i}
+N S(Q,E)
+=
+\frac{\sigma}{4\pi}
+2\pi \sin\theta d\theta
+\frac{k_f}{k_i}
+N S(Q,E)</span></p>
+</div><p>Observe</p>
+<div class="math">
+<p><span class="math">k_i^2 + k_f^2 - 2 k_i k_f \cos\theta = Q^2</span></p>
+</div><p>and hence,</p>
+<div class="math">
+<p><span class="math">k_i k_f \sin\theta d\theta =  Q dQ</span></p>
+</div><p>we obtain,</p>
+<div class="math">
+<p><span class="math">N \sigma \;
+S(Q,E) \;
+\frac{Q dQ}{2 k^2_i}</span></p>
+</div><p>Or we can rewrite it as</p>
+<div class="math">
+<p><span class="math">\frac{d^2 \sigma}{dE_f dQ}
+= N \sigma \;
+S(Q,E) \;
+\frac{Q}{2 k^2_i}</span></p>
+</div></div>
+<div class="section" id="coherent-inelastic-phonon-kernel-for-powder-sample">
+<h2>Coherent inelastic phonon kernel for powder sample<a class="headerlink" href="#coherent-inelastic-phonon-kernel-for-powder-sample" title="Permalink to this headline">¶</a></h2>
+<p>From Squire, the double differential cross section
+for coherent inelastic phonon scattering that excites
+one phonon is
+(the expression for scattering that annhilates one phonon can
+be treated similarly)</p>
+<div class="math">
+<p><span class="math">\left( \frac{d^2 \sigma}{d\Omega dE_f} \right)_{coh+1} =
+\frac{\sigma_{coh}}{4\pi}
+\frac{k_f}{k_i}
+\frac{\left( 2\pi \right)^3}{v_0}
+e^{-2W}
+\frac{1}{2M}
+\sum_{\bold Q}
+\frac{\left( {\bold Q}\cdot {\bold e}_{{\bold Q},\alpha}\right)^2}
+{\omega_{{\bold Q},\alpha}}
+\langle n_{{\bold Q},\alpha} + 1 \rangle
+\delta(\omega_i-\omega_f-\omega_{{\bold Q},\alpha})
+\delta({\bold k}_i-{\bold k}_f - {\bold Q} )</span></p>
+</div><p>We want to compute the total cross section for a specific <span class="math">\bold Q</span>.
+Note that the differential solid angle above is for the scattered neutron,
+i.e., <span class="math">d\Omega = d\Omega_f</span>.
+Also note that for ideal powder sample, there are small crystallites
+inside the sample, and their orientation are uniformly and randomly
+distributed in the <span class="math">4\pi</span> solid angle.
+Therefore, the integration we are looking for is</p>
+<div class="math" id="equation-sigma_Q">
+<p><span class="eqno">(1)</span><span class="math">\sigma_{\bold Q} = \int dE_f d\Omega_f \frac{d\Omega_i}{4\pi}
+\left( \frac{d^2 \sigma}{d\Omega dE_f} \right)_{\bold Q}</span></p>
+</div><p>where</p>
+<div class="math" id="equation-dd_sigma_Q">
+<p><span class="eqno">(2)</span><span class="math">\left( \frac{d^2 \sigma}{d\Omega dE_f} \right)_{\bold Q} =
+\frac{\sigma_{coh}}{4\pi}
+\frac{k_f}{k_i}
+\frac{\left( 2\pi \right)^3}{v_0}
+e^{-2W}
+\frac{1}{2M}
+\frac{\left( {\bold Q}\cdot {\bold e}_{{\bold Q},\alpha}\right)^2}
+{\omega_{{\bold Q},\alpha}}
+\langle n_{{\bold Q},\alpha} + 1 \rangle
+\delta(\omega_i-\omega_f-\omega_{{\bold Q},\alpha})
+\delta({\bold k}_i-{\bold k}_f - {\bold Q} )</span></p>
+</div><p>We observe that</p>
+<div class="math">
+<p><span class="math">k_i^2 + Q^2 - 2k_i Q \cos\theta = k_f^2</span></p>
+</div><p>where <span class="math">\theta</span> is the angle
+between <span class="math">\bold k_i</span> and <span class="math">\bold Q</span>.
+Differentiate the equation and we obtain:</p>
+<div class="math" id="equation-diff_kiQkf_geom">
+<p><span class="eqno">(3)</span><span class="math">\frac{2m}{\hbar^2} dE_f = 2 k_i Q \sin\theta d\theta</span></p>
+</div><p>Since <span class="math">{\bold k_i}</span> is at a cone about <span class="math">\bold Q</span>
+at angle <span class="math">\theta</span>, we have</p>
+<div class="math" id="equation-dOmega_i">
+<p><span class="eqno">(4)</span><span class="math">d\Omega_i = 2\pi \sin\theta d\theta</span></p>
+</div><p>On the other hand,</p>
+<div class="math" id="equation-d_k_f">
+<p><span class="eqno">(5)</span><span class="math">d{\bold k_f} = k_f^2 dk_f d\Omega_f = \frac{m k_f}{\hbar^2} dE_f d\Omega_f</span></p>
+</div><p>Plug Eqs <a href="#equation-dd_sigma_Q">(2)</a>, <a href="#equation-diff_kiQkf_geom">(3)</a>, <a href="#equation-dOmega_i">(4)</a>, <a href="#equation-d_k_f">(5)</a> into <a href="#equation-sigma_Q">(1)</a>, we obtain</p>
+<div class="math">
+<p><span class="math">\sigma_{\bold Q} =
+\frac{\sigma_{coh}}{4\pi}
+\frac{k_f}{k_i}
+\frac{\left( 2\pi \right)^3}{v_0}
+e^{-2W}
+\frac{\hbar^2 ({\bold Q}\cdot {\bold e})^2}{2M \hbar\omega}
+\langle n + 1 \rangle
+\frac{1}{2 k_i k_f Q}</span></p>
+</div><p>In the implementation, we need to randomly select a branch and a
+<span class="math">\bold Q</span>, and then compute
+<span class="math">\sigma_{\bold Q}</span>.
+Due to randomly selection of <span class="math">\bold Q</span>,
+a multiplication factor of
+number of possible Q points to choose from.
+Consider the number of Q points in one reciprocal
+unitcell for one phonon branch is N, or
+the number of unit cells in one crystal,
+we obtain the multiplication factor as</p>
+<div class="math">
+<p><span class="math">N \frac{V_{r,accessible}}{v_{0r}}</span></p>
+</div><p>where <span class="math">V_{r,accessible}</span> is the reciprocal
+volume accessible by the scattering process, which
+depends on the incident neutron energy, and
+<span class="math">v_{0r}</span> is the volume of the reciprocal unit cell.
+Note that <span class="math">N \sigma_{coh}</span> is actually taken care of
+elsewhere, and <span class="math">v_{0r}=   \frac{\left( 2\pi \right)^3}{v_0}</span>
+the probablity multiplication factor is</p>
+<div class="math">
+<p><span class="math">\frac{1}{4\pi}
+\frac{k_f}{k_i}
+e^{-2W}
+\frac{\hbar^2 ({\bold Q}\cdot {\bold e})^2}{2M \hbar\omega}
+\langle n + 1 \rangle
+\frac{V_{r,accessible}}{2 k_i k_f Q}</span></p>
+</div></div>
+<div class="section" id="one-phonon-coherent-inelastic-scattering-single-crystal">
+<h2>One-phonon coherent inelastic scattering, single crystal<a class="headerlink" href="#one-phonon-coherent-inelastic-scattering-single-crystal" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Under construction</p>
+</div>
+<p>Now we are considering more complex examples. Suppose we are working on a single-crystal sample. For now, we are only concerned with coherent inelastic scattering with one-phonon processes. First let us look at the differential cross section of one-phonon emission:</p>
+<div class="math">
+<p><span class="math">\left( \frac{d^2 \sigma}{d\Omega dE_f} \right)_{coh+1} =
+\frac{\sigma_{coh}}{4\pi} \frac{k_f}{k_i}
+\frac{\left( 2\pi \right)^3}{v_0}\frac{1}{2M}
+e^{-2W}
+\sum_{\bold Q}\frac{\left( {\bold Q}\cdot {\bold e}_{{\bold Q},\alpha}\right)^2}
+{\omega_{{\bold Q},\alpha}} \langle n_{{\bold Q},\alpha} + 1 \rangle
+\delta(\omega_i-\omega_f-\omega_{{\bold Q},\alpha})
+\delta({\bold k}_i-{\bold k}_f - {\bold Q} )</span></p>
+</div><p>where <span class="math">{\bold Q}</span> is the wave vector of phonon, <span class="math">\alpha</span> is the index for phonon branch, <span class="math">\omega_{{\bold Q},\alpha}</span> is the phonon enregy, <span class="math">i</span> and <span class="math">f</span> represents initial and final states of neutron, <span class="math">\sigma_{coh}</span> is the coherent scattering cross section, <span class="math">v_0</span> is the volume of the unit cell, <span class="math">M</span> is the mass of the atom.</p>
+<p>For convenience, define</p>
+<div class="math">
+<p><span class="math">C = \frac{\sigma_{coh}}{4\pi} \frac{k_f}{k_i}
+\frac{\left( 2\pi \right)^3}{v_0}\frac{1}{2M} e^{-2W}</span></p>
+</div><p>In the case of large crystal, the density of Q points in the reciprocal space is high, and the summation over <span class="math">{\bold Q}</span> can be replaced by an integration:</p>
+<div class="math">
+<p><span class="math">\sum_{\bold Q} = \int \frac{V}{(2\pi)^3} d{\bold Q}</span></p>
+</div><p>(C.1) reduces to</p>
+<div class="math">
+<p><span class="math">\left( \frac{d^2 \sigma}{d\Omega dE_f} \right)_{coh+1}
+=C \times
+\frac{V}{(2\pi)^3}
+\left.\left[
+\frac{\left( {\bold Q}\cdot {\bold e}_{{\bold Q},\alpha}\right)^2}
+{\omega_{{\bold Q},\alpha}} \langle n_{{\bold Q},\alpha} + 1 \rangle
+\delta(\omega_i-\omega_f-\omega_{{\bold Q},\alpha})
+\right]\right|_{{\bold Q}={\bold k}_i-{\bold k}_f}</span></p>
+</div><p>The &#8220;evaluate at&#8221; symbol reminds us the momentum conservation condition resulted from the integration of one of the delta functions in (C.1).</p>
+<p>We now want to evaluate the differntial cross section
+<span class="math">\frac{d\sigma}{d\Omega}</span>
+by doing an integration over <span class="math">E_f</span></p>
+<p>This means that we fix the scattering direction, <span class="math">\frac{{\bold k}_f}{k_f}</span>. By changing <span class="math">E_f</span>, we are changing the length of scattering wave vector, <span class="math">k_f</span>, and therefore changing <span class="math">{\bold Q}</span> and <span class="math">\omega_{{\bold Q},\alpha}</span></p>
+<p>Thus</p>
+<div class="math">
+<p><span class="math">\int \delta(\omega_i-\omega_f-\omega_{{\bold Q},\alpha}) d E_f
+= \frac{\hbar}{ d(\omega_f + \omega_{{\bold Q},\alpha}) / {d\omega_f} }</span></p>
+</div><p>The differential cross section is then</p>
+<div class="math">
+<p><span class="math">\left( \frac{d \sigma}{d\Omega} \right)_{coh+1}
+= C \times \frac{V}{(2\pi)^3}
+\left.\left[
+\frac{\left( {\bold Q}\cdot {\bold e}_{{\bold Q},\alpha}\right)^2}{\omega_{{\bold Q},\alpha}}
+\langle n_{{\bold Q},\alpha} + 1 \rangle
+\frac{\hbar}{ d(\omega_f + \omega_{{\bold Q},\alpha}) / {d\omega_f} }
+\right]\right|_{
+{\bold Q}={\bold k}_i-{\bold k}_f;
+\omega_{{\bold Q},\alpha}=\omega_i-\omega_f
+}</span></p>
+</div><div class="math">
+<p><span class="math">\left( \frac{d \sigma}{d\Omega} \right)_{coh+1}
+=\frac{\sigma_{coh}}{4\pi} \frac{k_f}{k_i}
+N
+\frac{1}{2M} e^{-2W}
+\left[
+\frac{\left( {\bold Q}\cdot {\bold e}_{{\bold Q},\alpha}\right)^2}{\omega_{{\bold Q},\alpha}}
+\langle n_{{\bold Q},\alpha} + 1 \rangle
+\frac{\hbar}{ d(\omega_f + \omega_{{\bold Q},\alpha}) / {d\omega_f} }
+\right]</span></p>
+</div><p>in which we neglect the &#8220;evaluate at&#8221; symbol.</p>
+<p>To get scattering probability from scattering cross section, we need a factor of
+<span class="math">\frac{l}{V}</span>
+where <span class="math">l</span> is the length of the path that neutron goes through the sample, and <span class="math">V</span> is the volume of the sample.</p>
+<p>Also in the previous section we have shown that we need a factor of <span class="math">4\pi</span>.</p>
+<p>Considering the absorption along the path, there is another factor of
+<span class="math">e^{-\frac{\sigma_a(v_i)+\sigma_i}{v_0} l_i} e^{-\frac{\sigma_a(v_f)+\sigma_i}{v_0} l_f}</span>.</p>
+<p>So the final result of Monte-Carlo probability multiplication factor is</p>
+<div class="math">
+<p><span class="math">{\sigma_{coh}} \frac{k_f}{k_i}
+\frac{l}{v_0}
+\frac{1}{2M} e^{-2W}
+e^{-\frac{\sigma_a(v_i)+\sigma_i}{v_0} l_i} e^{-\frac{\sigma_a(v_f)+\sigma_i}{v_0} l_f}
+\left[
+\frac{\left( {\bold Q}\cdot {\bold e}_{{\bold Q},\alpha}\right)^2}{\omega_{{\bold Q},\alpha}}
+\langle n_{{\bold Q},\alpha} + 1 \rangle
+\frac{\hbar}{ d(\omega_f + \omega_{{\bold Q},\alpha}) / {d\omega_f} }
+\right]</span></p>
+</div><p>where <span class="math">l_i,\, l_f</span> are the length of entering and leaving paths.
+The incoherent scattering cross section is <span class="math">\sigma_i</span>, and</p>
+<div class="math">
+<p><span class="math">\sigma_a(v) = \sigma_a(2200m/s)\frac{2200}{v}</span></p>
+</div><p>is the absorption cross section.</p>
+</div>
+<div class="section" id="scattering-from-single-crystal-analytical-dispersion-function">
+<h2>Scattering from single crystal analytical dispersion function<a class="headerlink" href="#scattering-from-single-crystal-analytical-dispersion-function" title="Permalink to this headline">¶</a></h2>
+<div class="math">
+<p><span class="math">\frac{d^2 \sigma}{d\Omega dE_f} =
+\frac{\sigma}{4\pi}
+\frac{k_f}{k_i}
+N S({\bold Q},E)</span></p>
+</div><div class="math">
+<p><span class="math">S({\bold Q},E) = \delta(E-E({\bold Q})) S({\bold Q})</span></p>
+</div><p>The algorithm first randomly choose a direction in the
+4pi solid angle, and that takes care of
+<span class="math">d\Omega</span>.</p>
+<p>Along a chosen direction <span class="math">{\bold e}_f</span>,
+we can use <span class="math">k_f</span> as
+a parameter, and get two functions for energy transfer:</p>
+<div class="math">
+<p><span class="math">E1(k_f) = E_i - E_f = E_i - \frac{\hbar^2 k_f^2}{2 m}</span></p>
+</div><p>and</p>
+<div class="math">
+<p><span class="math">E2(k_f) = E({\bold Q}) = E({\bold k}_i - k_f \; {\bold e}_f)</span></p>
+</div><p>The delta function in the structure factor requires these two
+functions to equal.
+We seek to transform the integration of delta function:</p>
+<div class="math">
+<p><span class="math">\int \delta(E-E({\bold Q})) dE_f = \int \delta(f(k_f)) dk_f \; \frac{dE_f}{dk_f}</span></p>
+</div><p>or</p>
+<div class="math">
+<p><span class="math">\int \delta(E-E({\bold Q})) dE_f = \left| \frac{d f}{dk_f} \right|^{-1} \; \frac{dE_f}{dk_f}</span></p>
+</div></div>
+<div class="section" id="advanced-topics">
+<h2>Advanced topics<a class="headerlink" href="#advanced-topics" title="Permalink to this headline">¶</a></h2>
+<p>Method:</p>
+<div class="highlight-python"><div class="highlight"><pre>bool total_scattering();
+</pre></div>
+</div>
+<p>by default return false.
+Override this method in a kernel to return true
+if the kernel has a strongly energy-dependent
+total scattering cross section, such as, in the
+case of powder diffraction.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="index.html">home</a>|&nbsp;</li>
+        <li><a href="search.html">search</a>|&nbsp;</li>
+        <li><a href="Documentation.html">MCViNE documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2006-2015, Jiao Lin, Michael Aivazis, and Brent Fultz.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

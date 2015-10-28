@@ -1,0 +1,264 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Sample Assembly &mdash; mcvine 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="mcvine 1.0 documentation" href="index.html" /> 
+  </head>
+  <body>
+<div class="header">  
+<table><tr>
+<!--
+<td>
+<div style="text-align: left; padding: 7px 7px 10px 10px">
+<a href="index.html"><img src="_static/mcvine.png" border="0" alt="py4sci"
+  height="80"/></a>
+</div>
+</td>
+-->
+<td style="padding: 0pt 0pt 1em 1em;">
+<h1 class="banner" style="color:white; font-size:2em; text-align:left">MCViNE</h1>
+<h2 class="banner-note" style="color:lightgrey; font-size:1.5em; margin:0">Monte Carlo VIrtual Neutron Experiment</h2>
+</td>
+</tr>
+</table>
+</div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="index.html">home</a>|&nbsp;</li>
+        <li><a href="search.html">search</a>|&nbsp;</li>
+        <li><a href="Documentation.html">MCViNE documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Sample Assembly</a><ul>
+<li><a class="reference internal" href="#isotropic-elastic-scattering-vanadium-sample">Isotropic Elastic scattering Vanadium sample</a></li>
+<li><a class="reference internal" href="#single-crystal-phonon-coherent-inelastic-scattering-fcc-ni">Single Crystal Phonon Coherent Inelastic Scattering fcc Ni</a></li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/Tutorials-SampleAssembly.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="sample-assembly">
+<span id="tutorials-sampleassembly"></span><h1>Sample Assembly<a class="headerlink" href="#sample-assembly" title="Permalink to this headline">¶</a></h1>
+<p>Basics:</p>
+<blockquote>
+<div><ul class="simple">
+<li>The main file is a xml file that descibes the composition of the sample assembly</li>
+<li>Each neutron scatterer in the assembly has one xml file describing its scattering properties (scattering kernels)</li>
+<li>Materials are defined using xyz files</li>
+<li>Additional files may be needed for complex kernels</li>
+</ul>
+</div></blockquote>
+<div class="section" id="isotropic-elastic-scattering-vanadium-sample">
+<h2>Isotropic Elastic scattering Vanadium sample<a class="headerlink" href="#isotropic-elastic-scattering-vanadium-sample" title="Permalink to this headline">¶</a></h2>
+<p>Create a directory:</p>
+<blockquote>
+<div>$ mkdir V
+$ cd V</div></blockquote>
+<p>So we are now inside directory V.
+We need to create three files in this directory:</p>
+<ol class="arabic simple">
+<li>sampleassembly.xml &#8211; the main file describes the whole sample assembly. It only contains one scatterer, V powder sample, in this case</li>
+<li>V.xyz &#8211; xyz file describing the crystal structure of V, the material</li>
+<li>V-scatterer.xml  &#8211; The file describing the kernels of the scatterer, the V sample.</li>
+</ol>
+<p>Here are the contents of these files:</p>
+<p>sampleassembly.xml:</p>
+<div class="highlight-python"><div class="highlight"><pre>&lt;SampleAssembly name=&quot;bcc V powder sample assembly&quot;&gt;
+
+ &lt;PowderSample name=&quot;V&quot; type=&quot;sample&quot;&gt;
+   &lt;Shape&gt;
+     &lt;block width=&quot;100*mm&quot; height=&quot;100*mm&quot; thickness=&quot;2*mm&quot; /&gt;
+   &lt;/Shape&gt;
+   &lt;Phase type=&quot;crystal&quot;&gt;
+     &lt;ChemicalFormula&gt;V&lt;/ChemicalFormula&gt;
+     &lt;xyzfile&gt;V.xyz&lt;/xyzfile&gt;
+   &lt;/Phase&gt;
+ &lt;/PowderSample&gt;
+
+ &lt;LocalGeometer registry-coordinate-system=&quot;InstrumentScientist&quot;&gt;
+   &lt;Register name=&quot;V&quot; position=&quot;(0,0,0)&quot; orientation=&quot;(0,0,45)&quot;/&gt;
+ &lt;/LocalGeometer&gt;
+
+&lt;/SampleAssembly&gt;
+</pre></div>
+</div>
+<p>V.xyz:</p>
+<div class="highlight-python"><div class="highlight"><pre>2
+3.02 0 0   0 3.02 0   0 0 3.02
+V 0  0  0
+V 0.5 0.5 0.5
+</pre></div>
+</div>
+<p>V-scatterer.xml:</p>
+<div class="highlight-python"><div class="highlight"><pre>&lt;?xml version=&quot;1.0&quot;?&gt;
+
+&lt;!DOCTYPE scatterer&gt;
+
+&lt;!-- mcweights: monte-carlo weights for 3 possible processes:
+absorption, scattering, transmission --&gt;
+&lt;homogeneous_scatterer mcweights=&quot;0, 1, 0&quot;&gt;
+
+ &lt;IsotropicKernel&gt;
+ &lt;/IsotropicKernel&gt;
+
+&lt;/homogeneous_scatterer&gt;
+</pre></div>
+</div>
+</div>
+<div class="section" id="single-crystal-phonon-coherent-inelastic-scattering-fcc-ni">
+<h2>Single Crystal Phonon Coherent Inelastic Scattering fcc Ni<a class="headerlink" href="#single-crystal-phonon-coherent-inelastic-scattering-fcc-ni" title="Permalink to this headline">¶</a></h2>
+<p>Create a directory</p>
+<blockquote>
+<div>$ mkdir Ni
+$ cd Ni</div></blockquote>
+<p>So we are now inside directory $workdir/scattering/V.
+We need to create three files in this directory:</p>
+<ol class="arabic simple">
+<li>sampleassembly.xml &#8211; the main file describes the whole sample assembly. It only contains one scatterer, fcc Ni powder sample, in this case</li>
+<li>Ni.xyz &#8211; xyz file describing the crystal structure of Ni, the material</li>
+<li>Ni-scatterer.xml  &#8211; The file describing the kernels of the scatterer, the Ni sample.</li>
+<li>a directory of idf files containing data of phonons on a reciprocal space grid.</li>
+</ol>
+<p>Here are the contents of these files:</p>
+<p>sampleassembly.xml:</p>
+<div class="highlight-python"><div class="highlight"><pre>&lt;SampleAssembly name=&quot;fcc Ni powder sample assembly&quot;&gt;
+
+ &lt;PowderSample name=&quot;Ni&quot; type=&quot;sample&quot;&gt;
+   &lt;Shape&gt;
+     &lt;block width=&quot;100*mm&quot; height=&quot;100*mm&quot; thickness=&quot;2*mm&quot; /&gt;
+   &lt;/Shape&gt;
+   &lt;Phase type=&quot;crystal&quot;&gt;
+     &lt;ChemicalFormula&gt;Ni&lt;/ChemicalFormula&gt;
+     &lt;xyzfile&gt;Ni.xyz&lt;/xyzfile&gt;
+   &lt;/Phase&gt;
+ &lt;/PowderSample&gt;
+
+ &lt;LocalGeometer registry-coordinate-system=&quot;InstrumentScientist&quot;&gt;
+   &lt;Register name=&quot;Ni&quot; position=&quot;(0,0,0)&quot; orientation=&quot;(0,0,45)&quot;/&gt;
+ &lt;/LocalGeometer&gt;
+
+&lt;/SampleAssembly&gt;
+</pre></div>
+</div>
+<p>Ni.xyz:</p>
+<div class="highlight-python"><div class="highlight"><pre>4
+3.52 0 0   0 3.52 0   0 0 3.52
+Ni 0  0  0
+Ni 0.5 0.5 0
+Ni 0.5 0 0.5
+Ni 0 0.5 0.5
+</pre></div>
+</div>
+<p>Ni-scatterer.xml:</p>
+<div class="highlight-python"><div class="highlight"><pre>&lt;?xml version=&quot;1.0&quot;?&gt;
+
+&lt;!DOCTYPE scatterer&gt;
+
+&lt;!-- mcweights: monte-carlo weights for 3 possible processes:
+absorption, scattering, transmission --&gt;
+&lt;homogeneous_scatterer mcweights=&quot;0, 1, 0&quot;&gt;
+
+ &lt;Phonon_CoherentInelastic_SingleXtal_Kernel&gt;
+   &lt;LinearlyInterpolatedDispersion idf-data-path=&quot;phonon-dispersion&quot;/&gt;
+ &lt;/Phonon_CoherentInelastic_SingleXtal_Kernel&gt;
+
+&lt;/homogeneous_scatterer&gt;
+</pre></div>
+</div>
+<p>Directory &#8220;phonon-dispersion&#8221;. All files in this directory
+comply with the &#8220;idf&#8221; data format defined in
+<a class="reference external" href="http://danse.us/trac/inelastic/browser/idf">http://danse.us/trac/inelastic/browser/idf</a>.</p>
+<blockquote>
+<div><ul class="simple">
+<li>DOS: phonon density of states</li>
+<li>Omega2: square of angular freqencies of phonons on a grid</li>
+<li>Polarizations: polarization vectors of phonons on a grid</li>
+<li>Qgridinfo: definition of the reciprocal space grid</li>
+</ul>
+</div></blockquote>
+<p>Please be very careful on providing these files to make sure
+the units are correct in the data files.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="index.html">home</a>|&nbsp;</li>
+        <li><a href="search.html">search</a>|&nbsp;</li>
+        <li><a href="Documentation.html">MCViNE documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2006-2015, Jiao Lin, Michael Aivazis, and Brent Fultz.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

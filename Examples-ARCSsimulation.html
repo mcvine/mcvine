@@ -1,0 +1,369 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Simulation of ARCS experiments &mdash; mcvine 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="mcvine 1.0 documentation" href="index.html" /> 
+  </head>
+  <body>
+<div class="header">  
+<table><tr>
+<!--
+<td>
+<div style="text-align: left; padding: 7px 7px 10px 10px">
+<a href="index.html"><img src="_static/mcvine.png" border="0" alt="py4sci"
+  height="80"/></a>
+</div>
+</td>
+-->
+<td style="padding: 0pt 0pt 1em 1em;">
+<h1 class="banner" style="color:white; font-size:2em; text-align:left">MCViNE</h1>
+<h2 class="banner-note" style="color:lightgrey; font-size:1.5em; margin:0">Monte Carlo VIrtual Neutron Experiment</h2>
+</td>
+</tr>
+</table>
+</div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="index.html">home</a>|&nbsp;</li>
+        <li><a href="search.html">search</a>|&nbsp;</li>
+        <li><a href="Documentation.html">MCViNE documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Simulation of ARCS experiments</a><ul>
+<li><a class="reference internal" href="#tutorial-1-full-simulation-of-an-experiment-of-a-polycrystalline-vanadium-sample">Tutorial 1: full simulation of an experiment of a polycrystalline Vanadium sample</a><ul>
+<li><a class="reference internal" href="#incident-beam">Incident beam</a></li>
+<li><a class="reference internal" href="#scattering-of-incident-neutrons-by-sample">Scattering of incident neutrons by sample</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#tutorial-2-compute-resolution-function-in-q-e-space">Tutorial 2: Compute resolution function in Q,E space</a></li>
+<li><a class="reference internal" href="#commands">Commands</a><ul>
+<li><a class="reference internal" href="#arcs-beam">arcs_beam</a></li>
+<li><a class="reference internal" href="#arcs-compute-iqe-resolution">arcs-compute-IQE-resolution</a></li>
+<li><a class="reference internal" href="#arcs-neutrons2nxs">arcs-neutrons2nxs</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/Examples-ARCSsimulation.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="simulation-of-arcs-experiments">
+<span id="tutorials-arcs"></span><h1>Simulation of ARCS experiments<a class="headerlink" href="#simulation-of-arcs-experiments" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="tutorial-1-full-simulation-of-an-experiment-of-a-polycrystalline-vanadium-sample">
+<h2>Tutorial 1: full simulation of an experiment of a polycrystalline Vanadium sample<a class="headerlink" href="#tutorial-1-full-simulation-of-an-experiment-of-a-polycrystalline-vanadium-sample" title="Permalink to this headline">¶</a></h2>
+<p>Here is an example of a full simulation of an ARCS experiment
+using a polycrystalline vanadium sample.</p>
+<p>The basic procedure is</p>
+<ul class="simple">
+<li>simulate the neutrons at the sample position</li>
+<li>&#8220;replay&#8221; neutrons at the sample position to send them to the sample to be scattered, and save the scattered neutrons</li>
+<li>send the scattered neutrons to ARCS detector system, which generates &#8220;event-mode&#8221; data</li>
+<li>reduce &#8220;event-mode&#8221; data to I(Q,E)</li>
+</ul>
+<p>Create a working directory:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ mkdir -p arcs-polyV
+$ cd arcs-polyV
+</pre></div>
+</div>
+<p>Let us suppose that the environment variable &#8220;workdir&#8221; is set to this new
+directory.</p>
+<div class="section" id="incident-beam">
+<h3>Incident beam<a class="headerlink" href="#incident-beam" title="Permalink to this headline">¶</a></h3>
+<p>In this step we simulate the ARCS instrument from moderator
+down to the sample position.</p>
+<p>Create a directory</p>
+<div class="highlight-python"><div class="highlight"><pre>$ mkdir mod2sample
+$ cd mod2sample
+</pre></div>
+</div>
+<p>Suppose</p>
+<ul class="simple">
+<li>the incident energy to simulate is 100 meV</li>
+<li>fermi chopper &#8220;100-1.5-SMI&#8221; is chosen</li>
+<li>fermi chopper frequency is set to 600 Hz</li>
+<li>T0 chopper frequency is set to 120 Hz</li>
+<li>neutron count is 1e8</li>
+</ul>
+<p>We can run the arcs beam simulation (from moderator to sample)</p>
+<blockquote>
+<div>$ arcs_beam -E=100 -T0_nu=120 -fermi_chopper=100-1.5-SMI -fermi_nu=600 &#8211;ncount=1e8</div></blockquote>
+<p>Output: out/neutrons
+See how many neutrons are there:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ mcvine-neutron-storage-count-neutrons out/neutrons
+</pre></div>
+</div>
+<p>Output: out/mon1-itof-focused.h5
+Plot:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ PlotHist.py out/mon1-tof.h5
+</pre></div>
+</div>
+<p>Output: out/mon2-itof-focused.h5
+Plot:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ PlotHist.py out/mon2-tof.h5
+</pre></div>
+</div>
+</div>
+<div class="section" id="scattering-of-incident-neutrons-by-sample">
+<h3>Scattering of incident neutrons by sample<a class="headerlink" href="#scattering-of-incident-neutrons-by-sample" title="Permalink to this headline">¶</a></h3>
+<p>Create a directory for this:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ mkdir -p $workdir/scattering
+$ cd $workdir/scattering
+</pre></div>
+</div>
+<p>Create a script for this simulation:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ mcvine-create-instrument-simulation-application -name=ssd -components=source,sample,detector
+</pre></div>
+</div>
+<p>Configure the script to use the correct components and save the configuration:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ ./ssd -source=NeutronFromStorage -sample=SampleAssemblyFromXml -detector=NeutronToStorage -h -dump-pml=yes
+</pre></div>
+</div>
+<p>Change the configuration by editing the file ssd.pml:</p>
+<div class="highlight-python"><div class="highlight"><pre>&lt;inventory&gt;
+
+  &lt;component name=&quot;ssd&quot;&gt;
+      &lt;property name=&quot;sequence&quot;&gt;[&#39;source&#39;, &#39;sample&#39;, &#39;detector&#39;]&lt;/property&gt;
+      &lt;facility name=&quot;source&quot;&gt;sources/NeutronFromStorage&lt;/facility&gt;
+      &lt;facility name=&quot;sample&quot;&gt;samples/SampleAssemblyFromXml&lt;/facility&gt;
+      &lt;facility name=&quot;detector&quot;&gt;monitors/NeutronToStorage&lt;/facility&gt;
+
+      &lt;property name=&quot;multiple-scattering&quot;&gt;False&lt;/property&gt;
+
+      &lt;property name=&quot;ncount&quot;&gt;1e7&lt;/property&gt;
+      &lt;property name=&quot;buffer_size&quot;&gt;1000000&lt;/property&gt;
+
+      &lt;property name=&quot;overwrite-datafiles&quot;&gt;True&lt;/property&gt;
+      &lt;property name=&quot;output-dir&quot;&gt;out&lt;/property&gt;
+
+      &lt;component name=&quot;sample&quot;&gt;
+          &lt;property name=&quot;xml&quot;&gt;V/sampleassembly.xml&lt;/property&gt;
+      &lt;/component&gt;
+
+
+      &lt;component name=&quot;source&quot;&gt;
+          &lt;property name=&quot;path&quot;&gt;../mod2sample/out/neutrons&lt;/property&gt;
+      &lt;/component&gt;
+
+
+      &lt;component name=&quot;detector&quot;&gt;
+          &lt;property name=&quot;path&quot;&gt;neutrons&lt;/property&gt;
+          &lt;property name=&quot;append&quot;&gt;False&lt;/property&gt;
+      &lt;/component&gt;
+
+
+      &lt;component name=&quot;geometer&quot;&gt;
+          &lt;property name=&quot;source&quot;&gt;((0, 0, 13.45), (0, 0, 0))&lt;/property&gt;
+          &lt;property name=&quot;sample&quot;&gt;((0, 0, 13.6), (0, 0, 0))&lt;/property&gt;
+          &lt;property name=&quot;detector&quot;&gt;((0, 0, 13.6), (0, 0, 0))&lt;/property&gt;
+      &lt;/component&gt;
+
+  &lt;/component&gt;
+
+&lt;/inventory&gt;
+</pre></div>
+</div>
+<p>Create sample assembly xml file</p>
+<div class="highlight-python"><div class="highlight"><pre>$ mkdir V
+$ cd V
+</pre></div>
+</div>
+<p>So we are now inside directory $workdir/scattering/V.
+We need to create three files in this directory:</p>
+<ol class="arabic simple">
+<li>sampleassembly.xml &#8211; the main file describes the whole sample assembly. It only contains one scatterer, V powder sample, in this case</li>
+<li>V.xyz &#8211; xyz file describing the crystal structure of V, the material</li>
+<li>V-scatterer.xml  &#8211; The file describing the kernels of the scatterer, the V sample.</li>
+</ol>
+<p>Here are the contents of these files:</p>
+<p>sampleassembly.xml:</p>
+<div class="highlight-python"><div class="highlight"><pre>&lt;SampleAssembly name=&quot;bcc V powder sample assembly&quot;&gt;
+
+ &lt;PowderSample name=&quot;V&quot; type=&quot;sample&quot;&gt;
+   &lt;Shape&gt;
+     &lt;block width=&quot;100*mm&quot; height=&quot;100*mm&quot; thickness=&quot;2*mm&quot; /&gt;
+   &lt;/Shape&gt;
+   &lt;Phase type=&quot;crystal&quot;&gt;
+     &lt;ChemicalFormula&gt;V&lt;/ChemicalFormula&gt;
+     &lt;xyzfile&gt;V.xyz&lt;/xyzfile&gt;
+   &lt;/Phase&gt;
+ &lt;/PowderSample&gt;
+
+ &lt;LocalGeometer registry-coordinate-system=&quot;InstrumentScientist&quot;&gt;
+   &lt;Register name=&quot;V&quot; position=&quot;(0,0,0)&quot; orientation=&quot;(0,0,45)&quot;/&gt;
+ &lt;/LocalGeometer&gt;
+
+&lt;/SampleAssembly&gt;
+</pre></div>
+</div>
+<p>V.xyz:</p>
+<div class="highlight-python"><div class="highlight"><pre>2
+3.02 0 0   0 3.02 0   0 0 3.02
+V 0  0  0
+V 0.5 0.5 0.5
+</pre></div>
+</div>
+<p>V-scatterer.xml:</p>
+<div class="highlight-python"><div class="highlight"><pre>&lt;?xml version=&quot;1.0&quot;?&gt;
+
+&lt;!DOCTYPE scatterer&gt;
+
+&lt;!-- mcweights: monte-carlo weights for 3 possible processes:
+absorption, scattering, transmission --&gt;
+&lt;homogeneous_scatterer mcweights=&quot;0, 1, 0&quot;&gt;
+
+ &lt;IsotropicKernel&gt;
+ &lt;/IsotropicKernel&gt;
+
+&lt;/homogeneous_scatterer&gt;
+</pre></div>
+</div>
+<p>Run the simulation:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ ./ssd
+</pre></div>
+</div>
+<p>Output: out/neutrons
+See how many neutrons are there:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ mcvine-neutron-storage-count-neutrons out/neutrons
+</pre></div>
+</div>
+<p>(Optional) check the I(Q,E) using an ideal I(Q,E) monitor:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ checksqe -source.path=out/neutrons -monitor.Ei=100 -monitor.Emin=-95 -monitor.Emax=95 -monitor.nE=190 -monitor.Qmin=0 -monitor.Qmax=13 -monitor.nQ=130
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="tutorial-2-compute-resolution-function-in-q-e-space">
+<h2>Tutorial 2: Compute resolution function in Q,E space<a class="headerlink" href="#tutorial-2-compute-resolution-function-in-q-e-space" title="Permalink to this headline">¶</a></h2>
+<p>See <a class="reference internal" href="Examples-ARCSsimulation-old.html#arcs-iqeres"><em>Command &#8220;arcs-compute-IQE-resolution&#8221;</em></a></p>
+</div>
+<div class="section" id="commands">
+<h2>Commands<a class="headerlink" href="#commands" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="arcs-beam">
+<span id="id1"></span><h3>arcs_beam<a class="headerlink" href="#arcs-beam" title="Permalink to this headline">¶</a></h3>
+<p>Compute neutrons at the sample position of ARCS beam.
+The neutrons computed will be saved in a file, which
+can be reused to simulate sample scattering.
+So make sure to keep those neutron files somewhere,
+and usually you don&#8217;t want to delete them.</p>
+<p>Run</p>
+<div class="highlight-python"><div class="highlight"><pre>$ arcs_beam -h
+</pre></div>
+</div>
+<p>to find help</p>
+</div>
+<div class="section" id="arcs-compute-iqe-resolution">
+<span id="arcs-iqeres"></span><h3>arcs-compute-IQE-resolution<a class="headerlink" href="#arcs-compute-iqe-resolution" title="Permalink to this headline">¶</a></h3>
+<p>Compute I(Q,E) resolution function.</p>
+<p>To run this simulation, you will need to compute neutrons at
+sample position for ARCS. This can be done by running
+the <a class="reference internal" href="Examples-ARCSsimulation-old.html#arcs-beam"><em>arcs_beam</em></a> command.</p>
+<p>Example command:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ arcs-compute-IQE-resolution --ncount=1e7 --nodes=10 --Ei=100 --Q=6  --E=20 --dQ=2 --dE=10 --mod2sample=/path/to/mod2sample
+</pre></div>
+</div>
+<ul class="simple">
+<li>ncount: Monte Carlo counts</li>
+<li>nodes: number of nodes</li>
+<li>Ei: nominal incident energy (meV)</li>
+<li>Q, E: momentum and energy transfer at which the resolution is calculated</li>
+<li>dQ, dE: range of momentum and energy transfer in which the resolution function is computed</li>
+<li>mod2sample: the path in which the moderator-to-sample simulation was performed.</li>
+</ul>
+</div>
+<div class="section" id="arcs-neutrons2nxs">
+<h3>arcs-neutrons2nxs<a class="headerlink" href="#arcs-neutrons2nxs" title="Permalink to this headline">¶</a></h3>
+<p>Convert scattered neutrons into nexus data file.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ arcs-neutrons2nxs --neutrons=&lt;neutron-file&gt; --nxs=&lt;nexus-output-file&gt; --workdir=&lt;temporary-working-dir&gt;
+</pre></div>
+</div>
+<ul class="simple">
+<li>neutrons: input neutron file. This file must be generated from a mcvine simulation of
+sample-scattered neutrons</li>
+<li>nxs: output nexus data file. default: arcs-sim.nxs</li>
+<li>workdir: temporary working dir. default: work</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="index.html">home</a>|&nbsp;</li>
+        <li><a href="search.html">search</a>|&nbsp;</li>
+        <li><a href="Documentation.html">MCViNE documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2006-2015, Jiao Lin, Michael Aivazis, and Brent Fultz.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,195 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Introduction &mdash; mcvine 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="mcvine 1.0 documentation" href="index.html" /> 
+  </head>
+  <body>
+<div class="header">  
+<table><tr>
+<!--
+<td>
+<div style="text-align: left; padding: 7px 7px 10px 10px">
+<a href="index.html"><img src="_static/mcvine.png" border="0" alt="py4sci"
+  height="80"/></a>
+</div>
+</td>
+-->
+<td style="padding: 0pt 0pt 1em 1em;">
+<h1 class="banner" style="color:white; font-size:2em; text-align:left">MCViNE</h1>
+<h2 class="banner-note" style="color:lightgrey; font-size:1.5em; margin:0">Monte Carlo VIrtual Neutron Experiment</h2>
+</td>
+</tr>
+</table>
+</div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="index.html">home</a>|&nbsp;</li>
+        <li><a href="search.html">search</a>|&nbsp;</li>
+        <li><a href="Documentation.html">MCViNE documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Introduction</a><ul>
+<li><a class="reference internal" href="#features">Features</a></li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/Introduction.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="introduction">
+<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
+<p>To put it simply, MCViNE is a Monte Carlo simulation framework
+useful for simulating neutron experiments.</p>
+<ol class="arabic simple">
+<li>MCViNE is a framework to construct simulated neutron instruments, and manage the flow of neutrons through them from moderator to detector.</li>
+<li>It also provides a mechanism to allow users to assemble a complex sample component (including sample and also the sample environment, eg. sample holder). This mechanism is extensible to handle arbitrary complex geometeric shapes of neutron scatterer, and arbitrary complex physics of neutron scattering.</li>
+</ol>
+<p>A natural question to ask is, how is it different from existing legacy Monte Carlo
+neutron scattering code such as mcstas, vitess, etc?
+Please take a moment to read <a class="reference internal" href="Philosophy.html#philosophy"><em>philosophy of MCViNE</em></a>.</p>
+<div class="section" id="features">
+<span id="id1"></span><h2>Features<a class="headerlink" href="#features" title="Permalink to this headline">¶</a></h2>
+<p>Infrastructure:</p>
+<ul class="simple">
+<li>Simple, clean command line interface for</li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li>Creation of simulation application (<a class="reference internal" href="Tutorials-basics.html#create-sim-app"><em>tutorial</em></a>, <a class="reference internal" href="Fundamentals.html#fundamentals-instrument"><em>manual</em></a>)</li>
+<li><a class="reference internal" href="Fundamentals.html#fundamentals-list-of-components"><em>Listing available neutron components</em></a></li>
+<li><a class="reference internal" href="Fundamentals.html#fundamentals-component-info"><em>Displaying info about any neutron component</em></a></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><a class="reference internal" href="Fundamentals.html#fundamentals-tracer"><em>Debugging facility</em></a></li>
+<li><a class="reference internal" href="Extend.html#extend-mcvine"><em>Easily extensible python/c++ interface for neutron component</em></a></li>
+<li><a class="reference internal" href="SampleAssembly.html#sampleassembly"><em>Sample simulation framework</em></a></li>
+<li>Detector system simulation framework</li>
+<li><a class="reference internal" href="DeveloperGuide.html#wrap-legacy-packages"><em>Wrapping legacy packages and putting them to work in one framework</em></a>.</li>
+</ul>
+<p>Generic components:</p>
+<ul class="simple">
+<li><a class="reference internal" href="Components.html#neutronprinter"><em>Neutron Printer</em></a></li>
+<li><em class="xref std std-ref">Monochromatic Source</em></li>
+<li><a class="reference internal" href="Components.html#neutronstorage"><em>Neutron storage (reader, writer)</em></a></li>
+<li><a class="reference internal" href="Components.html#ndmonitor"><em>NDMonitor</em></a></li>
+<li><a class="reference internal" href="SampleAssembly.html#sampleassembly"><em>SampleAssemblyFromXml</em></a></li>
+<li>DetectorSystemFromXml</li>
+</ul>
+<p>Sample scattering kernels:</p>
+<ul class="simple">
+<li><a class="reference internal" href="SampleAssembly.html#kernel-isotropic"><em>Isotropic</em></a></li>
+<li><a class="reference internal" href="SampleAssembly.html#kernel-constant-energy-transfer"><em>Constant energy transfer</em></a></li>
+<li><a class="reference internal" href="SampleAssembly.html#kernel-constant-qe"><em>Constant Q,E</em></a></li>
+<li><a class="reference internal" href="SampleAssembly.html#kernel-sqe"><em>S(Q,E)</em></a></li>
+<li><em class="xref std std-ref">S(Q)</em></li>
+<li><a class="reference internal" href="SampleAssembly.html#kernel-simplepowderdiffr"><em>Simple powder diffraction (experimental)</em></a></li>
+<li><a class="reference internal" href="SampleAssembly.html#kernel-coh-inel-phonon-polyxtal"><em>Coherent inelastic phonon scattering for polycrystal</em></a></li>
+<li><a class="reference internal" href="SampleAssembly.html#kernel-coh-inel-phonon-singlextal"><em>Coherent inelastic phonon scattering for single crysal</em></a></li>
+<li>Detector scattering kernels:<ul>
+<li>He3</li>
+</ul>
+</li>
+</ul>
+<p>Instruments:</p>
+<ul class="simple">
+<li>ARCS</li>
+<li>VULCAN</li>
+<li>SEQUOIA (in progress)</li>
+<li>CNCS (in progress)</li>
+</ul>
+<p><a class="reference internal" href="Components.html#mcstas-comp-lib"><em>McStas binding</em></a>:</p>
+<ul class="simple">
+<li>Availability of reusable mcvine-wrapped mcstas component library upon installation</li>
+<li>Seamless integration of mcvine-wrapped mcstas components</li>
+<li>(Semi-)automatic translation of mcstas component</li>
+<li>CLI for compiling a mcstas component to a reusable c++ shared library and a python component</li>
+</ul>
+<p>Graphical user interface:</p>
+<ul class="simple">
+<li><a class="reference external" href="http://vnf-dev.caltech.edu/mcvine">http://vnf-dev.caltech.edu/mcvine</a></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="index.html">home</a>|&nbsp;</li>
+        <li><a href="search.html">search</a>|&nbsp;</li>
+        <li><a href="Documentation.html">MCViNE documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2006-2015, Jiao Lin, Michael Aivazis, and Brent Fultz.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,359 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Installation &mdash; mcvine 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="mcvine 1.0 documentation" href="index.html" /> 
+  </head>
+  <body>
+<div class="header">  
+<table><tr>
+<!--
+<td>
+<div style="text-align: left; padding: 7px 7px 10px 10px">
+<a href="index.html"><img src="_static/mcvine.png" border="0" alt="py4sci"
+  height="80"/></a>
+</div>
+</td>
+-->
+<td style="padding: 0pt 0pt 1em 1em;">
+<h1 class="banner" style="color:white; font-size:2em; text-align:left">MCViNE</h1>
+<h2 class="banner-note" style="color:lightgrey; font-size:1.5em; margin:0">Monte Carlo VIrtual Neutron Experiment</h2>
+</td>
+</tr>
+</table>
+</div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="index.html">home</a>|&nbsp;</li>
+        <li><a href="search.html">search</a>|&nbsp;</li>
+        <li><a href="Documentation.html">MCViNE documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Installation</a><ul>
+<li><a class="reference internal" href="#build-mcvine-from-source">Build mcvine from source</a><ul>
+<li><a class="reference internal" href="#obtain-mcvine-source">Obtain mcvine source</a><ul>
+<li><a class="reference internal" href="#from-github-repository">From github repository</a></li>
+<li><a class="reference internal" href="#danse-package-repository-on-the-web">DANSE package repository on the web</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#before-you-install">Before you install</a></li>
+<li><a class="reference internal" href="#build-and-install">Build and Install</a><ul>
+<li><a class="reference internal" href="#mcvine-wrapped-mcstas-components">MCViNE-wrapped McStas components</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#build-notes">Build notes</a><ul>
+<li><a class="reference internal" href="#sns-machines">SNS machines</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#deployments">Deployments</a><ul>
+<li><a class="reference internal" href="#danse-clusters-at-caltech-cacr">DANSE clusters at Caltech CACR</a><ul>
+<li><a class="reference internal" href="#foxtrot-danse-us">foxtrot.danse.us</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#arcs-clusters-at-sns">ARCS clusters at SNS</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#systems-tested">Systems tested</a></li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/Installation.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="installation">
+<span id="id1"></span><h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
+<p>For a list of systems already deployed with MCViNE, please go to
+<a class="reference internal" href="#deployments"><em>deployments</em></a>.</p>
+<p>At this moment, mcvine can only be installed from source.</p>
+<div class="section" id="build-mcvine-from-source">
+<h2>Build mcvine from source<a class="headerlink" href="#build-mcvine-from-source" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last"><a class="reference external" href="https://www.docker.com/">Docker</a> is used to test
+installation of MCViNE on various Linux systems.
+Related Dockerfiles can be found in
+<a class="reference external" href="https://github.com/heetuu/mcvine-releaser/tree/master/docker">https://github.com/heetuu/mcvine-releaser/tree/master/docker</a>,
+and they can be used as hints for installing dependencies
+and then building mcvine.</p>
+</div>
+<p>To install mcvine from source, please follow these steps:</p>
+<ul class="simple">
+<li><a class="reference internal" href="#obtain-mcvine-source"><em>Obtain MCViNE source</em></a></li>
+<li><a class="reference internal" href="#check-deps"><em>Check and install dependencies</em></a></li>
+<li><a class="reference internal" href="#run-install"><em>Run install script</em></a></li>
+</ul>
+<div class="section" id="obtain-mcvine-source">
+<span id="id2"></span><h3>Obtain mcvine source<a class="headerlink" href="#obtain-mcvine-source" title="Permalink to this headline">¶</a></h3>
+<p>You can obtain
+<a class="reference internal" href="#install-src-git"><em>mcvine source from github</em></a>.</p>
+<div class="section" id="from-github-repository">
+<span id="install-src-git"></span><h4>From github repository<a class="headerlink" href="#from-github-repository" title="Permalink to this headline">¶</a></h4>
+<p>Check out MCViNE by</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git clone https://github.com/heetuu/mcvine-releaser mcvine
+</pre></div>
+</div>
+<p>and change into the checked-out directory:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ cd mcvine
+</pre></div>
+</div>
+</div>
+<div class="section" id="danse-package-repository-on-the-web">
+<span id="install-src-repo-on-web"></span><h4>DANSE package repository on the web<a class="headerlink" href="#danse-package-repository-on-the-web" title="Permalink to this headline">¶</a></h4>
+<p>You can get a source distribution of mcvine
+from <a class="reference external" href="http://dev.danse.us/packages/mcvine-src-dist.tgz">http://dev.danse.us/packages/mcvine-src-dist.tgz</a>.
+You will need
+to expand it somewhere:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ tar -xvzf mcvine-src-dist.tgz
+</pre></div>
+</div>
+<p>and change into the expanded directory:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ cd mcvine-src-dist
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="before-you-install">
+<span id="check-deps"></span><h3>Before you install<a class="headerlink" href="#before-you-install" title="Permalink to this headline">¶</a></h3>
+<p>MCViNE is written in C++ and Python, and it is required
+that the
+following essential development tools are available
+in your system:</p>
+<ul class="simple">
+<li>make</li>
+<li>gcc c++ compiler</li>
+<li>python</li>
+<li>git</li>
+</ul>
+<p>It also depends on some python packages:</p>
+<ul class="simple">
+<li>numpy</li>
+<li>h5py</li>
+<li>psutil</li>
+</ul>
+<p>and the GNU scientific library (gsl).</p>
+<p>Boost python is required for generating python bindings of mcvine c++ libraries.
+You may need to let mcvine installer know about your boost python installation by</p>
+<div class="highlight-python"><div class="highlight"><pre>$ export BOOSTPYTHON_DIR=/path/to/boost/python
+</pre></div>
+</div>
+<p>If you want to take advantage of parallel computing, please install
+mpich2. After installation of mpich2, you will need include mpich2
+executables such as mpicxx in your PATH, so that the following
+command does not complain about &#8220;command not found&#8221;:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ mpicxx
+</pre></div>
+</div>
+</div>
+<div class="section" id="build-and-install">
+<span id="run-install"></span><h3>Build and Install<a class="headerlink" href="#build-and-install" title="Permalink to this headline">¶</a></h3>
+<p>To start, please run the build.py command:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ ./build.py &lt;export_root&gt;
+</pre></div>
+</div>
+<p>Here, &lt;export_root&gt; is the path where you want mcvine installed.
+If left empty, it will by default be the sub-directory &#8220;EXPORT&#8221;
+in the current directory.</p>
+<p>The script will see if the dependencies are installed;
+if it cannot find a dependency, it will ask if
+you allow it to try to install it for you.
+You may decide to install the dependency yourself
+and come back here to run the script again.</p>
+<p>If everything goes fine. You will have a mcvine installation built
+under the directory you specified in the command
+line, and the following command</p>
+<div class="highlight-python"><div class="highlight"><pre>$ ls &lt;export_root&gt;
+</pre></div>
+</div>
+<p>will output something like:</p>
+<div class="highlight-python"><div class="highlight"><pre>bin  docs  etc  include  lib  modules  share
+</pre></div>
+</div>
+<p>This will conclude the installation.
+To try your installation out, please do
+the following:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ source &lt;export_root&gt;/bin/envs.sh
+$ mcvine-component-info -type=E_monitor
+</pre></div>
+</div>
+<p>The 2nd command will print some info about the E_monitor
+component. If you see anything unexpected, there must be some
+problems in the installation; please don&#8217;t hesitate to post
+a message to the mcvine user discussion group
+mcvine-users at googlegroups dot com.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>The command</p>
+<div class="highlight-python"><div class="highlight"><pre>$ source &lt;export_root&gt;/bin/envs.sh
+</pre></div>
+</div>
+<p class="last">build the environment necessary for using mcvine.
+You may want to look into it and make it part of your
+.bashrc.</p>
+</div>
+<div class="section" id="mcvine-wrapped-mcstas-components">
+<h4>MCViNE-wrapped McStas components<a class="headerlink" href="#mcvine-wrapped-mcstas-components" title="Permalink to this headline">¶</a></h4>
+<p>Optional:
+to set the path of the mcvine-wrapped mcstas component library, please
+set the environment variable &#8220;MCSTAS_COMPONENT_LIBDIR&#8221;. For example,
+you can set it by:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ export MCSTAS_COMPONENT_LIBDIR=/path/to/mcvine/EXPORT/share/mcstas2/McStas-Components
+</pre></div>
+</div>
+<p>By default, however, you don&#8217;t need to set it and mcvine will try
+to find it in default locations.</p>
+</div>
+</div>
+</div>
+<div class="section" id="build-notes">
+<span id="buildnotes"></span><h2>Build notes<a class="headerlink" href="#build-notes" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="sns-machines">
+<h3>SNS machines<a class="headerlink" href="#sns-machines" title="Permalink to this headline">¶</a></h3>
+<p>Before running &#8221;./build.py&#8221;,
+please let mcvine know about the mpich2 installation:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ export MPI_DIR=/usr
+$ export MPI_INCDIR=/usr/include/mpich2-x86_64
+$ export MPI_LIBDIR=/usr/lib64/mpich2/lib
+</pre></div>
+</div>
+<p>Now you can run build.py:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ ./build.py
+</pre></div>
+</div>
+<p>It will ask if you want to install h5py and boostpython, please
+answer with yes.</p>
+</div>
+</div>
+<div class="section" id="deployments">
+<span id="id3"></span><h2>Deployments<a class="headerlink" href="#deployments" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="danse-clusters-at-caltech-cacr">
+<h3>DANSE clusters at Caltech CACR<a class="headerlink" href="#danse-clusters-at-caltech-cacr" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="foxtrot-danse-us">
+<h4>foxtrot.danse.us<a class="headerlink" href="#foxtrot-danse-us" title="Permalink to this headline">¶</a></h4>
+<p>MCViNE is available through the &#8220;modules&#8221; package manager.</p>
+<p>To use mcvine, run</p>
+<div class="highlight-python"><div class="highlight"><pre>$ module add python wx h5py mcvine
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="arcs-clusters-at-sns">
+<h3>ARCS clusters at SNS<a class="headerlink" href="#arcs-clusters-at-sns" title="Permalink to this headline">¶</a></h3>
+<p>MCViNE is tentatively installed on arcs clusters at SNS.
+You can use it at arcs1 and arcs2 clusters.</p>
+<p>To use mcvine, run</p>
+<div class="highlight-python"><div class="highlight"><pre>$ source ~linjiao/mcvine.sh
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="systems-tested">
+<h2>Systems tested<a class="headerlink" href="#systems-tested" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Ubuntu</li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li>14.04</li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li>Fedora</li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li>21</li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li>Cent OS</li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li>6</li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="index.html">home</a>|&nbsp;</li>
+        <li><a href="search.html">search</a>|&nbsp;</li>
+        <li><a href="Documentation.html">MCViNE documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2006-2015, Jiao Lin, Michael Aivazis, and Brent Fultz.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

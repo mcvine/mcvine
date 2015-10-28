@@ -1,0 +1,740 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Tutorials – Powder Diffraction Kernel &mdash; mcvine 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="mcvine 1.0 documentation" href="index.html" /> 
+  </head>
+  <body>
+<div class="header">  
+<table><tr>
+<!--
+<td>
+<div style="text-align: left; padding: 7px 7px 10px 10px">
+<a href="index.html"><img src="_static/mcvine.png" border="0" alt="py4sci"
+  height="80"/></a>
+</div>
+</td>
+-->
+<td style="padding: 0pt 0pt 1em 1em;">
+<h1 class="banner" style="color:white; font-size:2em; text-align:left">MCViNE</h1>
+<h2 class="banner-note" style="color:lightgrey; font-size:1.5em; margin:0">Monte Carlo VIrtual Neutron Experiment</h2>
+</td>
+</tr>
+</table>
+</div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="index.html">home</a>|&nbsp;</li>
+        <li><a href="search.html">search</a>|&nbsp;</li>
+        <li><a href="Documentation.html">MCViNE documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Tutorials &#8211; Powder Diffraction Kernel</a><ul>
+<li><a class="reference internal" href="#simulation-with-powder-diffraction-kernel">Simulation with Powder Diffraction Kernel</a><ul>
+<li><a class="reference internal" href="#source-simple">Source_simple</a></li>
+<li><a class="reference internal" href="#sampleassemblyfromxml">SampleAssemblyFromXml</a></li>
+<li><a class="reference internal" href="#ndmonitor-x-y-t">NDMonitor(x,y,t)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#simulation-with-powdern">Simulation with PowderN</a></li>
+<li><a class="reference internal" href="#wave-vector-sensitive-monitor">Wave Vector Sensitive Monitor</a></li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/Tutorials-PowderKernel.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="tutorials-powder-diffraction-kernel">
+<span id="tutorials-powder-kernel"></span><h1>Tutorials &#8211; Powder Diffraction Kernel<a class="headerlink" href="#tutorials-powder-diffraction-kernel" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="simulation-with-powder-diffraction-kernel">
+<h2>Simulation with Powder Diffraction Kernel<a class="headerlink" href="#simulation-with-powder-diffraction-kernel" title="Permalink to this headline">¶</a></h2>
+<p>In this tutorial we will do experiment with a simple instrument consisting of three
+components:</p>
+<div class="highlight-python"><div class="highlight"><pre>[Source_simple] -&gt; [PowderDiffractionKernel] -&gt; [NDMonitor(x,y,t)]
+</pre></div>
+</div>
+<p>that uses <strong>SimplePowderDiffractionKernel</strong>, or simply <strong>Powder Diffraction Kernel</strong>. The structure
+of configuration and execution files for the instrument looks like the following:</p>
+<div class="highlight-python"><div class="highlight"><pre>ssd         # execution Python script
+ssd.pml     # main configuration file
+Al/
+    Al-scatterer.xml
+    Al.laz
+    Al.xyz
+    peaks.py
+    sampleassembly.xml
+</pre></div>
+</div>
+<p>The main configuration file ssd.pml defines components, order of components in
+the instrument and parameters for each component. Let&#8217;s take a look at the ssd.pml file</p>
+<p><strong>ssd.pml</strong></p>
+<div class="highlight-python"><div class="highlight"><pre>&lt;?xml version=&quot;1.0&quot;?&gt;
+
+&lt;!-- [Source_simple] -&gt; [PowderDiffractionKernel] -&gt; [NDMonitor(x,y,t)] --&gt;
+
+&lt;!DOCTYPE inventory&gt;
+
+&lt;inventory&gt;
+
+    &lt;component name=&quot;ssd&quot;&gt;
+        &lt;property name=&quot;sequence&quot;&gt;[&#39;source&#39;, &#39;sample&#39;, &#39;detector&#39;]&lt;/property&gt;
+        &lt;facility name=&quot;source&quot;&gt;sources/Source_simple&lt;/facility&gt;
+        &lt;facility name=&quot;sample&quot;&gt;samples/SampleAssemblyFromXml&lt;/facility&gt;
+        &lt;facility name=&quot;detector&quot;&gt;monitors/NDMonitor(x,y,t)&lt;/facility&gt;
+
+        &lt;property name=&quot;dump-instrument&quot;&gt;False&lt;/property&gt;
+        &lt;property name=&quot;overwrite-datafiles&quot;&gt;on&lt;/property&gt;
+        &lt;property name=&quot;launcher&quot;&gt;mpirun&lt;/property&gt;
+        &lt;property name=&quot;output-dir&quot;&gt;out&lt;/property&gt;
+        &lt;property name=&quot;ncount&quot;&gt;100000&lt;/property&gt;
+        &lt;property name=&quot;buffer_size&quot;&gt;10000&lt;/property&gt;
+        &lt;property name=&quot;multiple-scattering&quot;&gt;False&lt;/property&gt;
+        &lt;property name=&quot;mode&quot;&gt;worker&lt;/property&gt;
+        &lt;facility name=&quot;geometer&quot;&gt;geometer&lt;/facility&gt;
+        &lt;property name=&quot;dump-registry&quot;&gt;False&lt;/property&gt;
+
+        &lt;component name=&quot;source&quot;&gt;
+            &lt;property name=&quot;yh&quot;&gt;0.01&lt;/property&gt;
+            &lt;property name=&quot;dist&quot;&gt;10.0&lt;/property&gt;
+            &lt;property name=&quot;width&quot;&gt;0.0&lt;/property&gt;
+            &lt;property name=&quot;dE&quot;&gt;70.0&lt;/property&gt;
+            &lt;property name=&quot;gauss&quot;&gt;0.0&lt;/property&gt;
+            &lt;property name=&quot;height&quot;&gt;0.0&lt;/property&gt;
+            &lt;property name=&quot;flux&quot;&gt;1.0&lt;/property&gt;
+            &lt;property name=&quot;dLambda&quot;&gt;0.0&lt;/property&gt;
+            &lt;property name=&quot;radius&quot;&gt;0.05&lt;/property&gt;
+            &lt;property name=&quot;Lambda0&quot;&gt;0.0&lt;/property&gt;
+            &lt;property name=&quot;E0&quot;&gt;100.0&lt;/property&gt;
+            &lt;property name=&quot;xw&quot;&gt;0.01&lt;/property&gt;
+        &lt;/component&gt;
+
+        &lt;component name=&quot;sample&quot;&gt;
+            &lt;property name=&quot;xml&quot;&gt;Al/sampleassembly.xml&lt;/property&gt;
+        &lt;/component&gt;
+
+        &lt;component name=&quot;detector&quot;&gt;
+            &lt;property name=&quot;title&quot;&gt;ixyt&lt;/property&gt;
+            &lt;property name=&quot;filename&quot;&gt;ixyt.h5&lt;/property&gt;
+            &lt;property name=&quot;tmin&quot;&gt;0.0&lt;/property&gt;
+            &lt;property name=&quot;tmax&quot;&gt;0.002&lt;/property&gt;
+            &lt;property name=&quot;nt&quot;&gt;100&lt;/property&gt;
+            &lt;property name=&quot;nx&quot;&gt;200&lt;/property&gt;
+            &lt;property name=&quot;ny&quot;&gt;200&lt;/property&gt;
+            &lt;property name=&quot;xmax&quot;&gt;1.0&lt;/property&gt;
+            &lt;property name=&quot;xmin&quot;&gt;-1.0&lt;/property&gt;
+            &lt;property name=&quot;ymin&quot;&gt;-1.0&lt;/property&gt;
+            &lt;property name=&quot;ymax&quot;&gt;1.0&lt;/property&gt;
+        &lt;/component&gt;
+
+        &lt;component name=&quot;geometer&quot;&gt;
+            &lt;property name=&quot;source&quot;&gt;((0, 0, 0), (0, 0, 0))&lt;/property&gt;
+            &lt;property name=&quot;sample&quot;&gt;((0, 0, 10), (0, 0, 0))&lt;/property&gt;
+            &lt;property name=&quot;detector&quot;&gt;((0, 0, 11), (0, 0, 0))&lt;/property&gt;
+        &lt;/component&gt;
+
+    &lt;/component&gt;
+
+&lt;/inventory&gt;
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>Note: Base name of the file ssd.pml should be the same as in tag
+      &lt;component name=&quot;ssd&quot;&gt; otherwise simulation will silently
+      die without doing anything useful.
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>Note: Name &quot;ssd&quot; stands for initial letters of source -&gt; sample -&gt; detector
+</pre></div>
+</div>
+<p>The ssd.pml file has three components: <tt class="docutils literal"><span class="pre">Source_simple</span></tt>, <tt class="docutils literal"><span class="pre">SampleAssemblyFromXml</span></tt> and
+<tt class="docutils literal"><span class="pre">NDMonitor(x,y,t)</span></tt>. It describes parameters for source and detector components
+whereas parameters for sample component are defined in a separate file:
+<em>Al/sampleassembly.xml</em>. Let&#8217;s take a closer look at the components.</p>
+<div class="section" id="source-simple">
+<h3>Source_simple<a class="headerlink" href="#source-simple" title="Permalink to this headline">¶</a></h3>
+<p>Source_simple component is a standard component available in McStas simulation package.
+It generates flux of neutrons uniformly distributed in the energy range <tt class="docutils literal"><span class="pre">[E0-dE,</span> <span class="pre">E0+dE]</span></tt> in meV.
+In our configuration the energy range is <tt class="docutils literal"><span class="pre">[30,</span> <span class="pre">170]</span> <span class="pre">meV</span></tt>. Parameters <tt class="docutils literal"><span class="pre">xw</span></tt>, <tt class="docutils literal"><span class="pre">yh</span></tt> and
+<tt class="docutils literal"><span class="pre">dist</span></tt> define width, height and distance to the sample correspondingly. The benefit
+of using this simple source is to quickly get an estimate of what happens to the neutrons
+in this energy range as they propagates through the instrument.</p>
+</div>
+<div class="section" id="sampleassemblyfromxml">
+<h3>SampleAssemblyFromXml<a class="headerlink" href="#sampleassemblyfromxml" title="Permalink to this headline">¶</a></h3>
+<p>The SampleAssemblyFromXml component allows to create a sample from detailed pieces
+of information about the material including configuration of unit cell, physical
+properties of atoms with respect to the scattered or absorbed neutrons. Please refer
+to <a class="reference internal" href="Tutorials-SampleAssembly.html#tutorials-sampleassembly"><em>Sample Assebly</em></a> tutorial for some details
+of how to write the configuration files for sample assembly.</p>
+<p>In this tutorial we will include <em>SimplePowderDiffractionKernel</em> in the sample assembly
+and describe some properties of the kernel. The purpose of the kernel in the sample
+assembly is to define a general mechanism of neutron scattering without
+regard to any macroscopic properties of the material. It does though depend on
+microscopic properties such as atom species, lattice parameters, symmetry of the
+lattice, scattering cross sections etc.</p>
+<p>In this experiment we will create a simple sample consisting of Al atoms and will
+keep all the configuration files related to the material in <em>Al</em> directory. The only
+parameter in the <em>ssd.pml</em> file related to sample was the name of xml file: <em>Al/sampleassembly.xml</em></p>
+<p><strong>Al/sampleassembly.xml</strong></p>
+<div class="highlight-python"><div class="highlight"><pre>&lt;?xml version=&quot;1.0&quot;?&gt;
+
+&lt;!DOCTYPE SampleAssembly&gt;
+
+&lt;SampleAssembly name=&quot;Al&quot;&gt;
+
+  &lt;PowderSample name=&quot;Al&quot; type=&quot;sample&quot;&gt;
+    &lt;Shape&gt;
+      &lt;block width=&quot;6*cm&quot; height=&quot;10*cm&quot; thickness=&quot;1*cm&quot; /&gt;
+    &lt;/Shape&gt;
+    &lt;Phase type=&quot;crystal&quot;&gt;
+      &lt;ChemicalFormula&gt;Al&lt;/ChemicalFormula&gt;
+      &lt;xyzfile&gt;Al.xyz&lt;/xyzfile&gt;
+    &lt;/Phase&gt;
+  &lt;/PowderSample&gt;
+
+  &lt;LocalGeometer registry-coordinate-system=&quot;InstrumentScientist&quot;&gt;
+    &lt;Register name=&quot;Al&quot; position=&quot;(0,0,0)&quot; orientation=&quot;(0,0,0)&quot;/&gt;
+  &lt;/LocalGeometer&gt;
+
+&lt;/SampleAssembly&gt;
+</pre></div>
+</div>
+<p>File <em>sampleassembly.xml</em> is the main file that describes general properties of the sample:
+shape, phase type, local geometry and some others. Our sample is a block with sizes: <tt class="docutils literal"><span class="pre">6cm*10cm*1cm</span></tt>.
+The phase type is a crystal consisting of just one chemical element <em>Al</em> and the
+unit cell is given in <em>Al.xyz</em> file.</p>
+<p><strong>Al/Al.xyz</strong></p>
+<div class="highlight-python"><div class="highlight"><pre>4
+4.049320 0 0   0 4.049320 0   0 0 4.049320
+Al 0  0  0
+Al 0.5 0.5 0
+Al 0.5 0 0.5
+Al 0 0.5 0.5
+</pre></div>
+</div>
+<p>The <em>Al.xyz</em> file tells us that the Al atoms comprise FCC unit cell with lattice
+constants:</p>
+<div class="highlight-python"><div class="highlight"><pre>a = b = c = 4.049320 AA
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>Note: .xyz file used here is not a standard .xyz file. Standard .xyz file
+       http://en.wikipedia.org/wiki/XYZ_file_format devotes the 2nd line
+       for comment where as in this case we store meaningful information:
+       lattice parameters.
+</pre></div>
+</div>
+<p>If the <em>Al-scatterer.xml</em> file is present in <em>Al</em> directory, then system will automatically
+recognize it and will turn on the scattering process for the sample.</p>
+<p><strong>Al/Al-scatterer.xml</strong></p>
+<div class="highlight-python"><div class="highlight"><pre>&lt;?xml version=&quot;1.0&quot;?&gt;
+
+&lt;!DOCTYPE scatterer&gt;
+
+&lt;!-- weights: absorption, scattering, transmission --&gt;
+&lt;homogeneous_scatterer mcweights=&quot;0, 1, 0&quot;&gt;
+
+  &lt;SimplePowderDiffractionKernel Dd_over_d=&quot;1e-5&quot; DebyeWaller_factor=&quot;1&quot; peaks-py-path=&quot;peaks.py&quot;&gt;
+  &lt;/SimplePowderDiffractionKernel&gt;
+
+&lt;/homogeneous_scatterer&gt;
+</pre></div>
+</div>
+<p><em>Al-scatterer.xml</em> configuration file describes the scattering process by defining
+the kernel. As mentioned above, we use <em>SimplePowderDiffractionKernel</em> for our experiment.
+We need to specify several parameters for the kernel: relative line width <span class="math">\Delta d/d</span>
+(<tt class="docutils literal"><span class="pre">Dd_over_d</span></tt>), Debye-Waller factor (<tt class="docutils literal"><span class="pre">DebyeWaller_factor</span></tt>) and file containing
+information about the diffraction planes (<tt class="docutils literal"><span class="pre">peaks-py-path</span></tt>).</p>
+<p><strong>peaks.py</strong></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">mccomponents.sample.diffraction.SimplePowderDiffractionKernel</span> <span class="kn">import</span> <span class="n">Peak</span>
+
+<span class="n">peaks</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">Peak</span><span class="p">(</span><span class="n">q</span><span class="o">=</span><span class="mf">2.687561</span><span class="p">,</span> <span class="n">F_squared</span><span class="o">=</span><span class="mf">1.690000</span><span class="p">,</span> <span class="n">multiplicity</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">intrinsic_line_width</span><span class="o">=</span><span class="mf">0.000000</span><span class="p">,</span> <span class="n">DebyeWaller_factor</span><span class="o">=</span><span class="mf">1.000000</span><span class="p">),</span>
+    <span class="n">Peak</span><span class="p">(</span><span class="n">q</span><span class="o">=</span><span class="mf">3.103329</span><span class="p">,</span> <span class="n">F_squared</span><span class="o">=</span><span class="mf">1.690000</span><span class="p">,</span> <span class="n">multiplicity</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">intrinsic_line_width</span><span class="o">=</span><span class="mf">0.000000</span><span class="p">,</span> <span class="n">DebyeWaller_factor</span><span class="o">=</span><span class="mf">1.000000</span><span class="p">),</span>
+    <span class="n">Peak</span><span class="p">(</span><span class="n">q</span><span class="o">=</span><span class="mf">4.388769</span><span class="p">,</span> <span class="n">F_squared</span><span class="o">=</span><span class="mf">1.440000</span><span class="p">,</span> <span class="n">multiplicity</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">intrinsic_line_width</span><span class="o">=</span><span class="mf">0.000000</span><span class="p">,</span> <span class="n">DebyeWaller_factor</span><span class="o">=</span><span class="mf">1.000000</span><span class="p">),</span>
+    <span class="n">Peak</span><span class="p">(</span><span class="n">q</span><span class="o">=</span><span class="mf">5.146288</span><span class="p">,</span> <span class="n">F_squared</span><span class="o">=</span><span class="mf">1.440000</span><span class="p">,</span> <span class="n">multiplicity</span><span class="o">=</span><span class="mi">24</span><span class="p">,</span> <span class="n">intrinsic_line_width</span><span class="o">=</span><span class="mf">0.000000</span><span class="p">,</span> <span class="n">DebyeWaller_factor</span><span class="o">=</span><span class="mf">1.000000</span><span class="p">),</span>
+    <span class="n">Peak</span><span class="p">(</span><span class="n">q</span><span class="o">=</span><span class="mf">5.375123</span><span class="p">,</span> <span class="n">F_squared</span><span class="o">=</span><span class="mf">1.210000</span><span class="p">,</span> <span class="n">multiplicity</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">intrinsic_line_width</span><span class="o">=</span><span class="mf">0.000000</span><span class="p">,</span> <span class="n">DebyeWaller_factor</span><span class="o">=</span><span class="mf">1.000000</span><span class="p">),</span>
+    <span class="n">Peak</span><span class="p">(</span><span class="n">q</span><span class="o">=</span><span class="mf">6.206657</span><span class="p">,</span> <span class="n">F_squared</span><span class="o">=</span><span class="mf">1.210000</span><span class="p">,</span> <span class="n">multiplicity</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">intrinsic_line_width</span><span class="o">=</span><span class="mf">0.000000</span><span class="p">,</span> <span class="n">DebyeWaller_factor</span><span class="o">=</span><span class="mf">1.000000</span><span class="p">),</span>
+    <span class="n">Peak</span><span class="p">(</span><span class="n">q</span><span class="o">=</span><span class="mf">6.763548</span><span class="p">,</span> <span class="n">F_squared</span><span class="o">=</span><span class="mf">1.000000</span><span class="p">,</span> <span class="n">multiplicity</span><span class="o">=</span><span class="mi">24</span><span class="p">,</span> <span class="n">intrinsic_line_width</span><span class="o">=</span><span class="mf">0.000000</span><span class="p">,</span> <span class="n">DebyeWaller_factor</span><span class="o">=</span><span class="mf">1.000000</span><span class="p">),</span>
+    <span class="n">Peak</span><span class="p">(</span><span class="n">q</span><span class="o">=</span><span class="mf">6.939254</span><span class="p">,</span> <span class="n">F_squared</span><span class="o">=</span><span class="mf">1.000000</span><span class="p">,</span> <span class="n">multiplicity</span><span class="o">=</span><span class="mi">24</span><span class="p">,</span> <span class="n">intrinsic_line_width</span><span class="o">=</span><span class="mf">0.000000</span><span class="p">,</span> <span class="n">DebyeWaller_factor</span><span class="o">=</span><span class="mf">1.000000</span><span class="p">),</span>
+    <span class="n">Peak</span><span class="p">(</span><span class="n">q</span><span class="o">=</span><span class="mf">7.601572</span><span class="p">,</span> <span class="n">F_squared</span><span class="o">=</span><span class="mf">1.000000</span><span class="p">,</span> <span class="n">multiplicity</span><span class="o">=</span><span class="mi">24</span><span class="p">,</span> <span class="n">intrinsic_line_width</span><span class="o">=</span><span class="mf">0.000000</span><span class="p">,</span> <span class="n">DebyeWaller_factor</span><span class="o">=</span><span class="mf">1.000000</span><span class="p">),</span>
+    <span class="n">Peak</span><span class="p">(</span><span class="n">q</span><span class="o">=</span><span class="mf">8.062684</span><span class="p">,</span> <span class="n">F_squared</span><span class="o">=</span><span class="mf">0.810000</span><span class="p">,</span> <span class="n">multiplicity</span><span class="o">=</span><span class="mi">24</span><span class="p">,</span> <span class="n">intrinsic_line_width</span><span class="o">=</span><span class="mf">0.000000</span><span class="p">,</span> <span class="n">DebyeWaller_factor</span><span class="o">=</span><span class="mf">1.000000</span><span class="p">),</span>
+    <span class="n">Peak</span><span class="p">(</span><span class="n">q</span><span class="o">=</span><span class="mf">8.062684</span><span class="p">,</span> <span class="n">F_squared</span><span class="o">=</span><span class="mf">0.810000</span><span class="p">,</span> <span class="n">multiplicity</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">intrinsic_line_width</span><span class="o">=</span><span class="mf">0.000000</span><span class="p">,</span> <span class="n">DebyeWaller_factor</span><span class="o">=</span><span class="mf">1.000000</span><span class="p">),</span>
+    <span class="n">Peak</span><span class="p">(</span><span class="n">q</span><span class="o">=</span><span class="mf">8.777539</span><span class="p">,</span> <span class="n">F_squared</span><span class="o">=</span><span class="mf">0.640000</span><span class="p">,</span> <span class="n">multiplicity</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">intrinsic_line_width</span><span class="o">=</span><span class="mf">0.000000</span><span class="p">,</span> <span class="n">DebyeWaller_factor</span><span class="o">=</span><span class="mf">1.000000</span><span class="p">),</span>
+    <span class="n">Peak</span><span class="p">(</span><span class="n">q</span><span class="o">=</span><span class="mf">9.179770</span><span class="p">,</span> <span class="n">F_squared</span><span class="o">=</span><span class="mf">0.640000</span><span class="p">,</span> <span class="n">multiplicity</span><span class="o">=</span><span class="mi">48</span><span class="p">,</span> <span class="n">intrinsic_line_width</span><span class="o">=</span><span class="mf">0.000000</span><span class="p">,</span> <span class="n">DebyeWaller_factor</span><span class="o">=</span><span class="mf">1.000000</span><span class="p">),</span>
+    <span class="n">Peak</span><span class="p">(</span><span class="n">q</span><span class="o">=</span><span class="mf">9.309986</span><span class="p">,</span> <span class="n">F_squared</span><span class="o">=</span><span class="mf">0.640000</span><span class="p">,</span> <span class="n">multiplicity</span><span class="o">=</span><span class="mi">24</span><span class="p">,</span> <span class="n">intrinsic_line_width</span><span class="o">=</span><span class="mf">0.000000</span><span class="p">,</span> <span class="n">DebyeWaller_factor</span><span class="o">=</span><span class="mf">1.000000</span><span class="p">),</span>
+    <span class="n">Peak</span><span class="p">(</span><span class="n">q</span><span class="o">=</span><span class="mf">9.309986</span><span class="p">,</span> <span class="n">F_squared</span><span class="o">=</span><span class="mf">0.640000</span><span class="p">,</span> <span class="n">multiplicity</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">intrinsic_line_width</span><span class="o">=</span><span class="mf">0.000000</span><span class="p">,</span> <span class="n">DebyeWaller_factor</span><span class="o">=</span><span class="mf">1.000000</span><span class="p">),</span>
+    <span class="n">Peak</span><span class="p">(</span><span class="n">q</span><span class="o">=</span><span class="mf">9.813587</span><span class="p">,</span> <span class="n">F_squared</span><span class="o">=</span><span class="mf">0.490000</span><span class="p">,</span> <span class="n">multiplicity</span><span class="o">=</span><span class="mi">24</span><span class="p">,</span> <span class="n">intrinsic_line_width</span><span class="o">=</span><span class="mf">0.000000</span><span class="p">,</span> <span class="n">DebyeWaller_factor</span><span class="o">=</span><span class="mf">1.000000</span><span class="p">),</span>
+    <span class="n">Peak</span><span class="p">(</span><span class="n">q</span><span class="o">=</span><span class="mf">10.174943</span><span class="p">,</span> <span class="n">F_squared</span><span class="o">=</span><span class="mf">0.490000</span><span class="p">,</span> <span class="n">multiplicity</span><span class="o">=</span><span class="mi">24</span><span class="p">,</span> <span class="n">intrinsic_line_width</span><span class="o">=</span><span class="mf">0.000000</span><span class="p">,</span> <span class="n">DebyeWaller_factor</span><span class="o">=</span><span class="mf">1.000000</span><span class="p">),</span>
+    <span class="n">Peak</span><span class="p">(</span><span class="n">q</span><span class="o">=</span><span class="mf">10.292577</span><span class="p">,</span> <span class="n">F_squared</span><span class="o">=</span><span class="mf">0.490000</span><span class="p">,</span> <span class="n">multiplicity</span><span class="o">=</span><span class="mi">24</span><span class="p">,</span> <span class="n">intrinsic_line_width</span><span class="o">=</span><span class="mf">0.000000</span><span class="p">,</span> <span class="n">DebyeWaller_factor</span><span class="o">=</span><span class="mf">1.000000</span><span class="p">),</span>
+    <span class="n">Peak</span><span class="p">(</span><span class="n">q</span><span class="o">=</span><span class="mf">10.750246</span><span class="p">,</span> <span class="n">F_squared</span><span class="o">=</span><span class="mf">0.490000</span><span class="p">,</span> <span class="n">multiplicity</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">intrinsic_line_width</span><span class="o">=</span><span class="mf">0.000000</span><span class="p">,</span> <span class="n">DebyeWaller_factor</span><span class="o">=</span><span class="mf">1.000000</span><span class="p">),</span>
+    <span class="n">Peak</span><span class="p">(</span><span class="n">q</span><span class="o">=</span><span class="mf">11.081100</span><span class="p">,</span> <span class="n">F_squared</span><span class="o">=</span><span class="mf">0.360000</span><span class="p">,</span> <span class="n">multiplicity</span><span class="o">=</span><span class="mi">24</span><span class="p">,</span> <span class="n">intrinsic_line_width</span><span class="o">=</span><span class="mf">0.000000</span><span class="p">,</span> <span class="n">DebyeWaller_factor</span><span class="o">=</span><span class="mf">1.000000</span><span class="p">),</span>
+    <span class="n">Peak</span><span class="p">(</span><span class="n">q</span><span class="o">=</span><span class="mf">11.081100</span><span class="p">,</span> <span class="n">F_squared</span><span class="o">=</span><span class="mf">0.360000</span><span class="p">,</span> <span class="n">multiplicity</span><span class="o">=</span><span class="mi">24</span><span class="p">,</span> <span class="n">intrinsic_line_width</span><span class="o">=</span><span class="mf">0.000000</span><span class="p">,</span> <span class="n">DebyeWaller_factor</span><span class="o">=</span><span class="mf">1.000000</span><span class="p">),</span>
+    <span class="n">Peak</span><span class="p">(</span><span class="n">q</span><span class="o">=</span><span class="mf">11.189210</span><span class="p">,</span> <span class="n">F_squared</span><span class="o">=</span><span class="mf">0.360000</span><span class="p">,</span> <span class="n">multiplicity</span><span class="o">=</span><span class="mi">24</span><span class="p">,</span> <span class="n">intrinsic_line_width</span><span class="o">=</span><span class="mf">0.000000</span><span class="p">,</span> <span class="n">DebyeWaller_factor</span><span class="o">=</span><span class="mf">1.000000</span><span class="p">),</span>
+    <span class="n">Peak</span><span class="p">(</span><span class="n">q</span><span class="o">=</span><span class="mf">11.611592</span><span class="p">,</span> <span class="n">F_squared</span><span class="o">=</span><span class="mf">0.360000</span><span class="p">,</span> <span class="n">multiplicity</span><span class="o">=</span><span class="mi">48</span><span class="p">,</span> <span class="n">intrinsic_line_width</span><span class="o">=</span><span class="mf">0.000000</span><span class="p">,</span> <span class="n">DebyeWaller_factor</span><span class="o">=</span><span class="mf">1.000000</span><span class="p">),</span>
+    <span class="n">Peak</span><span class="p">(</span><span class="n">q</span><span class="o">=</span><span class="mf">11.918560</span><span class="p">,</span> <span class="n">F_squared</span><span class="o">=</span><span class="mf">0.360000</span><span class="p">,</span> <span class="n">multiplicity</span><span class="o">=</span><span class="mi">24</span><span class="p">,</span> <span class="n">intrinsic_line_width</span><span class="o">=</span><span class="mf">0.000000</span><span class="p">,</span> <span class="n">DebyeWaller_factor</span><span class="o">=</span><span class="mf">1.000000</span><span class="p">),</span>
+    <span class="n">Peak</span><span class="p">(</span><span class="n">q</span><span class="o">=</span><span class="mf">11.918560</span><span class="p">,</span> <span class="n">F_squared</span><span class="o">=</span><span class="mf">0.360000</span><span class="p">,</span> <span class="n">multiplicity</span><span class="o">=</span><span class="mi">48</span><span class="p">,</span> <span class="n">intrinsic_line_width</span><span class="o">=</span><span class="mf">0.000000</span><span class="p">,</span> <span class="n">DebyeWaller_factor</span><span class="o">=</span><span class="mf">1.000000</span><span class="p">),</span>
+    <span class="n">Peak</span><span class="p">(</span><span class="n">q</span><span class="o">=</span><span class="mf">12.413314</span><span class="p">,</span> <span class="n">F_squared</span><span class="o">=</span><span class="mf">0.250000</span><span class="p">,</span> <span class="n">multiplicity</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">intrinsic_line_width</span><span class="o">=</span><span class="mf">0.000000</span><span class="p">,</span> <span class="n">DebyeWaller_factor</span><span class="o">=</span><span class="mf">1.000000</span><span class="p">),</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p><em>peaks.py</em> file specifies cumulative parameters based on the Al.laz <a class="reference external" href="http://www.mcstas.org/download/components/data/">powder pattern
+file</a>
+available in McStas package . We show the Al.laz file here for reference purposes:</p>
+<p><strong>Al/Al.laz</strong></p>
+<div class="highlight-python"><div class="highlight"><pre># TITLE *Aluminum-Al-[FM3-M] Miller, H.P.jr.;DuMond, J.W.M.[1942] at 298 K
+# CELL 4.049320 4.049320 4.049320 90.000000 90.000000 90.000000
+# SPCGRP F M 3 M   CUBIC STRUCTURE
+# ATOM AL 1 0.000000 0.000000 0.000000
+# SCATTERING FACTOR  COEFFICIENTS: AL     F= 0.345 CM-12
+# Reference: Physical Review (1940) 57, 198-206
+#
+# Physical parameters:
+# sigma_coh 1.495   coherent scattering cross section in [barn]
+# sigma_inc 0.0082  incoherent scattering cross section in [barn]
+# sigma_abs 0.231   absorption scattering cross section in [barn]
+# density   2.70    in [g/cm^3]
+# weight    26.98   in [g/mol]
+# nb_atoms  4       in [atoms/unit cell]
+# v_sound   5100    in [m/s]
+# v_sound_l 6420    velocity of longitudinal sound in [m/s]
+# v_sound_t 3040    velocity of transversal sound in [m/s]
+# T_m       933.5   melting temperature in [K]
+# T_b       2792.2  boiling temperature in [K]
+# At_number 13      atomic number Z
+# lattice_a 4.04932 lattice parameter a in [Angs]
+#
+# Format parameters: Lazy format &lt;http://icsd.ill.fr&gt;
+# column_j 17 multiplicity &#39;j&#39;
+# column_d 6  d-spacing &#39;d&#39; in [Angs]
+# column_F 13 norm of scattering factor |F| in [barn^0.5]
+# column_h 1
+# column_k 2
+# column_l 3
+#
+# H  K  L  THETA  2THETA D VALUE  1/D**2 SIN2*1000  H  K  L INTENSITY         /F(HKL)/       A(HKL)      B(HKL) PHA.ANG. MULT   LPG
+  1  1  1  12.35  24.70   2.3379  0.1830    45.74   1  1  1    1000.0              1.3         1.32         0.00    0.00  8  22.38
+  2  0  0  14.30  28.59   2.0247  0.2439    60.99   2  0  0     550.0              1.3         1.30         0.00    0.00  6  16.92
+  2  2  0  20.44  40.88   1.4317  0.4879   121.97   2  2  0     503.5              1.2         1.22         0.00    0.00 12   8.75
+  3  1  1  24.18  48.35   1.2209  0.6709   167.71   3  1  1     686.4              1.2         1.17         0.00    0.00 24   6.54
+  2  2  2  25.32  50.65   1.1689  0.7318   182.96   2  2  2     205.3              1.1         1.15         0.00    0.00  8   6.05
+  4  0  0  29.60  59.20   1.0123  0.9758   243.95   4  0  0     106.3              1.1         1.08         0.00    0.00  6   4.71
+  3  3  1  32.56  65.13   0.9290  1.1587   289.69   3  3  1     337.1              1.0         1.03         0.00    0.00 24   4.10
+  4  2  0  33.52  67.04   0.9055  1.2197   304.93   4  2  0     314.0              1.0         1.02         0.00    0.00 24   3.93
+  4  2  2  37.22  74.45   0.8266  1.4637   365.92   4  2  2     242.5              1.0         0.96         0.00    0.00 24   3.43
+  5  1  1  39.91  79.82   0.7793  1.6466   411.66   5  1  1     204.2              0.9         0.91         0.00    0.00 24   3.17
+  3  3  3  39.91  79.82   0.7793  1.6466   411.66   3  3  3      68.1              0.9         0.91         0.00    0.00  8   3.17
+  4  4  0  44.31  88.61   0.7158  1.9516   487.89   4  4  0      79.3              0.8         0.85         0.00    0.00 12   2.86
+  5  3  1  46.93  93.86   0.6845  2.1345   533.63   5  3  1     277.3              0.8         0.81         0.00    0.00 48   2.74
+  4  4  2  47.81  95.61   0.6749  2.1955   548.88   4  4  2     132.9              0.8         0.80         0.00    0.00 24   2.71
+  6  0  0  47.81  95.61   0.6749  2.1955   548.88   6  0  0      33.2              0.8         0.80         0.00    0.00  6   2.71
+  6  2  0  51.35 102.69   0.6403  2.4395   609.87   6  2  0     113.9              0.7         0.75         0.00    0.00 24   2.63
+  5  3  3  54.07 108.13   0.6175  2.6224   655.61   5  3  3     102.9              0.7         0.72         0.00    0.00 24   2.60
+  6  2  2  54.99 109.98   0.6105  2.6834   670.85   6  2  2      99.8              0.7         0.71         0.00    0.00 24   2.60
+  4  4  4  58.81 117.63   0.5845  2.9274   731.84   4  4  4      29.9              0.7         0.66         0.00    0.00  8   2.64
+  5  5  1  61.86 123.72   0.5670  3.1103   777.58   5  5  1      84.6              0.6         0.63         0.00    0.00 24   2.73
+  7  1  1  61.86 123.72   0.5670  3.1103   777.58   7  1  1      84.6              0.6         0.63         0.00    0.00 24   2.73
+  6  4  0  62.92 125.85   0.5615  3.1713   792.83   6  4  0      83.4              0.6         0.62         0.00    0.00 24   2.77
+  6  4  2  67.52 135.04   0.5411  3.4153   853.82   6  4  2     163.1              0.6         0.59         0.00    0.00 48   3.06
+  5  5  3  71.52 143.05   0.5272  3.5982   899.56   5  5  3      85.2              0.6         0.56         0.00    0.00 24   3.51
+  7  3  1  71.52 143.05   0.5272  3.5982   899.56   7  3  1     170.5              0.6         0.56         0.00    0.00 48   3.51
+  8  0  0  81.05 162.10   0.5062  3.9032   975.79   8  0  0      34.4              0.5         0.52         0.00    0.00  6   6.59
+</pre></div>
+</div>
+<p>Parameters for <em>peaks.py</em> file are automatically generated from <em>Al.laz</em> file using
+Python script <a class="reference external" href="http://dev.danse.us/trac/MCViNE/browser/trunk/instruments/VULCAN/applications/peak_generator.py">peak_generator.py</a></p>
+<div class="highlight-python"><div class="highlight"><pre>Note: For now peak_generator.py can only be used for cubic lattice types
+</pre></div>
+</div>
+<p>Let&#8217;s take a closer look at the parameters provided in <em>peaks.py</em> file.</p>
+<p>Parameters <tt class="docutils literal"><span class="pre">q</span></tt> is a q-vector in reciprocal lattice related to lattice parameters and
+Miller indices (h,k,l). For orthorhombic lattice type q-vector can be simplified as follows:</p>
+<div class="math">
+<p><span class="math">\bold{q} = (2\pi h/a)\bold{i} + (2\pi k/b)\bold{j} + (2\pi l/c)\bold{k}</span></p>
+</div><p>with <tt class="docutils literal"><span class="pre">a</span></tt>, <tt class="docutils literal"><span class="pre">b</span></tt> and <tt class="docutils literal"><span class="pre">c</span></tt> being the lattice constants. For FCC lattice type it
+can be even further simplified to:</p>
+<div class="math">
+<p><span class="math">\bold{q} = 2\pi/a(h\bold{i} + k\bold{j} + l\bold{k})</span></p>
+</div><p>so that the magnitude of the q-vector will be:</p>
+<div class="math">
+<p><span class="math">q = (2\pi/a)\sqrt{h^2 + k^2 + l^2}</span></p>
+</div><p>Parameter <tt class="docutils literal"><span class="pre">F_squared</span></tt> is the squared structure factor corresponding to <tt class="docutils literal"><span class="pre">|F(hkl)|</span></tt> in <em>Al.laz</em> file:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">F_squared</span> <span class="o">=</span> <span class="n">F</span><span class="p">(</span><span class="n">hkl</span><span class="p">)</span><span class="o">^</span><span class="mi">2</span>
+</pre></div>
+</div>
+<p>Parameter  <tt class="docutils literal"><span class="pre">multiplicity</span></tt> corresponds to column <tt class="docutils literal"><span class="pre">MULT</span></tt> in <em>Al.laz</em> file. Other
+parameters <tt class="docutils literal"><span class="pre">intrinsic_line_width</span></tt> and <tt class="docutils literal"><span class="pre">DebyeWaller_factor</span></tt> should be obtained
+from other experimental data.</p>
+</div>
+<div class="section" id="ndmonitor-x-y-t">
+<h3>NDMonitor(x,y,t)<a class="headerlink" href="#ndmonitor-x-y-t" title="Permalink to this headline">¶</a></h3>
+<p>The final component in our simple instrument is <strong>NDMonitor</strong>. It is a generic monitor
+that can plot various dependencies of physical values: <tt class="docutils literal"><span class="pre">x</span></tt>, <tt class="docutils literal"><span class="pre">y</span></tt>, <tt class="docutils literal"><span class="pre">z</span></tt>, <tt class="docutils literal"><span class="pre">vx</span></tt>,
+<tt class="docutils literal"><span class="pre">vy</span></tt>, <tt class="docutils literal"><span class="pre">vz</span></tt>, <tt class="docutils literal"><span class="pre">w</span></tt>, <tt class="docutils literal"><span class="pre">energy</span></tt>.
+For the instrument we are interested in neutron
+distribution in <tt class="docutils literal"><span class="pre">(x,y)</span></tt> plane within some time range <tt class="docutils literal"><span class="pre">t</span></tt>. For this we will use
+<tt class="docutils literal"><span class="pre">NDMonitor(x,y,t)</span></tt> component. Other examples of NDMonitor include <tt class="docutils literal"><span class="pre">NDMonitor(w,x)</span></tt>
+where <tt class="docutils literal"><span class="pre">w</span></tt> is the wavelength, <tt class="docutils literal"><span class="pre">NDMonitor(w)</span></tt>, <tt class="docutils literal"><span class="pre">NDMonitor(energy,x)</span></tt> etc.
+[Need to write a separate section on NDMonitor!!!]</p>
+<p>The application script will look as follows:</p>
+<p><strong>ssd</strong></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
+
+<span class="kn">import</span> <span class="nn">mcvine</span>
+<span class="kn">import</span> <span class="nn">mccomponents.sample.diffraction.xml</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="kn">from</span> <span class="nn">mcvine.applications.InstrumentBuilder</span> <span class="kn">import</span> <span class="n">build</span>
+    <span class="n">components</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;source&#39;</span><span class="p">,</span> <span class="s">&#39;sample&#39;</span><span class="p">,</span> <span class="s">&#39;detector&#39;</span><span class="p">]</span>
+    <span class="n">App</span> <span class="o">=</span> <span class="n">build</span><span class="p">(</span><span class="n">components</span><span class="p">)</span>
+    <span class="n">app</span> <span class="o">=</span> <span class="n">App</span><span class="p">(</span><span class="s">&#39;ssd&#39;</span><span class="p">)</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+    <span class="k">return</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>After we finished with configuration and execution (application) files, it&#8217;s time
+to run the experiment simulation:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python ssd
+</pre></div>
+</div>
+<p>The results of scattered neutrons is displayed on NDMonitor(x,y,t). To get the neutron
+intensity in <tt class="docutils literal"><span class="pre">(x,y)</span></tt> plane we need to sum neutron intensity over some time period.
+For our system we integrated neutrons over the time range <tt class="docutils literal"><span class="pre">[0,</span> <span class="pre">002]</span> <span class="pre">sec</span></tt>. To draw
+the plot for the monitor we use the script:</p>
+<p><strong>plot_ndmonitor.py</strong></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
+
+<span class="c"># Note: Before using this script make sure that &quot;out/ixyt.h5&quot; is generated!</span>
+<span class="kn">from</span> <span class="nn">histogram.hdf</span> <span class="kn">import</span> <span class="n">load</span>
+<span class="kn">from</span> <span class="nn">histogram.plotter</span> <span class="kn">import</span> <span class="n">defaultPlotter</span> <span class="k">as</span> <span class="n">dp</span>
+
+<span class="n">h</span>   <span class="o">=</span> <span class="n">load</span><span class="p">(</span><span class="s">&#39;out/ixyt.h5&#39;</span><span class="p">,</span> <span class="s">&#39;ix_y_t&#39;</span><span class="p">)</span>
+<span class="n">ixy</span> <span class="o">=</span> <span class="n">h</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="s">&#39;t&#39;</span><span class="p">)</span>
+
+<span class="n">dp</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ixy</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This produces the diffraction image where every ring corresponds to separate
+diffraction plane, or separate combination of Miller indices (h,k,l)</p>
+<div class="figure">
+<a class="reference internal image-reference" href="_images/powder-kernel.png"><img alt="_images/powder-kernel.png" src="_images/powder-kernel.png" style="width: 600px;" /></a>
+<p class="caption"><em>Fig. 1 Diffraction with SimplePowderDiffractionKernel</em></p>
+</div>
+</div>
+</div>
+<div class="section" id="simulation-with-powdern">
+<h2>Simulation with PowderN<a class="headerlink" href="#simulation-with-powdern" title="Permalink to this headline">¶</a></h2>
+<p>In the previous section we used <tt class="docutils literal"><span class="pre">SimplePowderDiffractionKernel</span></tt> and assembled
+our sample using different pieces of information about material structure and
+macroscopic parameters. We can achieve the same result using standard McStas component
+for powder sample called <tt class="docutils literal"><span class="pre">PowderN.comp</span></tt>. You might ask, why you actually need to have
+PowderDiffractionKernel when one can use <tt class="docutils literal"><span class="pre">PowderN</span></tt> component instead. The answer is that PowderDiffractionKernel
+allows more flexibility in defining your sample, especially when you want to investigate
+a complex structure for which the powder pattern file is not available.</p>
+<p>Let&#8217;s replace <tt class="docutils literal"><span class="pre">SampleAssemblyFromXml</span></tt> component by <tt class="docutils literal"><span class="pre">PowderN</span></tt> and see if results
+are consistent.</p>
+<p><strong>ssd2.pml</strong></p>
+<div class="highlight-python"><div class="highlight"><pre>&lt;?xml version=&quot;1.0&quot;?&gt;
+
+&lt;!-- [Source_simple] -&gt; [PowderN] -&gt; [NDMonitor(x,y,t)] --&gt;
+
+&lt;!DOCTYPE inventory&gt;
+
+&lt;inventory&gt;
+
+    &lt;component name=&quot;ssd2&quot;&gt;
+        &lt;property name=&quot;sequence&quot;&gt;[&#39;source&#39;, &#39;sample&#39;, &#39;detector&#39;]&lt;/property&gt;
+        &lt;facility name=&quot;source&quot;&gt;sources/Source_simple&lt;/facility&gt;
+        &lt;facility name=&quot;sample&quot;&gt;samples/SampleAssemblyFromXml&lt;/facility&gt;
+        &lt;facility name=&quot;detector&quot;&gt;monitors/NDMonitor(x,y,t)&lt;/facility&gt;
+
+        &lt;property name=&quot;dump-instrument&quot;&gt;False&lt;/property&gt;
+        &lt;property name=&quot;overwrite-datafiles&quot;&gt;on&lt;/property&gt;
+        &lt;property name=&quot;launcher&quot;&gt;mpirun&lt;/property&gt;
+        &lt;property name=&quot;output-dir&quot;&gt;out&lt;/property&gt;
+        &lt;property name=&quot;ncount&quot;&gt;100000&lt;/property&gt;
+        &lt;property name=&quot;buffer_size&quot;&gt;10000&lt;/property&gt;
+        &lt;property name=&quot;multiple-scattering&quot;&gt;False&lt;/property&gt;
+        &lt;property name=&quot;mode&quot;&gt;worker&lt;/property&gt;
+        &lt;facility name=&quot;geometer&quot;&gt;geometer&lt;/facility&gt;
+        &lt;property name=&quot;dump-registry&quot;&gt;False&lt;/property&gt;
+
+        &lt;component name=&quot;source&quot;&gt;
+            &lt;property name=&quot;yh&quot;&gt;0.01&lt;/property&gt;
+            &lt;property name=&quot;dist&quot;&gt;10.0&lt;/property&gt;
+            &lt;property name=&quot;width&quot;&gt;0.0&lt;/property&gt;
+            &lt;property name=&quot;dE&quot;&gt;70.0&lt;/property&gt;
+            &lt;property name=&quot;gauss&quot;&gt;0.0&lt;/property&gt;
+            &lt;property name=&quot;height&quot;&gt;0.0&lt;/property&gt;
+            &lt;property name=&quot;flux&quot;&gt;1.0&lt;/property&gt;
+            &lt;property name=&quot;dLambda&quot;&gt;0.0&lt;/property&gt;
+            &lt;property name=&quot;radius&quot;&gt;0.05&lt;/property&gt;
+            &lt;property name=&quot;Lambda0&quot;&gt;0.0&lt;/property&gt;
+            &lt;property name=&quot;E0&quot;&gt;100.0&lt;/property&gt;
+            &lt;property name=&quot;xw&quot;&gt;0.01&lt;/property&gt;
+        &lt;/component&gt;
+
+    &lt;component name=&quot;sample&quot;&gt;
+        &lt;property name=&quot;reflections&quot;&gt;Al.laz&lt;/property&gt;
+        &lt;property name=&quot;xwidth&quot;&gt;0.06&lt;/property&gt;
+        &lt;property name=&quot;yheight&quot;&gt;0.1&lt;/property&gt;
+        &lt;property name=&quot;zthick&quot;&gt;0.01&lt;/property&gt;
+        &lt;property name=&quot;DW&quot;&gt;1&lt;/property&gt;
+        &lt;property name=&quot;Delta_d&quot;&gt;1e-5&lt;/property&gt;
+        &lt;property name=&quot;frac&quot;&gt;0&lt;/property&gt;
+        &lt;property name=&quot;tfrac&quot;&gt;0&lt;/property&gt;
+    &lt;/component&gt;
+
+        &lt;component name=&quot;detector&quot;&gt;
+            &lt;property name=&quot;title&quot;&gt;ixyt&lt;/property&gt;
+            &lt;property name=&quot;filename&quot;&gt;ixyt.h5&lt;/property&gt;
+            &lt;property name=&quot;tmin&quot;&gt;0.0&lt;/property&gt;
+            &lt;property name=&quot;tmax&quot;&gt;0.002&lt;/property&gt;
+            &lt;property name=&quot;nt&quot;&gt;100&lt;/property&gt;
+            &lt;property name=&quot;nx&quot;&gt;200&lt;/property&gt;
+            &lt;property name=&quot;ny&quot;&gt;200&lt;/property&gt;
+            &lt;property name=&quot;xmax&quot;&gt;1.0&lt;/property&gt;
+            &lt;property name=&quot;xmin&quot;&gt;-1.0&lt;/property&gt;
+            &lt;property name=&quot;ymin&quot;&gt;-1.0&lt;/property&gt;
+            &lt;property name=&quot;ymax&quot;&gt;1.0&lt;/property&gt;
+        &lt;/component&gt;
+
+        &lt;component name=&quot;geometer&quot;&gt;
+            &lt;property name=&quot;source&quot;&gt;((0, 0, 0), (0, 0, 0))&lt;/property&gt;
+            &lt;property name=&quot;sample&quot;&gt;((0, 0, 10), (0, 0, 0))&lt;/property&gt;
+            &lt;property name=&quot;detector&quot;&gt;((0, 0, 11), (0, 0, 0))&lt;/property&gt;
+        &lt;/component&gt;
+
+    &lt;/component&gt;
+
+&lt;/inventory&gt;
+</pre></div>
+</div>
+<p>When configuring <tt class="docutils literal"><span class="pre">PowderN</span></tt> component we intentionally excluded incoherently
+scattered <tt class="docutils literal"><span class="pre">frac</span></tt> and transmitted <tt class="docutils literal"><span class="pre">tfrac</span></tt> neutrons.</p>
+<div class="highlight-python"><div class="highlight"><pre>&lt;component name=&quot;sample&quot;&gt;
+    ...
+    &lt;property name=&quot;frac&quot;&gt;0&lt;/property&gt;
+    &lt;property name=&quot;tfrac&quot;&gt;0&lt;/property&gt;
+&lt;/component&gt;
+</pre></div>
+</div>
+<p>We slightly update application script ...</p>
+<p><strong>ssd2</strong></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
+
+<span class="kn">import</span> <span class="nn">mcvine</span>
+<span class="kn">import</span> <span class="nn">mccomponents.sample.diffraction.xml</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="kn">from</span> <span class="nn">mcvine.applications.InstrumentBuilder</span> <span class="kn">import</span> <span class="n">build</span>
+    <span class="n">components</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;source&#39;</span><span class="p">,</span> <span class="s">&#39;sample&#39;</span><span class="p">,</span> <span class="s">&#39;detector&#39;</span><span class="p">]</span>
+    <span class="n">App</span> <span class="o">=</span> <span class="n">build</span><span class="p">(</span><span class="n">components</span><span class="p">)</span>
+    <span class="n">app</span> <span class="o">=</span> <span class="n">App</span><span class="p">(</span><span class="s">&#39;ssd2&#39;</span><span class="p">)</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+    <span class="k">return</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>and run again the experiment simulation.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python ssd2
+</pre></div>
+</div>
+<p>As you can see we get a very similar picture to what we obtained in the first section
+using  <tt class="docutils literal"><span class="pre">SimplePowderDiffractionKernel</span></tt>. Results for <tt class="docutils literal"><span class="pre">SimplePowderDiffractionKernel</span></tt>
+and <tt class="docutils literal"><span class="pre">PowderN</span></tt> component look consistent.</p>
+<div class="figure">
+<a class="reference internal image-reference" href="_images/powderN.png"><img alt="_images/powderN.png" src="_images/powderN.png" style="width: 600px;" /></a>
+<p class="caption"><em>Fig. 2 Diffraction with PowderN component</em></p>
+</div>
+</div>
+<div class="section" id="wave-vector-sensitive-monitor">
+<h2>Wave Vector Sensitive Monitor<a class="headerlink" href="#wave-vector-sensitive-monitor" title="Permalink to this headline">¶</a></h2>
+<p>Let&#8217;s now change our initial instrument configuration by replacing <tt class="docutils literal"><span class="pre">NDMonitor(x,y,t)</span></tt>
+by <tt class="docutils literal"><span class="pre">NDMonitor(q)</span></tt> as shown below:</p>
+<div class="highlight-python"><div class="highlight"><pre>[Source_simple] -&gt; [PowderDiffractionKernel] -&gt; [NDMonitor(q)]
+</pre></div>
+</div>
+<p>The monitor <tt class="docutils literal"><span class="pre">NDMonitor(q)</span></tt> is sensitive to the wave vector. Our new configuration
+files will look like:</p>
+<p><strong>ssd3.pml</strong></p>
+<div class="highlight-python"><div class="highlight"><pre>&lt;?xml version=&quot;1.0&quot;?&gt;
+
+&lt;!-- [Source_simple] -&gt; [PowderDiffractionKernel] -&gt; [NDMonitor(q)] --&gt;
+
+&lt;!DOCTYPE inventory&gt;
+
+&lt;inventory&gt;
+
+    &lt;component name=&quot;ssd3&quot;&gt;
+        &lt;property name=&quot;sequence&quot;&gt;[&#39;source&#39;, &#39;sample&#39;, &#39;detector&#39;]&lt;/property&gt;
+        &lt;facility name=&quot;source&quot;&gt;sources/Source_simple&lt;/facility&gt;
+        &lt;facility name=&quot;sample&quot;&gt;samples/SampleAssemblyFromXml&lt;/facility&gt;
+        &lt;facility name=&quot;detector&quot;&gt;monitors/NDMonitor(q)&lt;/facility&gt;
+
+        &lt;property name=&quot;dump-instrument&quot;&gt;False&lt;/property&gt;
+        &lt;property name=&quot;overwrite-datafiles&quot;&gt;on&lt;/property&gt;
+        &lt;property name=&quot;launcher&quot;&gt;mpirun&lt;/property&gt;
+        &lt;property name=&quot;output-dir&quot;&gt;out&lt;/property&gt;
+        &lt;property name=&quot;ncount&quot;&gt;100000&lt;/property&gt;
+        &lt;property name=&quot;buffer_size&quot;&gt;10000&lt;/property&gt;
+        &lt;property name=&quot;multiple-scattering&quot;&gt;False&lt;/property&gt;
+        &lt;property name=&quot;mode&quot;&gt;worker&lt;/property&gt;
+        &lt;facility name=&quot;geometer&quot;&gt;geometer&lt;/facility&gt;
+        &lt;property name=&quot;dump-registry&quot;&gt;False&lt;/property&gt;
+
+        &lt;component name=&quot;source&quot;&gt;
+            &lt;property name=&quot;yh&quot;&gt;0.01&lt;/property&gt;
+            &lt;property name=&quot;dist&quot;&gt;10.0&lt;/property&gt;
+            &lt;property name=&quot;width&quot;&gt;0.0&lt;/property&gt;
+            &lt;property name=&quot;dE&quot;&gt;70.0&lt;/property&gt;
+            &lt;property name=&quot;gauss&quot;&gt;0.0&lt;/property&gt;
+            &lt;property name=&quot;height&quot;&gt;0.0&lt;/property&gt;
+            &lt;property name=&quot;flux&quot;&gt;1.0&lt;/property&gt;
+            &lt;property name=&quot;dLambda&quot;&gt;0.0&lt;/property&gt;
+            &lt;property name=&quot;radius&quot;&gt;0.05&lt;/property&gt;
+            &lt;property name=&quot;Lambda0&quot;&gt;0.0&lt;/property&gt;
+            &lt;property name=&quot;E0&quot;&gt;100.0&lt;/property&gt;
+            &lt;property name=&quot;xw&quot;&gt;0.01&lt;/property&gt;
+        &lt;/component&gt;
+
+        &lt;component name=&quot;sample&quot;&gt;
+            &lt;property name=&quot;xml&quot;&gt;Al/sampleassembly.xml&lt;/property&gt;
+        &lt;/component&gt;
+
+        &lt;component name=&quot;detector&quot;&gt;
+            &lt;property name=&quot;title&quot;&gt;iq&lt;/property&gt;
+            &lt;property name=&quot;filename&quot;&gt;iq.h5&lt;/property&gt;
+            &lt;property name=&quot;xwidth&quot;&gt;0.4&lt;/property&gt;
+            &lt;property name=&quot;yheight&quot;&gt;0.4&lt;/property&gt;
+            &lt;property name=&quot;qmin&quot;&gt;2.0&lt;/property&gt;
+            &lt;property name=&quot;qmax&quot;&gt;8.0&lt;/property&gt;
+            &lt;property name=&quot;nq&quot;&gt;200&lt;/property&gt;
+        &lt;/component&gt;
+
+        &lt;component name=&quot;geometer&quot;&gt;
+            &lt;property name=&quot;source&quot;&gt;((0, 0, 0), (0, 0, 0))&lt;/property&gt;
+            &lt;property name=&quot;sample&quot;&gt;((0, 0, 10), (0, 0, 0))&lt;/property&gt;
+            &lt;property name=&quot;detector&quot;&gt;((0, 0, 11), (0, 0, 0))&lt;/property&gt;
+        &lt;/component&gt;
+
+    &lt;/component&gt;
+
+&lt;/inventory&gt;
+</pre></div>
+</div>
+<p><strong>ssd3</strong></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
+
+<span class="kn">import</span> <span class="nn">mcvine</span>
+<span class="kn">import</span> <span class="nn">mccomponents.sample.diffraction.xml</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="kn">from</span> <span class="nn">mcvine.applications.InstrumentBuilder</span> <span class="kn">import</span> <span class="n">build</span>
+    <span class="n">components</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;source&#39;</span><span class="p">,</span> <span class="s">&#39;sample&#39;</span><span class="p">,</span> <span class="s">&#39;detector&#39;</span><span class="p">]</span>
+    <span class="n">App</span> <span class="o">=</span> <span class="n">build</span><span class="p">(</span><span class="n">components</span><span class="p">)</span>
+    <span class="n">app</span> <span class="o">=</span> <span class="n">App</span><span class="p">(</span><span class="s">&#39;ssd3&#39;</span><span class="p">)</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+    <span class="k">return</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Running experiment simulation</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python ssd3
+$ PlotHist.py out/iq.h5
+</pre></div>
+</div>
+<p>we get the plot I(q), where wave vector (q) has units 1/AA and intensity (I)
+has arbitrary units:</p>
+<div class="figure">
+<a class="reference internal image-reference" href="_images/ndmonitor-q.png"><img alt="_images/ndmonitor-q.png" src="_images/ndmonitor-q.png" style="width: 600px;" /></a>
+<p class="caption"><em>Fig. 3 Diffraction with SimplePowderDiffractionKernel and NDMonitor(q)</em></p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="index.html">home</a>|&nbsp;</li>
+        <li><a href="search.html">search</a>|&nbsp;</li>
+        <li><a href="Documentation.html">MCViNE documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2006-2015, Jiao Lin, Michael Aivazis, and Brent Fultz.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

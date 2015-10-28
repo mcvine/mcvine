@@ -1,0 +1,183 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Frequently Asked Questions &mdash; mcvine 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="mcvine 1.0 documentation" href="index.html" /> 
+  </head>
+  <body>
+<div class="header">  
+<table><tr>
+<!--
+<td>
+<div style="text-align: left; padding: 7px 7px 10px 10px">
+<a href="index.html"><img src="_static/mcvine.png" border="0" alt="py4sci"
+  height="80"/></a>
+</div>
+</td>
+-->
+<td style="padding: 0pt 0pt 1em 1em;">
+<h1 class="banner" style="color:white; font-size:2em; text-align:left">MCViNE</h1>
+<h2 class="banner-note" style="color:lightgrey; font-size:1.5em; margin:0">Monte Carlo VIrtual Neutron Experiment</h2>
+</td>
+</tr>
+</table>
+</div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="index.html">home</a>|&nbsp;</li>
+        <li><a href="search.html">search</a>|&nbsp;</li>
+        <li><a href="Documentation.html">MCViNE documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Frequently Asked Questions</a><ul>
+<li><a class="reference internal" href="#how-do-i">How do I ...</a></li>
+<li><a class="reference internal" href="#why-do-i">Why do I...</a></li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/FAQ.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="frequently-asked-questions">
+<span id="faq"></span><h1>Frequently Asked Questions<a class="headerlink" href="#frequently-asked-questions" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="how-do-i">
+<h2>How do I ...<a class="headerlink" href="#how-do-i" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt>... Use a mcstas component that I wrote myself?</dt>
+<dd>An automatic tools is available to wrap a mcstas component to a mcvine component.
+Please take a look at <a class="reference internal" href="Components.html#user-defined-mcstas-components"><em>User-defined mcstas components</em></a>.</dd>
+<dt>... Check whether parallel mcvine simulation is available for my system?</dt>
+<dd><p class="first">Run the following command:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ mpirun -np 2 python -c &quot;import mpi; print mpi.world().rank&quot;
+</pre></div>
+</div>
+<p class="last">If you see two number &#8220;0&#8221; and &#8220;1&#8221; (random sequence), parallel mcvine is available.</p>
+</dd>
+<dt>... Get help on the instrument simulation application I have created?</dt>
+<dd><p class="first">Say if your application is mysimapp.py, you can do:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ mysimapp.py -h
+</pre></div>
+</div>
+<p class="last">to see what this app is about, and the available options.
+For help on common simulation application options, please refer
+to <a class="reference internal" href="Fundamentals.html#fundamentals-instrument"><em>Instrument</em></a>; for a tutorial, see
+<a class="reference internal" href="Tutorials-basics.html#create-sim-app"><em>Create and run your instrument simulation application</em></a>.</p>
+</dd>
+<dt>... What does the intensities at monitors mean?</dt>
+<dd>Please refer to <a class="reference internal" href="Fundamentals.html#fundamentals-simulated-intensities"><em>Simulated intensities</em></a></dd>
+</dl>
+</div>
+<div class="section" id="why-do-i">
+<h2>Why do I...<a class="headerlink" href="#why-do-i" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt>... get nothing from my simulation?</dt>
+<dd><p class="first">You may want to check if your configuration is done correctly.
+A good thing to check is if the components are assign correctly:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ mysimapp.py --help-persistence
+</pre></div>
+</div>
+<p class="last">It prints out looking-up of all components (not only neutron components, but also
+other components that help make the simulation application possible,
+such as geometer).
+You may see hints of why some components are not really loaded successfully.</p>
+</dd>
+<dt>... get MemoryError?</dt>
+<dd><p class="first">You may need to reduce buffer_size. It determines how many neutrons are
+kept in the memory. To set buffer_size to, say, one million neutrons, do:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="o">--</span><span class="n">buffer_size</span><span class="o">=</span><span class="mi">1000000</span>
+</pre></div>
+</div>
+<p class="last">Optimal buffer_size depends on the memory for the computing nodes.
+For a machine of 1G memory, the maximum buffer_size would be
+1e9/100 = 1e7 neutrons.
+If, however, you are running parallely on a machine of 10 cpus and 2G
+ram, the maximum buffer_size would be 2e9/100/10 = 2e6.
+It also depends on factors such as
+whether the option &#8220;multiple-scattering&#8221; is turned on.
+If &#8220;multiple-scattering&#8221; is on, it is safer to divide the number
+you got by another factor of 10.</p>
+</dd>
+</dl>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="index.html">home</a>|&nbsp;</li>
+        <li><a href="search.html">search</a>|&nbsp;</li>
+        <li><a href="Documentation.html">MCViNE documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2006-2015, Jiao Lin, Michael Aivazis, and Brent Fultz.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>
