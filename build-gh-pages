@@ -1,13 +1,19 @@
 #!/usr/bin/env bash
 
-GH_PAGES_SRC="docs/sphinx build-gh-pages"
+MSG=$@
+
+SPHINX_SRC=docs/sphinx
+GH_PAGES_SRC="docs build-gh-pages"
 
 git checkout gh-pages
-rm -rf build _sources _static
+# rm -rf  _sources _static
 git checkout master $GH_PAGES_SRC
 git reset HEAD
+cd $SPHINX_SRC
 make html
-mv -fv build/html/* ./
-# rm -rf $GH_PAGES_SRC build
-# git add -A
+mv -fv $SPHINX_SRC/_build/html/* ./
+rm -rf $GH_PAGES_SRC
+git add -A
 # git ci -m "Generated gh-pages for `git log master -1 --pretty=short --abbrev-commit`" && git push origin gh-pages ; git checkout master
+git commit -m "$MSG" && git push origin gh-pages
+git checkout master
