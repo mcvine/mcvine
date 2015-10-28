@@ -11,6 +11,7 @@ git checkout master $GH_PAGES_SRC # get sphinx source
 git reset HEAD
 cd $SPHINX_SRC # build
 make html
+cd -  # go back to root of the repo
 mv -fv $SPHINX_SRC/_build/html/* ./  # mv new html files to root
 rm -rf $GH_PAGES_SRC  # remove sphinx source
 git add -A  # add new files
