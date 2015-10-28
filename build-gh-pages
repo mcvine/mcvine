@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+# Usage: ./build-gh-pages <commit-msg>
+# Example: ./build-gh-pages update static html pages at mcvine github site
 
 MSG=$@
 
