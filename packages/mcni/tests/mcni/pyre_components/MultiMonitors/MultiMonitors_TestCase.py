@@ -45,7 +45,7 @@ class TestCase(unittest.TestCase):
         "two monitors facing the incident beam shoulder by shoulder"
         
         cmd = '''./testapp1.py \
- --ncount=1e5 \
+ --ncount=1e6 \
  --source=Source_simple \
  --source.width=0.01 \
  --source.height=0.01 \
@@ -82,7 +82,7 @@ class TestCase(unittest.TestCase):
  --journal.debug.monitor \
 '''
         execute(cmd)
-        time.sleep(5)
+        time.sleep(3)
 
         # the flux from source is 1/(s*cm**2*st)
         # each round the neutron intensity is
