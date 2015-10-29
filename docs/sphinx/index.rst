@@ -26,7 +26,7 @@ and
 
 At this point, MCViNE is under the git version control system,
 and MCViNE source code is available for online-browsing at 
-`the github site <https://github.com/heetuu/MCViNE>`_.
+`the github site <https://github.com/mcvine/mcvine>`_.
 
 MCViNE is currently deployed on the analysis computing clusters at the
 Spallation Neutron Source (SNS).

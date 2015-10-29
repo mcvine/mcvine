@@ -5,7 +5,7 @@ Organization
 ------------
 
 * mcvine-releaser:
-  - github url: https://github.com/heetuu/mcvine-releaser
+  - github url: https://github.com/mcvine/releaser
   - place where dependencies are gathered, sources are check out,
     products are built, etc.
   - sub directories:
@@ -55,7 +55,7 @@ Create dev directory::
 
 Get releaser::
 
- $ git clone git@githut.com:heetuu/mcvine-releaser mcvine
+ $ git clone git@githut.com:mcvine/releaser mcvine
 
 Get source::
 
@@ -92,7 +92,7 @@ Continuous integration
 
 This is done by using buildbot.
 The source code for buildbot configrations of MCViNE
-is at https://github.com/heetuu/mcvine-buildbot.
+is at https://github.com/mcvine/buildbot.
 The web interface is at http://buildbot.danse.us:8010/.
 
 
@@ -100,7 +100,7 @@ Deployment testing
 ------------------
 
 This is done by using docker.
-Source code: https://github.com/heetuu/mcvine-releaser/tree/master/docker.
+Source code: https://github.com/mcvine/releaser/tree/master/docker.
 Related: :ref:`installation`.
 
 
@@ -267,7 +267,7 @@ Tests
 -----
 
 Some tests may need data files. 
-These data files are "MCViNE resources": https://github.com/heetuu/mcvine-resources.
+These data files are "MCViNE resources": https://github.com/mcvine/resources.
 The directory of the MCViNE resources should be assigned to
 env var MCVINE_RESOURCES.
 

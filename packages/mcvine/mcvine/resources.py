@@ -17,7 +17,7 @@ variable MCVINE_RESOURCES to its root path.
 
 If it is not available, please obtain it by
 
- $ git clone https://github.com/heetuu/mcvine-resources.git
+ $ git clone https://github.com/mcvine/resources.git mcvine-resources
 
 , and then set MCVINE_RESOURCES to the path of the new
 directory.

@@ -16,7 +16,7 @@ Build mcvine from source
    `Docker <https://www.docker.com/>`_ is used to test
    installation of MCViNE on various Linux systems.
    Related Dockerfiles can be found in
-   https://github.com/heetuu/mcvine-releaser/tree/master/docker,
+   https://github.com/mcvine/releaser/tree/master/docker,
    and they can be used as hints for installing dependencies
    and then building mcvine.
 
@@ -40,7 +40,7 @@ From github repository
 """"""""""""""""""""""
 Check out MCViNE by ::
 
- $ git clone https://github.com/heetuu/mcvine-releaser mcvine
+ $ git clone https://github.com/mcvine/releaser mcvine
 
 and change into the checked-out directory::
 

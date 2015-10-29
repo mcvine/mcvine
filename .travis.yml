@@ -16,8 +16,8 @@ matrix:
     
 before_script:
   - docker pull linjiao/mcvine-ubuntu-deps:12.04
-  - git clone https://github.com/heetuu/mcvine-releaser.git
-  - git clone https://github.com/heetuu/mcvine-resources.git
+  - git clone https://github.com/mcvine/releaser.git mcvine-releaser
+  - git clone https://github.com/mcvine/resources.git mcvine-resources
 
 script:
   - docker run -v `readlink -f mcvine-releaser`:/mcvine-releaser -v `readlink -f mcvine-resources`:/mcvine-resources -e "BOOSTPYTHON_DIR=/usr" -e "BOOSTPYTHON_INCDIR=/usr/include" -e "BOOSTPYTHON_LIBDIR=/usr/lib/x86_64-linux-gnu" -e "MCVINE_RESOURCES=/mcvine-resources" -w /mcvine-releaser linjiao/mcvine-ubuntu-deps:12.04  /bin/bash -c "python build.py && python test.py --skip-long-tests"
