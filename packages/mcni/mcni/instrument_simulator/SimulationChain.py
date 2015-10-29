@@ -12,7 +12,7 @@
 #
 
 
-from dsm.Composite import Composite 
+from danse.ins.dsm.Composite import Composite 
 class SimulationChain(Composite):
 
     sockets = {

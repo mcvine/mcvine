@@ -12,7 +12,7 @@
 #
 
 
-from dsm.Connectable import Connectable 
+from danse.ins.dsm.Connectable import Connectable 
 class SimulationNode(Connectable):
 
     sockets = {
