@@ -90,7 +90,13 @@ NeutronEventBuffer.from_npyarr = NEB_fromnpyarr
 
 def cevents_from_npyarr(npyarr):
     '''convert a numpy array to a boost-python instance of Neutron::cEvent pointer'''
-    from numpyext import getdataptr
+    try:
+        from danse.ins.numpyext import getdataptr
+    except ImportError:
+        from numpyext import getdataptr
+        import warnings
+        warnings.warn("Using old numpyext. Should use danse.ins.numpyext")
+    
     ptr = getdataptr( npyarr )
     from bpext import wrap_ptr
     import mcni.mcni

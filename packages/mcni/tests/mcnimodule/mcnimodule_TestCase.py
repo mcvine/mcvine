@@ -20,18 +20,23 @@ debug = journal.debug( "mcnimodule_TestCase" )
 warning = journal.warning( "mcnimodule_TestCase" )
 
 
-import mcni
+import mcni, mcni.mcni
+import numpy
+try:
+    from danse.ins.numpyext import getdataptr
+except ImportError:
+    from numpyext import getdataptr
+    import warnings
+    warnings.warn("Using old numpyext. Should use danse.ins.numpyext")
+from bpext import wrap_ptr
+
 
 class mcnimodule_TestCase(unittest.TestCase):
 
     def test1(self):
         'numpy array --> spin'
-        import numpy
         arr = numpy.array( [1., 2.] )
-        from numpyext import getdataptr
         ptr = getdataptr( arr )
-        from bpext import wrap_ptr
-        import mcni.mcni
         spin = wrap_ptr( ptr, 'NeutronSpin' )
         self.assertEqual( spin.s1, 1 )
         self.assertEqual( spin.s2, 2 )
@@ -39,12 +44,8 @@ class mcnimodule_TestCase(unittest.TestCase):
 
     def test2(self):
         'numpy array --> cevent'
-        import numpy
         arr = numpy.arange( 0, 10, 1. )
-        from numpyext import getdataptr
         ptr = getdataptr( arr )
-        from bpext import wrap_ptr
-        import mcni.mcni
         event = wrap_ptr( ptr, 'cNeutronEvent' )
         self.assertEqual( event.x, 0 )
         self.assertEqual( event.y, 1 )
@@ -53,12 +54,8 @@ class mcnimodule_TestCase(unittest.TestCase):
 
     def test3(self):
         'numpy array --> event buffer'
-        import numpy
         arr = numpy.arange( 0, 20, 1. )
-        from numpyext import getdataptr
         ptr = getdataptr( arr )
-        from bpext import wrap_ptr
-        import mcni.mcni
         cevents = wrap_ptr( ptr, 'cNeutronEvent' )
 
         events = mcni.neutron_buffer(2)

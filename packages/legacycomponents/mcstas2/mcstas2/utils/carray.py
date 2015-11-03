@@ -15,7 +15,12 @@
 
 def pycptr2npyarr( vptr, typename, size ):
     type = name2npytype( typename )
-    from numpyext import wrapdataptr
+    try:
+        from danse.ins.numpyext import wrapdataptr
+    except ImportError:
+        from numpyext import wrapdataptr
+        import warnings
+        warnings.warn("Using old numpyext. Should use danse.ins.numpyext")
     return wrapdataptr( vptr, type, size )
 
 

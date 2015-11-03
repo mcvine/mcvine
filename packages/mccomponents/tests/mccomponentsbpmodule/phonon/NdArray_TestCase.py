@@ -24,16 +24,23 @@ import mcni
 from mccomposite import mccompositebp 
 from mccomponents import mccomponentsbp
 
+import numpy
+try:
+    from danse.ins import numpyext
+except ImportError:
+    import numpyext
+    import warnings
+    warnings.warn("Using old numpyext. Should use danse.ins.numpyext")
+import bpext
+
+
 class TestCase(unittest.TestCase):
 
     def test(self):
-        import numpyext
-        import numpy
         a = numpy.arange(12, dtype = numpy.double)
         a.shape = 3,4
         ptr = numpyext.getdataptr( a )
         
-        import bpext
         wp = bpext.wrap_native_ptr( ptr )
         
         shape = mccomponentsbp.vector_uint( 0 )

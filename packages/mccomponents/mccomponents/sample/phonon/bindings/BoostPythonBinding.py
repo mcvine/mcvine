@@ -22,7 +22,13 @@ import mcni.mcnibp as b2
 
 
 import numpy
-
+try:
+    from danse.ins import numpyext
+except ImportError:
+    import numpyext
+    import warnings
+    warnings.warn("Using old numpyext. Should use danse.ins.numpyext")
+import bpext
 
 
 class New:
@@ -34,10 +40,8 @@ class New:
         '''
         assert npyarr.dtype == numpy.double, "only work for double array for this time"
         
-        import numpyext
         ptr = numpyext.getdataptr( npyarr )
         
-        import bpext
         wp = bpext.wrap_native_ptr( ptr )
         
         shape = b.vector_uint( 0 )
