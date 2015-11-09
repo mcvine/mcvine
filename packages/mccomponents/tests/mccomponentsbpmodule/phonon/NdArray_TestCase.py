@@ -31,7 +31,12 @@ except ImportError:
     import numpyext
     import warnings
     warnings.warn("Using old numpyext. Should use danse.ins.numpyext")
-import bpext
+try:
+    from danse.ins import bpext
+except ImportError:
+    import bpext
+    import warnings
+    warnings.warn("Using old bpext. Should use danse.ins.bpext")
 
 
 class TestCase(unittest.TestCase):

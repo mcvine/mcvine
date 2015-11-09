@@ -18,7 +18,7 @@ MODULE = mcni
 include std-pythonmodule.def
 include local.def
 
-PROJ_CXX_SRCLIB = -lboost_python -L$(BOOSTPYTHON_LIBDIR) -lmcni -lbpext -ljournal
+PROJ_CXX_SRCLIB = -lboost_python -L$(BOOSTPYTHON_LIBDIR) -lmcni -ldanse_ins_bpext -L$(DANSE_DIR)/lib64 -L$(DANSE_DIR)/lib -ljournal
 
 PROJ_SRCS = \
 	bindings.cc \
