@@ -21,6 +21,13 @@ adapted from VULCAN/applications/peak_generator.py
 from math import pi as PI
 from ..powder import Peak
 import re
+# import matter package
+try:
+    from danse.ins import matter
+except ImportError:
+    import matter
+    import warnings
+    warnings.warn("Using old matter package. Should use danse.ins.matter")
 
 
 COMMENT = "(#[^\n]*\n)"  # Python comment
@@ -130,7 +137,6 @@ def getLattice(lines):
          (float(par[1]), float(par[2]), float(par[3]),
           float(par[4]), float(par[5]), float(par[6]))
     # lattice
-    import matter
     lat = matter.Lattice(_a, _b, _c, _alpha, _beta, _gamma)
     return lat
 

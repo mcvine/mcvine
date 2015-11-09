@@ -95,11 +95,18 @@ def makeKernel():
         )
 
 
+# import matter package
+try:
+    from danse.ins import matter
+except ImportError:
+    import matter
+    import warnings
+    warnings.warn("Using old matter package. Should use danse.ins.matter")
 def makeMatter():
-    from matter import Structure, Atom, Lattice
-    atoms = [Atom('Fe', xyz=(0,0,0)), Atom('Al', xyz=(0.5,0.5,0.5))]
-    lattice = Lattice(base=((1.,0,0), (0,1.,0), (0,0,1.)))
-    return Structure(atoms, lattice)
+    atoms = [matter.Atom('Fe', xyz=(0,0,0)), 
+             matter.Atom('Al', xyz=(0.5,0.5,0.5))]
+    lattice = matter.Lattice(base=((1.,0,0), (0,1.,0), (0,0,1.)))
+    return matter.Structure(atoms, lattice)
 
 
 def mkDOS():

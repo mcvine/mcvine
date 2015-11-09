@@ -107,13 +107,19 @@ def makeScatterer():
     return scattererEngine(scatterer)
 
 
+# import matter package
+try:
+    from danse.ins import matter
+except ImportError:
+    import matter
+    import warnings
+    warnings.warn("Using old matter package. Should use danse.ins.matter")
 def makeUnitcell():
-    from matter import Atom, Structure, Lattice
-    atoms = [Atom('Ni')]
+    atoms = [matter.Atom('Ni')]
     # positions = [(0,0,0)]
     cellvectors = [ (3.57,0,0), (0,3.57,0), (0,0,3.57) ]
-    lattice = Lattice(base=cellvectors)
-    return Structure(lattice=lattice, atoms=atoms)
+    lattice = matter.Lattice(base=cellvectors)
+    return matter.Structure(lattice=lattice, atoms=atoms)
 
 
 
