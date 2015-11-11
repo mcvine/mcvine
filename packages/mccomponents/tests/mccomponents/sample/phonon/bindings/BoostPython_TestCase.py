@@ -157,7 +157,7 @@ class TestCase(unittest.TestCase):
     
     
     def test6(self):
-        import matter
+        from danse.ins import matter
         atom = matter.Atom('H')
         atomic_scatterer = bp.atomicscatterer_fromSite(atom)
         self.assert_(atomic_scatterer is not None)
