@@ -84,7 +84,13 @@ def wrap( componentfilename, componentcategory,
     # build binding
     from mcstas2.release import mcvinedir as export_root
     export_include = os.path.join(export_root, 'include')
+    danse_dir = os.environ.get('DANSE_DIR') or ''
+    danse_ins_include = os.path.join(danse_dir, 'include')
     export_lib = os.path.join(export_root, 'lib')
+    danse_ins_libs = [
+        os.path.join(danse_dir, 'lib64'),
+        os.path.join(danse_dir, 'lib'),
+        ]
     from binding_builder import binding as bindingdataobject
     bindingobj = bindingdataobject(
         python_package = pythonpackage, binding_module = bindingname,
@@ -92,8 +98,8 @@ def wrap( componentfilename, componentcategory,
         c_sources = bindingsources['c'] + [cc],
         python_sources = bindingsources['python'],
         c_libs = ['mcstas2', 'mcstas2_share', 'mcni' ] + binding.libstolink,
-        c_libdirs = [export_lib],
-        c_includes = [export_include],
+        c_libdirs = [export_lib] + danse_ins_libs,
+        c_includes = [export_include, danse_ins_include],
         c_defines = binding.define_macros,
         dependencies = [ bindingtype, 'caltech-config', 'mcstas2', 'mcni' ],
         )
