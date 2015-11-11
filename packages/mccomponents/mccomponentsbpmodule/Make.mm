@@ -21,7 +21,8 @@ include local.def
 
 PROJ_CXX_SRCLIB = -lboost_python  -L$(BOOSTPYTHON_LIBDIR) \
 	-ljournal -lmccomposite -lmcni -lmccomponents -lfparser \
-	 -lgsl -lgslcblas -L$(GSL_LIBDIR) \
+	-L$(DANSE_DIR)/lib -L$(DANSE_DIR)/lib64 \
+	-lgsl -lgslcblas -L$(GSL_LIBDIR) \
 
 
 PROJ_SRCS = \

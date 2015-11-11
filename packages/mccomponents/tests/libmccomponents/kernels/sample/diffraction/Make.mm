@@ -22,12 +22,15 @@ PROJ_CPPTESTS = test_SimplePowderDiffractionKernel \
 
 
 PROJ_TESTS = $(PROJ_PYTESTS) $(PROJ_CPPTESTS)
+
+PROJ_CXX_INCLUDES += $(DANSE_DIR)/include $(DANSE_DIR)/include/danse/ins
 PROJ_LIBRARIES = -L$(BLD_LIBDIR) \
 	-lmccomponents -lmccomposite -lmcni \
 	-lfparser \
 	-lgsl -lgslcblas -L$(GSL_LIBDIR) \
-	-ljournal
-PROJ_CXX_DEFINES += DEEPDEBUG
+	-ljournal \
+	-L$(DANSE_DIR)/lib -L$(DANSE_DIR)/lib64
+# PROJ_CXX_DEFINES += DEEPDEBUG
 
 
 # directory structure

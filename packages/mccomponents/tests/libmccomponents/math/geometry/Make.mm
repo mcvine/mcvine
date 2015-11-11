@@ -19,8 +19,13 @@ PROJ_CLEAN += $(PROJ_CPPTESTS)
 PROJ_PYTESTS =  alltests.py
 PROJ_CPPTESTS = test_choose_direction
 PROJ_TESTS = $(PROJ_PYTESTS) $(PROJ_CPPTESTS)
-PROJ_LIBRARIES = -L$(BLD_LIBDIR) -lmccomponents -lmccomposite -lmcni -ljournal -lfparser -lgsl -lgslcblas
-
+PROJ_CXX_INCLUDES += $(DANSE_DIR)/include $(DANSE_DIR)/include/danse/ins
+PROJ_LIBRARIES = -L$(BLD_LIBDIR) \
+	-lmccomponents -lmccomposite -lmcni \
+	-lfparser \
+	-lgsl -lgslcblas -L$(GSL_LIBDIR) \
+	-ljournal \
+	-L$(DANSE_DIR)/lib -L$(DANSE_DIR)/lib64
 
 #--------------------------------------------------------------------------
 #
