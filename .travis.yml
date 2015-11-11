@@ -15,7 +15,7 @@ matrix:
       compiler: gcc
     
 before_script:
-  - docker pull linjiao/mcvine-ubuntu-deps:12.04
+  - docker pull linjiao/mcvine-ubuntu-deps:14.04
   - git clone https://github.com/mcvine/releaser.git mcvine-releaser
   - git clone https://github.com/mcvine/resources.git mcvine-resources
 
