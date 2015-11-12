@@ -20,6 +20,14 @@ import os
 import re
 import math
 from time import localtime, strftime
+# import matter package
+try:
+    from danse.ins import matter
+except ImportError:
+    import matter
+    import warnings
+    warnings.warn("Using old matter package. Should use danse.ins.matter")
+
 
 COMMENT = "(#[^\n]*\n)"  # Python comment
 PI      = 3.14159265
@@ -80,7 +88,6 @@ class PeakGenerator:
 
     def _qVector(self, h, k, l):
         "Returns q-vector from (h, k, l) parameters"
-        import matter   # import matter package
         import numpy
 
         lat     = matter.Lattice(self._a, self._b, self._c, self._alpha, self._beta, self._gamma)

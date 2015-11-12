@@ -22,8 +22,11 @@ PROJ_CPPTESTS = \
 	testvitess2mcvine \
 
 PROJ_TESTS = $(PROJ_PYTESTS) $(PROJ_CPPTESTS)
-PROJ_LIBRARIES = -L$(BLD_LIBDIR) -lvitess
 
+PROJ_CXX_INCLUDES += $(DANSE_DIR)/include $(DANSE_DIR)/include/danse/ins
+PROJ_LIBRARIES = -L$(BLD_LIBDIR) \
+	-lvitess \
+	-L$(DANSE_DIR)/lib -L$(DANSE_DIR)/lib64
 
 #--------------------------------------------------------------------------
 #

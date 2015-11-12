@@ -32,12 +32,15 @@ PROJ_CPPTESTS = test_LinearlyInterpolatedGridData_3D \
 
 
 PROJ_TESTS = $(PROJ_PYTESTS) $(PROJ_CPPTESTS)
+PROJ_CXX_INCLUDES += $(DANSE_DIR)/include $(DANSE_DIR)/include/danse/ins
 PROJ_LIBRARIES = -L$(BLD_LIBDIR) \
 	-lmccomponents -lmccomposite -lmcni \
 	-lfparser \
 	-lgsl -lgslcblas -L$(GSL_LIBDIR) \
-	-ljournal
-PROJ_CXX_DEFINES += DEEPDEBUG USE_DANSE_NAMESPACE
+	-ljournal \
+	-L$(DANSE_DIR)/lib -L$(DANSE_DIR)/lib64
+# PROJ_CXX_DEFINES += DEEPDEBUG
+PROJ_CXX_DEFINES += USE_DANSE_NAMESPACE
 
 
 # directory structure

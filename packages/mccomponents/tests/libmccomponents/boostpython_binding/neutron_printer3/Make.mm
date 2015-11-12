@@ -19,8 +19,12 @@ include std-pythonmodule.def
 include local.def
 
 
-PROJ_CXX_SRCLIB = -lboost_python  -L$(BOOSTPYTHON_LIBDIR) -ljournal -lmcni -lmccomposite -lmccomponents
-
+PROJ_CXX_INCLUDES += $(DANSE_DIR)/include $(DANSE_DIR)/include/danse/ins
+PROJ_CXX_SRCLIB = \
+	-lboost_python -L$(BOOSTPYTHON_LIBDIR) \
+	-lmccomponents -lmccomposite -lmcni \
+	-ljournal \
+	-L$(DANSE_DIR)/lib -L$(DANSE_DIR)/lib64
 
 PROJ_SRCS = \
 	wrap.cc \

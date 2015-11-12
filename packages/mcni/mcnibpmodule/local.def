@@ -15,7 +15,7 @@
 
 
 PROJ_CXX_INCLUDES += $(BOOSTPYTHON_INCDIR)
-
+PROJ_CXX_INCLUDES += $(DANSE_DIR)/include $(DANSE_DIR)/include/danse/ins
 
 # version
 # $Id$

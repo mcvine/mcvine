@@ -12,7 +12,7 @@
 //
 
 #include "mcni/neutron.h"
-#include "bpext/bpext.h"
+#include "danse/ins/bpext/bpext.h"
 
 
 namespace mcnimodule{
