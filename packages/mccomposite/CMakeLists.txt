@@ -7,5 +7,5 @@ set (PKG_NAME "${PACKAGE_NAME}")
 # 
 add_subdirectory(lib)
 add_subdirectory(mccompositebpmodule)
-# add_subdirectory(python)
+add_subdirectory(python)
 # add_subdirectory(tests)
