@@ -14,7 +14,7 @@
 
 #include <cmath>
 #include <complex>
-#include <portinfo>
+//#include <portinfo>
 #include "journal/warning.h"
 
 #ifdef DEEPDEBUG

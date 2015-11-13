@@ -17,7 +17,7 @@
 
 #ifndef PORTINFO_INCLUDED
 #define PORTINFO_INCLUDED
-#include <portinfo>
+//#include <portinfo>
 #endif
 
 #ifndef IOMANIP_INCLUDED

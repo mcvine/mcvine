@@ -16,7 +16,6 @@
 #else
 
 
-#include <portinfo>
 #include "journal/warning.h"
 #include "journal/debug.h"
 #include "journal/info.h"

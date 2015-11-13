@@ -13,7 +13,7 @@
 
 #include <iostream>
 #include <cmath>
-#include <portinfo>
+//#include <portinfo>
 #include "journal/debug.h"
 #include "mcni/neutron/units_conversion.h"
 #include "mccomponents/kernels/sample/phonon/vector3.h"
