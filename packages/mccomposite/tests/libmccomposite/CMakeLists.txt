@@ -38,7 +38,7 @@ foreach( _src ${SRC_FILES} )
     )
   set(_testname ${_src})
   add_test(
-    NAME ${_testname} 
+    NAME lib${PACKAGE_NAME}/${_testname} 
     COMMAND ${_target} 
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
     )
