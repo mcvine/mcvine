@@ -43,8 +43,6 @@ set ( SRC_FILES
   )
 # ----------------------------------------
 
-find_package(GSL REQUIRED)
-
 # -I and -L
 include_directories(${EXPORT_HEADERS})
 include_directories(${DEPLOYMENT_PREFIX}/include)
@@ -52,6 +50,7 @@ include_directories(${PYTHON_INCLUDE_DIRS})
 include_directories(${GLS_INCLUDE_DIR})
 link_directories(${EXPORT_LIB})
 link_directories(${DEPLOYMENT_PREFIX}/${INSTALL_LIB_DIR})
+add_definitions(-DUSE_DANSE_NAMESPACE)
 
 # compile executable
 foreach( _src ${SRC_FILES} )
