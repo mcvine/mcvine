@@ -6,4 +6,5 @@ set (PKG_NAME "${PACKAGE_NAME}")
 
 # 
 add_subdirectory(lib)
+add_subdirectory(mcnimodule)
 add_subdirectory(mcnibpmodule)
