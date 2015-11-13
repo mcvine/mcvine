@@ -60,12 +60,12 @@ find_package ( Boost COMPONENTS python )
 macro ( PYUNITTEST_ADD_TEST _test_src_dir _testname_prefix )
   # Add all of the individual tests so that they can be run in parallel
   foreach ( part ${ARGN} )
-    message( ${part} )
+    # message( ${part} )
     get_filename_component( _filename ${part} NAME )
     get_filename_component( _suitename ${part} NAME_WE )
     get_filename_component( _directory ${part} DIRECTORY )
     set ( _pyunit_separate_name "${_testname_prefix}_${_directory}_${_suitename}" )
-    message( ${_pyunit_separate_name})
+    # message( "name: ${_pyunit_separate_name}, cmd:${PYTHON_EXECUTABLE} -B ${_filename}, workdir:  ${_test_src_dir}/${_directory}" )
     add_test ( NAME ${_pyunit_separate_name}
       COMMAND ${PYTHON_EXECUTABLE} -B ${_filename} )
     set_tests_properties ( ${_pyunit_separate_name} PROPERTIES 
