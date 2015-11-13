@@ -1,6 +1,7 @@
 #
 set(SRC_DIRS 
   unittestX.py
+  libmccomposite
   mccompositebpmodule
   mccomposite
   )
