@@ -6,8 +6,11 @@
 #   - rpm: source rpm
 #   - deb: binary deb
 
-cmake_minimum_required (VERSION 2.6)
 project (mcvine)
+
+cmake_minimum_required (VERSION 2.6)
+set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
+
 
 set(VERSION "1.0")
 set(AUTHOR "Jiao Lin")
