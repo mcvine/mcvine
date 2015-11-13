@@ -1,3 +1,7 @@
+# DEVELOPER NOTES:
+# !!! Make.mm files in subdir boostpython_binding
+# !!! are not yet converted to cmake files.
+
 # ------------- Modify these -------------
 set ( SRC_FILES 
   neutron/testEvent.cc
