@@ -20,22 +20,19 @@ include_directories( ${PYTHON_INCLUDE_DIRS} )
 
 # export headers from this project
 file(COPY boostpython_binding geometry math neutron test
-  DESTINATION include/mcni FILES_MATCHING PATTERN "*.h" PATTERN "*.icc")
+  DESTINATION ${EXPORT_HEADERS}/mcni FILES_MATCHING PATTERN "*.h" PATTERN "*.icc")
 file(COPY mcni/
-  DESTINATION include/mcni FILES_MATCHING PATTERN "*.h" PATTERN "*.icc")
+  DESTINATION ${EXPORT_HEADERS}/mcni FILES_MATCHING PATTERN "*.h" PATTERN "*.icc")
 file(COPY headers/
-  DESTINATION include/mcni FILES_MATCHING PATTERN "*.h" PATTERN "*.icc")
+  DESTINATION ${EXPORT_HEADERS}/mcni FILES_MATCHING PATTERN "*.h" PATTERN "*.icc")
 
 # -I and -L
-include_directories(${CMAKE_CURRENT_BINARY_DIR}/include)
+include_directories(${EXPORT_HEADERS})
 include_directories(${DEPLOYMENT_PREFIX}/include)
 # compile shared lib
 add_library ( ${LIB_NAME} SHARED ${SRC_FILES} )
+set_target_properties(${MOD_NAME} PROPERTIES LIBRARY_OUTPUT_DIRECTORY "${EXPORT_LIB}") # install to python directory
 
-# install headers
-install (
-  DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/include/${PACKAGE_NAME}/
-  DESTINATION include/${PACKAGE_NAME})
 # install shared lib
 install (TARGETS ${LIB_NAME}
   LIBRARY DESTINATION ${INSTALL_LIB_DIR}
