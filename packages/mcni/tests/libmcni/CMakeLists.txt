@@ -1,6 +1,12 @@
 # ------------- Modify these -------------
 set ( SRC_FILES 
   neutron/testEvent.cc
+  geometry/testVector3
+  geometry/testMatrix3
+  geometry/testcoords_transform
+  geometry/testutils
+  mcni/testAbstractNeutronScatterer
+  mcni/testAbstractNeutronComponent
   )
 # ----------------------------------------
 
@@ -30,6 +36,4 @@ foreach( _src ${SRC_FILES} )
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
     )
 endforeach( _src ${SRC_FILES} ) 
-
-# set_target_properties(${LIB_NAME} PROPERTIES LIBRARY_OUTPUT_DIRECTORY "${EXPORT_LIB}") # install to python directory
 
