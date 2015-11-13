@@ -16,7 +16,6 @@
 #error AbstractNeutronScatterer.icc not meaningful outside AbstractNeutronScatterer.h
 #else
 
-#include <portinfo>
 #include "journal/error.h"
 #include "journal/debug.h"
 

@@ -12,7 +12,6 @@
 //
 
 
-#include <portinfo>
 #include "journal/error.h"
 #include "journal/debug.h"
 
