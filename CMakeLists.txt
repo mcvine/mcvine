@@ -7,7 +7,7 @@
 #   - deb: binary deb
 
 cmake_minimum_required (VERSION 2.6)
-project (journal)
+project (mcvine)
 
 set(VERSION "1.0")
 set(AUTHOR "Jiao Lin")
