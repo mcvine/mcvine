@@ -1,23 +1,25 @@
 # ------------- Modify these -------------
+set (PYBINDING_NAME "${PACKAGE_NAME}bpmodule")
 set ( SRC_FILES 
-  _${PYBINDING_NAME}.cc
-  ProxyDevice.cc
-  bindings.cc
-  exceptions.cc
-  facility.cc
-  journal.cc
-  misc.cc
-  state.cc
+  ${PYBINDING_NAME}.cc
+  wrap_Vector3.cc
+  wrap_Matrix3.cc
+  wrap_geometry.cc
+  wrap_neutron.cc
+  wrap_abstractneutronscatterer.cc
+  wrap_abstractneutroncomponent.cc
+  wrap_dummycomponent.cc
   )
 # ----------------------------------------
 
 # alias
-set ( MOD_NAME _${PYBINDING_NAME} )
+set ( MOD_NAME ${PYBINDING_NAME} )
 
 # -I and -L
+include_directories(${CMAKE_CURRENT_BINARY_DIR}/../lib/include)
+include_directories(${DEPLOYMENT_PREFIX}/include)
 include_directories(${PYTHON_INCLUDE_DIRS})
-include_directories(${CMAKE_BINARY_DIR}/lib/include)
-link_directories(${CMAKE_BINARY_DIR}/lib)
+link_directories(${CMAKE_CURRENT_BINARY_DIR}/../lib)
 
 # compile shared library
 add_library(${MOD_NAME} SHARED ${SRC_FILES})
