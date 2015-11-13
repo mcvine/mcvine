@@ -56,6 +56,8 @@ set(INSTALL_PY_PATH "${INSTALL_LIB_DIR}/python${PYTHON_VERSION_MAJOR}.${PYTHON_V
 
 #
 enable_testing()
+# unittest helper
+set(LIST_PYTESTS_PY ${CMAKE_SOURCE_DIR}/cmake/list_pytests.py)
 
 # subdirs
 add_subdirectory(packages)
