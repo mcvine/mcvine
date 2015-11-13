@@ -58,6 +58,7 @@ set(INSTALL_PY_PATH "${INSTALL_LIB_DIR}/python${PYTHON_VERSION_MAJOR}.${PYTHON_V
 set(EXPORT_ROOT ${CMAKE_BINARY_DIR}/export)
 set(EXPORT_HEADERS ${EXPORT_ROOT}/include)
 set(EXPORT_LIB ${EXPORT_ROOT}/lib)
+set(EXPORT_PYTHON ${EXPORT_ROOT}/python)
 
 #
 enable_testing()
@@ -71,6 +72,11 @@ add_subdirectory(packages)
 install (
   DIRECTORY ${EXPORT_HEADERS}/
   DESTINATION include
+  )
+# install python modules all together
+install(DIRECTORY ${EXPORT_PYTHON}/
+  DESTINATION ${INSTALL_PY_PATH}
+  FILES_MATCHING PATTERN "*.py" PATTERN "*.so"
   )
 
 # packaging
