@@ -1,9 +1,9 @@
 import unittest
 DEBUG = False
 
-def list_tests_from(path):
+def list_tests_from(path, pattern):
     loader = unittest.TestLoader()
-    suite = loader.discover(path)
+    suite = loader.discover(path, pattern=pattern)
     for atest in suite:
         tests = atest._tests
         if len(tests):
@@ -17,4 +17,4 @@ def list_tests_from(path):
 
 if __name__ == "__main__": 
     import sys
-    list_tests_from(sys.argv[1])
+    list_tests_from(*sys.argv[1:])

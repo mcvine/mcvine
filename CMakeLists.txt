@@ -53,12 +53,16 @@ find_package ( PythonLibs REQUIRED )
 find_package ( PythonInterp REQUIRED )
 # python installation path
 set(INSTALL_PY_PATH "${INSTALL_LIB_DIR}/python${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}/site-packages")
+# needs boost python
+find_package ( Boost COMPONENTS python )
 
 # export root at build
 set(EXPORT_ROOT ${CMAKE_BINARY_DIR}/export)
 set(EXPORT_HEADERS ${EXPORT_ROOT}/include)
 set(EXPORT_LIB ${EXPORT_ROOT}/lib)
 set(EXPORT_PYTHON ${EXPORT_ROOT}/python)
+set(ENV{PYTHONPATH} "${EXPORT_PYTHON}:$ENV{PYTHONPATH}")
+set(ENV{LD_LIBRARY_PATH} "${EXPORT_LIB}:$ENV{LD_LIBRARY_PATH}")
 
 #
 enable_testing()

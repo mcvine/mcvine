@@ -90,14 +90,15 @@ def _import():
     except ImportError:
         import bpext
         import warnings
-        warnings.warn("Using old bpext. Should use danse.ins.bpext")
+        warnings.warn("Using old bpext. Should use danse.ins.bpext\n%s")
     return
 
 try:
     _import()
 except ImportError:
-    import warnings
-    warnings.warn("Unable to load boost python binding of mcni")
+    import warnings, traceback as tb
+    warnings.warn("Unable to load boost python binding of mcni\n%s" \
+                  % tb.format_exc())
     binding_imported = False
 else:
     import mcni.mcnibp as b
