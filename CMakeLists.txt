@@ -56,6 +56,33 @@ set(INSTALL_PY_PATH "${INSTALL_LIB_DIR}/python${PYTHON_VERSION_MAJOR}.${PYTHON_V
 # needs boost python
 find_package ( Boost COMPONENTS python )
 
+#
+macro ( PYUNITTEST_ADD_TEST _test_src_dir _testname_prefix )
+  # Add all of the individual tests so that they can be run in parallel
+  foreach ( part ${ARGN} )
+    message( ${part} )
+    get_filename_component( _filename ${part} NAME )
+    get_filename_component( _suitename ${part} NAME_WE )
+    get_filename_component( _directory ${part} DIRECTORY )
+    set ( _pyunit_separate_name "${_testname_prefix}_${_directory}_${_suitename}" )
+    message( ${_pyunit_separate_name})
+    add_test ( NAME ${_pyunit_separate_name}
+      COMMAND ${PYTHON_EXECUTABLE} -B ${_filename} )
+    set_tests_properties ( ${_pyunit_separate_name} PROPERTIES 
+      WORKING_DIRECTORY ${_test_src_dir}/${_directory})
+  endforeach ( part ${ARGN} )
+endmacro ( PYUNITTEST_ADD_TEST )
+macro ( PYUNITTEST_ADD_TESTS_IN_DIR _test_src_dir _testname_prefix)
+  execute_process(
+    COMMAND find . -name *TestCase.py
+    WORKING_DIRECTORY ${_test_src_dir}
+    OUTPUT_VARIABLE _tests
+    )
+  separate_arguments(_testlist UNIX_COMMAND ${_tests})
+  # message( ${_testlist} )
+  PYUNITTEST_ADD_TEST( ${_test_src_dir} ${_testname_prefix} ${_testlist} )
+endmacro ( PYUNITTEST_ADD_TESTS_IN_DIR )
+
 # export root at build
 set(EXPORT_ROOT ${CMAKE_BINARY_DIR}/export)
 set(EXPORT_HEADERS ${EXPORT_ROOT}/include)
@@ -63,6 +90,7 @@ set(EXPORT_LIB ${EXPORT_ROOT}/lib)
 set(EXPORT_PYTHON ${EXPORT_ROOT}/python)
 set(ENV{PYTHONPATH} "${EXPORT_PYTHON}:$ENV{PYTHONPATH}")
 set(ENV{LD_LIBRARY_PATH} "${EXPORT_LIB}:$ENV{LD_LIBRARY_PATH}")
+set(TESTS_DIR ${CMAKE_BINARY_DIR}/tests)
 
 #
 enable_testing()

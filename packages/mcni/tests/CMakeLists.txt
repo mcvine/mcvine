@@ -1,2 +1,3 @@
 #
-add_subdirectory(mcni)
+add_subdirectory(libmcni)
+# add_subdirectory(mcni)
