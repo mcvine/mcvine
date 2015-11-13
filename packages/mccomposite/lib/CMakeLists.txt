@@ -31,8 +31,11 @@ file(COPY headers/
 # -I and -L
 include_directories(${EXPORT_HEADERS})
 include_directories(${DEPLOYMENT_PREFIX}/include)
+link_directories(${EXPORT_LIB})
+link_directories(${DEPLOYMENT_PREFIX}/${INSTALL_LIB_DIR})
 # compile shared lib
 add_library ( ${LIB_NAME} SHARED ${SRC_FILES} )
+target_link_libraries(${LIB_NAME} ${PYTHON_LIBRARY} ${Boost_LIBRARIES} "journal" "mcni")
 set_target_properties(${LIB_NAME} PROPERTIES LIBRARY_OUTPUT_DIRECTORY "${EXPORT_LIB}") # install to python directory
 
 # install shared lib
