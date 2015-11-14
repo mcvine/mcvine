@@ -73,7 +73,11 @@ macro ( PYUNITTEST_ADD_TEST _test_src_dir _testname_prefix )
     add_test ( NAME ${_pyunit_separate_name}
       COMMAND ${PYTHON_EXECUTABLE} -B ${_filename} )
     set_tests_properties ( ${_pyunit_separate_name} PROPERTIES 
-      WORKING_DIRECTORY ${_test_src_dir}/${_directory})
+      WORKING_DIRECTORY ${_test_src_dir}/${_directory}
+      ENVIRONMENT PATH="${EXPORT_BIN}:$ENV{PATH}"
+      ENVIRONMENT PYTHONPATH="${EXPORT_PYTHON}:$ENV{PYTHONPATH}"
+      ENVIRONMENT LD_LIBRARY_PATH="${EXPORT_LIB}:$ENV{LD_LIBRARY_PATH}"
+      )
   endforeach ( part ${ARGN} )
 endmacro ( PYUNITTEST_ADD_TEST )
 macro ( PYUNITTEST_ADD_TESTS_IN_DIR _test_src_dir _testname_prefix)
@@ -92,9 +96,9 @@ set(EXPORT_ROOT ${CMAKE_BINARY_DIR}/export)
 set(EXPORT_HEADERS ${EXPORT_ROOT}/include)
 set(EXPORT_LIB ${EXPORT_ROOT}/lib)
 set(EXPORT_PYTHON ${EXPORT_ROOT}/python)
-set(ENV{PYTHONPATH} "${EXPORT_PYTHON}:$ENV{PYTHONPATH}")
-set(ENV{LD_LIBRARY_PATH} "${EXPORT_LIB}:$ENV{LD_LIBRARY_PATH}")
+set(EXPORT_BIN ${EXPORT_ROOT}/bin)
 set(TESTS_DIR ${CMAKE_BINARY_DIR}/tests)
+message("lib: $ENV{LD_LIBRARY_PATH}; python: $ENV{PYTHONPATH}")
 
 #
 enable_testing()
@@ -114,6 +118,8 @@ install(DIRECTORY ${EXPORT_PYTHON}/
   DESTINATION ${INSTALL_PY_PATH}
   FILES_MATCHING PATTERN "*.py" PATTERN "*.so"
   )
+# install exes
+install(PROGRAMS ${EXPORT_BIN}/ DESTINATION bin)
 
 # packaging
 # CPACK
