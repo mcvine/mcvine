@@ -15,6 +15,6 @@ foreach (_srcdir ${SRC_DIRS})
 endforeach(_srcdir ${SRC_DIRS})
 
 # add python tests
-PYUNITTEST_ADD_TESTS_IN_DIR( ${TESTS_DIR}/mcni "mcni")
+# PYUNITTEST_ADD_TESTS_IN_DIR( ${TESTS_DIR}/mcni "mcni")
 # old code to test the macro
 # PYUNITTEST_ADD_TEST( ${CMAKE_CURRENT_SOURCE_DIR} "mcvinetest" mcni/neutron_TestCase.py )
