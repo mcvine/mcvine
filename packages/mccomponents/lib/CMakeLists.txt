@@ -72,6 +72,7 @@ target_link_libraries(
   "journal" "mcni" "mccomposite" "fparser"
   )
 set_target_properties(${LIB_NAME} PROPERTIES LIBRARY_OUTPUT_DIRECTORY "${EXPORT_LIB}") # install to python directory
+add_dependencies(${LIB_NAME} "mccomposite")
 
 # install shared lib
 install (TARGETS ${LIB_NAME}

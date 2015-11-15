@@ -37,6 +37,7 @@ link_directories(${DEPLOYMENT_PREFIX}/${INSTALL_LIB_DIR})
 add_library ( ${LIB_NAME} SHARED ${SRC_FILES} )
 target_link_libraries(${LIB_NAME} ${PYTHON_LIBRARY} ${Boost_LIBRARIES} "journal" "mcni")
 set_target_properties(${LIB_NAME} PROPERTIES LIBRARY_OUTPUT_DIRECTORY "${EXPORT_LIB}") # install to python directory
+add_dependencies(${LIB_NAME} "mcni")
 
 # install shared lib
 install (TARGETS ${LIB_NAME}

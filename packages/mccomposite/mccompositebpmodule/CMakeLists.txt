@@ -31,3 +31,4 @@ target_link_libraries(${MOD_NAME} ${PYTHON_LIBRARY} ${Boost_LIBRARIES} "journal"
 set_target_properties(${MOD_NAME} PROPERTIES PREFIX "") # dont need "lib" prefix
 set_target_properties(${MOD_NAME} PROPERTIES LIBRARY_OUTPUT_DIRECTORY "${EXPORT_PYTHON}/${PKG_NAME}") # export to python directory
 set_target_properties(${MOD_NAME} PROPERTIES SKIP_BUILD_RPATH "ON")
+add_dependencies(${MOD_NAME} ${LIB_NAME})
