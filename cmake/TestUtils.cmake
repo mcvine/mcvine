@@ -11,12 +11,11 @@ macro ( PYUNITTEST_ADD_TEST _test_src_dir _testname_prefix )
     # message( "name: ${_pyunit_separate_name}, cmd:${PYTHON_EXECUTABLE} -B ${_filename}, workdir:  ${_test_src_dir}/${_directory}" )
     add_test ( NAME ${_pyunit_separate_name}
       COMMAND ${PYTHON_EXECUTABLE} -B ${_filename} )
+    set(_env "PYTHONPATH=${EXPORT_PYTHON}:$ENV{PYTHONPATH};LD_LIBRARY_PATH=${EXPORT_LIB}:$ENV{LD_LIBRARY_PATH};MCVINE_DIR=${EXPORT_ROOT};PATH=${EXPORT_BIN}:$ENV{PATH}")
+    message("${part}: ${_env}")
     set_tests_properties ( ${_pyunit_separate_name} PROPERTIES 
       WORKING_DIRECTORY ${_test_src_dir}/${_directory}
-      ENVIRONMENT PATH="${EXPORT_BIN}:$ENV{PATH}"
-      ENVIRONMENT PYTHONPATH="${EXPORT_PYTHON}:$ENV{PYTHONPATH}"
-      ENVIRONMENT LD_LIBRARY_PATH="${EXPORT_LIB}:$ENV{LD_LIBRARY_PATH}"
-      ENVIRONMENT MCVINE_DIR="${EXPORT_ROOT}"
+      ENVIRONMENT "${_env}"
       )
   endforeach ( part ${ARGN} )
 endmacro ( PYUNITTEST_ADD_TEST )
