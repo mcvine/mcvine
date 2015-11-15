@@ -1,20 +1,20 @@
 #
 set(SRC_DIRS 
-  unittestX.py
-  libmccomponents
-  mccomponentsbpmodule
-  mccomponents
-  kernels
+  lib
+  mcstas2bpmodule
+  mcstas2
+  instruments
+  vitess-IO
   # bin
   )
 
 # add c tests
-add_subdirectory(libmccomponents)
+add_subdirectory(lib)
 
 # copy tests to build
 foreach (_srcdir ${SRC_DIRS})
-  file(COPY ${_srcdir} DESTINATION ${TESTS_DIR}/mccomponents/)
+  file(COPY ${_srcdir} DESTINATION ${TESTS_DIR}/mcstas2/)
 endforeach(_srcdir ${SRC_DIRS})
 
 # add python tests
-PYUNITTEST_ADD_TESTS_IN_DIR( ${TESTS_DIR}/mccomponents "mccomponents")
+PYUNITTEST_ADD_TESTS_IN_DIR( ${TESTS_DIR}/mcstas2 "mcstas2")
