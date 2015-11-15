@@ -1,8 +1,9 @@
 # ------------- Modify these -------------
 # ----------------------------------------
 
-# install
-install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/
-  DESTINATION etc/${PKG_NAME}
+# copy etc files
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/
+  DESTINATION ${EXPORT_ETC}/
   FILES_MATCHING PATTERN "*.pml"
   )
+
