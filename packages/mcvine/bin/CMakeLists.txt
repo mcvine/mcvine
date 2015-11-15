@@ -1,0 +1,3 @@
+#
+file(COPY ./ DESTINATION ${EXPORT_BIN}/ 
+  FILES_MATCHING PATTERN "mcvine*")
