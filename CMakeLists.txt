@@ -90,7 +90,7 @@ install(DIRECTORY ${EXPORT_PYTHON}/
   FILES_MATCHING PATTERN "*.py" PATTERN "*.so"
   )
 # install exes
-install(PROGRAMS ${EXPORT_BIN}/ DESTINATION bin)
+install(DIRECTORY ${EXPORT_BIN}/ DESTINATION bin)
 
 # packaging
 # CPACK
