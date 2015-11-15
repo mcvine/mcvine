@@ -69,6 +69,7 @@ set(EXPORT_LIB ${EXPORT_ROOT}/lib)
 set(EXPORT_PYTHON ${EXPORT_ROOT}/python)
 set(EXPORT_BIN ${EXPORT_ROOT}/bin)
 set(EXPORT_ETC ${EXPORT_ROOT}/etc)
+set(EXPORT_SHARE ${EXPORT_ROOT}/share)
 set(TESTS_DIR ${CMAKE_BINARY_DIR}/tests)
 message("lib: $ENV{LD_LIBRARY_PATH}; python: $ENV{PYTHONPATH}")
 
@@ -78,7 +79,7 @@ enable_testing()
 set(LIST_PYTESTS_PY ${CMAKE_SOURCE_DIR}/cmake/list_pytests.py)
 
 # subdirs
-# add_subdirectory(packages)
+add_subdirectory(packages)
 add_subdirectory(instruments)
 
 # install headers 
@@ -95,6 +96,8 @@ install(DIRECTORY ${EXPORT_PYTHON}/
 install(DIRECTORY ${EXPORT_BIN}/ DESTINATION bin)
 # install etc
 install(DIRECTORY ${EXPORT_ETC}/ DESTINATION etc)
+# install share
+install(DIRECTORY ${EXPORT_SHARE}/ DESTINATION share)
 
 # packaging
 # CPACK
