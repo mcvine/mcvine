@@ -52,7 +52,7 @@ link_directories(${EXPORT_LIB})
 link_directories(${DEPLOYMENT_PREFIX}/${INSTALL_LIB_DIR})
 add_definitions(-DUSE_DANSE_NAMESPACE)
 
-# compile executable
+# 
 set(link_libs
   ${PYTHON_LIBRARY} ${Boost_LIBRARIES} ${GSL_LIBRARIES}
   "journal" "danse_ins_bpext"
