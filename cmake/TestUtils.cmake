@@ -1,3 +1,4 @@
+# python unit tests
 macro ( PYUNITTEST_ADD_TEST _test_src_dir _testname_prefix )
   # Add all of the individual tests so that they can be run in parallel
   foreach ( part ${ARGN} )
@@ -29,3 +30,29 @@ macro ( PYUNITTEST_ADD_TESTS_IN_DIR _test_src_dir _testname_prefix)
   # message( ${_testlist} )
   PYUNITTEST_ADD_TEST( ${_test_src_dir} ${_testname_prefix} ${_testlist} )
 endmacro ( PYUNITTEST_ADD_TESTS_IN_DIR )
+
+
+# c tests
+# compile executable
+function ( CUNITTEST_ADD_TESTS  _test_name_prefix _link_libs _deps)
+  set(__link_libs ${${_link_libs}})
+  set(__deps ${${_deps}})
+  set( SRC_FILES ${ARGN} )
+  foreach( _src ${SRC_FILES} )
+    get_filename_component( _filename ${_src} NAME )
+    get_filename_component( _exe ${_src} NAME_WE )
+    get_filename_component( _directory ${_src} DIRECTORY )
+    set(_target_path ${_directory}/${_exe})
+    string(REPLACE "/" "_" _target_name ${_target_path})
+    # file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/${_directory})
+    add_executable(${_target_name} ${_src})
+    add_dependencies(${_target_name} ${__deps})
+    target_link_libraries(${_target_name} ${__link_libs})
+    set(_testname ${_src})
+    add_test(
+      NAME ${_test_name_prefix}/${_testname} 
+      COMMAND ${_target_name} 
+      WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+      )
+  endforeach( _src ${SRC_FILES} )
+endfunction ( CUNITTEST_ADD_TESTS )
