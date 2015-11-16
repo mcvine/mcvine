@@ -2,3 +2,5 @@
 *.pyc
 /build
 /docker
+/packages/instrument
+/packages/sampleassembly

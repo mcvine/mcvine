@@ -6,12 +6,7 @@
 #   - rpm: source rpm
 #   - deb: binary deb
 
-project (mcvine)
-
-cmake_minimum_required (VERSION 2.6)
-set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
-
-
+set(PROJECT_NAME "mcvine")
 set(VERSION "1.0")
 set(AUTHOR "Jiao Lin")
 set(AUTHOR_EMAILE "jiao.lin@gmail.com")
@@ -35,21 +30,37 @@ set (DOCKER_PKGING_TEST_SRPM ". /opt/danse/bin/setup-danse.sh && mcvine")
 set (DOCKER_PKGING_TEST_RPM ${DOCKER_PKGING_TEST_SRPM})
 set (DOCKER_PKGING_TEST_DEB ${DOCKER_PKGING_TEST_SRPM})
 
+# need instrument and sampleassembly
+# place them under packages/
+execute_process(
+  COMMAND rm -rf instrument sampleassembly
+  WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/packages
+  )
+execute_process(
+  COMMAND git clone https://github.com/danse-inelastic/instrument
+  COMMAND git clone https://github.com/danse-inelastic/sampleassembly
+  WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/packages
+  )
 
+#
+project (${PROJECT_NAME})
+cmake_minimum_required (VERSION 2.8)
 
-# lib64
-get_property(LIB64 GLOBAL PROPERTY FIND_LIBRARY_USE_LIB64_PATHS)
-if ("${LIB64}" STREQUAL "TRUE")
-    set(LIBSUFFIX 64)
-else()
-    set(LIBSUFFIX "")
-endif()
-set(INSTALL_LIB_DIR
-  lib${LIBSUFFIX} CACHE PATH "Installation directory for libraries")
-# message( STATUS "Install lib dir: ${INSTALL_LIB_DIR}")
-mark_as_advanced(INSTALL_LIB_DIR)
+# get cmake_utils
+execute_process(
+  COMMAND rm -rf cmake_utils
+  )
+execute_process(
+  COMMAND git clone https://github.com/danse-inelastic/cmake_utils
+  WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+  )
+set(CMAKE_MODULE_PATH ${PROJECT_BINARY_DIR}/cmake_utils)
 
-#list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}")
+# use utils
+include(System) # system info
+include(Dirs)   # directory structure
+include(TestUtils)
+# message("lib: $ENV{LD_LIBRARY_PATH}; python: $ENV{PYTHONPATH}")
 
 # needs python
 find_package ( PythonLibs REQUIRED )
@@ -60,27 +71,18 @@ set(INSTALL_PY_PATH "${INSTALL_LIB_DIR}/python${PYTHON_VERSION_MAJOR}.${PYTHON_V
 find_package ( Boost COMPONENTS python )
 
 #
-include(TestUtils)
-
-# export root at build
-set(EXPORT_ROOT ${CMAKE_BINARY_DIR}/export)
-set(EXPORT_HEADERS ${EXPORT_ROOT}/include)
-set(EXPORT_LIB ${EXPORT_ROOT}/lib)
-set(EXPORT_PYTHON ${EXPORT_ROOT}/python)
-set(EXPORT_BIN ${EXPORT_ROOT}/bin)
-set(EXPORT_ETC ${EXPORT_ROOT}/etc)
-set(EXPORT_SHARE ${EXPORT_ROOT}/share)
-set(TESTS_DIR ${CMAKE_BINARY_DIR}/tests)
-message("lib: $ENV{LD_LIBRARY_PATH}; python: $ENV{PYTHONPATH}")
-
-#
 enable_testing()
-# unittest helper
-set(LIST_PYTESTS_PY ${CMAKE_SOURCE_DIR}/cmake/list_pytests.py)
 
 # subdirs
+set(BUILDING_MCVINE "yes")
 add_subdirectory(packages)
 add_subdirectory(instruments)
+
+# rule to build mcstas components
+add_custom_target(
+  wrap-mcstas-components
+  ${EXPORT_ENVVARS};EXPORT_ROOT=${EXPORT_ROOT};EXPORT_PYTHON=${EXPORT_PYTHON};DV_DIR=${CMAKE_SOURCE_DIR};BOOSTPYTHON_LIBDIR=${Boost_LIBRARY_DIR};BOOSTPYTHON_INCDIR=${BOOST_INCLUDE_DIR} ${EXPORT_BIN}/mcvine-compile-all-mcstas-components
+  )
 
 # install headers 
 install (
