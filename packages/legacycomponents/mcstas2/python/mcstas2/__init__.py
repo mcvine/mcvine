@@ -88,15 +88,19 @@ def wrapcomponent( componentfilename, componentcategory, **kwds ):
 
     #set appropriate builder
     builders = {
-        'developer': 'mm',
+        # 'developer': 'mm',
+        # 'developer': 'cmake',
+        'developer': 'distutils',
         'user': 'distutils',
         }
     if kwds.get('buildername') is None: kwds['buildername'] = builders[releasetype]
 
     #set appropriate python export path
     from pythonexportathome import path as pytreeathome
+    import os
     pythontrees = {
-        'developer': None,
+        # 'developer': None,
+        'developer': os.environ.get('EXPORT_PYTHON'),
         'user': pytreeathome,
         }
     if kwds.get('pythonexportroot') is None: kwds['pythonexportroot'] = pythontrees[releasetype]
