@@ -20,11 +20,12 @@ import os
 
 
 
-def wrap( componentfilename, componentcategory,
-          pythonpackage = None,
-          path = None, componentname = None,
-          bindingname = None, bindingtype = 'boostpython',
-          buildername = 'mm', pythonexportroot = None):
+def wrap(
+    componentfilename, componentcategory,
+    pythonpackage = None,
+    path = None, componentname = None,
+    bindingname = None, bindingtype = 'boostpython',
+    buildername = 'mm', pythonexportroot = None):
     """wrap a McStas component in python
   componentfilename: component file path. Eg. /.../monitors/E_monitor.comp
   componentcategory: category of component. Eg. monitors
@@ -37,9 +38,42 @@ def wrap( componentfilename, componentcategory,
   pythonexportroot: directory where python modules are exported. Eg. $EXPORT_ROOT. None means pyton modules will be exported wherever the binding builder's default export path.
   
     """
+    bindingobj, classname, componentcategory, componentname = \
+        createBindingObject( 
+            componentfilename, componentcategory,
+            pythonpackage = pythonpackage,
+            path = path, componentname = componentname,
+            bindingname = bindingname, bindingtype = bindingtype
+            )
+    from binding_builder import builder
+    builder( buildername ).build( bindingobj, pythonexportroot )
+    
+    # register the new factory
+    from mcstas2.components import registercomponent
+    m = __import__( '%s.%s' % (
+        bindingobj.python_package,
+        classname), {}, {}, [''] )
+    registercomponent( componentcategory, componentname, m )
+    return 
+
+
+def createBindingObject( 
+    componentfilename, componentcategory,
+    pythonpackage = None,
+    path = None, componentname = None,
+    bindingname = None, bindingtype = 'boostpython'):
+    """Create the binding object of a McStas component in python
+    
+  componentfilename: component file path. Eg. /.../monitors/E_monitor.comp
+  componentcategory: category of component. Eg. monitors
+  pythonpackage: the python package where this component will be export to. Eg. mcstas.components.monitors
+  path: temporary path where binding sources go
+  componentname: name of the component. Eg. E_monitor
+  bindingname: name of the binding. Eg. E_monitorboostpython
+  bindingtype: type of binding. Eg. boostpython (currently only this is supported)
+    """
     
     debug.log( 'pythonpackage=%s' % pythonpackage )
-    
 
     if pythonpackage is None:
         pythonpackage = 'mcstas2.components.%s' % componentcategory
@@ -103,14 +137,7 @@ def wrap( componentfilename, componentcategory,
         c_defines = binding.define_macros,
         dependencies = [ bindingtype, 'caltech-config', 'mcstas2', 'mcni' ],
         )
-    from binding_builder import builder
-    builder( buildername ).build( bindingobj, pythonexportroot )
-    
-    # register the new factory
-    from mcstas2.components import registercomponent
-    m = __import__( '%s.%s' % (pythonpackage, klass.name), {}, {}, [''] )
-    registercomponent( componentcategory, componentname, m )
-    return 
+    return bindingobj, klass.name, componentcategory, componentname
 
 
 # version
