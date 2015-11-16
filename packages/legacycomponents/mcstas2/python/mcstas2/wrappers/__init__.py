@@ -19,7 +19,6 @@ debug = journal.debug('mcstas2.wrappers' )
 import os
 
 
-
 def wrap(
     componentfilename, componentcategory,
     pythonpackage = None,

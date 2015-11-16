@@ -212,6 +212,8 @@ def create_sources_for_components(path):
     from .wrappers import createBindingObject
     root_cmakefile = os.path.join(path, 'CMakeLists.txt')
     root_cmake_stream = open(root_cmakefile, 'wt')
+    root_cmake_stream.write('add_custom_target(wrap-mcstas-components-cmake)\n')
+    root_cmake_stream.write('add_dependencies(wrap-mcstas-components-cmake reconfigure-to-include-mcstas-components)\n')
     for type, category in iterComponents():
         try:
             f = componentfactory( category, type )
