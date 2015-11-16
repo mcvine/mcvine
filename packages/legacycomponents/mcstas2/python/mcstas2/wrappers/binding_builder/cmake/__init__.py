@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 
 
-def build( binding, site_package_path = None ):
+def prepare( binding ):
+    """prepare binding source tree with CMakeLists.txt"""
     python_pkg_rel_path = binding.python_package.replace(".", '/')
     python_sources = ' '.join(binding.python_sources)
     include_dirs = ' '.join(binding.c_includes)
@@ -19,41 +20,28 @@ def build( binding, site_package_path = None ):
     fname = os.path.join(
         os.path.dirname(binding.c_sources[0]), 'CMakeLists.txt')
     open(fname, 'wt').write(cmake_code)
-    import pdb; pdb.set_trace()
     return
 
 
 cmake_template = """
 set(PYTHON_PKG_REL_PATH %(python_pkg_rel_path)s)
 set(PYTHON_SOURCES %(python_sources)s)
-set(INCUDE_DIRS %(include_dirs)s)
+set(INCLUDE_DIRS %(include_dirs)s)
 set(LIBS %(libs)s)
 set(LIBDIRS %(libdirs)s)
 set(DEFINES %(defines)s)
 set(MOD_NAME %(binding_name)s)
 set(SRC_FILES %(sources)s %(headers)s)
 
-#
-set(CMAKE_MODULE_PATH ${PROJECT_BINARY_DIR}/cmake_utils)
-include(System) # system info
-include(Dirs)   # directory structure
-include(TestUtils)
-
-find_package ( PythonLibs REQUIRED )
-find_package ( PythonInterp REQUIRED )
-# python installation path
-set(INSTALL_PY_PATH "${INSTALL_LIB_DIR}/python${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}/site-packages")
-# needs boost python
-find_package ( Boost COMPONENTS python )
-
 # python
 file(
-  COPY ${PACKAGE_SOURCES} 
+  COPY ${PYTHON_SOURCES} 
   DESTINATION ${EXPORT_PYTHON}/${PYTHON_PKG_REL_PATH}
   )
 
 # -I  -L  -D
 include_directories(${INCLUDE_DIRS})
+include_directories(${PYTHON_INCLUDE_DIRS})
 link_directories(${LIBDIRS})
 add_definitions(${DEFINES})
 
