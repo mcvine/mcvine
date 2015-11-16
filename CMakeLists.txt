@@ -79,10 +79,23 @@ add_subdirectory(packages)
 add_subdirectory(instruments)
 
 # rule to build mcstas components
+# this one use distutils and can only run in series
 add_custom_target(
-  wrap-mcstas-components
+  wrap-mcstas-components-serial
   ${EXPORT_ENVVARS};EXPORT_ROOT=${EXPORT_ROOT};EXPORT_PYTHON=${EXPORT_PYTHON};DV_DIR=${CMAKE_SOURCE_DIR};BOOSTPYTHON_LIBDIR=${Boost_LIBRARY_DIR};BOOSTPYTHON_INCDIR=${BOOST_INCLUDE_DIR} ${EXPORT_BIN}/mcvine-compile-all-mcstas-components
   )
+add_custom_target(
+  reconfigure-to-include-mcstas-components
+  cmake ${CMAKE_SOURCE_DIR} -DDEPLOYMENT_PREFIX=${DEPLOYMENT_PREFIX} -DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}
+  WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+  )
+add_dependencies(reconfigure-to-include-mcstas-components src-for-mcstas-components)
+# add_custom_target(
+#   wrap-mcstas-components
+#  make wrap-mcstas-components-cmake
+#  WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+#  DEPENDS reconfigure-to-include-mcstas-components
+#  )
 
 # install headers 
 install (
