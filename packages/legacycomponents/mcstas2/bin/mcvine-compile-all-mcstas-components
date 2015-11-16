@@ -4,21 +4,12 @@ from pyre.applications.Script import Script
 class App(Script):
 
     def main(self):
-        
-        from mcstas2 import listallcomponentcategories, listcomponentsincategory
-        from mcstas2 import componentfactory
-        categories = listallcomponentcategories()
-        for c in categories:
-            types = listcomponentsincategory(c)
-            for type in types:
-                cf = componentfactory(
-                    type=type, 
-                    category=c, 
-                    )
-                # instantiate a component will trigger automatic build procedure
-                # cf()
+        from mcstas2 import iterComponents, componentfactory
+        for type, category in iterComponents():
+            cf = componentfactory(type=type, category=category,)
+            # instantiate a component will trigger automatic build procedure
+            # cf()
             continue
-        
         return
 
     
