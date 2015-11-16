@@ -12,3 +12,7 @@ add_subdirectory(mcstas2bpmodule)
 add_subdirectory(python)
 add_subdirectory(tests)
 add_subdirectory(share)
+
+# bin
+file(COPY bin/ DESTINATION ${EXPORT_BIN}/ 
+  FILES_MATCHING PATTERN "mcvine*")
