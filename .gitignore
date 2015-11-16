@@ -4,3 +4,4 @@
 /docker
 /packages/instrument
 /packages/sampleassembly
+/packages/legacycomponents/mcstas2/components/*
