@@ -11,7 +11,7 @@ add_subdirectory(libmcni)
 
 # copy tests to build
 foreach (_srcdir ${SRC_DIRS})
-  file(COPY ${_srcdir} DESTINATION ${TESTS_DIR}/mcni/)
+  file(COPY ${_srcdir} DESTINATION ${TESTS_DIR}/mcni/ PATTERN obsolete EXCLUDE)
 endforeach(_srcdir ${SRC_DIRS})
 
 # add python tests
