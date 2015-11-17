@@ -2,13 +2,17 @@
 
 if [ $# -eq 0 ]
 then
-    echo	"Usage: ./builders/build /path/to/mcvine/resources [cores]"
+    echo "Usage: ./builders/build <src-path> <build-path> <install-path> <resources-path> [cores]"
+    echo "Example: ./builders/build $PWD $PWD/build $PWD/install $PWD/resources 20"
     exit 1
 fi
 
-export MCVINE_RESOURCES=$1
+SRC=$1
+BUILD=$2
+INSTALL=$3
+export MCVINE_RESOURCES=$4
 
-CORES=$2
+CORES=$5
 if ((CORES < 1)); then
     let CORES=`grep -c ^processor /proc/cpuinfo`
     let CORES-=1
@@ -23,10 +27,10 @@ echo "- using $CORES cores"
 
 . /opt/danse/bin/setup-danse.sh
 
-rm -rf build
-mkdir build
-cd build
-cmake .. -DDEPLOYMENT_PREFIX=/opt/danse -DCMAKE_INSTALL_PREFIX=~/dv/mcvine-releaser/output
+rm -rf $BUILD
+mkdir $BUILD
+cd $BUILD
+cmake $SRC -DDEPLOYMENT_PREFIX=/opt/danse -DCMAKE_INSTALL_PREFIX=$INSTALL
 make -j$CORES reconfigure-to-include-mcstas-components
 make -j$CORES wrap-mcstas-components-cmake
 make -j$CORES 
