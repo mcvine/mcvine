@@ -6,7 +6,7 @@ then
     exit 1
 fi
 
-MCVINE_RESOURCES=$1
+export MCVINE_RESOURCES=$1
 
 CORES=$2
 if ((CORES < 1)); then
