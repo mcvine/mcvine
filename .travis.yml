@@ -19,7 +19,7 @@ before_script:
   - git clone https://github.com/mcvine/resources.git
 
 script:
-  - docker run -v $PWD:/mcvine-src -w /mcvine-src linjiao/mcvine-ubuntu-deps:14.04  /bin/bash buildme /mcvine-src/resources 2
+  - docker run -v $PWD:/mcvine-src -w /mcvine-src linjiao/mcvine-ubuntu-deps:14.04  /bin/bash builders/build /mcvine-src/resources 2
     
 notifications:
   email:

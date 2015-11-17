@@ -2,7 +2,7 @@
 
 if [ $# -eq 0 ]
 then
-    echo	"Usage: ./buildme /path/to/mcvine/resources [cores]"
+    echo	"Usage: ./builders/build /path/to/mcvine/resources [cores]"
     exit 1
 fi
 
