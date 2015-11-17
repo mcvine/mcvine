@@ -24,9 +24,10 @@ set(DEP_DANSE_PKGS "pyre danse.ins.dsm danse.ins.numpyext danse.ins.bpext histog
 set (PKGCLOUD_USERNAME "danse")
 set (PKGCLOUD_REPO "ins")
 # dependencies
-set (DOCKER_PKGING_DEPS_DEB "danse.ins")
+set (DOCKER_PKGING_DEPS_DEB "python-numpy python-psutil python-h5py python-mpi4py libgsl0-dev libboost-python-dev libboost-python1.55.0 pyre danse.ins.dsm danse.ins.numpyext danse.ins.bpext histogram danse.ins.matter drchops")
 set (DOCKER_PKGING_DEPS_RPM "danse.ins")
 set (DOCKER_PKGING_TEST_SRPM ". /opt/danse/bin/setup-danse.sh && mcvine")
+set (DOCKER_PKGING_BUILDSTEP_BUILDCMD "cd .. && git clone https://github.com/mcvine/resources.git &&  /work/src/builders/build /work/src /work/build /work/resources")
 set (DOCKER_PKGING_TEST_RPM ${DOCKER_PKGING_TEST_SRPM})
 set (DOCKER_PKGING_TEST_DEB ${DOCKER_PKGING_TEST_SRPM})
 
@@ -117,6 +118,7 @@ install(DIRECTORY ${EXPORT_ETC}/ DESTINATION etc)
 install(DIRECTORY ${EXPORT_SHARE}/ DESTINATION share)
 
 # packaging
+set(PKG_NAME "mcvine")
 # CPACK
 set(CPACK_PACKAGE_VERSION ${VERSION})
 # set(CPACK_GENERATOR  "RPM")
