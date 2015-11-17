@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 . /opt/danse/bin/setup-danse.sh
+MCVINE_RESOURCES=~/dv/mcvine/resources
 
 rm -rf build
 mkdir build
@@ -8,3 +9,5 @@ cd build
 cmake .. -DDEPLOYMENT_PREFIX=/opt/danse -DCMAKE_INSTALL_PREFIX=~/dv/mcvine-releaser/output
 make -j20 reconfigure-to-include-mcstas-components
 make -j20 wrap-mcstas-components-cmake
+make -j20 
+make test ARGS="-j20"

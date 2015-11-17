@@ -11,10 +11,10 @@ set(SRC_DIRS
 # add c tests
 add_subdirectory(lib)
 
-# copy tests to build
-foreach (_srcdir ${SRC_DIRS})
-  file(COPY ${_srcdir} DESTINATION ${TESTS_DIR}/mcstas2/)
-endforeach(_srcdir ${SRC_DIRS})
+# copy tests directory to build
+execute_process(
+  COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/ ${TESTS_DIR}/mcstas2/
+  )
 
 # add python tests
 PYUNITTEST_ADD_TESTS_IN_DIR( ${TESTS_DIR}/mcstas2 "mcstas2")
