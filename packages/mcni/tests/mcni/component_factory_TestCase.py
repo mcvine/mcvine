@@ -20,16 +20,20 @@ debug = journal.debug( "mcni_component_factory_TestCase" )
 warning = journal.warning( "mcni_component_factory_TestCase" )
 
 
-import mcni
+from mcni import componentfactory, componentinfo
 
 class TestCase(unittest.TestCase):
 
 
     def test(self):
         'mcni: component factory'
-        from mcni import componentfactory, componentinfo
         print 'mcni, sources, MonochromaticSource',  componentfactory( 'sources', 'MonochromaticSource'), componentinfo( 'sources', 'MonochromaticSource' )
         print 'mcni, sources, MonochromaticSource',  componentfactory( 'sources', 'MonochromaticSource', 'mcni'), componentinfo( 'sources', 'MonochromaticSource', 'mcni' )
+        return
+
+    def test2(self):
+        'mcni: component factory for mcstas components'
+        import mcstas2
         print 'mcstas2, sources, Source_simple',  componentfactory( 'sources', 'Source_simple', 'mcstas2'), componentinfo( 'sources', 'Source_simple', 'mcstas2' )
         return
     

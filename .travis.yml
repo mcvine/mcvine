@@ -16,11 +16,10 @@ matrix:
     
 before_script:
   - docker pull linjiao/mcvine-ubuntu-deps:14.04
-  - git clone https://github.com/mcvine/releaser.git mcvine-releaser && cd mcvine-releaser && git checkout 1-mv-danse.ins-deps-out && cd ..
-  - git clone https://github.com/mcvine/resources.git mcvine-resources
+  - git clone https://github.com/mcvine/resources.git
 
 script:
-  - docker run -v `readlink -f mcvine-releaser`:/mcvine-releaser -v `readlink -f mcvine-resources`:/mcvine-resources -e "BOOSTPYTHON_DIR=/usr" -e "BOOSTPYTHON_INCDIR=/usr/include" -e "BOOSTPYTHON_LIBDIR=/usr/lib/x86_64-linux-gnu" -e "MCVINE_RESOURCES=/mcvine-resources" -w /mcvine-releaser linjiao/mcvine-ubuntu-deps:14.04  /bin/bash -c ". /opt/danse/bin/setup-danse.sh && python build.py && python test.py --skip-long-tests"
+  - docker run -v $PWD:/mcvine-src -w /mcvine-src linjiao/mcvine-ubuntu-deps:14.04  /bin/bash buildme /mcvine-src/resources 2
     
 notifications:
   email:

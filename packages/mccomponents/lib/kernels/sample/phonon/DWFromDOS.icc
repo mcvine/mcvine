@@ -1,0 +1,145 @@
+// -*- C++ -*-
+// Debye Waller Factor
+//  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// 
+//                                  Jiao Lin
+//                        California Institute of Technology
+//                        (C) 1998-2004  All Rights Reserved
+// 
+//  <LicenseText>
+// 
+//  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// 
+
+#ifndef DANSE_PHONON_DWFROMDOS_H
+#error this is the implementation of template class DWFromDOS
+#else
+
+
+#include "journal/warning.h"
+#include "journal/debug.h"
+#include "journal/info.h"
+#include <iomanip>
+
+#include "mccomponents/physics/constants.h"
+#include "mccomponents/physics/statistics.h"
+
+
+template <typename FloatType>
+void DANSE::phonon::DWFromDOS<FloatType>::calc_DW_core
+(float_t atom_mass, float_t T_in_Kelvin )
+{
+
+  using namespace mccomponents;
+
+
+#ifdef DEBUG
+  journal::info_t info_DW("debye-waller");
+  journal::debug_t debug_DW("debye-waller");
+  journal::warning_t warning_DW("debye-waller");
+#endif
+  m_core = 0.;
+  float_t norm_fac=0.;
+
+  using physics::BoseEinsteinDistribution;
+  const float_t & wmin = m_dos.emin(), wmax = m_dos.emax();
+  float_t dw = (wmax-wmin)/(m_nSample-1 + .00000001);
+  float_t w, Z;
+  float_t f[m_nSample];
+  int index_first_nonzero_w = -1;
+  
+  for (size_t i=0; i<m_nSample; i++) {
+    w = dw * i + wmin;
+    Z = m_dos( w );
+    // if w is too smal, we ingore it to avoid divergence
+    // we will compute its contribution by interpolation
+    // see below after this for loop
+    if (w < wmax/m_nSample/100.) {
+      continue;
+    }
+    if (index_first_nonzero_w == -1) 
+      index_first_nonzero_w = i;
+    
+    f[i] = (2*BoseEinsteinDistribution(w, T_in_Kelvin)+1)/w*Z;
+    float_t frac = 1;
+    if (i==m_nSample-1)
+      frac = 0.5;
+    m_core += f[i] * frac;
+    norm_fac += Z * frac;
+#ifdef DEBUG
+    debug_DW  << journal::at(__HERE__)
+	      << "w=" <<w << ","
+	      << "Z=" <<Z << ","
+	      << "BE="<<BoseEinsteinDistribution(w, T_in_Kelvin) << ","
+	      << "core=" <<m_core << ","
+	      << "norm_fac=" <<norm_fac << ","
+	      << journal::endl;
+#endif
+    // std::cout << f[i] << std::endl;
+  }
+  // compute the contribution at w=0, by interpolating
+  // from the values near w=0
+  if (index_first_nonzero_w == -1) {
+    std::cerr << "DWFromDOS: failed. DOS is invalid (don't have data for w>0)"
+	      << std::endl;
+    throw;
+  }
+  // f(0) = f(x1) - x1*(f(x2)-f(x1))/(x2-x1)
+  float_t f0 = f[index_first_nonzero_w]				\
+    - (dw*index_first_nonzero_w+wmin)				\
+    * (f[index_first_nonzero_w+1] - f[index_first_nonzero_w])	\
+    / dw;
+  m_core += f0 / 2;
+  // 
+  norm_fac += m_dos(0) / 2;
+  
+  using physics::e;
+  m_core /= e*1e-3;
+  // m_core /= norm_fac; // now core = \int Z(w)*(2<n>+1)/(hbar*w) dw
+  m_core *= dw;
+  
+#ifdef DEBUG
+  debug_DW  << journal::at(__HERE__)
+	    << m_core << journal::endl;
+#endif
+  using physics::hbar; using physics::atomic_mass;
+  m_core *= hbar*hbar/2/atomic_mass/atom_mass;
+  // now core = hbar^2/2M*integration
+  
+  m_core *= 1e20; // so that Q can be given in the unit A^-1
+  
+#ifdef DEBUG
+  debug_DW  << journal::at(__HERE__)
+	    << "hbar=" << hbar << ","
+	    << "atomic_mass=" <<atomic_mass << ","
+	    << "atom_mass="<<atom_mass << ","
+	    << "core=" <<m_core 
+	    << journal::endl;
+#endif
+}
+
+template <typename FloatType>
+FloatType 
+DANSE::phonon::DWFromDOS<FloatType>::DW
+( float_t Q_mag ) 
+  const
+{
+  return Q_mag*Q_mag*m_core;
+}
+
+template <typename FloatType>
+FloatType 
+DANSE::phonon::DWFromDOS<FloatType>::DW
+( const K_t & Q )
+  const
+{
+  return DW( Q.length() );
+}
+
+
+#endif // DANSE_PHONON_DWFROMDOS_H
+
+// version
+// $Id$
+
+// End of file

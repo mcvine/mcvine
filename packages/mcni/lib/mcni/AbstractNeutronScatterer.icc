@@ -1,0 +1,55 @@
+// -*- C++ -*-
+//
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//
+//                                   Jiao Lin
+//                      California Institute of Technology
+//                         (C) 2005 All Rights Reserved  
+//
+// {LicenseText}
+//
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//
+
+
+#ifndef MCNI_ABSTRACTNEUTRONSCATTERER_H
+#error AbstractNeutronScatterer.icc not meaningful outside AbstractNeutronScatterer.h
+#else
+
+#include "journal/error.h"
+#include "journal/debug.h"
+
+#include "mcni/neutron.h"
+
+#include "exceptions.h"
+
+
+void 
+mcni::absorb(Neutron::Event &ev)
+{
+#ifdef DEEPDEBUG
+  journal::debug_t debug("scatter");
+  debug << journal::at(__HERE__)
+	<<"* Warning: neutron " << ev << " absorbed."
+	<< journal::endl;
+#endif
+  ev.probability = -1;
+}
+
+
+bool 
+mcni::invalid(const Neutron::Event &ev)
+{
+  return (ev.probability < 0.0);
+}
+
+
+#endif
+
+
+// version
+// $Id$
+
+// Generated automatically by CxxMill on Thu Apr  7 14:44:15 2005
+
+// End of file 

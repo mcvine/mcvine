@@ -11,7 +11,6 @@
 //  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // 
 
-#include <portinfo>
 #include <Python.h>
 
 PyObject *pymcni_runtimeError = 0;

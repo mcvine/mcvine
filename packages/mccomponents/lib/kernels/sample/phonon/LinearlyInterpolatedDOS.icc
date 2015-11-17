@@ -1,0 +1,185 @@
+// -*- C++ -*-
+//  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// 
+//                                  Jiao Lin
+//                        California Institute of Technology
+//                        (C) 2004-2007  All Rights Reserved
+// 
+//  <LicenseText>
+// 
+//  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// 
+
+#ifndef DANSE_PHONON_LINEARLYINTERPOLATEDDOS_H
+#error this is the implementation of DOS template class
+#else
+
+
+#ifndef PORTINFO_INCLUDED
+#define PORTINFO_INCLUDED
+//#include <portinfo>
+#endif
+
+#ifndef IOMANIP_INCLUDED
+#define IOMANIP_INCLUDED
+#include <iomanip>
+#endif
+
+
+#include <numeric>
+#include <iostream>
+
+#include "journal/error.h"
+#include "journal/debug.h"
+
+
+#include "mccomponents/kernels/sample/phonon/LinearlyInterpolatedGridData_1D.h"
+
+
+namespace DANSE { namespace phonon {
+    template <typename FloatType, typename Array_1D>
+    struct LinearlyInterpolatedDOS<FloatType, Array_1D>::Details {
+      typedef LinearlyInterpolatedGridData_1D<array_t, float_t, index_t> interp_t;
+      typedef typename interp_t::axis_t axis_t;
+      axis_t eaxis;
+      interp_t interpolated;
+  
+      Details( float_t e0, float_t de, index_t ne, const array_t & Z)
+	: eaxis(e0, de, ne-1),
+	  interpolated( eaxis, Z )
+      {
+      }
+      
+    };
+  }
+}
+
+
+template <typename FloatType, typename Array_1D>
+DANSE::phonon::LinearlyInterpolatedDOS<FloatType, Array_1D>::LinearlyInterpolatedDOS
+(float_t e0, float_t de, index_t ne, const array_t & Z)
+  : base_t(e0, e0+de*(ne-1)),
+    m_details( new Details(e0, de, ne, m_Z ) ),
+    m_Z(Z),
+    m_e0(e0), m_de(de), m_n(ne), m_e1( base_t::emax() )
+{
+  if  ( ne != Z.size() ) {
+    
+    journal::error_t err("DOS");
+    err << journal::at(__HERE__)
+        << "***energy axis and dos axis have differnet size of data" << journal::newline
+	<< "ne = " << ne << journal::newline
+        << "Z.size = " << Z.size() << journal::newline
+	<< journal::endl;
+    
+    throw DOS_Init_Error();
+  }
+
+  if  ( ne < 2 ) {
+    
+    journal::error_t err("DOS");
+    err << "***dos curve must have at least two data points!"
+	<< journal::endl;
+    
+    throw DOS_Init_Error();
+  }
+
+  // make sure e is ascending
+  if (de<0) {
+    journal::error_t err("DOS");
+    err << "***the e axis of dos curve must be ascending!" 
+	<< journal::endl;
+    throw DOS_Init_Error();
+  }
+
+  // make sure e[0] >= 0.0
+  if ( e0 < 0.0 ) {
+    journal::error_t err("DOS");
+    err << "***the e axis of dos curve must be positive!" 
+	<< journal::endl;
+    throw DOS_Init_Error();
+  }
+
+
+  // normalize
+  FloatType area = std::accumulate( m_Z.begin(), m_Z.end(), 0. ) * de;
+  for (size_t i=0; i < m_Z.size(); i++) {
+    m_Z[i] /= area;
+  }
+
+  // compute second order derivative at E=0
+  _compute_sod();
+}
+
+
+template <typename FloatType, typename Array_1D>
+DANSE::phonon::LinearlyInterpolatedDOS<FloatType, Array_1D>::~LinearlyInterpolatedDOS
+()
+{
+#ifdef DEBUG
+  journal::debug_t debug("DOS");
+  debug << "DOS " << this << " destroyed" << journal::endl;
+#endif
+}
+
+
+template <typename FloatType, typename Array_1D>
+FloatType
+DANSE::phonon::LinearlyInterpolatedDOS<FloatType, Array_1D>::sod
+()
+const
+{
+  return m_sod;
+}
+
+
+#include "mccomponents/math/regression/linear1.h"
+
+template <typename FloatType, typename Array_1D>
+void
+DANSE::phonon::LinearlyInterpolatedDOS<FloatType, Array_1D>::_compute_sod
+()
+{
+  FloatType c, R2;
+  int N = 20; // XXX: hack
+  FloatType *x = new FloatType[N], *y = new FloatType[N];
+  for (int i=0; i<N; i++) {
+    x[i] = m_e0 + m_de * i;
+    x[i] *= x[i];
+    y[i] = m_Z[i];
+  }
+  mccomponents::math::linear_regression1
+    (x, y, N, c, R2);
+  
+  if (R2<.9) {
+    std::cerr << "LinearlyInterpolatedDOS: failed to fit first "
+	      << N 
+	      << " points of DOS curve to parabolic with R2>=0.9"
+	      << std::endl;
+    for (int i=0; i<N; i++) 
+      std::cerr << x[i] << "\t" << y[i] << std::endl;
+    std::cerr << std::endl;
+    throw;
+  }
+
+  m_sod = c;
+  delete [] x; delete [] y;
+}
+
+template <typename FloatType, typename Array_1D>
+FloatType
+DANSE::phonon::LinearlyInterpolatedDOS<FloatType, Array_1D>::value
+( const FloatType & energy )
+  const
+{
+  if (energy < m_e0 || energy >= m_e1 ) return 0.;
+  return m_details->interpolated( energy );
+}
+
+
+#endif // DANSE_PHONON_LINEARLYINTERPOLATEDDOS_H
+
+// version
+// $Id$
+
+// End of file
