@@ -28,8 +28,10 @@ else:
     type = 'user'
     mcvinedir = mcvinedir or pyredir or exportroot
     if not mcvinedir:
-        raise RuntimeError, "environment variable MCVINE_DIR was not defined. please define it to the path of the mcvine installation"
-
+        danse_dir = os.environ.get("DANSE_DIR")
+        if not danse_dir:
+            raise RuntimeError, "Neither environment variable MCVINE_DIR nor DANSE_DIR was not defined. please define it to the path of the mcvine/danse installation"
+        mcvinedir = danse_dir
 
 if mcvine_resources:
     mcvine_resources = os.path.abspath(mcvine_resources)
