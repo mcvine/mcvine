@@ -27,7 +27,7 @@ set (PKGCLOUD_REPO "ins")
 set (DOCKER_PKGING_DEPS_DEB "python-numpy python-psutil python-h5py python-mpi4py libgsl0-dev libboost-python-dev libboost-python1.55.0 pyre danse.ins.dsm danse.ins.numpyext danse.ins.bpext histogram danse.ins.matter drchops")
 set (DOCKER_PKGING_DEPS_RPM "danse.ins")
 set (DOCKER_PKGING_TEST_SRPM ". /opt/danse/bin/setup-danse.sh && mcvine")
-set (DOCKER_PKGING_BUILDSTEP_BUILDCMD "cd .. && git clone https://github.com/mcvine/resources.git &&  /work/src/builders/build /work/src /work/build /work/resources")
+set (DOCKER_PKGING_BUILDSTEP_BUILDCMD "cd .. && git clone https://github.com/mcvine/resources.git &&  /work/src/builders/build /work/src /work/build /opt/danse /work/resources")
 set (DOCKER_PKGING_TEST_RPM ${DOCKER_PKGING_TEST_SRPM})
 set (DOCKER_PKGING_TEST_DEB ${DOCKER_PKGING_TEST_SRPM})
 
@@ -45,7 +45,7 @@ execute_process(
 
 #
 project (${PROJECT_NAME})
-cmake_minimum_required (VERSION 2.8)
+cmake_minimum_required (VERSION 2.8.12)
 
 # get cmake_utils
 execute_process(
@@ -111,7 +111,10 @@ install(DIRECTORY ${EXPORT_PYTHON}/
   FILES_MATCHING PATTERN "*.py" PATTERN "*.so"
   )
 # install exes
-install(DIRECTORY ${EXPORT_BIN}/ DESTINATION bin)
+install(DIRECTORY ${EXPORT_BIN}/ DESTINATION bin 
+  FILES_MATCHING
+  PATTERN "*" PERMISSIONS OWNER_READ OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE
+  )
 # install etc
 install(DIRECTORY ${EXPORT_ETC}/ DESTINATION etc)
 # install share
