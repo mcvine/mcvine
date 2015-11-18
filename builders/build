@@ -3,7 +3,9 @@
 if [ $# -eq 0 ]
 then
     echo "Usage: ./builders/build <src-path> <build-path> <install-path> <resources-path> [cores]"
-    echo "Example: ./builders/build $PWD $PWD/build $PWD/install $PWD/resources 20"
+    echo
+    echo "Example: ./builders/build \$PWD \$PWD/build \$PWD/install \$PWD/resources 20"
+    echo
     exit 1
 fi
 
@@ -30,8 +32,8 @@ echo "- using $CORES cores"
 rm -rf $BUILD
 mkdir $BUILD
 cd $BUILD
-cmake $SRC -DDEPLOYMENT_PREFIX=/opt/danse -DCMAKE_INSTALL_PREFIX=$INSTALL
-make -j$CORES reconfigure-to-include-mcstas-components
-make -j$CORES wrap-mcstas-components-cmake
-make -j$CORES 
-make test ARGS="-j$CORES"
+cmake $SRC -DDEPLOYMENT_PREFIX=/opt/danse -DCMAKE_INSTALL_PREFIX=$INSTALL \
+    && make -j$CORES reconfigure-to-include-mcstas-components \
+    && make -j$CORES wrap-mcstas-components-cmake \
+    && make -j$CORES \
+    && make test ARGS="-j$CORES"
