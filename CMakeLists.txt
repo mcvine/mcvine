@@ -118,9 +118,7 @@ install(DIRECTORY ${EXPORT_BIN}/ DESTINATION bin
 # install etc
 install(DIRECTORY ${EXPORT_ETC}/ DESTINATION etc)
 # install share
-install(DIRECTORY ${EXPORT_SHARE}/ DESTINATION share/${PROJECT_NAME}/)
-# install tests
-install(DIRECTORY ${TESTS_DIR} DESTINATION share/${PROJECT_NAME}/)
+install(DIRECTORY ${EXPORT_SHARE}/ DESTINATION share)
 
 # packaging
 set(PKG_NAME "mcvine")
