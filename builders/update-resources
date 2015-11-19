@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+PARENT=/opt/danse/share/mcvine
+cd $PARENT
+sudo git pull

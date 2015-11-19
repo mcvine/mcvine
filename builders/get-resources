@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+PARENT=/opt/danse/share/mcvine
+sudo mkdir -p $PARENT
+cd $PARENT
+sudo git clone https://github.com/mcvine/resources
