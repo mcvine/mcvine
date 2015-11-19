@@ -17,4 +17,4 @@ foreach (_srcdir ${SRC_DIRS})
 endforeach(_srcdir ${SRC_DIRS})
 
 # add python tests
-# PYUNITTEST_ADD_TESTS_IN_DIR( ${TESTS_DIR}/mccomponents "mccomponents")
+PYUNITTEST_ADD_TESTS_IN_DIR( ${TESTS_DIR}/mccomponents "mccomponents")
