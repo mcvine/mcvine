@@ -35,5 +35,4 @@ cd $BUILD
 cmake $SRC -DDEPLOYMENT_PREFIX=/opt/danse -DCMAKE_INSTALL_PREFIX=$INSTALL \
     && make -j$CORES reconfigure-to-include-mcstas-components \
     && make -j$CORES wrap-mcstas-components-cmake \
-    && make -j$CORES \
-    && make test ARGS="-j$CORES"
+    && make -j$CORES 
