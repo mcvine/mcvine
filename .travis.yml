@@ -1,5 +1,4 @@
 sudo: required
-dist: trusty
 
 language: cpp
 
@@ -20,7 +19,7 @@ before_script:
   - git clone https://github.com/mcvine/resources.git
 
 script:
-  - docker run -v $PWD:/mcvine-src -w /mcvine-src linjiao/mcvine-ubuntu-deps:14.04  "./builders/build /mcvine-src /mcvine-build /mcvine-install /mcvine-src/resources 2 && ./builders/test /mcvine-build /mcvine-src/resources 2
+  - docker run -v $PWD:/mcvine-src -w /mcvine-src linjiao/mcvine-ubuntu-deps:14.04  "./builders/build /mcvine-src /mcvine-build /mcvine-install /mcvine-src/resources 2 && ./builders/test /mcvine-build /mcvine-src/resources 2"
     
 notifications:
   email:
