@@ -13,7 +13,10 @@ add_subdirectory(libmccomponents)
 
 # copy tests to build
 foreach (_srcdir ${SRC_DIRS})
-  file(COPY ${_srcdir} DESTINATION ${TESTS_DIR}/mccomponents/)
+  file(COPY ${_srcdir} DESTINATION ${TESTS_DIR}/mccomponents/
+    FILES_MATCHING 
+    PATTERN "*"
+    PATTERN "sansmodel*" EXCLUDE)
 endforeach(_srcdir ${SRC_DIRS})
 
 # add python tests
