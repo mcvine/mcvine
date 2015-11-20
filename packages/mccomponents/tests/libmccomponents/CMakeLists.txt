@@ -64,3 +64,7 @@ CUNITTEST_ADD_TESTS(
   "lib${PACKAGE_NAME}" link_libs deps
   ${SRC_FILES})
 
+
+
+#
+add_subdirectory("boostpython_binding/neutron_printer3")

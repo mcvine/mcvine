@@ -133,7 +133,7 @@ def pysuite():
 
 
 def main():
-    TestCase.interactive = True
+    # TestCase.interactive = True
     #debug.activate()
     #journal.debug("CompositeNeutronScatterer_Impl").activate()
     #journal.debug('phonon_coherent_inelastic_polyxtal_kernel').activate()
