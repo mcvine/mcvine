@@ -5,6 +5,7 @@ set(SRC_DIRS
   mccomponentsbpmodule
   mccomponents
   kernels
+  data
   # bin
   )
 
