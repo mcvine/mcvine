@@ -2,6 +2,6 @@
 
 # MCViNE: Monte Carlo VIrtual Neutron Experiment
 
-* Examples: http://docs.danse.us/VNET/VNFatSNS/
-* Publications: http://mcvine.github.io/Publications.html
-* Documentation: http://mcvine.github.io/
+* Homepage: http://www.mcvine.org
+* Examples: http://www.mcvine.org/examples.html
+* Publications: http://www.mcvine.org/publications.html
