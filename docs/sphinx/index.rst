@@ -71,6 +71,7 @@ Getting Started
 More infomation
 ---------------
 
+* :ref:`News <news>`
 * :ref:`Publications <publications>`
 * `The user mailing list <http://groups.google.com/group/mcvine-users>`_
 * `The developer mailing list <http://groups.google.com/group/mcvine-dev>`_
