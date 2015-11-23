@@ -20,7 +20,7 @@ Publications made use of MCViNE
 #. Yuen Yiu, A.A. Aczel, G.E. Granroth, D.L. Abernathy, M.B. Stone, W.J.L. Buyers, J.Y.Y. Lin, G.D. Samolyuk, G.M. Stocks, and S.E. Nagler, Light atom quantum oscillations in UC and US, submitted, arXiv preprint arXiv:1508.00930
 
 
-   2014
+2014
 ~~~~
 #. Jiao Y. Y. Lin, Adam. A. Aczel, Douglas L. Abernathy, Steve E. Nagler, William J. L. Buyers, and Garrett E. Granroth, Using Monte Carlo ray tracing simulations to model the quantum harmonic oscillator modes observed in uranium nitride, Physical Review B, 89, 144302, 2014.
 
