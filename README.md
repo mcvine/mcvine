@@ -3,4 +3,5 @@
 # MCViNE: Monte Carlo VIrtual Neutron Experiment
 
 * Homepage: http://www.mcvine.org
-* Publications: http://www.mcvine.org/Publications.html
+* Examples: http://www.mcvine.org/examples.html
+* Publications: http://www.mcvine.org/publications.html
