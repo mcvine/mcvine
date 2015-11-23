@@ -23,6 +23,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="mcvine 1.0 documentation" href="index.html" /> 
   </head>
   <body>
@@ -111,11 +112,11 @@ neutron scatterer.</p>
 <li>S(neutron)</li>
 </ul>
 <p>The method scattering_coefficient(neutron) can be computed as
-<img class="math" src="_images/math/6f0149a1e87bb0f75a29c514aca84bc38503f927.png" alt="\sigma / v_0"/>, where <img class="math" src="_images/math/2298cf1485084afe72757a9c8483af49a138d81f.png" alt="\sigma"/> is the total cross section
-of a unit cell and <img class="math" src="_images/math/86b9d0c0fb1047cba5bea0154ea1965aabc6053a.png" alt="v_0"/> is the unit cell volume,
+<span class="math">\(\sigma / v_0\)</span>, where <span class="math">\(\sigma\)</span> is the total cross section
+of a unit cell and <span class="math">\(v_0\)</span> is the unit cell volume,
 if the material is crystalline.</p>
 <p>The method S(neutron) resembles the dynamic structure factor
-<img class="math" src="_images/math/c2bd9f82a83159f34a0725db516cd060bc522218.png" alt="S({\bold Q}, E)"/>.
+<span class="math">\(S({\bold Q}, E)\)</span>.
 In this method, we need to choose a scattering direction and
 its speed, and adjust the probability of the neutron
 according to the dynamic structure factor.
@@ -125,11 +126,11 @@ of the scattered neutrons, while the total amount of scattering
 is determined by the cross section, which is already taken
 care of by the scattering_coefficient method.
 Another useful fact is when the scattering is isotropic,
-<img class="math" src="_images/math/7239c478fb99bd2f0a879215f0320434071c6ed3.png" alt="S({\bold Q})=1"/>.
+<span class="math">\(S({\bold Q})=1\)</span>.
 The method S(neutron) is more complicated than just
-computing <img class="math" src="_images/math/c2bd9f82a83159f34a0725db516cd060bc522218.png" alt="S({\bold Q}, E)"/>, however.
+computing <span class="math">\(S({\bold Q}, E)\)</span>, however.
 It involves Monte Carlo selection and the random variables
-are usually not simply <img class="math" src="_images/math/33f7c87c4b66b41d92a1ab32a6eaeccd3ec713bb.png" alt="\bold Q"/> and <img class="math" src="_images/math/cfd13a0f26eb7ef0093319a7669da7dd3771dbac.png" alt="E"/>.</p>
+are usually not simply <span class="math">\(\bold Q\)</span> and <span class="math">\(E\)</span>.</p>
 <p>In the following, typical implementations for some
 kernels are documented.</p>
 </div>
@@ -139,23 +140,23 @@ kernels are documented.</p>
 And it could be a good approximation for incoherent
 scattering at low temperature.</p>
 <p>The implementation is easy: just generate
-randomly and uniformly neutrons in all <img class="math" src="_images/math/68f0a8f80ca0cffa13635d762ef5046571f05d9b.png" alt="4\pi"/>
+randomly and uniformly neutrons in all <span class="math">\(4\pi\)</span>
 solid angle.</p>
 </div>
 <div class="section" id="s-q-e-kernel">
 <h2>S(Q,E) kernel<a class="headerlink" href="#s-q-e-kernel" title="Permalink to this headline">¶</a></h2>
-<p>This kernel works with scalar Q instead of <img class="math" src="_images/math/33f7c87c4b66b41d92a1ab32a6eaeccd3ec713bb.png" alt="\bold Q"/>
+<p>This kernel works with scalar Q instead of <span class="math">\(\bold Q\)</span>
 vector, meaning it is most useful for powder studies.</p>
 <p>Start from the definition of dynamic structure factor:</p>
 <div class="math">
-<p><img src="_images/math/d3ad8d289bcd6d4f98e5d8527403d318aa796401.png" alt="\frac{d^2 \sigma}{d\Omega dE_f} =
+\[\frac{d^2 \sigma}{d\Omega dE_f} =
 \frac{\sigma}{4\pi}
 \frac{k_f}{k_i}
-N S(Q,E)"/></p>
-</div><p>The integrated scattering intensity for a chosen <img class="math" src="_images/math/7b1816c51f7d31275cd3ad400208fb7b3ce136a0.png" alt="Q"/>
-and <img class="math" src="_images/math/cfd13a0f26eb7ef0093319a7669da7dd3771dbac.png" alt="E"/> is at a cone, or we can write</p>
+N S(Q,E)\]</div>
+<p>The integrated scattering intensity for a chosen <span class="math">\(Q\)</span>
+and <span class="math">\(E\)</span> is at a cone, or we can write</p>
 <div class="math">
-<p><img src="_images/math/d4593128fb970a53050b83f7c7ab06814da7a417.png" alt="\frac{\sigma}{4\pi}
+\[\frac{\sigma}{4\pi}
 d\Omega
 \frac{k_f}{k_i}
 N S(Q,E)
@@ -163,25 +164,25 @@ N S(Q,E)
 \frac{\sigma}{4\pi}
 2\pi \sin\theta d\theta
 \frac{k_f}{k_i}
-N S(Q,E)"/></p>
-</div><p>Observe</p>
+N S(Q,E)\]</div>
+<p>Observe</p>
 <div class="math">
-<p><img src="_images/math/d1ca65eaf579086d811a643b75ff1d6f6f277451.png" alt="k_i^2 + k_f^2 - 2 k_i k_f \cos\theta = Q^2"/></p>
-</div><p>and hence,</p>
+\[k_i^2 + k_f^2 - 2 k_i k_f \cos\theta = Q^2\]</div>
+<p>and hence,</p>
 <div class="math">
-<p><img src="_images/math/6f10f2e77d271cc9ec20b34748b69f2cf026e9ff.png" alt="k_i k_f \sin\theta d\theta =  Q dQ"/></p>
-</div><p>we obtain,</p>
+\[k_i k_f \sin\theta d\theta =  Q dQ\]</div>
+<p>we obtain,</p>
 <div class="math">
-<p><img src="_images/math/2c2c69630ccd6675f428d252a0aef39467bbc4a3.png" alt="N \sigma \;
+\[N \sigma \;
 S(Q,E) \;
-\frac{Q dQ}{2 k^2_i}"/></p>
-</div><p>Or we can rewrite it as</p>
+\frac{Q dQ}{2 k^2_i}\]</div>
+<p>Or we can rewrite it as</p>
 <div class="math">
-<p><img src="_images/math/7256ed6c818a1ece51ae4418d22cde4d0cb5cc9c.png" alt="\frac{d^2 \sigma}{dE_f dQ}
+\[\frac{d^2 \sigma}{dE_f dQ}
 = N \sigma \;
 S(Q,E) \;
-\frac{Q}{2 k^2_i}"/></p>
-</div></div>
+\frac{Q}{2 k^2_i}\]</div>
+</div>
 <div class="section" id="coherent-inelastic-phonon-kernel-for-powder-sample">
 <h2>Coherent inelastic phonon kernel for powder sample<a class="headerlink" href="#coherent-inelastic-phonon-kernel-for-powder-sample" title="Permalink to this headline">¶</a></h2>
 <p>From Squire, the double differential cross section
@@ -190,7 +191,7 @@ one phonon is
 (the expression for scattering that annhilates one phonon can
 be treated similarly)</p>
 <div class="math">
-<p><img src="_images/math/dd1385998ae61788f988b8daf0925aac77d93f04.png" alt="\left( \frac{d^2 \sigma}{d\Omega dE_f} \right)_{coh+1} =
+\[\left( \frac{d^2 \sigma}{d\Omega dE_f} \right)_{coh+1} =
 \frac{\sigma_{coh}}{4\pi}
 \frac{k_f}{k_i}
 \frac{\left( 2\pi \right)^3}{v_0}
@@ -201,20 +202,20 @@ e^{-2W}
 {\omega_{{\bold Q},\alpha}}
 \langle n_{{\bold Q},\alpha} + 1 \rangle
 \delta(\omega_i-\omega_f-\omega_{{\bold Q},\alpha})
-\delta({\bold k}_i-{\bold k}_f - {\bold Q} )"/></p>
-</div><p>We want to compute the total cross section for a specific <img class="math" src="_images/math/33f7c87c4b66b41d92a1ab32a6eaeccd3ec713bb.png" alt="\bold Q"/>.
+\delta({\bold k}_i-{\bold k}_f - {\bold Q} )\]</div>
+<p>We want to compute the total cross section for a specific <span class="math">\(\bold Q\)</span>.
 Note that the differential solid angle above is for the scattered neutron,
-i.e., <img class="math" src="_images/math/0c1350018b9539e2956a65f90a93beea0e50af4d.png" alt="d\Omega = d\Omega_f"/>.
+i.e., <span class="math">\(d\Omega = d\Omega_f\)</span>.
 Also note that for ideal powder sample, there are small crystallites
 inside the sample, and their orientation are uniformly and randomly
-distributed in the <img class="math" src="_images/math/68f0a8f80ca0cffa13635d762ef5046571f05d9b.png" alt="4\pi"/> solid angle.
+distributed in the <span class="math">\(4\pi\)</span> solid angle.
 Therefore, the integration we are looking for is</p>
 <div class="math" id="equation-sigma_Q">
-<p><span class="eqno">(1)</span><img src="_images/math/b596f16f67c255e80837b277ea978a4860d6950c.png" alt="\sigma_{\bold Q} = \int dE_f d\Omega_f \frac{d\Omega_i}{4\pi}
-\left( \frac{d^2 \sigma}{d\Omega dE_f} \right)_{\bold Q}"/></p>
-</div><p>where</p>
+<span class="eqno">(1)</span>\[\sigma_{\bold Q} = \int dE_f d\Omega_f \frac{d\Omega_i}{4\pi}
+\left( \frac{d^2 \sigma}{d\Omega dE_f} \right)_{\bold Q}\]</div>
+<p>where</p>
 <div class="math" id="equation-dd_sigma_Q">
-<p><span class="eqno">(2)</span><img src="_images/math/9dabdb08a00a503738a25e53d4f09bf6a05e38e3.png" alt="\left( \frac{d^2 \sigma}{d\Omega dE_f} \right)_{\bold Q} =
+<span class="eqno">(2)</span>\[\left( \frac{d^2 \sigma}{d\Omega dE_f} \right)_{\bold Q} =
 \frac{\sigma_{coh}}{4\pi}
 \frac{k_f}{k_i}
 \frac{\left( 2\pi \right)^3}{v_0}
@@ -224,36 +225,36 @@ e^{-2W}
 {\omega_{{\bold Q},\alpha}}
 \langle n_{{\bold Q},\alpha} + 1 \rangle
 \delta(\omega_i-\omega_f-\omega_{{\bold Q},\alpha})
-\delta({\bold k}_i-{\bold k}_f - {\bold Q} )"/></p>
-</div><p>We observe that</p>
+\delta({\bold k}_i-{\bold k}_f - {\bold Q} )\]</div>
+<p>We observe that</p>
 <div class="math">
-<p><img src="_images/math/f08b6aadab4e738021edc901945fc9654a9a0367.png" alt="k_i^2 + Q^2 - 2k_i Q \cos\theta = k_f^2"/></p>
-</div><p>where <img class="math" src="_images/math/a9cfbeb8ebee1f365919e147a79e242dcb67ee5d.png" alt="\theta"/> is the angle
-between <img class="math" src="_images/math/e1d57a3f83ab86e066cade9f1c02b2d3dd52484a.png" alt="\bold k_i"/> and <img class="math" src="_images/math/33f7c87c4b66b41d92a1ab32a6eaeccd3ec713bb.png" alt="\bold Q"/>.
+\[k_i^2 + Q^2 - 2k_i Q \cos\theta = k_f^2\]</div>
+<p>where <span class="math">\(\theta\)</span> is the angle
+between <span class="math">\(\bold k_i\)</span> and <span class="math">\(\bold Q\)</span>.
 Differentiate the equation and we obtain:</p>
 <div class="math" id="equation-diff_kiQkf_geom">
-<p><span class="eqno">(3)</span><img src="_images/math/978bd15cf937cc8ec44b4c92033f3a0ee8bf0029.png" alt="\frac{2m}{\hbar^2} dE_f = 2 k_i Q \sin\theta d\theta"/></p>
-</div><p>Since <img class="math" src="_images/math/c6a2f4c2d3186f40d5af7b4579cdfcb5934461ab.png" alt="{\bold k_i}"/> is at a cone about <img class="math" src="_images/math/33f7c87c4b66b41d92a1ab32a6eaeccd3ec713bb.png" alt="\bold Q"/>
-at angle <img class="math" src="_images/math/a9cfbeb8ebee1f365919e147a79e242dcb67ee5d.png" alt="\theta"/>, we have</p>
+<span class="eqno">(3)</span>\[\frac{2m}{\hbar^2} dE_f = 2 k_i Q \sin\theta d\theta\]</div>
+<p>Since <span class="math">\({\bold k_i}\)</span> is at a cone about <span class="math">\(\bold Q\)</span>
+at angle <span class="math">\(\theta\)</span>, we have</p>
 <div class="math" id="equation-dOmega_i">
-<p><span class="eqno">(4)</span><img src="_images/math/075e8ca8fac7f408f29456142dc2da15f4048bd8.png" alt="d\Omega_i = 2\pi \sin\theta d\theta"/></p>
-</div><p>On the other hand,</p>
+<span class="eqno">(4)</span>\[d\Omega_i = 2\pi \sin\theta d\theta\]</div>
+<p>On the other hand,</p>
 <div class="math" id="equation-d_k_f">
-<p><span class="eqno">(5)</span><img src="_images/math/8faaeb40b0046d404e78690ef0476cdbcbf9f28c.png" alt="d{\bold k_f} = k_f^2 dk_f d\Omega_f = \frac{m k_f}{\hbar^2} dE_f d\Omega_f"/></p>
-</div><p>Plug Eqs <a href="#equation-dd_sigma_Q">(2)</a>, <a href="#equation-diff_kiQkf_geom">(3)</a>, <a href="#equation-dOmega_i">(4)</a>, <a href="#equation-d_k_f">(5)</a> into <a href="#equation-sigma_Q">(1)</a>, we obtain</p>
+<span class="eqno">(5)</span>\[d{\bold k_f} = k_f^2 dk_f d\Omega_f = \frac{m k_f}{\hbar^2} dE_f d\Omega_f\]</div>
+<p>Plug Eqs <a href="#equation-dd_sigma_Q">(2)</a>, <a href="#equation-diff_kiQkf_geom">(3)</a>, <a href="#equation-dOmega_i">(4)</a>, <a href="#equation-d_k_f">(5)</a> into <a href="#equation-sigma_Q">(1)</a>, we obtain</p>
 <div class="math">
-<p><img src="_images/math/880ef561169de4b77d96c2de9bd74e0b2f69aed2.png" alt="\sigma_{\bold Q} =
+\[\sigma_{\bold Q} =
 \frac{\sigma_{coh}}{4\pi}
 \frac{k_f}{k_i}
 \frac{\left( 2\pi \right)^3}{v_0}
 e^{-2W}
 \frac{\hbar^2 ({\bold Q}\cdot {\bold e})^2}{2M \hbar\omega}
 \langle n + 1 \rangle
-\frac{1}{2 k_i k_f Q}"/></p>
-</div><p>In the implementation, we need to randomly select a branch and a
-<img class="math" src="_images/math/33f7c87c4b66b41d92a1ab32a6eaeccd3ec713bb.png" alt="\bold Q"/>, and then compute
-<img class="math" src="_images/math/7f985c121a2f4857d3b6902dfb3724724904b89e.png" alt="\sigma_{\bold Q}"/>.
-Due to randomly selection of <img class="math" src="_images/math/33f7c87c4b66b41d92a1ab32a6eaeccd3ec713bb.png" alt="\bold Q"/>,
+\frac{1}{2 k_i k_f Q}\]</div>
+<p>In the implementation, we need to randomly select a branch and a
+<span class="math">\(\bold Q\)</span>, and then compute
+<span class="math">\(\sigma_{\bold Q}\)</span>.
+Due to randomly selection of <span class="math">\(\bold Q\)</span>,
 a multiplication factor of
 number of possible Q points to choose from.
 Consider the number of Q points in one reciprocal
@@ -261,22 +262,22 @@ unitcell for one phonon branch is N, or
 the number of unit cells in one crystal,
 we obtain the multiplication factor as</p>
 <div class="math">
-<p><img src="_images/math/9b4cead08eecb76ffc8239ca8346bc24f771c1a1.png" alt="N \frac{V_{r,accessible}}{v_{0r}}"/></p>
-</div><p>where <img class="math" src="_images/math/fcb0244af15a42e9d37e8b482f60eb5ddd0c85eb.png" alt="V_{r,accessible}"/> is the reciprocal
+\[N \frac{V_{r,accessible}}{v_{0r}}\]</div>
+<p>where <span class="math">\(V_{r,accessible}\)</span> is the reciprocal
 volume accessible by the scattering process, which
 depends on the incident neutron energy, and
-<img class="math" src="_images/math/52fae939bf4e57a7dbd2f02a4b41532a944b7de0.png" alt="v_{0r}"/> is the volume of the reciprocal unit cell.
-Note that <img class="math" src="_images/math/869fcce368c8a476a6cdbaafb0bad3c684ff45e5.png" alt="N \sigma_{coh}"/> is actually taken care of
-elsewhere, and <img class="math" src="_images/math/bf4d225f89fe87b34fe78ba4967d2b1155bb63e5.png" alt="v_{0r}=   \frac{\left( 2\pi \right)^3}{v_0}"/>
+<span class="math">\(v_{0r}\)</span> is the volume of the reciprocal unit cell.
+Note that <span class="math">\(N \sigma_{coh}\)</span> is actually taken care of
+elsewhere, and <span class="math">\(v_{0r}=   \frac{\left( 2\pi \right)^3}{v_0}\)</span>
 the probablity multiplication factor is</p>
 <div class="math">
-<p><img src="_images/math/65604df226268a0bf513589979ce3d64dab9490b.png" alt="\frac{1}{4\pi}
+\[\frac{1}{4\pi}
 \frac{k_f}{k_i}
 e^{-2W}
 \frac{\hbar^2 ({\bold Q}\cdot {\bold e})^2}{2M \hbar\omega}
 \langle n + 1 \rangle
-\frac{V_{r,accessible}}{2 k_i k_f Q}"/></p>
-</div></div>
+\frac{V_{r,accessible}}{2 k_i k_f Q}\]</div>
+</div>
 <div class="section" id="one-phonon-coherent-inelastic-scattering-single-crystal">
 <h2>One-phonon coherent inelastic scattering, single crystal<a class="headerlink" href="#one-phonon-coherent-inelastic-scattering-single-crystal" title="Permalink to this headline">¶</a></h2>
 <div class="admonition note">
@@ -285,44 +286,44 @@ e^{-2W}
 </div>
 <p>Now we are considering more complex examples. Suppose we are working on a single-crystal sample. For now, we are only concerned with coherent inelastic scattering with one-phonon processes. First let us look at the differential cross section of one-phonon emission:</p>
 <div class="math">
-<p><img src="_images/math/16a53225a7ddb21fe539a1a65e82ddd28fa3cd80.png" alt="\left( \frac{d^2 \sigma}{d\Omega dE_f} \right)_{coh+1} =
+\[\left( \frac{d^2 \sigma}{d\Omega dE_f} \right)_{coh+1} =
 \frac{\sigma_{coh}}{4\pi} \frac{k_f}{k_i}
 \frac{\left( 2\pi \right)^3}{v_0}\frac{1}{2M}
 e^{-2W}
 \sum_{\bold Q}\frac{\left( {\bold Q}\cdot {\bold e}_{{\bold Q},\alpha}\right)^2}
 {\omega_{{\bold Q},\alpha}} \langle n_{{\bold Q},\alpha} + 1 \rangle
 \delta(\omega_i-\omega_f-\omega_{{\bold Q},\alpha})
-\delta({\bold k}_i-{\bold k}_f - {\bold Q} )"/></p>
-</div><p>where <img class="math" src="_images/math/f70c21bdecdb39a9434773a496df7ab8aefe058c.png" alt="{\bold Q}"/> is the wave vector of phonon, <img class="math" src="_images/math/ad59b6e24a4a00ac621801f8d7513d68be654ab5.png" alt="\alpha"/> is the index for phonon branch, <img class="math" src="_images/math/ab2018a4a5886f224b586c5892d04402d0b8f574.png" alt="\omega_{{\bold Q},\alpha}"/> is the phonon enregy, <img class="math" src="_images/math/a581f053bbfa5115f42c13094857cdd12a37ec49.png" alt="i"/> and <img class="math" src="_images/math/0001d02b63ede2fe3219e05a7cd09c82ae6298b6.png" alt="f"/> represents initial and final states of neutron, <img class="math" src="_images/math/872a664cf0a39eba8e195262b9508c859042a2c9.png" alt="\sigma_{coh}"/> is the coherent scattering cross section, <img class="math" src="_images/math/86b9d0c0fb1047cba5bea0154ea1965aabc6053a.png" alt="v_0"/> is the volume of the unit cell, <img class="math" src="_images/math/2de38926392ba23abeac75effc66c37a5f5be5fd.png" alt="M"/> is the mass of the atom.</p>
+\delta({\bold k}_i-{\bold k}_f - {\bold Q} )\]</div>
+<p>where <span class="math">\({\bold Q}\)</span> is the wave vector of phonon, <span class="math">\(\alpha\)</span> is the index for phonon branch, <span class="math">\(\omega_{{\bold Q},\alpha}\)</span> is the phonon enregy, <span class="math">\(i\)</span> and <span class="math">\(f\)</span> represents initial and final states of neutron, <span class="math">\(\sigma_{coh}\)</span> is the coherent scattering cross section, <span class="math">\(v_0\)</span> is the volume of the unit cell, <span class="math">\(M\)</span> is the mass of the atom.</p>
 <p>For convenience, define</p>
 <div class="math">
-<p><img src="_images/math/83d75fed7514fc0e44dc47bf5acbdb98f3a43285.png" alt="C = \frac{\sigma_{coh}}{4\pi} \frac{k_f}{k_i}
-\frac{\left( 2\pi \right)^3}{v_0}\frac{1}{2M} e^{-2W}"/></p>
-</div><p>In the case of large crystal, the density of Q points in the reciprocal space is high, and the summation over <img class="math" src="_images/math/f70c21bdecdb39a9434773a496df7ab8aefe058c.png" alt="{\bold Q}"/> can be replaced by an integration:</p>
+\[C = \frac{\sigma_{coh}}{4\pi} \frac{k_f}{k_i}
+\frac{\left( 2\pi \right)^3}{v_0}\frac{1}{2M} e^{-2W}\]</div>
+<p>In the case of large crystal, the density of Q points in the reciprocal space is high, and the summation over <span class="math">\({\bold Q}\)</span> can be replaced by an integration:</p>
 <div class="math">
-<p><img src="_images/math/67c92f06bd951e8a93f88a75e1ae6222a9e61a47.png" alt="\sum_{\bold Q} = \int \frac{V}{(2\pi)^3} d{\bold Q}"/></p>
-</div><p>(C.1) reduces to</p>
+\[\sum_{\bold Q} = \int \frac{V}{(2\pi)^3} d{\bold Q}\]</div>
+<p>(C.1) reduces to</p>
 <div class="math">
-<p><img src="_images/math/0dcace6e25c2f643bda7602254380b8f28c858f4.png" alt="\left( \frac{d^2 \sigma}{d\Omega dE_f} \right)_{coh+1}
+\[\left( \frac{d^2 \sigma}{d\Omega dE_f} \right)_{coh+1}
 =C \times
 \frac{V}{(2\pi)^3}
 \left.\left[
 \frac{\left( {\bold Q}\cdot {\bold e}_{{\bold Q},\alpha}\right)^2}
 {\omega_{{\bold Q},\alpha}} \langle n_{{\bold Q},\alpha} + 1 \rangle
 \delta(\omega_i-\omega_f-\omega_{{\bold Q},\alpha})
-\right]\right|_{{\bold Q}={\bold k}_i-{\bold k}_f}"/></p>
-</div><p>The &#8220;evaluate at&#8221; symbol reminds us the momentum conservation condition resulted from the integration of one of the delta functions in (C.1).</p>
+\right]\right|_{{\bold Q}={\bold k}_i-{\bold k}_f}\]</div>
+<p>The &#8220;evaluate at&#8221; symbol reminds us the momentum conservation condition resulted from the integration of one of the delta functions in (C.1).</p>
 <p>We now want to evaluate the differntial cross section
-<img class="math" src="_images/math/bfe89c73159d2d488c473c99f156523e7df8b026.png" alt="\frac{d\sigma}{d\Omega}"/>
-by doing an integration over <img class="math" src="_images/math/6e9f22040d0fa294eb3b8c0583ee7d7d15ad992a.png" alt="E_f"/></p>
-<p>This means that we fix the scattering direction, <img class="math" src="_images/math/87835004c4a63fb1be9f04da800f2f463358822d.png" alt="\frac{{\bold k}_f}{k_f}"/>. By changing <img class="math" src="_images/math/6e9f22040d0fa294eb3b8c0583ee7d7d15ad992a.png" alt="E_f"/>, we are changing the length of scattering wave vector, <img class="math" src="_images/math/7cc862741943be6799881182389a2984ae22d035.png" alt="k_f"/>, and therefore changing <img class="math" src="_images/math/f70c21bdecdb39a9434773a496df7ab8aefe058c.png" alt="{\bold Q}"/> and <img class="math" src="_images/math/ab2018a4a5886f224b586c5892d04402d0b8f574.png" alt="\omega_{{\bold Q},\alpha}"/></p>
+<span class="math">\(\frac{d\sigma}{d\Omega}\)</span>
+by doing an integration over <span class="math">\(E_f\)</span></p>
+<p>This means that we fix the scattering direction, <span class="math">\(\frac{{\bold k}_f}{k_f}\)</span>. By changing <span class="math">\(E_f\)</span>, we are changing the length of scattering wave vector, <span class="math">\(k_f\)</span>, and therefore changing <span class="math">\({\bold Q}\)</span> and <span class="math">\(\omega_{{\bold Q},\alpha}\)</span></p>
 <p>Thus</p>
 <div class="math">
-<p><img src="_images/math/01f1552d0ae75345f127e84b3af2e6cbeb7c87b2.png" alt="\int \delta(\omega_i-\omega_f-\omega_{{\bold Q},\alpha}) d E_f
-= \frac{\hbar}{ d(\omega_f + \omega_{{\bold Q},\alpha}) / {d\omega_f} }"/></p>
-</div><p>The differential cross section is then</p>
+\[\int \delta(\omega_i-\omega_f-\omega_{{\bold Q},\alpha}) d E_f
+= \frac{\hbar}{ d(\omega_f + \omega_{{\bold Q},\alpha}) / {d\omega_f} }\]</div>
+<p>The differential cross section is then</p>
 <div class="math">
-<p><img src="_images/math/3e931980d4045ba493326f58df10eab2d0885e62.png" alt="\left( \frac{d \sigma}{d\Omega} \right)_{coh+1}
+\[\left( \frac{d \sigma}{d\Omega} \right)_{coh+1}
 = C \times \frac{V}{(2\pi)^3}
 \left.\left[
 \frac{\left( {\bold Q}\cdot {\bold e}_{{\bold Q},\alpha}\right)^2}{\omega_{{\bold Q},\alpha}}
@@ -331,9 +332,9 @@ by doing an integration over <img class="math" src="_images/math/6e9f22040d0fa29
 \right]\right|_{
 {\bold Q}={\bold k}_i-{\bold k}_f;
 \omega_{{\bold Q},\alpha}=\omega_i-\omega_f
-}"/></p>
-</div><div class="math">
-<p><img src="_images/math/4db8c9b8cbd0629b0d368b11a73516ffe8d9c810.png" alt="\left( \frac{d \sigma}{d\Omega} \right)_{coh+1}
+}\]</div>
+<div class="math">
+\[\left( \frac{d \sigma}{d\Omega} \right)_{coh+1}
 =\frac{\sigma_{coh}}{4\pi} \frac{k_f}{k_i}
 N
 \frac{1}{2M} e^{-2W}
@@ -341,17 +342,17 @@ N
 \frac{\left( {\bold Q}\cdot {\bold e}_{{\bold Q},\alpha}\right)^2}{\omega_{{\bold Q},\alpha}}
 \langle n_{{\bold Q},\alpha} + 1 \rangle
 \frac{\hbar}{ d(\omega_f + \omega_{{\bold Q},\alpha}) / {d\omega_f} }
-\right]"/></p>
-</div><p>in which we neglect the &#8220;evaluate at&#8221; symbol.</p>
+\right]\]</div>
+<p>in which we neglect the &#8220;evaluate at&#8221; symbol.</p>
 <p>To get scattering probability from scattering cross section, we need a factor of
-<img class="math" src="_images/math/a8a242469d6e810e43812144a60d92eac1b373ac.png" alt="\frac{l}{V}"/>
-where <img class="math" src="_images/math/d99efde75c84ef402a92cd4497530d2366fb112f.png" alt="l"/> is the length of the path that neutron goes through the sample, and <img class="math" src="_images/math/c99df7a209495334da442b1ec998abaabfa320d8.png" alt="V"/> is the volume of the sample.</p>
-<p>Also in the previous section we have shown that we need a factor of <img class="math" src="_images/math/68f0a8f80ca0cffa13635d762ef5046571f05d9b.png" alt="4\pi"/>.</p>
+<span class="math">\(\frac{l}{V}\)</span>
+where <span class="math">\(l\)</span> is the length of the path that neutron goes through the sample, and <span class="math">\(V\)</span> is the volume of the sample.</p>
+<p>Also in the previous section we have shown that we need a factor of <span class="math">\(4\pi\)</span>.</p>
 <p>Considering the absorption along the path, there is another factor of
-<img class="math" src="_images/math/479fe37f3d4ab508dd14d48a049fdf342d1edf98.png" alt="e^{-\frac{\sigma_a(v_i)+\sigma_i}{v_0} l_i} e^{-\frac{\sigma_a(v_f)+\sigma_i}{v_0} l_f}"/>.</p>
+<span class="math">\(e^{-\frac{\sigma_a(v_i)+\sigma_i}{v_0} l_i} e^{-\frac{\sigma_a(v_f)+\sigma_i}{v_0} l_f}\)</span>.</p>
 <p>So the final result of Monte-Carlo probability multiplication factor is</p>
 <div class="math">
-<p><img src="_images/math/e33bc6ad24a0f70d1ffcad02d5b8e9580993806b.png" alt="{\sigma_{coh}} \frac{k_f}{k_i}
+\[{\sigma_{coh}} \frac{k_f}{k_i}
 \frac{l}{v_0}
 \frac{1}{2M} e^{-2W}
 e^{-\frac{\sigma_a(v_i)+\sigma_i}{v_0} l_i} e^{-\frac{\sigma_a(v_f)+\sigma_i}{v_0} l_f}
@@ -359,42 +360,42 @@ e^{-\frac{\sigma_a(v_i)+\sigma_i}{v_0} l_i} e^{-\frac{\sigma_a(v_f)+\sigma_i}{v_
 \frac{\left( {\bold Q}\cdot {\bold e}_{{\bold Q},\alpha}\right)^2}{\omega_{{\bold Q},\alpha}}
 \langle n_{{\bold Q},\alpha} + 1 \rangle
 \frac{\hbar}{ d(\omega_f + \omega_{{\bold Q},\alpha}) / {d\omega_f} }
-\right]"/></p>
-</div><p>where <img class="math" src="_images/math/10c345b663d1f9d62a89ffba4e95b297aadf92d2.png" alt="l_i,\, l_f"/> are the length of entering and leaving paths.
-The incoherent scattering cross section is <img class="math" src="_images/math/b79c9c4567863b03143dff446f6b06d86ec45d31.png" alt="\sigma_i"/>, and</p>
+\right]\]</div>
+<p>where <span class="math">\(l_i,\, l_f\)</span> are the length of entering and leaving paths.
+The incoherent scattering cross section is <span class="math">\(\sigma_i\)</span>, and</p>
 <div class="math">
-<p><img src="_images/math/9c9296697dc284ff99002629511012db4ef87639.png" alt="\sigma_a(v) = \sigma_a(2200m/s)\frac{2200}{v}"/></p>
-</div><p>is the absorption cross section.</p>
+\[\sigma_a(v) = \sigma_a(2200m/s)\frac{2200}{v}\]</div>
+<p>is the absorption cross section.</p>
 </div>
 <div class="section" id="scattering-from-single-crystal-analytical-dispersion-function">
 <h2>Scattering from single crystal analytical dispersion function<a class="headerlink" href="#scattering-from-single-crystal-analytical-dispersion-function" title="Permalink to this headline">¶</a></h2>
 <div class="math">
-<p><img src="_images/math/92fa4e69e1d71eb3f893c68086bfc030d81c5096.png" alt="\frac{d^2 \sigma}{d\Omega dE_f} =
+\[\frac{d^2 \sigma}{d\Omega dE_f} =
 \frac{\sigma}{4\pi}
 \frac{k_f}{k_i}
-N S({\bold Q},E)"/></p>
-</div><div class="math">
-<p><img src="_images/math/a7316fbde7c83faabc60b4e83a38890bdc27868b.png" alt="S({\bold Q},E) = \delta(E-E({\bold Q})) S({\bold Q})"/></p>
-</div><p>The algorithm first randomly choose a direction in the
+N S({\bold Q},E)\]</div>
+<div class="math">
+\[S({\bold Q},E) = \delta(E-E({\bold Q})) S({\bold Q})\]</div>
+<p>The algorithm first randomly choose a direction in the
 4pi solid angle, and that takes care of
-<img class="math" src="_images/math/bf24ceb41cf86647d98cae97d62b5e97b09b12f5.png" alt="d\Omega"/>.</p>
-<p>Along a chosen direction <img class="math" src="_images/math/4d6d4d02b420d651070462789dcd981d9bd31bbf.png" alt="{\bold e}_f"/>,
-we can use <img class="math" src="_images/math/7cc862741943be6799881182389a2984ae22d035.png" alt="k_f"/> as
+<span class="math">\(d\Omega\)</span>.</p>
+<p>Along a chosen direction <span class="math">\({\bold e}_f\)</span>,
+we can use <span class="math">\(k_f\)</span> as
 a parameter, and get two functions for energy transfer:</p>
 <div class="math">
-<p><img src="_images/math/307638630e7c4a47706679247dd3ec0ad0977e8e.png" alt="E1(k_f) = E_i - E_f = E_i - \frac{\hbar^2 k_f^2}{2 m}"/></p>
-</div><p>and</p>
+\[E1(k_f) = E_i - E_f = E_i - \frac{\hbar^2 k_f^2}{2 m}\]</div>
+<p>and</p>
 <div class="math">
-<p><img src="_images/math/fb3c0c54d1f89d484d428e66ba1742cd99271284.png" alt="E2(k_f) = E({\bold Q}) = E({\bold k}_i - k_f \; {\bold e}_f)"/></p>
-</div><p>The delta function in the structure factor requires these two
+\[E2(k_f) = E({\bold Q}) = E({\bold k}_i - k_f \; {\bold e}_f)\]</div>
+<p>The delta function in the structure factor requires these two
 functions to equal.
 We seek to transform the integration of delta function:</p>
 <div class="math">
-<p><img src="_images/math/f00cecd35e59e416e2488e327fc866426479864c.png" alt="\int \delta(E-E({\bold Q})) dE_f = \int \delta(f(k_f)) dk_f \; \frac{dE_f}{dk_f}"/></p>
-</div><p>or</p>
+\[\int \delta(E-E({\bold Q})) dE_f = \int \delta(f(k_f)) dk_f \; \frac{dE_f}{dk_f}\]</div>
+<p>or</p>
 <div class="math">
-<p><img src="_images/math/38946fb07f8103ff4145ffe8376fe29e14630546.png" alt="\int \delta(E-E({\bold Q})) dE_f = \left| \frac{d f}{dk_f} \right|^{-1} \; \frac{dE_f}{dk_f}"/></p>
-</div></div>
+\[\int \delta(E-E({\bold Q})) dE_f = \left| \frac{d f}{dk_f} \right|^{-1} \; \frac{dE_f}{dk_f}\]</div>
+</div>
 <div class="section" id="advanced-topics">
 <h2>Advanced topics<a class="headerlink" href="#advanced-topics" title="Permalink to this headline">¶</a></h2>
 <p>Method:</p>

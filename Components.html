@@ -23,6 +23,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="mcvine 1.0 documentation" href="index.html" /> 
   </head>
   <body>
@@ -322,13 +323,13 @@ for the simulations that use the storage to be successful.</p>
 the error bar of simulated intensity of a simulation using neutron storage
 is given by</p>
 <div class="math">
-<p><img src="_images/math/0dad71875b4f92016eed572db5b0b72a85cdaf09.png" alt="Err^2(I) = \Delta^2_{intrinsic} \times I^2  + \sum{p_i^2}"/></p>
-</div><p>and the instrinsic error induced by using the neutron
+\[Err^2(I) = \Delta^2_{intrinsic} \times I^2  + \sum{p_i^2}\]</div>
+<p>and the instrinsic error induced by using the neutron
 storage could be approximated from the data of the simulation
 that generated the neutron storage:</p>
 <div class="math">
-<p><img src="_images/math/193d2f5a5449ad8781d4f1b622390ca59717412f.png" alt="\Delta^2_{instrinsic} = \sum p_{ns, i}^2 / (\sum p_{ns, i})^2"/></p>
-</div><p>where the subscript &#8220;<img class="math" src="_images/math/da93a4433922cc997c2ea624d1828cda4232ec10.png" alt="ns"/>&#8221; denotes the simulation that generates
+\[\Delta^2_{instrinsic} = \sum p_{ns, i}^2 / (\sum p_{ns, i})^2\]</div>
+<p>where the subscript &#8220;<span class="math">\(ns\)</span>&#8221; denotes the simulation that generates
 the neutron storage.</p>
 <p>You can see that the errobar of a simulation involves a neutron
 source that replays neutrons in a neutron storage is limited by
