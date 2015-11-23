@@ -272,92 +272,92 @@ the number of Monte Carlo runs.</p>
 <h2>Error bar of simulated intensities<a class="headerlink" href="#error-bar-of-simulated-intensities" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="basic-treatment">
 <span id="fundamentals-errorbar-basic"></span><h3>Basic treatment<a class="headerlink" href="#basic-treatment" title="Permalink to this headline">¶</a></h3>
-<p>Here we examine the variance, or <span class="math">\sigma^2</span> of the simulated
+<p>Here we examine the variance, or <img class="math" src="_images/math/93c29bfedc993de115781b4fbb7e3a8b9e8d6b51.png" alt="\sigma^2"/> of the simulated
 intensities at virtual monitors.</p>
 <p>Let us think of a bin in a histogram gathered in a virtual monitor.
 Say, in a virtual experiment that bin get the total intensity,
-<span class="math">I</span>,</p>
+<img class="math" src="_images/math/5d9e7b2aec3287330051a115f2ea3cdc8c7a6587.png" alt="I"/>,</p>
 <div class="math">
-<p><span class="math">I = \sum p_i</span></p>
-</div><p>where <span class="math">p_i</span> is the probability of each neutron event recorded
+<p><img src="_images/math/7c0c96a7db24d65286b58bfc148074c61cf3dcde.png" alt="I = \sum p_i"/></p>
+</div><p>where <img class="math" src="_images/math/be005a6163eb06f81800d3f41ee8408927fec9d7.png" alt="p_i"/> is the probability of each neutron event recorded
 in the target bin.
-Our purpose here is to find the variance of the intensity <span class="math">I</span>,
-<span class="math">Var(I)</span>, or <span class="math">\sigma^2_I</span>.</p>
+Our purpose here is to find the variance of the intensity <img class="math" src="_images/math/5d9e7b2aec3287330051a115f2ea3cdc8c7a6587.png" alt="I"/>,
+<img class="math" src="_images/math/61e3c085217149a11b6e2f6ffcad75f5c1cd3aed.png" alt="Var(I)"/>, or <img class="math" src="_images/math/83bc60902b5fdd90d23d243eee91c940eb0c6b8a.png" alt="\sigma^2_I"/>.</p>
 <p>First, let us think about this problem intuitively.
 Apparantly with more events fall in to the target bin,
 we expect the variance will reduce with respect to
-the total intensity <span class="math">I</span>. A good approximation would be that
-the relative error, <span class="math">\frac{\sigma_I}{I}</span>, will reduce
-in the order of <span class="math">\sqrt{N}</span>, where <span class="math">N</span> is the
+the total intensity <img class="math" src="_images/math/5d9e7b2aec3287330051a115f2ea3cdc8c7a6587.png" alt="I"/>. A good approximation would be that
+the relative error, <img class="math" src="_images/math/94225bb3001fed6c3c996f4e41914bdab7b11e75.png" alt="\frac{\sigma_I}{I}"/>, will reduce
+in the order of <img class="math" src="_images/math/50ad50e28cb8df4a48967b3a38d4e877901b2d1d.png" alt="\sqrt{N}"/>, where <img class="math" src="_images/math/75e27f04188974063be3230dca208cd495b77ce1.png" alt="N"/> is the
 total number of events fall in the bin.</p>
 <p>Now, let us try to do a quantitative treatment of this problem.
 To start, let us not worry about the fact that the number
-of events, <span class="math">N</span>, is a result of random process. Let us assume
-that <span class="math">N</span> is a fixed number, and try to find out <span class="math">Var(I)</span>:</p>
+of events, <img class="math" src="_images/math/75e27f04188974063be3230dca208cd495b77ce1.png" alt="N"/>, is a result of random process. Let us assume
+that <img class="math" src="_images/math/75e27f04188974063be3230dca208cd495b77ce1.png" alt="N"/> is a fixed number, and try to find out <img class="math" src="_images/math/61e3c085217149a11b6e2f6ffcad75f5c1cd3aed.png" alt="Var(I)"/>:</p>
 <div class="math">
-<p><span class="math">Var_1(I) &amp;= Var(\sum p_i)    \\
+<p><img src="_images/math/04d87c1d92fe8c373234b673c790e3ba253148d1.png" alt="Var_1(I) &amp;= Var(\sum p_i)    \\
        &amp;= \sum Var(p_i)      \\
-       &amp;= N Var(\bar{p})</span></p>
-</div><p>where <span class="math">\bar{p}</span> is the mean value of the collection
-<span class="math">\{p_i\}</span>, or <span class="math">\bar{p}=\frac{1}{N}\sum{p_i}</span>.</p>
-<p>The variance of <span class="math">\bar{p}</span> can be estimated by</p>
+       &amp;= N Var(\bar{p})"/></p>
+</div><p>where <img class="math" src="_images/math/eb8a40ad6909151b7a829368bb8e599735b957f9.png" alt="\bar{p}"/> is the mean value of the collection
+<img class="math" src="_images/math/6d129086f518ea123b61cb71ac043a9bfc69e5e6.png" alt="\{p_i\}"/>, or <img class="math" src="_images/math/89f12fbb1a704244b1d0861aba19d71244a7a3a8.png" alt="\bar{p}=\frac{1}{N}\sum{p_i}"/>.</p>
+<p>The variance of <img class="math" src="_images/math/eb8a40ad6909151b7a829368bb8e599735b957f9.png" alt="\bar{p}"/> can be estimated by</p>
 <div class="math">
-<p><span class="math">Var(\bar{p}) &amp;= \frac{1}{N-1} \sum{(p_i-\bar{p})^2} \\
+<p><img src="_images/math/4786e9aa573891849eef9a8a947ded392f350821.png" alt="Var(\bar{p}) &amp;= \frac{1}{N-1} \sum{(p_i-\bar{p})^2} \\
              &amp;= \frac{1}{N-1} (\sum p^2_i - \frac{1}{N} {(\sum p_i)}^2) \\
-             &amp;= \frac{1}{N-1} (\sum p^2_i - N \bar{p}^2)</span></p>
+             &amp;= \frac{1}{N-1} (\sum p^2_i - N \bar{p}^2)"/></p>
 </div><p>and</p>
 <div class="math">
-<p><span class="math">Var_1(I) = \frac{N}{N-1} (\sum p^2_i - N \bar{p}^2)</span></p>
+<p><img src="_images/math/291550d018f11fb1e0c251d91762642f9acd57b7.png" alt="Var_1(I) = \frac{N}{N-1} (\sum p^2_i - N \bar{p}^2)"/></p>
 </div><p>Now, let us think about the effect of number of events being random.
 The variance resulted from that can be estimated as</p>
 <div class="math">
-<p><span class="math">Var_2(I) &amp;= Var(N) \times \bar{p}^2 \\
-         &amp;= N \times \bar{p}^2</span></p>
+<p><img src="_images/math/08c3e323b6972d202deb5523366de01ad9edf9c3.png" alt="Var_2(I) &amp;= Var(N) \times \bar{p}^2 \\
+         &amp;= N \times \bar{p}^2"/></p>
 </div><p>So we have</p>
 <div class="math">
-<p><span class="math">Var(I) &amp;= Var_1(I) + Var_2(I) \\
-       &amp;= \frac{N}{N-1} (\sum{p_i^2} - \bar{p}^2)</span></p>
+<p><img src="_images/math/a6c46a891ddd0b733c485cf32dd02f5687d2a0a4.png" alt="Var(I) &amp;= Var_1(I) + Var_2(I) \\
+       &amp;= \frac{N}{N-1} (\sum{p_i^2} - \bar{p}^2)"/></p>
 </div><p>In most cases, this could be approximated as</p>
 <div class="math">
-<p><span class="math">Var(I) = \sum{p_i^2}</span></p>
+<p><img src="_images/math/e835d5dc004fa5025acad65db044f36a66f3044c.png" alt="Var(I) = \sum{p_i^2}"/></p>
 </div><p>To see if this is a reasonable estimate, let us consider a special case
-in which most of <span class="math">p_i</span> have similar value. In that case,</p>
+in which most of <img class="math" src="_images/math/be005a6163eb06f81800d3f41ee8408927fec9d7.png" alt="p_i"/> have similar value. In that case,</p>
 <div class="math">
-<p><span class="math">Var(I) &amp;= \sum{\bar{p}^2} \\
-       &amp;= N\bar{p}^2 = I^2/N</span></p>
+<p><img src="_images/math/2ec7cb0466765b719ee74287b139cd8f71fc3d54.png" alt="Var(I) &amp;= \sum{\bar{p}^2} \\
+       &amp;= N\bar{p}^2 = I^2/N"/></p>
 </div><p>or</p>
 <div class="math">
-<p><span class="math">\frac{\sigma_I}{I} &amp;= \frac{\sqrt{Var(I)}}{I} \\
-                   &amp;= \frac{1}{\sqrt{N}}</span></p>
+<p><img src="_images/math/e5450e7d0a18b6a119ebfb535bf064e8d5dc08da.png" alt="\frac{\sigma_I}{I} &amp;= \frac{\sqrt{Var(I)}}{I} \\
+                   &amp;= \frac{1}{\sqrt{N}}"/></p>
 </div><p>which is consistent with our intuitive guess.</p>
 <p>The error bar of the intensity is then</p>
 <div class="math">
-<p><span class="math">Err(I) = \sqrt{Var(I)} = \sqrt{\sum{p_i^2}}</span></p>
+<p><img src="_images/math/a522097349a2c7879eeaebd7edd163956765be16.png" alt="Err(I) = \sqrt{Var(I)} = \sqrt{\sum{p_i^2}}"/></p>
 </div><p>or</p>
 <div class="math">
-<p><span class="math">Err^2(I) = \sum{p_i^2}</span></p>
+<p><img src="_images/math/3eb8a677d89ce3a29feae4c14235fb5b3dfa8b2d.png" alt="Err^2(I) = \sum{p_i^2}"/></p>
 </div></div>
 <div class="section" id="error-propagation">
 <span id="fundamentals-errorbar-errorprop"></span><h3>Error propagation<a class="headerlink" href="#error-propagation" title="Permalink to this headline">¶</a></h3>
 <p>In the above discussion we assumed that the probablities
-<span class="math">{p_i}</span> are computed precisely and have no errors
+<img class="math" src="_images/math/dfe22104bbc01b1fd242ed7750d897c2a6e10ae3.png" alt="{p_i}"/> are computed precisely and have no errors
 themselves.
-But there are cases that <span class="math">{p_i}</span> itself has intrinsic errors.</p>
+But there are cases that <img class="math" src="_images/math/dfe22104bbc01b1fd242ed7750d897c2a6e10ae3.png" alt="{p_i}"/> itself has intrinsic errors.</p>
 <p>In some cases, the intrinsic relative error can be seen as constant
 among all computed events:</p>
 <div class="math">
-<p><span class="math">\frac{Err_{intrinsic}(p_i)}{p_i} = \Delta_{intrinsic}</span></p>
+<p><img src="_images/math/f9ccc3d38f643517cec841a018990b3954c76265.png" alt="\frac{Err_{intrinsic}(p_i)}{p_i} = \Delta_{intrinsic}"/></p>
 </div><p>And the intensity, I, has therefore the same intrinsic relative error:</p>
 <div class="math">
-<p><span class="math">\frac{Err_{intrinsic}(I)}{I} = \Delta_{intrinsic}</span></p>
+<p><img src="_images/math/11ec396c1dfb2184527cc6692a50ee7e5e3abc3a.png" alt="\frac{Err_{intrinsic}(I)}{I} = \Delta_{intrinsic}"/></p>
 </div><p>The total relative error considering the intrinsic error
 and the error discussed above in <a class="reference internal" href="#fundamentals-errorbar-basic"><em>Basic treatment</em></a>, is then</p>
 <div class="math">
-<p><span class="math">{[\frac{Err(I)}{I}]}^2 &amp;= \frac{Var(I)}{I^2} + \Delta_{intrinsic}^2 \\
-                       &amp;= \frac{\sum{p_i^2}}{I^2} + \Delta_{intrinsic}^2</span></p>
+<p><img src="_images/math/9026d58f30cf5cf603a0b0a56224878717b0bdac.png" alt="{[\frac{Err(I)}{I}]}^2 &amp;= \frac{Var(I)}{I^2} + \Delta_{intrinsic}^2 \\
+                       &amp;= \frac{\sum{p_i^2}}{I^2} + \Delta_{intrinsic}^2"/></p>
 </div><p>or</p>
 <div class="math">
-<p><span class="math">Err^2(I) = \Delta_{intrinsic}^2 \times I^2  + \sum{p_i^2}</span></p>
+<p><img src="_images/math/e6c3056805a863d6855d11214d68c4829165c601.png" alt="Err^2(I) = \Delta_{intrinsic}^2 \times I^2  + \sum{p_i^2}"/></p>
 </div></div>
 </div>
 </div>
