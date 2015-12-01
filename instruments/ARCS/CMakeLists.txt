@@ -22,7 +22,7 @@ file(COPY applications/ DESTINATION ${EXPORT_BIN}/
   )
 
 # tests
-set(BUILD_TESTS_PATH ${TESTS_DIR}/mcvine/instruments/${PACKAGE_NAME})
+set(BUILD_TESTS_PATH ${TESTS_DIR}/mcvine.instruments/${PACKAGE_NAME})
 # copy tests to build
 file(COPY tests/ DESTINATION ${BUILD_TESTS_PATH})
 # add python tests
