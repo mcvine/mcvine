@@ -1,5 +1,5 @@
 #
-set(PACKAGE_NAME "ARCS")
+set(PACKAGE_NAME "SEQUOIA")
 set (LIB_NAME "${PACKAGE_NAME}")
 set (PYPKG_NAME "mcvine.instruments.${PACKAGE_NAME}")
 
@@ -18,7 +18,7 @@ file(COPY etc/
 
 # app
 file(COPY applications/ DESTINATION ${EXPORT_BIN}/
-  FILES_MATCHING PATTERN "arcs*"
+  FILES_MATCHING PATTERN "sequoia*"
   )
 
 # tests

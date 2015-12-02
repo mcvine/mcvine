@@ -1,5 +1,5 @@
 #
-set(PACKAGE_NAME "ARCS")
+set(PACKAGE_NAME "SNS")
 set (LIB_NAME "${PACKAGE_NAME}")
 set (PYPKG_NAME "mcvine.instruments.${PACKAGE_NAME}")
 
@@ -10,15 +10,10 @@ file(
   FILES_MATCHING PATTERN "*.py"
   )
 
-# etc
-file(COPY etc/
-  DESTINATION ${EXPORT_ETC}/
-  FILES_MATCHING PATTERN "*.pml" PATTERN "*.odb"
-  )
-
-# app
-file(COPY applications/ DESTINATION ${EXPORT_BIN}/
-  FILES_MATCHING PATTERN "arcs*"
+# bin
+file(COPY bin/ DESTINATION ${EXPORT_BIN}/
+  FILES_MATCHING 
+  PATTERN "mcvine-sns*"
   )
 
 # tests
