@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE scatterer>
+
+<!-- weights: absorption, scattering, transmission -->
+<homogeneous_scatterer mcweights="0, 1, 0">
+  
+  <E_vQ_Kernel 
+     E_Q="if(Qx*Qx+Qy*Qy+Qz*Qz&gt;30, 25, 15)"
+     S_Q="1" 
+     Emax="30*meV"
+     />
+  
+</homogeneous_scatterer>
+
