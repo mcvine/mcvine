@@ -12,6 +12,7 @@ Applications
    - arcs-events2nxs
  - arcs-nxs-populate-Eidata: add Ei-related data into event mode nxs
  - arcs-reduce-nxs-using-mantid: reduction
+ - arcs_analyze_beam: analyze ARCS beam by placing multiple monitors at the sample position
 
 
 Instrument configuration
