@@ -1,0 +1,36 @@
+SNS SEQUOIA instrument simulation.
+
+Applications
+------------
+
+ - sequoia_beam: beam simulation
+   - run sequoia-m2s
+     - run sequoia_moderator2sample
+   - run post processing
+ - sequoia-neutrons2nxs: scattered neutrons to det system and generate event mode nxs
+   - sequoia-neutron2events
+   - sequoia-events2nxs
+ - sequoia-nxs-populate-Eidata: add Ei-related data into event mode nxs
+ - sequoia-reduce-nxs-using-mantid: reduction
+ - sequoia_analyze_beam: analyze SEQUOIA beam by placing multiple monitors at the sample position
+
+
+Instrument configuration
+------------------------
+
+Positions and orientations of components and component parameters
+are hard-coded in etc/sequoia_moderator2sample.
+Changing them can be done with cmd line args or modification
+of the pml file.
+But be very careful because positional information
+is also used in module
+SEQUOIA/nxs/raw.py.
+
+Detector configuration is in mcvine-resources/instruments/SEQUOIA/resources/SEQUOIA.xml.fornxs
+(see applications/sequoia-neutrons2events).
+This information is also used in SEQUOIA/nxs/raw.py
+
+These information is scattered a bit, 
+and it means there should be a better design to centralize
+the information about instrument and detector configurations.
+

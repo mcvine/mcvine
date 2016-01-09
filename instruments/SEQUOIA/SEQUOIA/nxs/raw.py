@@ -4,7 +4,7 @@
 #
 #                                   Jiao Lin
 #                      California Institute of Technology
-#                      (C) 2008-2012  All Rights Reserved
+#                      (C) 2008-2016  All Rights Reserved
 #
 # {LicenseText}
 #
@@ -100,6 +100,98 @@ def write(events, tofbinsize, path):
     #
     sys.stdout.write('\n')
     return
+
+
+def populateEiData(entry, sim_out):
+    """populate data related to Ei computation into an SEQUOIA nexus file.
+    This includes the monitor data and DASlog/EnergyRequest
+    
+    entry: nexus "entry"
+    sim_out: moderator2sample SEQUOIA simulation output directory
+      it should contains monitor data files mon?-itof-focused.h5,
+      where ? = 1 and 2, and ienergy.h5
+
+    Limitations:
+      monitor positions are now hard-coded as (from moderator)
+      1: 11.831
+      2: 18.5
+      need to make sure it matches what mantid is using
+    """
+    # compute average Ei
+    import histogram.hdf as hh, numpy as np
+    ienergy_h5 = os.path.join(sim_out, 'ienergy.h5')
+    ie = hh.load(ienergy_h5)
+    Ei = (ie.energy * ie.I).sum() / ie.I.sum()
+    #
+    setEnergyRequest(entry, Ei)
+    populateMonitors(entry, sim_out)
+    return
+
+
+def setEnergyRequest(entry, Ei):
+    """set energy request value into an SEQUOIA nexus file
+    
+    entry: nexus "entry"
+    Ei: unit meV
+    
+    caveat: the nexus template file should already have /entry/DASlogs/EnergyRequest which contains the appropriate sub-datasets with correct attributes.
+    """
+    daslogs = entry['DASlogs']
+    er = daslogs['EnergyRequest']
+    er['average_value'][0] \
+        = er['maximum_value'][0] \
+        = er['minimum_value'][0] \
+        = er['value'][0] \
+        = Ei
+    return
+
+
+def populateMonitors(entry, sim_out):
+    """populate monitor data into an SEQUOIA nexus file
+    
+    entry: nexus "entry"
+    sim_out: moderator2sample SEQUOIA simulation output directory
+      it should contains monitor data files mon?-itof-focused.h5,
+      where ? = 1 and 2
+
+    Limitations:
+      monitor positions are now hard-coded (see below)
+    """
+    import histogram.hdf as hh, numpy as np
+    dists = [m1, m2]
+    itofpaths = [
+        os.path.join(sim_out, 'mon%s-itof-focused.h5' % i)
+        for i in range(1,3)
+        ]
+    for i, (dist, itofpath) in enumerate(zip(dists, itofpaths)):
+        # check entry
+        mon_entry = entry['monitor%s' % (i+1)]
+        # assert mon_entry['distance'][0] == dist - sample
+        mon_entry['distance'][0] = dist - sample
+        tof_entry = mon_entry['time_of_flight']
+        assert tof_entry[0] == 0. and tof_entry[1] == 1.
+        # data
+        hist = hh.load(itofpath)
+        tofaxis = hist.axisFromName('tof'); tofaxis.changeUnit('microsecond')
+        bb = tofaxis.binBoundaries().asNumarray()
+        tofmin = bb[0]; tofmax = bb[-1]
+        # XXX Michael Reuter said that float array is OK.
+        # change array to double
+        N = len(mon_entry['data'])
+        del mon_entry['data']
+        mon_entry['data'] = np.zeros(N, dtype="double")
+        # set attributes
+        mon_entry['data'].attrs['signal'] = 1
+        mon_entry['data'].attrs['axes'] = 'time_of_flight'
+        # set data
+        mon_entry['data'][int(tofmin): int(tofmax)] = hist.I
+        continue
+    return
+
+recorder = 19.9
+sample = recorder + 0.1254
+m1 = 18.26
+m2 = 29.0032
 
 
 bank_id_offset = 38
