@@ -237,9 +237,9 @@ mccomponents::kernels::E_vQ_Kernel<E_vQ_functor_t, S_vQ_functor_t>\
   std::cout << "E,Q=" << E << ", " << vQ << std::endl;
 #endif
   // check if the energy transfer matches what the dispersion dictates
-  // and bail out if it does not
-  // without this, the simulated spectrum will connect
-  // discontinued dispersion surfaces
+  // and bail out if it does not.
+  // without this, the simulated spectrum will show a trace
+  // connecting discontinued dispersion surfaces
   if (std::abs(E-m_E(vQ.x, vQ.y, vQ.z)) > m_Emax * 1e-5) return;
   
   // final velocity vector
