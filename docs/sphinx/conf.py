@@ -2,6 +2,7 @@
 #
 # mcvine documentation build configuration file, created by
 # sphinx-quickstart on Mon Jun 15 22:26:56 2009.
+
 #
 # This file is execfile()d with the current directory set to its containing dir.
 #
@@ -12,6 +13,11 @@
 # serve to show the default.
 
 import sys, os
+
+# custom build step
+# create a rst file for listing all kernel docs
+cmd = "python kernels/list.py > kernels/kernels.rst"
+os.system(cmd)
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
