@@ -1,0 +1,21 @@
+To create a dev env:
+
+* follow steps in releaser/docker/ubuntu/14.04 to install the deps,
+  including danse INS packages
+* checkout mcvine src and resources
+  $ mkdir -p $HOME/dv/mcvine
+  $ cd $HOME/dv/mcvine
+  $ git clone git@github.com:mcvine/mcvine
+  $ git clone git@github.com:mcvine/resources
+* build and install
+  $ cd $HOME/dv/mcvine/mcvine
+  $ ./builders/build  $PWD $PWD/build ~/dv/mcvine/export  ~/dv/mcvine/resources/ $NCPUS
+  $ cd build
+  $ make install
+* create $HOME/.dev-mcvine
+  . /opt/danse/bin/setup-danse.sh
+  MCVINE_DIR=$HOME/dv/mcvine/export
+  export PATH=$MCVINE_DIR/bin:$PATH
+  export PYTHONPATH=$MCVINE_DIR/lib/python2.7/site-packages:$PYTHONPATH
+  export LD_LIBRARY_PATH=$MCVINE_DIR/lib:$LD_LIBRARY_PATH
+
