@@ -27,7 +27,7 @@ if component_library_dir is None:
             component_library_dir = c
             break
         continue
-    if not os.path.exists(component_library_dir):
+    if not component_library_dir or not os.path.exists(component_library_dir):
         raise RuntimeError("Cannot find McStas component library in %s" % (candidates,))
         
 
