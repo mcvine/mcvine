@@ -25,6 +25,9 @@ namespace wrap_mccomposite {
     wrap_Geometer<AbstractNeutronScatterer>( "NeutronScatterer" );
     
     typedef Geometer<AbstractNeutronScatterer>::position_t position_t;
+    
+    // check prior registration
+    if (converter::registry::query(type_id<position_t>())!=NULL) return;
     class_<position_t, bases<mccomposite::geometry::Vector> >("Position", init<double, double, double>());
 
     typedef Geometer<AbstractNeutronScatterer>::orientation_t orientation_t;

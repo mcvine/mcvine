@@ -32,6 +32,10 @@ namespace wrap_mccomposite {
   void wrap_basics()
   {
     using namespace boost::python;
+    // check if prior registration exists
+    type_info info = type_id<Vector>();
+    if (converter::registry::query(info)!=NULL) return;
+    // register
     class_<Vector>
       ("Vector",
        init<double, double, double>()
