@@ -15,6 +15,7 @@ To create a dev env:
 * create $HOME/.dev-mcvine
   . /opt/danse/bin/setup-danse.sh
   export MCVINE_DIR=$HOME/dv/mcvine/export
+  export MCVINE_RESOURCES=$HOME/dv/mcvine/resources
   export PATH=$MCVINE_DIR/bin:$PATH
   export PYTHONPATH=$MCVINE_DIR/lib/python2.7/site-packages:$PYTHONPATH
   export LD_LIBRARY_PATH=$MCVINE_DIR/lib:$LD_LIBRARY_PATH
