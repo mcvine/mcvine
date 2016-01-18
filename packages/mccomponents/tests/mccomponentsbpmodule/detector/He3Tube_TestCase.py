@@ -21,7 +21,8 @@ warning = journal.warning( "He3Tube_TestCase" )
 
 
 import mcni
-from mccomposite import mccompositebp 
+# from mccomposite import mccompositebp 
+from mccomposite.bindings.BoostPythonBinding import binding as mccompositebp
 from mccomponents import mccomponentsbp
 
 class He3Tube_TestCase(unittest.TestCase):

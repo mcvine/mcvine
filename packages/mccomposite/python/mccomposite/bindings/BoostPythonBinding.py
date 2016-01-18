@@ -12,7 +12,21 @@
 #
 
 
-import mccomposite.mccompositebp as binding
+from mccomposite import mccompositebp
+from mcni import mcnibp
+class _BindingProxy:
+    # when duplicated registration is avoided (see mccompositebpmodule/wrap_basics.cc)
+    # symbols may be missing from mccompositebp.
+    # this is a proxy to allow fallback to mcnibp if needed
+    def __getattr__(self, key):
+        if hasattr(mccompositebp, key): return getattr(mccompositebp, key)
+        if key is "Vector":
+            key = "Vector3_double"
+        elif key is "RotationMatrix":
+            key = "RotationMatrix_double"
+        return getattr(mcnibp, key)
+binding = _BindingProxy()
+
 from AbstractBinding import AbstractBinding as Interface
 from mcni.bindings.boostpython import Binding as base
 

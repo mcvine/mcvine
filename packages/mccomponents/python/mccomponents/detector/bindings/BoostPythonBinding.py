@@ -17,7 +17,7 @@ from mccomponents.homogeneous_scatterer.bindings.BoostPythonBinding import Boost
 
 import mccomponents.mccomponentsbp as b
 import mccomposite.mccompositebp as b1
-
+from mccomposite.bindings.BoostPythonBinding import binding as b1
 
 class New:
 
