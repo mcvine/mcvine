@@ -10,8 +10,7 @@ def mcstas():
     return
 
 
-from . import compilecomponent
-#, convertinstrument
+from . import compilecomponent, convertinstrument
 
 
 # End of file 
