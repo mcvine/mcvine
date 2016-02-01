@@ -16,57 +16,16 @@ __doc__ = """
 command line interface
 """
 
-
 name = 'mcvine'
 
 
-def run(action, *args, **opts):
-    mod = importActionHandler(action)
-    return mod.run(*args, **opts)
+import click
 
-
-def importActionHandler(action):
-    code = 'from . import %s' % action
-    exec(code)
-    mod = locals()[action]
-    return mod
-
-
+@click.group()
 def main():
-    import sys
-    if len(sys.argv) <= 1:
-        action = 'help'
-    else:
-        action = sys.argv[1]
-
-    if action in ['-h', '--help']:
-        action = 'help'
-
-    if action not in commands:
-        print ()
-        print ("Invalid command: %s" % action)
-        action = 'help'
-    
-    mod = importActionHandler(action)
-    args, kwds = mod.parse_cmdline()
-    
-    mod.run(*args, **kwds)
     return
 
-
-public_commands = [
-    'mcstas',
-    'mpi',
-    'sampleassembly',
-    'help',
-    ]
-
-hidden_commands = [
-    ]
-
-
-commands = public_commands + hidden_commands
-
+from . import mcstas, mpi, sampleassembly
 
 # version
 __id__ = "$Id$"
