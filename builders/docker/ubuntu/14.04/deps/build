@@ -1,0 +1,1 @@
+docker build -t linjiao/mcvine-ubuntu-deps:14.04 .

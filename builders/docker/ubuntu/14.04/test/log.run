@@ -1,0 +1,658 @@
+* src/mcvine/packages/mcni/tests/libmcni/neutron/testCeventbuffer.cc
+* executing ./testCeventbuffer...
+* src/mcvine/packages/mcni/tests/libmcni/neutron/testunits_conversion.cc
+* executing ./testunits_conversion...
+* src/mcvine/packages/mcni/tests/libmcni/neutron/testcoords_transform.cc
+* executing ./testcoords_transform...
+* src/mcvine/packages/mcni/tests/libmcni/neutron/testEvent.cc
+* executing ./testEvent...
+* src/mcvine/packages/mcni/tests/libmcni/mcni/testAbstractNeutronComponent.cc
+* executing ./testAbstractNeutronComponent...
+* src/mcvine/packages/mcni/tests/libmcni/mcni/testAbstractNeutronScatterer.cc
+* executing ./testAbstractNeutronScatterer...
+* src/mcvine/packages/mcni/tests/libmcni/geometry/testutils.cc
+* executing ./testutils...
+* src/mcvine/packages/mcni/tests/libmcni/geometry/testcoords_transform.cc
+* executing ./testcoords_transform...
+* src/mcvine/packages/mcni/tests/libmcni/geometry/testVector3.cc
+* executing ./testVector3...
+* src/mcvine/packages/mcni/tests/libmcni/geometry/testMatrix3.cc
+* executing ./testMatrix3...
+* src/mcvine/packages/mccomposite/tests/libmccomposite/mccomposite/testMultipleScattering.cc
+* executing ./testMultipleScattering...
+* src/mcvine/packages/mccomposite/tests/libmccomposite/mccomposite/testCompositeNeutronScatterer.cc
+* executing ./testCompositeNeutronScatterer...
+* src/mcvine/packages/mccomposite/tests/libmccomposite/mccomposite/testAbstractNeutronScatterer.cc
+* executing ./testAbstractNeutronScatterer...
+* src/mcvine/packages/mccomposite/tests/libmccomposite/mccomposite/testGeometer.cc
+* executing ./testGeometer...
+* src/mcvine/packages/mccomposite/tests/libmccomposite/mccomposite/test_neutron_propagation.cc
+* executing ./test_neutron_propagation...
+* src/mcvine/packages/mccomposite/tests/libmccomposite/geometry/testDilation.cc
+* executing ./testDilation...
+* src/mcvine/packages/mccomposite/tests/libmccomposite/geometry/testPrinter.cc
+* executing ./testPrinter...
+* src/mcvine/packages/mccomposite/tests/libmccomposite/geometry/testLocator.cc
+* executing ./testLocator...
+* src/mcvine/packages/mccomposite/tests/libmccomposite/geometry/test_intersect.cc
+* executing ./test_intersect...
+* src/mcvine/packages/mccomposite/tests/libmccomposite/geometry/testArrowIntersector.cc
+* executing ./testArrowIntersector...
+* src/mcvine/packages/mccomponents/tests/libmccomponents/homogeneous_scatterer/testHomogeneousNeutronScatterer.cc
+* executing ./testHomogeneousNeutronScatterer...
+* src/mcvine/packages/mccomponents/tests/libmccomponents/homogeneous_scatterer/testMultipleScattering.cc
+* executing ./testMultipleScattering...
+* src/mcvine/packages/mccomponents/tests/libmccomponents/homogeneous_scatterer/testCompositeScatteringKernel.cc
+* executing ./testCompositeScatteringKernel...
+* src/mcvine/packages/mccomponents/tests/libmccomponents/kernels/sample/test_Broadened_E_Q_Kernel.cc
+* executing ./test_Broadened_E_Q_Kernel...
+* src/mcvine/packages/mccomponents/tests/libmccomponents/kernels/sample/test_E_vQ_Kernel.cc
+* executing ./test_E_vQ_Kernel...
+* src/mcvine/packages/mccomponents/tests/libmccomponents/kernels/sample/test_SQE_fromexpression.cc
+* executing ./test_SQE_fromexpression...
+* src/mcvine/packages/mccomponents/tests/libmccomponents/kernels/sample/test_SQAdaptor.cc
+* executing ./test_SQAdaptor...
+* src/mcvine/packages/mccomponents/tests/libmccomponents/kernels/sample/test_E_Q_Kernel.cc
+* executing ./test_E_Q_Kernel...
+* src/mcvine/packages/mccomponents/tests/libmccomponents/kernels/sample/test_SvQ_fromexpression.cc
+* executing ./test_SvQ_fromexpression...
+* src/mcvine/packages/mccomponents/tests/libmccomponents/kernels/sample/test_SQkernel.cc
+* executing ./test_SQkernel...
+* src/mcvine/packages/mccomponents/tests/libmccomponents/kernels/sample/phonon/test_PeriodicDispersion_3D.cc
+* executing ./test_PeriodicDispersion_3D...
+* src/mcvine/packages/mccomponents/tests/libmccomponents/kernels/sample/phonon/test_interpolation.cc
+* executing ./test_interpolation...
+* src/mcvine/packages/mccomponents/tests/libmccomponents/kernels/sample/phonon/test_CoherentInelastic_PolyXtal.cc
+* executing ./test_CoherentInelastic_PolyXtal...
+* src/mcvine/packages/mccomponents/tests/libmccomponents/kernels/sample/phonon/test_CoherentInelastic_SingleXtal.cc
+* executing ./test_CoherentInelastic_SingleXtal...
+* src/mcvine/packages/mccomponents/tests/libmccomponents/kernels/sample/phonon/test_ChangeCoordinateSystem_forDispersion_3D.cc
+* executing ./test_ChangeCoordinateSystem_forDispersion_3D...
+* src/mcvine/packages/mccomponents/tests/libmccomponents/kernels/sample/phonon/test_DWFromDOS.cc
+* executing ./test_DWFromDOS...
+* src/mcvine/packages/mccomponents/tests/libmccomponents/kernels/sample/phonon/test_LinearlyInterpolatedGridData_1D.cc
+* executing ./test_LinearlyInterpolatedGridData_1D...
+* src/mcvine/packages/mccomponents/tests/libmccomponents/kernels/sample/phonon/test_LinearlyInterpolatedDOS.cc
+* executing ./test_LinearlyInterpolatedDOS...
+* src/mcvine/packages/mccomponents/tests/libmccomponents/kernels/sample/diffraction/test_SimplePowderDiffractionKernel.cc
+* executing ./test_SimplePowderDiffractionKernel...
+* src/mcvine/packages/mccomponents/tests/libmccomponents/kernels/detector/testTof2Channel.cc
+* executing ./testTof2Channel...
+* src/mcvine/packages/mccomponents/tests/libmccomponents/kernels/detector/testHe3.cc
+* executing ./testHe3...
+* src/mcvine/packages/mccomponents/tests/libmccomponents/kernels/detector/testEventModeMCA.cc
+* executing ./testEventModeMCA...
+* src/mcvine/packages/mccomponents/tests/libmccomponents/kernels/detector/testHe3Tube.cc
+* executing ./testHe3Tube...
+* src/mcvine/packages/mccomponents/tests/libmccomponents/kernels/detector/testevents2iqe.cc
+* executing ./testevents2iqe...
+* src/mcvine/packages/mccomponents/tests/libmccomponents/kernels/detector/testZ2Channel.cc
+* executing ./testZ2Channel...
+* src/mcvine/packages/mccomponents/tests/libmccomponents/math/test_rootfinding.cc
+* executing ./test_rootfinding...
+* src/mcvine/packages/mccomponents/tests/libmccomponents/math/test_Fx_fromExpr.cc
+* executing ./test_Fx_fromExpr...
+* src/mcvine/packages/mccomponents/tests/libmccomponents/math/test_fparser.cc
+* executing ./test_fparser...
+* src/mcvine/packages/mccomponents/tests/libmccomponents/math/test_random.cc
+* executing ./test_random...
+* src/mcvine/packages/mccomponents/tests/libmccomponents/math/test_Fxyz_fromExpr.cc
+* executing ./test_Fxyz_fromExpr...
+* src/mcvine/packages/mccomponents/tests/libmccomponents/math/geometry/test_choose_direction.cc
+* executing ./test_choose_direction...
+* src/mcvine/packages/mccomponents/tests/libmccomponents/math/random/test_gaussian.cc
+* executing ./test_gaussian...
+* src/mcvine/packages/mccomponents/tests/libmccomponents/math/random/test_gaussian_gsl.cc
+* executing ./test_gaussian_gsl...
+* src/mcvine/packages/legacycomponents/mcstas2/tests/lib/test_random_numbers.cc
+* executing ./test_random_numbers...
+* src/mcvine/packages/legacycomponents/mcstas2/tests/lib/testGravity.cc
+* executing ./testGravity...
+* src/mcvine/packages/legacycomponents/mcstas2/tests/lib/test_detector_output_macros.cc
+* executing ./test_detector_output_macros...
+* src/mcvine/packages/legacycomponents/mcstas2/tests/lib/testComponent.cc
+* executing ./testComponent...
+* src/mcvine/packages/legacycomponents/vitess/tests/lib/testvitess2mcvine.cc
+* executing ./testvitess2mcvine...
+* src/mcvine/packages/legacycomponents/vitess/tests/lib/testmcvine2vitess.cc
+* executing ./testmcvine2vitess...
+
+Report:
+* SUCCEED
+* Out of 63 tests, 59 passed, skipped 4
+ - skipped:
+src/mcvine/packages/mccomponents/tests/libmccomponents/kernels/sample/phonon/test_LinearlyInterpolatedPolarizationOnGrid_3D.cc: Linear interpolation
+src/mcvine/packages/mccomponents/tests/libmccomponents/kernels/sample/phonon/test_LinearlyInterpolatedDispersionOnGrid_3D.cc: Linear interpolation
+src/mcvine/packages/mccomponents/tests/libmccomponents/kernels/sample/phonon/test_LinearlyInterpolatedGridData_3D.cc: Linear interpolation
+src/mcvine/packages/legacycomponents/vitess/tests/neutron/testNeutronSize.cc: not implemented yet
+2015-11-12: Recurively run all unit tests
+* running in src/mcvine/packages/mcni ... took 0:00:00.052
+* running in src/mcvine/packages/mccomposite ... took 0:00:00.047
+* running in src/mcvine/packages/mccomponents ... took 0:00:00.069
+* running in src/mcvine/packages/mcvine ... took 0:00:00.072
+* running in src/mcvine/packages/legacycomponents ... took 0:00:00.074
+* running in src/mcvine/packages/softwareinstallationinfodb ... took 0:00:00.057
+* running in src/mcvine/packages/mcni/mcnimodule ... took 0:00:00.064
+* running in src/mcvine/packages/mcni/mcni ... took 0:00:00.075
+* running in src/mcvine/packages/mcni/mcnibpmodule ... took 0:00:00.048
+* running in src/mcvine/packages/mcni/examples ... took 0:00:00.046
+* running in src/mcvine/packages/mcni/libmcni ... took 0:00:00.073
+* running in src/mcvine/packages/mcni/tests ... took 0:00:00.076
+* running in src/mcvine/packages/mcni/mcni/pyre_support ... took 0:00:00.080
+* running in src/mcvine/packages/mcni/mcni/instrument_simulator ... took 0:00:00.075
+* running in src/mcvine/packages/mcni/mcni/neutron_storage ... took 0:00:00.073
+* running in src/mcvine/packages/mcni/mcni/utils ... took 0:00:00.060
+* running in src/mcvine/packages/mcni/mcni/neutron_coordinates_transformers ... took 0:00:00.077
+* running in src/mcvine/packages/mcni/mcni/bindings ... took 0:00:00.051
+* running in src/mcvine/packages/mcni/mcni/coordinate_system_transformers ... took 0:00:00.083
+* running in src/mcvine/packages/mcni/mcni/pyre_components ... took 0:00:00.053
+* running in src/mcvine/packages/mcni/mcni/pyre_units_ext ... took 0:00:00.048
+* running in src/mcvine/packages/mcni/mcni/components ... took 0:00:00.046
+* running in src/mcvine/packages/mcni/mcni/neutron_storage/_neutron_storage_impl ... took 0:00:00.077
+* running in src/mcvine/packages/mcni/mcni/utils/mpi ... took 0:00:00.051
+* running in src/mcvine/packages/mcni/mcni/bindings/boostpython ... took 0:00:00.076
+* running in src/mcvine/packages/mcni/libmcni/neutron ... took 0:00:00.069
+* running in src/mcvine/packages/mcni/libmcni/mcni ... took 0:00:00.077
+* running in src/mcvine/packages/mcni/libmcni/headers ... took 0:00:00.076
+* running in src/mcvine/packages/mcni/libmcni/geometry ... took 0:00:00.065
+* running in src/mcvine/packages/mcni/libmcni/sharedlib ... took 0:00:00.079
+* running in src/mcvine/packages/mcni/libmcni/test ... took 0:00:00.071
+* running in src/mcvine/packages/mcni/libmcni/math ... took 0:00:00.072
+* running in src/mcvine/packages/mcni/libmcni/boostpython_binding ... took 0:00:00.069
+* running in src/mcvine/packages/mcni/tests/mcnimodule ... took 0:00:00.166
+* running in src/mcvine/packages/mcni/tests/mcni ... took 0:00:00.429
+* running in src/mcvine/packages/mcni/tests/mcnibpmodule ... took 0:00:00.075
+* running in src/mcvine/packages/mcni/tests/libmcni ... took 0:00:00.059
+* running in src/mcvine/packages/mcni/tests/mcni/pyre_support ... took 0:00:00.688
+* running in src/mcvine/packages/mcni/tests/mcni/neutron_storage ... took 0:00:03.224
+* running in src/mcvine/packages/mcni/tests/mcni/utils ... took 0:00:00.123
+* running in src/mcvine/packages/mcni/tests/mcni/coordinate_system_transformers ... took 0:00:00.173
+* running in src/mcvine/packages/mcni/tests/mcni/pyre_components ... took 0:00:00.410
+* running in src/mcvine/packages/mcni/tests/mcni/components ... took 0:00:02.993
+* running in src/mcvine/packages/mcni/tests/mcni/pyre_support/consoleneutrontracer_test_out ... took 0:00:00.072
+* running in src/mcvine/packages/mcni/tests/mcni/pyre_support/out-pyre_support_test ... took 0:00:00.079
+* running in src/mcvine/packages/mcni/tests/mcni/pyre_support/consoleneutrontracer_test_out/rank0-step0 ... took 0:00:00.079
+* running in src/mcvine/packages/mcni/tests/mcni/pyre_support/out-pyre_support_test/rank0-step0 ... took 0:00:00.045
+* running in src/mcvine/packages/mcni/tests/mcni/pyre_support/out-pyre_support_test/rank0-step1 ... took 0:00:00.074
+* running in src/mcvine/packages/mcni/tests/mcni/pyre_support/out-pyre_support_test/rank0-step2 ... took 0:00:00.060
+* running in src/mcvine/packages/mcni/tests/mcni/pyre_components/ndmonitor ... took 0:00:00.082
+* running in src/mcvine/packages/mcni/tests/mcni/pyre_components/MultiMonitors ... took 0:00:00.078
+* running in src/mcvine/packages/mcni/tests/libmcni/neutron ... took 0:00:00.057
+* running in src/mcvine/packages/mcni/tests/libmcni/mcni ... took 0:00:00.052
+* running in src/mcvine/packages/mcni/tests/libmcni/geometry ... took 0:00:00.065
+* running in src/mcvine/packages/mcni/tests/libmcni/boostpython_binding ... took 0:00:00.109
+* running in src/mcvine/packages/mcni/tests/libmcni/boostpython_binding/neutron_printer ... took 0:00:00.075
+* running in src/mcvine/packages/mcni/tests/libmcni/boostpython_binding/component_template ... took 0:00:00.077
+* running in src/mcvine/packages/mccomposite/mccomposite ... took 0:00:00.075
+* running in src/mcvine/packages/mccomposite/libmccomposite ... took 0:00:00.075
+* running in src/mcvine/packages/mccomposite/mccompositebpmodule ... took 0:00:00.081
+* running in src/mcvine/packages/mccomposite/tests ... took 0:00:00.075
+* running in src/mcvine/packages/mccomposite/mccomposite/geometry ... took 0:00:00.070
+* running in src/mcvine/packages/mccomposite/mccomposite/bindings ... took 0:00:00.055
+* running in src/mcvine/packages/mccomposite/mccomposite/coordinate_systems ... took 0:00:00.076
+* running in src/mcvine/packages/mccomposite/mccomposite/extensions ... took 0:00:00.075
+* running in src/mcvine/packages/mccomposite/mccomposite/orientation_conventions ... took 0:00:00.071
+* running in src/mcvine/packages/mccomposite/libmccomposite/headers ... took 0:00:00.083
+* running in src/mcvine/packages/mccomposite/libmccomposite/mccomposite ... took 0:00:00.078
+* running in src/mcvine/packages/mccomposite/libmccomposite/geometry ... took 0:00:00.075
+* running in src/mcvine/packages/mccomposite/libmccomposite/sharedlib ... took 0:00:00.077
+* running in src/mcvine/packages/mccomposite/libmccomposite/boostpython_binding ... took 0:00:00.077
+* running in src/mcvine/packages/mccomposite/libmccomposite/geometry/visitors ... took 0:00:00.075
+* running in src/mcvine/packages/mccomposite/libmccomposite/geometry/primitives ... took 0:00:00.075
+* running in src/mcvine/packages/mccomposite/libmccomposite/geometry/operations ... took 0:00:00.070
+* running in src/mcvine/packages/mccomposite/tests/mccomposite ... took 0:00:00.114
+* running in src/mcvine/packages/mccomposite/tests/libmccomposite ... took 0:00:00.075
+* running in src/mcvine/packages/mccomposite/tests/mccompositebpmodule ... took 0:00:00.098
+* running in src/mcvine/packages/mccomposite/tests/mccomposite/extensions ... took 0:00:00.104
+* running in src/mcvine/packages/mccomposite/tests/libmccomposite/mccomposite ... took 0:00:00.077
+* running in src/mcvine/packages/mccomposite/tests/libmccomposite/geometry ... took 0:00:00.075
+* running in src/mcvine/packages/mccomposite/tests/libmccomposite/boostpython_binding ... took 0:00:00.080
+* running in src/mcvine/packages/mccomposite/tests/libmccomposite/boostpython_binding/neutron_printer2 ... took 0:00:00.078
+* running in src/mcvine/packages/mccomposite/tests/libmccomposite/boostpython_binding/scatterer_template ... took 0:00:00.078
+* running in src/mcvine/packages/mccomponents/tests ... took 0:00:00.057
+* running in src/mcvine/packages/mccomponents/mccomponents ... took 0:00:00.079
+* running in src/mcvine/packages/mccomponents/bin ... took 0:00:00.095
+* running in src/mcvine/packages/mccomponents/libmccomponents ... took 0:00:00.076
+* running in src/mcvine/packages/mccomponents/mccomponentsbpmodule ... took 0:00:00.059
+* running in src/mcvine/packages/mccomponents/tests/libmccomponents ... took 0:00:00.050
+* running in src/mcvine/packages/mccomponents/tests/mccomponents ... took 0:00:00.047
+* running in src/mcvine/packages/mccomponents/tests/kernels ... took 0:00:00.076
+* running in src/mcvine/packages/mccomponents/tests/bin ... took 0:00:01.129
+* running in src/mcvine/packages/mccomponents/tests/data ... took 0:00:00.072
+* running in src/mcvine/packages/mccomponents/tests/mccomponentsbpmodule ... took 0:00:00.386
+* running in src/mcvine/packages/mccomponents/tests/libmccomponents/kernels ... took 0:00:00.071
+* running in src/mcvine/packages/mccomponents/tests/libmccomponents/homogeneous_scatterer ... took 0:00:00.062
+* running in src/mcvine/packages/mccomponents/tests/libmccomponents/math ... took 0:00:00.074
+* running in src/mcvine/packages/mccomponents/tests/libmccomponents/boostpython_binding ... took 0:00:00.060
+* running in src/mcvine/packages/mccomponents/tests/libmccomponents/kernels/detector ... took 0:00:00.082
+* running in src/mcvine/packages/mccomponents/tests/libmccomponents/kernels/sample ... took 0:00:00.073
+* running in src/mcvine/packages/mccomponents/tests/libmccomponents/kernels/sample/phonon ... took 0:00:00.079
+* running in src/mcvine/packages/mccomponents/tests/libmccomponents/kernels/sample/diffraction ... took 0:00:00.080
+* running in src/mcvine/packages/mccomponents/tests/libmccomponents/math/geometry ... took 0:00:00.078
+* running in src/mcvine/packages/mccomponents/tests/libmccomponents/math/random ... took 0:00:00.069
+* running in src/mcvine/packages/mccomponents/tests/libmccomponents/boostpython_binding/kernel_template ... took 0:00:00.078
+* running in src/mcvine/packages/mccomponents/tests/libmccomponents/boostpython_binding/neutron_printer3 ... took 0:00:00.075
+* running in src/mcvine/packages/mccomponents/tests/mccomponents/homogeneous_scatterer ... took 0:00:00.414
+* running in src/mcvine/packages/mccomponents/tests/mccomponents/pyre_support ... took 0:00:00.082
+* running in src/mcvine/packages/mccomponents/tests/mccomponents/sample ... took 0:00:00.757
+* running in src/mcvine/packages/mccomponents/tests/mccomponents/detector ... took 0:00:28.367
+* running in src/mcvine/packages/mccomponents/tests/mccomponents/homogeneous_scatterer/bindings ... took 0:00:00.459
+* running in src/mcvine/packages/mccomponents/tests/mccomponents/homogeneous_scatterer/hsxml ... took 0:00:00.474
+* running in src/mcvine/packages/mccomponents/tests/mccomponents/pyre_support/reduction ... took 0:00:00.078
+* running in src/mcvine/packages/mccomponents/tests/mccomponents/pyre_support/FixedQE ... took 0:00:00.051
+* running in src/mcvine/packages/mccomponents/tests/mccomponents/pyre_support/Nickel ... took 0:00:00.088
+* running in src/mcvine/packages/mccomponents/tests/mccomponents/pyre_support/components ... took 0:00:00.082
+* running in src/mcvine/packages/mccomponents/tests/mccomponents/pyre_support/reduction/main ... took 0:00:00.082
+* running in src/mcvine/packages/mccomponents/tests/mccomponents/sample/sampleassemblies ... took 0:00:00.078
+* running in src/mcvine/packages/mccomponents/tests/mccomponents/sample/phonon ... took 0:00:05.840
+* running in src/mcvine/packages/mccomponents/tests/mccomponents/sample/scatterers ... took 0:00:00.083
+* running in src/mcvine/packages/mccomponents/tests/mccomponents/sample/bindings ... took 0:00:00.057
+* running in src/mcvine/packages/mccomponents/tests/mccomponents/sample/darkangle ... took 0:00:01.904
+* running in src/mcvine/packages/mccomponents/tests/mccomponents/sample/multiple_scattering_app ... took 0:00:00.077
+* running in src/mcvine/packages/mccomponents/tests/mccomponents/sample/diffraction ... took 0:00:00.424
+* running in src/mcvine/packages/mccomponents/tests/mccomponents/sample/SQE-examples ... took 0:00:00.065
+* running in src/mcvine/packages/mccomponents/tests/mccomponents/sample/idf ... took 0:00:00.454
+* running in src/mcvine/packages/mccomponents/tests/mccomponents/sample/sampleassemblies/Al-simplepowderdiffractionkernel ... took 0:00:00.061
+* running in src/mcvine/packages/mccomponents/tests/mccomponents/sample/sampleassemblies/Ni-isotropicsqekernel ... took 0:00:00.086
+* running in src/mcvine/packages/mccomponents/tests/mccomponents/sample/sampleassemblies/V-constantE ... took 0:00:00.081
+* running in src/mcvine/packages/mccomponents/tests/mccomponents/sample/sampleassemblies/Al-constantvqekernel ... took 0:00:00.078
+* running in src/mcvine/packages/mccomponents/tests/mccomponents/sample/sampleassemblies/bmg ... took 0:00:00.079
+* running in src/mcvine/packages/mccomponents/tests/mccomponents/sample/sampleassemblies/Al-constantenergytransfer ... took 0:00:00.078
+* running in src/mcvine/packages/mccomponents/tests/mccomponents/sample/sampleassemblies/Ni ... took 0:00:00.066
+* running in src/mcvine/packages/mccomponents/tests/mccomponents/sample/sampleassemblies/Al-constantqekernel ... took 0:00:00.075
+* running in src/mcvine/packages/mccomponents/tests/mccomponents/sample/sampleassemblies/Al-broadened-E_Q-kernel ... took 0:00:00.080
+* running in src/mcvine/packages/mccomponents/tests/mccomponents/sample/sampleassemblies/Al-isotropickernel ... took 0:00:00.081
+* running in src/mcvine/packages/mccomponents/tests/mccomponents/sample/sampleassemblies/Al-E_vQ-kernel ... took 0:00:00.073
+* running in src/mcvine/packages/mccomponents/tests/mccomponents/sample/sampleassemblies/Al-E_Q-kernel ... took 0:00:00.078
+* running in src/mcvine/packages/mccomponents/tests/mccomponents/sample/phonon/kernels ... took 0:00:00.078
+* running in src/mcvine/packages/mccomponents/tests/mccomponents/sample/phonon/bindings ... took 0:00:02.103
+* running in src/mcvine/packages/mccomponents/tests/mccomponents/sample/phonon/xml ... took 0:00:00.379
+* running in src/mcvine/packages/mccomponents/tests/mccomponents/sample/phonon/kernels/CoherentInelastic_PolyXtal ... took 0:00:00.846
+* running in src/mcvine/packages/mccomponents/tests/mccomponents/sample/phonon/kernels/CoherentInelastic_PolyXtal/phonon-dispersion-fccNi-primitive-reciprocal-unitcell ... took 0:00:00.088
+* running in src/mcvine/packages/mccomponents/tests/mccomponents/sample/phonon/kernels/CoherentInelastic_PolyXtal/phonon-dispersion-fccNi-cubic-reciprocal-unitcell ... took 0:00:00.085
+* running in src/mcvine/packages/mccomponents/tests/mccomponents/sample/phonon/xml/sampleassemblies ... took 0:00:00.080
+* running in src/mcvine/packages/mccomponents/tests/mccomponents/sample/phonon/xml/sampleassemblies/incoh-inel ... took 0:00:00.078
+* running in src/mcvine/packages/mccomponents/tests/mccomponents/sample/phonon/xml/sampleassemblies/coh-inel-polyxtal ... took 0:00:00.080
+* running in src/mcvine/packages/mccomponents/tests/mccomponents/sample/phonon/xml/sampleassemblies/coh-inel-singlextal ... took 0:00:00.080
+* running in src/mcvine/packages/mccomponents/tests/mccomponents/sample/phonon/xml/sampleassemblies/incoh-el ... took 0:00:00.063
+* running in src/mcvine/packages/mccomponents/tests/mccomponents/sample/phonon/xml/sampleassemblies/multiphonon ... took 0:00:00.086
+* running in src/mcvine/packages/mccomponents/tests/mccomponents/sample/scatterers/fccNi ... took 0:00:00.080
+* running in src/mcvine/packages/mccomponents/tests/mccomponents/sample/darkangle/out ... took 0:00:00.074
+* running in src/mcvine/packages/mccomponents/tests/mccomponents/sample/darkangle/Fe-isotropickernel ... took 0:00:00.066
+* running in src/mcvine/packages/mccomponents/tests/mccomponents/sample/darkangle/out/rank0-step0 ... took 0:00:00.079
+* running in src/mcvine/packages/mccomponents/tests/mccomponents/sample/idf/dispersion-example ... took 0:00:00.078
+* running in src/mcvine/packages/mccomponents/tests/mccomponents/detector/bindings ... took 0:00:00.437
+* running in src/mcvine/packages/mccomponents/tests/kernels/incoh-el+phonon ... took 0:00:00.078
+* running in src/mcvine/packages/mccomponents/tests/kernels/powderdiff ... took 0:00:00.075
+* running in src/mcvine/packages/mccomponents/tests/kernels/incoh-phonon ... took 0:00:00.053
+* running in src/mcvine/packages/mccomponents/tests/kernels/coh-phonon ... took 0:00:00.083
+* running in src/mcvine/packages/mccomponents/tests/kernels/coh-powder+phonon ... took 0:00:00.078
+* running in src/mcvine/packages/mccomponents/tests/kernels/incoh-el ... took 0:00:00.067
+* running in src/mcvine/packages/mccomponents/tests/kernels/incoh-el+phonon/sampleassembly ... took 0:00:00.079
+* running in src/mcvine/packages/mccomponents/tests/kernels/powderdiff/sampleassembly ... took 0:00:00.079
+* running in src/mcvine/packages/mccomponents/tests/kernels/powderdiff/use_mcstas_powdern ... took 0:00:00.077
+* running in src/mcvine/packages/mccomponents/tests/kernels/incoh-phonon/sampleassembly ... took 0:00:00.088
+* running in src/mcvine/packages/mccomponents/tests/kernels/coh-phonon/sampleassembly ... took 0:00:00.075
+* running in src/mcvine/packages/mccomponents/tests/kernels/coh-powder+phonon/sampleassembly ... took 0:00:00.077
+* running in src/mcvine/packages/mccomponents/tests/kernels/incoh-el/sampleassembly ... took 0:00:00.078
+* running in src/mcvine/packages/mccomponents/tests/mccomponentsbpmodule/sample ... took 0:00:00.428
+* running in src/mcvine/packages/mccomponents/tests/mccomponentsbpmodule/detector ... took 0:00:00.434
+* running in src/mcvine/packages/mccomponents/tests/mccomponentsbpmodule/phonon ... took 0:00:00.462
+* running in src/mcvine/packages/mccomponents/tests/mccomponentsbpmodule/diffraction ... took 0:00:00.440
+* running in src/mcvine/packages/mccomponents/mccomponents/homogeneous_scatterer ... took 0:00:00.072
+* running in src/mcvine/packages/mccomponents/mccomponents/pyre_support ... took 0:00:00.072
+* running in src/mcvine/packages/mccomponents/mccomponents/sample ... took 0:00:00.086
+* running in src/mcvine/packages/mccomponents/mccomponents/detector ... took 0:00:00.072
+* running in src/mcvine/packages/mccomponents/mccomponents/homogeneous_scatterer/bindings ... took 0:00:00.079
+* running in src/mcvine/packages/mccomponents/mccomponents/homogeneous_scatterer/hsxml ... took 0:00:00.073
+* running in src/mcvine/packages/mccomponents/mccomponents/homogeneous_scatterer/hsxml/parser ... took 0:00:00.054
+* running in src/mcvine/packages/mccomponents/mccomponents/pyre_support/components ... took 0:00:00.047
+* running in src/mcvine/packages/mccomponents/mccomponents/sample/kernelxml ... took 0:00:00.073
+* running in src/mcvine/packages/mccomponents/mccomponents/sample/phonon ... took 0:00:00.068
+* running in src/mcvine/packages/mccomponents/mccomponents/sample/bindings ... took 0:00:00.084
+* running in src/mcvine/packages/mccomponents/mccomponents/sample/diffraction ... took 0:00:00.054
+* running in src/mcvine/packages/mccomponents/mccomponents/sample/idf ... took 0:00:00.074
+* running in src/mcvine/packages/mccomponents/mccomponents/sample/kernelxml/parser ... took 0:00:00.065
+* running in src/mcvine/packages/mccomponents/mccomponents/sample/phonon/bindings ... took 0:00:00.071
+* running in src/mcvine/packages/mccomponents/mccomponents/sample/phonon/xml ... took 0:00:00.078
+* running in src/mcvine/packages/mccomponents/mccomponents/sample/phonon/xml/parser ... took 0:00:00.074
+* running in src/mcvine/packages/mccomponents/mccomponents/sample/diffraction/parsers ... took 0:00:00.073
+* running in src/mcvine/packages/mccomponents/mccomponents/sample/diffraction/bindings ... took 0:00:00.079
+* running in src/mcvine/packages/mccomponents/mccomponents/sample/diffraction/xml ... took 0:00:00.054
+* running in src/mcvine/packages/mccomponents/mccomponents/sample/diffraction/xml/parser ... took 0:00:00.052
+* running in src/mcvine/packages/mccomponents/mccomponents/detector/elements ... took 0:00:00.077
+* running in src/mcvine/packages/mccomponents/mccomponents/detector/bindings ... took 0:00:00.077
+* running in src/mcvine/packages/mccomponents/mccomponents/detector/optional_extensions ... took 0:00:00.072
+* running in src/mcvine/packages/mccomponents/libmccomponents/homogeneous_scatterer ... took 0:00:00.071
+* running in src/mcvine/packages/mccomponents/libmccomponents/physics ... took 0:00:00.057
+* running in src/mcvine/packages/mccomponents/libmccomponents/headers ... took 0:00:00.050
+* running in src/mcvine/packages/mccomponents/libmccomponents/kernels ... took 0:00:00.077
+* running in src/mcvine/packages/mccomponents/libmccomponents/sharedlib ... took 0:00:00.076
+* running in src/mcvine/packages/mccomponents/libmccomponents/math ... took 0:00:00.075
+* running in src/mcvine/packages/mccomponents/libmccomponents/boostpython_binding ... took 0:00:00.074
+* running in src/mcvine/packages/mccomponents/libmccomponents/kernels/sample ... took 0:00:00.073
+* running in src/mcvine/packages/mccomponents/libmccomponents/kernels/detector ... took 0:00:00.082
+* running in src/mcvine/packages/mccomponents/libmccomponents/kernels/sample/SQE ... took 0:00:00.074
+* running in src/mcvine/packages/mccomponents/libmccomponents/kernels/sample/phonon ... took 0:00:00.050
+* running in src/mcvine/packages/mccomponents/libmccomponents/kernels/sample/diffraction ... took 0:00:00.047
+* running in src/mcvine/packages/mccomponents/libmccomponents/kernels/sample/SQE/idf ... took 0:00:00.052
+* running in src/mcvine/packages/mccomponents/libmccomponents/math/fparser-4.0.5 ... took 0:00:00.040
+* running in src/mcvine/packages/mccomponents/libmccomponents/math/fparser-4.5.1 ... took 0:00:00.040
+* running in src/mcvine/packages/mccomponents/libmccomponents/math/random ... took 0:00:00.040
+* running in src/mcvine/packages/mccomponents/libmccomponents/math/regression ... took 0:00:00.080
+* running in src/mcvine/packages/mccomponents/libmccomponents/math/fparser-4.0.5/docs ... took 0:00:00.059
+* running in src/mcvine/packages/mccomponents/libmccomponents/math/fparser-4.0.5/examples ... took 0:00:00.071
+* running in src/mcvine/packages/mccomponents/libmccomponents/math/fparser-4.5.1/docs ... took 0:00:00.079
+* running in src/mcvine/packages/mccomponents/libmccomponents/math/fparser-4.5.1/examples ... took 0:00:00.050
+* running in src/mcvine/packages/mccomponents/libmccomponents/math/fparser-4.5.1/mpfr ... took 0:00:00.053
+* running in src/mcvine/packages/mccomponents/libmccomponents/math/fparser-4.5.1/extrasrc ... took 0:00:00.048
+* running in src/mcvine/packages/mcvine/mcvine ... took 0:00:00.063
+* running in src/mcvine/packages/mcvine/bin ... took 0:00:00.082
+* running in src/mcvine/packages/mcvine/etc ... took 0:00:00.074
+* running in src/mcvine/packages/mcvine/tests ... took 0:00:00.075
+* running in src/mcvine/packages/mcvine/mcvine/cli ... took 0:00:00.077
+* running in src/mcvine/packages/mcvine/mcvine/pyre_support ... took 0:00:00.060
+* running in src/mcvine/packages/mcvine/mcvine/scripts ... took 0:00:00.073
+* running in src/mcvine/packages/mcvine/mcvine/instrument ... took 0:00:00.066
+* running in src/mcvine/packages/mcvine/mcvine/instruments ... took 0:00:00.077
+* running in src/mcvine/packages/mcvine/mcvine/applications ... took 0:00:00.062
+* running in src/mcvine/packages/mcvine/mcvine/cli/mpi ... took 0:00:00.049
+* running in src/mcvine/packages/mcvine/mcvine/cli/sampleassembly ... took 0:00:00.076
+* running in src/mcvine/packages/mcvine/mcvine/cli/mcstas ... took 0:00:00.075
+* running in src/mcvine/packages/mcvine/mcvine/cli/kernel ... took 0:00:00.078
+* running in src/mcvine/packages/mcvine/etc/mcvine-check-iqe ... took 0:00:00.078
+* running in src/mcvine/packages/mcvine/etc/mcvine-check-angular-distribution ... took 0:00:00.051
+* running in src/mcvine/packages/mcvine/tests/integration ... took 0:00:00.077
+* running in src/mcvine/packages/mcvine/tests/mcvine ... took 0:00:00.440
+* running in src/mcvine/packages/mcvine/tests/docs ... took 0:00:00.078
+* running in src/mcvine/packages/mcvine/tests/bin ... took 0:00:00.077
+* running in src/mcvine/packages/mcvine/tests/integration/dumppml ... took 0:00:01.619
+* running in src/mcvine/packages/mcvine/tests/integration/vanadium ... took 0:00:00.072
+* running in src/mcvine/packages/mcvine/tests/integration/beam-analysis ... took 0:00:00.056
+* running in src/mcvine/packages/mcvine/tests/integration/dumppml/out ... took 0:00:00.064
+* running in src/mcvine/packages/mcvine/tests/integration/dumppml/out/rank0-step4 ... took 0:00:00.076
+* running in src/mcvine/packages/mcvine/tests/integration/dumppml/out/rank0-step0 ... took 0:00:00.072
+* running in src/mcvine/packages/mcvine/tests/integration/dumppml/out/rank0-step3 ... took 0:00:00.076
+* running in src/mcvine/packages/mcvine/tests/integration/dumppml/out/rank0-step1 ... took 0:00:00.078
+* running in src/mcvine/packages/mcvine/tests/integration/dumppml/out/rank0-step2 ... took 0:00:00.074
+* running in src/mcvine/packages/mcvine/tests/docs/extend ... took 0:00:01.506
+* running in src/mcvine/packages/mcvine/tests/docs/basics ... took 0:00:05.386
+* running in src/mcvine/packages/mcvine/tests/docs/components ... took 0:00:05.705
+* running in src/mcvine/packages/mcvine/tests/docs/extend/out ... took 0:00:00.075
+* running in src/mcvine/packages/mcvine/tests/docs/extend/out/rank0-step4 ... took 0:00:00.066
+* running in src/mcvine/packages/mcvine/tests/docs/extend/out/rank0-step0 ... took 0:00:00.047
+* running in src/mcvine/packages/mcvine/tests/docs/extend/out/rank0-step3 ... took 0:00:00.079
+* running in src/mcvine/packages/mcvine/tests/docs/extend/out/rank0-step1 ... took 0:00:00.077
+* running in src/mcvine/packages/mcvine/tests/docs/extend/out/rank0-step2 ... took 0:00:00.076
+* running in src/mcvine/packages/mcvine/tests/docs/basics/out ... took 0:00:00.079
+* running in src/mcvine/packages/mcvine/tests/docs/basics/out/rank0-step4 ... took 0:00:00.071
+* running in src/mcvine/packages/mcvine/tests/docs/basics/out/rank0-step0 ... took 0:00:00.078
+* running in src/mcvine/packages/mcvine/tests/docs/basics/out/rank0-step3 ... took 0:00:00.075
+* running in src/mcvine/packages/mcvine/tests/docs/basics/out/rank0-step1 ... took 0:00:00.087
+* running in src/mcvine/packages/mcvine/tests/docs/basics/out/rank0-step2 ... took 0:00:00.071
+* running in src/mcvine/packages/mcvine/tests/docs/components/out ... took 0:00:00.080
+* running in src/mcvine/packages/mcvine/tests/docs/components/out/rank0-step4 ... took 0:00:00.079
+* running in src/mcvine/packages/mcvine/tests/docs/components/out/rank0-step0 ... took 0:00:00.072
+* running in src/mcvine/packages/mcvine/tests/docs/components/out/rank0-step3 ... took 0:00:00.078
+* running in src/mcvine/packages/mcvine/tests/docs/components/out/rank0-step1 ... took 0:00:00.080
+* running in src/mcvine/packages/mcvine/tests/docs/components/out/rank0-step2 ... took 0:00:00.083
+* running in src/mcvine/packages/mcvine/tests/bin/checksqe ... took 0:00:00.075
+* running in src/mcvine/packages/mcvine/tests/bin/cli ... took 0:00:00.079
+* running in src/mcvine/packages/mcvine/tests/bin/spe2sqehist ... took 0:00:00.079
+* running in src/mcvine/packages/mcvine/tests/bin/cli/convert-mcstas-instrument ... took 0:00:00.076
+* running in src/mcvine/packages/legacycomponents/mcstas2 ... took 0:00:00.079
+* running in src/mcvine/packages/legacycomponents/vitess ... took 0:00:00.075
+* running in src/mcvine/packages/legacycomponents/mcstas2/tests ... took 0:00:00.072
+* running in src/mcvine/packages/legacycomponents/mcstas2/share ... took 0:00:00.079
+* running in src/mcvine/packages/legacycomponents/mcstas2/mcstas2 ... took 0:00:00.075
+* running in src/mcvine/packages/legacycomponents/mcstas2/bin ... took 0:00:00.079
+* running in src/mcvine/packages/legacycomponents/mcstas2/mcstas2bpmodule ... took 0:00:00.076
+* running in src/mcvine/packages/legacycomponents/mcstas2/lib ... took 0:00:00.070
+* running in src/mcvine/packages/legacycomponents/mcstas2/tests/lib ... took 0:00:00.081
+* running in src/mcvine/packages/legacycomponents/mcstas2/tests/vitess-IO ... took 0:00:00.058
+* running in src/mcvine/packages/legacycomponents/mcstas2/tests/mcstas2 ... took 0:00:00.409
+* running in src/mcvine/packages/legacycomponents/mcstas2/tests/instruments ... took 0:00:00.076
+* running in src/mcvine/packages/legacycomponents/mcstas2/tests/mcstas2bpmodule ... took 0:00:00.407
+* running in src/mcvine/packages/legacycomponents/mcstas2/tests/mcstas2/pyre_support ... took 0:00:00.378
+* running in src/mcvine/packages/legacycomponents/mcstas2/tests/mcstas2/utils ... took 0:00:00.081
+* running in src/mcvine/packages/legacycomponents/mcstas2/tests/mcstas2/wrappers ... took 0:00:00.085
+* running in src/mcvine/packages/legacycomponents/mcstas2/tests/mcstas2/components ... took 0:00:00.075
+* running in src/mcvine/packages/legacycomponents/mcstas2/tests/mcstas2/pyre_support/_component_interfaces ... took 0:00:00.053
+* running in src/mcvine/packages/legacycomponents/mcstas2/tests/mcstas2/pyre_support/_component_interfaces/monitors ... took 0:00:00.460
+* running in src/mcvine/packages/legacycomponents/mcstas2/tests/mcstas2/pyre_support/_component_interfaces/monitors/isotropic-sqe ... took 0:00:00.049
+* running in src/mcvine/packages/legacycomponents/mcstas2/tests/mcstas2/utils/parsers ... took 0:00:00.411
+* running in src/mcvine/packages/legacycomponents/mcstas2/tests/mcstas2/wrappers/pymodule ... took 0:00:00.091
+* running in src/mcvine/packages/legacycomponents/mcstas2/tests/mcstas2/wrappers/binding_builder ... took 0:00:00.078
+* running in src/mcvine/packages/legacycomponents/mcstas2/tests/mcstas2/wrappers/binding ... took 0:00:00.089
+* running in src/mcvine/packages/legacycomponents/mcstas2/tests/mcstas2/wrappers/component2cppClass ... took 0:00:00.478
+* running in src/mcvine/packages/legacycomponents/mcstas2/tests/mcstas2/wrappers/binding_builder/mm ... took 0:00:00.081
+* running in src/mcvine/packages/legacycomponents/mcstas2/tests/mcstas2/wrappers/binding_builder/distutils ... took 0:00:00.063
+* running in src/mcvine/packages/legacycomponents/mcstas2/tests/mcstas2/wrappers/binding_builder/mm/src ... took 0:00:00.050
+* running in src/mcvine/packages/legacycomponents/mcstas2/tests/mcstas2/wrappers/binding_builder/distutils/src ... took 0:00:00.080
+* running in src/mcvine/packages/legacycomponents/mcstas2/tests/mcstas2/wrappers/binding/boostpython ... took 0:00:00.086
+* running in src/mcvine/packages/legacycomponents/mcstas2/tests/mcstas2/wrappers/binding/boostpython/E_monitor-project-template ... took 0:00:00.076
+* running in src/mcvine/packages/legacycomponents/mcstas2/tests/mcstas2/wrappers/component2cppClass/E_monitor ... took 0:00:00.060
+* running in src/mcvine/packages/legacycomponents/mcstas2/tests/mcstas2/components/samples ... took 0:00:00.403
+* running in src/mcvine/packages/legacycomponents/mcstas2/tests/mcstas2/components/monitors ... took 0:00:01.149
+* running in src/mcvine/packages/legacycomponents/mcstas2/tests/mcstas2/components/sources ... took 0:00:00.437
+* running in src/mcvine/packages/legacycomponents/mcstas2/tests/mcstas2/components/optics ... took 0:00:00.445
+* running in src/mcvine/packages/legacycomponents/mcstas2/tests/instruments/vanadium_example ... took 0:00:00.076
+* running in src/mcvine/packages/legacycomponents/mcstas2/share/McStas-Components ... took 0:00:00.079
+* running in src/mcvine/packages/legacycomponents/mcstas2/share/McStas-Components/samples ... took 0:00:00.084
+* running in src/mcvine/packages/legacycomponents/mcstas2/share/McStas-Components/monitors ... took 0:00:00.074
+* running in src/mcvine/packages/legacycomponents/mcstas2/share/McStas-Components/sources ... took 0:00:00.076
+* running in src/mcvine/packages/legacycomponents/mcstas2/share/McStas-Components/optics ... took 0:00:00.077
+* running in src/mcvine/packages/legacycomponents/mcstas2/share/McStas-Components/samples/original ... took 0:00:00.060
+* running in src/mcvine/packages/legacycomponents/mcstas2/share/McStas-Components/samples/to-be-added ... took 0:00:00.074
+* running in src/mcvine/packages/legacycomponents/mcstas2/share/McStas-Components/monitors/original ... took 0:00:00.066
+* running in src/mcvine/packages/legacycomponents/mcstas2/share/McStas-Components/monitors/to-be-added ... took 0:00:00.067
+* running in src/mcvine/packages/legacycomponents/mcstas2/share/McStas-Components/sources/original ... took 0:00:00.077
+* running in src/mcvine/packages/legacycomponents/mcstas2/share/McStas-Components/sources/to-be-added ... took 0:00:00.076
+* running in src/mcvine/packages/legacycomponents/mcstas2/share/McStas-Components/optics/original ... took 0:00:00.074
+* running in src/mcvine/packages/legacycomponents/mcstas2/share/McStas-Components/optics/to-be-added ... took 0:00:00.076
+* running in src/mcvine/packages/legacycomponents/mcstas2/mcstas2/pyre_support ... took 0:00:00.078
+* running in src/mcvine/packages/legacycomponents/mcstas2/mcstas2/utils ... took 0:00:00.066
+* running in src/mcvine/packages/legacycomponents/mcstas2/mcstas2/wrappers ... took 0:00:00.077
+* running in src/mcvine/packages/legacycomponents/mcstas2/mcstas2/bindings ... took 0:00:00.079
+* running in src/mcvine/packages/legacycomponents/mcstas2/mcstas2/components ... took 0:00:00.069
+* running in src/mcvine/packages/legacycomponents/mcstas2/mcstas2/pyre_support/_component_interfaces ... took 0:00:00.068
+* running in src/mcvine/packages/legacycomponents/mcstas2/mcstas2/pyre_support/_component_interfaces/monitors ... took 0:00:00.050
+* running in src/mcvine/packages/legacycomponents/mcstas2/mcstas2/utils/pyre_support ... took 0:00:00.082
+* running in src/mcvine/packages/legacycomponents/mcstas2/mcstas2/utils/mills ... took 0:00:00.073
+* running in src/mcvine/packages/legacycomponents/mcstas2/mcstas2/utils/parsers ... took 0:00:00.080
+* running in src/mcvine/packages/legacycomponents/mcstas2/mcstas2/utils/parsers.old ... took 0:00:00.077
+* running in src/mcvine/packages/legacycomponents/mcstas2/mcstas2/utils/mills/cxx ... took 0:00:00.075
+* running in src/mcvine/packages/legacycomponents/mcstas2/mcstas2/utils/parsers/pyparsing ... took 0:00:00.076
+* running in src/mcvine/packages/legacycomponents/mcstas2/mcstas2/utils/parsers.old/pyparsing ... took 0:00:00.081
+* running in src/mcvine/packages/legacycomponents/mcstas2/mcstas2/wrappers/pymodule ... took 0:00:00.075
+* running in src/mcvine/packages/legacycomponents/mcstas2/mcstas2/wrappers/binding_builder ... took 0:00:00.075
+* running in src/mcvine/packages/legacycomponents/mcstas2/mcstas2/wrappers/binding ... took 0:00:00.076
+* running in src/mcvine/packages/legacycomponents/mcstas2/mcstas2/wrappers/component2cppClass ... took 0:00:00.078
+* running in src/mcvine/packages/legacycomponents/mcstas2/mcstas2/wrappers/binding_builder/mm ... took 0:00:00.054
+* running in src/mcvine/packages/legacycomponents/mcstas2/mcstas2/wrappers/binding_builder/distutils ... took 0:00:00.051
+* running in src/mcvine/packages/legacycomponents/mcstas2/mcstas2/wrappers/binding/boostpython ... took 0:00:00.073
+* running in src/mcvine/packages/legacycomponents/mcstas2/mcstas2/bindings/boostpython ... took 0:00:00.064
+* running in src/mcvine/packages/legacycomponents/mcstas2/mcstas2/components/samples ... took 0:00:00.075
+* running in src/mcvine/packages/legacycomponents/mcstas2/mcstas2/components/misc ... took 0:00:00.058
+* running in src/mcvine/packages/legacycomponents/mcstas2/mcstas2/components/monitors ... took 0:00:00.093
+* running in src/mcvine/packages/legacycomponents/mcstas2/mcstas2/components/sources ... took 0:00:00.062
+* running in src/mcvine/packages/legacycomponents/mcstas2/mcstas2/components/optics ... took 0:00:00.051
+* running in src/mcvine/packages/legacycomponents/mcstas2/mcstas2/components/contrib ... took 0:00:00.049
+* running in src/mcvine/packages/legacycomponents/mcstas2/lib/share ... took 0:00:00.076
+* running in src/mcvine/packages/legacycomponents/mcstas2/lib/mcni_integration ... took 0:00:00.062
+* running in src/mcvine/packages/legacycomponents/mcstas2/lib/mcstas_compact ... took 0:00:00.081
+* running in src/mcvine/packages/legacycomponents/mcstas2/lib/boostpython_binding ... took 0:00:00.078
+* running in src/mcvine/packages/legacycomponents/vitess/tests ... took 0:00:00.079
+* running in src/mcvine/packages/legacycomponents/vitess/vitess ... took 0:00:00.062
+* running in src/mcvine/packages/legacycomponents/vitess/bin ... took 0:00:00.083
+* running in src/mcvine/packages/legacycomponents/vitess/lib ... took 0:00:00.085
+* running in src/mcvine/packages/legacycomponents/vitess/vitessbpmodule ... took 0:00:00.087
+* running in src/mcvine/packages/legacycomponents/vitess/tests/lib ... took 0:00:00.076
+* running in src/mcvine/packages/legacycomponents/vitess/tests/neutron ... took 0:00:00.086
+* running in src/mcvine/packages/legacycomponents/vitess/tests/vitess ... took 0:00:00.085
+* running in src/mcvine/packages/legacycomponents/vitess/tests/bin ... took 0:00:00.081
+* running in src/mcvine/packages/legacycomponents/vitess/tests/vitessbpmodule ... took 0:00:00.218
+* running in src/mcvine/packages/legacycomponents/vitess/tests/vitess/pyre_components ... took 0:00:00.073
+* running in src/mcvine/packages/legacycomponents/vitess/tests/vitess/pyre_components/vitess ... took 0:00:00.067
+* running in src/mcvine/packages/legacycomponents/vitess/vitess/pyre_components ... took 0:00:00.080
+* running in src/mcvine/packages/legacycomponents/vitess/vitess/components ... took 0:00:00.065
+* running in src/mcvine/packages/softwareinstallationinfodb/softwareinstallationinfodb.user ... took 0:00:00.076
+* running in src/mcvine/packages/softwareinstallationinfodb/softwareinstallationinfodb.dv ... took 0:00:00.079
+* running in src/mcvine/packages/softwareinstallationinfodb/softwareinstallationinfodb ... took 0:00:00.059
+
+** Standalone tests
+* Running /opt/danse/src/mcvine/releaser/src/mcvine/packages/mcni/tests/mcni/pyre_support/serial_app_TestCase.pyc ... took 0:00:00.266
+* Running /opt/danse/src/mcvine/releaser/src/mcvine/packages/mcni/tests/mcni/pyre_support/parallel_simulation_TestCase.pyc ... took 0:00:02.004
+* Running /opt/danse/src/mcvine/releaser/src/mcvine/packages/mcni/tests/mcni/pyre_support/multiple_scattering_Instrument_TestCase.pyc ... took 0:00:00.452
+* Running /opt/danse/src/mcvine/releaser/src/mcvine/packages/mcni/tests/mcni/pyre_support/parallel_app_TestCase.pyc ... took 0:00:01.600
+* Running /opt/danse/src/mcvine/releaser/src/mcvine/packages/mcni/tests/mcni/pyre_support/output_dir_option_TestCase.pyc ... took 0:00:00.544
+* Running /opt/danse/src/mcvine/releaser/src/mcvine/packages/mcni/tests/mcni/neutron_storage/merge_TestCase.pyc ... took 0:00:00.154
+* Running /opt/danse/src/mcvine/releaser/src/mcvine/packages/mcni/tests/mcni/pyre_components/neutron_storage_normalization_TestCase.pyc ... took 0:02:01.735
+* Running /opt/danse/src/mcvine/releaser/src/mcvine/packages/mcni/tests/mcni/pyre_components/neutron_storage_mpi_TestCase.pyc ... took 0:02:04.968
+* Running /opt/danse/src/mcvine/releaser/src/mcvine/packages/mcni/tests/mcni/pyre_components/EventAreaMonitor_TestCase.pyc ... took 0:01:00.543
+* Running /opt/danse/src/mcvine/releaser/src/mcvine/packages/mcni/tests/mcni/pyre_components/neutron_storage_TestCase.pyc ... took 0:01:00.497
+* Running /opt/danse/src/mcvine/releaser/src/mcvine/packages/mcni/tests/mcni/components/neutron_storage_parallel_TestCase.pyc ... took 0:00:00.084
+* Running /opt/danse/src/mcvine/releaser/src/mcvine/packages/mcni/tests/mcni/components/neutron_storage_TestCase.pyc ... took 0:00:00.323
+* Running /opt/danse/src/mcvine/releaser/src/mcvine/packages/mcni/tests/mcni/pyre_components/ndmonitor/ndmonitor_TestCase.pyc ... took 0:00:04.049
+* Running /opt/danse/src/mcvine/releaser/src/mcvine/packages/mcni/tests/mcni/pyre_components/MultiMonitors/MultiMonitors_TestCase.pyc ... took 0:00:06.837
+* Running /opt/danse/src/mcvine/releaser/src/mcvine/packages/mccomposite/tests/mccomposite/geometry_TestCase.pyc ... took 0:00:00.152
+* Running /opt/danse/src/mcvine/releaser/src/mcvine/packages/mccomposite/tests/mccomposite/extensions/Copy_TestCase.pyc ... took 0:00:00.175
+* Running /opt/danse/src/mcvine/releaser/src/mcvine/packages/mccomposite/tests/mccomposite/extensions/HollowCylinder_TestCase.pyc ... took 0:00:00.201
+* Running /opt/danse/src/mcvine/releaser/src/mcvine/packages/mccomponents/tests/mccomponents/homogeneous_scatterer/homogeneous_scatterer_TestCase.pyc ... took 0:00:00.426
+* Running /opt/danse/src/mcvine/releaser/src/mcvine/packages/mccomponents/tests/mccomponents/sample/samplecomponent_E_vQ_Kernel_TestCase.pyc ... took 0:00:00.765
+* Running /opt/danse/src/mcvine/releaser/src/mcvine/packages/mccomponents/tests/mccomponents/sample/samplecomponent_multiplescattering_3_TestCase.pyc ... took 0:00:00.502
+* Running /opt/danse/src/mcvine/releaser/src/mcvine/packages/mccomponents/tests/mccomponents/sample/samplecomponent_IsotropicKernel_TestCase.pyc ... took 0:00:00.440
+* Running /opt/danse/src/mcvine/releaser/src/mcvine/packages/mccomponents/tests/mccomponents/sample/samplecomponent_multiplescattering_TestCase.pyc ... took 0:00:00.513
+* Running /opt/danse/src/mcvine/releaser/src/mcvine/packages/mccomponents/tests/mccomponents/sample/samplecomponent_IsotropicKernel_multiplescattering_TestCase.pyc ... took 0:00:00.500
+* Running /opt/danse/src/mcvine/releaser/src/mcvine/packages/mccomponents/tests/mccomponents/sample/samplecomponent_ConstantvQEKernel_TestCase.pyc ... took 0:00:00.491
+* Running /opt/danse/src/mcvine/releaser/src/mcvine/packages/mccomponents/tests/mccomponents/sample/samplecomponent_E_Q_Kernel_TestCase.pyc ... took 0:00:02.307
+* Running /opt/danse/src/mcvine/releaser/src/mcvine/packages/mccomponents/tests/mccomponents/sample/samplecomponent_ConstantEnergyTransferKernel_TestCase.pyc ... took 0:00:00.528
+* Running /opt/danse/src/mcvine/releaser/src/mcvine/packages/mccomponents/tests/mccomponents/sample/scattererxml_TestCase.pyc ... took 0:00:00.580
+* Running /opt/danse/src/mcvine/releaser/src/mcvine/packages/mccomponents/tests/mccomponents/sample/samplecomponent_Broadened_E_Q_Kernel_TestCase.pyc ... took 0:00:00.561
+* Running /opt/danse/src/mcvine/releaser/src/mcvine/packages/mccomponents/tests/mccomponents/sample/samplecomponent_SimplePowderDiffractionKernel_TestCase.pyc ... took 0:00:00.425
+* Running /opt/danse/src/mcvine/releaser/src/mcvine/packages/mccomponents/tests/mccomponents/sample/samplecomponent_multiplescattering_2_TestCase.pyc ... took 0:00:00.666
+* Running /opt/danse/src/mcvine/releaser/src/mcvine/packages/mccomponents/tests/mccomponents/sample/samplecomponent_ConstantQEKernel_TestCase.pyc ... took 0:00:00.513
+* Running /opt/danse/src/mcvine/releaser/src/mcvine/packages/mccomponents/tests/mccomponents/detector/detectorcomponent_TestCase.pyc ... took 0:00:37.318
+* Running /opt/danse/src/mcvine/releaser/src/mcvine/packages/mccomponents/tests/mccomponents/pyre_support/components/DetectorSystemFromXml_TestCase.pyc ... took 0:02:01.387
+* Running /opt/danse/src/mcvine/releaser/src/mcvine/packages/mccomponents/tests/mccomponents/sample/phonon/xml/Phonon_CoherentInelastic_PolyXtal_Kernel_TestCase.pyc ... took 0:02:52.705
+* Running /opt/danse/src/mcvine/releaser/src/mcvine/packages/mccomponents/tests/mccomponents/sample/phonon/xml/Phonon_IncoherentElastic_Kernel_TestCase.pyc ... took 0:00:00.454
+* Running /opt/danse/src/mcvine/releaser/src/mcvine/packages/mccomponents/tests/mccomponents/sample/phonon/xml/Phonon_Multiphonon_Kernel_TestCase.pyc ... took 0:00:02.211
+* Running /opt/danse/src/mcvine/releaser/src/mcvine/packages/mccomponents/tests/mccomponents/sample/phonon/xml/Phonon_IncoherentInelastic_Kernel_TestCase.pyc ... took 0:00:00.522
+* Running /opt/danse/src/mcvine/releaser/src/mcvine/packages/mccomponents/tests/mccomponents/sample/phonon/xml/Phonon_CoherentInelastic_SingleXtal_Kernel_TestCase.pyc ... took 0:02:32.526
+* Running /opt/danse/src/mcvine/releaser/src/mcvine/packages/mccomponents/tests/mccomponentsbpmodule/sample/ConstantEnergyTransferKernel_TestCase.pyc ... took 0:00:00.406
+* Running /opt/danse/src/mcvine/releaser/src/mcvine/packages/mccomponents/tests/mccomponentsbpmodule/sample/E_Q_Kernel_TestCase.pyc ... took 0:00:00.439
+* Running /opt/danse/src/mcvine/releaser/src/mcvine/packages/mccomponents/tests/mccomponentsbpmodule/sample/Broadened_E_Q_Kernel_TestCase.pyc ... took 0:00:00.428
+* Running /opt/danse/src/mcvine/releaser/src/mcvine/packages/legacycomponents/mcstas2/tests/mcstas2/pyre_support/pyre_support_TestCase.pyc ... took 0:00:00.584
+* Running /opt/danse/src/mcvine/releaser/src/mcvine/packages/legacycomponents/mcstas2/tests/mcstas2/pyre_support/componentfactory_TestCase.pyc ... took 0:00:00.517
+* Running /opt/danse/src/mcvine/releaser/src/mcvine/packages/legacycomponents/mcstas2/tests/mcstas2/pyre_support/_component_interfaces/monitors/restore_neutrons_TestCase.pyc ... took 0:00:00.489
+* Running /opt/danse/src/mcvine/releaser/src/mcvine/packages/legacycomponents/mcstas2/tests/mcstas2/pyre_support/_component_interfaces/monitors/TOF_monitor2_TestCase.pyc ... took 0:00:00.570
+* Running /opt/danse/src/mcvine/releaser/src/mcvine/packages/legacycomponents/mcstas2/tests/mcstas2/pyre_support/_component_interfaces/monitors/IQE_monitor_TestCase.pyc ... took 0:06:53.093 (Long test!!!)
+* Running /opt/danse/src/mcvine/releaser/src/mcvine/packages/legacycomponents/mcstas2/tests/mcstas2/wrappers/pymodule/pymodule_TestCase.pyc ... took 0:00:00.422
+* Running /opt/danse/src/mcvine/releaser/src/mcvine/packages/legacycomponents/mcstas2/tests/mcstas2/wrappers/binding/boostpython/boostpython_TestCase.pyc ... took 0:00:00.431
+************************************************************
+======================================================================
+ERROR: None
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/danse/src/mcvine/releaser/src/mcvine/packages/mccomponents/tests/mccomponents/detector/reduction_utils_TestCase.py", line 49, in test1
+    tofmax=0.015*pyre.units.time.s,
+  File "/opt/danse/src/mcvine/releaser/EXPORT/modules/mccomponents/detector/reduction_utils.py", line 84, in events2IQE
+    raise IOError, "%s does not exist" % pixelpositionsfile
+IOError: /opt/mcvine/resources/instruments/ARCS/resources/pixelID2position.bin does not exist
+
+======================================================================
+ERROR: dos from idf
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/danse/src/mcvine/releaser/src/mcvine/packages/mccomponents/tests/mccomponents/sample/phonon/read_dos_TestCase.py", line 49, in test2
+    dos = read_dos.doshist_fromidf(p)
+  File "/opt/danse/src/mcvine/releaser/EXPORT/modules/mccomponents/sample/phonon/read_dos.py", line 20, in doshist_fromidf
+    e,Z = readDOS(datapath)
+  File "/opt/danse/src/mcvine/releaser/EXPORT/modules/mccomponents/sample/idf/__init__.py", line 122, in readDOS
+    dummy, v, Z = read( datapath )
+  File "/opt/danse/src/mcvine/releaser/EXPORT/modules/mccomponents/sample/idf/DOS.py", line 34, in read
+    f=open(filename,'r').read()
+IOError: [Errno 2] No such file or directory: '/opt/mcvine/resources/examples/samples/vanadium/phonons/DOS'
+
+======================================================================
+ERROR: None
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/danse/src/mcvine/releaser/src/mcvine/packages/mccomponents/tests/mccomponents/sample/diffraction/parsers_TestCase.py", line 40, in test1
+    text = open(laz).read()
+IOError: [Errno 2] No such file or directory: '/opt/mcvine/resources/examples/samples/aluminum/powderdiffr/Al.laz'
+
+======================================================================
+ERROR: None
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/danse/src/mcvine/releaser/src/mcvine/packages/mccomponents/tests/mccomponents/sample/diffraction/powder_TestCase.py", line 42, in test1
+    text = open(laz).read()
+IOError: [Errno 2] No such file or directory: '/opt/mcvine/resources/examples/samples/aluminum/powderdiffr/Al.laz'
+
+======================================================================
+ERROR: None
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/danse/src/mcvine/releaser/src/mcvine/packages/mccomponents/tests/mccomponents/sample/diffraction/powder_TestCase.py", line 64, in test2
+    os.path.join(aluminum_dir, 'powderdiffr', "Al.laz"))
+  File "/opt/danse/src/mcvine/releaser/EXPORT/modules/mccomponents/sample/diffraction/powder.py", line 16, in loadPattern
+    text = open(laz).read()
+IOError: [Errno 2] No such file or directory: '/opt/mcvine/resources/examples/samples/aluminum/powderdiffr/Al.laz'
+
+======================================================================
+ERROR: None
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/danse/src/mcvine/releaser/src/mcvine/packages/legacycomponents/mcstas2/tests/mcstas2/utils/parsers/instrumentparser_TestCase.py", line 33, in test
+    text = open(path).read()
+IOError: [Errno 2] No such file or directory: '/opt/mcvine/resources/instruments/VULCAN/resources/vulcan_asbuilt_L2d.instr'
+
+======================================================================
+ERROR: /opt/danse/src/mcvine/releaser/src/mcvine/packages/mccomponents/tests/mccomponents/sample/samplecomponent_SimplePowderDiffractionKernel_TestCase.pyc
+----------------------------------------------------------------------
+/opt/danse/src/mcvine/releaser/EXPORT/modules/mccomposite/bindings/BoostPythonBinding.py:15: RuntimeWarning: to-Python converter for mcni::Vector3<double> already registered; second conversion method ignored.
+  import mccomposite.mccompositebp as binding
+/opt/danse/src/mcvine/releaser/EXPORT/modules/mccomposite/bindings/BoostPythonBinding.py:15: RuntimeWarning: to-Python converter for mcni::RotationMatrix<double> already registered; second conversion method ignored.
+  import mccomposite.mccompositebp as binding
+/opt/danse/src/mcvine/releaser/EXPORT/modules/mccomposite/bindings/BoostPythonBinding.py:15: RuntimeWarning: to-Python converter for mcni::Position<double> already registered; second conversion method ignored.
+  import mccomposite.mccompositebp as binding
+* mpi4py available
+Traceback (most recent call last):
+  File "/opt/danse/src/mcvine/releaser/src/mcvine/packages/mccomponents/tests/mccomponents/sample/samplecomponent_SimplePowderDiffractionKernel_TestCase.py", line 15, in <module>
+    from setup_sampleassemblies import mcvine_resources
+  File "/opt/danse/src/mcvine/releaser/src/mcvine/packages/mccomponents/tests/mccomponents/sample/setup_sampleassemblies.py", line 9, in <module>
+    os.symlink(src, dst)
+OSError: [Errno 17] File exists
+
+----------------------------------------------------------------------
+Ran 205 tests in 1396.84798002s
+
+FAILED (errors=7)
+
+----------------------------------------------------------------------
+Skipped 18 tests.
+ - /opt/danse/src/mcvine/releaser/src/mcvine/packages/mcni/tests/mcni/parallel_simulation_TestCase.pyc
+ - /opt/danse/src/mcvine/releaser/src/mcvine/packages/mcni/tests/mcni/components/NeutronFromStorage_mpi_TestCase.pyc
+ - /opt/danse/src/mcvine/releaser/src/mcvine/packages/mcni/tests/mcni/components/neutron_storage_mpi_TestCase.pyc
+ - /opt/danse/src/mcvine/releaser/src/mcvine/packages/mcni/tests/mcni/pyre_components/ndmonitor/ndmonitor_mpi_TestCase.pyc
+ - /opt/danse/src/mcvine/releaser/src/mcvine/packages/mccomposite/tests/mccomposite/mccomposite_TestCase.pyc
+ - /opt/danse/src/mcvine/releaser/src/mcvine/packages/mccomponents/tests/mccomponents/sample/phonon/utils_TestCase.pyc
+ - /opt/danse/src/mcvine/releaser/src/mcvine/packages/mccomponents/tests/mccomponents/sample/idf/idf_TestCase.pyc
+ - /opt/danse/src/mcvine/releaser/src/mcvine/packages/mccomponents/tests/mccomponents/sample/phonon/kernels/CoherentInelastic_PolyXtal/fccNiphononkernel_TestCase.pyc
+ - /opt/danse/src/mcvine/releaser/src/mcvine/packages/mccomponents/tests/mccomponents/sample/phonon/kernels/CoherentInelastic_PolyXtal/fccNiphononkernelfromxml_primitivereciprocalunitcell_TestCase.pyc
+ - /opt/danse/src/mcvine/releaser/src/mcvine/packages/legacycomponents/mcstas2/tests/mcstas2/mcstas2_TestCase.pyc
+ - /opt/danse/src/mcvine/releaser/src/mcvine/packages/legacycomponents/mcstas2/tests/mcstas2/wrappers/wrap_TestCase.pyc
+ - /opt/danse/src/mcvine/releaser/src/mcvine/packages/legacycomponents/mcstas2/tests/mcstas2/wrappers/wrapSingleCrystal_TestCase.pyc
+ - /opt/danse/src/mcvine/releaser/src/mcvine/packages/legacycomponents/mcstas2/tests/mcstas2/wrappers/wrap_using_distutils_TestCase.pyc
+ - /opt/danse/src/mcvine/releaser/src/mcvine/packages/legacycomponents/mcstas2/tests/mcstas2/wrappers/Source_simple_to_E_monitor_TestCase.pyc
+ - /opt/danse/src/mcvine/releaser/src/mcvine/packages/legacycomponents/mcstas2/tests/mcstas2/pyre_support/_component_interfaces/monitors/E_monitor_TestCase.pyc
+ - /opt/danse/src/mcvine/releaser/src/mcvine/packages/legacycomponents/mcstas2/tests/mcstas2/wrappers/binding_builder/mm/buid_TestCase.pyc
+ - /opt/danse/src/mcvine/releaser/src/mcvine/packages/legacycomponents/mcstas2/tests/mcstas2/wrappers/binding_builder/distutils/buid_TestCase.pyc
+ - /opt/danse/src/mcvine/releaser/src/mcvine/packages/legacycomponents/vitess/tests/vitess/pyre_components/vitess/vitess_TestCase.pyc
+____
+
+
+============================================================
+* python unit tests failed
+============================================================

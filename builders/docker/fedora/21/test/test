@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+MCVINE_RESOURCES=/opt/mcvine/resources ./test.py

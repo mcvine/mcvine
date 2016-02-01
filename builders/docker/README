@@ -1,0 +1,15 @@
+Dockerfiles for installing mcvine
+---------------------------------
+
+Each subdir here is for one operating system.
+For example, ubuntu is one such subdir.
+
+In each subdir, there are subsubdirs for different versions
+of the same OS.
+For example, ubuntu/14.04 is one such subsubdir.
+
+In each subsubdir, there are following subsubsubdirs:
+
+* deps:  Dockerfile to build all dependencies
+* build: Dockerfile to build mcvine
+

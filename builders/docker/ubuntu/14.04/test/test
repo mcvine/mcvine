@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+. /opt/danse/bin/setup-danse.sh
+export MCVINE_RESOURCES=/opt/danse/share/mcvine/resources
+./test.py --skip-long-tests

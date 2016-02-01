@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+sudo docker run -v $MCVINE_RESOURCES:/opt/mcvine/resources -v $PWD/test:/opt/mcvine/test linjiao/mcvine-fedora-build:21 sh test
+
+# example: sudo docker run -v /home/linjiao/dv/mcvine-resources:/opt/mcvine/resources -v ~/dv/mcvine-releaser-git/docker/fedora/21/test/test:/opt/mcvine/test linjiao/mcvine-fedora-build:21 sh test
