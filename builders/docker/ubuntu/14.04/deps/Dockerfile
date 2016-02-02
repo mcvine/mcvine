@@ -8,7 +8,7 @@ LABEL Description="image prepared for buildindg MCViNE"
 RUN apt-get update
 # 
 # dependencies: packages
-RUN apt-get -qy install python python-numpy python-psutil python-h5py python-mpi4py
+RUN apt-get -qy install python python-numpy python-psutil python-h5py python-mpi4py python-yaml
 # dependencies: c libs
 RUN apt-get -qy install libgsl0-dev 
 # dependencies: boost python

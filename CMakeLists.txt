@@ -31,18 +31,6 @@ set (DOCKER_PKGING_BUILDSTEP_BUILDCMD "cd .. && git clone https://github.com/mcv
 set (DOCKER_PKGING_TEST_RPM ${DOCKER_PKGING_TEST_SRPM})
 set (DOCKER_PKGING_TEST_DEB ${DOCKER_PKGING_TEST_SRPM})
 
-# need instrument and sampleassembly
-# place them under packages/
-execute_process(
-  COMMAND rm -rf instrument sampleassembly
-  WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/packages
-  )
-execute_process(
-  COMMAND git clone https://github.com/danse-inelastic/instrument
-  COMMAND git clone https://github.com/danse-inelastic/sampleassembly
-  WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/packages
-  )
-
 #
 project (${PROJECT_NAME})
 cmake_minimum_required (VERSION 2.8.12)
