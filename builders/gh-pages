@@ -2,6 +2,12 @@
 # Usage: ./builders/gh-pages <commit-msg>
 # Example: ./builders/gh-pages update static html pages at mcvine github site
 
+if [ $# -eq 0 ]
+  then
+    echo "Usage: ./builders/gh-pages <commit-msg>"
+    exit 1
+fi
+
 MSG=$@
 
 SPHINX_SRC=docs/sphinx
