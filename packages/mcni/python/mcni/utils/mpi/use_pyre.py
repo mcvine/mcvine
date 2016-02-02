@@ -13,20 +13,20 @@
 
 name = 'pyre'
 
-from . import info
-import pickle, sys
+from . import logger
+import pickle
 
 def _mpi():
     global size, rank, world
     try:
         import mpi
         if not mpi.inParallel():
-            sys.stderr.write( "** pyre mpi binding: failed to load\n" )
+            logger.warn( "** pyre mpi binding: failed to load\n" )
             rank = 0
             return
-        sys.stderr.write( "* pyre mpi available\n" )
+        logger.info( "* pyre mpi available\n" )
     except ImportError:
-        sys.stderr.write( "** pyre mpi NOT available\n" )
+        logger.warn( "** pyre mpi NOT available\n" )
         rank = 0
         return
     world = mpi.world()
@@ -55,13 +55,13 @@ def sendStr( s, peer, tag):
     
     msg = "Machine %s: sending string of length %d to peer %s with tag %s" % (
         rank, len(s), peer, tag)
-    info.log( msg )
+    logger.info( msg )
     
     port.send(s)
     
     msg = "Machine %s: sent string of length %d to peer %s with tag %s" % (
         rank, len(s), peer, tag) 
-    info.log( msg )
+    logger.info( msg )
     return
 
 
@@ -70,7 +70,7 @@ def receiveStr(peer, tag):
     s = port.receive()
     msg = "Machine %s: received string of length %d from peer %s with tag %s" % (
         rank, len(s), peer, tag)
-    info.log( msg )
+    logger.info( msg )
     return s
 
 
