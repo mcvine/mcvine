@@ -2,7 +2,7 @@
 # place them under packages/
 execute_process(
   COMMAND rm -rf instrument sampleassembly
-  WORKING_DIRECTORY ${PKG_NAMECMAKE_CURRENT_SOURCE_DIR}
+  WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
   )
 execute_process(
   COMMAND git clone https://github.com/danse-inelastic/instrument
