@@ -38,6 +38,18 @@ Example 2: find out the types of components in 'sources' category
 """
 
 
+import yaml, os
+conf_path = "mcvine.conf"
+config = dict()
+if os.path.exists(conf_path):
+    config = yaml.load(open("mcvine.conf"))
+
+import logging.config
+logging_conf = config.get("logging")
+if logging_conf:
+    logging.config.dictConfig(logging_conf)
+
+
 # ----------------------------------------------------------------------
 # create a convenient instance for handling units
 # so that users can do:

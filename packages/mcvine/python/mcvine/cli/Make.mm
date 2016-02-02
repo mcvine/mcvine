@@ -40,9 +40,6 @@ update: clean
 
 EXPORT_PYTHON_MODULES = \
 	__init__.py \
-	help.py \
-	mcvine.py \
-	sampleassembly.py \
 
 
 export:: export-package-python-modules

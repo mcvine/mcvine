@@ -12,40 +12,17 @@
 #
 
 
-from .. import name as cliname
-from . import name as cmdname
-actionname = 'convertinstrument'
+import os, click
 
-import os
-def run(filename=None):
+from . import mcstas
+@mcstas.command()
+@click.argument("filename")
+def convertinstrument(filename=None):
+    if not os.path.exists(filename):
+        raise IOError("McStas Instrument %r does not exist" % filename)
+    click.echo("Converting McStas instrument %s ..." % filename)
     App().run(filename)
     return
-
-
-def parse_cmdline():
-    print ("%s %s %s: convert a mcstas instrument to mcvine app\n" % (cliname, cmdname, actionname))
-    
-    import optparse
-    cmd1 =  "%prog " + cmdname + " " + actionname
-    usage = "usage: " + cmd1 + " instrument-path [options]\n"
-    usage += "\n * Example:\n"
-    usage += "   $ " + cmd1 + " myinstrument.instr"
-    
-    parser = optparse.OptionParser(usage, add_help_option=True)
-    
-    #
-    # parser.add_option('-p', '--port', type="int", default=18861, dest='port')
-    
-    #
-    options, args = parser.parse_args()
-    if len(args) > 3:
-        parser.error("too many arguments\n\n")
-    if len(args) < 3:
-        parser.error("too few arguments\n\n")
-
-    kwds = vars(options)
-    return args[2:], kwds
-
 
 
 class App(object):

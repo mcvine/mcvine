@@ -12,8 +12,8 @@
 #
 
 
-import journal
-info = journal.info( 'mcni.utils.mpi' )
+import logging
+logger = logging.getLogger("mcni.utils.mpi")
 
 # 
 import os

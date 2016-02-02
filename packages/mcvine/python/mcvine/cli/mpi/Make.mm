@@ -37,7 +37,6 @@ update: clean
 EXPORT_PYTHON_MODULES = \
 	__init__.py \
 	info.py \
-	help.py \
 
 
 export:: export-package-python-modules
