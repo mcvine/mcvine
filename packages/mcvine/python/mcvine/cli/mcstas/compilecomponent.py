@@ -23,6 +23,9 @@ def compilecomponent(debug=None, type=None, category=None, filename=None):
         compileFile(filename, category)
         return
     
+    if not category and not type:
+        raise RuntimeError("neither category nor type nor component paths was given")
+    
     from mcvine import findcomponentfactory
     click.echo("Compiling component %s in category %r ..." % (
         type, category))

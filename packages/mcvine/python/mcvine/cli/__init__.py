@@ -22,7 +22,7 @@ import click
 def mcvine():
     return
 
-from . import mcstas, mpi, sampleassembly
+from . import mcstas, mpi, sampleassembly #, kernel
 
 # version
 __id__ = "$Id$"

@@ -36,8 +36,6 @@ update: clean
 
 EXPORT_PYTHON_MODULES = \
 	__init__.py \
-	simiqe.py \
-	help.py \
 
 
 export:: export-package-python-modules
