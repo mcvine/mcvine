@@ -16,13 +16,10 @@ __doc__ = """
 command line interface
 """
 
-name = 'mcvine'
-
-
 import click
 
 @click.group()
-def main():
+def mcvine():
     return
 
 from . import mcstas, mpi, sampleassembly

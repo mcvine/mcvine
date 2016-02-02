@@ -3,14 +3,13 @@
 # Jiao Lin <jiao.lin@gmail.com>
 #
 
-from .. import main
+import click
+from .. import mcvine
 
-@main.group()
+@mcvine.group()
 def mcstas():
     return
 
-
 from . import compilecomponent, convertinstrument
-
 
 # End of file 
