@@ -3,6 +3,14 @@
 News
 ====
 
+2016
+----
+* **Feb 2015**:
+
+  - The introductory paper to MCViNE was published at NIMA: http://dx.doi.org/10.1016/j.nima.2015.11.118
+  - Yuen Yiu's paper *Light atom quantum oscillations in UC and US* was published at Physical Review B: http://dx.doi.org/10.1103/PhysRevB.93.014306
+
+
 2015
 ----
 
