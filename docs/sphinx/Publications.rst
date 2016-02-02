@@ -8,17 +8,17 @@ Publications
 
 References
 ----------
-#. Jiao YY Lin, Hillary L Smith, Garrett E Granroth, Douglas L Abernathy, Mark D Lumsden, Barry Winn, Adam A Aczel, Michael Aivazis, and Brent Fultz, MCViNE--An object oriented Monte Carlo neutron ray tracing simulation package, submitted 2015. arXiv preprint arXiv:1504.02776
+#. Jiao YY Lin, Hillary L Smith, Garrett E Granroth, Douglas L Abernathy, Mark D Lumsden, Barry Winn, Adam A Aczel, Michael Aivazis, and Brent Fultz, MCViNE--An object oriented Monte Carlo neutron ray tracing simulation package, http://dx.doi.org/10.1016/j.nima.2015.11.118
 
 
 Publications made use of MCViNE
 -------------------------------
 
-2015
-~~~~
+2016
+----
 #. Jennifer L. Niedziela, R. Mills, M. J. Loguillo, D. Armitage, H. L. Smith, J. Y. Y. Lin, M. S. Lucas, M. B. Stone, and D. L. Abernathy, High temperature sample environments for inelastic neutron scattering at the Spallation Neutron Source, in preparation
-#. Yuen Yiu, A.A. Aczel, G.E. Granroth, D.L. Abernathy, M.B. Stone, W.J.L. Buyers, J.Y.Y. Lin, G.D. Samolyuk, G.M. Stocks, and S.E. Nagler, Light atom quantum oscillations in UC and US, submitted, arXiv preprint arXiv:1508.00930
-#. Jiao YY Lin, Hillary L Smith, Garrett E Granroth, Douglas L Abernathy, Mark D Lumsden, Barry Winn, Adam A Aczel, Michael Aivazis, and Brent Fultz, MCViNE--An object oriented Monte Carlo neutron ray tracing simulation package, submitted 2015. arXiv preprint arXiv:1504.02776
+#. Yuen Yiu, A.A. Aczel, G.E. Granroth, D.L. Abernathy, M.B. Stone, W.J.L. Buyers, J.Y.Y. Lin, G.D. Samolyuk, G.M. Stocks, and S.E. Nagler, Light atom quantum oscillations in UC and US, Physical Review B 93, 014306, Jan 2016. http://dx.doi.org/10.1103/PhysRevB.93.014306
+#. Jiao YY Lin, Hillary L Smith, Garrett E Granroth, Douglas L Abernathy, Mark D Lumsden, Barry Winn, Adam A Aczel, Michael Aivazis, and Brent Fultz, MCViNE--An object oriented Monte Carlo neutron ray tracing simulation package, NIMA Volume 810, 21 February 2016, Pages 86–99, http://dx.doi.org/10.1016/j.nima.2015.11.118
 
 
 2014
