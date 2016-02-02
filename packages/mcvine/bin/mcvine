@@ -3,12 +3,9 @@
 # Jiao Lin <jiao.lin@gmail.com>
 #
 
-from mcvine.cli import main
+from mcvine.cli import mcvine
 
-
-if __name__ == '__main__': 
-    print '-'*78
-    main()
+if __name__ == '__main__': mcvine()
 
 
 # End of file 
