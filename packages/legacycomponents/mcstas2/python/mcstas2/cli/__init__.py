@@ -4,7 +4,7 @@
 #
 
 import click
-from .. import mcvine
+from mcvine.cli import mcvine
 
 @mcvine.group()
 def mcstas():
