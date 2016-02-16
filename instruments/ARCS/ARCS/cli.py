@@ -25,5 +25,10 @@ def mod2sample(ctx, appname):
     from .applications.Moderator2Sample import App
     return App(appname)
 
+@arcs_app('arcs_m2s')
+def m2s(ctx, appname):
+    from .applications.M2S import App
+    return App(appname)
+
 
 # End of file 
