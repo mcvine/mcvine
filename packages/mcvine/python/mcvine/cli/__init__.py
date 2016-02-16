@@ -18,6 +18,9 @@ command line interface
 
 import click
 
+# map aliases to long commands
+aliases = dict()
+
 @click.group()
 def mcvine():
     return
@@ -25,6 +28,9 @@ def mcvine():
 from . import mpi, sampleassembly #, kernel
 from mcvine.instrument import cli
 from mcstas2 import cli
+
+# aliases should be the last
+from . import bash_aliases
 
 # version
 __id__ = "$Id$"
