@@ -29,16 +29,23 @@ def mcvine():
 # shortcut for pyre app
 def pyre_app(parent, appname, cmd_prefix):
     def decorator(f):
+        # pass extra args and options to pyre app
         d1 = parent.command(
             context_settings=dict(ignore_unknown_options=True, allow_extra_args=True))
         d2 = click.pass_context
         def _f(ctx):
+            # build the sys argv list for pyre app
             import sys
             sys.argv = [appname] + ctx.args
+            # create app instance
             app = f(ctx, appname)
+            # and run
             app.run()
             return
+        # nicer cmd name
         _f.__name__ = f.__name__
+        # register the alias
+        # sth like arcs_analyze_beam -> mcvine instrument arcs analyze_beam
         aliases[appname] = '%s %s' % (cmd_prefix, f.__name__)
         return d1(d2(_f))
     return decorator        
