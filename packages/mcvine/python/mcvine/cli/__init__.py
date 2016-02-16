@@ -56,7 +56,7 @@ from mcvine.instrument import cli
 from mcstas2 import cli
 
 # aliases should be the last cmds to import
-from . import bash_aliases
+from . import bash
 
 # version
 __id__ = "$Id$"
