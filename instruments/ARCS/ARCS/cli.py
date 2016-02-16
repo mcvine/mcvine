@@ -30,5 +30,10 @@ def m2s(ctx, appname):
     from .applications.M2S import App
     return App(appname)
 
+@arcs_app('arcs_beam')
+def beam(ctx, appname):
+    from .applications.Beam import App
+    return App(appname)
+
 
 # End of file 

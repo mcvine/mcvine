@@ -3,7 +3,7 @@
 cmd_help = """
 Simulate ARCS beam.
 
-It is a wrapper of arcs-m2s and convenient tools to 
+It is a wrapper of arcs-m2s and a postprocessing step to
 compute monitor spectra and others.
 
 Example:
@@ -14,6 +14,8 @@ For more details of cmd line parameters, run:
 
  $ arcs_beam --help-properties
 
+Impl notes:
+* The postprocessing happens in mcvine.instruments.ARCS.beam_postprocessing.
 """
 
 import os, time
@@ -71,7 +73,7 @@ class App(base):
 
 
     def _run_arcs_m2s(self):
-        cmd = ['arcs-m2s']
+        cmd = ['mcvine instrument arcs m2s']
         keys = [
             'fermi_chopper',
             'fermi_nu',
@@ -90,7 +92,7 @@ class App(base):
 
 
     def _run_beam(self):
-        cmd = ['arcs_moderator2sample']
+        cmd = ['mcvine instrument arcs mod2sample']
         keys = ['ncount']
         cmd += self._buildCmdFromInventory(keys)
         cmd += ['-buffer_size=%s' % int(self.inventory.ncount/10)]
@@ -116,9 +118,3 @@ class App(base):
         return ['-%s=%s' % (k,v) for k,v in kwds.iteritems()]
     
     
-def main():
-    app = App('arcs_beam')
-    app.run()
-    return
-
-if __name__ == '__main__': main()
