@@ -52,6 +52,6 @@ def aliases(ctx, keyword):
 
 
 def alias_cmd(alias, cmd):
-    return """%(alias)s () { %(cmd)s "$@"; };""" % locals()
+    return """%(alias)s () { %(cmd)s "$@"; }; export %(alias)s;""" % locals()
 
 # End of file 
