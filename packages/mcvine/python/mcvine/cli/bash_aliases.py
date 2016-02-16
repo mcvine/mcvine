@@ -29,6 +29,6 @@ To put the aliases in use, run
 
 
 def alias_cmd(alias, cmd):
-    return """%(alias)s () { %(cmd)s "$@"; }""" % locals()
+    return """%(alias)s () { %(cmd)s "$@"; };""" % locals()
 
 # End of file 
