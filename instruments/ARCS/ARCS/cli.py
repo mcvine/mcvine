@@ -5,27 +5,18 @@
 
 import click
 from ..cli import instrument
+from mcvine.cli import pyre_app
 
 @instrument.group()
 def arcs():
     return
 
 
-
-@arcs.command(context_settings=dict(ignore_unknown_options=True, allow_extra_args=True))
-@click.pass_context
-def analyze_beam(ctx):
-    appname = 'arcs_analyze_beam'
-    import sys
-    sys.argv = [appname] + ctx.args
+cmd_prefix = "mcvine instrument arcs "
+@pyre_app(parent=arcs, appname = 'arcs_analyze_beam', cmd_prefix=cmd_prefix)
+def analyze_beam(ctx, appname):
     from .applications.BeamAnalysis import App
-    app = App('arcs_analyze_beam')
-    app.run()
-    return
-
-
-from mcvine.cli import aliases
-aliases['arcs_analyze_beam'] = 'mcvine instrument arcs analyze_beam'
+    return App(appname)
 
 
 # End of file 
