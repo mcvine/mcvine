@@ -62,13 +62,20 @@ class App(base):
     def main(self):
         if not os.path.exists(self.out):
             os.makedirs(self.out)
-            
+        
+        self._writeREADME()
         # create configuration for arcs moderator to sample simulation
         self._run_arcs_m2s()
         # run the simulation from mod to sample
         self._run_beam()
         # postprocessing
         bpp.run(self.m2sout, self.out, self.inventory.E)
+        return
+
+
+    def _writeREADME(self):
+        stream = open("README.arcs_beam", 'wt')
+        stream.write(rundir_readme_txt)
         return
 
 
@@ -118,3 +125,17 @@ class App(base):
         return ['-%s=%s' % (k,v) for k,v in kwds.iteritems()]
     
     
+rundir_readme_txt = """
+arcs_beam: perform ARCS beam simulation and save various data files
+
+Steps:
+* configure moderator2sample simulation using cmd line inputs
+* run moderator2sample simulation
+* sanitize the outputs and save them
+
+Dirs and files:
+* out: sanitized output including neutron packets, monitor data histograms etc
+* arcs_moderator2sample.pml: configuration file for moderator2sample sim
+* run-m2s.sh: script that runs the moderator2sample sim
+* _m2sout: "raw" output from the moderator2sample sim
+"""
