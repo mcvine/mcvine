@@ -70,3 +70,15 @@ calls
 
 request the position and orientation of the scatterer.
 
+
+Command line interface
+----------------------
+
+The main command::
+
+ $ mcvine
+
+It is implemented using python-click: http://click.pocoo.org/5/.
+The main command is at /packages/mcvine/python/mcvine/cli.
+sub-cmds are imported from various sub-packages such as mcstas2 
+and mcvine.instruments.
