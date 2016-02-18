@@ -47,7 +47,7 @@ intercepted by ARCS detector system.""")
 @click.argument("neutrons", default="neutrons.dat")
 @click.option("--workdir", default='work-arcs-neutrons2events')
 @click.option("--nodes", default=0)
-@click.option("--ncount", default=None)
+@click.option("--ncount", default=0)
 @alias("arcs_neutrons2events", "%s neutrons2events" % cmd_prefix)
 def neutrons2events(neutrons, workdir, nodes, ncount):
     from .applications.Neutrons2Events import run
@@ -66,5 +66,24 @@ def events2nxs(events, nxs, tofbinsize, type, ei):
     run(events, nxs, tofbinsize=tofbinsize, type=type, Ei=ei)
     return
     
+@arcs.command(help="""convert scattereed neutrons to nexus file
+
+Impl.: mcvine.instruments.ARCS.applications.Neutrons2Nxs
+""")
+@click.option("--neutrons", default="", help='path to neutron data file')
+@click.option("--nxs", default="arcs-sim.nxs", help='nexus output path')
+@click.option("--workdir", default='work-arcs-neutrons2nxs', help="working dir to save intermediate data fiels")
+@click.option("--nodes", default=0)
+@click.option("--type", default="raw", type=click.Choice(['processed', 'raw']))
+@alias("arcs_neutrons2nxs", "%s neutrons2nxs" % cmd_prefix)
+@click.pass_context
+def neutrons2nxs(ctx, neutrons, nxs, workdir, nodes, type):
+    if not neutrons:
+        click.echo(ctx.get_help(), color=ctx.color)
+        return
+    from .applications.Neutrons2Nxs import run
+    run(neutrons, nxs, type, workdir, nodes)
+    return
+
 
 # End of file 
