@@ -27,12 +27,12 @@ alias_help = """build bash aliases of long mcvine commands
 This command prints out the bash function definitions to 
 establish aliases of relevant long commands. For example
 
- $ mcvine bash_aliases arcs
+ $ mcvine bash aliases arcs
 
 will print out bash functions to define aliases for all arcs related commands.
 To put the aliases in use, run
 
- $ eval `mcvine bash_aliases arcs`
+ $ eval `mcvine bash aliases arcs`
 """
 @bash.command(help=alias_help)
 @click.argument("keyword", default="")
@@ -52,6 +52,6 @@ def aliases(ctx, keyword):
 
 
 def alias_cmd(alias, cmd):
-    return """%(alias)s () { %(cmd)s "$@"; }; export %(alias)s;""" % locals()
+    return """%(alias)s () { %(cmd)s "$@"; }; export -f %(alias)s;""" % locals()
 
 # End of file 

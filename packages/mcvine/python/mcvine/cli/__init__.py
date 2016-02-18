@@ -26,7 +26,14 @@ aliases = dict()
 def mcvine():
     return
 
-# shortcut for pyre app
+# decorator to create bash alias of a command
+def alias(shortname, longname):
+    def decorate(f):
+        aliases[shortname] = longname
+        return f
+    return decorate
+
+# decorator for pyre app
 def pyre_app(parent, appname, cmd_prefix):
     def decorator(f):
         # pass extra args and options to pyre app
@@ -48,7 +55,7 @@ def pyre_app(parent, appname, cmd_prefix):
         # sth like arcs_analyze_beam -> mcvine instrument arcs analyze_beam
         aliases[appname] = '%s %s' % (cmd_prefix, f.__name__)
         return d1(d2(_f))
-    return decorator        
+    return decorator
 
 # sub-cmds
 from . import mpi, sampleassembly #, kernel
