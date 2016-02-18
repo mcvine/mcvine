@@ -21,3 +21,33 @@ def populate_monitor_data(sim_out, nxs)
     populateMonitors(entry, sim_out)
     return
 
+
+def reduce(nxsfile, qaxis, outfile, use_ei_guess=False, ei_guess=None, eaxis=None):
+    from mantid.simpleapi import DgsReduction, SofQW3, SaveNexus
+    if use_ei_guess:
+        DgsReduction(
+            SampleInputFile=nxsfile,
+            IncidentEnergyGuess=ei_guess,
+            UseIncidentEnergyGuess=use_ei_guess,
+            OutputWorkspace='reduced',
+            EnergyTransferRange=eaxis,
+            )
+    else:
+        DgsReduction(
+            SampleInputFile=nxsfile,
+            OutputWorkspace='reduced',
+            EnergyTransferRange=eaxis,
+            )
+        
+    SofQW3(
+        InputWorkspace='reduced',
+        OutputWorkspace='iqw',
+        QAxisBinning=qaxis,
+        EMode='Direct',
+        )
+    SaveNexus(
+        InputWorkspace='iqw',
+        Filename = outfile,
+        Title = 'iqw',
+        )
+    return

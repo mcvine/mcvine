@@ -96,7 +96,7 @@ def nxs():
 @click.option('--type', default="Ei", type=click.Choice(['Ei', 'monitor']), help='type of metadata')
 @click.option('--beam_outdir', help='path to the output directory of arcs beam simulation')
 @click.option('--nxs', help='path to the nexus file to be decorated')
-@alias("arcs_populate_metadata", "%s nxs populate_metadata" % cmd_prefix)
+@alias("arcs_nxs_populate_metadata", "%s nxs populate_metadata" % cmd_prefix)
 @click.pass_context
 def populate_metadata(ctx, type, beam_outdir, nxs):
     "populate metadata into the simulated nexus file"
@@ -107,5 +107,37 @@ def populate_metadata(ctx, type, beam_outdir, nxs):
     f = getattr(nxs, "populate_%s_data" % type)
     f(beam_outdir, nxs)
     return
+
+@nxs.command()
+@click.argument("nxs")
+@click.option('--out', default="iqe.nxs", help="output path. Eg. iqe.nxs")
+@click.option('--use_ei_guess', default=False)
+@click.option('--ei_guess', help='guess for Ei', default=0.)
+@click.option('--qaxis', help='tuple of Qmin,Qmax,dQ', default=(0,13,0.1))
+@click.option('--eaxis', help='tuple of Emin,Emax,dE', default=None)
+@alias("arcs_nxs_reduce", "%s nxs reduce" % cmd_prefix)
+def reduce(nxs, out, use_ei_guess, ei_guess, qaxis, eaxis):
+    "run reduction"
+    if ei_guess > 0:
+        use_ei_guess = True
+
+    qmin, qmax, dq = qaxis
+    qaxis = (qmin, dq, qmax)
+
+    if eaxis is not None:
+        emin, emax, de = eaxis
+        eaxis = emin, de, emax
+
+    d = dict(
+        nxsfile = nxs,
+        use_ei_guess = use_ei_guess,
+        ei_guess = ei_guess,
+        qaxis = qaxis,
+        eaxis = eaxis,
+        outfile = out,
+        )
+    run(**d)
+    return
+
 
 # End of file 
