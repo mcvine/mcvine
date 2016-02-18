@@ -4,12 +4,12 @@
 #
 
 import click
-from ..cli import instrument
+from ..cli import instruments
 from mcvine.cli import pyre_app, alias
 
-cmd_prefix = "mcvine instrument arcs "
+cmd_prefix = "mcvine instruments arcs "
 
-@instrument.group()
+@instruments.group()
 @alias("arcs", cmd_prefix)
 def arcs():
     return

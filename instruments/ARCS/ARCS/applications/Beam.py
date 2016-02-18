@@ -80,7 +80,7 @@ class App(base):
 
 
     def _run_arcs_m2s(self):
-        cmd = ['mcvine instrument arcs m2s']
+        cmd = ['mcvine instruments arcs m2s']
         keys = [
             'fermi_chopper',
             'fermi_nu',
@@ -99,17 +99,17 @@ class App(base):
 
 
     def _run_beam(self):
-        cmd = ['mcvine instrument arcs mod2sample']
+        cmd = ['mcvine instruments arcs mod2sample']
         keys = ['ncount']
         cmd += self._buildCmdFromInventory(keys)
-        cmd += ['-buffer_size=%s' % int(self.inventory.ncount/10)]
+        cmd += ['--buffer_size=%s' % int(self.inventory.ncount/10)]
         cmd.append( '--output-dir=%s' % self.m2sout)
         from mcvine import resources
         moddat = os.path.join(
             resources.instrument('ARCS'), 'resources',
             'source_sct521_bu_17_1.dat',
             )
-        cmd += ['-moderator.S_filename=%s' % moddat]
+        cmd += ['--moderator.S_filename=%s' % moddat]
         cmd = ' '.join(cmd)
         open('run-m2s.sh', 'wt').write(cmd) # save the running command
         bpp._exec(cmd)
@@ -122,7 +122,7 @@ class App(base):
             v = getattr(self.inventory, k)
             kwds[k] = v
             continue
-        return ['-%s=%s' % (k,v) for k,v in kwds.iteritems()]
+        return ['--%s=%s' % (k,v) for k,v in kwds.iteritems()]
     
     
 rundir_readme_txt = """

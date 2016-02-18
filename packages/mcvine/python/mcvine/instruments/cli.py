@@ -4,10 +4,15 @@
 #
 
 import importlib
-from ..instrument.cli import instrument
 
-instruments = ['ARCS']
-for inst in instruments:
+import click
+from mcvine.cli import mcvine
+@mcvine.group()
+def instruments():
+    return
+
+instrument_list = ['ARCS']
+for inst in instrument_list:
     mod = "mcvine.instruments.%s.cli" % inst
     importlib.import_module(mod)
     continue

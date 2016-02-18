@@ -9,6 +9,4 @@ from mcvine.cli import mcvine
 def instrument():
     return
 
-from mcvine.instruments import cli
-
 # End of file 

@@ -27,7 +27,7 @@ import unittest
 class TestCase(unittest.TestCase):
 
     def test1(self):
-        cmd = 'arcs-m2s --dry_run'
+        cmd = 'mcvine instruments arcs m2s --dry_run'
         out, err = execute(cmd)
         argv = eval(out.splitlines()[-1])
         # print argv
@@ -40,7 +40,7 @@ class TestCase(unittest.TestCase):
 
 
     def test2(self):
-        cmd = 'arcs-m2s --dry_run --fermi_bladeradius=3.'
+        cmd = 'mcvine instruments arcs m2s --dry_run --fermi_bladeradius=3.'
         out, err = execute(cmd)
         argv = eval(out.splitlines()[-1])
         # print argv
@@ -52,7 +52,7 @@ class TestCase(unittest.TestCase):
 
 
     def test3(self):
-        cmd = 'arcs-m2s --dry_run --fermi_chopper=700-0.5-AST'
+        cmd = 'mcvine instruments arcs m2s --dry_run --fermi_chopper=700-0.5-AST'
         out, err = execute(cmd)
         argv = eval(out.splitlines()[-1])
         # print argv
@@ -65,7 +65,7 @@ class TestCase(unittest.TestCase):
 
 
     def test4(self):
-        cmd = 'arcs-m2s --dry_run --fermi_chopper=700-0.5-AST --fermi_bladeradius=3.'
+        cmd = 'mcvine instruments arcs m2s --dry_run --fermi_chopper=700-0.5-AST --fermi_bladeradius=3.'
         out, err = execute(cmd)
         argv = eval(out.splitlines()[-1])
         # print argv

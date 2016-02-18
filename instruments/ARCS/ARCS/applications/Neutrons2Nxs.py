@@ -36,7 +36,7 @@ def sendneutronstodetsys(
     workdir = None,
     ):
     d = locals()
-    cmd = 'mcvine instrument arcs neutrons2events %(neutronfile)s --nodes=%(nodes)s --workdir=%(workdir)s' % d
+    cmd = 'mcvine instruments arcs neutrons2events %(neutronfile)s --nodes=%(nodes)s --workdir=%(workdir)s' % d
     execute(cmd, os.curdir)
     return os.path.join(workdir, 'out', 'events.dat')
 
@@ -44,7 +44,7 @@ def sendneutronstodetsys(
 def event2nxs(eventdat, nxs, type, workdir):
     d = dict(globals())
     d.update(locals())
-    cmd = 'mcvine instrument arcs events2nxs %(eventdat)s %(nxs)s --type=%(type)s --tofbinsize=%(tofbinsize)s' % d
+    cmd = 'mcvine instruments arcs events2nxs %(eventdat)s %(nxs)s --type=%(type)s --tofbinsize=%(tofbinsize)s' % d
     execute(cmd, workdir)
     return
 

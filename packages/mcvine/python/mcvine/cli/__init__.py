@@ -22,8 +22,11 @@ import click
 aliases = dict()
 
 # main command
-CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
-@click.group(context_settings=CONTEXT_SETTINGS)
+# enable -h seems to interfere with the pyre_app decorator.
+# disable it for now
+# CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
+# @click.group(context_settings=CONTEXT_SETTINGS)
+@click.group()
 def mcvine():
     return
 
@@ -62,6 +65,7 @@ def pyre_app(parent, appname, cmd_prefix):
 # sub-cmds
 from . import mpi, sampleassembly, mantid #, kernel
 from mcvine.instrument import cli
+from mcvine.instruments import cli
 from mcstas2 import cli
 
 # aliases should be the last cmds to import
