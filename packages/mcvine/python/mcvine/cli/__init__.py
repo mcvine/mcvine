@@ -51,6 +51,7 @@ def pyre_app(parent, appname, cmd_prefix):
             return
         # nicer cmd name
         _f.__name__ = f.__name__
+        _f.__doc__ = f.__doc__
         # register the alias
         # sth like arcs_analyze_beam -> mcvine instrument arcs analyze_beam
         aliases[appname] = '%s %s' % (cmd_prefix, f.__name__)
