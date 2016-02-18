@@ -100,7 +100,7 @@ def nxs():
 @click.pass_context
 def populate_metadata(ctx, type, beam_outdir, nxs):
     "populate metadata into the simulated nexus file"
-    if not nxs or beam_outdir:
+    if not nxs or not beam_outdir:
         click.echo(ctx.get_help(), color=ctx.color)
         return
     from .applications import nxs

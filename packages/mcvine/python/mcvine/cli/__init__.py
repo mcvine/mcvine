@@ -60,7 +60,7 @@ def pyre_app(parent, appname, cmd_prefix):
     return decorator
 
 # sub-cmds
-from . import mpi, sampleassembly #, kernel
+from . import mpi, sampleassembly, mantid #, kernel
 from mcvine.instrument import cli
 from mcstas2 import cli
 

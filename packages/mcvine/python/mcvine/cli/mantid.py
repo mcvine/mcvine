@@ -1,8 +1,23 @@
-#!/usr/bin/env python
+# -*- Python -*-
+#
+#
+# Jiao Lin <jiao.lin@gmail.com>
+#
 
+from . import mcvine, click
 import h5py, numpy as np
 
-def extract(inpath, outpath):
+
+@mcvine.group()
+def mantid():
+    return
+
+@mantid.command()
+@click.argument("mantid")
+@click.argument("histogram")
+def extract_iqe(mantid, histogram):
+    "extract iqe from a mantid-saved h5 file and save to a histogram"
+    inpath, outpath = mantid, histogram
     f = h5py.File(inpath)
     w = f['mantid_workspace_1']['workspace']
     e = np.array(w['axis1'])
@@ -21,11 +36,4 @@ def extract(inpath, outpath):
     return
 
 
-def main():
-    import sys
-    inpath,outpath = sys.argv[1:3]
-    extract(inpath, outpath)
-    return
-
-if __name__ == '__main__': main()
-
+# End of file 
