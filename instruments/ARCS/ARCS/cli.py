@@ -86,4 +86,26 @@ def neutrons2nxs(ctx, neutrons, nxs, workdir, nodes, type):
     return
 
 
+# nexus file utilities
+@arcs.group()
+def nxs():
+    "nexus utils"
+    return
+
+@nxs.command()
+@click.option('--type', default="Ei", type=click.Choice(['Ei', 'monitor']), help='type of metadata')
+@click.option('--beam_outdir', help='path to the output directory of arcs beam simulation')
+@click.option('--nxs', help='path to the nexus file to be decorated')
+@alias("arcs_populate_metadata", "%s nxs populate_metadata" % cmd_prefix)
+@click.pass_context
+def populate_metadata(ctx, type, beam_outdir, nxs):
+    "populate metadata into the simulated nexus file"
+    if not nxs or beam_outdir:
+        click.echo(ctx.get_help(), color=ctx.color)
+        return
+    from .applications import nxs
+    f = getattr(nxs, "populate_%s_data" % type)
+    f(beam_outdir, nxs)
+    return
+
 # End of file 
