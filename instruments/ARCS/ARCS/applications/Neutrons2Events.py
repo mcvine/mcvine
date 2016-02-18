@@ -45,8 +45,14 @@ class App(AppBase):
     
 
 # main methods
-def run(neutrons, workdir, **kwds):
-    eventdat = sendneutronstodetsys(neutronfile=neutrons, workdir=workdir, **kwds)
+def run(neutrons, workdir, nodes, ncount=None):
+    neutrons = os.path.abspath(neutrons)
+    workdir = os.path.abspath(workdir)
+    if os.path.exists(workdir):
+        raise IOError("%s already exists" % workdir)
+    os.makedirs(workdir)
+    eventdat = sendneutronstodetsys(
+        neutronfile=neutrons, workdir=workdir, nodes=nodes, ncount=ncount)
     return
 
 

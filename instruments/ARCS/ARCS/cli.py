@@ -5,7 +5,7 @@
 
 import click
 from ..cli import instrument
-from mcvine.cli import pyre_app
+from mcvine.cli import pyre_app, alias
 
 @instrument.group()
 def arcs():
@@ -15,6 +15,7 @@ def arcs():
 cmd_prefix = "mcvine instrument arcs "
 arcs_app = lambda name: pyre_app(parent=arcs, appname = name, cmd_prefix=cmd_prefix)
 
+# beam sim
 @arcs_app("arcs_analyze_beam")
 def analyze_beam(ctx, appname):
     from .applications.BeamAnalysis import App
@@ -35,5 +36,18 @@ def beam(ctx, appname):
     from .applications.Beam import App
     return App(appname)
 
+
+# detsys sim
+@arcs.command()
+@click.argument("neutrons", default="neutrons.dat")
+@click.option("--workdir", default='work-arcs-neutrons2events')
+@click.option("--nodes", default=0)
+@click.option("--ncount", default=None)
+@alias("arcs_neutrons2events", "%s neutrons2events" % cmd_prefix)
+def neutrons2events(neutrons, workdir, nodes, ncount):
+    from .applications.Neutrons2Events import run
+    run(neutrons, workdir, nodes, ncount=ncount)
+    return
+    
 
 # End of file 
