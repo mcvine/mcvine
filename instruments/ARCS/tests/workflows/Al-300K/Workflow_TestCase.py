@@ -15,7 +15,8 @@ class TestCase(unittest.TestCase):
         src = os.path.join(mcvine.resources.instrument('ARCS'), 'simulations/aluminum/plate-rotated28deg-Ei80meV')
         workdir = "work"
         dest = os.path.join(workdir)
-        shutil.rmtree(dest)
+        if os.path.exists(dest):
+            shutil.rmtree(dest)
         shutil.copytree(src, dest)
         # run 
         from mcvine.instruments.ARCS.applications.utils import execute
