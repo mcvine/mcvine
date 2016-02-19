@@ -13,7 +13,7 @@ def populate_Ei_data(sim_out, nxs):
     return
 
 
-def populate_monitor_data(sim_out, nxs)
+def populate_monitor_data(sim_out, nxs):
     import h5py
     f = h5py.File(nxs, 'a')
     entry = f['entry']
