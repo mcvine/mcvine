@@ -20,10 +20,13 @@ class TestCase(unittest.TestCase):
         shutil.copytree(src, dest)
         # run 
         from mcvine.instruments.ARCS.applications.utils import execute
-        execute("make", workdir)
+        # The following only work when mantid is installed
+        # execute("make", workdir)
         # generate a plot
-        cmd = "PlotHist.py --min=0 --max=0.001 --output=iqe.eps %s/iqe.h5" % workdir
-        execute(cmd, os.curdir)
+        # cmd = "PlotHist.py --min=0 --max=0.001 --output=iqe.eps %s/iqe.h5" % workdir
+        # execute(cmd, os.curdir)
+        #
+        execute("make arcs-sim-wEidata.nxs", workdir)
         return
 
 
