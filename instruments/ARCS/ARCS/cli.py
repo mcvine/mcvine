@@ -103,8 +103,8 @@ def populate_metadata(ctx, type, beam_outdir, nxs):
     if not nxs or not beam_outdir:
         click.echo(ctx.get_help(), color=ctx.color)
         return
-    from .applications import nxs
-    f = getattr(nxs, "populate_%s_data" % type)
+    from .applications import nxs as nxsmod
+    f = getattr(nxsmod, "populate_%s_data" % type)
     f(beam_outdir, nxs)
     return
 
@@ -113,8 +113,8 @@ def populate_metadata(ctx, type, beam_outdir, nxs):
 @click.option('--out', default="iqe.nxs", help="output path. Eg. iqe.nxs")
 @click.option('--use_ei_guess', default=False)
 @click.option('--ei_guess', help='guess for Ei', default=0.)
-@click.option('--qaxis', help='tuple of Qmin,Qmax,dQ', default=(0,13,0.1))
-@click.option('--eaxis', help='tuple of Emin,Emax,dE', default=None)
+@click.option('--qaxis', help='Qmin Qmax dQ', default=(0.,13.,0.1))
+@click.option('--eaxis', help='Emin Emax dE', default=(0.,0.,0.))
 @alias("arcs_nxs_reduce", "%s nxs reduce" % cmd_prefix)
 def reduce(nxs, out, use_ei_guess, ei_guess, qaxis, eaxis):
     "run reduction"
@@ -123,11 +123,14 @@ def reduce(nxs, out, use_ei_guess, ei_guess, qaxis, eaxis):
 
     qmin, qmax, dq = qaxis
     qaxis = (qmin, dq, qmax)
-
+    
+    import numpy as np
+    if np.all(np.array(eaxis)==0.): eaxis = None
     if eaxis is not None:
         emin, emax, de = eaxis
         eaxis = emin, de, emax
-
+    
+    nxs = nxs.encode("utf8"); out = out.encode("utf8")
     d = dict(
         nxsfile = nxs,
         use_ei_guess = use_ei_guess,
@@ -136,7 +139,8 @@ def reduce(nxs, out, use_ei_guess, ei_guess, qaxis, eaxis):
         eaxis = eaxis,
         outfile = out,
         )
-    run(**d)
+    from .applications.nxs import reduce
+    reduce(**d)
     return
 
 
