@@ -7,46 +7,24 @@ intercepted by ARCS detector system.
 
 Examples:
 
- $ arcs-neutrons2nxs --neutrons=scattered-neutrons-example
+ $ arcs_neutrons2evens scattered-neutrons-example
 """
 
 
-appname = 'arcs-neutrons2events'
+appname = 'arcs_neutrons2events'
 cmd_help = __doc__
 tofbinsize = 0.1 # microsecond
 
 
-# application 
-from pyre.applications.Script import Script as AppBase
-class App(AppBase):
-
-    class Inventory(AppBase.Inventory):
-
-        import pyre.inventory
-        neutrons = pyre.inventory.str('neutrons', default='neutrons.dat')
-        workdir = pyre.inventory.str('workdir', default='work-arcs-neutrons2events')
-        nodes = pyre.inventory.int('nodes', default=0)
-
-        
-    def main(self):
-        neutrons = self.inventory.neutrons; neutrons = os.path.abspath(neutrons)
-        workdir = self.inventory.workdir; workdir = os.path.abspath(workdir)
-        if os.path.exists(workdir):
-            raise IOError("%s already exists" % workdir)
-        os.makedirs(workdir)
-        
-        nodes = self.inventory.nodes
-        run(neutrons, workdir, nodes=nodes)
-        return
-
-
-    def help(self):
-        print cmd_help
-    
-
 # main methods
-def run(neutrons, workdir, **kwds):
-    eventdat = sendneutronstodetsys(neutronfile=neutrons, workdir=workdir, **kwds)
+def run(neutrons, workdir, nodes, ncount=None):
+    neutrons = os.path.abspath(neutrons)
+    workdir = os.path.abspath(workdir)
+    if os.path.exists(workdir):
+        raise IOError("%s already exists" % workdir)
+    os.makedirs(workdir)
+    eventdat = sendneutronstodetsys(
+        neutronfile=neutrons, workdir=workdir, nodes=nodes, ncount=ncount)
     return
 
 
@@ -94,6 +72,7 @@ def sendneutronstodetsys(
     cmd = ' '.join(cmd)
     run_sh = os.path.join(workdir, 'run.sh')
     open(run_sh, 'w').write(cmd+'\n')
+    from .utils import execute
     execute(cmd, workdir)
 
     # events.dat
@@ -110,35 +89,12 @@ app.run()
 """
 
 
-# utils
-import os, subprocess as sp, shlex
-def execute(cmd, workdir):
-    print '* executing %s... ' % cmd
-    args = shlex.split(cmd)
-    p = sp.Popen(args, cwd=workdir)
-    p.communicate()
-    if p.wait():
-        raise RuntimeError, "%r failed" % cmd
-    return
-
-
 import numpy as np
 from mcvine import resources
-import os, subprocess as sp
+import os
 
 #
 arcsxml = os.path.join(
     resources.instrument('ARCS'), 'resources', 'ARCS.xml.fornxs')
 
 
-def main():
-    app = App(appname)
-    app.run()
-    return
-
-
-interactive = False
-
-if __name__ == '__main__': 
-    interactive = True
-    main()

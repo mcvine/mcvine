@@ -17,7 +17,7 @@ file(COPY etc/
   )
 
 # app
-file(COPY applications/ DESTINATION ${EXPORT_BIN}/
+file(COPY bin/ DESTINATION ${EXPORT_BIN}/
   FILES_MATCHING PATTERN "arcs*"
   )
 

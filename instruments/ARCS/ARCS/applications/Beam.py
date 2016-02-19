@@ -3,7 +3,7 @@
 cmd_help = """
 Simulate ARCS beam.
 
-It is a wrapper of arcs-m2s and convenient tools to 
+It is a wrapper of arcs-m2s and a postprocessing step to
 compute monitor spectra and others.
 
 Example:
@@ -14,6 +14,8 @@ For more details of cmd line parameters, run:
 
  $ arcs_beam --help-properties
 
+Impl notes:
+* The postprocessing happens in mcvine.instruments.ARCS.beam_postprocessing.
 """
 
 import os, time
@@ -60,7 +62,8 @@ class App(base):
     def main(self):
         if not os.path.exists(self.out):
             os.makedirs(self.out)
-            
+        
+        self._writeREADME()
         # create configuration for arcs moderator to sample simulation
         self._run_arcs_m2s()
         # run the simulation from mod to sample
@@ -70,8 +73,14 @@ class App(base):
         return
 
 
+    def _writeREADME(self):
+        stream = open("README.arcs_beam", 'wt')
+        stream.write(rundir_readme_txt)
+        return
+
+
     def _run_arcs_m2s(self):
-        cmd = ['arcs-m2s']
+        cmd = ['mcvine instruments arcs m2s']
         keys = [
             'fermi_chopper',
             'fermi_nu',
@@ -90,17 +99,17 @@ class App(base):
 
 
     def _run_beam(self):
-        cmd = ['arcs_moderator2sample']
+        cmd = ['mcvine instruments arcs mod2sample']
         keys = ['ncount']
         cmd += self._buildCmdFromInventory(keys)
-        cmd += ['-buffer_size=%s' % int(self.inventory.ncount/10)]
+        cmd += ['--buffer_size=%s' % int(self.inventory.ncount/10)]
         cmd.append( '--output-dir=%s' % self.m2sout)
         from mcvine import resources
         moddat = os.path.join(
             resources.instrument('ARCS'), 'resources',
             'source_sct521_bu_17_1.dat',
             )
-        cmd += ['-moderator.S_filename=%s' % moddat]
+        cmd += ['--moderator.S_filename=%s' % moddat]
         cmd = ' '.join(cmd)
         open('run-m2s.sh', 'wt').write(cmd) # save the running command
         bpp._exec(cmd)
@@ -113,12 +122,20 @@ class App(base):
             v = getattr(self.inventory, k)
             kwds[k] = v
             continue
-        return ['-%s=%s' % (k,v) for k,v in kwds.iteritems()]
+        return ['--%s=%s' % (k,v) for k,v in kwds.iteritems()]
     
     
-def main():
-    app = App('arcs_beam')
-    app.run()
-    return
+rundir_readme_txt = """
+arcs_beam: perform ARCS beam simulation and save various data files
 
-if __name__ == '__main__': main()
+Steps:
+* configure moderator2sample simulation using cmd line inputs
+* run moderator2sample simulation
+* sanitize the outputs and save them
+
+Dirs and files:
+* out: sanitized output including neutron packets, monitor data histograms etc
+* arcs_moderator2sample.pml: configuration file for moderator2sample sim
+* run-m2s.sh: script that runs the moderator2sample sim
+* _m2sout: "raw" output from the moderator2sample sim
+"""

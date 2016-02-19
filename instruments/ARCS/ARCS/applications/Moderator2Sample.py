@@ -5,18 +5,14 @@ ARCS simulation from moderator to sample position.
 
 The configurations are in ../etc/arcs_moderator2sample/
 
-Make sure to read ../README
+Make sure to read ../../README
 """
 
+"""
 import warnings
 warnings.simplefilter('ignore')
 import mcvine
 warnings.simplefilter('default')
+"""
 
-def main():
-    from mcvine.instruments.ARCS.Instrument import Instrument
-    app = Instrument('arcs_moderator2sample')
-    app.run()
-    return
-
-if __name__ == '__main__': main()
+from mcvine.instruments.ARCS.Instrument import Instrument as App

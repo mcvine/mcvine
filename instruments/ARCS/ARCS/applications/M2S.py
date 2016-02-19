@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
-"""
-This script wraps arcs_moderator2sample.
+cmd_help = """
+This app wraps arcs_moderator2sample.
 The 'arcs_moderator2sample' is a instrument simulation script 
 with a list of components from moderator to sample (just before sample).
 There are quite a few components and configuring it could be
@@ -10,6 +10,11 @@ This script is a wrapper. Its interface is simpler: there are less
 than ten parameters to set. And this script computes parameters
 of some components such as phase of fermi chopper based on user's
 inputs here.
+
+Use --help-properties to see the configurable options:
+
+ $ <cmd> --help-properties
+
 """
 
 
@@ -53,6 +58,10 @@ class App(base):
         dry_run.meta[base.inventory_item_signature] = True
 
         pass # end of Inventory
+
+
+    def help(self):
+        print cmd_help
     
     
     def runApp(
@@ -129,9 +138,3 @@ def hasOpt(key, argv):
     return False
 
 
-def main():
-    app = App('arcs-m2s')
-    return app.run()
-
-
-if __name__ == '__main__': main()

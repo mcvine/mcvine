@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 # 
 # This test requires a data file at the given path.
 # This is only valid for account linjiao @ sns workstations.

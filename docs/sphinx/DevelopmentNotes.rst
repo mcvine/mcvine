@@ -78,7 +78,20 @@ The main command::
 
  $ mcvine
 
-It is implemented using python-click: http://click.pocoo.org/5/.
+It is implemented using python-click: http://click.pocoo.org/.
 The main command is at /packages/mcvine/python/mcvine/cli.
 sub-cmds are imported from various sub-packages such as mcstas2 
 and mcvine.instruments.
+
+
+pyre commands
+"""""""""""""
+Pyre applications are built using pyre machineries and they
+have configurable components.
+
+Pyre super applications are pyre app wrappers and is made in mcvine.
+The design of pyre-super-app is not optimal but it serves
+the purpose of simplification of command line interface
+for some applications with a lot of components and 
+parameters to set.
+
