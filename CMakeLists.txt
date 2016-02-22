@@ -1,6 +1,8 @@
 # To improve
 # * dependency items are declared at different places
-#   - This file two places DEP_DANSE_PKGS, CPACK_DEBIAN_PACKAGE_DEPENDS
+#   - This file two places 
+#     - CPACK_DEBIAN_PACKAGE_DEPENDS: all deb pkgs needed during install
+#     - DOCKER_PKGING_DEPS_DEB: all deb pkgs needed in building
 #   - File rpm.spec.in
 # * rpm and deb releases are treated differently:
 #   - rpm: source rpm
@@ -16,15 +18,16 @@ set(LICENSE "BSD")
 set(RPM_APP_GROUP "Development/Tools")
 set(GITHUB_URL "https://github.com/mcvine/mcvine")
 
+# Is this still needed?
 # this is released with danse.ins packages
-set(DEP_DANSE_PKGS "pyre danse.ins.dsm danse.ins.numpyext danse.ins.bpext histogram danse.ins.matter drchops")
+# set(DEP_DANSE_PKGS "pyre danse.ins.dsm danse.ins.numpyext danse.ins.bpext histogram danse.ins.matter drchops")
 
 # packaging with the help of docker and packagecloud
 # package repository at packagecloud
 set (PKGCLOUD_USERNAME "danse")
 set (PKGCLOUD_REPO "ins")
 # dependencies
-set (DOCKER_PKGING_DEPS_DEB "python-numpy python-psutil python-h5py python-mpi4py libgsl0-dev libboost-python-dev libboost-python1.55.0 pyre danse.ins.dsm danse.ins.numpyext danse.ins.bpext histogram danse.ins.matter drchops")
+set (DOCKER_PKGING_DEPS_DEB "python-yaml python-numpy python-psutil python-h5py python-mpi4py libgsl0-dev libboost-python-dev libboost-python1.55.0 pyre danse.ins.dsm danse.ins.numpyext danse.ins.bpext histogram danse.ins.matter drchops")
 set (DOCKER_PKGING_DEPS_RPM "danse.ins")
 set (DOCKER_PKGING_TEST_SRPM ". /opt/danse/bin/setup-danse.sh && mcvine")
 set (DOCKER_PKGING_BUILDSTEP_BUILDCMD "cd .. && git clone https://github.com/mcvine/resources.git &&  /work/src/builders/build /work/src /work/build /opt/danse /work/resources")
@@ -126,7 +129,7 @@ set(CPACK_PACKAGE_VENDOR ${VENDOR})
 set(CPACK_PACKAGING_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX})
 set(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_NAME}-${CPACK_PACKAGE_VERSION}-${CPACK_PACKAGE_RELEASE}.${CMAKE_SYSTEM_PROCESSOR}")
 set(CPACK_RPM_PACKAGE_REQUIRES "cmake")
-set(CPACK_DEBIAN_PACKAGE_DEPENDS "python, danse.ins")
+set(CPACK_DEBIAN_PACKAGE_DEPENDS "python python-yaml python-numpy python-psutil python-h5py python-mpi4py libgsl0-dev libboost-python-dev libboost-python1.55.0 pyre danse.ins.dsm danse.ins.numpyext danse.ins.bpext histogram danse.ins.matter drchops")
 include(CPack)
 
 # source tar ball
