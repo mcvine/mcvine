@@ -17,6 +17,7 @@ appname = 'sequoia-reduce-nxs-using-mantid'
 
 import os
 from mcvine import resources as res
+# !!! This is no longer needed !!!
 default_mcvine_idfpath = os.path.join(
     res.instrument('SEQUOIA'), 'resources', 'SEQUOIA_Definition-mcvine.xml')
 

@@ -19,7 +19,7 @@ if not mcvine_resources:
     skip = True
 else:
     aluminum_dir = os.path.join(
-        mcvine_resources, "examples", "samples", "aluminum")
+        mcvine_resources, "samples", "Al", "300K")
 
 
 import unittestX as unittest

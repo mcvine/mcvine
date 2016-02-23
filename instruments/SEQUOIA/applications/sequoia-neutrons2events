@@ -142,7 +142,7 @@ import os, subprocess as sp
 
 #
 sequoiaxml = os.path.join(
-    res.instrument('SEQUOIA'), 'resources', 'sequoia.xml.fornxs')
+    res.instrument('SEQUOIA'), 'detsys', 'sequoia.xml.fornxs')
 
 
 def main():

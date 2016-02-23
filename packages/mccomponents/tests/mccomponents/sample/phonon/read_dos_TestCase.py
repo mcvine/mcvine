@@ -44,7 +44,7 @@ class TestCase(unittest.TestCase):
         "dos from idf"
         # p = 'V-DOS.idf'
         p = os.path.join(
-            mcvine_resources, "examples", "samples", "vanadium",
+            mcvine_resources, "samples", "V", "300K",
             "phonons", "DOS")
         dos = read_dos.doshist_fromidf(p)
         # H.plot(dos)

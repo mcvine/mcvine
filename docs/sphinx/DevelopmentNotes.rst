@@ -95,3 +95,19 @@ the purpose of simplification of command line interface
 for some applications with a lot of components and 
 parameters to set.
 
+
+Resources
+---------
+
+Organization:
+* instruments: 
+  - each directory corresponds to one instrument
+  - subdirs of an instrument
+    - moderator
+    - detsys
+    - nxs
+    - simulations
+* samples:
+  - any directory with sampleassembly.xml is a sample assembly folder
+  - other directories could provide various kinds of data
+  - hierarchy: matter/temperature/shape/...  For example: V/300K/plate
