@@ -26,7 +26,7 @@ But be very careful because positional information
 is also used in module
 ARCS/nxs/raw.py.
 
-Detector configuration is in mcvine-resources/instruments/ARCS/resources/ARCS.xml.fornxs
+Detector configuration is in mcvine-resources/instruments/ARCS/detsys/ARCS.xml.fornxs
 (see applications/arcs-neutrons2events).
 This information is also used in ARCS/nxs/raw.py
 

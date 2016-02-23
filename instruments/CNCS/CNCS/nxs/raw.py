@@ -110,7 +110,7 @@ npixels = nbanks * pixelsperbank
 import os
 from mcvine import resources as res
 nxs_template = os.path.join(
-    res.instrument('CNCS'), 'resources',
+    res.instrument('CNCS'), 'nxs',
     'cncs-raw-events-template.nxs',
     )
 import numpy as np

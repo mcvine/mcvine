@@ -106,7 +106,7 @@ class App(base):
         cmd.append( '--output-dir=%s' % self.m2sout)
         from mcvine import resources
         moddat = os.path.join(
-            resources.instrument('ARCS'), 'resources',
+            resources.instrument('ARCS'), 'moderator',
             'source_sct521_bu_17_1.dat',
             )
         cmd += ['--moderator.S_filename=%s' % moddat]

@@ -26,7 +26,7 @@ class TestCase(unittest.TestCase):
         outfile = 'intensities.dat'
         nevents = 337
         arcs_res = os.path.join(
-            mcvine_resources, 'instruments/ARCS/resources',)
+            mcvine_resources, 'instruments/ARCS/reduction',)
         pixelpositionsfile = os.path.join(
             arcs_res, 'pixelID2position.bin')
         solidanglesfile = os.path.join(

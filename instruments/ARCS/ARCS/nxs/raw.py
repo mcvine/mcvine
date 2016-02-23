@@ -216,7 +216,7 @@ npixels = nbanks * pixelsperbank
 import os
 from mcvine import resources
 nxs_template = os.path.join(
-    resources.instrument('ARCS'), 'resources', 'arcs-raw-events-template.nxs')
+    resources.instrument('ARCS'), 'nxs', 'arcs-raw-events-template.nxs')
 import numpy as np
 
 

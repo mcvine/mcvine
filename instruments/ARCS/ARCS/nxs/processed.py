@@ -67,7 +67,7 @@ def convert(events):
 import os
 from mcvine import resources
 nxs_template = os.path.join(
-    resources.instrument('ARCS'), 'resources', 'arcs-events-template.nxs')
+    resources.instrument('ARCS'), 'nxs', 'arcs-events-template.nxs')
 def _write(
     path,
     indices=None, pulse_time=None,

@@ -202,7 +202,7 @@ npixels = nbanks * pixelsperbank
 import os
 from mcvine import resources as res
 nxs_template = os.path.join(
-    res.instrument('SEQUOIA'), 'resources',
+    res.instrument('SEQUOIA'), 'nxs',
     'sequoia-raw-events-template.nxs')
 import numpy as np
 

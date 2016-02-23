@@ -8,9 +8,11 @@ The sample was a "resolution sample", which only scatters neutrons
 to Q = 10 angstrom**-1 and E = 100 meV.
 
 The detector system is specified by ARCS.xml. Please note 
-that this ARCS.xml is different from the one in instruments/ARCS/resources.
+that this ARCS.xml is different from the one in 
+mcvine-resources/instruments/ARCS/ARCS.xml.
 The reason is the nexus "processed" file for ARCS has a different
 convention of counting pixels than the original counting scheme
 defined by Rick's data acquisition team.
+This file is the same as mcvine-resources/instruments/ARCS/ARCS.xml.fornxs
 
 To run this simulation, run command "run".

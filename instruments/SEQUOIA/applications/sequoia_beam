@@ -225,7 +225,7 @@ class App(base):
         cmd.append( '--output-dir=%s' % self.m2sout)
         from mcvine import resources as res
         moddat = os.path.join(
-            res.instrument('SEQUOIA'), 'resources',
+            res.instrument('SEQUOIA'), 'moderator',
             'source_sct521_bu_17_1.dat',
             )
         cmd += ['-mod.S_filename=%s' % moddat]

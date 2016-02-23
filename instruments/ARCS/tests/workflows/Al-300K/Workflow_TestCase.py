@@ -12,7 +12,7 @@ class TestCase(unittest.TestCase):
     def test(self):
         "ARCS Al 300K simulation workflow"
         # copy template
-        src = os.path.join(mcvine.resources.instrument('ARCS'), 'simulations/aluminum/plate-rotated28deg-Ei80meV')
+        src = os.path.join(mcvine.resources.instrument('ARCS'), 'simulations/Al/plate-rotated28deg-Ei80meV')
         workdir = "work"
         dest = os.path.join(workdir)
         if os.path.exists(dest):

@@ -385,7 +385,7 @@ def config(Edes=20., E_min=10., E_max=30., Ortho30=False, toffset_us=-1.0, freq=
   
   from mcvine import resources as res
   moddatadir = os.path.join(
-      res.instrument('HYSPEC'), 'resources',
+      res.instrument('HYSPEC'),
       'mcstas',
       )
   if Ortho30:

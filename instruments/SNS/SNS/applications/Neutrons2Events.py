@@ -47,7 +47,7 @@ class App(AppBase):
         tofmax = pyre.inventory.float('tofmax', default=0.2) # second
         
         # instrument name. if given, assume instrument xml (danse) is 
-        # at $MCVINE_RESOURCES/instruments/<instrument>/resources/<instrument>.xml.fornxs
+        # at $MCVINE_RESOURCES/instruments/<instrument>/detsys/<instrument>.xml.fornxs
         instrument = pyre.inventory.str('instrument') 
         
         # path instrument.xml.fornxs (danse). this overrides the instrument option
@@ -73,7 +73,7 @@ class App(AppBase):
             from mcvine import resources
             detsys = os.path.join(
                 resources.instrument(instrument.upper()), 
-                'resources',
+                'detsys',
                 '%s.xml.fornxs' % instrument)
         run(neutrons, workdir, 
             nodes=nodes, tofbinsize=tofbinsize, tofmax=tofmax, 

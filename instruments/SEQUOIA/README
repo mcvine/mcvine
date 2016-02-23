@@ -26,7 +26,7 @@ But be very careful because positional information
 is also used in module
 SEQUOIA/nxs/raw.py.
 
-Detector configuration is in mcvine-resources/instruments/SEQUOIA/resources/SEQUOIA.xml.fornxs
+Detector configuration is in mcvine-resources/instruments/SEQUOIA/nxs/SEQUOIA.xml.fornxs
 (see applications/sequoia-neutrons2events).
 This information is also used in SEQUOIA/nxs/raw.py
 

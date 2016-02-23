@@ -95,6 +95,6 @@ import os
 
 #
 arcsxml = os.path.join(
-    resources.instrument('ARCS'), 'resources', 'ARCS.xml.fornxs')
+    resources.instrument('ARCS'), 'detsys', 'ARCS.xml.fornxs')
 
 
