@@ -28,7 +28,7 @@ class TestCase(unittest.TestCase):
         parser = McStasInstrumentParser()
         path = os.path.join(
             mcvine_resources, 
-            "instruments/VULCAN/mcstas2/vulcan_asbuilt_L2d.instr"
+            "instruments/VULCAN/mcstas/vulcan_asbuilt_L2d.instr"
             )
         text = open(path).read()
         instrument = parser.parse(text)
