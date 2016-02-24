@@ -1,0 +1,4 @@
+
+* deps: install dependencies before build
+* build: build mcvine
+* test: test mcvine
