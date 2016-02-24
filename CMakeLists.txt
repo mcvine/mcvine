@@ -111,7 +111,7 @@ install(DIRECTORY ${EXPORT_ETC}/ DESTINATION etc)
 # install share
 install(DIRECTORY ${EXPORT_SHARE}/ DESTINATION share/${PROJECT_NAME}/)
 # install tests
-install(DIRECTORY ${TESTS_DIR} DESTINATION share/${PROJECT_NAME}/)
+install(DIRECTORY ${TESTS_DIR} DESTINATION share/${PROJECT_NAME}/ USE_SOURCE_PERMISSIONS)
 
 # packaging
 set(PKG_NAME "mcvine")
