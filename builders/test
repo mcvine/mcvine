@@ -2,9 +2,9 @@
 
 if [ $# -eq 0 ]
 then
-    echo "Usage: ./builders/test <build-path> <resources-path> [cores]"
+    echo "Usage: ./builders/test <build-path> <resources-path> [cores] [additonal-args]"
     echo
-    echo "Example: ./builders/test \$PWD/build \$PWD/resources 20"
+    echo "Example: ./builders/test \$PWD/build \$PWD/resources 20 -V"
     echo
     exit 1
 fi
@@ -21,6 +21,8 @@ if ((CORES < 1)); then
     fi
 fi
 
+ADDI_ARGS=$4
+
 echo "Testing mcvine"
 echo "- mcvine resoureces: $MCVINE_RESOURCES"
 echo "- using $CORES cores"
@@ -28,4 +30,4 @@ echo "- using $CORES cores"
 . /opt/danse/bin/setup-danse.sh
 
 cd $BUILD
-make test ARGS="-j$CORES"
+make test ARGS="-j$CORES $ADDI_ARGS"
