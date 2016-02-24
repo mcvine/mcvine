@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+docker build -t linjiao/mcvine-ubuntu-test-install-from-packagecloud:14.04 .

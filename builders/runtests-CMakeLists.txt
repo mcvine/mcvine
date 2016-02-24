@@ -1,0 +1,29 @@
+set(PROJECT_NAME "mcvine")
+set(VERSION "1.0")
+
+project (${PROJECT_NAME})
+cmake_minimum_required (VERSION 2.8.12)
+
+# get cmake_utils
+execute_process(
+  COMMAND rm -rf cmake_utils
+  )
+execute_process(
+  COMMAND git clone https://github.com/danse-inelastic/cmake_utils
+  WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+  )
+set(CMAKE_MODULE_PATH ${CMAKE_BINARY_DIR}/cmake_utils)
+# add include them
+include(System) # system info
+include(Dirs)   # directory structure
+include(TestUtils)
+
+# need python
+find_package ( PythonLibs REQUIRED )
+find_package ( PythonInterp REQUIRED )
+
+# add python tests
+PYUNITTEST_ADD_TESTS_IN_DIR( ${CMAKE_SOURCE_DIR} "mcvine")
+
+#
+enable_testing()
