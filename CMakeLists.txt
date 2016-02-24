@@ -27,7 +27,7 @@ set(GITHUB_URL "https://github.com/mcvine/mcvine")
 set (PKGCLOUD_USERNAME "danse")
 set (PKGCLOUD_REPO "ins")
 # dependencies
-set (DOCKER_PKGING_DEPS_DEB "python-yaml python-numpy python-psutil python-h5py python-mpi4py libgsl0-dev libboost-python-dev libboost-python1.55.0 pyre danse.ins.dsm danse.ins.numpyext danse.ins.bpext histogram danse.ins.matter drchops")
+set (DOCKER_PKGING_DEPS_DEB "python-yaml python-numpy python-psutil python-h5py python-mpi4py libgsl0-dev libboost-python-dev libboost-python1.55.0 pyre danse.ins.dsm danse.ins.numpyext danse.ins.bpext histogram danse.ins.matter drchops mcvine-resources")
 set (DOCKER_PKGING_DEPS_RPM "danse.ins")
 set (DOCKER_PKGING_TEST_SRPM ". /opt/danse/bin/setup-danse.sh && mcvine")
 set (DOCKER_PKGING_BUILDSTEP_BUILDCMD "cd .. && git clone https://github.com/mcvine/resources.git &&  /work/src/builders/build /work/src /work/build /opt/danse /work/resources")
@@ -129,7 +129,7 @@ set(CPACK_PACKAGE_VENDOR ${VENDOR})
 set(CPACK_PACKAGING_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX})
 set(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_NAME}-${CPACK_PACKAGE_VERSION}-${CPACK_PACKAGE_RELEASE}.${CMAKE_SYSTEM_PROCESSOR}")
 set(CPACK_RPM_PACKAGE_REQUIRES "cmake")
-set(CPACK_DEBIAN_PACKAGE_DEPENDS "python, python-yaml, python-numpy, python-psutil, python-h5py, python-mpi4py, libgsl0-dev, libboost-python-dev, libboost-python1.55.0, pyre, danse.ins.dsm, danse.ins.numpyext, danse.ins.bpext, histogram, danse.ins.matter, drchops")
+set(CPACK_DEBIAN_PACKAGE_DEPENDS "python, python-yaml, python-numpy, python-psutil, python-h5py, python-mpi4py, libgsl0-dev, libboost-python-dev, libboost-python1.55.0, pyre, danse.ins.dsm, danse.ins.numpyext, danse.ins.bpext, histogram, danse.ins.matter, drchops, mcvine-resources")
 include(CPack)
 
 # source tar ball
