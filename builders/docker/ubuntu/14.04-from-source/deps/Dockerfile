@@ -23,3 +23,5 @@ RUN apt-get -qy install cmake
 RUN apt-get -qy install curl
 RUN curl -s https://packagecloud.io/install/repositories/danse/ins/script.deb.sh |  bash
 RUN apt-get -qy install pyre danse.ins.dsm danse.ins.numpyext danse.ins.bpext histogram danse.ins.matter drchops
+RUN apt-get -qy install mcvine-resources
+
