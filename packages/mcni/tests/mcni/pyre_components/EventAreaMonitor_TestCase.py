@@ -24,8 +24,8 @@ warning = journal.warning( "mcni.pyre_components.test" )
 
 
 #input parameter for output directory for neutrontostorage component
-instrument1_output = 'out-neutron_storage_TestCase'
-instrument2_output = 'out-neutron_storage_TestCase-Instrument2'
+instrument1_output = 'out-EventAreaMonitor_TestCase-instrument1'
+instrument2_output = 'out-EventAreaMonitor_TestCase-instrument2'
 
 #the real output directory depends on
 # mpi is installed or not
