@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 
-docker build -t linjiao/mcvine-ubuntu-test-install-from-packagecloud:14.04 .
+docker build -t linjiao/mcvine-ubuntu-test-install-from-packagecloud:14.04 --no-cache .
 docker run -v $PWD/runtests:/opt/danse/share/mcvine/tests/build/runtests linjiao/mcvine-ubuntu-test-install-from-packagecloud:14.04 bash runtests
