@@ -51,7 +51,7 @@ Requires: mcvine-resources
 cd ..
 rm -rf build_tree
 mkdir build_tree
-./%(srcdirname)/builders/build %{srcdirname} build_tree %{rpmprefix} /opt/danse/share/mcvine/resources
+./%{srcdirname}/builders/build %{srcdirname} build_tree %{rpmprefix} /opt/danse/share/mcvine/resources
 
 %install 
 cd ../build_tree
