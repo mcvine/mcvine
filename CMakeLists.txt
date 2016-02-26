@@ -1,9 +1,12 @@
 # To improve
 # * dependency items are declared at different places
-#   - This file two places 
-#     - CPACK_DEBIAN_PACKAGE_DEPENDS: all deb pkgs needed during install
-#     - DOCKER_PKGING_DEPS_DEB: all deb pkgs needed in building
-#   - File rpm.spec.in
+#   - This file 
+#     - DOCKER_PKGING_DEPS_DEB: deb pkgs needed in building and installation 
+#     - DOCKER_PKGING_DEPS_RPM: rpm pkgs needed in building and installation. should be the same as DOCKER_PKGING_DEPS_DEB except the name might be somewhat different. for example, numpy is called python-numpy in ubuntu, but just numpy in fedora
+#     - CPACK_DEBIAN_PACKAGE_DEPENDS: deb pkgs needed during installation only
+#   - File rpm.spec.in:
+#     - BuildRequires: rpm pkgs needed during build
+#     - Requires: rpm pkgs needed during installation
 # * rpm and deb releases are treated differently:
 #   - rpm: source rpm
 #   - deb: binary deb
@@ -28,7 +31,7 @@ set (PKGCLOUD_USERNAME "danse")
 set (PKGCLOUD_REPO "ins")
 # dependencies
 set (DOCKER_PKGING_DEPS_DEB "python-yaml python-numpy python-psutil python-h5py python-mpi4py libgsl0-dev libboost-python-dev libboost-python1.55.0 pyre danse.ins.dsm danse.ins.numpyext danse.ins.bpext histogram danse.ins.matter drchops mcvine-resources")
-set (DOCKER_PKGING_DEPS_RPM "danse.ins")
+set (DOCKER_PKGING_DEPS_RPM "python-yaml numpy python-psutil h5py mpi4py-mpich2 gsl-devel boost-devel boost-python pyre danse.ins.dsm danse.ins.numpyext danse.ins.bpext histogram danse.ins.matter drchops mcvine-resources")
 set (DOCKER_PKGING_TEST_SRPM ". /opt/danse/bin/setup-danse.sh && mcvine")
 set (DOCKER_PKGING_BUILDSTEP_BUILDCMD "cd .. && git clone https://github.com/mcvine/resources.git &&  /work/src/builders/build /work/src /work/build /opt/danse /work/resources")
 set (DOCKER_PKGING_TEST_RPM ${DOCKER_PKGING_TEST_SRPM})
