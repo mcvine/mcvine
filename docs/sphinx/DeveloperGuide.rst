@@ -4,18 +4,12 @@ Developer Guide
 Organization
 ------------
 
-* mcvine-releaser:
-  - github url: https://github.com/mcvine/releaser
-  - place where dependencies are gathered, sources are check out,
-    products are built, etc.
-  - sub directories:
-    - src: sources
-    - EXPORT: build products such as shared libraries, python modules, scripts
-  - more details in README.md of the releaser
-* mcvine-resources:
+* mcvine:
+  - src code
+* resources:
   - resources needed by some mcvine applications etc
   - usually don't change over time. new files are added into it.
-  - path specified by MCVINE_RESOURCES
+  - path specified by env var MCVINE_RESOURCES
   - examples should be explicitly versioned?
 
 
@@ -24,84 +18,19 @@ Development environemnt
 
 The following instructions work for ubuntu 14.04LTS 64bit
 
-Basic dev tools
-
-* make
-* c++ compiler
-* python
-* git
-
-Dependencies:
-
-* boost-python, gsl
-* numpy, matplotlib
-* h5py
-* psutil
-
-
-::
-
- $ apt-get install git
- $ apt-get install g++
- $ apt-get install python-dev libboost-python python-numpy python-matplotlib python-h5py python-psutil
- $ apt-get install libboost-python1.55.0 libboost-python1.55-dev
- $ apt-get install libgsl0-dev
-
-Create dev directory::
-
- $ cd $HOME
- $ mkdir dv
- $ cd dv
-
-Get releaser::
-
- $ git clone git@githut.com:mcvine/releaser mcvine
-
-Get source::
-
- $ cd mcvine
- $ ./getsrc.py
-
-Env vars to build::
-
- $ export BOOSTPYTHON_DIR=/usr
- $ export BOOSTPYTHON_LIBDIR=/usr/lib/x86_64-linux-gnu
-
-Build::
-
- $ ./build.py
-
-Env vars to use mcvine::
-
- $ . ~/dv/mcvine/EXPORT/bin/envs.sh
-
-Run a test::
-
- $ cd ~/dv/mcvine/src/mcvine/packages/mcni/tests/mcni
- $ ./alltests.py
-
-Build during development::
-
- $ . ~/dv/mcvine/src/dottools # once for one session
- $ cd /place/where/code/were/modified
- $ mm
+Follow what is in the docker files in mcvine/builders/docker/ubuntu/14.04-from-source.
 
 
 Continuous integration
 ----------------------
 
-This is done by using buildbot.
-The source code for buildbot configrations of MCViNE
-is at https://github.com/mcvine/buildbot.
-The web interface is at http://buildbot.danse.us:8010/.
+This is done by using travis CI.
 
 
 Deployment testing
 ------------------
 
-This is done by using docker.
-Source code: https://github.com/mcvine/releaser/tree/master/docker.
-Related: :ref:`installation`.
+This is done by using docker: mcvine/builders/docker/ubuntu/14.04-from-packagecloud
 
 
 Creating a new scattering kernel for sample
