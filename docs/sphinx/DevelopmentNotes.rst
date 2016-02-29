@@ -111,3 +111,6 @@ Organization:
   - any directory with sampleassembly.xml is a sample assembly folder
   - other directories could provide various kinds of data
   - hierarchy: matter/temperature/shape/...  For example: V/300K/plate
+
+
+McStas component library: its path is set by env var $MCSTAS_COMPONENT_LIBDIR.
