@@ -114,3 +114,15 @@ Organization:
 
 
 McStas component library: its path is set by env var $MCSTAS_COMPONENT_LIBDIR.
+
+
+Documentation
+-------------
+
+* github:mcvine/mcvine.org
+  mcvine.org site
+* github:mcvine/mcvine.github.io:master
+  Documentation for all releases
+* github:mcvine/mcvine:gh-pages
+  Documentation for the development version
+
