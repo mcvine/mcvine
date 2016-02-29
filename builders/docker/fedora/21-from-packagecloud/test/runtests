@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+. /opt/danse/bin/setup-mcvine.sh
+export PATH=/usr/lib64/mpich/bin:$PATH
+export LD_LIBRARY_PATH=/usr/lib64/mpich/lib:$LD_LIBRARY_PATH
+export PYTHONPATH=/usr/lib64/python2.7/site-packages/mpich:$PYTHONPATH
+
+cmake ..
+
+CORES=$1
+if ((CORES < 1)); then
+    let CORES=`grep -c ^processor /proc/cpuinfo`
+    let CORES-=1
+    if ((CORES < 1)); then
+	CORES = 1;
+    fi
+fi
+
+make test ARGS="-j$CORES -V"

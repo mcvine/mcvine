@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+docker build -t linjiao/mcvine-fedora-test-install-from-packagecloud:21 --no-cache .
+docker run -v $PWD/runtests:/opt/danse/share/mcvine/tests/build/runtests linjiao/mcvine-fedora-test-install-from-packagecloud:21 bash runtests
+
+# docker run -it -v $PWD/runtests:/opt/danse/share/mcvine/tests/build/runtests linjiao/mcvine-fedora-test-install-from-packagecloud:21 bash
