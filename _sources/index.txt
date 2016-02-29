@@ -7,9 +7,7 @@ that provides researchers with tools for performing
 computer modeling and simulations that mirror real 
 neutron scattering experiments. 
 
-Currently MCViNE software is only available for the Linux platform,
-which was selected because other tools for scientific computing, including
-molecular dynamics and ab initio simulations, use this platform.
+Currently MCViNE software is only available for the Linux platform.
 Detailed installation instructions for MCViNE are available at
 :ref:`Installation <installation>`.
 Building the source is driven by a python script, but the underlying
@@ -28,24 +26,26 @@ At this point, MCViNE is under the git version control system,
 and MCViNE source code is available for online-browsing at 
 `the github site <https://github.com/mcvine/mcvine>`_.
 
-MCViNE is currently deployed on the analysis computing clusters at the
-Spallation Neutron Source (SNS).
-Any SNS user can use MCViNE at analysis.sns.gov after running an
-environment setup script.
+..
+   MCViNE is currently deployed on the analysis computing clusters at the
+   Spallation Neutron Source (SNS).
+   Any SNS user can use MCViNE at analysis.sns.gov after running an
+   environment setup script.
 
-There are many functionalities available in the MCViNE package, 
-so novice users may find it difficult to navigate through the user
-documentation and learn how to perform MCViNE simulations for their needs.
-To make MCViNE more readily accessible to non-expert users,
-we are experimenting with 
-:ref:`workflow templates <workflows>`.
-Users can easily clone workflows from the templates
-and customize them by modifying sample specification and simulation
-parameters.
-Output of a workflow usually includes 
-the simulated scattered neutrons,
-the simulated event-mode NeXus file,
-and the reduced I(Q, E) file.
+..
+   There are many functionalities available in the MCViNE package, 
+   so novice users may find it difficult to navigate through the user
+   documentation and learn how to perform MCViNE simulations for their needs.
+   To make MCViNE more readily accessible to non-expert users,
+   we are experimenting with 
+   :ref:`workflow templates <workflows>`.
+   Users can easily clone workflows from the templates
+   and customize them by modifying sample specification and simulation
+   parameters.
+   Output of a workflow usually includes 
+   the simulated scattered neutrons,
+   the simulated event-mode NeXus file,
+   and the reduced I(Q, E) file.
 
 The MCViNE software is an open source software and is freely
 available.
