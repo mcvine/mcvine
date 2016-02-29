@@ -70,6 +70,11 @@
 </li>
 <li><a class="reference internal" href="#xml-parsing">xml parsing</a></li>
 <li><a class="reference internal" href="#geometry">geometry</a></li>
+<li><a class="reference internal" href="#command-line-interface">Command line interface</a><ul>
+<li><a class="reference internal" href="#pyre-commands">pyre commands</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#resources">Resources</a></li>
 </ul>
 </li>
 </ul>
@@ -156,6 +161,49 @@ calls</p>
 <div>lg.position(scatterer)
 lg.orientation(scatterer)</div></blockquote>
 <p>request the position and orientation of the scatterer.</p>
+</div>
+<div class="section" id="command-line-interface">
+<h2>Command line interface<a class="headerlink" href="#command-line-interface" title="Permalink to this headline">¶</a></h2>
+<p>The main command:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ mcvine
+</pre></div>
+</div>
+<p>It is implemented using python-click: <a class="reference external" href="http://click.pocoo.org/">http://click.pocoo.org/</a>.
+The main command is at /packages/mcvine/python/mcvine/cli.
+sub-cmds are imported from various sub-packages such as mcstas2
+and mcvine.instruments.</p>
+<div class="section" id="pyre-commands">
+<h3>pyre commands<a class="headerlink" href="#pyre-commands" title="Permalink to this headline">¶</a></h3>
+<p>Pyre applications are built using pyre machineries and they
+have configurable components.</p>
+<p>Pyre super applications are pyre app wrappers and is made in mcvine.
+The design of pyre-super-app is not optimal but it serves
+the purpose of simplification of command line interface
+for some applications with a lot of components and
+parameters to set.</p>
+</div>
+</div>
+<div class="section" id="resources">
+<h2>Resources<a class="headerlink" href="#resources" title="Permalink to this headline">¶</a></h2>
+<p>Organization:
+* instruments:</p>
+<blockquote>
+<div><ul class="simple">
+<li>each directory corresponds to one instrument</li>
+<li>subdirs of an instrument
+- moderator
+- detsys
+- nxs
+- simulations</li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li>samples:
+- any directory with sampleassembly.xml is a sample assembly folder
+- other directories could provide various kinds of data
+- hierarchy: matter/temperature/shape/...  For example: V/300K/plate</li>
+</ul>
+<p>McStas component library: its path is set by env var $MCSTAS_COMPONENT_LIBDIR.</p>
 </div>
 </div>
 

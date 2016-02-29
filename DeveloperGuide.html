@@ -117,104 +117,28 @@
 <h1>Developer Guide<a class="headerlink" href="#developer-guide" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="organization">
 <h2>Organization<a class="headerlink" href="#organization" title="Permalink to this headline">¶</a></h2>
-<ul>
-<li><p class="first">mcvine-releaser:
-- github url: <a class="reference external" href="https://github.com/mcvine/releaser">https://github.com/mcvine/releaser</a>
-- place where dependencies are gathered, sources are check out,</p>
-<blockquote>
-<div><p>products are built, etc.</p>
-</div></blockquote>
 <ul class="simple">
-<li>sub directories:
-- src: sources
-- EXPORT: build products such as shared libraries, python modules, scripts</li>
-<li>more details in README.md of the releaser</li>
-</ul>
-</li>
-<li><p class="first">mcvine-resources:
+<li>mcvine:
+- src code</li>
+<li>resources:
 - resources needed by some mcvine applications etc
 - usually don&#8217;t change over time. new files are added into it.
-- path specified by MCVINE_RESOURCES
-- examples should be explicitly versioned?</p>
-</li>
+- path specified by env var MCVINE_RESOURCES
+- examples should be explicitly versioned?</li>
 </ul>
 </div>
 <div class="section" id="development-environemnt">
 <h2>Development environemnt<a class="headerlink" href="#development-environemnt" title="Permalink to this headline">¶</a></h2>
 <p>The following instructions work for ubuntu 14.04LTS 64bit</p>
-<p>Basic dev tools</p>
-<ul class="simple">
-<li>make</li>
-<li>c++ compiler</li>
-<li>python</li>
-<li>git</li>
-</ul>
-<p>Dependencies:</p>
-<ul class="simple">
-<li>boost-python, gsl</li>
-<li>numpy, matplotlib</li>
-<li>h5py</li>
-<li>psutil</li>
-</ul>
-<div class="highlight-python"><div class="highlight"><pre>$ apt-get install git
-$ apt-get install g++
-$ apt-get install python-dev libboost-python python-numpy python-matplotlib python-h5py python-psutil
-$ apt-get install libboost-python1.55.0 libboost-python1.55-dev
-$ apt-get install libgsl0-dev
-</pre></div>
-</div>
-<p>Create dev directory:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ cd $HOME
-$ mkdir dv
-$ cd dv
-</pre></div>
-</div>
-<p>Get releaser:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ git clone git@githut.com:mcvine/releaser mcvine
-</pre></div>
-</div>
-<p>Get source:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ cd mcvine
-$ ./getsrc.py
-</pre></div>
-</div>
-<p>Env vars to build:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ export BOOSTPYTHON_DIR=/usr
-$ export BOOSTPYTHON_LIBDIR=/usr/lib/x86_64-linux-gnu
-</pre></div>
-</div>
-<p>Build:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ ./build.py
-</pre></div>
-</div>
-<p>Env vars to use mcvine:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ . ~/dv/mcvine/EXPORT/bin/envs.sh
-</pre></div>
-</div>
-<p>Run a test:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ cd ~/dv/mcvine/src/mcvine/packages/mcni/tests/mcni
-$ ./alltests.py
-</pre></div>
-</div>
-<p>Build during development:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ . ~/dv/mcvine/src/dottools # once for one session
-$ cd /place/where/code/were/modified
-$ mm
-</pre></div>
-</div>
+<p>Follow what is in the docker files in mcvine/builders/docker/ubuntu/14.04-from-source.</p>
 </div>
 <div class="section" id="continuous-integration">
 <h2>Continuous integration<a class="headerlink" href="#continuous-integration" title="Permalink to this headline">¶</a></h2>
-<p>This is done by using buildbot.
-The source code for buildbot configrations of MCViNE
-is at <a class="reference external" href="https://github.com/mcvine/buildbot">https://github.com/mcvine/buildbot</a>.
-The web interface is at <a class="reference external" href="http://buildbot.danse.us:8010/">http://buildbot.danse.us:8010/</a>.</p>
+<p>This is done by using travis CI.</p>
 </div>
 <div class="section" id="deployment-testing">
 <h2>Deployment testing<a class="headerlink" href="#deployment-testing" title="Permalink to this headline">¶</a></h2>
-<p>This is done by using docker.
-Source code: <a class="reference external" href="https://github.com/mcvine/releaser/tree/master/docker">https://github.com/mcvine/releaser/tree/master/docker</a>.
-Related: <a class="reference internal" href="Installation.html#installation"><em>Installation</em></a>.</p>
+<p>This is done by using docker: mcvine/builders/docker/ubuntu/14.04-from-packagecloud</p>
 </div>
 <div class="section" id="creating-a-new-scattering-kernel-for-sample">
 <h2>Creating a new scattering kernel for sample<a class="headerlink" href="#creating-a-new-scattering-kernel-for-sample" title="Permalink to this headline">¶</a></h2>

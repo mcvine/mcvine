@@ -70,3 +70,47 @@ calls
 
 request the position and orientation of the scatterer.
 
+
+Command line interface
+----------------------
+
+The main command::
+
+ $ mcvine
+
+It is implemented using python-click: http://click.pocoo.org/.
+The main command is at /packages/mcvine/python/mcvine/cli.
+sub-cmds are imported from various sub-packages such as mcstas2 
+and mcvine.instruments.
+
+
+pyre commands
+"""""""""""""
+Pyre applications are built using pyre machineries and they
+have configurable components.
+
+Pyre super applications are pyre app wrappers and is made in mcvine.
+The design of pyre-super-app is not optimal but it serves
+the purpose of simplification of command line interface
+for some applications with a lot of components and 
+parameters to set.
+
+
+Resources
+---------
+
+Organization:
+* instruments: 
+  - each directory corresponds to one instrument
+  - subdirs of an instrument
+    - moderator
+    - detsys
+    - nxs
+    - simulations
+* samples:
+  - any directory with sampleassembly.xml is a sample assembly folder
+  - other directories could provide various kinds of data
+  - hierarchy: matter/temperature/shape/...  For example: V/300K/plate
+
+
+McStas component library: its path is set by env var $MCSTAS_COMPONENT_LIBDIR.

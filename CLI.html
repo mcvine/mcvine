@@ -60,6 +60,16 @@
 
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Command line interface</a><ul>
+<li><a class="reference internal" href="#mcvine">mcvine</a></li>
+<li><a class="reference internal" href="#bash">bash</a></li>
+<li><a class="reference internal" href="#misc">Misc</a></li>
+</ul>
+</li>
+</ul>
+
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="_sources/CLI.txt"
@@ -88,6 +98,32 @@
             
   <div class="section" id="command-line-interface">
 <span id="cli"></span><h1>Command line interface<a class="headerlink" href="#command-line-interface" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="mcvine">
+<h2>mcvine<a class="headerlink" href="#mcvine" title="Permalink to this headline">¶</a></h2>
+<p>The main command line interface (CLI) of the MCViNE package is the command &#8220;mcvine&#8221;.
+Execute:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ mcvine
+</pre></div>
+</div>
+<p>will list available subcommands.</p>
+</div>
+<div class="section" id="bash">
+<h2>bash<a class="headerlink" href="#bash" title="Permalink to this headline">¶</a></h2>
+<p>If you are using bash, you can use the following command to add bash auto-complete
+support:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ eval &quot;$(_MCVINE_COMPLETE=source mcvine)&quot;
+</pre></div>
+</div>
+<p>You can also establish some aliases to some long commands. For example:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ eval `mcvine bash aliases arcs`
+</pre></div>
+</div>
+<p>will create aliases for commands related to the ARCS spectrometer, which
+include a series of aliases starting with prefix &#8220;arcs&#8221;. For example,
+&#8220;arcs_beam&#8221; is an alias of &#8220;mcvine instruments arcs beam&#8221;.</p>
+</div>
+<div class="section" id="misc">
+<h2>Misc<a class="headerlink" href="#misc" title="Permalink to this headline">¶</a></h2>
 <p>mcstas support:</p>
 <div class="highlight-python"><div class="highlight"><pre>$ mcvine mcstas compilecomponent --filename=&lt;path-to-component&gt; --category=&lt;component-category&gt;
 </pre></div>
@@ -95,6 +131,7 @@
 <p>Check sample assembly xml:</p>
 <div class="highlight-python"><div class="highlight"><pre>$ mcvine sampleassembly check &lt;xmlpath&gt;
 </pre></div>
+</div>
 </div>
 </div>
 
