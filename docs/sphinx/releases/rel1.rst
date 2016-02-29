@@ -6,7 +6,7 @@ Release Notes 1.0 - Feb 2016
 This is the first production release of MCViNE.
 
 The release can be installed on ubuntu 14.04 and fedora 21
-using debian and rpm package managers, respectively.
+:ref:`using debian and rpm package managers <install_using_pkg_mgr>`, respectively.
 
 The introduction to the architecture and design
 principles and some key algorithms for the MCViNE software framework

@@ -7,6 +7,8 @@ Installation
 .. :ref:`deployments <deployments>`.
 
 
+.. _install_using_pkg_mgr:
+
 Install using package managers
 ------------------------------
 
