@@ -64,9 +64,10 @@ rm -rf build_tree
 
 %files
 %defattr(-,root,root,-)
-%{prefix}/include/@PROJECT_NAME@/*
+%{prefix}/include/*
 %{prefix}/@INSTALL_LIB_DIR@/*
 %{prefix}/bin/*
 %{prefix}/etc/*
+%{prefix}/share/*
 
 %changelog
