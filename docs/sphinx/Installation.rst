@@ -10,18 +10,37 @@ Installation
 Install using package managers
 ------------------------------
 
-Ubuntu 14.04::
+Ubuntu 14.04
+~~~~~~~~~~~~
+
+Install::
 
  $ sudo apt-get update
  $ sudo apt-get install -qy curl
  $ curl -s https://packagecloud.io/install/repositories/danse/ins/script.deb.sh | sudo bash
  $ sudo apt-get install mcvine
 
-Fedora 21::
+Run::
+
+ $ . /opt/danse/bin/setup-mcvine.sh
+ $ mcvine
+
+
+Fedora 21
+~~~~~~~~~
+
+Install::
 
  $ sudo yum install -y curl
  $ curl -s https://packagecloud.io/install/repositories/danse/ins/script.rpm.sh | sudo bash
  $ sudo yum install mcvine
+
+Run::
+ $ . /opt/danse/bin/setup-mcvine.sh
+ $ PATH=/usr/lib64/mpich/bin:$PATH
+ $ LD_LIBRARY_PATH=/usr/lib64/mpich/lib:$LD_LIBRARY_PATH
+ $ PYTHONPATH=/usr/lib64/python2.7/site-packages/mpich:$PYTHONPATH
+ $ mcvine
 
 
 Build mcvine from source
