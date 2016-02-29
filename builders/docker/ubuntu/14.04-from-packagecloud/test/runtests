@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+. /opt/danse/bin/setup-mcvine.sh
+cmake ..
+
+CORES=$1
+if ((CORES < 1)); then
+    let CORES=`grep -c ^processor /proc/cpuinfo`
+    let CORES-=1
+    if ((CORES < 1)); then
+	CORES = 1;
+    fi
+fi
+
+make test ARGS="-j$CORES -V"
