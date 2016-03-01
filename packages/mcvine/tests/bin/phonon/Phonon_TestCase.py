@@ -15,7 +15,7 @@ class TestCase(unittest.TestCase):
     
     def test_band(self):
         "mcvine phonon band"
-        cmd = "mcvine phonon band %s" % self.phonons_path
+        cmd = "mcvine phonon band %s --start 0 0 0 --end 2.0736585172209856 0.0 2.0736585172209856" % self.phonons_path
         os.system(cmd)
         return
 
