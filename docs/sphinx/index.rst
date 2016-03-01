@@ -60,6 +60,7 @@ Feedback to the MCViNE developers can be provided through the
 Getting Started
 ---------------
 
+* `Examples of simulated neutron spectra <http://www.mcvine.org/examples.html>`_
 * :ref:`Installation <installation>`
 * :ref:`Command line interface: $ mcvine <cli>`
 * :ref:`Tutorials <tutorials>`
@@ -75,9 +76,9 @@ More infomation
 
 * :ref:`News <news>`
 * :ref:`Publications <publications>`
+* `Milestones <https://github.com/mcvine/mcvine/milestones>`_
 * `The user mailing list <http://groups.google.com/group/mcvine-users>`_
 * `The developer mailing list <http://groups.google.com/group/mcvine-dev>`_
-* `Milestones <https://github.com/mcvine/mcvine/milestones>`_
 * `The MCViNE project <http://mcvine.org>`_
 * `The DANSE project <http://danse.us>`_
 
