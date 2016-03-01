@@ -17,31 +17,11 @@ To use bash aliases for ARCS related commands::
  $ eval `mcvine bash aliases arcs`
 
 
-Tutorial 1: full simulation of an experiment of a polycrystalline Vanadium sample
----------------------------------------------------------------------------------
+Tutorial: Simulation of ARCS beam
+---------------------------------
 
-Here is an example of a full simulation of an ARCS experiment 
-using a polycrystalline vanadium sample.
 
-.. note::
-   The following are steps needed for such a simulation:
-
-   #. simulate the neutron beam at the sample position
-   #. "replay" neutrons at the sample position to send them to the sample to be scattered, and save the scattered neutrons
-   #. send the scattered neutrons to ARCS detector system, which generates "event-mode" nexus data
-   #. reduce "event-mode" nexus data to I(Q,E)
-
-Create a working directory::
-
-  $ mkdir -p arcs-polyV
-  $ cd arcs-polyV
-
-Let us suppose that the environment variable "workdir" is set to this new
-directory.
-
-1. Incident beam at sample
-""""""""""""""""""""""""""
-In this step we simulate the ARCS instrument from moderator
+Here we simulate the ARCS instrument from moderator
 down to the sample position.
 
 Create a directory ::
@@ -77,136 +57,198 @@ Output: out/mon2-itof-focused.h5
    $ PlotHist.py out/mon2-tof.h5
 
 
-Scattering of incident neutrons by sample
-"""""""""""""""""""""""""""""""""""""""""
-Create a directory for this::
- 
- $ mkdir -p $workdir/scattering
- $ cd $workdir/scattering
 
-Create a script for this simulation::
+..
+   Tutorial 1: full simulation of an experiment of a polycrystalline Vanadium sample
+   ---------------------------------------------------------------------------------
 
- $ mcvine-create-instrument-simulation-application -name=ssd -components=source,sample,detector 
+   Here is an example of a full simulation of an ARCS experiment 
+   using a polycrystalline vanadium sample.
 
-Configure the script to use the correct components and save the configuration::
+   .. note::
+      The following are steps needed for such a simulation:
 
- $ ./ssd -source=NeutronFromStorage -sample=SampleAssemblyFromXml -detector=NeutronToStorage -h -dump-pml=yes
+      #. simulate the neutron beam at the sample position
+      #. "replay" neutrons at the sample position to send them to the sample to be scattered, and save the scattered neutrons
+      #. send the scattered neutrons to ARCS detector system, which generates "event-mode" nexus data
+      #. reduce "event-mode" nexus data to I(Q,E)
 
-Change the configuration by editing the file ssd.pml::
+   Create a working directory::
 
-  <inventory>
-  
-    <component name="ssd">
-        <property name="sequence">['source', 'sample', 'detector']</property>
-        <facility name="source">sources/NeutronFromStorage</facility>
-        <facility name="sample">samples/SampleAssemblyFromXml</facility>
-        <facility name="detector">monitors/NeutronToStorage</facility>
-  
-        <property name="multiple-scattering">False</property>
-  
-        <property name="ncount">1e7</property>
-        <property name="buffer_size">1000000</property>
-  
-        <property name="overwrite-datafiles">True</property>
-        <property name="output-dir">out</property>
-  
-        <component name="sample">
-            <property name="xml">V/sampleassembly.xml</property>
-        </component>
-  
-  
-        <component name="source">
-            <property name="path">../mod2sample/out/neutrons</property>
-        </component>
-  
-  
-        <component name="detector">
-            <property name="path">neutrons</property>
-            <property name="append">False</property>
-        </component>
-  
-  
-        <component name="geometer">
-            <property name="source">((0, 0, 13.45), (0, 0, 0))</property>
-            <property name="sample">((0, 0, 13.6), (0, 0, 0))</property>
-            <property name="detector">((0, 0, 13.6), (0, 0, 0))</property>
-        </component>
-  
-    </component>
-  
-  </inventory>
+     $ mkdir -p arcs-polyV
+     $ cd arcs-polyV
 
+   Let us suppose that the environment variable "workdir" is set to this new
+   directory.
 
-Create sample assembly xml file ::
+   1. Incident beam at sample
+   """"""""""""""""""""""""""
+   In this step we simulate the ARCS instrument from moderator
+   down to the sample position.
 
-  $ mkdir V
-  $ cd V
+   Create a directory ::
 
-So we are now inside directory $workdir/scattering/V.
-We need to create three files in this directory:
+    $ mkdir mod2sample
+    $ cd mod2sample
 
-1. sampleassembly.xml -- the main file describes the whole sample assembly. It only contains one scatterer, V powder sample, in this case
-2. V.xyz -- xyz file describing the crystal structure of V, the material
-3. V-scatterer.xml  -- The file describing the kernels of the scatterer, the V sample.
+   Suppose
 
-Here are the contents of these files:
+   * the incident energy to simulate is 100 meV
+   * fermi chopper "100-1.5-SMI" is chosen
+   * fermi chopper frequency is set to 600 Hz
+   * T0 chopper frequency is set to 120 Hz
+   * neutron count is 1e8
 
-sampleassembly.xml::
+   We can run the arcs beam simulation (from moderator to sample)
 
- <SampleAssembly name="bcc V powder sample assembly">
-  
-  <PowderSample name="V" type="sample">
-    <Shape>
-      <block width="100*mm" height="100*mm" thickness="2*mm" />
-    </Shape>
-    <Phase type="crystal">
-      <ChemicalFormula>V</ChemicalFormula>
-      <xyzfile>V.xyz</xyzfile>
-    </Phase>
-  </PowderSample>
-  
-  <LocalGeometer registry-coordinate-system="InstrumentScientist">
-    <Register name="V" position="(0,0,0)" orientation="(0,0,45)"/>
-  </LocalGeometer>
- 
- </SampleAssembly>
+    $ arcs_beam -E=100 -T0_nu=120 -fermi_chopper=100-1.5-SMI -fermi_nu=600 --ncount=1e8
+
+   Output: out/neutrons
+
+   .. See how many neutrons are there::
+      $ mcvine-neutron-storage-count-neutrons out/neutrons
+
+   Output: out/mon1-itof-focused.h5
+
+   .. Plot::
+      $ PlotHist.py out/mon1-tof.h5
+
+   Output: out/mon2-itof-focused.h5
+
+   .. Plot::
+      $ PlotHist.py out/mon2-tof.h5
 
 
-V.xyz::
+   Scattering of incident neutrons by sample
+   """""""""""""""""""""""""""""""""""""""""
+   Create a directory for this::
 
- 2
- 3.02 0 0   0 3.02 0   0 0 3.02
- V 0  0  0
- V 0.5 0.5 0.5
+    $ mkdir -p $workdir/scattering
+    $ cd $workdir/scattering
 
-V-scatterer.xml::
+   Create a script for this simulation::
 
- <?xml version="1.0"?>
- 
- <!DOCTYPE scatterer>
- 
- <!-- mcweights: monte-carlo weights for 3 possible processes: 
- absorption, scattering, transmission -->
- <homogeneous_scatterer mcweights="0, 1, 0">
-  
-  <IsotropicKernel>
-  </IsotropicKernel>
- 
- </homogeneous_scatterer>
+    $ mcvine-create-instrument-simulation-application -name=ssd -components=source,sample,detector 
 
-Run the simulation::
+   Configure the script to use the correct components and save the configuration::
 
-  $ ./ssd
+    $ ./ssd -source=NeutronFromStorage -sample=SampleAssemblyFromXml -detector=NeutronToStorage -h -dump-pml=yes
 
-Output: out/neutrons
-See how many neutrons are there::
+   Change the configuration by editing the file ssd.pml::
 
- $ mcvine-neutron-storage-count-neutrons out/neutrons
+     <inventory>
+
+       <component name="ssd">
+	   <property name="sequence">['source', 'sample', 'detector']</property>
+	   <facility name="source">sources/NeutronFromStorage</facility>
+	   <facility name="sample">samples/SampleAssemblyFromXml</facility>
+	   <facility name="detector">monitors/NeutronToStorage</facility>
+
+	   <property name="multiple-scattering">False</property>
+
+	   <property name="ncount">1e7</property>
+	   <property name="buffer_size">1000000</property>
+
+	   <property name="overwrite-datafiles">True</property>
+	   <property name="output-dir">out</property>
+
+	   <component name="sample">
+	       <property name="xml">V/sampleassembly.xml</property>
+	   </component>
 
 
-(Optional) check the I(Q,E) using an ideal I(Q,E) monitor::
+	   <component name="source">
+	       <property name="path">../mod2sample/out/neutrons</property>
+	   </component>
 
- $ checksqe -source.path=out/neutrons -monitor.Ei=100 -monitor.Emin=-95 -monitor.Emax=95 -monitor.nE=190 -monitor.Qmin=0 -monitor.Qmax=13 -monitor.nQ=130
+
+	   <component name="detector">
+	       <property name="path">neutrons</property>
+	       <property name="append">False</property>
+	   </component>
+
+
+	   <component name="geometer">
+	       <property name="source">((0, 0, 13.45), (0, 0, 0))</property>
+	       <property name="sample">((0, 0, 13.6), (0, 0, 0))</property>
+	       <property name="detector">((0, 0, 13.6), (0, 0, 0))</property>
+	   </component>
+
+       </component>
+
+     </inventory>
+
+
+   Create sample assembly xml file ::
+
+     $ mkdir V
+     $ cd V
+
+   So we are now inside directory $workdir/scattering/V.
+   We need to create three files in this directory:
+
+   1. sampleassembly.xml -- the main file describes the whole sample assembly. It only contains one scatterer, V powder sample, in this case
+   2. V.xyz -- xyz file describing the crystal structure of V, the material
+   3. V-scatterer.xml  -- The file describing the kernels of the scatterer, the V sample.
+
+   Here are the contents of these files:
+
+   sampleassembly.xml::
+
+    <SampleAssembly name="bcc V powder sample assembly">
+
+     <PowderSample name="V" type="sample">
+       <Shape>
+	 <block width="100*mm" height="100*mm" thickness="2*mm" />
+       </Shape>
+       <Phase type="crystal">
+	 <ChemicalFormula>V</ChemicalFormula>
+	 <xyzfile>V.xyz</xyzfile>
+       </Phase>
+     </PowderSample>
+
+     <LocalGeometer registry-coordinate-system="InstrumentScientist">
+       <Register name="V" position="(0,0,0)" orientation="(0,0,45)"/>
+     </LocalGeometer>
+
+    </SampleAssembly>
+
+
+   V.xyz::
+
+    2
+    3.02 0 0   0 3.02 0   0 0 3.02
+    V 0  0  0
+    V 0.5 0.5 0.5
+
+   V-scatterer.xml::
+
+    <?xml version="1.0"?>
+
+    <!DOCTYPE scatterer>
+
+    <!-- mcweights: monte-carlo weights for 3 possible processes: 
+    absorption, scattering, transmission -->
+    <homogeneous_scatterer mcweights="0, 1, 0">
+
+     <IsotropicKernel>
+     </IsotropicKernel>
+
+    </homogeneous_scatterer>
+
+   Run the simulation::
+
+     $ ./ssd
+
+   Output: out/neutrons
+   See how many neutrons are there::
+
+    $ mcvine-neutron-storage-count-neutrons out/neutrons
+
+
+   (Optional) check the I(Q,E) using an ideal I(Q,E) monitor::
+
+    $ checksqe -source.path=out/neutrons -monitor.Ei=100 -monitor.Emin=-95 -monitor.Emax=95 -monitor.nE=190 -monitor.Qmin=0 -monitor.Qmax=13 -monitor.nQ=130
 
 
 ..
