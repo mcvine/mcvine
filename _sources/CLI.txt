@@ -22,7 +22,7 @@ support::
 
  $ eval "$(_MCVINE_COMPLETE=source mcvine)"
 
-You can also establish some aliases to some long commands. For example::
+You can also establish aliases to some long commands. For example::
 
  $ eval `mcvine bash aliases arcs`
 
