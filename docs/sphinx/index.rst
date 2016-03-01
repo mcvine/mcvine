@@ -10,20 +10,21 @@ neutron scattering experiments.
 Currently MCViNE software is only available for the Linux platform.
 Detailed installation instructions for MCViNE are available at
 :ref:`Installation <installation>`.
-Building the source is driven by a python script, but the underlying
-build engine is based on gnu make.
+
+.. Building the source is driven by a python script, but the underlying
+   build engine is based on gnu make.
 
 .. usages of instrument simulation applications, 
 
-The MCViNE :ref:`user documentation <mcvinedocs>` includes
-:ref:`explanations of MCViNE concepts <philosophy>`,
-:ref:`tutorials <tutorials>`, 
-:ref:`usage of neutron components <Components>`,
-and
-:ref:`instructions for creating a sample assembly <SampleAssembly>`.
+.. The MCViNE :ref:`user documentation <mcvinedocs>` includes
+   :ref:`explanations of MCViNE concepts <philosophy>`,
+   :ref:`tutorials <tutorials>`, 
+   :ref:`usage of neutron components <Components>`,
+   and
+   :ref:`instructions for creating a sample assembly <SampleAssembly>`.
 
-At this point, MCViNE is under the git version control system,
-and MCViNE source code is available for online-browsing at 
+.. At this point, MCViNE is under the git version control system,
+MCViNE source code is available for online-browsing at 
 `the github site <https://github.com/mcvine/mcvine>`_.
 
 ..
@@ -59,13 +60,14 @@ Feedback to the MCViNE developers can be provided through the
 Getting Started
 ---------------
 
+* :ref:`Installation <installation>`
+* :ref:`Command line interface: $ mcvine <cli>`
+* :ref:`Tutorials <tutorials>`
+.. * :ref:`FAQ <faq>`
 .. * :ref:`Demos <demos>`
 .. * :ref:`Overview <overview>`
-* :ref:`Features <features>`
-* :ref:`Installation <installation>`
-* :ref:`Tutorials <tutorials>`
-* :ref:`Documentation <mcvinedocs>`
-* :ref:`FAQ <faq>`
+.. * :ref:`Features <features>`
+.. * :ref:`Documentation <mcvinedocs>`
 
 
 More infomation
@@ -75,7 +77,7 @@ More infomation
 * :ref:`Publications <publications>`
 * `The user mailing list <http://groups.google.com/group/mcvine-users>`_
 * `The developer mailing list <http://groups.google.com/group/mcvine-dev>`_
-* `Roadmap <http://danse.us/trac/MCViNE/roadmap>`_
-* `The MCViNE project <http://danse.us/trac/MCViNE>`_
+* `Milestones <https://github.com/mcvine/mcvine/milestones>`_
+* `The MCViNE project <http://mcvine.org>`_
 * `The DANSE project <http://danse.us>`_
 

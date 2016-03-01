@@ -1,11 +1,13 @@
 .. _tutorials:
 
-Tutorials
-=========
+Tutorials and examples
+======================
 
-
-* :ref:`Basics <tutorials-basics>`
-* :ref:`Sample assembly <tutorials-sampleassembly>`
-* :ref:`Powder Diffraction Kernel <tutorials-powder-kernel>`
 * :ref:`ARCS experiments <tutorials-arcs>`
-* :ref:`VULCAN experiments <tutorials-vulcan>`
+* :ref:`SEQUOIA experiments <tutorials-sequoia>`
+* :ref:`HYSPEC experiments <tutorials-hyspec>`
+
+.. * :ref:`Basics <tutorials-basics>`
+.. * :ref:`Sample assembly <tutorials-sampleassembly>`
+.. * :ref:`Powder Diffraction Kernel <tutorials-powder-kernel>`
+.. * :ref:`VULCAN experiments <tutorials-vulcan>`
