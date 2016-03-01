@@ -100,6 +100,7 @@ cpp_instance_factories = [
     'spin',
     'state',
     'neutron',
+    'vector3',
     ]
 for method in cpp_instance_factories:
     exec '%s = binding.%s' % (method, method)
