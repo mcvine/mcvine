@@ -15,8 +15,13 @@ class TestCase(unittest.TestCase):
     
     def test_band(self):
         "mcvine phonon band"
-        cmd = "mcvine phonon band %s --start 0 0 0 --end 2.0736585172209856 0.0 2.0736585172209856" % self.phonons_path
-        os.system(cmd)
+        cmd = "mcvine phonon band %s --start 0 0 0 --end 2.0736585172209856 0.0 2.0736585172209856 --cartesian --output band-cartesian.png" % self.phonons_path
+        if os.system(cmd):
+            raise RuntimeError("%s failed" % cmd)
+
+        cmd = "mcvine phonon band %s --start 0 0 0 --end 1 0 0 --output band-hkl.png" % self.phonons_path
+        if os.system(cmd):
+            raise RuntimeError("%s failed" % cmd)
         return
 
 
