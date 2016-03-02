@@ -12,12 +12,12 @@ def phonon():
 
 @phonon.command()
 @click.argument("phonon")
-@click.option("--start", default=(0.,0.,0.))
-@click.option("--end", default=(0.,0.,1.))
-@click.option("--npts", default=100)
-@click.option("--cartesian", default=False, is_flag=True)
-@click.option("--output", default="")
-@click.option("--branch", default=-1)
+@click.option("--start", default=(0.,0.,0.), help='start Q point')
+@click.option("--end", default=(0.,0.,1.), help='stop Q point')
+@click.option("--npts", default=100, help='number of points to sample')
+@click.option("--cartesian", default=False, is_flag=True, help='indicate whether the Q points are in cartesian or hkl format')
+@click.option("--output", default="", help="image file path to save the plot. empty means plotting interactively")
+@click.option("--branch", default=-1, help="0-based branch index. default value -1 means plot all branches")
 def band(phonon, start, end, npts, cartesian, output, branch):
     "Plot band structure along one direction"
     # phonon is the path to a directory with IDF phonon data
@@ -52,13 +52,15 @@ def band(phonon, start, end, npts, cartesian, output, branch):
 
 
 @phonon.command()
+@click.argument("crystal")
 @click.argument("phonon")
-@click.option("--start", default=(0.,0.,0.))
-@click.option("--end", default=(0.,0.,1.))
-@click.option("--npts", default=100)
-@click.option("--cartesian", default=False, is_flag=True)
-@click.option("--output", default="")
-def slice(phonon, start, end, npts, cartesian, output):
+@click.option("--start", default=(0.,0.,0.), help='start Q point')
+@click.option("--end", default=(0.,0.,1.), help='stop Q point')
+@click.option("--npts", default=100, help='number of points to sample')
+@click.option("--cartesian", default=False, is_flag=True, help='indicate whether the Q points are in cartesian or hkl format')
+@click.option("--outhist", default="slice.h5", help="Output histogram file path")
+@click.option("--Eaxis", default=(0., 100., 1.), help="Energy axis. (min, max, step)")
+def slice(crystal, phonon, start, end, npts, cartesian, outhist, eaxis):
     "Plot slice of SQE data along a specific reciprocal space direction"
     # phonon is the path to a directory with IDF phonon data
     from mccomponents.sample.phonon import periodicdispersion_fromidf as pd
@@ -101,21 +103,26 @@ def slice(phonon, start, end, npts, cartesian, output):
         ]
     pols = np.array(pols)
     pols.shape = nQ, nbr, natoms, 3
-    # !!! hack
-    atom_positions = [[0,0,0]]
+
+    # get atom positions from crystal structure file
+    from danse.ins.matter.Parsers import getParser
+    parser = getParser(os.path.splitext(crystal)[-1][1:])
+    structure = parser.parseFile(crystal)
+    atom_positions = [atom.xyz for atom in structure]
+    
     events = computeEvents(hkls, Es, pols, atom_positions, reci_basis)
 
     xaxis = 0, 1, 2./npts
-    Eaxis = 0, np.max(Es) * 1.1, 1.
+    # Eaxis = 0, np.max(Es) * 1.1, 1.
+    Eaxis = eaxis
 
     def Qtox(hkl):
         x = np.linalg.norm(hkl-start, axis=-1)/np.linalg.norm(step) / npts
         mask = x==x
         return x, mask
-    
     h = makeSlice(events, xaxis, Eaxis, Qtox)
     import histogram.hdf as hh
-    hh.dump(h, "IxE.h5")
+    hh.dump(h, outhist)
     return
 
 
