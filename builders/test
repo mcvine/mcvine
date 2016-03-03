@@ -30,4 +30,4 @@ echo "- using $CORES cores"
 . /opt/danse/bin/setup-danse.sh
 
 cd $BUILD
-make test ARGS="-j$CORES $ADDI_ARGS"
+env CTEST_OUTPUT_ON_FAILURE=1 make test ARGS="-j$CORES $ADDI_ARGS"
