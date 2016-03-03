@@ -31,6 +31,31 @@ include a series of aliases starting with prefix "arcs". For example,
 "arcs_beam" is an alias of "mcvine instruments arcs beam".
 
 
+instruments
+-----------
+
+Subcommands for neutron instruments. For example::
+
+ $ mcvine instruments arcs
+
+provide commands for the ARCS spectrometer at SNS
+
+
+phonon
+------
+
+Command::
+
+ $ mcvine phonon
+
+Phonon-related functionalities.
+
+Given phonon data in IDF format, it can
+
+* extract band structure
+* compute neutron scattering data slice
+
+
 Misc
 ----
 

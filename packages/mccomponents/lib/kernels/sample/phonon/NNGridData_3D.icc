@@ -41,6 +41,9 @@ namespace NNGridData_3D_impl{
       throw DANSE::phonon::Exception( oss.str() );
       }
     }
+    // if it is very close to the end point, move it
+    // to start point
+    if (std::abs(r-axis.n) < 1e-7) r=0;
     
     index = std::floor( r );
     
