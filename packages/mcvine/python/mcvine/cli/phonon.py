@@ -73,7 +73,7 @@ def band(phonon, start, end, npts, cartesian, output, branch):
 @click.option("--outhist", default="slice.h5", help="Output histogram file path")
 @click.option("--Eaxis", default=(0., 100., 1.), help="Energy axis. (min, max, step)")
 def slice(crystal, phonon, start, end, npts, cartesian, outhist, eaxis):
-    "Plot slice of SQE data along a specific reciprocal space direction"
+    "Compute slice of SQE data along a specific reciprocal space direction"
     # phonon is the path to a directory with IDF phonon data
 
     # read phonon data
