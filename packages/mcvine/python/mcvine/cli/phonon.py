@@ -16,7 +16,7 @@ def phonon():
 @click.option("--end", default=(0.,0.,1.), help='stop Q point')
 @click.option("--npts", default=100, help='number of points to sample')
 @click.option("--cartesian", default=False, is_flag=True, help='indicate whether the Q points are in cartesian or hkl format')
-@click.option("--output", default="", help="image file path to save the plot. empty means plotting interactively")
+@click.option("--output", default="", help="image file path to save the plot. empty means plotting interactively. Plotting requires matplotlib installed.")
 @click.option("--branch", default=-1, help="0-based branch index. default value -1 means plot all branches")
 def band(phonon, start, end, npts, cartesian, output, branch):
     "Plot band structure along one direction"
@@ -38,7 +38,12 @@ def band(phonon, start, end, npts, cartesian, output, branch):
           for br in range(nbr)]
     Es = np.array(Es)
     Es.shape = -1, nbr
-    import pylab
+    try:
+        import pylab
+    except ImportError:
+        import warnings
+        warnings.warn("Plotting needs matplotlib. Please install python matplotlib")
+        return
     if branch == -1:
         for i in range(nbr):
             pylab.plot(Es[:, i])
@@ -72,14 +77,16 @@ def slice(crystal, phonon, start, end, npts, cartesian, outhist, eaxis):
     end = np.array(end)
     step = (end-start)/npts
     Qs = start + step * np.arange(0, npts, 1.)[:, np.newaxis]
+
     import os
     reci_basis = recibasis_fromQgridinfo(os.path.join(phonon, 'Qgridinfo'))
     inv_reci_basis = np.linalg.inv(reci_basis)
     if cartesian:
         hkls = np.dot(Qs, inv_reci_basis)
-        # start and step will be used later in method Qtox
+        # these vectors will be used later in method Qtox
         start = np.dot(start, inv_reci_basis)
         step = np.dot(step, inv_reci_basis)
+        end = np.dot(end, inv_reci_basis)
     else:
         hkls = Qs
         Qs = np.dot(hkls, reci_basis)
@@ -112,12 +119,13 @@ def slice(crystal, phonon, start, end, npts, cartesian, outhist, eaxis):
     
     events = computeEvents(hkls, Es, pols, atom_positions, reci_basis)
 
-    xaxis = 0, 1, 2./npts
+    maxx = np.linalg.norm(end-start)
+    xaxis = 0, maxx, maxx/npts
     # Eaxis = 0, np.max(Es) * 1.1, 1.
     Eaxis = eaxis
 
     def Qtox(hkl):
-        x = np.linalg.norm(hkl-start, axis=-1)/np.linalg.norm(step) / npts
+        x = np.linalg.norm(hkl-start, axis=-1)
         mask = x==x
         return x, mask
     h = makeSlice(events, xaxis, Eaxis, Qtox)

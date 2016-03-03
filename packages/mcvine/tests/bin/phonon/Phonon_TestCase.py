@@ -33,7 +33,7 @@ class TestCase(unittest.TestCase):
 
     def test_slice(self):
         "mcvine phonon slice"
-        cmd = "mcvine phonon slice %s %s --start 0 0 0 --end 1 0 0 --npts=1000 --Eaxis=0 30 .1 --outhist %s/slice-hkl.h5" % (self.xyz_path, self.phonons_path, self.out)
+        cmd = "mcvine phonon slice %s %s --start 0 0 0 --end 1 0 0 --npts=250 --Eaxis=0 30 .1 --outhist %s/slice-hkl.h5" % (self.xyz_path, self.phonons_path, self.out)
         if os.system(cmd):
             raise RuntimeError("%s failed" % cmd)
         return
