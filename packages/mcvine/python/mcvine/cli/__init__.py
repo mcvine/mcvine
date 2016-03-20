@@ -34,16 +34,29 @@ def mcvine():
 # decorator to allow a cmd to save cmd parameters 
 # for data provenance purpose
 def save_metadata(f):
+    from mcvine import version, git_revision
+    mcvine_vers = dict(version=version, git_revision=git_revision)
     def _(*args, **kwds):
         c = click.get_current_context()
         cmdpath = c.command_path
-        metadata = [cmdpath, c.params, c.args]
+        # clean parameter dictionary
+        import copy
+        params = copy.deepcopy(c.params); del params['save_metadata_only']
+        # construct metadata
+        metadata = dict(
+            cmd=cmdpath, params=params, args=c.args,
+            mcvine=mcvine_vers)
+        # output path
         fn = cmdpath.replace(' ', '-') + ".params"
+        # save
         json.dump(metadata, open(fn, 'wt'))
-        return f(*args, **kwds)
+        # run the cmd only if we are not just saving meta data
+        save_metadata_only = kwds.pop('save_metadata_only', None)
+        if not save_metadata_only:
+            return f(*args, **kwds)
     _.__name__ = f.__name__
     _.__doc__ = f.__doc__
-    return _
+    return click.option("--save-metadata-only", is_flag=True)(_)
 
 # decorator to create bash alias of a command
 def alias(shortname, longname):
@@ -64,7 +77,7 @@ def pyre_app(parent, appname, cmd_prefix):
             import sys
             sys.argv = [appname] + ctx.args
             # create app instance
-            app = save_metadata(f)(ctx, appname)
+            app = f(ctx, appname)
             # and run
             app.run()
             return
@@ -74,7 +87,7 @@ def pyre_app(parent, appname, cmd_prefix):
         # register the alias
         # sth like arcs_analyze_beam -> mcvine instrument arcs analyze_beam
         aliases[appname] = '%s %s' % (cmd_prefix, f.__name__)
-        return d1(d2(_f))
+        return d1(save_metadata(d2(_f)))
     return decorator
 
 # sub-cmds

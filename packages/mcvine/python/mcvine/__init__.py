@@ -37,6 +37,7 @@ Example 2: find out the types of components in 'sources' category
 
 """
 
+from .version import version, git_revision
 
 import yaml, os
 conf_path = "mcvine.conf"
