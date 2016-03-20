@@ -3,3 +3,4 @@
 rm -rf *out
 rm -f *.dat
 rm -f arcs_mod*.pml run-m2s.sh README.arcs_beam
+rm -f mcvine-instruments-arcs-*.params
