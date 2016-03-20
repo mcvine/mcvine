@@ -16,7 +16,7 @@ __doc__ = """
 command line interface
 """
 
-import click
+import click, json
 
 # map aliases to long commands
 aliases = dict()
@@ -29,6 +29,21 @@ aliases = dict()
 @click.group()
 def mcvine():
     return
+
+
+# decorator to allow a cmd to save cmd parameters 
+# for data provenance purpose
+def save_metadata(f):
+    def _(*args, **kwds):
+        c = click.get_current_context()
+        cmdpath = c.command_path
+        metadata = [cmdpath, c.params, c.args]
+        fn = cmdpath.replace(' ', '-') + ".params"
+        json.dump(metadata, open(fn, 'wt'))
+        return f(*args, **kwds)
+    _.__name__ = f.__name__
+    _.__doc__ = f.__doc__
+    return _
 
 # decorator to create bash alias of a command
 def alias(shortname, longname):
@@ -49,7 +64,7 @@ def pyre_app(parent, appname, cmd_prefix):
             import sys
             sys.argv = [appname] + ctx.args
             # create app instance
-            app = f(ctx, appname)
+            app = save_metadata(f)(ctx, appname)
             # and run
             app.run()
             return
