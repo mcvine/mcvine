@@ -42,13 +42,17 @@ project (${PROJECT_NAME})
 cmake_minimum_required (VERSION 2.8.12)
 
 # get cmake_utils
-execute_process(
-  COMMAND rm -rf cmake_utils
-  )
-execute_process(
-  COMMAND git clone https://github.com/danse-inelastic/cmake_utils
-  WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
-  )
+IF(EXISTS "cmake_utils/")
+  execute_process(
+    COMMAND git pull
+    WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/cmake_utils
+    )
+ELSE(EXISTS "cmake_utils/")
+  execute_process(
+    COMMAND git clone https://github.com/danse-inelastic/cmake_utils
+    WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+    )
+ENDIF(EXISTS "cmake_utils/")
 set(CMAKE_MODULE_PATH ${PROJECT_BINARY_DIR}/cmake_utils)
 
 # use utils
