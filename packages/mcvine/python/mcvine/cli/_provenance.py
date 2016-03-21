@@ -4,6 +4,15 @@
 #
 
 import click, os, json, subprocess as sp
+import logging
+logger = logging.getLogger("mcvine.cli")
+
+
+provenance_opts = [
+    'save_metadata_only',
+    'keep_in_cache',
+    'use_cache',
+    ]
 
 # decorator to allow a cmd to save cmd parameters 
 # for data provenance purpose
@@ -16,7 +25,21 @@ def save_metadata(f):
         # clean parameter dictionary
         import copy
         params = copy.deepcopy(c.params)
-        del params['save_metadata_only']; del params['keep_in_cache']
+        for popt in provenance_opts: del params[popt]
+        # deal with option --use-cache
+        use_cache = kwds.pop('use_cache', None)
+        save_metadata_only = kwds.pop('save_metadata_only', None)
+        if use_cache and not save_metadata_only:
+            path = cache_path(cmdpath, params, c.args)
+            if os.path.exists(path):
+                # if requested to use cache and the cache exists,
+                # use it.
+                logger.info("%s already exists. reuse results there" % path)
+                # XXX assume the current working directory is the output directory
+                out = "."
+                copy_withhardlinks(path,out)
+                return
+        # deal with --save-metadata-only
         # construct metadata
         metadata = dict(
             cmd=cmdpath, params=params, args=c.args,
@@ -26,10 +49,9 @@ def save_metadata(f):
         # save
         json.dump(metadata, open(fn, 'wt'))
         # run the cmd only if we are not just saving meta data
-        save_metadata_only = kwds.pop('save_metadata_only', None)
         # no need to continue if the only request is to save metadata
         if save_metadata_only: return
-        #
+        # deal with option --keep-in-cache
         keep_in_cache = kwds.pop('keep_in_cache', None)
         if not keep_in_cache:
             return f(*args, **kwds)
@@ -46,19 +68,24 @@ def save_metadata(f):
             os.makedirs(path)
         # XXX assume the current working directory is the output directory
         out = "."
-        # XXX this is not portable, but should be OK for the systems
-        # XXX we support
-        cmd = 'cp -al %s "%s"' % (out, path)
-        ret = sp.call(cmd, shell=True)
-        if ret:
-            raise RuntimeError("%s failed" % cmd)
+        copy_withhardlinks(out, path)
         return
     _.__name__ = f.__name__
     _.__doc__ = f.__doc__
-    return click.option("--keep-in-cache", is_flag=True)(
-        click.option("--save-metadata-only", is_flag=True)
-        (_)
-    )
+    d1 = click.option("--save-metadata-only", is_flag=True)
+    d2 = click.option("--keep-in-cache", is_flag=True)
+    d3 = click.option("--use-cache", is_flag=True)
+    return d1(d2(d3(_)))
+
+
+def copy_withhardlinks(src, dest):
+    # XXX this is not portable, but should be OK for the systems
+    # XXX we support
+    cmd = 'cp -r --preserve=all -l "%s/"* "%s/"' % (src, dest)
+    ret = sp.call(cmd, shell=True)
+    if ret:
+        raise RuntimeError("%s failed" % cmd)
+    return
 
 
 def arg_str(params, args):
