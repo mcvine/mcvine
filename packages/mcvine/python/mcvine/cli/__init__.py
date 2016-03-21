@@ -1,14 +1,6 @@
 # -*- Python -*-
 #
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#
-#                                   Jiao Lin
-#                      California Institute of Technology
-#                      (C) 2006-2013  All Rights Reserved
-#
-# {LicenseText}
-#
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Jiao Lin <jiao.lin@gmail.com>
 #
 
 
@@ -30,20 +22,7 @@ aliases = dict()
 def mcvine():
     return
 
-
-# decorator to allow a cmd to save cmd parameters 
-# for data provenance purpose
-def save_metadata(f):
-    def _(*args, **kwds):
-        c = click.get_current_context()
-        cmdpath = c.command_path
-        metadata = [cmdpath, c.params, c.args]
-        fn = cmdpath.replace(' ', '-') + ".params"
-        json.dump(metadata, open(fn, 'wt'))
-        return f(*args, **kwds)
-    _.__name__ = f.__name__
-    _.__doc__ = f.__doc__
-    return _
+from ._provenance import save_metadata
 
 # decorator to create bash alias of a command
 def alias(shortname, longname):
@@ -64,7 +43,7 @@ def pyre_app(parent, appname, cmd_prefix):
             import sys
             sys.argv = [appname] + ctx.args
             # create app instance
-            app = save_metadata(f)(ctx, appname)
+            app = f(ctx, appname)
             # and run
             app.run()
             return
@@ -74,7 +53,7 @@ def pyre_app(parent, appname, cmd_prefix):
         # register the alias
         # sth like arcs_analyze_beam -> mcvine instrument arcs analyze_beam
         aliases[appname] = '%s %s' % (cmd_prefix, f.__name__)
-        return d1(d2(_f))
+        return d1(save_metadata(d2(_f)))
     return decorator
 
 # sub-cmds
@@ -85,8 +64,5 @@ from mcstas2 import cli
 
 # aliases should be the last cmds to import
 from . import bash
-
-# version
-__id__ = "$Id$"
 
 # End of file 

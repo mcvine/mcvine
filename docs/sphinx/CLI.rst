@@ -41,6 +41,22 @@ Subcommands for neutron instruments. For example::
 provide commands for the ARCS spectrometer at SNS
 
 
+Simulation Cache
+----------------
+
+Simulation results could be cached.
+
+For example::
+
+ $ mcvine instruments arcs beam --E=100 --ncount=1e8 --keep-in-cache
+
+will save the simulation results to a cache.
+
+To reuse the cached results, add option "--use-cache"::
+
+ $ mcvine instruments arcs beam --E=100 --ncount=1e8 --use-cache
+
+
 phonon
 ------
 
@@ -67,6 +83,3 @@ mcstas support::
 Check sample assembly xml::
 
  $ mcvine sampleassembly check <xmlpath>
-
-
-
