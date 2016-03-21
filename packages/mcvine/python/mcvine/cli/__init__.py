@@ -1,14 +1,6 @@
 # -*- Python -*-
 #
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#
-#                                   Jiao Lin
-#                      California Institute of Technology
-#                      (C) 2006-2013  All Rights Reserved
-#
-# {LicenseText}
-#
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Jiao Lin <jiao.lin@gmail.com>
 #
 
 
@@ -30,33 +22,7 @@ aliases = dict()
 def mcvine():
     return
 
-
-# decorator to allow a cmd to save cmd parameters 
-# for data provenance purpose
-def save_metadata(f):
-    from mcvine import version, git_revision
-    mcvine_vers = dict(version=version, git_revision=git_revision)
-    def _(*args, **kwds):
-        c = click.get_current_context()
-        cmdpath = c.command_path
-        # clean parameter dictionary
-        import copy
-        params = copy.deepcopy(c.params); del params['save_metadata_only']
-        # construct metadata
-        metadata = dict(
-            cmd=cmdpath, params=params, args=c.args,
-            mcvine=mcvine_vers)
-        # output path
-        fn = cmdpath.replace(' ', '-') + ".params"
-        # save
-        json.dump(metadata, open(fn, 'wt'))
-        # run the cmd only if we are not just saving meta data
-        save_metadata_only = kwds.pop('save_metadata_only', None)
-        if not save_metadata_only:
-            return f(*args, **kwds)
-    _.__name__ = f.__name__
-    _.__doc__ = f.__doc__
-    return click.option("--save-metadata-only", is_flag=True)(_)
+from ._provenance import save_metadata
 
 # decorator to create bash alias of a command
 def alias(shortname, longname):
@@ -98,8 +64,5 @@ from mcstas2 import cli
 
 # aliases should be the last cmds to import
 from . import bash
-
-# version
-__id__ = "$Id$"
 
 # End of file 
