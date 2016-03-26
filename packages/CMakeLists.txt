@@ -1,26 +1,25 @@
-# need instrument and sampleassembly
+# need packages like instrument and sampleassembly
 # place them under packages/
-execute_process(
-  COMMAND rm -rf instrument sampleassembly
-  WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+include(GitUtils)
+UPDATE_PACKAGE_FROM_GIT(
+  ${CMAKE_CURRENT_SOURCE_DIR}
+  instrument
+  https://github.com/danse-inelastic/instrument
   )
-execute_process(
-  COMMAND git clone https://github.com/danse-inelastic/instrument
-  COMMAND git clone https://github.com/danse-inelastic/sampleassembly
-  WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-  )
+UPDATE_PACKAGE_FROM_GIT(
+  ${CMAKE_CURRENT_SOURCE_DIR}
+  sampleassembly
+  https://github.com/danse-inelastic/sampleassembly
+)
 #
 add_subdirectory(instrument)
 add_subdirectory(sampleassembly)
 
 # need "click". 
-execute_process(
-  COMMAND rm -rf click
-  WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-  )
-execute_process(
-  COMMAND git clone https://github.com/yxqd/click
-  WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+UPDATE_PACKAGE_FROM_GIT(
+  ${CMAKE_CURRENT_SOURCE_DIR}
+  click
+  https://github.com/yxqd/click
   )
 # export click python pkg
 file(

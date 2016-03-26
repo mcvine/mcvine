@@ -181,12 +181,4 @@ add_custom_target(
   )
 
 # docker folder for build and test packaging artifacts
-execute_process(
-  COMMAND rm -rf docker
-  WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-  )
-execute_process(
-  COMMAND git clone https://github.com/danse-inelastic/packaging-use-docker docker
-  WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-  )
-add_subdirectory(docker)
+include(docker)
