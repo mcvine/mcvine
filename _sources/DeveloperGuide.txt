@@ -26,6 +26,10 @@ Continuous integration
 
 This is done by using travis CI.
 
+When a test fails in travis CI, one can use mcvine/builders/sim-travis.sh
+to simulate the mcvine travis environment and find out the details of the
+failure in case the log message is not enough for debugging.
+
 
 Deployment testing
 ------------------

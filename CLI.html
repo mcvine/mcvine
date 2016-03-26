@@ -65,6 +65,9 @@
 <li><a class="reference internal" href="#">Command line interface</a><ul>
 <li><a class="reference internal" href="#mcvine">mcvine</a></li>
 <li><a class="reference internal" href="#bash">bash</a></li>
+<li><a class="reference internal" href="#instruments">instruments</a></li>
+<li><a class="reference internal" href="#simulation-cache">Simulation Cache</a></li>
+<li><a class="reference internal" href="#phonon">phonon</a></li>
 <li><a class="reference internal" href="#misc">Misc</a></li>
 </ul>
 </li>
@@ -121,6 +124,40 @@ support:</p>
 <p>will create aliases for commands related to the ARCS spectrometer, which
 include a series of aliases starting with prefix &#8220;arcs&#8221;. For example,
 &#8220;arcs_beam&#8221; is an alias of &#8220;mcvine instruments arcs beam&#8221;.</p>
+</div>
+<div class="section" id="instruments">
+<h2>instruments<a class="headerlink" href="#instruments" title="Permalink to this headline">¶</a></h2>
+<p>Subcommands for neutron instruments. For example:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ mcvine instruments arcs
+</pre></div>
+</div>
+<p>provide commands for the ARCS spectrometer at SNS</p>
+</div>
+<div class="section" id="simulation-cache">
+<h2>Simulation Cache<a class="headerlink" href="#simulation-cache" title="Permalink to this headline">¶</a></h2>
+<p>Simulation results could be cached.</p>
+<p>For example:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ mcvine instruments arcs beam --E=100 --ncount=1e8 --keep-in-cache
+</pre></div>
+</div>
+<p>will save the simulation results to a cache.</p>
+<p>To reuse the cached results, add option &#8220;&#8211;use-cache&#8221;:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ mcvine instruments arcs beam --E=100 --ncount=1e8 --use-cache
+</pre></div>
+</div>
+</div>
+<div class="section" id="phonon">
+<h2>phonon<a class="headerlink" href="#phonon" title="Permalink to this headline">¶</a></h2>
+<p>Command:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ mcvine phonon
+</pre></div>
+</div>
+<p>Phonon-related functionalities.</p>
+<p>Given phonon data in IDF format, it can</p>
+<ul class="simple">
+<li>extract band structure</li>
+<li>compute neutron scattering data slice</li>
+</ul>
 </div>
 <div class="section" id="misc">
 <h2>Misc<a class="headerlink" href="#misc" title="Permalink to this headline">¶</a></h2>
