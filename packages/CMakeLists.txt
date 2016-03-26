@@ -1,27 +1,28 @@
-# need instrument and sampleassembly
+# need packages like instrument and sampleassembly
 # place them under packages/
-execute_process(
-  COMMAND rm -rf instrument sampleassembly
-  WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-  )
-execute_process(
-  COMMAND git clone https://github.com/danse-inelastic/instrument
-  COMMAND git clone https://github.com/danse-inelastic/sampleassembly
-  WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-  )
+# first define a macro
+macro ( ADD_EXT_PACKAGE _extpkg _giturl)
+  IF(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/${_extpkg}")
+    execute_process(
+      COMMAND git pull
+      WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/${_extpkg}"
+      )
+  ELSE(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/${_extpkg}")
+    execute_process(
+      COMMAND git clone ${_giturl}
+      WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+      )
+  ENDIF(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/${_extpkg}")
+endmacro ( ADD_EXT_PACKAGE )
+# end use it for ext packages
+ADD_EXT_PACKAGE(instrument https://github.com/danse-inelastic/instrument)
+ADD_EXT_PACKAGE(sampleassembly https://github.com/danse-inelastic/sampleassembly)
 #
 add_subdirectory(instrument)
 add_subdirectory(sampleassembly)
 
 # need "click". 
-execute_process(
-  COMMAND rm -rf click
-  WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-  )
-execute_process(
-  COMMAND git clone https://github.com/yxqd/click
-  WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-  )
+ADD_EXT_PACKAGE(click https://github.com/yxqd/click)
 # export click python pkg
 file(
   COPY click/click
