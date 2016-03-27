@@ -52,6 +52,12 @@ pre {
     border: 1px solid #ccc;
     /* background-color: #f8f8f8; */
     background-color: #fafaf0;
+
+    white-space: pre-wrap;       /* CSS 3 */
+    white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+    white-space: -pre-wrap;      /* Opera 4-6 */
+    white-space: -o-pre-wrap;    /* Opera 7 */
+    word-wrap: break-word;       /* Internet Explorer 5.5+ */
 }
 
 td.linenos pre {
@@ -257,7 +263,7 @@ div.body {
     margin: 0;
     padding: 0.5em 20px 20px 20px;
     max-height: 1200;
-    overflow: scroll;
+    /* overflow: scroll; */
 }
 
 div.bodywrapper {
