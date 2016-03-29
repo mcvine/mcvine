@@ -33,5 +33,10 @@ def instrument(name):
     return os.path.join(r, "instruments", name)
 
 
+def sample(name, temperature='default', shape='default'):
+    r = root()
+    return os.path.join(r, 'samples', name, temperature, shape)
+
+
 # End of file 
 
