@@ -62,8 +62,8 @@ Getting Started
 
 * `Examples of simulated neutron spectra <http://www.mcvine.org/examples.html>`_
 * :ref:`Installation <installation>`
-* :ref:`Command line interface: $ mcvine <cli>`
 * :ref:`Tutorials <tutorials>`
+* :ref:`Command line interface: $ mcvine <cli>`
 .. * :ref:`FAQ <faq>`
 .. * :ref:`Demos <demos>`
 .. * :ref:`Overview <overview>`
