@@ -38,7 +38,7 @@ sample_examples = '"V", "V/300K", or "V/300K/plate"'
 
 
 def create_beam_run_script(workdir):
-    name = "run.sh"
+    name = "run-beam.sh"
     content = """#!/usr/bin/env bash
 
 mcvine instruments arcs beam --keep-in-cache --use-cache E=100 --ncount=1e8
