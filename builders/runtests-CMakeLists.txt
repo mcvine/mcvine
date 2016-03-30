@@ -24,7 +24,18 @@ find_package ( PythonInterp REQUIRED )
 
 # add python tests
 set(EXPORT_ENVVARS "PYTHONPATH=$ENV{PYTHONPATH};LD_LIBRARY_PATH=$ENV{LD_LIBRARY_PATH};MCVINE_DIR=${MCVINE_DIR};PATH=$ENV{PATH}")
-PYUNITTEST_ADD_TESTS_IN_DIR( ${CMAKE_SOURCE_DIR} "mcvine")
+# Used to include all tests
+# PYUNITTEST_ADD_TESTS_IN_DIR( ${CMAKE_SOURCE_DIR} "mcvine")
+# But turns out instrument tests are obsolete, so we have to add
+# these subdirs one by one and skip instrument
+# PYUNITTEST_ADD_TESTS_IN_DIR( ${CMAKE_SOURCE_DIR}/instrument "instrument")
+PYUNITTEST_ADD_TESTS_IN_DIR( ${CMAKE_SOURCE_DIR}/sampleassembly "sampleassembly")
+PYUNITTEST_ADD_TESTS_IN_DIR( ${CMAKE_SOURCE_DIR}/mcni "mcni")
+PYUNITTEST_ADD_TESTS_IN_DIR( ${CMAKE_SOURCE_DIR}/mccomposite "mccomposite")
+PYUNITTEST_ADD_TESTS_IN_DIR( ${CMAKE_SOURCE_DIR}/mccomponents "mccomponents")
+PYUNITTEST_ADD_TESTS_IN_DIR( ${CMAKE_SOURCE_DIR}/mcstas2 "mcstas2")
+PYUNITTEST_ADD_TESTS_IN_DIR( ${CMAKE_SOURCE_DIR}/mcvine "mcvine")
+PYUNITTEST_ADD_TESTS_IN_DIR( ${CMAKE_SOURCE_DIR}/mcvine.instruments "mcvine.instruments")
 
 #
 enable_testing()
