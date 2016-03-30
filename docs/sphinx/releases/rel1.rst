@@ -1,3 +1,17 @@
+.. _relnotes1.0.1:
+
+Release Notes 1.0.1 - March 2016
+================================
+
+This is a minor update of :ref:`Release 1.0 <relnotes1.0>`.
+The main added functionality is the ARCS powder simulation
+workflow tool::
+
+ $ mcvine workflow powder
+
+See :ref:`ARCS tutorials <tutorials-arcs>` for more details.
+
+
 .. _relnotes1.0:
 
 Release Notes 1.0 - Feb 2016
