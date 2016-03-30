@@ -68,7 +68,8 @@ option --ncount.
    More details of beam simulation can be found in 
    :ref:`a different tutorial below <tut_arcs_beam>`
 
-After this step is finished, we should examine the output files,
+After this step is finished, we may optionally examine the output files
+(see the note below),
 and then move back to the workflow directory::
 
   $ cd ..
@@ -85,7 +86,7 @@ and then move back to the workflow directory::
 
  * Output: out/mon1-itof-focused.h5 -- focused monitor 1 histogram
 
-   Plot::
+   To plot, execute::
 
      $ plothist out/mon1-tof-focused.h5
 
@@ -98,7 +99,7 @@ and then move back to the workflow directory::
 """"""""""""""""""""""""""""""""""""""""""""""""""""""
 
 These three steps are combined together by the Makefile in this workflow
-directory. All you need to do is to run::
+directory. All you need to do is to execute::
 
  $ make
 
