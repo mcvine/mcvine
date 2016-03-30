@@ -34,7 +34,7 @@ failure in case the log message is not enough for debugging.
 Deployment testing
 ------------------
 
-This is done by using docker: mcvine/builders/docker/ubuntu/14.04-from-packagecloud
+This is done by travis-CI.
 
 
 Creating a new scattering kernel for sample
