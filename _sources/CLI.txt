@@ -14,6 +14,8 @@ Execute::
 will list available subcommands.
 
 
+.. _cli/bash:
+
 bash
 ----
 
