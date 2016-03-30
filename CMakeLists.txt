@@ -12,7 +12,7 @@
 #   - deb: binary deb
 
 set(PROJECT_NAME "mcvine")
-set(VERSION "1.0")
+set(VERSION "1.0.1")
 set(AUTHOR "Jiao Lin")
 set(AUTHOR_EMAILE "jiao.lin@gmail.com")
 set(VENDOR "DANSE")
@@ -39,7 +39,7 @@ set (DOCKER_PKGING_TEST_DEB ${DOCKER_PKGING_TEST_SRPM})
 
 #
 project (${PROJECT_NAME})
-cmake_minimum_required (VERSION 2.8.12)
+cmake_minimum_required (VERSION 2.8.11)
 
 # get cmake_utils
 IF(EXISTS "cmake_utils/")
