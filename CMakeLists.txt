@@ -160,9 +160,6 @@ add_custom_target(
 set(RPM_BUILD_DIR rpm_build)
 # rpm spec file
 set(RPM_SPEC_IN "rpm.spec.in")
-IF ("${DOCKER_PKGING_RPM_DIST_NAME}" STREQUAL "centos")
-  set(RPM_SPEC_IN "rpm.spec.in.CentOS")
-ENDIF ("${DOCKER_PKGING_RPM_DIST_NAME}" STREQUAL "centos")
 configure_file( ${CMAKE_CURRENT_SOURCE_DIR}/${RPM_SPEC_IN}
   ${CMAKE_CURRENT_BINARY_DIR}/${RPM_BUILD_DIR}/SPECS/${PKG_NAME}.spec )
 # rules to build src rpm
