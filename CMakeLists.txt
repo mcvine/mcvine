@@ -142,7 +142,8 @@ include(CPack)
 # source tar ball
 add_custom_command(
   OUTPUT ${PKG_NAME}-${CPACK_PACKAGE_VERSION}.tar.gz
-  COMMAND git archive --format=tar --prefix=${PKG_NAME}-${CPACK_PACKAGE_VERSION}/ HEAD | gzip -c > ${CMAKE_CURRENT_BINARY_DIR}/${PKG_NAME}-${CPACK_PACKAGE_VERSION}.tar.gz
+  # COMMAND git archive --format=tar --prefix=${PKG_NAME}-${CPACK_PACKAGE_VERSION}/ HEAD | gzip -c > ${CMAKE_CURRENT_BINARY_DIR}/${PKG_NAME}-${CPACK_PACKAGE_VERSION}.tar.gz
+  COMMAND tar cfz ${CMAKE_CURRENT_BINARY_DIR}/${PKG_NAME}-${CPACK_PACKAGE_VERSION}.tar.gz .
   WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
   )
 add_custom_target( 
