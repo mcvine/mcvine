@@ -22,9 +22,9 @@ Requires: python
 Requires: python-devel
 Requires: numpy
 Requires: python-yaml
-# Requires: python-psutil
-# Requires: h5py
-# Requires: mpi4py-mpich2
+Requires: python-psutil
+Requires: h5py
+Requires: mpi4py-mpich2
 Requires: gsl-devel
 Requires: boost-python
 Requires: pyre
