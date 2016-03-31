@@ -135,8 +135,12 @@ def slice(crystal, phonon, start, end, npts, cartesian, outhist, eaxis):
     # Eaxis = 0, np.max(Es) * 1.1, 1.
     Eaxis = eaxis
     # functor to convert hkl to "x" value
+    from distutils.version import LooseVersion
     def Qtox(hkl):
-        x = np.linalg.norm(hkl-start, axis=-1)
+        if LooseVersion(np.__version__) >= LooseVersion("1.8"):
+            x = np.linalg.norm(hkl-start, axis=-1)
+        else:
+            x = np.array(map(np.linalg.norm, hkl-start))
         mask = x==x
         return x, mask
     # histogramming
