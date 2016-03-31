@@ -46,6 +46,25 @@ Run::
  $ mcvine
 
 
+CentOS 7
+~~~~~~~~
+
+Install::
+
+ $ sudo yum install -y curl
+ $ curl -s https://packagecloud.io/install/repositories/danse/ins/script.rpm.sh | sudo bash
+ $ sudo yum install mcvine
+ $ sudo yum install hdf5 hdf5-devel
+ $ sudo yum install openmpi openmpi-devel
+ $ module load openmpi-$(uname -i) # activate openmpi
+ $ sudo easy_install h5py psutil mpi4py
+
+Run::
+
+ $ . /opt/danse/bin/setup-mcvine.sh
+ $ mcvine
+
+
 Build mcvine from source
 ------------------------
 
