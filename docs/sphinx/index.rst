@@ -74,6 +74,7 @@ Getting Started
 More infomation
 ---------------
 
+* :ref:`Version 1.0.1 Release Notes <relnotes>`
 * :ref:`News <news>`
 * :ref:`Publications <publications>`
 * `Milestones <https://github.com/mcvine/mcvine/milestones>`_
