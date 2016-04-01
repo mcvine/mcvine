@@ -28,8 +28,8 @@ Run::
  $ mcvine
 
 
-Fedora 21
-~~~~~~~~~
+Fedora 21 or CentOS 7
+~~~~~~~~~~~~~~~~~~~~~
 
 Install::
 
@@ -40,28 +40,9 @@ Install::
 Run::
 
  $ . /opt/danse/bin/setup-mcvine.sh
- $ PATH=/usr/lib64/mpich/bin:$PATH
- $ LD_LIBRARY_PATH=/usr/lib64/mpich/lib:$LD_LIBRARY_PATH
- $ PYTHONPATH=/usr/lib64/python2.7/site-packages/mpich:$PYTHONPATH
- $ mcvine
-
-
-CentOS 7
-~~~~~~~~
-
-Install::
-
- $ sudo yum install -y curl
- $ curl -s https://packagecloud.io/install/repositories/danse/ins/script.rpm.sh | sudo bash
- $ sudo yum install mcvine
- $ sudo yum install hdf5 hdf5-devel
- $ sudo yum install openmpi openmpi-devel
- $ module load openmpi-$(uname -i) # activate openmpi
- $ sudo easy_install h5py psutil mpi4py
-
-Run::
-
- $ . /opt/danse/bin/setup-mcvine.sh
+ $ export PATH=/usr/lib64/mpich/bin:$PATH
+ $ export LD_LIBRARY_PATH=/usr/lib64/mpich/lib:$LD_LIBRARY_PATH
+ $ export PYTHONPATH=/usr/lib64/python2.7/site-packages/mpich:$PYTHONPATH
  $ mcvine
 
 
