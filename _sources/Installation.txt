@@ -28,8 +28,8 @@ Run::
  $ mcvine
 
 
-Fedora 21
-~~~~~~~~~
+Fedora 21 or CentOS 7
+~~~~~~~~~~~~~~~~~~~~~
 
 Install::
 
@@ -40,9 +40,9 @@ Install::
 Run::
 
  $ . /opt/danse/bin/setup-mcvine.sh
- $ PATH=/usr/lib64/mpich/bin:$PATH
- $ LD_LIBRARY_PATH=/usr/lib64/mpich/lib:$LD_LIBRARY_PATH
- $ PYTHONPATH=/usr/lib64/python2.7/site-packages/mpich:$PYTHONPATH
+ $ export PATH=/usr/lib64/mpich/bin:$PATH
+ $ export LD_LIBRARY_PATH=/usr/lib64/mpich/lib:$LD_LIBRARY_PATH
+ $ export PYTHONPATH=/usr/lib64/python2.7/site-packages/mpich:$PYTHONPATH
  $ mcvine
 
 

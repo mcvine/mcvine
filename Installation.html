@@ -64,7 +64,7 @@
 <li><a class="reference internal" href="#">Installation</a><ul>
 <li><a class="reference internal" href="#install-using-package-managers">Install using package managers</a><ul>
 <li><a class="reference internal" href="#ubuntu-14-04">Ubuntu 14.04</a></li>
-<li><a class="reference internal" href="#fedora-21">Fedora 21</a></li>
+<li><a class="reference internal" href="#fedora-21-or-centos-7">Fedora 21 or CentOS 7</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#build-mcvine-from-source">Build mcvine from source</a></li>
@@ -117,8 +117,8 @@ $ mcvine
 </pre></div>
 </div>
 </div>
-<div class="section" id="fedora-21">
-<h3>Fedora 21<a class="headerlink" href="#fedora-21" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="fedora-21-or-centos-7">
+<h3>Fedora 21 or CentOS 7<a class="headerlink" href="#fedora-21-or-centos-7" title="Permalink to this headline">¶</a></h3>
 <p>Install:</p>
 <div class="highlight-python"><div class="highlight"><pre>$ sudo yum install -y curl
 $ curl -s https://packagecloud.io/install/repositories/danse/ins/script.rpm.sh | sudo bash
@@ -127,9 +127,9 @@ $ sudo yum install mcvine
 </div>
 <p>Run:</p>
 <div class="highlight-python"><div class="highlight"><pre>$ . /opt/danse/bin/setup-mcvine.sh
-$ PATH=/usr/lib64/mpich/bin:$PATH
-$ LD_LIBRARY_PATH=/usr/lib64/mpich/lib:$LD_LIBRARY_PATH
-$ PYTHONPATH=/usr/lib64/python2.7/site-packages/mpich:$PYTHONPATH
+$ export PATH=/usr/lib64/mpich/bin:$PATH
+$ export LD_LIBRARY_PATH=/usr/lib64/mpich/lib:$LD_LIBRARY_PATH
+$ export PYTHONPATH=/usr/lib64/python2.7/site-packages/mpich:$PYTHONPATH
 $ mcvine
 </pre></div>
 </div>

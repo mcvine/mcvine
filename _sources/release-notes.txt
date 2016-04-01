@@ -1,9 +1,23 @@
-.. _relnotes1.0:
+.. _relnotes1.0.1:
 
-Release Notes 1.0 - Feb 2016
-============================
+Release Notes 1.0.1 - March 2016
+================================
 
-This is the first production release of MCViNE.
+This is a minor update of release 1.0.
+Compare to 1.0, the main added functionality in 1.0.1
+is the ARCS powder simulation workflow tool::
+
+ $ mcvine workflow powder
+
+See :ref:`ARCS tutorials <tutorials-arcs>` for more details.
+
+Source code
+-----------
+can be found at https://github.com/mcvine/mcvine/releases/tag/1.0.1
+
+
+.. note::
+   The following are copied from the release notes of version 1.0.
 
 Installation
 ------------
@@ -25,9 +39,4 @@ The main command line interface (CLI) was established in
 :ref:`the mcvine CLI <cli>`,
 in which
 :ref:`a series of simulation applications for the ARCS spectrometer <arcs>` are included.
-
-Source code
------------
-can be found at https://github.com/mcvine/mcvine/releases/tag/1.0.
-
 
