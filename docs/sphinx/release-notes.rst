@@ -1,4 +1,4 @@
-.. _relnotes1.0.1:
+.. _relnotes:
 
 Release Notes 1.0.1 - March 2016
 ================================
