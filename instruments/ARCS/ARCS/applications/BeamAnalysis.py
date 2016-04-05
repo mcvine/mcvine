@@ -9,4 +9,6 @@ warnings.simplefilter('default')
 from mcvine.applications.InstrumentBuilder import build
 components = ['source', 'monitor']
 App = build(components)
+name = "arcs_analyze_beam"
 
+if __name__ == '__main__': App(name).run()
