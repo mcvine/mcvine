@@ -40,13 +40,13 @@ def pyre_app(parent, appname, cmd_prefix):
         d2 = click.pass_context
         def _f(ctx):
             # build the sys argv list for pyre app
-            app, path = f(ctx)
-            assert app.name == appname, "app name mismatch: %s vs %s!" % (app.name, appname)
+            App, path = f(ctx)
             import sys
             # path of app need to be sys.argv so that pyre mpi app mechanism
             # can pick this up and run it using mpirun
             sys.argv = [path] + ctx.args
             # create app instance
+            app = App(appname)
             # and run
             app.run()
             return

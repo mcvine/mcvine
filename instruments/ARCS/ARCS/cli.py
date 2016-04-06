@@ -20,25 +20,25 @@ arcs_app = lambda name: pyre_app(parent=arcs, appname = name, cmd_prefix=cmd_pre
 @arcs_app("arcs_analyze_beam")
 def analyze_beam(ctx):
     from .applications import BeamAnalysis as mod
-    return mod.App(mod.name), mod.__file__
+    return mod.App, mod.__file__
 
 @arcs_app('arcs_moderator2sample')
 def mod2sample(ctx):
     "moderator to sample simulation"
     from .applications import Moderator2Sample as mod
-    return mod.App(mod.name), mod.__file__
+    return mod.App, mod.__file__
 
 @arcs_app('arcs_m2s')
-def m2s(ctx, appname):
+def m2s(ctx):
     "simplified moderator to sample simulation app"
     from .applications import M2S as mod
-    return mod.App(mod.name), mod.__file__
+    return mod.App, mod.__file__
 
 @arcs_app('arcs_beam')
-def beam(ctx, appname):
+def beam(ctx):
     "beam simulation. include mod2sample sim and post-processing"
     from .applications import Beam as mod
-    return mod.App(mod.name), mod.__file__
+    return mod.App, mod.__file__
 
 
 # detsys sim
