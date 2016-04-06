@@ -138,3 +138,5 @@ def hasOpt(key, argv):
     return False
 
 
+name = 'arcs_m2s'
+if __name__ == '__main__': App(name).run()

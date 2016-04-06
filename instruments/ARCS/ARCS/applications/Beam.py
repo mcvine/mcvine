@@ -139,3 +139,7 @@ Dirs and files:
 * run-m2s.sh: script that runs the moderator2sample sim
 * _m2sout: "raw" output from the moderator2sample sim
 """
+
+
+name = 'arcs_beam'
+if __name__ == '__main__': App(name).run()
