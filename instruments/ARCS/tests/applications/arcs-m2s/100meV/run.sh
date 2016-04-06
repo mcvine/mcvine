@@ -5,4 +5,4 @@
 # for arcs_moderator2sample.
 
 rm -rf out
-mcvine instruments arcs m2s -E=100 --- --moderator.S_filename=$MCVINE_RESOURCES/instruments/ARCS/moderator/source_sct521_bu_17_1.dat --ncount=1e6 --buffer_size=100000 --overwrite-datafiles  2> err
+mcvine instruments arcs m2s -E=100 --- --moderator.S_filename=$MCVINE_RESOURCES/instruments/ARCS/moderator/source_sct521_bu_17_1.dat --ncount=1e5 --buffer_size=10000 --overwrite-datafiles  2> err
