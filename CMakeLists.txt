@@ -58,6 +58,8 @@ set(CMAKE_MODULE_PATH ${PROJECT_BINARY_DIR}/cmake_utils)
 # use utils
 include(System) # system info
 include(Dirs)   # directory structure
+# customize the env vars for the testing environment
+set(EXPORT_ENVVARS "PYTHONPATH=${EXPORT_PYTHON}:$ENV{PYTHONPATH};LD_LIBRARY_PATH=${EXPORT_LIB}:$ENV{LD_LIBRARY_PATH};MCVINE_DIR=${EXPORT_ROOT};PATH=${EXPORT_BIN}:$ENV{PATH};EXPORT_ROOT=${EXPORT_ROOT}")
 include(TestUtils)
 # message("lib: $ENV{LD_LIBRARY_PATH}; python: $ENV{PYTHONPATH}")
 
