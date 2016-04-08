@@ -44,6 +44,48 @@ class TestCase(unittest.TestCase):
         print neutrons
         return
 
+    def test2(self):
+        "SNS_source_r1: angling"
+        from mcstas2 import componentfactory
+        factory = componentfactory( category, componentname )
+        Emin=59.99; Emax=60.01
+        component = factory(
+            'component',
+            S_filename="source_sct521_bu_17_1.dat",
+            width=0.001, height=0.001,
+            dist=2.5,
+            xw=0.001, yh=0.001,
+            Emin=Emin, Emax=Emax,
+            angling = 30,
+            )
+
+        import mcni
+        N = 100
+        neutrons = mcni.neutron_buffer( N )
+        for i in range(N):
+            neutrons[i] = mcni.neutron(r=(0,0,-1), v=(0,0,3000), time = 0, prob = 1)
+            continue
+        component.process( neutrons )
+
+        from mcni.utils import conversion as Conv
+        expected_vlen = Conv.e2v((Emin+Emax)/2)
+        
+        import numpy as np
+        for i in range(N):
+            neutron = neutrons[i]
+            state = neutron.state
+            r = state.position
+            assert abs(r[0]) < 0.001
+            assert abs(r[1]) < 0.001
+            assert abs(r[2]) < 0.001
+            v = np.array(state.velocity)
+            vlen = np.linalg.norm(v)
+            # print v, expected_vlen, vlen
+            assert abs(vlen - expected_vlen)/expected_vlen < 0.01
+            assert abs(-v[0] - expected_vlen/2.)/expected_vlen < 0.01
+            assert abs(v[2] - expected_vlen*np.sqrt(3)/2.)/expected_vlen < 0.01
+        return
+
     pass  # end of TestCase
 
 
