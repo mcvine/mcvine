@@ -24,14 +24,15 @@ class MultiPhonon_Kernel(base):
     def __init__(
         self,
         dos=None,
-        Qmax=None,
+        Qmax=None, dQ=None, Emax=None,
         scattering_xs = None, absorption_xs = None,
         average_mass = None,
         Nmax = None,
         ):
         base.__init__(self, dispersion=None)
         self.dos = dos
-        self.Qmax = Qmax
+        self.Qmax = Qmax; self.dQ = dQ
+        self.Emax = Emax
         self.average_mass = average_mass
         self.scattering_xs = scattering_xs
         self.absorption_xs = absorption_xs
