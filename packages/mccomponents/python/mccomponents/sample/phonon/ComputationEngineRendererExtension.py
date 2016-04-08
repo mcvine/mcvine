@@ -232,12 +232,20 @@ class ComputationEngineRendererExtension:
         Qmax = kernel.Qmax
         if Qmax:
             Qmax = Qmax * units.angstrom
+        # dQ
+        dQ = kernel.dQ
+        if dQ:
+            dQ = dQ * units.angstrom
+        # Emax
+        Emax = kernel.Emax
+        if Emax:
+            Emax = Emax / units.meV
         
         # sqe
         from .multiphonon import sqe
         q,e,s = sqe(
             dos.energy, dos.I, 
-            Qmax=Qmax,
+            Qmax=Qmax, dQ=dQ,
             T = temperature,
             M = average_mass, N = kernel.Nmax,
             )
@@ -247,6 +255,9 @@ class ComputationEngineRendererExtension:
             [('Q', q, 'angstrom**-1'),
              ('energy', e, 'meV')],
             s)
+        # usually only a subset of sqe is necessary 
+        if Emax:
+            sqehist = sqehist[(), (None, Emax)].copy()
         journal.debug("phonon").log("computed multiphonon sqe")
         
         from mccomponents import sample
@@ -254,7 +265,7 @@ class ComputationEngineRendererExtension:
         gsqe = sample.gridsqe(sqehist)
         # q and e range
         qrange = q[0]/units.angstrom, q[-1]/units.angstrom
-        erange = e[0]*units.meV, e[-1]*units.meV
+        erange = e[0]*units.meV, sqehist.energy[-1]*units.meV
         # kernel
         sqekernel = sample.sqekernel(
             # XXX: we may want to support more options

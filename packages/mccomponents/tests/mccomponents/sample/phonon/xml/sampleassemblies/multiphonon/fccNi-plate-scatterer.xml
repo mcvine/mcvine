@@ -5,7 +5,7 @@
 <!-- weights: absorption, scattering, transmission -->
 <homogeneous_scatterer mcweights="0, 1, 0">
   
-  <MultiPhonon_Kernel Qmax="13/angstrom" Nmax="4">
+  <MultiPhonon_Kernel Qmax="13/angstrom" Emax="100*meV" dQ="0.1/angstrom" Nmax="4">
     <LinearlyInterpolatedDOS idf-data-path="dos.idf"/>
   </MultiPhonon_Kernel>
   
