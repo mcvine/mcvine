@@ -673,8 +673,8 @@ TRACE
   */
   double angling_in_radian = angling * PI / 180.;
   {
-    double vx1 = vx * cos(angling) - vz * sin(angling);
-    double vz1 = vx * sin(angling) + vz * cos(angling);
+    double vx1 = vx * cos(angling_in_radian) - vz * sin(angling_in_radian);
+    double vz1 = vx * sin(angling_in_radian) + vz * cos(angling_in_radian);
     vz = vz1; vx = vx1;
   }
   p*=INorm2/mcget_ncount();
