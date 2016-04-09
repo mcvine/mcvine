@@ -54,6 +54,10 @@ class App(base):
         emission_time.meta['tip'] = 'emission time for moderator unit (microsecond)'
         emission_time.meta[base.inventory_item_signature] = True
 
+        with_moderator_angling = pyre.inventory.bool("with_moderator_angling", default=True)
+        with_moderator_angling.meta['tip'] = "turn on/of moderator angling"
+        with_moderator_angling.meta[base.inventory_item_signature] = True
+
         dry_run = pyre.inventory.bool('dry_run', default=False)
         dry_run.meta[base.inventory_item_signature] = True
 
@@ -69,6 +73,7 @@ class App(base):
         fermi_chopper = None,
         fermi_nu=None, fermi_bladeradius=None, 
         T0_nu=None, E=None, emission_time=None,
+        with_moderator_angling = None,
         dry_run = False,
         ):
         
@@ -105,6 +110,22 @@ class App(base):
         # this is only for advanced users: fermi chopper blade radius
         if fermi_bladeradius>0:
             opts['fermichopper.blader'] = fermi_bladeradius
+        
+        # fermi chopper rotation in ARCS is couter-clock-wise (CCW)
+        # looking from above.
+        # but the fermi chopper component Fermi_chop2 is rotating CW
+        # (because the implementation does it in the frame of the fermi
+        # chopper, and rotate neutron trace CCW)
+        # therefore, we need to rotate the Fermi chopper 180 degrees
+        # about z axis
+        opts['geometer.fermichopper'] = "((0, 0, 11.61), (0, 0, 180))"
+        
+        if with_moderator_angling:
+            # moderator angling is 13.75 degree CW
+            # change moderator orientation wrt instrument
+            opts['geometer.moderator'] = "((0, 0, 0), (0, -13.75, 0))"
+            # change angling parameter of moderator
+            opts['moderator.angling'] = -13.75
             
         import sys
         addOptions(opts, sys.argv)
