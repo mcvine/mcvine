@@ -1,18 +1,27 @@
 #!/usr/bin/env python
+#
 
 import subprocess as sp, os, shlex
+
 
 import unittest
 class TestCase(unittest.TestCase):
 
-    def test(self):
+    def test1(self):
+        cmd = 'mcvine instruments arcs m2s --E=100 --with_moderator_angling=no --- --dump-pml=yes -h'
         workdir = os.path.abspath(os.path.dirname(__file__))
         sp.check_call(
-            shlex.split("mcvine instruments arcs beam --E=100 --ncount=1e5"), 
+            shlex.split(cmd),
             shell=False, cwd=workdir)
         return
 
 
-if __name__ == '__main__': unittest.main()
+    pass  # end of TestCase
 
+
+
+def main(): unittest.main()
+if __name__ == "__main__":
+    main()
+    
 # End of file 

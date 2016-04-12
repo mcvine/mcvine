@@ -48,6 +48,9 @@ class App(base):
         emission_time = pyre.inventory.float('emission_time', default=-1)
         emission_time.meta['tip'] = 'emission time for moderator unit (microsecond)'
 
+        with_moderator_angling = pyre.inventory.bool('with_moderator_angling', default=True)
+        with_moderator_angling.meta['tip'] = "turn on/of moderator angling"
+
         ncount = pyre.inventory.float('ncount', default=1000000)
 
 
@@ -87,6 +90,7 @@ class App(base):
             'T0_nu',
             'E',
             'emission_time',
+            'with_moderator_angling',
             ]
         cmd += self._buildCmdFromInventory(keys)
         cmd += ['--- -dump-pml=yes', '-h'] # , '>arcs-m2s.log']
