@@ -4,10 +4,16 @@ Simulation of ARCS experiments
 ==============================
 
 .. note::
-   :ref:`Tricks for $ mcvine command line bash interface" <cli/bash>` may be useful
+   :ref:`Tricks for $ mcvine command line bash interface" <cli/bash>` 
+   and :ref:`CLI for ARCS <arcscmds>`
+   may be useful
    if you need to customize the simulations in the following tutorials.
 
+.. note::
+   Some more examples of ARCS simulations are available at
+   `mcvine resources/ARCS simulations <https://github.com/mcvine/resources/tree/master/instruments/ARCS/simulations>`_.
 
+..  `mcvine/resources <https://github.com/mcvine/resources>`_:
 
 Tutorial: full simulation of an experiment of a polycrystalline Vanadium sample
 -------------------------------------------------------------------------------
@@ -415,6 +421,16 @@ Output: out/mon2-itof-focused.h5
 
 .. Plot::
    $ plothist out/mon2-tof.h5
+
+
+
+Advanced topic - customize ARCS simulation
+""""""""""""""""""""""""""""""""""""""""""
+
+You may need to choose different simulation components
+to achieve a better match with the experimental data.
+
+* `Super-fine Fermi chopper example <https://github.com/mcvine/resources/tree/master/instruments/ARCS/simulations/beam/686.62meV-FC_700-0.5-ASTAnalyticSNSMod-McStasFermiChopper>`_
 
 
 .. _arcscmds:
