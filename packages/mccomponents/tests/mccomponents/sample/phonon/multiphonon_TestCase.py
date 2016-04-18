@@ -38,12 +38,14 @@ class TestCase(unittest.TestCase):
         # expand E a bit
         E = numpy.arange(E[0], 70, dE)
         g = numpy.concatenate((g, numpy.zeros(len(E)-len(g))))
-
         g/=g.sum()*dE
         from mccomponents.sample.phonon.multiphonon import computeAnESet
         kelvin2mev = 0.0862
         beta = 1./(300*kelvin2mev)
         E, An_set = computeAnESet(N=5, E=E, g=g, beta=beta, dE=dE)
+        # check sum rule
+        for An in An_set:
+            self.assertAlmostEqual(An.sum() * dE, 1.)
         if interactive:
             import pylab
             for An in An_set:
