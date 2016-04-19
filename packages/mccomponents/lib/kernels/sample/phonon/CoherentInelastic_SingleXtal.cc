@@ -48,6 +48,58 @@ namespace{
   const char * phonon_cohinel_sc_journal_channel = "CoherentInelastic_SingleXtal";
 }
 
+/*
+  Notes about probability factors in pick_a_final_state and pick_v_f.
+  
+  The probability of the neutron is adjusted in a series of 
+  steps, and it can be confusing.
+
+  In pick_v_f:
+    prob_factors.push_back(nf); // easy
+    float_t Jacobi = std::abs(f2-f1)/(2*delta_v);
+    prob_factors.push_back(2*vsq2e*v_f_l/Jacobi);
+
+   Since f2,f1 are in meV, 2*vsq2e*v_f_l/Jacobi) has dimension 1:
+    f1, f2: energy in mev
+    delta_v: velocity in m/s
+    v_f_l/Jacobi: v/(E/v) = v^2/E
+    2*vsq2e*v_f_l/Jacobi: 1.
+
+  In pick_a_final_state, there are some simple ones:
+
+    prob_factors.push_back(solid_angle): 1
+    prob_factors.push_back( m_disp.nBranches() ): 1
+    prob_factors.push_back( k_f_l/k_i_l ): 1.
+    prob_factors.push_back( DW ):  1.
+    prob_factors.push_back( therm_factor ): 1.
+
+   all of them have dimension 1.
+
+  The difficult one is here:
+    prob_factors.push_back(neutron_units_conversion::ksquare2E( norm_of_slsum )/std::abs(omega));
+
+    and norm_of_slsum is
+      float_t norm_of_slsum = std::norm(sclen);
+      norm_of_slsum /= 1e30;
+      // divide this quautity by \sigma_coh because we want a normalized
+      // value
+      norm_of_slsum /= (m_tot_scattering_xs*1e-28);
+
+    and sclen is
+
+      complex_t sclen = sum_of_scattering_length
+        <complex_t, K_t, epsilon_t, atom_t, atoms_t, dispersion_t>
+	(Q, branch, m_atoms, m_disp );
+
+    and sum_of_scattering_length is a result of sum of terms like this
+
+      complex_t c1 = atom.coherent_scattering_length/std::sqrt(atom.mass) \
+        * std::exp( cI * qdotd ) * qdote;
+
+   So the dimension is (L*Q)**2/m / L**2 / E * Qsq2E = 1 if m is in unit of atomic mass
+
+ */
+
 mccomponents::kernels::phonon::CoherentInelastic_SingleXtal::CoherentInelastic_SingleXtal
 ( const dispersion_t &disp,
   const atoms_t &atoms,
@@ -301,7 +353,6 @@ mccomponents::kernels::phonon::CoherentInelastic_SingleXtal::pick_a_final_state
   // debye waller factor	  
   float_t DW = exp( -m_DW_calc->DW( Q_l ) );
 
-  prob_factors.push_back( 1.0/m_uc_vol );
   prob_factors.push_back( k_f_l/k_i_l );
   prob_factors.push_back( DW );
   prob_factors.push_back( therm_factor );
