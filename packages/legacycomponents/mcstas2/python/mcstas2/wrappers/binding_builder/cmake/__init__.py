@@ -52,7 +52,11 @@ endforeach()
 # -I  -L  -D
 include_directories(${INCLUDE_DIRS})
 include_directories(${PYTHON_INCLUDE_DIRS})
+include_directories(${Boost_INCLUDE_DIRS})
+include_directories(${DEPLOYMENT_PREFIX}/include)
 link_directories(${LIBDIRS})
+link_directories(${Boost_LIBRARY_DIRS})
+link_directories(${DEPLOYMENT_PREFIX}/${INSTALL_LIB_DIR})
 add_definitions(${DEFINES})
 
 # compile shared library
