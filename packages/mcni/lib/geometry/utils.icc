@@ -43,7 +43,7 @@ namespace mcni {
   }
 
   template <typename Number>
-  Vector3<Number> rotated(const Vector3<Number> &v, const Vector3<Number> &by, const Number &angle, Number epsilon=1e-7)
+  Vector3<Number> rotated(const Vector3<Number> &v, const Vector3<Number> &by, const Number &angle, Number epsilon)
   {
     Vector3<Number> v1(v);
     
