@@ -43,8 +43,8 @@ class Application(base):
     if usempi:
         def _defaults(self):
             base._defaults(self)
-            from .LauncherMPICH2 import LauncherMPICH2
-            self.inventory.launcher = LauncherMPICH2()
+            factory = getattr(launchers, mpi.mpi_launcher_choice)
+            self.inventory.launcher = factory()
             return
 
 
@@ -80,8 +80,8 @@ class Application(base):
     pass # end of Application
 
 
-
-# version
-__id__ = "$Id$"
+class launchers:
+    from .LauncherMPICH2 import LauncherMPICH2 as mpich2
+    from .LauncherSlurm import LauncherSlurm as slurm
 
 # End of file 

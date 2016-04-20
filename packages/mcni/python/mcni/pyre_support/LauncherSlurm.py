@@ -7,11 +7,11 @@
 from .MPILauncherBase import MPILauncherBase as Launcher
 
 
-class LauncherMPICH2(Launcher):
+class LauncherSlurm(Launcher):
 
 
     def __init__(self):
-        super(LauncherMPICH2, self).__init__("mpirun")
+        super(LauncherSlurm, self).__init__("slurm")
         return
 
     
