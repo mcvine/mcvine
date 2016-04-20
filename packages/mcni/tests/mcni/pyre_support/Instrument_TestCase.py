@@ -88,7 +88,8 @@ class TestCase(unittest.TestCase):
         
         # for higher values, buffer_size is set by memory limit
         import psutil
-        temp = min(psutil.TOTAL_PHYMEM/2, (psutil.avail_phymem() + psutil.avail_virtmem())*0.7)
+        vm = psutil.virtual_memory()
+        temp = min(vm.total/2, vm.available*0.85)
         temp = int(temp)
         from mcni.neutron_storage.idfneutron import ndblsperneutron
         max = int(temp/ndblsperneutron/8/100/mpiSize) * 100
