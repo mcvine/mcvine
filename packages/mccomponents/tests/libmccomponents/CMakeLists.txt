@@ -47,7 +47,7 @@ set ( SRC_FILES
 include_directories(${EXPORT_HEADERS})
 include_directories(${DEPLOYMENT_PREFIX}/include)
 include_directories(${PYTHON_INCLUDE_DIRS})
-include_directories(${GLS_INCLUDE_DIR})
+include_directories( ${GSL_INCLUDE_DIR} )
 link_directories(${EXPORT_LIB})
 link_directories(${DEPLOYMENT_PREFIX}/${INSTALL_LIB_DIR})
 add_definitions(-DUSE_DANSE_NAMESPACE)
