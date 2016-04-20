@@ -481,7 +481,8 @@ def _computeMaximumBufferSize(nodes):
     we should not need to divide the maximum buffer size by nodes.
     """
     import psutil
-    memsize = min(psutil.TOTAL_PHYMEM/2, (psutil.avail_phymem() + psutil.avail_virtmem())*0.7)
+    vm = psutil.virtual_memory()
+    memsize = min(vm.total/2, vm.available*0.85)
     memsize = int(memsize)
     from mcni.neutron_storage.idfneutron import ndblsperneutron
 
