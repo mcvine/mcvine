@@ -36,7 +36,9 @@ def use_mpi_binding(name):
 
 
 # import binding module
-if mpi_binding_choice:
+if mpi_binding_choice == 'NONE':
+    b = None
+elif mpi_binding_choice:
     b = use_mpi_binding(mpi_binding_choice)
 else:
     b = _find_mpi_binding()
