@@ -33,7 +33,15 @@ class Application(SuperAppBase):
             print "** Error: component list is empty"
             print
             return
-        Instrument = build(components)
+        base = build(components)
+        class Instrument(base):
+            def _defaults(self):
+                super(Instrument, self)._defaults()
+                # can only run serially
+                self.inventory.mode = 'worker'
+                from mcni.pyre_support.LauncherSerial import LauncherSerial
+                self.inventory.launcher = LauncherSerial()
+                return
         instrument = Instrument('mcvine-instrument')
         return instrument.run()
 
