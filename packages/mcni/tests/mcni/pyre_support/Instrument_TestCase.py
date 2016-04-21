@@ -83,7 +83,7 @@ class TestCase(unittest.TestCase):
         instrument.inventory.ncount = ncount = 2e3
         self.assertEqual(instrument._getBufferSize(), ncount/DEFAULT_NUMBER_SIM_LOOPS)
 
-        instrument.mpiSize = mpiSize = 10
+        instrument.mpi.size = mpiSize = 10
         self.assertEqual(instrument._getBufferSize(), int(ncount/mpiSize/DEFAULT_NUMBER_SIM_LOOPS))
         
         # for higher values, buffer_size is set by memory limit
