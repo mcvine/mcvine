@@ -240,12 +240,13 @@ class Instrument( AppInitMixin, CompositeNeutronComponentMixin, base, ParallelCo
         self.overwrite_datafiles = self.inventory.overwrite_datafiles
         
         self.sequence = self.inventory.sequence
-        self.buffer_size = self._getBufferSize()
-        self.ncount = self.inventory.ncount
-        if self.parallel:
-            # every node only need to run a portion of the total counts
-            partitions = getPartitions(self.ncount, self.mpi.size)
-            self.ncount = partitions[self.mpi.rank]
+        if self.inventory.mode == 'worker':
+            self.buffer_size = self._getBufferSize()
+            self.ncount = self.inventory.ncount
+            if self.parallel:
+                # every node only need to run a portion of the total counts
+                partitions = getPartitions(self.ncount, self.mpi.size)
+                self.ncount = partitions[self.mpi.rank]
 
         # tracer
         tracer = self.inventory.tracer
@@ -261,7 +262,7 @@ class Instrument( AppInitMixin, CompositeNeutronComponentMixin, base, ParallelCo
         super(Instrument, self)._init_before_my_inventory()
 
         # output directory
-        if not self._showHelpOnly: 
+        if not self._showHelpOnly and self.inventory.mode == 'worker': 
             self._setup_outputdir()
 
         #
@@ -275,10 +276,7 @@ class Instrument( AppInitMixin, CompositeNeutronComponentMixin, base, ParallelCo
         # this logic probably should go into class MpiApplication.
         # Please read MpiApplication._init as well!
         # 
-        from .MpiApplication import usempi
-        self.mpi_server_mode = usempi() \
-            and (self.inventory.launcher.nodes > 1) \
-            and self.inventory.mode == 'server'
+        self.mpi_server_mode = self.inventory.mode == 'server'
         # mpi_server_mode is true means that it is not a worker,
         # and no initialization is necessary for all neutron sub-components
         # we can just set _showHelpOnly for them.

@@ -65,6 +65,7 @@ class MPI(object):
             else:
                 parallel = True
         except:
+            mpi = None
             rank = 0
             size = 1
             parallel = False

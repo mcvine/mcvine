@@ -60,8 +60,7 @@ class MPILauncherBase(Launcher):
             python_mpi = self._get_python_mpi()
 
         if nodes < 2:
-            self.inventory.nodes = 1
-            return []
+            self.inventory.nodes = nodes = 1
         
         # build the command
         args = []
@@ -76,7 +75,6 @@ class MPILauncherBase(Launcher):
         sysargs = sys.argv
         args.append( sysargs[0] )
         args.append("--mode=worker")
-        
         for arg in sysargs[1:]:
             index = arg.find('=')
             if index == -1:
