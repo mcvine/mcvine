@@ -275,8 +275,8 @@ class Instrument( AppInitMixin, CompositeNeutronComponentMixin, base, ParallelCo
         # this logic probably should go into class MpiApplication.
         # Please read MpiApplication._init as well!
         # 
-        from MpiApplication import usempi
-        self.mpi_server_mode = usempi \
+        from .MpiApplication import usempi
+        self.mpi_server_mode = usempi() \
             and (self.inventory.launcher.nodes > 1) \
             and self.inventory.mode == 'server'
         # mpi_server_mode is true means that it is not a worker,
