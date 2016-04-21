@@ -41,9 +41,9 @@ class TestCase(unittest.TestCase):
         from mcni.components.NeutronFromStorage import NeutronFromStorage
         comp = NeutronFromStorage('storage', 'neutron-storage-for-NeutronFromStorage_TestCase')
 
-        from mcni.utils import mpiutil
-        mpisize = mpiutil.world.size
-        mpirank = mpiutil.rank
+        from mcni.utils import mpi
+        mpisize = mpi.world.size
+        mpirank = mpi.rank
         
         from mcni import neutron_buffer
         neutrons = neutron_buffer(1)

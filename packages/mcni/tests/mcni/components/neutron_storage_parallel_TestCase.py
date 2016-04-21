@@ -91,7 +91,7 @@ class TestCase(unittest.TestCase):
         if self.nompi: return
 
         import os, shutil
-        from mcni.utils.mpiutil import rank 
+        from mcni.utils.mpi import rank 
         path = neutron_storage_path
         if os.path.exists( path ): shutil.rmtree( path )
         return

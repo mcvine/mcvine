@@ -38,7 +38,6 @@ EXPORT_PYTHON_MODULES = \
 	__init__.py \
 	constants.py \
 	conversion.py \
-	mpiutil.py \
 
 
 export:: export-package-python-modules

@@ -24,6 +24,7 @@ nbits_seedt = 16
 
 
 def usetimer_p():
+    from utils.mpi import rank as mpirank
     return usetimer() + mpirank
 
 
@@ -47,10 +48,6 @@ _methods = {
 
 use('default')
 
-
-
-#mpi
-from utils.mpiutil import rank as mpirank
 
 
 # version

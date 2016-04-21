@@ -86,7 +86,7 @@ class Instrument(base):
         
         #get neutrons from other nodes
         from mcni.neutron_storage import neutrons_from_npyarr as a2n, neutrons_as_npyarr as n2a, ndblsperneutron
-        from mcni.utils.mpiutil import rank as mpirank, send, receive, world
+        from mcni.utils.mpi import rank as mpirank, send, receive, world
         
         tag = 999
         if mpirank != 0:

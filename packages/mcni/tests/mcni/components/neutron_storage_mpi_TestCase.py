@@ -43,10 +43,10 @@ def _init():
             )
         continue
 
-    from mcni.utils import mpiutil
+    from mcni.utils import mpi
     global mpirank
-    mpirank = mpiutil.rank
-    mpisize = mpiutil.world.size
+    mpirank = mpi.rank
+    mpisize = mpi.world.size
     if mpisize != 3:
         raise RuntimeError, __doc__
 
@@ -60,10 +60,10 @@ def _init():
         storage.write(neutrons)
         del storage
         for i in range(1, mpisize):
-            mpiutil.send(0, i, channel)
+            mpi.send(0, i, channel)
             continue
     else:
-        mpiutil.receive(0, channel)
+        mpi.receive(0, channel)
 
 
 from mcni.AbstractComponent import AbstractComponent
