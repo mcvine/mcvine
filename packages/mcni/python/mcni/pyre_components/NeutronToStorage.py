@@ -64,12 +64,12 @@ class NeutronToStorage(ParallelComponent, AbstractComponent):
         context = self.simulation_context
         # make sure every node reaches here
         if context.mpiSize:
-            channel = self.getUniqueChannel()
+            channel = self.mpi.getUniqueChannel()
             if context.mpiRank:
-                self.mpiSend(context.mpiRank, 0, channel)
+                self.mpi.send(context.mpiRank, 0, channel)
             else:
-                for i in range(1, self.mpiSize):
-                    self.mpiReceive(i, channel)
+                for i in range(1, self.mpi.size):
+                    self.mpi.receive(i, channel)
         # merge and normalize neutron files
         if context.mpiRank == 0:
             import time; time.sleep(60)

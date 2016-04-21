@@ -40,7 +40,7 @@ class NeutronFromStorage( ParallelComponent, AbstractComponent ):
         
         # mpi
         if self.parallel:
-            self._setCursor(self.mpiSize, n)
+            self._setCursor(self.mpi.size, n)
 
         # read as numpy array
         npyarr = self._storage.read(n, asnpyarr=True)
@@ -63,21 +63,21 @@ class NeutronFromStorage( ParallelComponent, AbstractComponent ):
         # each node reads a chunk of neutrons of size n
         # increment cursor at the master node and send
         # cursors to each node.
-        channel = self.getUniqueChannel()
-        if self.mpiRank == 0:
+        channel = self.mpi.getUniqueChannel()
+        if self.mpi.rank == 0:
             cursor = self._cursor
             for i in range(1, mpisize):
-                self.mpiSend(self._cursor+i*n, i, channel)
+                self.mpi.send(self._cursor+i*n, i, channel)
                 continue
         else:
-            cursor = self.mpiReceive(0, channel)
+            cursor = self.mpi.receive(0, channel)
 
         # at each node, seek to the position specified by cursor
         self._storage.seek(cursor, 'start')
         
         # increment my cursor to jump over all neutrons
         # read by all nodes
-        if self.mpiRank == 0:
+        if self.mpi.rank == 0:
             self._cursor += mpisize*n
             
         return
@@ -98,7 +98,7 @@ class NeutronFromStorage( ParallelComponent, AbstractComponent ):
         self._storage = storage( path, 'r' )
         if self.parallel:
             # master node keeps the cursor
-            if self.mpiRank == 0:
+            if self.mpi.rank == 0:
                 self._cursor = 0
         return
 

@@ -20,6 +20,23 @@ info = journal.info( 'mpi' )
 
 
 
+class ParallelComponent(object):
+
+    '''Base class for components that can be parallelized.
+    '''
+
+    @property
+    def mpi(self):
+        mpi = getattr(self, '_mpi', None)
+        if not mpi:
+            mpi = self._mpi = MPI()
+        return mpi
+
+    @property
+    def parallel(self):
+        return self.mpi.parallel
+
+
 class UniqueChannelGenerator(object):
 
     def __init__(self, start=10000):
@@ -33,67 +50,69 @@ class UniqueChannelGenerator(object):
         return r
     
 
+class MPI(object):
 
-class ParallelComponent(object):
+    """mpi wrapper class used by parallelcomponent"""
 
-    '''Base class for components that can be parallelized.
-    '''
 
-    try:
-        from mcni.utils import mpi
-        mpiRank = mpi.rank; mpiSize = mpi.size
-        if mpiSize <= 1:
-            mpiSize = 1
+    def __init__(self):
+        try:
+            from mcni.utils import mpi
+            rank = mpi.rank; size = mpi.size
+            if size <= 1:
+                size = 1
+                parallel = False
+            else:
+                parallel = True
+        except:
+            rank = 0
+            size = 1
             parallel = False
-        else:
-            parallel = True
-    except:
-        mpiRank = 0
-        mpiSize = 1
-        parallel = False
-        pass
+            pass
 
-    info.log( "rank %d of %d" % (mpiRank, mpiSize ) )
+        info.log( "rank %d of %d" % (rank, size) )
 
+        self.size = size
+        self.rank = rank
+        self.parallel = parallel
+        self.engine = mpi
+        return
 
     _unique_channel_generator = UniqueChannelGenerator()
     def getUniqueChannel(self):
         return self.__class__._unique_channel_generator()
     
 
-    def mpiSend( self, obj, peer, tag):
-        return self.mpi.send(obj, peer, tag)
+    def send( self, obj, peer, tag):
+        return self.engine.send(obj, peer, tag)
 
 
-    def mpiReceive(self, peer, tag):
-        return self.mpi.receive(peer, tag)
+    def receive(self, peer, tag):
+        return self.engine.receive(peer, tag)
 
 
-    def mpiSendStr( self, s, peer, tag):
-        return self.mpi.sendStr(s, peer, tag)
+    def sendStr( self, s, peer, tag):
+        return self.engine.sendStr(s, peer, tag)
     
 
-    def mpiReceiveStr(self, peer, tag):
-        return self.mpi.receiveStr(peer, tag)
+    def receiveStr(self, peer, tag):
+        return self.engine.receiveStr(peer, tag)
 
 
-    def mpiBarrier(self):
+    def barrier(self):
         "a naive implementation of barrier"
-        if self.mpiSize < 2:
+        if self.size < 2:
             return
         c = self.getUniqueChannel()
-        if self.mpiRank == 0:
-            for i in range(1, self.mpiSize):
-                self.mpiSendStr('', i, c)
+        if self.rank == 0:
+            for i in range(1, self.size):
+                self.sendStr('', i, c)
         else:
-            self.mpiReceiveStr(0, c)
+            self.receiveStr(0, c)
         return
     
 
-    pass # end of ParallelComponent
+    pass # end of MPI
 
-
-# version
-__id__ = "$Id$"
 
 # End of file 

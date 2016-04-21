@@ -125,8 +125,8 @@ class Instrument( AppInitMixin, CompositeNeutronComponentMixin, base, ParallelCo
         context = SimulationContext()
         context.multiple_scattering = self.inventory.multiple_scattering
         context.tracer = self.tracer
-        context.mpiRank = self.mpiRank
-        context.mpiSize = self.mpiSize
+        context.mpiRank = self.mpi.rank
+        context.mpiSize = self.mpi.size
         context.outputdir = self.outputdir
         context.overwrite_datafiles = self.overwrite_datafiles
         
@@ -137,7 +137,7 @@ class Instrument( AppInitMixin, CompositeNeutronComponentMixin, base, ParallelCo
         logger = journal.logger(
             'info', 'instrument', header='', footer='', format='-> %s')
         for i in range(n):
-            logger("mpi node %s at loop %s" % (self.mpiRank, i))
+            logger("mpi node %s at loop %s" % (self.mpi.rank, i))
             neutrons = mcni.neutron_buffer( self.buffer_size )
             context.iteration_no = i
             mcni.simulate( instrument, geometer, neutrons, context=context)
@@ -145,7 +145,7 @@ class Instrument( AppInitMixin, CompositeNeutronComponentMixin, base, ParallelCo
         
         remain = int(self.ncount % self.buffer_size)
         if remain:
-            logger("mpi node %s at last loop" % (self.mpiRank,))
+            logger("mpi node %s at last loop" % (self.mpi.rank,))
             neutrons = mcni.neutron_buffer(remain)
             context.iteration_no = n
             mcni.simulate( instrument, geometer, neutrons, context=context)
@@ -204,9 +204,9 @@ class Instrument( AppInitMixin, CompositeNeutronComponentMixin, base, ParallelCo
     
     
     def _setup_outputdir(self):
-        self.mpiBarrier()
+        self.mpi.barrier()
         outputdir = self.outputdir = self.inventory.outputdir
-        if self.parallel and self.mpiRank==0 and self.inventory.mode=='worker':
+        if self.parallel and self.mpi.rank==0 and self.inventory.mode=='worker':
             if not self.overwrite_datafiles and os.path.exists( outputdir ):
                 msg = "output directory %r exists. If you want to overwrite the output directory, please specify option --overwrite-datafiles." % outputdir
                 raise RuntimeError, msg
@@ -244,8 +244,8 @@ class Instrument( AppInitMixin, CompositeNeutronComponentMixin, base, ParallelCo
         self.ncount = self.inventory.ncount
         if self.parallel:
             # every node only need to run a portion of the total counts
-            partitions = getPartitions(self.ncount, self.mpiSize)
-            self.ncount = partitions[self.mpiRank]
+            partitions = getPartitions(self.ncount, self.mpi.size)
+            self.ncount = partitions[self.mpi.rank]
 
         # tracer
         tracer = self.inventory.tracer
@@ -331,12 +331,12 @@ class Instrument( AppInitMixin, CompositeNeutronComponentMixin, base, ParallelCo
 
 
     def _minimumSuggestedBufferSize(self):
-        return self.inventory.ncount / 1000 / (self.mpiSize or 1)
+        return self.inventory.ncount / 1000 / (self.mpi.size or 1)
     
     
     def _computeBufferSize(self):
         ncount = self.inventory.ncount
-        mpisize = self.mpiSize or 1
+        mpisize = self.mpi.size or 1
         nsteps = DEFAULT_NUMBER_SIM_LOOPS
         candidate = int(ncount/nsteps/mpisize)
         # rare case where ncount is way too small
@@ -350,7 +350,7 @@ class Instrument( AppInitMixin, CompositeNeutronComponentMixin, base, ParallelCo
     def _maximumBufferSize(self):
         # XXX need to tell if we are in the shared memory machine
         # XXX or not. for now, let us play safe
-        nodes = self.mpiSize or 1
+        nodes = self.mpi.size or 1
         return min(
             _computeMaximumBufferSize(nodes),
             MAXIMUM_BUFFER_SIZE,
