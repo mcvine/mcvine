@@ -33,7 +33,7 @@ class TestCase(unittest.TestCase):
         import sys
         save = sys.argv
         sys.argv = [
-            '',
+            __file__,
             '--ncount=10',
             '--buffer_size=4',
             '--output-dir=out-pyre_support_test',
@@ -58,7 +58,7 @@ class TestCase(unittest.TestCase):
         import sys
         save = sys.argv
         sys.argv = [
-            '',
+            __file__,
             '--ncount=10',
             '--buffer_size=4',
             '--output-dir=out-Instrument-dumppml',
@@ -180,6 +180,9 @@ class Instrument(base):
 
     def _defaults(self):
         base._defaults(self)
+        self.inventory.mode = 'worker'
+        from mcni.pyre_support.LauncherSerial import LauncherSerial
+        self.inventory.launcher = LauncherSerial()
         self.inventory.sequence = ['source', 'verifier']
         geometer = self.inventory.geometer
         self.inventory.geometer.inventory.verifier = (0,0,1), (0,0,90)
