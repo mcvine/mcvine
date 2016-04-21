@@ -40,13 +40,13 @@ class ComponentInterface(base):
         if not context.mpiSize:
             return norm
         # otherwise, need to send norm to all nodes
-        channel = self.getUniqueChannel()
+        channel = self.mpi.getUniqueChannel()
         if context.mpiRank == 0:
             for node in range(1, context.mpiSize):
-                self.mpiSend(norm, node, channel)
+                self.mpi.send(norm, node, channel)
                 continue
         else:
-            norm = self.mpiReceive(0, channel)
+            norm = self.mpi.receive(0, channel)
         return norm
 
 

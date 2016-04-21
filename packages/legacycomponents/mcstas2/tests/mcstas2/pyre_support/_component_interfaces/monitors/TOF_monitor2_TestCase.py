@@ -29,6 +29,9 @@ class Instrument(base):
 
     def _defaults(self):
         super(Instrument, self)._defaults()
+        from mcni.pyre_support.LauncherSerial import LauncherSerial
+        self.inventory.launcher = LauncherSerial()
+        self.inventory.mode = 'worker'
         from mcstas2.pyre_support import componentfactory
         self.inventory.monitor = componentfactory \
             ( 'monitors', 'TOF_monitor2' ) \

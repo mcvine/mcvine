@@ -11,7 +11,6 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
 
-
 import logging
 logger = logging.getLogger("mcni.utils.mpi")
 
@@ -19,9 +18,6 @@ logger = logging.getLogger("mcni.utils.mpi")
 import os
 ENVVAR_BINDING_NAME = 'MCVINE_MPI_BINDING'
 mpi_binding_choice = os.environ.get(ENVVAR_BINDING_NAME)
-
-ENVVAR_MPI_LAUNCHER = "MCVINE_MPI_LAUNCHER"
-mpi_launcher_choice = os.environ.get(ENVVAR_MPI_LAUNCHER, 'mpich2')
 
 # methods
 def _find_mpi_binding():

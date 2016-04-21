@@ -79,12 +79,12 @@ class HistogramBasedMonitorMixin(MonitorMixin):
                 self.__class__.__name__, self.name)
         # make sure every node reaches here
         if context.mpiSize > 1:
-            channel = self.getUniqueChannel()
+            channel = self.mpi.getUniqueChannel()
             if context.mpiRank:
-                self.mpiSend(context.mpiRank, 0, channel)
+                self.mpi.send(context.mpiRank, 0, channel)
             else:
-                for i in range(1, self.mpiSize):
-                    self.mpiReceive(i, channel)
+                for i in range(1, self.mpi.size):
+                    self.mpi.receive(i, channel)
         #
         if context.mpiRank == 0:
             f = self._getHistogramFilename()

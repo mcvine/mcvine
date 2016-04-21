@@ -36,7 +36,7 @@ class TestCase(unittest.TestCase):
         
         # build the command to ru
         cmd = ['python E_monitor_TestCase_app2.py']
-        if usempi:
+        if usempi():
             cmd.append('--mpirun.nodes=2')
         cmd = ' '.join(cmd)
         

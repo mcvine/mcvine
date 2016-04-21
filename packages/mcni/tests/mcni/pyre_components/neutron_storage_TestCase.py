@@ -60,6 +60,11 @@ class Instrument1(base):
 
     def _defaults(self):
         base._defaults(self)
+        # serial mode
+        self.inventory.mode = 'worker'
+        from mcni.pyre_support.LauncherSerial import LauncherSerial
+        self.inventory.launcher = LauncherSerial()
+
         self.inventory.sequence = ['source', 'storage']
         
         geometer = self.inventory.geometer
@@ -123,6 +128,11 @@ class Instrument2(base):
 
     def _defaults(self):
         base._defaults(self)
+        # serial mode
+        self.inventory.mode = 'worker'
+        from mcni.pyre_support.LauncherSerial import LauncherSerial
+        self.inventory.launcher = LauncherSerial()
+
         self.inventory.sequence = ['source', 'verifier']
         
         geometer = self.inventory.geometer

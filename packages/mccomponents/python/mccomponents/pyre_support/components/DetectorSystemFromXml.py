@@ -90,7 +90,7 @@ class DetectorSystemFromXml(ParallelComponent, AbstractComponent):
         context = self.simulation_context
         # make sure every node reaches here
         if context.mpiSize:
-            self.mpiBarrier()
+            self.mpi.barrier()
         # merge and normalize neutron files
         if context.mpiRank == 0:
             # XXX: wait for all other nodes to finish
