@@ -10,8 +10,8 @@ from .MPILauncherBase import MPILauncherBase as Launcher
 class LauncherSlurm(Launcher):
 
 
-    def __init__(self):
-        super(LauncherSlurm, self).__init__("slurm")
+    def __init__(self, name='slurm'):
+        super(LauncherSlurm, self).__init__(name)
         return
 
     def _defaults(self):

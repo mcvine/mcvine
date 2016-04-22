@@ -15,13 +15,13 @@
 # Launchers
 class launchers:
     from .LauncherMPICH2 import LauncherMPICH2 as mpich2
+    mpirun = mpich2
     from .LauncherSlurm import LauncherSlurm as slurm
     from .LauncherSerial import LauncherSerial as serial
 
 ENVVAR_MPI_LAUNCHER = "MCVINE_MPI_LAUNCHER"
 import os
-mpi_launcher_choice = os.environ.get(ENVVAR_MPI_LAUNCHER, 'mpich2')
-
+mpi_launcher_choice = os.environ.get(ENVVAR_MPI_LAUNCHER, 'mpirun')
 
 
 ## base class of mpi application. derived from pyre mpi application.

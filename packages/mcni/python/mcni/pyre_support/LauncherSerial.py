@@ -40,8 +40,8 @@ class LauncherSerial(Launcher):
         return False
 
             
-    def __init__(self):
-        Launcher.__init__(self, "mpirun")
+    def __init__(self, name='serial'):
+        Launcher.__init__(self, name=name)
         return
 
     
