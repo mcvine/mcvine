@@ -22,6 +22,9 @@ import journal
 
 from mcni.pyre_support.MpiApplication import usempi
 
+# parallel launcher
+from mcni.pyre_support.MpiApplication import mpi_launcher_choice as launcher
+
 # from E_monitor_TestCase.pml
 outputdir = 'out-E_monitor_TestCase2'
 ncount = 100 
@@ -37,7 +40,7 @@ class TestCase(unittest.TestCase):
         # build the command to ru
         cmd = ['python E_monitor_TestCase_app2.py']
         if usempi():
-            cmd.append('--mpirun.nodes=2')
+            cmd.append('--%s.nodes=2' % launcher)
         cmd = ' '.join(cmd)
         
         # run command

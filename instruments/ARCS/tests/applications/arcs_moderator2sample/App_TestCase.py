@@ -11,7 +11,9 @@ class TestCase(unittest.TestCase):
 
     def test1(self):
         source_file = os.path.join(instrument('ARCS'), "moderator/source_sct521_bu_17_1.dat")
-        cmd = "mcvine instruments arcs mod2sample --moderator.S_filename=%s --ncount=1e5 --buffer_size=10000 --mpirun.nodes=2" % source_file
+        from mcni.pyre_support.MpiApplication \
+            import mpi_launcher_choice as launcher
+        cmd = "mcvine instruments arcs mod2sample --moderator.S_filename=%s --ncount=1e5 --buffer_size=10000 --%s.nodes=2" % (source_file, launcher)
         sp.check_call(shlex.split(cmd), shell=False, cwd=cwd)
         return
 

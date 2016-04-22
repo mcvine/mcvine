@@ -91,10 +91,12 @@ class App(base):
             'mcstas', 'SNS_TD_30o70p_fit_fit.dat',
             )
         cmd = ['hyspec_moderator2sample']
+        from mcni.pyre_support.MpiApplication \
+            import mpi_launcher_choice as launcher
         data = {
             "ncount": self.inventory.ncount,
             "buffer_size": int(self.inventory.ncount/5/self.inventory.nodes),
-            "mpirun.nodes": self.inventory.nodes,
+            ("%s.nodes" % launcher): self.inventory.nodes,
             "output-dir": self.m2sout,
             'moderator.S_filename': moddat,
             }

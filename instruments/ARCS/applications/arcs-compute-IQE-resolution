@@ -57,8 +57,10 @@ def run(
     createScatteringKernel(Q,E)
     
     # run main sim
-    cmd = './sssd --source.path="%s" --ncount=%s --mpirun.nodes=%s' % (
-        incident_neutrons, ncount, nodes)
+    from mcni.pyre_support.MpiApplication \
+        import mpi_launcher_choice as launcher
+    cmd = './sssd --source.path="%s" --ncount=%s --%s.nodes=%s' % (
+        incident_neutrons, ncount, launcher, nodes)
     execute(cmd)
 
     # reduce events to S(Q,E)
