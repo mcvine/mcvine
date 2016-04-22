@@ -3,7 +3,7 @@
 PKGS=danse.ins numpyext bpext dsm matter journal pyre histogram
 
 for pkg in $PKGS; do
-    ./setup.py $PKG;
+    ./setup.sh $PKG;
 done
 
 ./setup.sh drchops 2-alpha

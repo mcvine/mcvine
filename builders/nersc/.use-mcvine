@@ -1,0 +1,33 @@
+LJHOME=/global/homes/l/linjiao
+
+module load python/2.7.9
+module load mpi4py/1.3.1
+module load h5py/2.5.0
+
+# gsl
+GSL_DIR=/usr/common/usg/gsl/1.16/gnu
+export PATH=$GSL_DIR/bin:$PATH
+export LD_LIBRARY_PATH=$GSL_DIR/lib:$LD_LIBRARY_PATH
+# boost
+BOOST_DIR=/usr/common/usg/boost/1.54.0-20160127/gnu
+export LD_LIBRARY_PATH=$BOOST_DIR/lib:$LD_LIBRARY_PATH
+# other deps
+export PYTHONPATH=/global/homes/l/linjiao/dv/mcvine/deps/lib/python2.7/site-packages/:$PYTHONPATH
+
+# danse
+DANSE_DIR=$HOME/dv/danse/export
+export PYTHONPATH=$DANSE_DIR/lib64/python2.7/site-packages:$PYTHONPATH
+export PATH=$DANSE_DIR/bin:$PATH
+export LD_LIBRARY_PATH=$DANSE_DIR/lib64:$LD_LIBRARY_PATH
+
+# mcvine
+export MCVINE_DIR=$DANSE_DIR
+export MCVINE_RESOURCES=$LJHOME/dv/mcvine/resources
+export MCSTAS_COMPONENT_LIBDIR=$MCVINE_DIR/share/mcvine/mcstas2/McStas-Components
+# export PATH=$MCVINE_DIR/bin:$PATH
+# export LD_LIBRARY_PATH=$MCVINE_DIR/lib64:$LD_LIBRARY_PATH
+# export PYTHONPATH=$MCVINE_DIR/lib64/python2.7/site-packages:$PYTHONPATH
+export EXPORT_ROOT=$MCVINE_DIR
+
+export MCVINE_MPI_LAUNCHER=slurm
+
