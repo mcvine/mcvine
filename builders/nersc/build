@@ -27,7 +27,7 @@ echo "Building mcvine"
 echo "- mcvine resoureces: $MCVINE_RESOURCES"
 echo "- using $CORES cores"
 
-source $HOME/.dev-mcvine
+source $HOME/.build-mcvine
 
 rm -rf $BUILD
 mkdir $BUILD
@@ -37,8 +37,6 @@ cmake \
     -D CMAKE_CXX_COMPILER=/opt/gcc/5.2.0/bin/g++ \
     -D PYTHON_LIBRARY=/usr/common/usg/python/2.7.9/lib/libpython2.7.so \
     -D PYTHON_INCLUDE_DIR=/usr/common/usg/python/2.7.9/include/python2.7 \
-    -D BOOST_ROOT=/usr/common/usg/boost/1.54.0-20160127/gnu \
-    -D BOOST_INCLUDEDIR=/usr/common/usg/boost/1.54.0-20160127/gnu/include \
     -D DEPLOYMENT_PREFIX=$INSTALL \
     -D CMAKE_INSTALL_PREFIX=$INSTALL \
     $SRC \
@@ -47,3 +45,5 @@ cmake \
     && make -j$CORES 
 
 #   -D GSL_HOME=/usr/common/usg/gsl/1.16/gnu \
+#   -D BOOST_ROOT=/usr/common/usg/boost/1.54.0-20160127/gnu \
+#   -D BOOST_INCLUDEDIR=/usr/common/usg/boost/1.54.0-20160127/gnu/include \
