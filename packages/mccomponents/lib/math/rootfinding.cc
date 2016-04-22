@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <cmath>
+
 #include "mccomponents/math/misc.h"
 #include "mccomponents/math/rootfinding.h"
 
@@ -174,8 +175,6 @@ namespace mccomponents { namespace math {
 	    throw;
 	  }
 
-// 	  printf("Function evaluates: %g %g \n",fl,fh); 
-
 	  if (fl*fh >= 0) {
 
 	    if (fl==0) return x1;
@@ -248,8 +247,9 @@ namespace mccomponents { namespace math {
 
 	      } else if(sign(fh,fnew) != fh)  {
 
-			xl=ans;
-			fl=fnew;
+		xl=ans;
+		fl=fnew;
+
 	      } else {
 
 		std::cerr << "never get here in zridd";
@@ -261,6 +261,7 @@ namespace mccomponents { namespace math {
 		check_answer(ans);
 		return ans;
 	      }
+
 	    }
 
 	    throw "zridd exceeded maximum iterations";
