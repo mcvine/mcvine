@@ -1,5 +1,3 @@
-include(FindGSL)
-
 
 # ------------- Modify these -------------
 set (FPARSER_VERSION "4.5.1")
@@ -44,7 +42,7 @@ set ( SRC_FILES
 
 # include python headers
 include_directories( ${PYTHON_INCLUDE_DIRS} )
-include_directories( ${GSL_INCLUDE_DIR} )
+include_directories( ${GSL_INCLUDE_DIRS} )
 
 # export headers from this project
 file(COPY boostpython_binding homogeneous_scatterer kernels physics

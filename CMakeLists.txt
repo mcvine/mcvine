@@ -70,7 +70,7 @@ find_package ( PythonInterp REQUIRED )
 set(INSTALL_PY_PATH "${INSTALL_LIB_DIR}/python${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}/site-packages")
 # needs boost python
 find_package ( Boost COMPONENTS python )
-
+message(" - Boost lib and header dirs: ${Boost_LIBRARY_DIRS} ${Boost_INCLUDE_DIRS}")
 #
 enable_testing()
 
@@ -85,7 +85,7 @@ add_subdirectory(instruments)
 # this one use distutils and can only run in series
 add_custom_target(
   wrap-mcstas-components-serial
-  ${EXPORT_ENVVARS};EXPORT_ROOT=${EXPORT_ROOT};EXPORT_PYTHON=${EXPORT_PYTHON};DV_DIR=${CMAKE_SOURCE_DIR};BOOSTPYTHON_LIBDIR=${Boost_LIBRARY_DIR};BOOSTPYTHON_INCDIR=${BOOST_INCLUDE_DIR} ${EXPORT_BIN}/mcvine-compile-all-mcstas-components
+  ${EXPORT_ENVVARS};EXPORT_ROOT=${EXPORT_ROOT};EXPORT_PYTHON=${EXPORT_PYTHON};DV_DIR=${CMAKE_SOURCE_DIR};BOOSTPYTHON_LIBDIR=${Boost_LIBRARY_DIR};BOOSTPYTHON_INCDIR=${Boost_INCLUDE_DIR} ${EXPORT_BIN}/mcvine-compile-all-mcstas-components
   )
 add_custom_target(
   reconfigure-to-include-mcstas-components

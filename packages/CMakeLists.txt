@@ -1,3 +1,14 @@
+# need GSL
+# NOTE: we are using FindGSL in "cmake_utils" of danse-inelastic
+# NOTE: cmake 3.2 has a built-in FindGSL, should switcht to that
+# NOTE: in the future.
+find_package(GSL REQUIRED)
+# NOTE: the builtin FindGSL use GSL_INCLUDE_DIRS instead of GSL_INCLUDE_DIR
+# NOTE: so for future compatibility we define GSL_INCLUDE_DIRS here.
+set (GSL_INCLUDE_DIRS ${GSL_INCLUDE_DIR})
+message(" - GSL libs: ${GSL_LIBRARIES}")
+message(" - GSL header dirs: ${GSL_INCLUDE_DIRS}")
+
 # need packages like instrument and sampleassembly
 # place them under packages/
 include(GitUtils)

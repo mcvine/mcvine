@@ -22,7 +22,7 @@ set ( MOD_NAME ${PYBINDING_NAME} )
 include_directories(${EXPORT_HEADERS})
 include_directories(${DEPLOYMENT_PREFIX}/include)
 include_directories(${PYTHON_INCLUDE_DIRS})
-include_directories(${Boost_INCLUDE_DIR})
+include_directories(${Boost_INCLUDE_DIRS})
 link_directories(${EXPORT_LIB})
 link_directories(${DEPLOYMENT_PREFIX}/${INSTALL_LIB_DIR})
 
