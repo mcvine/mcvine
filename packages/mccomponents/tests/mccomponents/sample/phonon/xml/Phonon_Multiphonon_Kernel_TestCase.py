@@ -71,10 +71,10 @@ class TestCase(unittest.TestCase):
         engine = hs.scattererEngine( scatterercomposite )
 
         os.chdir(save)
-        for i in range(10):
+        for i in range(1000):
             ev = mcni.neutron( r = (0,0,-5), v = (0,0,3000) )
             engine.scatter( ev )
-            print ev
+            # print ev
             continue
         
         return
