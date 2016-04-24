@@ -1,17 +1,13 @@
 #!/usr/bin/env python
 #
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#
-#                                   Jiao Lin
-#                      California Institute of Technology
-#                        (C) 2007 All Rights Reserved  
-#
-# {LicenseText}
-#
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Jiao Lin <jiao.lin@gmail.com>
 #
 
+
 standalone = True
+
+import os
+os.environ['MCVINE_MPI_LAUNCHER'] = 'serial'
 
 
 import unittestX as unittest
@@ -19,7 +15,6 @@ import journal
 
 debug = journal.debug( "mcni.pyre_support.test" )
 warning = journal.warning( "mcni.pyre_support.test" )
-
 
 
 class TestCase(unittest.TestCase):
@@ -53,26 +48,6 @@ class App(base):
 
 
 
-def pysuite():
-    suite1 = unittest.makeSuite(TestCase)
-    return unittest.TestSuite( (suite1,) )
-
-def main():
-    #debug.activate()
-    import journal
-    journal.info('mpirun').activate()
-    pytests = pysuite()
-    alltests = unittest.TestSuite( (pytests, ) )
-    res = unittest.TextTestRunner(verbosity=2).run(alltests)
-    import sys; sys.exit(not res.wasSuccessful())
-
-    return
-
-
-if __name__ == "__main__":
-    main()
+if __name__ == "__main__": unittest.main()
     
-# version
-__id__ = "$Id$"
-
 # End of file 
