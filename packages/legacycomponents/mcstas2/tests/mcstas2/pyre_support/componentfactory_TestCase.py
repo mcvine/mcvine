@@ -34,11 +34,6 @@ class TestCase(unittest.TestCase):
     pass  # end of TestCase
 
 
-def main():
-    unittest.main()
-    return
-    
-    
-if __name__ == "__main__": main()
+if __name__ == "__main__": unittest.main()
     
 # End of file 
