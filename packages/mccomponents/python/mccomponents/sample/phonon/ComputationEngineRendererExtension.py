@@ -16,8 +16,9 @@ import journal
 
 nsampling = 100
 
-class ComputationEngineRendererExtension:
+from mcni.components.ParallelComponent import MPI
 
+class ComputationEngineRendererExtension:
 
     def onPhonon_IncoherentElastic_Kernel(self, kernel):
         '''handler to create c++ instance of phonon incoherent elastic
@@ -242,14 +243,25 @@ class ComputationEngineRendererExtension:
             Emax = Emax / units.meV
         
         # sqe
-        from .multiphonon import sqe
-        q,e,s = sqe(
-            dos.energy, dos.I, 
-            Qmax=Qmax, dQ=dQ,
-            T = temperature,
-            M = average_mass, N = kernel.Nmax,
+        mpi = MPI()
+        if not mpi.parallel or mpi.rank == 0:
+            from .multiphonon import sqe
+            q,e,s = sqe(
+                dos.energy, dos.I, 
+                Qmax=Qmax, dQ=dQ,
+                T = temperature,
+                M = average_mass, N = kernel.Nmax,
             )
-        import histogram as H
+            if mpi.parallel:
+                channel = mpi.getUniqueChannel()
+                for peer in range(1, mpi.size):
+                    mpi.send((q,e,s), peer, channel)
+                    continue
+        else:
+            channel = mpi.getUniqueChannel()
+            q,e,s = mpi.receive(0, channel)
+        
+        import histogram as H, histogram.hdf as hh
         sqehist = H.histogram(
             'S',
             [('Q', q, 'angstrom**-1'),
@@ -258,6 +270,7 @@ class ComputationEngineRendererExtension:
         # usually only a subset of sqe is necessary 
         if Emax:
             sqehist = sqehist[(), (None, Emax)].copy()
+        hh.dump(sqehist, 'mp-sqe-%d.h5' % mpi.rank)
         journal.debug("phonon").log("computed multiphonon sqe")
         
         from mccomponents import sample

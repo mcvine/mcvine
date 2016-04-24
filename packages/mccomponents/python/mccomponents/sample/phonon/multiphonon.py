@@ -22,6 +22,11 @@ of the book
 
 Some of the implementation here were taken from
 Max Kresch's original multiphonon code.
+
+Known problems:
+* In function AnE_from_n_1 there is a step of convolution 
+  that is using a lot of memory.
+
 """
 
 
