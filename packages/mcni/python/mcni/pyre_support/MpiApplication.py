@@ -80,7 +80,7 @@ class Application(base):
         if self.inventory.launcher.nodes > 1 and self.inventory.mode=='worker' and not usempi():
             msg="Requested for parallel computing but mpi is not available"
             raise RuntimeError(msg)
-        if self.inventory.launcher.nodes == 1 and self.inventory.mode=='server':
+        if self.inventory.launcher.nodes <= 1 and self.inventory.mode=='server':
             import warnings
             warnings.warn("no point to run in parallel mode when using just one node")
         super(Application, self)._init()
