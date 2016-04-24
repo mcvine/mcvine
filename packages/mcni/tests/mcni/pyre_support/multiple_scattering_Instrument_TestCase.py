@@ -14,9 +14,11 @@
 
 standalone = True
 
-
 ncount = 10
 n_multiple_scattering = 1
+
+import os
+os.environ['MCVINE_MPI_LAUNCHER'] = 'serial'
 
 
 import mcvine

@@ -15,7 +15,10 @@
 standalone = True
 
 
-import os, shutil
+import os
+os.environ['MCVINE_MPI_LAUNCHER'] = 'serial'
+
+import shutil
 for entry in os.listdir('.'):
     if not entry.startswith('out-test'):
         continue
