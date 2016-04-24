@@ -61,6 +61,8 @@ class Application(base):
         base._defaults(self)
         factory = getattr(launchers, mpi_launcher_choice)
         self.inventory.launcher = factory()
+        if self.inventory.launcher.name == 'serial':
+            self.inventory.mode = 'worker'
         return
 
 

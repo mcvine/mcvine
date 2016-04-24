@@ -1,22 +1,13 @@
 #!/usr/bin/env python
 #
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#
-#                                   Jiao Lin
-#                      California Institute of Technology
-#                        (C) 2007 All Rights Reserved  
-#
-# {LicenseText}
-#
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Jiao Lin <jiao.lin@gmail.com>
 #
 
-
+import os
+os.environ['MCVINE_MPI_LAUNCHER'] = 'serial'
 
 skip = False
 standalone = True
-
-
 
 import unittestX as unittest
 import journal
@@ -55,6 +46,7 @@ class Instrument(base):
 
     def _defaults(self):
         base._defaults(self)
+
         self.inventory.sequence = [
             'source', 'validator1', 'monitor', 'validator2']
         self.inventory.outputdir = 'restore_neutrons_TestCase-out'
@@ -88,26 +80,6 @@ class TestCase(unittest.TestCase):
 
 import os
 
-
-def pysuite():
-    suite1 = unittest.makeSuite(TestCase)
-    return unittest.TestSuite( (suite1,) )
-
-
-def main():
-    #debug.activate()
-    #journal.debug("CompositeNeutronScatterer_Impl").activate()
-    pytests = pysuite()
-    alltests = unittest.TestSuite( (pytests, ) )
-    res = unittest.TextTestRunner(verbosity=2).run(alltests)
-    import sys; sys.exit(not res.wasSuccessful())
-
+if __name__ == "__main__": unittest.main()
     
-    
-if __name__ == "__main__":
-    main()
-    
-# version
-__id__ = "$Id$"
-
 # End of file 
