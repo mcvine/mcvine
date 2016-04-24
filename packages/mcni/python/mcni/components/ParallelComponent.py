@@ -19,7 +19,6 @@ import journal
 info = journal.info( 'mpi' )
 
 
-
 class ParallelComponent(object):
 
     '''Base class for components that can be parallelized.

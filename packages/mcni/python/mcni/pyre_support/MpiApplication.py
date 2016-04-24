@@ -22,7 +22,9 @@ class launchers:
 ENVVAR_MPI_LAUNCHER = "MCVINE_MPI_LAUNCHER"
 import os
 mpi_launcher_choice = os.environ.get(ENVVAR_MPI_LAUNCHER, 'mpirun')
-
+if mpi_launcher_choice == 'serial':
+    # if running in serial mode, no point to find a mpi binding
+    os.environ['MCVINE_MPI_BINDING'] = 'NONE'
 
 ## base class of mpi application. derived from pyre mpi application.
 ## The customization done here are:
@@ -78,6 +80,9 @@ class Application(base):
         if self.inventory.launcher.nodes > 1 and self.inventory.mode=='worker' and not usempi():
             msg="Requested for parallel computing but mpi is not available"
             raise RuntimeError(msg)
+        if self.inventory.launcher.nodes == 1 and self.inventory.mode=='server':
+            import warnings
+            warnings.warn("no point to run in parallel mode when using just one node")
         super(Application, self)._init()
         return
     
