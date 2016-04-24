@@ -14,6 +14,8 @@
 
 standalone = 1
 
+# parallel launcher
+from mcni.pyre_support.MpiApplication import mpi_launcher_choice as launcher
 
 import unittest
 
@@ -39,7 +41,7 @@ class TestCase(unittest.TestCase):
 
     def test1a(self):
         "ARCS detector system. Neutrons shotting at one single pixel."
-        cmd = './sd --mpirun.nodes=2  --output-dir=out1a'
+        cmd = './sd --%s.nodes=2  --output-dir=out1a' % launcher
         import os
         if os.system(cmd):
             raise RuntimeError, "%s failed" % cmd

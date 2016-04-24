@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# --mpirun.nodes option does not work even if we add it after ---
+# --<launcher>.nodes option does not work even if we add it after ---
 # arcs-m2s is better used just for generation of pml file
 # for arcs_moderator2sample.
 

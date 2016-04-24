@@ -25,7 +25,9 @@ class TestCase(unittest.TestCase):
         outdir = 'out-testmpi'
         if os.path.exists(outdir):
             shutil.rmtree(outdir)
-        cmd = './testmpi -mpirun.nodes=2'
+        from mcni.pyre_support.MpiApplication \
+            import mpi_launcher_choice as launcher            
+        cmd = './testmpi -%s.nodes=2' % launcher
         if os.system(cmd):
             raise RuntimeError, "%r failed" % cmd
 
