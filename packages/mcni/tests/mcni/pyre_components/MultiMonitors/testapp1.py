@@ -11,6 +11,10 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
 
+
+import os
+os.environ['MCVINE_MPI_LAUNCHER'] = 'serial'
+
 import mcvine
 
 
