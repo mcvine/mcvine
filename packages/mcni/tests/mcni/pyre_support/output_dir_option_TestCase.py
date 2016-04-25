@@ -14,6 +14,9 @@
 
 standalone = True
 
+import os
+os.environ['MCVINE_MPI_LAUNCHER'] = 'serial'
+
 
 import unittestX as unittest
 import journal
@@ -23,7 +26,7 @@ warning = journal.warning( "mcni.pyre_support.test" )
 
 
 outdir = 'test-output-dir-option_out'
-import os, sys, mcvine
+import sys, mcvine
 
 
 class TestCase(unittest.TestCase):
