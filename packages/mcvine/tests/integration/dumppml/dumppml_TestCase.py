@@ -15,7 +15,10 @@
 outdir = 'out'
 pml = 'ssd.pml'
 
-import os, glob, shutil
+import os
+os.environ['MCVINE_MPI_LAUNCHER'] = 'serial'
+
+import glob, shutil
 def cleanup():
     # clean up
     map(os.remove, glob.glob('ssd.pml*'))

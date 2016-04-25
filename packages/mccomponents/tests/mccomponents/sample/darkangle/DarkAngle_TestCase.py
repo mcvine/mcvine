@@ -22,7 +22,7 @@ class TestCase(unittest.TestCase):
     def test1(self):
         'mccomponents.sample.samplecomponent: IsotropicKernel for a fictitious simple cubic Fe'
         import os
-        cmd = './ssd -ncount=1e5 -buffer_size=100000'
+        cmd = 'MCVINE_MPI_LAUNCHER=serial ./ssd -ncount=1e5 -buffer_size=100000'
         # cmd = './ssd -ncount=1 -buffer_size=1'
         # cmd += ' --journal.debug.CompositeNeutronScatterer_Impl'
         ret = os.system(cmd)

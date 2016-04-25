@@ -24,7 +24,7 @@ class TestCase(unittest.TestCase):
 
     def test(self):
         "ARCS detector system. Neutrons shotting at one single pixel."
-        cmd = './sd'
+        cmd = 'MCVINE_MPI_LAUNCHER=serial ./sd'
         import os
         if os.system(cmd):
             raise RuntimeError, "%s failed" % cmd
@@ -59,7 +59,7 @@ class TestCase(unittest.TestCase):
     def test2(self):
         "ARCS detector system. A neutron missing all pixels."
         # cmd = './sd --source.velocity=1000,0,-2000 --ncount=1 --output-dir=out2'        
-        cmd = './sd --source.position=-0.00875,0.00462,0.005  --source.velocity=5713.19,-765.203,9068.39 --ncount=1 --output-dir=out2'
+        cmd = 'MCVINE_MPI_LAUNCHER=serial ./sd --source.position=-0.00875,0.00462,0.005  --source.velocity=5713.19,-765.203,9068.39 --ncount=1 --output-dir=out2'
         import os
         if os.system(cmd):
             raise RuntimeError, "%s failed" % cmd
