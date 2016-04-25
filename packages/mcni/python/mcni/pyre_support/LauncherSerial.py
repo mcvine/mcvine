@@ -34,7 +34,8 @@ class LauncherSerial(Launcher):
         dry = self.inventory.dry
         if not dry:
             import os
-            os.system(command)
+            if os.system(command):
+               raise RuntimeError("%s failed" % command) 
             return True
 
         return False
@@ -48,7 +49,7 @@ class LauncherSerial(Launcher):
     def _buildArgumentList(self):
         import sys
         # build the command
-        args = []
+        args = ['python']
         sysargs = sys.argv
         args.append( sysargs[0] )
         args.append("--mode=worker")

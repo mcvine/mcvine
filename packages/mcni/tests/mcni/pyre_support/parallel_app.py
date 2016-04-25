@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 #
-# Jiao Lin <jiao.lin@gmail.com
+# Jiao Lin <jiao.lin@gmail.com>
 #
 
 import journal

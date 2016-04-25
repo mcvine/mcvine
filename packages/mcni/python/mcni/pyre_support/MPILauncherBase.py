@@ -41,7 +41,8 @@ class MPILauncherBase(Launcher):
         dry = self.inventory.dry
         if not dry:
             import os
-            os.system(command)
+            if os.system(command):
+                raise RuntimeError("%s failed" % command)
             return True
 
         return False

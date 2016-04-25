@@ -12,6 +12,8 @@
 #
 
 
+import os
+os.environ['MCVINE_MPI_LAUNCHER'] = 'serial'
 
 import mcvine
 import unittestX as unittest
@@ -112,6 +114,7 @@ class Instrument(base):
 
     def _defaults(self):
         base._defaults(self)
+        self.inventory.mode = 'worker'
         self.inventory.sequence = ['source', 'verifier']
         geometer = self.inventory.geometer
         self.inventory.geometer.inventory.verifier = (0,0,1), (0,0,90)

@@ -46,20 +46,23 @@ def band(phonon, start, end, npts, cartesian, output, branch):
     Es.shape = -1, nbr
     # output
     try:
-        import pylab
+        import matplotlib as mpl
     except ImportError:
         import warnings
         warnings.warn("Plotting needs matplotlib. Please install python matplotlib")
         return
+    mpl.use("Agg")
+    import matplotlib.pyplot as plt
+    fig = plt.figure(); ax = fig.add_subplot(111)
     if branch == -1:
         for i in range(nbr):
-            pylab.plot(Es[:, i])
+            ax.plot(Es[:, i])
     else:
-        pylab.plot(Es[:, branch])
+        ax.plot(Es[:, branch])
     if output:
-        pylab.savefig(output)
+        fig.savefig(output)
     else:
-        pylab.show()
+        plt.show()
     return
 
 

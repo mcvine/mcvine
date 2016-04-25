@@ -12,6 +12,9 @@
 #
 
 
+import os
+os.environ['MCVINE_MPI_BINDING'] = 'NONE'
+
 
 import unittestX as unittest
 import journal

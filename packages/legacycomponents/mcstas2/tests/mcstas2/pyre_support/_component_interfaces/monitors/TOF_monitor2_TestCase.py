@@ -16,6 +16,10 @@ skip = False
 standalone = True
 
 
+import os
+os.environ['MCVINE_MPI_LAUNCHER'] = 'serial'
+
+
 import unittestX as unittest
 import journal
 
@@ -29,8 +33,6 @@ class Instrument(base):
 
     def _defaults(self):
         super(Instrument, self)._defaults()
-        from mcni.pyre_support.LauncherSerial import LauncherSerial
-        self.inventory.launcher = LauncherSerial()
         self.inventory.mode = 'worker'
         from mcstas2.pyre_support import componentfactory
         self.inventory.monitor = componentfactory \

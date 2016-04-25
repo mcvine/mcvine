@@ -14,10 +14,11 @@
 
 standalone = True
 
+import os
+os.environ['MCVINE_MPI_LAUNCHER'] = 'serial'
 
 import unittestX as unittest
 import journal
-import os
 
 debug = journal.debug( "mcni.pyre_components.test" )
 warning = journal.warning( "mcni.pyre_components.test" )

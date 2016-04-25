@@ -12,6 +12,9 @@
 #
 
 
+import os
+os.environ['MCVINE_MPI_LAUNCHER'] = 'serial'
+
 
 def execute(cmd):
     import subprocess as sp

@@ -12,6 +12,9 @@
 #
 
 
+import os
+os.environ['MCVINE_MPI_BINDING'] = 'NONE'
+
 from setup_sampleassemblies import mcvine_resources
 if not mcvine_resources:
     skip = True
