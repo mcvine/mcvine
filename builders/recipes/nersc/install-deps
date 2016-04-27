@@ -1,0 +1,13 @@
+Edison
+------
+
+It has most deps but missing 
+
+* psutils
+* yaml
+
+Had to download their source tar balls and install manually.
+Things to note:
+
+* yaml includes both yaml c library (header) and PyYaml py pkg
+* when install, do $ python setup.py install --prefix=$HOME/dv/mcvine/deps
