@@ -87,6 +87,7 @@ class DetectorSystemFromXml(ParallelComponent, AbstractComponent):
 
 
     def _saveFinalResult(self):
+        self._debug.log("Entering _saveFinalResult")
         context = self.simulation_context
         # make sure every node reaches here
         if context.mpiSize:
