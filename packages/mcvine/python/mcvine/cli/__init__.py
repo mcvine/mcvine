@@ -62,10 +62,16 @@ def pyre_app(parent, appname, cmd_prefix):
 # sub-cmds
 from . import mpi, mantid, phonon
 from . import sampleassembly #, kernel
-from . import workflow
 from mcvine.instrument import cli
 from mcvine.instruments import cli
 from mcstas2 import cli
+
+# workflow
+from mcvine.deployment_info import mcvine_workflow as wf_dir
+import sys
+sys.path.insert(0, wf_dir)
+from mcvine_workflow import cli
+del wf_dir
 
 # aliases should be the last cmds to import
 from . import bash

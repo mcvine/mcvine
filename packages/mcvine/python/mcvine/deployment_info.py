@@ -22,6 +22,7 @@ exportroot = os.environ.get('EXPORT_ROOT')
 pyredir = os.environ.get("PYRE_DIR")
 mcvinedir = os.environ.get("MCVINE_DIR")
 mcvine_resources = os.environ.get("MCVINE_RESOURCES")
+mcvine_workflow = os.environ.get('MCVINE_WORKFLOW')
 
 if dvdir and exportroot: type = 'developer'
 else: 
@@ -36,8 +37,8 @@ else:
 if mcvine_resources:
     mcvine_resources = os.path.abspath(mcvine_resources)
 
-
-# version
-__id__ = "$Id: __init__.py 601 2010-10-03 19:55:29Z linjiao $"
+# default location of mcvine workflow
+if not mcvine_workflow:
+    mcvine_workflow = os.path.join(mcvinedir, 'share', 'mcvine', 'workflow')
 
 # End of file 

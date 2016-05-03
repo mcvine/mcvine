@@ -17,14 +17,19 @@ UPDATE_PACKAGE_FROM_GIT(
   instrument
   https://github.com/danse-inelastic/instrument
   )
+add_subdirectory(instrument)
 UPDATE_PACKAGE_FROM_GIT(
   ${CMAKE_CURRENT_SOURCE_DIR}
   sampleassembly
   https://github.com/danse-inelastic/sampleassembly
 )
-#
-add_subdirectory(instrument)
 add_subdirectory(sampleassembly)
+UPDATE_PACKAGE_FROM_GIT(
+  ${CMAKE_CURRENT_SOURCE_DIR}
+  workflow
+  https://github.com/mcvine/workflow
+)
+add_subdirectory(workflow)
 
 # need "click". 
 UPDATE_PACKAGE_FROM_GIT(
