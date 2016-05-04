@@ -19,7 +19,7 @@ def phonon():
 @click.option("--output", default="", help="image file path to save the plot. empty means plotting interactively. Plotting requires matplotlib installed.")
 @click.option("--branch", default=-1, help="0-based branch index. default value -1 means plot all branches")
 def band(phonon, start, end, npts, cartesian, output, branch):
-    "Plot band structure along one direction"
+    "Given phonon data in IDF format, plot band structure along one direction"
     # phonon is the path to a directory with IDF phonon data
 
     # read phonon data
@@ -76,7 +76,7 @@ def band(phonon, start, end, npts, cartesian, output, branch):
 @click.option("--outhist", default="slice.h5", help="Output histogram file path")
 @click.option("--Eaxis", default=(0., 100., 1.), help="Energy axis. (min, max, step)")
 def slice(crystal, phonon, start, end, npts, cartesian, outhist, eaxis):
-    "Compute slice of SQE data along a specific reciprocal space direction"
+    "Given phonon data in IDF format, compute slice of SQE data along a specific reciprocal space direction"
     # phonon is the path to a directory with IDF phonon data
 
     # read phonon data
