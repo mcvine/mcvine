@@ -64,7 +64,8 @@ class NeutronToStorage(ParallelComponent, AbstractComponent):
         context = self.simulation_context
         # make sure every node reaches here
         if context.mpiSize:
-            channel = self.mpi.getUniqueChannel()
+            # channel = self.mpi.getUniqueChannel()
+            channel = abs(hash(self.name)) % (10**8)
             if context.mpiRank:
                 self.mpi.send(context.mpiRank, 0, channel)
             else:
