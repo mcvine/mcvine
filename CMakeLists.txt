@@ -27,7 +27,7 @@ set(LICENSE "BSD")
 set(RPM_APP_GROUP "Development/Tools")
 set(GITHUB_URL "https://github.com/mcvine/mcvine")
 # set(GIT_RELEASE_TAG ${VERSION})
-set(GIT_RELEASE_TAG "116-clean-symlinks")
+set(GIT_RELEASE_TAG "115-conda")
 set (HOMEPAGE ${GITHUB_URL})
 
 # Is this still needed?
@@ -45,8 +45,8 @@ set (DOCKER_PKGING_TEST_SRPM ". /opt/danse/bin/setup-danse.sh && mcvine")
 set (DOCKER_PKGING_BUILDSTEP_BUILDCMD "cd .. && git clone https://github.com/mcvine/resources.git &&  /work/src/builders/build /work/src /work/build /opt/danse /work/resources")
 set (DOCKER_PKGING_TEST_RPM ${DOCKER_PKGING_TEST_SRPM})
 set (DOCKER_PKGING_TEST_DEB ${DOCKER_PKGING_TEST_SRPM})
-set (CONDA_PKGING_BUILD_DEPS "python yaml numpy psutil h5py mpi4py gsl boost pyre danse.ins.dsm danse.ins.numpyext danse.ins.bpext histogram danse.ins.matter drchops mcvine-resources")
-set (CONDA_PKGING_RUN_DEPS "python yaml numpy psutil h5py mpi4py gsl boost pyre danse.ins.dsm danse.ins.numpyext danse.ins.bpext histogram danse.ins.matter drchops mcvine-resources")
+set (CONDA_PKGING_BUILD_DEPS "python pyyaml numpy psutil h5py mpi4py gsl boost pyre danse.ins.dsm danse.ins.numpyext danse.ins.bpext histogram danse.ins.matter drchops mcvine-resources")
+set (CONDA_PKGING_RUN_DEPS "python pyyaml numpy psutil h5py mpi4py gsl boost pyre danse.ins.dsm danse.ins.numpyext danse.ins.bpext histogram danse.ins.matter drchops mcvine-resources")
 set(CONDA_BUILD_MAKE_CMD "cmake -DCMAKE_INSTALL_PREFIX=$PREFIX -DDEPLOYMENT_PREFIX=$PREFIX .. && make -j $CORES && make -j$CORES reconfigure-to-include-mcstas-components && make -j$CORES wrap-mcstas-components-cmake && make -j$CORES && make install")
 
 #
