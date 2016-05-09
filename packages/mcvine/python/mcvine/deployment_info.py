@@ -12,7 +12,7 @@
 #
 
 
-import os
+import os, sys
 debug = os.environ.get('DEBUG', False)
 
 
@@ -31,16 +31,24 @@ else:
     if not mcvinedir:
         danse_dir = os.environ.get("DANSE_DIR")
         if not danse_dir:
-            raise RuntimeError, "Neither environment variable MCVINE_DIR nor DANSE_DIR was not defined. please define it to the path of the mcvine/danse installation"
+            # if nothing is specified, assume that 
+            # mcvine installed alongside the python
+            # that is in use in the current user setting.
+            opd = os.path.dirname
+            danse_dir = opd(opd(sys.executable))
+            msg = "Neither environment variable MCVINE_DIR nor DANSE_DIR was defined. Assumed that it is %s." % danse_dir
+            import warnings
+            warnings.warn(msg)
         mcvinedir = danse_dir
 
+if not mcvine_resources and type == 'user':
+    mcvine_resources = os.path.join(mcvine_dir, 'share', 'mcvine', 'resources')
 if mcvine_resources:
     mcvine_resources = os.path.abspath(mcvine_resources)
 
 # default location of mcvine workflow
 if not mcvine_workflow:
     mcvine_workflow = os.path.join(mcvinedir, 'share', 'mcvine', 'workflow')
-import sys
 sys.path.insert(0, mcvine_workflow)
 
 # End of file 
