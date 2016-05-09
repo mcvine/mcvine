@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 
+import os
+from mcvine import resources
 
 def execute(cmd):
-    import os
     print '* executing %s... ' % cmd
     if os.system(cmd):
         raise RuntimeError, "%r failed" % cmd
@@ -16,9 +17,10 @@ def run(
     # convert to mcstas coordinates
     vx,vy,vz = vi
     vi = vy, vz, vx
+    xml = os.path.join(resources.instrument('ARCS'), 'reduction', 'ARCS.xml.reduction.standard')
     # run main sim
-    cmd = './sd --source.velocity="%s" --source.energy=%s --ncount=%s' % (
-        tuple(vi), ei, ncount)
+    cmd = './sd --source.velocity="%s" --source.energy=%s --detector.instrumentxml=%s --ncount=%s' % (
+        tuple(vi), ei, xml, ncount)
     print ("running", cmd)
     execute(cmd)
     

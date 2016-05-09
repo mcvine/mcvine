@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 
+import os
+from mcvine import resources
 
 def execute(cmd):
-    import os
     print '* executing %s... ' % cmd
     if os.system(cmd):
         raise RuntimeError, "%r failed" % cmd
@@ -30,6 +31,7 @@ def run(
 
 def readPixelPosition(pixelID):
     ppfile = 'pixelID2position.bin'
+    ppfile = os.path.join(resources.instrument('ARCS'), 'reduction', ppfile)
     import numpy
     positions = numpy.fromfile(ppfile, 'double')
     positions.shape = -1,3
@@ -37,9 +39,10 @@ def readPixelPosition(pixelID):
 
 
 def runsim(vi, ei, ncount):
+    xml = os.path.join(resources.instrument('ARCS'), 'reduction', 'ARCS.xml.reduction.standard')
     # run main sim
-    cmd = './sd --source.velocity="%s" --source.energy=%s --ncount=%s' % (
-        tuple(vi), ei, ncount)
+    cmd = './sd --source.velocity="%s" --source.energy=%s --detector.instrumentxml=%s --ncount=%s' % (
+        tuple(vi), ei, xml, ncount)
     execute(cmd)
     return
 
