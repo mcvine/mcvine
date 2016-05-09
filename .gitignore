@@ -3,6 +3,7 @@
 log.*
 /build
 /docker
+/conda
 /packages/instrument
 /packages/sampleassembly
 /packages/workflow
