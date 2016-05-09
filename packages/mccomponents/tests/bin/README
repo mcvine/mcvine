@@ -1,0 +1,6 @@
+This is obsolete.
+There used to be the following broken symlinks:
+arcs-pixelID2position.bin -> ../mccomponents/detector/arcs-pixelID2position.bin
+arcs-solidangles.bin -> ../mccomponents/detector/arcs-solidangles.bin
+V-dos.idf -> ../../../../examples/samples/vanadium/phonons/DOS
+
