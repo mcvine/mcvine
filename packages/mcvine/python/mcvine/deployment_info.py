@@ -40,5 +40,7 @@ if mcvine_resources:
 # default location of mcvine workflow
 if not mcvine_workflow:
     mcvine_workflow = os.path.join(mcvinedir, 'share', 'mcvine', 'workflow')
+import sys
+sys.path.insert(0, mcvine_workflow)
 
 # End of file 

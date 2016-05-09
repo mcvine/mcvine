@@ -67,11 +67,8 @@ from mcvine.instruments import cli
 from mcstas2 import cli
 
 # workflow
-from mcvine.deployment_info import mcvine_workflow as wf_dir
-import sys
-sys.path.insert(0, wf_dir)
+from .. import deployment_info
 from mcvine_workflow import cli
-del wf_dir
 
 # aliases should be the last cmds to import
 from . import bash
