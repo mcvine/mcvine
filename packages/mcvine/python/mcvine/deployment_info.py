@@ -42,7 +42,7 @@ else:
         mcvinedir = danse_dir
 
 if not mcvine_resources and type == 'user':
-    mcvine_resources = os.path.join(mcvine_dir, 'share', 'mcvine', 'resources')
+    mcvine_resources = os.path.join(mcvinedir, 'share', 'mcvine', 'resources')
 if mcvine_resources:
     mcvine_resources = os.path.abspath(mcvine_resources)
 
