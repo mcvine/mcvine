@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-sequoia-events2nxs --type=raw
+sequoia-events2nxs --type=raw create-events/out/events.dat events.nxs
