@@ -79,9 +79,9 @@ class SimulationNode(Connectable):
             if tracer:
                 tracer(neutrons,  context=before(self))
             # take a snapshot. it will remove the invalid neutrons from the list
-            neutrons2 = neutrons.snapshot(len(neutrons))
+            # neutrons2 = neutrons.snapshot(len(neutrons))
             # need to swap with the orignal neutron buffer
-            neutrons.swap(neutrons2)
+            # neutrons.swap(neutrons2)
             logger(" %s processing ..." % name)
             process(neutrons)
             if tracer:

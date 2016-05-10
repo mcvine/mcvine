@@ -46,6 +46,9 @@ namespace {
       Neutron::Event &ev = evts[index];
       
       nc->scatter( ev ); 
+
+      index ++; continue;
+      
       if (ev.probability < 0) {
 	// swap the current event with the last event
 	swap_temp = evts[index];
