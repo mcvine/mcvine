@@ -12,13 +12,19 @@
 #   - deb: binary deb
 #
 # conda build instructions
-# $ conda config --add channels conda-forge yxqd
-# $ conda update -n root conda-build
+# $ conda install anaconda-client # for upload conda pkg to anaconda
+# $ conda config --set anaconda_upload yes # for automatic upload
+# $ conda config --add channels conda-forge yxqd # conda-forge provides gsl
+# $ conda update -n root conda-build # tool for building conda pkg
 # $ make conda-build-pkg
-
+# additional conda cmds
+# remove pkg from anaconda site
+# $ anaconda remove yxqd/mcvine/1.0.1/linux-64/mcvine-1.0.1-py27_0.tar.bz2
+# upload pkg to anaconda site
+# $ anaconda upload /home/lj7/anaconda2/conda-bld/linux-64/mcvine-1.0.1-py27_0.tar.bz2
 
 set(PROJECT_NAME "mcvine")
-set(VERSION "1.0.1")
+set(VERSION "1.1-dev")
 set(AUTHOR "Jiao Lin")
 set(AUTHOR_EMAILE "jiao.lin@gmail.com")
 set(VENDOR "DANSE")
@@ -26,8 +32,10 @@ set(SUMMARY "Monte Carlo VIrtual Neutron Experiment")
 set(LICENSE "BSD")
 set(RPM_APP_GROUP "Development/Tools")
 set(GITHUB_URL "https://github.com/mcvine/mcvine")
+# can change this to a branch or a tag, for example
+# set(GIT_RELEASE_TAG "115-conda")
 # set(GIT_RELEASE_TAG ${VERSION})
-set(GIT_RELEASE_TAG "115-conda")
+set(GIT_RELEASE_TAG "master")
 set (HOMEPAGE ${GITHUB_URL})
 
 # Is this still needed?
