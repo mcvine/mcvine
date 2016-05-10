@@ -41,6 +41,10 @@ else:
             warnings.warn(msg)
         mcvinedir = danse_dir
 
+# set EXPORT_ROOT for pyre to pick up components in system etc dir
+if type=='user' and not exportroot:
+    os.environ['EXPORT_ROOT'] = mcvinedir
+
 if not mcvine_resources and type == 'user':
     mcvine_resources = os.path.join(mcvinedir, 'share', 'mcvine', 'resources')
 if mcvine_resources:
