@@ -10,6 +10,12 @@
 # * rpm and deb releases are treated differently:
 #   - rpm: source rpm
 #   - deb: binary deb
+#
+# conda build instructions
+# $ conda config --add channels conda-forge yxqd
+# $ conda update -n root conda-build
+# $ make conda-build-pkg
+
 
 set(PROJECT_NAME "mcvine")
 set(VERSION "1.0.1")
@@ -20,6 +26,9 @@ set(SUMMARY "Monte Carlo VIrtual Neutron Experiment")
 set(LICENSE "BSD")
 set(RPM_APP_GROUP "Development/Tools")
 set(GITHUB_URL "https://github.com/mcvine/mcvine")
+# set(GIT_RELEASE_TAG ${VERSION})
+set(GIT_RELEASE_TAG "115-conda")
+set (HOMEPAGE ${GITHUB_URL})
 
 # Is this still needed?
 # this is released with danse.ins packages
@@ -36,6 +45,9 @@ set (DOCKER_PKGING_TEST_SRPM ". /opt/danse/bin/setup-danse.sh && mcvine")
 set (DOCKER_PKGING_BUILDSTEP_BUILDCMD "cd .. && git clone https://github.com/mcvine/resources.git &&  /work/src/builders/build /work/src /work/build /opt/danse /work/resources")
 set (DOCKER_PKGING_TEST_RPM ${DOCKER_PKGING_TEST_SRPM})
 set (DOCKER_PKGING_TEST_DEB ${DOCKER_PKGING_TEST_SRPM})
+set (CONDA_PKGING_BUILD_DEPS "python pyyaml numpy psutil h5py mpi4py gsl boost pyre danse.ins.dsm danse.ins.numpyext danse.ins.bpext histogram danse.ins.matter drchops mcvine-resources")
+set (CONDA_PKGING_RUN_DEPS "python pyyaml numpy psutil h5py mpi4py gsl boost pyre danse.ins.dsm danse.ins.numpyext danse.ins.bpext histogram danse.ins.matter drchops mcvine-resources")
+set(CONDA_BUILD_MAKE_CMD "cmake -DCMAKE_INSTALL_PREFIX=$PREFIX -DDEPLOYMENT_PREFIX=$PREFIX .. && make -j $CORES && make -j$CORES reconfigure-to-include-mcstas-components && make -j$CORES wrap-mcstas-components-cmake && make -j$CORES && make install")
 
 #
 project (${PROJECT_NAME})
@@ -121,6 +133,9 @@ install(DIRECTORY ${EXPORT_ETC}/ DESTINATION etc)
 install(DIRECTORY ${EXPORT_SHARE}/ DESTINATION share/${PROJECT_NAME}/)
 # install tests
 install(DIRECTORY ${TESTS_DIR} DESTINATION share/${PROJECT_NAME}/ USE_SOURCE_PERMISSIONS)
+# install top level cmake file and script for tests
+install(FILES builders/runtests/CMakeLists.txt DESTINATION share/${PROJECT_NAME}/tests/)
+install(PROGRAMS builders/runtests/test.py DESTINATION share/${PROJECT_NAME}/tests/)
 
 # packaging
 set(PKG_NAME "mcvine")
@@ -187,5 +202,10 @@ add_custom_target(
   DEPENDS ${SRC_RPM}
   )
 
-# docker folder for build and test packaging artifacts
+# folders for build and test packaging artifacts
+# deb/rpm
 include(docker)
+# conda
+include(conda)
+set(CONDA_TEST_SCRIPT "run_test.py")
+configure_file(builders/runtests/test.py conda/run_test.py)

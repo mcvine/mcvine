@@ -9,6 +9,6 @@ RUN apt-get install -qy cmake
 RUN apt-get install -qy git
 RUN apt-get install -qy wget
 WORKDIR /opt/danse/share/mcvine/tests
-RUN wget -O CMakeLists.txt https://raw.githubusercontent.com/mcvine/mcvine/master/builders/runtests-CMakeLists.txt
+RUN wget -O CMakeLists.txt https://raw.githubusercontent.com/mcvine/mcvine/master/builders/runtests/CMakeLists.txt
 RUN mkdir build
 WORKDIR /opt/danse/share/mcvine/tests/build
