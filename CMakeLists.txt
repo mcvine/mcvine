@@ -133,6 +133,9 @@ install(DIRECTORY ${EXPORT_ETC}/ DESTINATION etc)
 install(DIRECTORY ${EXPORT_SHARE}/ DESTINATION share/${PROJECT_NAME}/)
 # install tests
 install(DIRECTORY ${TESTS_DIR} DESTINATION share/${PROJECT_NAME}/ USE_SOURCE_PERMISSIONS)
+# install top level cmake file and script for tests
+install(FILES builders/runtests/CMakeLists.txt DESTINATION share/${PROJECT_NAME}/tests/)
+install(PROGRAMS builders/runtests/test.py DESTINATION share/${PROJECT_NAME}/tests/)
 
 # packaging
 set(PKG_NAME "mcvine")
