@@ -207,3 +207,5 @@ add_custom_target(
 include(docker)
 # conda
 include(conda)
+set(CONDA_TEST_SCRIPT "run_test.py")
+configure_file(builders/runtests/test.py conda/run_test.py)

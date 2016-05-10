@@ -13,7 +13,10 @@ The tests will run at a separate work directory.
 
 import os, sys, psutil
 
-work = sys.argv[1]
+if len(sys.argv)>1:
+    work = sys.argv[1]
+else:
+    work = 'work.test'
 
 os.makedirs(work)
 os.chdir(work)
