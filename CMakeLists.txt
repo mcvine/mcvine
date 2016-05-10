@@ -14,7 +14,8 @@
 # conda build instructions
 # $ conda install anaconda-client # for upload conda pkg to anaconda
 # $ conda config --set anaconda_upload yes # for automatic upload
-# $ conda config --add channels conda-forge yxqd # conda-forge provides gsl
+# $ conda config --add channels conda-forge # conda-forge provides gsl
+# $ conda config --add channels yxqd # yxqd provides danse pkgs
 # $ conda update -n root conda-build # tool for building conda pkg
 # $ make conda-build-pkg
 # additional conda cmds
@@ -24,7 +25,7 @@
 # $ anaconda upload /home/lj7/anaconda2/conda-bld/linux-64/mcvine-1.0.1-py27_0.tar.bz2
 
 set(PROJECT_NAME "mcvine")
-set(VERSION "1.1-dev")
+set(VERSION "1.1dev")
 set(AUTHOR "Jiao Lin")
 set(AUTHOR_EMAILE "jiao.lin@gmail.com")
 set(VENDOR "DANSE")
