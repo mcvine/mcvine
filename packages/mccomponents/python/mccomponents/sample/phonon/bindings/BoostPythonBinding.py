@@ -316,7 +316,7 @@ class New:
         
         deltaV_Jacobi = 0.001
         zridd = b.ZRidd(10) # 0.1 - accuracy of velocity (m/s)
-        rootsfinder = b.FindRootsEvenly(zridd, 2000)
+        rootsfinder = b.FindRootsEvenly(zridd, 100)
         targetregion = b.TargetCone(self.vector3(0,0,0),0)
         epsilon = 1.e-10
 
