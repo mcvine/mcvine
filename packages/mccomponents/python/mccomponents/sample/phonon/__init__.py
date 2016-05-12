@@ -1,16 +1,22 @@
 #!/usr/bin/env python
 #
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#
-#                                   Jiao Lin
-#                      California Institute of Technology
-#                        (C) 2007  All Rights Reserved
-#
-# {LicenseText}
-#
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Jiao Lin <jiao.lin@gmail.com>
 #
 
+
+"""
+This subpkg contains kernels for phonon scattering.
+
+* incoherentelastic_kernel: elastic kernel with Debye Waller factor computed given phonon data.
+* incoherentinelastic_kernel: incoherent single-phonon kernel
+* multiphonon_kernel: multi-phonon kernel in incoherent approximation
+* coherentinelastic_polyxtal_kernel: coherent phonon kernel for powder data
+* coherentinelastic_singlextal_kernel: coherent phonon kernel for single crystal data.
+  - In resolving a Q vector
+    - the Q vector is first limited to 1BZ by periodicdispersion
+    - then it is converted to hkl using the inverse of the reciprocal lattice vectors (obtained from the Qgridinfo file)
+
+"""
 
 import units
 meV = units.energy.meV
@@ -83,6 +89,7 @@ def dispersion_fromidf( datapath ):
 def periodicdispersion_fromidf( datapath ):
     dispersion = dispersion_fromidf( datapath )
     
+    # XXX this is wasteful. should only need to read Qaxes, not everything
     from mccomponents.sample.idf import readDispersion
     nAtoms, dimension, Qaxes, polarizations, energies, dos = readDispersion( datapath )
     reciprocalcell = [ bi for bi,n in Qaxes ]
@@ -102,9 +109,5 @@ def _import_bindings():
 
 _import_bindings()
 
-
-
-# version
-__id__ = "$Id$"
 
 # End of file 
