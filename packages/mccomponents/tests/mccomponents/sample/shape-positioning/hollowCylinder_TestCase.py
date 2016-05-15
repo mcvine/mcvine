@@ -10,7 +10,7 @@ class TestCase(unittest.TestCase):
 
 
     def test1(self):
-        'shape positioning: cylinder'
+        'shape positioning: hollow cylinder'
         # source
         from mcni.components.MonochromaticSource import MonochromaticSource
         import mcni
