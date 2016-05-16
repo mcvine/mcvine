@@ -31,8 +31,9 @@ class BoostPythonBinding(base, Interface):
         return binding.srandom( seed )
     
 
-    def compositekernel(self, kernels, weights, average):
-        return binding.CompositeScatteringKernel( kernels, weights, average )
+    def compositekernel(self, kernels, weights, rotmats, average):
+        return binding.CompositeScatteringKernel(
+            kernels, weights, rotmats, average )
 
 
     def kernelcontainer(self, size = 0):
@@ -53,6 +54,10 @@ class BoostPythonBinding(base, Interface):
     
     def vector_double(self, size):
         return binding.vector_double(size)
+
+
+    def vector_rotmat(self):
+        return binding.vector_rotmat(0)
     
 
     pass # end of BoostPythonBinding
