@@ -21,6 +21,7 @@ warning = journal.warning( "homogeneous_scatterer_TestCase" )
 
 
 import mcni
+from mcni import mcnibp
 from mccomposite import mccompositebp 
 from mccomponents import mccomponentsbp
 
@@ -55,10 +56,14 @@ class TestCase(unittest.TestCase):
         
         weights = mccomponentsbp.vector_double(0)
         weights.append(1.)
+
+        rotmats = mccomponentsbp.vector_rotmat(0)
+        rotmat = mcnibp.RotationMatrix_double(1,0,0, 0,1,0, 0,0,1)
+        rotmats.append(rotmat)
         
         average=False
         kernelcomposite = mccomponentsbp.CompositeScatteringKernel( 
-            kernels, weights, average)
+            kernels, weights, rotmats, average)
 
         mcweights = mccomponentsbp.MCWeights_AbsorptionScatteringTransmission()
         scatterer = mccomponentsbp.HomogeneousNeutronScatterer(
