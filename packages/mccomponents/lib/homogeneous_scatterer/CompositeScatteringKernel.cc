@@ -60,15 +60,37 @@ Details::select_kernel() const
 
 
 
+// helper functions
+/// transform velocity from coordinate system of the host to the constituent
+void tosubkernel 
+(mccomposite::geometry::Direction & direction, 
+ const mccomposite::geometry::RotationMatrix & rotmat)
+{
+  mccomposite::geometry::RotationMatrix rotmatT = rotmat;
+  rotmatT.transpose();
+  direction = rotmatT * direction;
+}
+void tohostkernel
+(mccomposite::geometry::Direction & direction, 
+ const mccomposite::geometry::RotationMatrix & rotmat)
+{
+  direction = rotmat * direction;
+}
+
+
+
 // meta-methods
 mccomponents::CompositeScatteringKernel::CompositeScatteringKernel
-( const kernels_t & kernels, const weights_t &weights, bool average)
+( const kernels_t & kernels, const weights_t &weights, const rotmats_t &rotmats,
+  bool average)
   : m_kernels(kernels),
     m_average(average),
     m_weights(weights),
+    m_rotmats(rotmats),
     m_details(new Details(*this))
 {
   assert(m_kernels.size() == m_weights.size());
+  assert(m_rotmats.size() == m_weights.size());
   
   // find if one of the elemental kernel claims it does total scattering
   // make sure there is at most one such kernel. 
@@ -142,7 +164,10 @@ void mccomponents::CompositeScatteringKernel::scatter
 {
   size_t index = m_details->select_kernel();
   ev.probability /= m_weights[index];
+  const rotmat_t &rotmat = m_rotmats[index];
+  tosubkernel(ev.state.velocity, rotmat);
   m_kernels[index]->scatter( ev );
+  tohostkernel(ev.state.velocity, rotmat);
 }
 
 void mccomponents::CompositeScatteringKernel::absorb
@@ -150,9 +175,11 @@ void mccomponents::CompositeScatteringKernel::absorb
 {
   size_t index = m_details->select_kernel();
   ev.probability /= m_weights[index];
+  const rotmat_t &rotmat = m_rotmats[index];
+  tosubkernel(ev.state.velocity, rotmat);
   m_kernels[index]->absorb( ev );
+  tohostkernel(ev.state.velocity, rotmat);
 }
-
 
 // version
 // $Id$
