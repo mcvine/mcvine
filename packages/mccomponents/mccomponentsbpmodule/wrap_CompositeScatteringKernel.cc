@@ -32,6 +32,7 @@ namespace wrap_mccomponents {
        init
        <const w_t::kernels_t &,
        const w_t::weights_t &,
+       const w_t::rotmats_t &,
        bool>()
        [with_custodian_and_ward<1,2>()]
        )

@@ -13,6 +13,7 @@
 
 
 from AbstractNode import AbstractNode, debug
+import numpy as np
 
 
 # base class for kernel nodes
@@ -21,11 +22,21 @@ class KernelNode(AbstractNode):
     
     
     def elementFactory( self, **kwds ):
+        kernel = self.createKernel(**kwds)
+        # weight
         weight = float(kwds.get('weight') or 1)
         if weight <= 0:
             raise ValueError("weight must be positive")
-        kernel = self.createKernel(**kwds)
         kernel.weight = weight
+        # rotmat
+        rotmat = kwds.get('orientation', None)
+        if rotmat is not None:
+            import numpy as np
+            d = dict(sqrt=np.sqrt)
+            rotmat = eval(rotmat, d)
+            rotmat = np.array(rotmat)
+            rotmat.shape = 3,3
+        kernel.rotmat = rotmat
         return kernel
 
     pass # end of KernelNode
