@@ -1,0 +1,10 @@
+To build mcvine conda pkg at heetuu:
+
+Make sure version number is correct in CMakeLists.txt,
+and check all CONDA related variables there.
+
+$ . ~/.use-anaconda
+$ source activate build-mcvine
+$ cd ~/dv/mcvine/build
+$ cmake ../mcvine
+$ make conda-build-pkg
