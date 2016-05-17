@@ -25,7 +25,7 @@
 # $ anaconda upload /home/lj7/anaconda2/conda-bld/linux-64/mcvine-1.0.1-py27_0.tar.bz2
 
 set(PROJECT_NAME "mcvine")
-set(VERSION "1.1dev")
+set(VERSION "1.1-alpha")
 set(AUTHOR "Jiao Lin")
 set(AUTHOR_EMAILE "jiao.lin@gmail.com")
 set(VENDOR "DANSE")
@@ -34,9 +34,8 @@ set(LICENSE "BSD")
 set(RPM_APP_GROUP "Development/Tools")
 set(GITHUB_URL "https://github.com/mcvine/mcvine")
 # can change this to a branch or a tag, for example
-# set(GIT_RELEASE_TAG "115-conda")
 # set(GIT_RELEASE_TAG ${VERSION})
-set(GIT_RELEASE_TAG "master")
+set(GIT_RELEASE_TAG "v1.1-alpha")
 set (HOMEPAGE ${GITHUB_URL})
 
 # Is this still needed?
@@ -54,6 +53,7 @@ set (DOCKER_PKGING_TEST_SRPM ". /opt/danse/bin/setup-danse.sh && mcvine")
 set (DOCKER_PKGING_BUILDSTEP_BUILDCMD "cd .. && git clone https://github.com/mcvine/resources.git &&  /work/src/builders/build /work/src /work/build /opt/danse /work/resources")
 set (DOCKER_PKGING_TEST_RPM ${DOCKER_PKGING_TEST_SRPM})
 set (DOCKER_PKGING_TEST_DEB ${DOCKER_PKGING_TEST_SRPM})
+set (VERSION_FOR_CONDA_PKGING 1.1alpha)
 set (CONDA_PKGING_BUILD_DEPS "python pyyaml numpy psutil h5py mpi4py gsl boost pyre danse.ins.dsm danse.ins.numpyext danse.ins.bpext histogram danse.ins.matter drchops mcvine-resources")
 set (CONDA_PKGING_RUN_DEPS "python pyyaml numpy psutil h5py mpi4py gsl boost pyre danse.ins.dsm danse.ins.numpyext danse.ins.bpext histogram danse.ins.matter drchops mcvine-resources")
 set(CONDA_BUILD_MAKE_CMD "cmake -DCMAKE_INSTALL_PREFIX=$PREFIX -DDEPLOYMENT_PREFIX=$PREFIX .. && make -j $CORES && make -j$CORES reconfigure-to-include-mcstas-components && make -j$CORES wrap-mcstas-components-cmake && make -j$CORES && make install")
