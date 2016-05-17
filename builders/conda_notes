@@ -6,5 +6,6 @@ and check all CONDA related variables there.
 $ . ~/.use-anaconda
 $ source activate build-mcvine
 $ cd ~/dv/mcvine/build
+$ rm -rf ./conda
 $ cmake ../mcvine
 $ make conda-build-pkg
