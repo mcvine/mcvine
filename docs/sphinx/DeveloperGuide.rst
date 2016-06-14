@@ -3,6 +3,7 @@ Developer Guide
 
 Organization
 ------------
+Hosted at github
 
 * mcvine:
   - src code
@@ -11,6 +12,14 @@ Organization
   - usually don't change over time. new files are added into it.
   - path specified by env var MCVINE_RESOURCES
   - examples should be explicitly versioned?
+* workflow:
+  - scripts/Makefiles/etc
+  - make it easier for users to construct workflow
+  - intended to be lightweight
+* training:
+  - Markdown files and jupyter notebooks
+* conda-recipes:
+  - recipes to build conda packages
 
 
 Development environemnt
@@ -36,6 +45,17 @@ Deployment testing
 
 This is done by travis-CI.
 
+
+Building release
+----------------
+
+Use conda::
+
+ $ cd ~/dv/mcvine/conda-recipes
+ $ git pull
+ $ . ~/.use-miniconda2
+ $ source activate build-mcvine
+ $ # run build commands in the current directory
 
 Creating a new scattering kernel for sample
 -------------------------------------------
