@@ -15,12 +15,12 @@
 # $ conda install anaconda-client # for upload conda pkg to anaconda
 # $ conda config --set anaconda_upload yes # for automatic upload
 # $ conda config --add channels conda-forge # conda-forge provides gsl
-# $ conda config --add channels yxqd # yxqd provides danse pkgs
+# $ conda config --add channels mcvine # mcvine provides danse pkgs
 # $ conda update -n root conda-build # tool for building conda pkg
 # $ make conda-build-pkg
 # additional conda cmds
-# remove pkg from anaconda site
-# $ anaconda remove yxqd/mcvine/1.0.1/linux-64/mcvine-1.0.1-py27_0.tar.bz2
+# remove mcvine pkg from anaconda site for mcvine
+# $ anaconda remove mcvine/mcvine/1.0.1/linux-64/mcvine-1.0.1-py27_0.tar.bz2
 # upload pkg to anaconda site
 # $ anaconda upload /home/lj7/anaconda2/conda-bld/linux-64/mcvine-1.0.1-py27_0.tar.bz2
 
