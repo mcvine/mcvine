@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE SampleAssembly>
+
+<SampleAssembly name="X">
+  
+  <PowderSample name="X" type="sample">
+    <Shape>
+      <sphereShell in_radius="5*cm" out_radius="10*cm"/>
+    </Shape>
+    <Phase type="crystal">
+      <ChemicalFormula>Al</ChemicalFormula>
+      <xyzfile>Al.xyz</xyzfile>
+    </Phase>
+  </PowderSample>
+  
+  <LocalGeometer registry-coordinate-system="InstrumentScientist">
+    <Register name="X" position="(0,0,0)" orientation="(0,0,0)"/>
+  </LocalGeometer>
+
+  <Environment temperature="300*K"/>
+
+</SampleAssembly>

@@ -211,9 +211,16 @@ add a python wrapper on top of the python binding.
 Shapes
 ------
 
-more shapes: 
-sampleassembly.saxml.parser.Document
+more shapes::
 
+* instrument.geometry
+* sampleassembly.saxml.parser.Document
+* mccomposite.bindings.BoostPythonBinding
+* mccomposite.coordinate_systems
+* mccomposite.geometry
+* mccomposite.extensions
+* mccomponents.detector
+* mccomponents.sample
 
 
 Tests
