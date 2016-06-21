@@ -218,6 +218,9 @@ more shapes::
 * mccomposite.bindings.BoostPythonBinding
 * mccomposite.coordinate_systems
 * mccomposite.geometry
+* mccomposite.extensions
+* mccomponents.detector
+* mccomponents.sample
 
 
 Tests
