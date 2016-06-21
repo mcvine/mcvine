@@ -108,8 +108,7 @@ mccomponents::kernels::phonon::CoherentInelastic_SingleXtal::CoherentInelastic_S
   float_t temperature,
   float_t deltaV_Jacobi, 
   const rootsfinder_t & roots_finder,
-  const target_region_t & target_region,
-  float_t epsilon) 
+  const target_region_t & target_region
   : m_disp(disp),
     m_atoms(atoms),
     m_DW_calc( &dw_calctor ),

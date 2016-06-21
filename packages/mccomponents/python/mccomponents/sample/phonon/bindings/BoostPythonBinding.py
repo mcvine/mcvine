@@ -318,14 +318,12 @@ class New:
         zridd = b.ZRidd(10) # 0.1 - accuracy of velocity (m/s)
         rootsfinder = b.FindRootsEvenly(zridd, 100)
         targetregion = b.TargetCone(self.vector3(0,0,0),0)
-        epsilon = 1.e-10
 
         return b.Phonon_CoherentInelastic_SingleXtal_kernel(
             dispersion, atom_vector, unitcell_vol, dw_calctor,
             temperature,
             deltaV_Jacobi, 
             rootsfinder, targetregion,
-            epsilon
             )
 
 
