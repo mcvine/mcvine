@@ -65,7 +65,8 @@ def create_sources_for_a_component(category, type, path):
     cmake.prepare(bindingobj)
     # update components cmakefile
     root_cmakefile = os.path.join(path, 'CMakeLists.txt')
-    if not os.path.exists(root_cmakefile):
+    if not os.path.exists(root_cmakefile) \
+       or not open(root_cmakefile).read().strip():
         _init_components_cmakefile(root_cmakefile)
     root_cmake_stream = open(root_cmakefile, 'a+')
     content = root_cmake_stream.read().split('\n')
