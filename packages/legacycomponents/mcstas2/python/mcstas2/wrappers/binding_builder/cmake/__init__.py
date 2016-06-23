@@ -45,6 +45,7 @@ foreach(pysrc ${PYTHON_SOURCES})
   get_filename_component(fn ${pysrc} NAME)
   add_custom_command(OUTPUT ${PYTHON_TARGET_DIR}/${fn}
     COMMAND ${CMAKE_COMMAND} -E copy ${pysrc} ${PYTHON_TARGET_DIR}/${fn}
+    DEPENDS ${pysrc}
     )
   list(APPEND PYTHON_TARGETS "${PYTHON_TARGET_DIR}/${fn}")
 endforeach()
