@@ -57,6 +57,21 @@ Use conda::
  $ source activate build-mcvine
  $ # run build commands in the current directory
 
+
+Adding/modifying Adapted McStas components
+------------------------------------------
+After changes to the source code, run the following under "build"
+directory::
+
+ $ make reconfigure-to-include-mcstas-components
+ $ make wrap-mcstas-components-cmake
+
+The first command will generate on-the-fly source codes to
+wrap the component, and add cmake machinery.
+The second command will build the binding.
+This is done in mcstas2.cmake_utils module.
+
+
 Creating a new scattering kernel for sample
 -------------------------------------------
 
