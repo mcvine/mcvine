@@ -197,40 +197,6 @@ def defaultcomponentlibrarypath( ):
     return dir
 
 
-def create_sources_for_components(path):
-    """create source code directories in the given path
-    for all components that are not yet wrapped
-    This is only to be used as a cmake command.
-    See ../../CMakeLists.txt
-    """
-    import os
-    #set appropriate python export path
-    pythonexportroot = os.environ.get('EXPORT_PYTHON'),
-    #
-    from components import componentfactory
-    from components.Registry import NotRegisteredError
-    from .wrappers import createBindingObject
-    root_cmakefile = os.path.join(path, 'CMakeLists.txt')
-    root_cmake_stream = open(root_cmakefile, 'wt')
-    root_cmake_stream.write('add_custom_target(wrap-mcstas-components-cmake)\n')
-    root_cmake_stream.write('add_dependencies(wrap-mcstas-components-cmake reconfigure-to-include-mcstas-components)\n')
-    for type, category in iterComponents():
-        try:
-            f = componentfactory( category, type )
-        except NotRegisteredError:
-            componentfn = defaultcomponentpath( category, type )
-            directory = '%s_%s' % (category, type)
-            srcpath = os.path.join(path, directory)
-            bindingobj, classname, componentcategory, componentname = \
-                createBindingObject(componentfn, category, path=srcpath)
-            # cmake
-            from .wrappers.binding_builder import cmake
-            cmake.prepare(bindingobj)
-            root_cmake_stream.write("add_subdirectory(%s)\n" % directory)
-        continue
-    return
-
-
 def iterComponents():
     """iterator to loop over all components, yielding
     the type and category of every component"""
