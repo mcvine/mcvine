@@ -672,12 +672,12 @@ TRACE
   double t_min, t_max;
   if (t_em < 0) {
     t_min = txval[tidxstart];
-    t_max = t_min + (txval[tidxstop-1]-t_min)/10 + t0;
+    t_max = t_min + 2*t0;
   } else {
-    t_min = t_em*.5 - t0, t_max = t_em*2 + t0;
-    if (t_min < txval[tidxstart]) t_min = txval[tidxstart];
-    if (t_max > txval[tidxstop-1]) t_max = txval[tidxstop-1];
+    t_min = t_em - t0, t_max = t_em + 3*t0;
   }
+  if (t_min < txval[tidxstart]) t_min = txval[tidxstart];
+  if (t_max > txval[tidxstop-1]) t_max = txval[tidxstop-1];
   if (logging) {
     printf(" * Selected E=%g, emission_time=%g\n", E, t_em);
     printf(" * emission time window: tmin=%g, tmax=%g\n", t_min, t_max);
