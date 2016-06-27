@@ -3,9 +3,16 @@ User Guide
 
 Common options for all mcvine simulation scripts
 ------------------------------------------------
---ncount
 
---buffer_size
+::
+
+  --ncount: total number of "neutrons" to simulate
+  --buffer_size: size of "neutron buffer" in memory
+
+
+
+Advanced topics
+---------------
 
 Debugging
 ---------
@@ -13,4 +20,11 @@ Print out neutrons::
 
  --tracer=console
 
+Simulation application::
+
+ --journal.info.<appname>
+
+Data stream::
+
+ --journal.info.dsm.Runner
 
