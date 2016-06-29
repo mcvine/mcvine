@@ -38,18 +38,24 @@ mccomponents::detector::EventModeMCA::EventModeMCA
   : m_out( outfilename, std::ofstream::binary ),
     m_dims( dims )
 {
-#ifdef DEBUG
+  // #ifdef DEBUG
   journal::debug_t debug( EventModeMCA_impl::jrnltag );
   debug << journal::at(__HERE__)
+	<< "Opening event mode mca" << journal::newline
 	<< "output file name: " << outfilename 
 	<< journal::endl;
 
-#endif
+  // #endif
 }
 
 mccomponents::detector::EventModeMCA::~EventModeMCA()
 {
-  
+  journal::debug_t debug( EventModeMCA_impl::jrnltag );
+  debug << journal::at(__HERE__)
+	<< "Closing event mode mca" 
+	<< journal::endl;
+  m_out.flush();
+  m_out.close();
 }
 
 void mccomponents::detector::EventModeMCA::accept
