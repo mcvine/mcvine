@@ -23,43 +23,17 @@ The detector system is of SEQUOIA.
 """
 
 
-appname = 'sequoia-neutrons2events'
+appname = 'sequoia_neutrons2events'
 cmd_help = __doc__
 
 
-# application 
-from pyre.applications.Script import Script as AppBase
-class App(AppBase):
-
-    class Inventory(AppBase.Inventory):
-
-        import pyre.inventory
-        neutrons = pyre.inventory.str('neutrons', default='neutrons.dat')
-        workdir = pyre.inventory.str('workdir', default='work-sequoia-neutrons2events')
-        nodes = pyre.inventory.int('nodes', default=0)
-        
-        tofbinsize = pyre.inventory.float('tofbinsize', default=0.1) # microsecond
-
-        
-    def main(self):
-        neutrons = self.inventory.neutrons; neutrons = os.path.abspath(neutrons)
-        workdir = self.inventory.workdir; workdir = os.path.abspath(workdir)
-        if os.path.exists(workdir):
-            raise IOError("%s already exists" % workdir)
-        os.makedirs(workdir)
-        
-        nodes = self.inventory.nodes
-        tofbinsize = self.inventory.tofbinsize
-        run(neutrons, workdir, nodes=nodes, tofbinsize=tofbinsize)
-        return
-
-
-    def help(self):
-        print cmd_help
-    
-
 # main methods
 def run(neutrons, workdir, **kwds):
+    neutrons = os.path.abspath(neutrons)
+    workdir = os.path.abspath(workdir)
+    if os.path.exists(workdir):
+        raise IOError("%s already exists" % workdir)
+    os.makedirs(workdir)
     eventdat = sendneutronstodetsys(neutronfile=neutrons, workdir=workdir, **kwds)
     return
 
@@ -146,15 +120,3 @@ import os, subprocess as sp
 sequoiaxml = os.path.join(
     res.instrument('SEQUOIA'), 'detsys', 'sequoia.xml.fornxs')
 
-
-def main():
-    app = App(appname)
-    app.run()
-    return
-
-
-interactive = False
-
-if __name__ == '__main__': 
-    interactive = True
-    main()
