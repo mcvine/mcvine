@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-"""
+cmd_help = """
 This script wraps sequoia_moderator2sample.
 The 'sequoia_moderator2sample' is a instrument simulation script 
 with a list of components from moderator to sample (just before sample).
@@ -10,6 +10,10 @@ This script is a wrapper. Its interface is simpler: there are less
 than ten parameters to set. And this script computes parameters
 of some components such as phase of fermi chopper based on user's
 inputs here.
+
+Use --help-properties to see the configurable options:
+ $ <cmd> --help-properties
+
 """
 
 
@@ -61,6 +65,10 @@ class App(base):
         dry_run.meta[base.inventory_item_signature] = True
 
         pass # end of Inventory
+    
+    
+    def help(self):
+        print cmd_help
     
     
     def runApp(
@@ -127,7 +135,7 @@ class App(base):
         
         else:
             from mcvine.instruments.SEQUOIA.Instrument import Instrument
-            instrument = Instrument('sequoia-moderator2sample')
+            instrument = Instrument('sequoia_moderator2sample')
             instrument.run()
         
         return
@@ -151,9 +159,6 @@ def hasOpt(key, argv):
     return False
 
 
-def main():
-    app = App('sequoia-m2s')
-    return app.run()
+name = 'sequoia_m2s'
 
-
-if __name__ == '__main__': main()
+if __name__ == '__main__': App(name).run()
