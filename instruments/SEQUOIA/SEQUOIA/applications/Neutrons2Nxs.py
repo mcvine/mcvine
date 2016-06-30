@@ -26,7 +26,7 @@ def run(neutrons, nxs, type, workdir, nodes):
     import time
     eventdat = sendneutronstodetsys(neutronfile=neutrons, workdir=os.path.join(workdir, 'todetsys'), nodes=nodes)
     time.sleep(10)
-    event2nxs(eventdat, nxs, type, workdir)
+    event2nxs(eventdat, nxs, type, os.curdir)
     return
 
 
