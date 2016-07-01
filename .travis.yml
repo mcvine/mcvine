@@ -29,9 +29,9 @@ install:
   - conda update conda
   - conda config --add channels conda-forge
   - conda config --add channels mcvine
+  - conda install -n root conda-build
   - conda create -n testenv python=$TRAVIS_PYTHON_VERSION
   - conda install -n testenv anaconda-client
-  - conda update -n root conda-build
   - conda install -n testenv cmake
   - conda install -n testenv pyyaml numpy
   - conda install -n testenv psutil h5py mpi4py gsl boost
