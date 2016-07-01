@@ -3,6 +3,9 @@ dist: trusty
 
 language: cpp
 
+python:
+  - 2.7
+
 branches:
   only:
     - master
