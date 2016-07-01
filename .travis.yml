@@ -40,6 +40,7 @@ install:
   - conda install -n testenv histogram danse.ins.matter drchops
   - conda install -n testenv mcvine-resources
   - source activate testenv
+  - ls -l /home/travis/mc/envs/testenv/bin/python
   - mkdir build
   - cd build
   - cmake ..
