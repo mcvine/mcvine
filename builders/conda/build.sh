@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 if [ -z "$CORES" ];
-    then CORES=1;
+    then CORES=2;
 fi
 
 PYVER_MAJOR=${CONDA_PY:0:1}
