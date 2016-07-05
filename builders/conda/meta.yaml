@@ -43,6 +43,7 @@ requirements:
     - danse.ins.matter
     - drchops
     - mcvine-resources
+    - cmake
 
 build:
   script_env:
