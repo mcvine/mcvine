@@ -36,7 +36,7 @@ install:
   - export TESTENV_DIR=/home/travis/mc/envs/testenv
   - ls -l ${TESTENV_DIR}/bin/python
   - cd builders/conda
-  - CORES=4 conda build .
+  - CORES=2 conda build .
   - cd ../..
   - conda install mcvine --use-local
 
