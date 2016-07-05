@@ -44,11 +44,14 @@ requirements:
     - drchops
     - mcvine-resources
 
+build:
+  script_env:
+    - CORES
+
 test:
   imports:
     - mcvine
   
-
 about:
   home: 
   license:

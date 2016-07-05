@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+if [ -z "$CORES" ];
+    then CORES=1;
+fi
+
 PYVER_MAJOR=${CONDA_PY:0:1}
 PYVER_MINOR=${CONDA_PY:1:1}
 PYVER=${PYVER_MAJOR}.${PYVER_MINOR}
