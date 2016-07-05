@@ -7,8 +7,9 @@ PYVER=${PYVER_MAJOR}.${PYVER_MINOR}
 let CORES=`grep -c ^processor /proc/cpuinfo`
 let CORES-=1
 if ((CORES < 1)); then
-    CORES = 1;
+    CORES=1;
 fi
+CORES=2
 
 mkdir build
 cd build
