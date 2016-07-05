@@ -1,6 +1,6 @@
 package:
   name: mcvine
-  version: "1.1dev"
+  version: "dev"
 
 source:
   git_rev: master

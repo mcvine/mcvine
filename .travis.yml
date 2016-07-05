@@ -33,8 +33,8 @@ install:
   - conda create -n testenv python=$TRAVIS_PYTHON_VERSION
   - conda install -n testenv anaconda-client
   - source activate testenv
-  - export TESTENV_DIR=/home/travis/mc/envs/testenv
-  - ls -l ${TESTENV_DIR}/bin/python
+  - anaconda login --username $ANACONDA_USERNAME --password $ANACONDA_PASSWORD
+  - conda config --set anaconda_upload yes
   - cd builders/conda
   - CORES=2 conda build .
   - cd ../..
