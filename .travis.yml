@@ -34,6 +34,7 @@ install:
   - conda create -n testenv python=$TRAVIS_PYTHON_VERSION
   - conda install -n testenv anaconda-client
   - source activate testenv
+  - which python
   - anaconda login --username $ANACONDA_USERNAME --password $ANACONDA_PASSWORD
   - conda config --set anaconda_upload yes
   - cd builders/conda

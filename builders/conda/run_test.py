@@ -13,6 +13,8 @@ The tests will run at a separate work directory.
 
 import os, sys, psutil
 
+print sys.executable
+
 if len(sys.argv)>1:
     work = sys.argv[1]
 else:
