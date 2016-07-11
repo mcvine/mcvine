@@ -13,7 +13,6 @@ The tests will run at a separate work directory.
 
 import os, sys, psutil
 
-print(sys.executable)
 prefix = os.path.dirname(os.path.dirname(sys.executable))
 
 if len(sys.argv)>1:
@@ -29,9 +28,8 @@ testsdir = os.path.join(mcvinedir, 'share', 'mcvine', 'tests')
 
 cores = os.environ.get('CORES', 2)
 conda_py = os.environ.get("CONDA_PY")
-print (conda_py)
 pyver = '%s.%s' % (conda_py[0], conda_py[1])
 py_lib = '%s/lib/libpython%s.so' % (prefix, pyver)
 py_include = '%s/include/python%s' % (prefix, pyver)
-cmd = '''cmake -DPYTHON_LIBRARY=%s -DPYTHON_INCLUDE_DIR=%s %s && env CTEST_OUTPUT_ON_FAILURE=1 make test ARGS="-j%s"''' % (py_lib, py_include, testsdir, cores)
+cmd = '''cmake -DPYTHON_LIBRARY=%s -DPYTHON_INCLUDE_DIR=%s %s && CTEST_OUTPUT_ON_FAILURE=1 make test ARGS="-j%s"''' % (py_lib, py_include, testsdir, cores)
 sys.exit(os.system(cmd))
