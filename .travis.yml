@@ -37,7 +37,7 @@ install:
   - conda config --set anaconda_upload no
   - cd builders/conda
   - CORES=2 conda build .
-  - anaconda remove mcvine/mcvine/dev/linux-64/mcvine-dev-py27_0.tar.bz2
+  - anaconda remove -f mcvine/mcvine/dev/linux-64/mcvine-dev-py27_0.tar.bz2
   - anaconda upload /home/travis/mc/conda-bld/linux-64/mcvine-dev-py27_0.tar.bz2
   - cd ../..
   - conda install mcvine --use-local
