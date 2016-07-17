@@ -2,10 +2,9 @@
 
 This is different from what is in
 http://github.com/mcvine/conda-recipes,
-which contains 
-(danse-ins-conda-cmake-drivers)[https://github.com/danse-inelastic/conda-packaging]
-to build conda pkgs
-of mcvine deps and mantid and mcvine.
+which contains recipes using
+[danse-ins-conda-cmake-drivers](https://github.com/danse-inelastic/conda-packaging)
+to build conda pkgs of mcvine deps and mantid and mcvine.
 The cmake-driver allows setting things like version 
 number and git branch from the master
 CMakeLists.txt at the src root dir.
