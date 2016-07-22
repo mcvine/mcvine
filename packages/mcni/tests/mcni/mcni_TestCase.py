@@ -26,7 +26,6 @@ class mcni_TestCase(unittest.TestCase):
 
 
     def test(self):
-        raise RuntimeError("test")
         component1 = Source('source')
         component2 = Verifier('dummy2', self)
         instrument = mcni.instrument( [component1, component2] )
