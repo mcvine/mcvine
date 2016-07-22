@@ -1,5 +1,7 @@
 # conda recipe for building mcvine
 
+This recipe is mainly for travis CI build.
+
 This is different from what is in
 http://github.com/mcvine/conda-recipes,
 which contains recipes using
@@ -11,11 +13,17 @@ CMakeLists.txt at the src root dir.
 
 This one does not need the cmake driver,
 but it does use cmake for the building step
-as the other recipe.
+as in other recipes.
 
 ## Configuration
 
-* Modify meta.yaml
-  - version
-  - git_rev
-  - git_url
+* Create meta.yaml by
+```
+ $ ./create_meta_yaml VERSION GIT_REV
+```
+
+## Build
+
+```
+ $ conda build .
+```
