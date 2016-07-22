@@ -36,6 +36,8 @@ install:
   - anaconda login --username $ANACONDA_USERNAME --password $ANACONDA_PASSWORD
   - conda config --set anaconda_upload no
   - cd builders/conda
+  - ./create_meta_yaml dev $GIT_FULL_HASH
+  - grep git_rev meta.yaml
   - CORES=2 conda build .
   - anaconda remove -f mcvine/mcvine/dev/linux-64/mcvine-dev-py27_0.tar.bz2
   - anaconda upload /home/travis/mc/conda-bld/linux-64/mcvine-dev-py27_0.tar.bz2
