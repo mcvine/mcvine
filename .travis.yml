@@ -38,7 +38,7 @@ install:
   - anaconda login --username $ANACONDA_USERNAME --password $ANACONDA_PASSWORD
   - conda config --set anaconda_upload no
   - cd builders/travis-conda
-  - ./create_meta_yaml $VERSION-unstable $GIT_FULL_HASH
+  - ./create_meta_yaml ${VERSION}unstable $GIT_FULL_HASH
   - grep version meta.yaml
   - grep git_rev meta.yaml
   - CORES=2 conda build .
