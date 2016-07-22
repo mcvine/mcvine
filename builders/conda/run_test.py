@@ -11,6 +11,7 @@ $MCVINE_DIR/share/mcvine/tests.
 The tests will run at a separate work directory.
 """
 
+print ("hello")
 import os, sys, psutil
 
 prefix = os.path.dirname(os.path.dirname(sys.executable))
@@ -32,4 +33,5 @@ pyver = '%s.%s' % (conda_py[0], conda_py[1])
 py_lib = '%s/lib/libpython%s.so' % (prefix, pyver)
 py_include = '%s/include/python%s' % (prefix, pyver)
 cmd = '''cmake -DPYTHON_LIBRARY=%s -DPYTHON_INCLUDE_DIR=%s %s && CTEST_OUTPUT_ON_FAILURE=1 make test ARGS="-j%s"''' % (py_lib, py_include, testsdir, cores)
-sys.exit(os.system(cmd))
+if os.system(cmd):
+    raise RuntimeError("%s failed" % cmd)
