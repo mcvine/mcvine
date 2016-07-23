@@ -1,0 +1,17 @@
+. ~/.use-anaconda
+source activate dev-mcvine
+
+export PYVER=2.7
+export DEPLOYMENT_PREFIX=${CONDA_ENV_PATH}
+export PYTHON_LIBRARY=${CONDA_ENV_PATH}/lib/libpython${PYVER}.so
+export PYTHON_INCLUDE_DIR=${CONDA_ENV_PATH}/include/python${PYVER}
+
+export MCVINE_RESOURCES=$HOME/dv/mcvine/resources
+export MCVINE_DIR=$HOME/dv/mcvine/export
+export EXPORT_ROOT=$MCVINE_DIR # pyre etc
+export PATH=$MCVINE_DIR/bin:$PATH
+export PYTHONPATH=$MCVINE_DIR/lib/python2.7/site-packages:$PYTHONPATH
+export LD_LIBRARY_PATH=$MCVINE_DIR/lib:$LD_LIBRARY_PATH
+
+alias mm="cmake ../mcvine && make -j 30 && make reconfigure-to-include-mcstas-components && make wrap-mcstas-components-cmake && make install -j 30"
+alias mt='env CTEST_OUTPUT_ON_FAILURE=1 make test ARGS="-j30"'
