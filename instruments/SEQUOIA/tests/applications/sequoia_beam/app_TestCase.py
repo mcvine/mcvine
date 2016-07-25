@@ -11,7 +11,7 @@ class TestCase(unittest.TestCase):
         if not os.path.exists(workdir):
             os.makedirs(workdir)
         sp.check_call(
-            shlex.split("mcvine instruments sequoia beam --E=100 --ncount=1e6"), 
+            shlex.split("mcvine instruments sequoia beam --E=100 --ncount=3e6"), 
             shell=False, cwd=workdir)
         return
 
