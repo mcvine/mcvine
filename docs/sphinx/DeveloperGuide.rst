@@ -12,7 +12,7 @@ Hosted at github
   - usually don't change over time. new files are added into it.
   - path specified by env var MCVINE_RESOURCES
   - examples should be explicitly versioned?
-* workflow:
+* workflow (more details in :ref:`devnotes`):
   - scripts/Makefiles/etc
   - make it easier for users to construct workflow
   - intended to be lightweight

@@ -1,5 +1,18 @@
+.. _devnotes:
+
 Development notes
 =================
+
+Workflow
+--------
+
+* Code: http://github.com/mcvine/workflow
+* CLI: $ mcvine workflow
+* CLI impl.: https://github.com/mcvine/workflow/tree/master/mcvine_workflow/cli
+* Workflow examples:
+  - https://github.com/mcvine/workflow/tree/master/notebook-examples
+  - https://github.com/mcvine/training/: subdirs such as ARCS
+
 
 SNS instruments
 ---------------
