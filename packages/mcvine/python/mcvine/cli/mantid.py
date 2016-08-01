@@ -5,8 +5,6 @@
 #
 
 from . import mcvine, click
-import h5py, numpy as np
-
 
 @mcvine.group()
 def mantid():
@@ -17,6 +15,7 @@ def mantid():
 @click.argument("histogram")
 def extract_iqe(mantid_nxs, histogram):
     "extract iqe from a mantid-saved h5 file and save to a histogram"
+    import h5py, numpy as np
     inpath, outpath = mantid_nxs, histogram
     f = h5py.File(inpath)
     w = f['mantid_workspace_1']['workspace']
