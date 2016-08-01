@@ -1,42 +1,34 @@
 .. _relnotes:
 
-Release Notes 1.0.1 - March 2016
-================================
+Release Notes 1.1 - July 2016
+=============================
 
-This is a minor update of release 1.0.
-Compare to 1.0, the main added functionality in 1.0.1
-is the ARCS powder simulation workflow tool::
-
- $ mcvine workflow powder
-
-See :ref:`ARCS tutorials <tutorials-arcs>` for more details.
+In this release, we mainly improved the installation of MCViNE
+and started providing the training materials as jupyter notebooks,
+in which examples of new single-crystal simulation workflow for the ARCS
+instrument are included.
 
 Source code
 -----------
-can be found at https://github.com/mcvine/mcvine/releases/tag/1.0.1
+can be found at https://github.com/mcvine/mcvine/releases/tag/1.1
 
-
-.. note::
-   The following are copied from the release notes of version 1.0.
 
 Installation
 ------------
-The release can be installed on ubuntu 14.04 and fedora 21
-:ref:`using debian and rpm package managers <install_using_pkg_mgr>`, respectively.
+The release can be :ref:`installed <installation>`
+on most of recent linux distributions using conda.
 
-Publications
-------------
-The introduction to the architecture and design
-principles and some key algorithms for the MCViNE software framework
-was published at
-`Nuclear Instruments and Methods in Physics Research Section A <http://dx.doi.org/10.1016/j.nima.2015.11.118>`_.
 
-More about publications can be found at :ref:`Publications <publications>`.
+Training materials
+------------------
+The MCViNE training materials now hosted at
+https://github.com/mcvine/training.
 
-Interface
----------
-The main command line interface (CLI) was established in
-:ref:`the mcvine CLI <cli>`,
-in which
-:ref:`a series of simulation applications for the ARCS spectrometer <arcs>` are included.
+
+Single crystal simulation workflows for the ARCS instrument
+-----------------------------------------------------------
+They are documented in:
+
+* `Spin wave <https://github.com/mcvine/training/blob/b385035b665e51aa0b427ec7a3f3f1ffe17cf322/ARCS/Tutorial%202.%20Single%20Crystal%20SpinWave.ipynb>`_
+* `Phonon <https://github.com/mcvine/training/blob/b385035b665e51aa0b427ec7a3f3f1ffe17cf322/ARCS/Tutorial%203.%20Single%20Crystal%20Phonon.ipynb>`_
 
