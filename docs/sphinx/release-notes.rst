@@ -10,7 +10,7 @@ instrument are included.
 
 Source code
 -----------
-can be found at https://github.com/mcvine/mcvine/releases/tag/1.1
+can be found at https://github.com/mcvine/mcvine/releases/tag/v1.1
 
 
 Installation
