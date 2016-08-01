@@ -8,7 +8,7 @@
     
     <title>Simulation of ARCS experiments &mdash; mcvine 1.0 documentation</title>
     
-    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
@@ -23,10 +23,10 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="mcvine 1.0 documentation" href="../index.html" /> 
   </head>
-  <body>
+  <body role="document">
 <div class="header">  
 <table><tr>
 <!--
@@ -44,7 +44,7 @@
 </table>
 </div>
 
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -57,7 +57,7 @@
       </ul>
     </div>
 
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
@@ -72,18 +72,23 @@
 </li>
 </ul>
 </li>
-<li><a class="reference internal" href="#tutorial-simulation-of-arcs-beam">Tutorial: Simulation of ARCS beam</a></li>
+<li><a class="reference internal" href="#tutorial-simulation-of-arcs-beam">Tutorial: Simulation of ARCS beam</a><ul>
+<li><a class="reference internal" href="#advanced-topic-customize-arcs-simulation">Advanced topic - customize ARCS simulation</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#command-line-interface-for-arcs">Command line interface for ARCS</a></li>
 </ul>
 </li>
 </ul>
 
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="../_sources/instruments/ARCS.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/instruments/ARCS.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
       <input type="text" name="q" />
@@ -102,14 +107,21 @@
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="simulation-of-arcs-experiments">
 <span id="tutorials-arcs"></span><h1>Simulation of ARCS experiments<a class="headerlink" href="#simulation-of-arcs-experiments" title="Permalink to this headline">¶</a></h1>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last"><a class="reference internal" href="../CLI.html#cli-bash"><em>Tricks for $ mcvine command line bash interface&#8221;</em></a> may be useful
+<p class="last"><a class="reference internal" href="../CLI.html#cli-bash"><span>Tricks for $ mcvine command line bash interface&#8221;</span></a>
+and <a class="reference internal" href="#arcscmds"><span>CLI for ARCS</span></a>
+may be useful
 if you need to customize the simulations in the following tutorials.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Some more examples of ARCS simulations are available at
+<a class="reference external" href="https://github.com/mcvine/resources/tree/master/instruments/ARCS/simulations">mcvine resources/ARCS simulations</a>.</p>
 </div>
 <div class="section" id="tutorial-full-simulation-of-an-experiment-of-a-polycrystalline-vanadium-sample">
 <h2>Tutorial: full simulation of an experiment of a polycrystalline Vanadium sample<a class="headerlink" href="#tutorial-full-simulation-of-an-experiment-of-a-polycrystalline-vanadium-sample" title="Permalink to this headline">¶</a></h2>
@@ -126,9 +138,9 @@ with a polycrystalline vanadium sample.</p>
 so that you can run the last three steps above using only one command.
 All you need to do is</p>
 <ol class="arabic simple">
-<li><a class="reference internal" href="#tutorial-arcs-powderv-create-workflow"><em>Create the workflow</em></a></li>
-<li><a class="reference internal" href="#tutorial-arcs-powderv-beam"><em>Run the beam simulation</em></a></li>
-<li><a class="reference internal" href="#tutorial-arcs-powderv-sample"><em>Run the sample scattering, neutron detection, and reduction using one make command</em></a></li>
+<li><a class="reference internal" href="#tutorial-arcs-powderv-create-workflow"><span>Create the workflow</span></a></li>
+<li><a class="reference internal" href="#tutorial-arcs-powderv-beam"><span>Run the beam simulation</span></a></li>
+<li><a class="reference internal" href="#tutorial-arcs-powderv-sample"><span>Run the sample scattering, neutron detection, and reduction using one make command</span></a></li>
 </ol>
 <div class="section" id="create-workflow">
 <span id="tutorial-arcs-powderv-create-workflow"></span><h3>1. Create workflow<a class="headerlink" href="#create-workflow" title="Permalink to this headline">¶</a></h3>
@@ -158,7 +170,7 @@ option &#8211;ncount.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">More details of beam simulation can be found in
-<a class="reference internal" href="#tut-arcs-beam"><em>a different tutorial below</em></a></p>
+<a class="reference internal" href="#tut-arcs-beam"><span>a different tutorial below</span></a></p>
 </div>
 <p>After this step is finished, we may optionally examine the output files
 (see the note below),
@@ -196,7 +208,7 @@ If any of the steps failed, the workflow will stop.</p>
 <div class="section" id="inputs">
 <h4>Inputs<a class="headerlink" href="#inputs" title="Permalink to this headline">¶</a></h4>
 <p>The main input for the sample scattering step is the &#8220;sampleassembly&#8221;
-directory, which is explained <a class="reference internal" href="../SampleAssembly.html#sampleassembly"><em>here</em></a>.</p>
+directory, which is explained <a class="reference internal" href="../SampleAssembly.html#sampleassembly"><span>here</span></a>.</p>
 <p>You may adjust the sample scattering simulation options in
 the script &#8220;scatter&#8221;:</p>
 <ul class="simple">
@@ -248,6 +260,14 @@ $ cd mod2sample
 <p>Output: out/neutrons</p>
 <p>Output: out/mon1-itof-focused.h5</p>
 <p>Output: out/mon2-itof-focused.h5</p>
+<div class="section" id="advanced-topic-customize-arcs-simulation">
+<h3>Advanced topic - customize ARCS simulation<a class="headerlink" href="#advanced-topic-customize-arcs-simulation" title="Permalink to this headline">¶</a></h3>
+<p>You may need to choose different simulation components
+to achieve a better match with the experimental data.</p>
+<ul class="simple">
+<li><a class="reference external" href="https://github.com/mcvine/resources/tree/master/instruments/ARCS/simulations/beam/686.62meV-FC_700-0.5-ASTAnalyticSNSMod-McStasFermiChopper">Super-fine Fermi chopper example</a></li>
+</ul>
+</div>
 </div>
 <div class="section" id="command-line-interface-for-arcs">
 <span id="arcscmds"></span><h2>Command line interface for ARCS<a class="headerlink" href="#command-line-interface-for-arcs" title="Permalink to this headline">¶</a></h2>
@@ -268,7 +288,7 @@ $ cd mod2sample
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -280,9 +300,9 @@ $ cd mod2sample
  
       </ul>
     </div>
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2006-2016, Jiao Lin, Michael Aivazis, and Brent Fultz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
     </div>
   </body>
 </html>

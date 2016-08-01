@@ -6,9 +6,9 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Release Notes 1.0.1 - March 2016 &mdash; mcvine 1.0 documentation</title>
+    <title>Release Notes 1.1 - July 2016 &mdash; mcvine 1.0 documentation</title>
     
-    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
@@ -23,10 +23,10 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="mcvine 1.0 documentation" href="index.html" /> 
   </head>
-  <body>
+  <body role="document">
 <div class="header">  
 <table><tr>
 <!--
@@ -44,7 +44,7 @@
 </table>
 </div>
 
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -57,25 +57,27 @@
       </ul>
     </div>
 
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Release Notes 1.0.1 - March 2016</a><ul>
+<li><a class="reference internal" href="#">Release Notes 1.1 - July 2016</a><ul>
 <li><a class="reference internal" href="#source-code">Source code</a></li>
 <li><a class="reference internal" href="#installation">Installation</a></li>
-<li><a class="reference internal" href="#publications">Publications</a></li>
-<li><a class="reference internal" href="#interface">Interface</a></li>
+<li><a class="reference internal" href="#training-materials">Training materials</a></li>
+<li><a class="reference internal" href="#single-crystal-simulation-workflows-for-the-arcs-instrument">Single crystal simulation workflows for the ARCS instrument</a></li>
 </ul>
 </li>
 </ul>
 
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="_sources/release-notes.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/release-notes.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
       <input type="text" name="q" />
@@ -94,44 +96,35 @@
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
-  <div class="section" id="release-notes-1-0-1-march-2016">
-<span id="relnotes"></span><h1>Release Notes 1.0.1 - March 2016<a class="headerlink" href="#release-notes-1-0-1-march-2016" title="Permalink to this headline">¶</a></h1>
-<p>This is a minor update of release 1.0.
-Compare to 1.0, the main added functionality in 1.0.1
-is the ARCS powder simulation workflow tool:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ mcvine workflow powder
-</pre></div>
-</div>
-<p>See <a class="reference internal" href="instruments/ARCS.html#tutorials-arcs"><em>ARCS tutorials</em></a> for more details.</p>
+  <div class="section" id="release-notes-1-1-july-2016">
+<span id="relnotes"></span><h1>Release Notes 1.1 - July 2016<a class="headerlink" href="#release-notes-1-1-july-2016" title="Permalink to this headline">¶</a></h1>
+<p>In this release, we mainly improved the installation of MCViNE
+and started providing the training materials as jupyter notebooks,
+in which examples of new single-crystal simulation workflow for the ARCS
+instrument are included.</p>
 <div class="section" id="source-code">
 <h2>Source code<a class="headerlink" href="#source-code" title="Permalink to this headline">¶</a></h2>
-<p>can be found at <a class="reference external" href="https://github.com/mcvine/mcvine/releases/tag/1.0.1">https://github.com/mcvine/mcvine/releases/tag/1.0.1</a></p>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">The following are copied from the release notes of version 1.0.</p>
-</div>
+<p>can be found at <a class="reference external" href="https://github.com/mcvine/mcvine/releases/tag/1.1">https://github.com/mcvine/mcvine/releases/tag/1.1</a></p>
 </div>
 <div class="section" id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
-<p>The release can be installed on ubuntu 14.04 and fedora 21
-<a class="reference internal" href="Installation.html#install-using-pkg-mgr"><em>using debian and rpm package managers</em></a>, respectively.</p>
+<p>The release can be <a class="reference internal" href="Installation.html#installation"><span>installed</span></a>
+on most of recent linux distributions using conda.</p>
 </div>
-<div class="section" id="publications">
-<h2>Publications<a class="headerlink" href="#publications" title="Permalink to this headline">¶</a></h2>
-<p>The introduction to the architecture and design
-principles and some key algorithms for the MCViNE software framework
-was published at
-<a class="reference external" href="http://dx.doi.org/10.1016/j.nima.2015.11.118">Nuclear Instruments and Methods in Physics Research Section A</a>.</p>
-<p>More about publications can be found at <a class="reference internal" href="Publications.html#publications"><em>Publications</em></a>.</p>
+<div class="section" id="training-materials">
+<h2>Training materials<a class="headerlink" href="#training-materials" title="Permalink to this headline">¶</a></h2>
+<p>The MCViNE training materials now hosted at
+<a class="reference external" href="https://github.com/mcvine/training">https://github.com/mcvine/training</a>.</p>
 </div>
-<div class="section" id="interface">
-<h2>Interface<a class="headerlink" href="#interface" title="Permalink to this headline">¶</a></h2>
-<p>The main command line interface (CLI) was established in
-<a class="reference internal" href="CLI.html#cli"><em>the mcvine CLI</em></a>,
-in which
-<em class="xref std std-ref">a series of simulation applications for the ARCS spectrometer</em> are included.</p>
+<div class="section" id="single-crystal-simulation-workflows-for-the-arcs-instrument">
+<h2>Single crystal simulation workflows for the ARCS instrument<a class="headerlink" href="#single-crystal-simulation-workflows-for-the-arcs-instrument" title="Permalink to this headline">¶</a></h2>
+<p>They are documented in:</p>
+<ul class="simple">
+<li><a class="reference external" href="https://github.com/mcvine/training/blob/b385035b665e51aa0b427ec7a3f3f1ffe17cf322/ARCS/Tutorial%202.%20Single%20Crystal%20SpinWave.ipynb">Spin wave</a></li>
+<li><a class="reference external" href="https://github.com/mcvine/training/blob/b385035b665e51aa0b427ec7a3f3f1ffe17cf322/ARCS/Tutorial%203.%20Single%20Crystal%20Phonon.ipynb">Phonon</a></li>
+</ul>
 </div>
 </div>
 
@@ -141,7 +134,7 @@ in which
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -153,9 +146,9 @@ in which
  
       </ul>
     </div>
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2006-2016, Jiao Lin, Michael Aivazis, and Brent Fultz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
     </div>
   </body>
 </html>

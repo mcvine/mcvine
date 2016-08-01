@@ -8,7 +8,7 @@
     
     <title>Installation &mdash; mcvine 1.0 documentation</title>
     
-    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
@@ -23,10 +23,10 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="mcvine 1.0 documentation" href="index.html" /> 
   </head>
-  <body>
+  <body role="document">
 <div class="header">  
 <table><tr>
 <!--
@@ -44,7 +44,7 @@
 </table>
 </div>
 
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -57,27 +57,16 @@
       </ul>
     </div>
 
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="index.html">Table Of Contents</a></h3>
-  <ul>
-<li><a class="reference internal" href="#">Installation</a><ul>
-<li><a class="reference internal" href="#install-using-package-managers">Install using package managers</a><ul>
-<li><a class="reference internal" href="#ubuntu-14-04">Ubuntu 14.04</a></li>
-<li><a class="reference internal" href="#fedora-21-or-centos-7">Fedora 21 or CentOS 7</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#build-mcvine-from-source">Build mcvine from source</a></li>
-</ul>
-</li>
-</ul>
-
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="_sources/Installation.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/Installation.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
       <input type="text" name="q" />
@@ -96,57 +85,19 @@
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="installation">
 <span id="id1"></span><h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="install-using-package-managers">
-<span id="install-using-pkg-mgr"></span><h2>Install using package managers<a class="headerlink" href="#install-using-package-managers" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="ubuntu-14-04">
-<h3>Ubuntu 14.04<a class="headerlink" href="#ubuntu-14-04" title="Permalink to this headline">¶</a></h3>
-<p>Install:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ sudo apt-get update
-$ sudo apt-get install -qy curl
-$ curl -s https://packagecloud.io/install/repositories/danse/ins/script.deb.sh | sudo bash
-$ sudo apt-get install mcvine
+<p>MCViNE can be installed in most of recent linux distributions by using conda:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ conda install -c mcvine mcvine
 </pre></div>
 </div>
-<p>Run:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ . /opt/danse/bin/setup-mcvine.sh
-$ mcvine
-</pre></div>
-</div>
-</div>
-<div class="section" id="fedora-21-or-centos-7">
-<h3>Fedora 21 or CentOS 7<a class="headerlink" href="#fedora-21-or-centos-7" title="Permalink to this headline">¶</a></h3>
-<p>Install:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ sudo yum install -y curl
-$ curl -s https://packagecloud.io/install/repositories/danse/ins/script.rpm.sh | sudo bash
-$ sudo yum install mcvine
-</pre></div>
-</div>
-<p>Run:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ . /opt/danse/bin/setup-mcvine.sh
-$ export PATH=/usr/lib64/mpich/bin:$PATH
-$ export LD_LIBRARY_PATH=/usr/lib64/mpich/lib:$LD_LIBRARY_PATH
-$ export PYTHONPATH=/usr/lib64/python2.7/site-packages/mpich:$PYTHONPATH
-$ mcvine
-</pre></div>
-</div>
-</div>
-</div>
-<div class="section" id="build-mcvine-from-source">
-<h2>Build mcvine from source<a class="headerlink" href="#build-mcvine-from-source" title="Permalink to this headline">¶</a></h2>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last"><a class="reference external" href="https://www.docker.com/">Docker</a> is used to test
-installation of MCViNE on various Linux systems.
-Related Dockerfiles can be found in
-<a class="reference external" href="https://github.com/mcvine/mcvine/tree/master/builders/docker">https://github.com/mcvine/mcvine/tree/master/builders/docker</a>
-and they can be used as hints for installing dependencies
-and then building mcvine.</p>
-</div>
-</div>
+<p>To install conda on a linux distribution, please refer to
+<a class="reference external" href="http://conda.pydata.org/docs/install/quick.html#linux-miniconda-install">miniconda quick install</a>.</p>
+<p>If you want to build mcvine from source,
+please refer to
+<a class="reference external" href="https://github.com/mcvine/conda-recipes">the mcvine conda recipes</a>.</p>
 </div>
 
 
@@ -155,7 +106,7 @@ and then building mcvine.</p>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -167,9 +118,9 @@ and then building mcvine.</p>
  
       </ul>
     </div>
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2006-2016, Jiao Lin, Michael Aivazis, and Brent Fultz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
     </div>
   </body>
 </html>

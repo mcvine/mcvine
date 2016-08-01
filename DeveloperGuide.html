@@ -8,7 +8,7 @@
     
     <title>Developer Guide &mdash; mcvine 1.0 documentation</title>
     
-    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
@@ -23,10 +23,10 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="mcvine 1.0 documentation" href="index.html" /> 
   </head>
-  <body>
+  <body role="document">
 <div class="header">  
 <table><tr>
 <!--
@@ -44,7 +44,7 @@
 </table>
 </div>
 
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -57,7 +57,7 @@
       </ul>
     </div>
 
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
@@ -66,6 +66,8 @@
 <li><a class="reference internal" href="#development-environemnt">Development environemnt</a></li>
 <li><a class="reference internal" href="#continuous-integration">Continuous integration</a></li>
 <li><a class="reference internal" href="#deployment-testing">Deployment testing</a></li>
+<li><a class="reference internal" href="#building-release">Building release</a></li>
+<li><a class="reference internal" href="#adding-modifying-adapted-mcstas-components">Adding/modifying Adapted McStas components</a></li>
 <li><a class="reference internal" href="#creating-a-new-scattering-kernel-for-sample">Creating a new scattering kernel for sample</a><ul>
 <li><a class="reference internal" href="#write-c-class">Write c++ class</a></li>
 <li><a class="reference internal" href="#create-boost-python-binding">Create boost python binding</a><ul>
@@ -86,12 +88,14 @@
 </li>
 </ul>
 
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="_sources/DeveloperGuide.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/DeveloperGuide.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
       <input type="text" name="q" />
@@ -110,12 +114,13 @@
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="developer-guide">
 <h1>Developer Guide<a class="headerlink" href="#developer-guide" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="organization">
 <h2>Organization<a class="headerlink" href="#organization" title="Permalink to this headline">¶</a></h2>
+<p>Hosted at github</p>
 <ul class="simple">
 <li>mcvine:
 - src code</li>
@@ -124,6 +129,14 @@
 - usually don&#8217;t change over time. new files are added into it.
 - path specified by env var MCVINE_RESOURCES
 - examples should be explicitly versioned?</li>
+<li>workflow (more details in <a class="reference internal" href="DevelopmentNotes.html#devnotes"><span>Development notes</span></a>):
+- scripts/Makefiles/etc
+- make it easier for users to construct workflow
+- intended to be lightweight</li>
+<li>training:
+- Markdown files and jupyter notebooks</li>
+<li>conda-recipes:
+- recipes to build conda packages</li>
 </ul>
 </div>
 <div class="section" id="development-environemnt">
@@ -141,6 +154,30 @@ failure in case the log message is not enough for debugging.</p>
 <div class="section" id="deployment-testing">
 <h2>Deployment testing<a class="headerlink" href="#deployment-testing" title="Permalink to this headline">¶</a></h2>
 <p>This is done by travis-CI.</p>
+</div>
+<div class="section" id="building-release">
+<h2>Building release<a class="headerlink" href="#building-release" title="Permalink to this headline">¶</a></h2>
+<p>Use conda:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ cd ~/dv/mcvine/conda-recipes
+$ git pull
+$ . ~/.use-miniconda2
+$ source activate build-mcvine
+$ # run build commands in the current directory
+</pre></div>
+</div>
+</div>
+<div class="section" id="adding-modifying-adapted-mcstas-components">
+<h2>Adding/modifying Adapted McStas components<a class="headerlink" href="#adding-modifying-adapted-mcstas-components" title="Permalink to this headline">¶</a></h2>
+<p>After changes to the source code, run the following under &#8220;build&#8221;
+directory:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ make reconfigure-to-include-mcstas-components
+$ make wrap-mcstas-components-cmake
+</pre></div>
+</div>
+<p>The first command will generate on-the-fly source codes to
+wrap the component, and add cmake machinery.
+The second command will build the binding.
+This is done in mcstas2.cmake_utils module.</p>
 </div>
 <div class="section" id="creating-a-new-scattering-kernel-for-sample">
 <h2>Creating a new scattering kernel for sample<a class="headerlink" href="#creating-a-new-scattering-kernel-for-sample" title="Permalink to this headline">¶</a></h2>
@@ -266,9 +303,9 @@ mccomponents.sample, for example, mccomponents.sample.phonons.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">To see how to use components from legacy packages,
-please refer to <a class="reference internal" href="Components.html#mcstas-comp-lib"><em>McStas component librarry</em></a> and <a class="reference internal" href="Components.html#vitess-comp-lib"><em>Vitess component librarry</em></a>.</p>
+please refer to <a class="reference internal" href="Components.html#mcstas-comp-lib"><span>McStas component librarry</span></a> and <a class="reference internal" href="Components.html#vitess-comp-lib"><span>Vitess component librarry</span></a>.</p>
 </div>
-<p>Please read <a class="reference internal" href="Philosophy.html#philosophy"><em>Concepts</em></a>
+<p>Please read <a class="reference internal" href="Philosophy.html#philosophy"><span>Concepts</span></a>
 to get a feeling of the architecture and design of mcvine.</p>
 <p>MCViNE is compatible with other pipeline-based Monte Carlo
 neutron scattering simulation packages.
@@ -288,8 +325,17 @@ add a python wrapper on top of the python binding.</p>
 </div>
 <div class="section" id="shapes">
 <h2>Shapes<a class="headerlink" href="#shapes" title="Permalink to this headline">¶</a></h2>
-<p>more shapes:
-sampleassembly.saxml.parser.Document</p>
+<p>more shapes:</p>
+<div class="highlight-python"><div class="highlight"><pre>* instrument.geometry
+* sampleassembly.saxml.parser.Document
+* mccomposite.bindings.BoostPythonBinding
+* mccomposite.coordinate_systems
+* mccomposite.geometry
+* mccomposite.extensions
+* mccomponents.detector
+* mccomponents.sample
+</pre></div>
+</div>
 </div>
 <div class="section" id="tests">
 <h2>Tests<a class="headerlink" href="#tests" title="Permalink to this headline">¶</a></h2>
@@ -314,7 +360,7 @@ env var MCVINE_RESOURCES.</p>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -326,9 +372,9 @@ env var MCVINE_RESOURCES.</p>
  
       </ul>
     </div>
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2006-2016, Jiao Lin, Michael Aivazis, and Brent Fultz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
     </div>
   </body>
 </html>

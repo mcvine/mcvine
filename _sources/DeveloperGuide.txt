@@ -3,6 +3,7 @@ Developer Guide
 
 Organization
 ------------
+Hosted at github
 
 * mcvine:
   - src code
@@ -11,6 +12,14 @@ Organization
   - usually don't change over time. new files are added into it.
   - path specified by env var MCVINE_RESOURCES
   - examples should be explicitly versioned?
+* workflow (more details in :ref:`devnotes`):
+  - scripts/Makefiles/etc
+  - make it easier for users to construct workflow
+  - intended to be lightweight
+* training:
+  - Markdown files and jupyter notebooks
+* conda-recipes:
+  - recipes to build conda packages
 
 
 Development environemnt
@@ -35,6 +44,32 @@ Deployment testing
 ------------------
 
 This is done by travis-CI.
+
+
+Building release
+----------------
+
+Use conda::
+
+ $ cd ~/dv/mcvine/conda-recipes
+ $ git pull
+ $ . ~/.use-miniconda2
+ $ source activate build-mcvine
+ $ # run build commands in the current directory
+
+
+Adding/modifying Adapted McStas components
+------------------------------------------
+After changes to the source code, run the following under "build"
+directory::
+
+ $ make reconfigure-to-include-mcstas-components
+ $ make wrap-mcstas-components-cmake
+
+The first command will generate on-the-fly source codes to
+wrap the component, and add cmake machinery.
+The second command will build the binding.
+This is done in mcstas2.cmake_utils module.
 
 
 Creating a new scattering kernel for sample
@@ -191,9 +226,16 @@ add a python wrapper on top of the python binding.
 Shapes
 ------
 
-more shapes: 
-sampleassembly.saxml.parser.Document
+more shapes::
 
+* instrument.geometry
+* sampleassembly.saxml.parser.Document
+* mccomposite.bindings.BoostPythonBinding
+* mccomposite.coordinate_systems
+* mccomposite.geometry
+* mccomposite.extensions
+* mccomponents.detector
+* mccomponents.sample
 
 
 Tests
