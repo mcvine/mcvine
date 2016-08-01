@@ -5,6 +5,9 @@ News
 
 2016
 ----
+* **July 2016**:
+
+  - Release 1.1 (http://mcvine.github.io/1.1/release-notes.html) was out
 * **March 2016**:
 
   - Release 1.0.1 (http://mcvine.github.io/1.0.1/release-notes.html) was out
