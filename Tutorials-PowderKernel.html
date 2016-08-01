@@ -8,7 +8,7 @@
     
     <title>Tutorials – Powder Diffraction Kernel &mdash; mcvine 1.0 documentation</title>
     
-    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
@@ -23,10 +23,10 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="mcvine 1.0 documentation" href="index.html" /> 
   </head>
-  <body role="document">
+  <body>
 <div class="header">  
 <table><tr>
 <!--
@@ -44,7 +44,7 @@
 </table>
 </div>
 
-    <div class="related" role="navigation" aria-label="related navigation">
+    <div class="related">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -57,7 +57,7 @@
       </ul>
     </div>
 
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+      <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
@@ -74,14 +74,12 @@
 </li>
 </ul>
 
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="_sources/Tutorials-PowderKernel.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div>
-<div id="searchbox" style="display: none" role="search">
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/Tutorials-PowderKernel.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
       <input type="text" name="q" />
@@ -100,7 +98,7 @@
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body" role="main">
+          <div class="body">
             
   <div class="section" id="tutorials-powder-diffraction-kernel">
 <span id="tutorials-powder-kernel"></span><h1>Tutorials &#8211; Powder Diffraction Kernel<a class="headerlink" href="#tutorials-powder-diffraction-kernel" title="Permalink to this headline">¶</a></h1>
@@ -203,16 +201,16 @@ the instrument and parameters for each component. Let&#8217;s take a look at the
 <div class="highlight-python"><div class="highlight"><pre>Note: Name &quot;ssd&quot; stands for initial letters of source -&gt; sample -&gt; detector
 </pre></div>
 </div>
-<p>The ssd.pml file has three components: <code class="docutils literal"><span class="pre">Source_simple</span></code>, <code class="docutils literal"><span class="pre">SampleAssemblyFromXml</span></code> and
-<code class="docutils literal"><span class="pre">NDMonitor(x,y,t)</span></code>. It describes parameters for source and detector components
+<p>The ssd.pml file has three components: <tt class="docutils literal"><span class="pre">Source_simple</span></tt>, <tt class="docutils literal"><span class="pre">SampleAssemblyFromXml</span></tt> and
+<tt class="docutils literal"><span class="pre">NDMonitor(x,y,t)</span></tt>. It describes parameters for source and detector components
 whereas parameters for sample component are defined in a separate file:
 <em>Al/sampleassembly.xml</em>. Let&#8217;s take a closer look at the components.</p>
 <div class="section" id="source-simple">
 <h3>Source_simple<a class="headerlink" href="#source-simple" title="Permalink to this headline">¶</a></h3>
 <p>Source_simple component is a standard component available in McStas simulation package.
-It generates flux of neutrons uniformly distributed in the energy range <code class="docutils literal"><span class="pre">[E0-dE,</span> <span class="pre">E0+dE]</span></code> in meV.
-In our configuration the energy range is <code class="docutils literal"><span class="pre">[30,</span> <span class="pre">170]</span> <span class="pre">meV</span></code>. Parameters <code class="docutils literal"><span class="pre">xw</span></code>, <code class="docutils literal"><span class="pre">yh</span></code> and
-<code class="docutils literal"><span class="pre">dist</span></code> define width, height and distance to the sample correspondingly. The benefit
+It generates flux of neutrons uniformly distributed in the energy range <tt class="docutils literal"><span class="pre">[E0-dE,</span> <span class="pre">E0+dE]</span></tt> in meV.
+In our configuration the energy range is <tt class="docutils literal"><span class="pre">[30,</span> <span class="pre">170]</span> <span class="pre">meV</span></tt>. Parameters <tt class="docutils literal"><span class="pre">xw</span></tt>, <tt class="docutils literal"><span class="pre">yh</span></tt> and
+<tt class="docutils literal"><span class="pre">dist</span></tt> define width, height and distance to the sample correspondingly. The benefit
 of using this simple source is to quickly get an estimate of what happens to the neutrons
 in this energy range as they propagates through the instrument.</p>
 </div>
@@ -221,7 +219,7 @@ in this energy range as they propagates through the instrument.</p>
 <p>The SampleAssemblyFromXml component allows to create a sample from detailed pieces
 of information about the material including configuration of unit cell, physical
 properties of atoms with respect to the scattered or absorbed neutrons. Please refer
-to <a class="reference internal" href="Tutorials-SampleAssembly.html#tutorials-sampleassembly"><span>Sample Assebly</span></a> tutorial for some details
+to <a class="reference internal" href="Tutorials-SampleAssembly.html#tutorials-sampleassembly"><em>Sample Assebly</em></a> tutorial for some details
 of how to write the configuration files for sample assembly.</p>
 <p>In this tutorial we will include <em>SimplePowderDiffractionKernel</em> in the sample assembly
 and describe some properties of the kernel. The purpose of the kernel in the sample
@@ -257,7 +255,7 @@ parameter in the <em>ssd.pml</em> file related to sample was the name of xml fil
 </pre></div>
 </div>
 <p>File <em>sampleassembly.xml</em> is the main file that describes general properties of the sample:
-shape, phase type, local geometry and some others. Our sample is a block with sizes: <code class="docutils literal"><span class="pre">6cm*10cm*1cm</span></code>.
+shape, phase type, local geometry and some others. Our sample is a block with sizes: <tt class="docutils literal"><span class="pre">6cm*10cm*1cm</span></tt>.
 The phase type is a crystal consisting of just one chemical element <em>Al</em> and the
 unit cell is given in <em>Al.xyz</em> file.</p>
 <p><strong>Al/Al.xyz</strong></p>
@@ -299,8 +297,8 @@ recognize it and will turn on the scattering process for the sample.</p>
 <p><em>Al-scatterer.xml</em> configuration file describes the scattering process by defining
 the kernel. As mentioned above, we use <em>SimplePowderDiffractionKernel</em> for our experiment.
 We need to specify several parameters for the kernel: relative line width <span class="math">\(\Delta d/d\)</span>
-(<code class="docutils literal"><span class="pre">Dd_over_d</span></code>), Debye-Waller factor (<code class="docutils literal"><span class="pre">DebyeWaller_factor</span></code>) and file containing
-information about the diffraction planes (<code class="docutils literal"><span class="pre">peaks-py-path</span></code>).</p>
+(<tt class="docutils literal"><span class="pre">Dd_over_d</span></tt>), Debye-Waller factor (<tt class="docutils literal"><span class="pre">DebyeWaller_factor</span></tt>) and file containing
+information about the diffraction planes (<tt class="docutils literal"><span class="pre">peaks-py-path</span></tt>).</p>
 <p><strong>peaks.py</strong></p>
 <div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">mccomponents.sample.diffraction.SimplePowderDiffractionKernel</span> <span class="kn">import</span> <span class="n">Peak</span>
 
@@ -403,34 +401,34 @@ Python script <a class="reference external" href="http://dev.danse.us/trac/MCViN
 </pre></div>
 </div>
 <p>Let&#8217;s take a closer look at the parameters provided in <em>peaks.py</em> file.</p>
-<p>Parameters <code class="docutils literal"><span class="pre">q</span></code> is a q-vector in reciprocal lattice related to lattice parameters and
+<p>Parameters <tt class="docutils literal"><span class="pre">q</span></tt> is a q-vector in reciprocal lattice related to lattice parameters and
 Miller indices (h,k,l). For orthorhombic lattice type q-vector can be simplified as follows:</p>
 <div class="math">
 \[\bold{q} = (2\pi h/a)\bold{i} + (2\pi k/b)\bold{j} + (2\pi l/c)\bold{k}\]</div>
-<p>with <code class="docutils literal"><span class="pre">a</span></code>, <code class="docutils literal"><span class="pre">b</span></code> and <code class="docutils literal"><span class="pre">c</span></code> being the lattice constants. For FCC lattice type it
+<p>with <tt class="docutils literal"><span class="pre">a</span></tt>, <tt class="docutils literal"><span class="pre">b</span></tt> and <tt class="docutils literal"><span class="pre">c</span></tt> being the lattice constants. For FCC lattice type it
 can be even further simplified to:</p>
 <div class="math">
 \[\bold{q} = 2\pi/a(h\bold{i} + k\bold{j} + l\bold{k})\]</div>
 <p>so that the magnitude of the q-vector will be:</p>
 <div class="math">
 \[q = (2\pi/a)\sqrt{h^2 + k^2 + l^2}\]</div>
-<p>Parameter <code class="docutils literal"><span class="pre">F_squared</span></code> is the squared structure factor corresponding to <code class="docutils literal"><span class="pre">|F(hkl)|</span></code> in <em>Al.laz</em> file:</p>
+<p>Parameter <tt class="docutils literal"><span class="pre">F_squared</span></tt> is the squared structure factor corresponding to <tt class="docutils literal"><span class="pre">|F(hkl)|</span></tt> in <em>Al.laz</em> file:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">F_squared</span> <span class="o">=</span> <span class="n">F</span><span class="p">(</span><span class="n">hkl</span><span class="p">)</span><span class="o">^</span><span class="mi">2</span>
 </pre></div>
 </div>
-<p>Parameter  <code class="docutils literal"><span class="pre">multiplicity</span></code> corresponds to column <code class="docutils literal"><span class="pre">MULT</span></code> in <em>Al.laz</em> file. Other
-parameters <code class="docutils literal"><span class="pre">intrinsic_line_width</span></code> and <code class="docutils literal"><span class="pre">DebyeWaller_factor</span></code> should be obtained
+<p>Parameter  <tt class="docutils literal"><span class="pre">multiplicity</span></tt> corresponds to column <tt class="docutils literal"><span class="pre">MULT</span></tt> in <em>Al.laz</em> file. Other
+parameters <tt class="docutils literal"><span class="pre">intrinsic_line_width</span></tt> and <tt class="docutils literal"><span class="pre">DebyeWaller_factor</span></tt> should be obtained
 from other experimental data.</p>
 </div>
 <div class="section" id="ndmonitor-x-y-t">
 <h3>NDMonitor(x,y,t)<a class="headerlink" href="#ndmonitor-x-y-t" title="Permalink to this headline">¶</a></h3>
 <p>The final component in our simple instrument is <strong>NDMonitor</strong>. It is a generic monitor
-that can plot various dependencies of physical values: <code class="docutils literal"><span class="pre">x</span></code>, <code class="docutils literal"><span class="pre">y</span></code>, <code class="docutils literal"><span class="pre">z</span></code>, <code class="docutils literal"><span class="pre">vx</span></code>,
-<code class="docutils literal"><span class="pre">vy</span></code>, <code class="docutils literal"><span class="pre">vz</span></code>, <code class="docutils literal"><span class="pre">w</span></code>, <code class="docutils literal"><span class="pre">energy</span></code>.
+that can plot various dependencies of physical values: <tt class="docutils literal"><span class="pre">x</span></tt>, <tt class="docutils literal"><span class="pre">y</span></tt>, <tt class="docutils literal"><span class="pre">z</span></tt>, <tt class="docutils literal"><span class="pre">vx</span></tt>,
+<tt class="docutils literal"><span class="pre">vy</span></tt>, <tt class="docutils literal"><span class="pre">vz</span></tt>, <tt class="docutils literal"><span class="pre">w</span></tt>, <tt class="docutils literal"><span class="pre">energy</span></tt>.
 For the instrument we are interested in neutron
-distribution in <code class="docutils literal"><span class="pre">(x,y)</span></code> plane within some time range <code class="docutils literal"><span class="pre">t</span></code>. For this we will use
-<code class="docutils literal"><span class="pre">NDMonitor(x,y,t)</span></code> component. Other examples of NDMonitor include <code class="docutils literal"><span class="pre">NDMonitor(w,x)</span></code>
-where <code class="docutils literal"><span class="pre">w</span></code> is the wavelength, <code class="docutils literal"><span class="pre">NDMonitor(w)</span></code>, <code class="docutils literal"><span class="pre">NDMonitor(energy,x)</span></code> etc.
+distribution in <tt class="docutils literal"><span class="pre">(x,y)</span></tt> plane within some time range <tt class="docutils literal"><span class="pre">t</span></tt>. For this we will use
+<tt class="docutils literal"><span class="pre">NDMonitor(x,y,t)</span></tt> component. Other examples of NDMonitor include <tt class="docutils literal"><span class="pre">NDMonitor(w,x)</span></tt>
+where <tt class="docutils literal"><span class="pre">w</span></tt> is the wavelength, <tt class="docutils literal"><span class="pre">NDMonitor(w)</span></tt>, <tt class="docutils literal"><span class="pre">NDMonitor(energy,x)</span></tt> etc.
 [Need to write a separate section on NDMonitor!!!]</p>
 <p>The application script will look as follows:</p>
 <p><strong>ssd</strong></p>
@@ -457,8 +455,8 @@ to run the experiment simulation:</p>
 </pre></div>
 </div>
 <p>The results of scattered neutrons is displayed on NDMonitor(x,y,t). To get the neutron
-intensity in <code class="docutils literal"><span class="pre">(x,y)</span></code> plane we need to sum neutron intensity over some time period.
-For our system we integrated neutrons over the time range <code class="docutils literal"><span class="pre">[0,</span> <span class="pre">002]</span> <span class="pre">sec</span></code>. To draw
+intensity in <tt class="docutils literal"><span class="pre">(x,y)</span></tt> plane we need to sum neutron intensity over some time period.
+For our system we integrated neutrons over the time range <tt class="docutils literal"><span class="pre">[0,</span> <span class="pre">002]</span> <span class="pre">sec</span></tt>. To draw
 the plot for the monitor we use the script:</p>
 <p><strong>plot_ndmonitor.py</strong></p>
 <div class="highlight-python"><div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
@@ -475,22 +473,22 @@ the plot for the monitor we use the script:</p>
 </div>
 <p>This produces the diffraction image where every ring corresponds to separate
 diffraction plane, or separate combination of Miller indices (h,k,l)</p>
-<div class="figure" id="id1">
+<div class="figure">
 <a class="reference internal image-reference" href="_images/powder-kernel.png"><img alt="_images/powder-kernel.png" src="_images/powder-kernel.png" style="width: 600px;" /></a>
-<p class="caption"><span class="caption-text"><em>Fig. 1 Diffraction with SimplePowderDiffractionKernel</em></span></p>
+<p class="caption"><em>Fig. 1 Diffraction with SimplePowderDiffractionKernel</em></p>
 </div>
 </div>
 </div>
 <div class="section" id="simulation-with-powdern">
 <h2>Simulation with PowderN<a class="headerlink" href="#simulation-with-powdern" title="Permalink to this headline">¶</a></h2>
-<p>In the previous section we used <code class="docutils literal"><span class="pre">SimplePowderDiffractionKernel</span></code> and assembled
+<p>In the previous section we used <tt class="docutils literal"><span class="pre">SimplePowderDiffractionKernel</span></tt> and assembled
 our sample using different pieces of information about material structure and
 macroscopic parameters. We can achieve the same result using standard McStas component
-for powder sample called <code class="docutils literal"><span class="pre">PowderN.comp</span></code>. You might ask, why you actually need to have
-PowderDiffractionKernel when one can use <code class="docutils literal"><span class="pre">PowderN</span></code> component instead. The answer is that PowderDiffractionKernel
+for powder sample called <tt class="docutils literal"><span class="pre">PowderN.comp</span></tt>. You might ask, why you actually need to have
+PowderDiffractionKernel when one can use <tt class="docutils literal"><span class="pre">PowderN</span></tt> component instead. The answer is that PowderDiffractionKernel
 allows more flexibility in defining your sample, especially when you want to investigate
 a complex structure for which the powder pattern file is not available.</p>
-<p>Let&#8217;s replace <code class="docutils literal"><span class="pre">SampleAssemblyFromXml</span></code> component by <code class="docutils literal"><span class="pre">PowderN</span></code> and see if results
+<p>Let&#8217;s replace <tt class="docutils literal"><span class="pre">SampleAssemblyFromXml</span></tt> component by <tt class="docutils literal"><span class="pre">PowderN</span></tt> and see if results
 are consistent.</p>
 <p><strong>ssd2.pml</strong></p>
 <div class="highlight-python"><div class="highlight"><pre>&lt;?xml version=&quot;1.0&quot;?&gt;
@@ -569,8 +567,8 @@ are consistent.</p>
 &lt;/inventory&gt;
 </pre></div>
 </div>
-<p>When configuring <code class="docutils literal"><span class="pre">PowderN</span></code> component we intentionally excluded incoherently
-scattered <code class="docutils literal"><span class="pre">frac</span></code> and transmitted <code class="docutils literal"><span class="pre">tfrac</span></code> neutrons.</p>
+<p>When configuring <tt class="docutils literal"><span class="pre">PowderN</span></tt> component we intentionally excluded incoherently
+scattered <tt class="docutils literal"><span class="pre">frac</span></tt> and transmitted <tt class="docutils literal"><span class="pre">tfrac</span></tt> neutrons.</p>
 <div class="highlight-python"><div class="highlight"><pre>&lt;component name=&quot;sample&quot;&gt;
     ...
     &lt;property name=&quot;frac&quot;&gt;0&lt;/property&gt;
@@ -602,21 +600,21 @@ scattered <code class="docutils literal"><span class="pre">frac</span></code> an
 </pre></div>
 </div>
 <p>As you can see we get a very similar picture to what we obtained in the first section
-using  <code class="docutils literal"><span class="pre">SimplePowderDiffractionKernel</span></code>. Results for <code class="docutils literal"><span class="pre">SimplePowderDiffractionKernel</span></code>
-and <code class="docutils literal"><span class="pre">PowderN</span></code> component look consistent.</p>
-<div class="figure" id="id2">
+using  <tt class="docutils literal"><span class="pre">SimplePowderDiffractionKernel</span></tt>. Results for <tt class="docutils literal"><span class="pre">SimplePowderDiffractionKernel</span></tt>
+and <tt class="docutils literal"><span class="pre">PowderN</span></tt> component look consistent.</p>
+<div class="figure">
 <a class="reference internal image-reference" href="_images/powderN.png"><img alt="_images/powderN.png" src="_images/powderN.png" style="width: 600px;" /></a>
-<p class="caption"><span class="caption-text"><em>Fig. 2 Diffraction with PowderN component</em></span></p>
+<p class="caption"><em>Fig. 2 Diffraction with PowderN component</em></p>
 </div>
 </div>
 <div class="section" id="wave-vector-sensitive-monitor">
 <h2>Wave Vector Sensitive Monitor<a class="headerlink" href="#wave-vector-sensitive-monitor" title="Permalink to this headline">¶</a></h2>
-<p>Let&#8217;s now change our initial instrument configuration by replacing <code class="docutils literal"><span class="pre">NDMonitor(x,y,t)</span></code>
-by <code class="docutils literal"><span class="pre">NDMonitor(q)</span></code> as shown below:</p>
+<p>Let&#8217;s now change our initial instrument configuration by replacing <tt class="docutils literal"><span class="pre">NDMonitor(x,y,t)</span></tt>
+by <tt class="docutils literal"><span class="pre">NDMonitor(q)</span></tt> as shown below:</p>
 <div class="highlight-python"><div class="highlight"><pre>[Source_simple] -&gt; [PowderDiffractionKernel] -&gt; [NDMonitor(q)]
 </pre></div>
 </div>
-<p>The monitor <code class="docutils literal"><span class="pre">NDMonitor(q)</span></code> is sensitive to the wave vector. Our new configuration
+<p>The monitor <tt class="docutils literal"><span class="pre">NDMonitor(q)</span></tt> is sensitive to the wave vector. Our new configuration
 files will look like:</p>
 <p><strong>ssd3.pml</strong></p>
 <div class="highlight-python"><div class="highlight"><pre>&lt;?xml version=&quot;1.0&quot;?&gt;
@@ -709,9 +707,9 @@ $ PlotHist.py out/iq.h5
 </div>
 <p>we get the plot I(q), where wave vector (q) has units 1/AA and intensity (I)
 has arbitrary units:</p>
-<div class="figure" id="id3">
+<div class="figure">
 <a class="reference internal image-reference" href="_images/ndmonitor-q.png"><img alt="_images/ndmonitor-q.png" src="_images/ndmonitor-q.png" style="width: 600px;" /></a>
-<p class="caption"><span class="caption-text"><em>Fig. 3 Diffraction with SimplePowderDiffractionKernel and NDMonitor(q)</em></span></p>
+<p class="caption"><em>Fig. 3 Diffraction with SimplePowderDiffractionKernel and NDMonitor(q)</em></p>
 </div>
 </div>
 </div>
@@ -722,7 +720,7 @@ has arbitrary units:</p>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related" role="navigation" aria-label="related navigation">
+    <div class="related">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -734,9 +732,9 @@ has arbitrary units:</p>
  
       </ul>
     </div>
-    <div class="footer" role="contentinfo">
+    <div class="footer">
         &copy; Copyright 2006-2016, Jiao Lin, Michael Aivazis, and Brent Fultz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
     </div>
   </body>
 </html>
