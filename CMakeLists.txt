@@ -25,7 +25,7 @@
 # $ anaconda upload /home/lj7/anaconda2/conda-bld/linux-64/mcvine-1.0.1-py27_0.tar.bz2
 
 set(PROJECT_NAME "mcvine")
-set(VERSION "1.1-alpha")
+set(VERSION "1.1RC")
 set(AUTHOR "Jiao Lin")
 set(AUTHOR_EMAILE "jiao.lin@gmail.com")
 set(VENDOR "DANSE")
@@ -139,7 +139,7 @@ install(DIRECTORY ${EXPORT_BIN}/ DESTINATION bin
 # install etc
 install(DIRECTORY ${EXPORT_ETC}/ DESTINATION etc)
 # install share
-install(DIRECTORY ${EXPORT_SHARE}/ DESTINATION share/${PROJECT_NAME}/)
+install(DIRECTORY ${EXPORT_SHARE}/ DESTINATION share/${PROJECT_NAME}/ USE_SOURCE_PERMISSIONS)
 # install tests
 install(DIRECTORY ${TESTS_DIR} DESTINATION share/${PROJECT_NAME}/ USE_SOURCE_PERMISSIONS)
 # install top level cmake file and script for tests
