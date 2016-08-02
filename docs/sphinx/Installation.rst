@@ -5,6 +5,7 @@ Installation
 
 MCViNE can be installed in most of recent linux distributions by using conda::
 
+ $ conda config --add channels conda-forge
  $ conda install -c mcvine mcvine
 
 To install conda on a linux distribution, please refer to 
