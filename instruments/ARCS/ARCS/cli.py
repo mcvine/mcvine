@@ -115,8 +115,9 @@ def populate_metadata(ctx, type, beam_outdir, nxs):
 @click.option('--ei_guess', help='guess for Ei', default=0.)
 @click.option('--qaxis', help='Qmin Qmax dQ', default=(0.,13.,0.1))
 @click.option('--eaxis', help='Emin Emax dE', default=(0.,0.,0.))
+@click.option('--tof2E/--no-tof2E', help='If true, input data must be tof events', default=True)
 @alias("arcs_nxs_reduce", "%s nxs reduce" % cmd_prefix)
-def reduce(nxs, out, use_ei_guess, ei_guess, qaxis, eaxis):
+def reduce(nxs, out, use_ei_guess, ei_guess, qaxis, eaxis, tof2e):
     "run reduction"
     if ei_guess > 0:
         use_ei_guess = True
@@ -131,6 +132,7 @@ def reduce(nxs, out, use_ei_guess, ei_guess, qaxis, eaxis):
         eaxis = emin, de, emax
     
     nxs = nxs.encode("utf8"); out = out.encode("utf8")
+    print "* tof2E=%s" % tof2e
     d = dict(
         nxsfile = nxs,
         use_ei_guess = use_ei_guess,
@@ -138,6 +140,7 @@ def reduce(nxs, out, use_ei_guess, ei_guess, qaxis, eaxis):
         qaxis = qaxis,
         eaxis = eaxis,
         outfile = out,
+        tof2E = tof2e,
         )
     from .applications.nxs import reduce
     reduce(**d)
