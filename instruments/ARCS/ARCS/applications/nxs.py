@@ -22,23 +22,25 @@ def populate_monitor_data(sim_out, nxs):
     return
 
 
-def reduce(nxsfile, qaxis, outfile, use_ei_guess=False, ei_guess=None, eaxis=None):
-    from mantid.simpleapi import DgsReduction, SofQW3, SaveNexus
-    if use_ei_guess:
-        DgsReduction(
-            SampleInputFile=nxsfile,
-            IncidentEnergyGuess=ei_guess,
-            UseIncidentEnergyGuess=use_ei_guess,
-            OutputWorkspace='reduced',
-            EnergyTransferRange=eaxis,
-            )
-    else:
-        DgsReduction(
-            SampleInputFile=nxsfile,
-            OutputWorkspace='reduced',
-            EnergyTransferRange=eaxis,
-            )
-        
+def reduce(nxsfile, qaxis, outfile, use_ei_guess=False, ei_guess=None, eaxis=None, tof2E=True):
+    from mantid.simpleapi import DgsReduction, SofQW3, SaveNexus, Load
+    if tof2E:
+        if use_ei_guess:
+            DgsReduction(
+                SampleInputFile=nxsfile,
+                IncidentEnergyGuess=ei_guess,
+                UseIncidentEnergyGuess=use_ei_guess,
+                OutputWorkspace='reduced',
+                EnergyTransferRange=eaxis,
+                )
+        else:
+            DgsReduction(
+                SampleInputFile=nxsfile,
+                OutputWorkspace='reduced',
+                EnergyTransferRange=eaxis,
+                )
+    else: 
+        reduced = Load(nxsfile)
     SofQW3(
         InputWorkspace='reduced',
         OutputWorkspace='iqw',
