@@ -62,6 +62,7 @@ class App(base):
 
         ncount = pyre.inventory.float('ncount', default=1000000)
 
+        nodes = pyre.inventory.int('nodes', default=0)
 
     m2sout = '_m2sout'
     out = 'out'
@@ -122,6 +123,11 @@ class App(base):
             'source_sct521_bu_17_1.dat',
             )
         cmd += ['-mod.S_filename=%s' % moddat]
+        # mpi nodes
+        from mcni.pyre_support.MpiApplication import mpi_launcher_choice
+        if self.inventory.nodes:
+            cmd += ['--%s.nodes=%s' % (
+                mpi_launcher_choice, self.inventory.nodes)]
         cmd = ' '.join(cmd)
         open('run-m2s.sh', 'wt').write(cmd) # save the running command
         bpp._exec(cmd)
