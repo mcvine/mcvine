@@ -41,6 +41,7 @@ class Instrument(base):
 def main():
     app = Instrument('testapp1')
     app.run()
+    app.run_postprocessing()
     return
     
     

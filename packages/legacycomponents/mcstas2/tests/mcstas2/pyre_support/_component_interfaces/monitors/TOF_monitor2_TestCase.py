@@ -68,6 +68,7 @@ class TestCase(unittest.TestCase):
         instrument = Instrument()
         instrument.testFacility = self
         instrument.run()
+        instrument.run_postprocessing()
         return
     
     pass  # end of TestCase

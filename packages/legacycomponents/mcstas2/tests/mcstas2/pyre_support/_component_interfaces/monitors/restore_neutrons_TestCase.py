@@ -73,6 +73,7 @@ class TestCase(unittest.TestCase):
     def test1(self):
         instrument = Instrument()
         instrument.run()
+        instrument.run_postprocessing()
         return
     
     pass  # end of TestCase

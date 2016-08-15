@@ -18,6 +18,8 @@ def build(neutron_components):
     class _Proxy:
         """proxy class of instrument sim app"""
         
+        Instrument = _build(neutron_components)
+    
         def __init__(self, *args, **kwds):
             self._init_params = args, kwds
             return
@@ -41,27 +43,20 @@ app.run(*args, **kwds)
             # run the script in a subprocess
             sysargs = ' '.join('"%s"' % a for a in sys.argv[1:])
             ppsd = os.path.join(workdir, 'post-processing-scripts')
-            os.makedirs(ppsd)
             sysargs += ' --post-processing-scripts-dir=%s' % ppsd
             cmd = '%s %s %s' % (sys.executable, apppath, sysargs)
             _exec(cmd)
             # run the postprocessing script
+            from mcni.pyre_support.Instrument import _run_ppsd
             _run_ppsd(ppsd)
             # clean up
             if not DEBUG_INSTRUMENT_APP_PROXY:
                 shutil.rmtree(workdir)
             return
+
     _Proxy.neutron_components = neutron_components
     return _Proxy
 
-def _run_ppsd(path):
-    import glob
-    scripts = glob.glob(os.path.join(path, '*.py'))
-    for script in scripts:
-        cmd = '%s %s' % (sys.executable, script)
-        _exec(cmd)
-        continue
-    return
 
 def _exec(cmd):
     if DEBUG_INSTRUMENT_APP_PROXY: 
@@ -86,27 +81,12 @@ def _build(neutron_components):
                 exec code in locals()
                 continue
             del code, name
-
-            import pyre.inventory as pinv
-            # path of the directory with post processing scripts
-            # the components that need post-processing should add scripts
-            # to this directory
-            post_processing_scripts_dir = pinv.str("post-processing-scripts-dir")
-
             pass # end of Inventory
 
         def _defaults(self):
             base._defaults(self)
             self.inventory.sequence = neutron_components
             return
-
-        def _makeSimContext(self):
-            context = base._makeSimContext(self)
-            pps = self.inventory.post_processing_scripts_dir
-            if not pps:
-                pps = os.path.join(self.inventory.outputdir, 'post-processing-scripts')
-            context.post_processing_scripts_dir = pps
-            return context
 
         pass # end of Instrument
 
