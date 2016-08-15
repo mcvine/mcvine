@@ -89,35 +89,15 @@ class DetectorSystemFromXml(ParallelComponent, AbstractComponent):
     def _saveFinalResult(self):
         self._debug.log("Entering _saveFinalResult")
         context = self.simulation_context
-        # make sure every node reaches here
-        if context.mpiSize:
-            self.mpi.barrier()
-        # merge and normalize neutron files
-        if context.mpiRank == 0:
-            # XXX: wait for all other nodes to finish
-            # XXX: this is a naive implementation
-            import time
-            N = 4; i = 0; wait = 10
-            while i < N:
-                print ("* wait %s seconds ..." % wait)
-                time.sleep(wait)
-                try:
-                    self._merge_and_normalize()
-                except Storage_MCsample_Mismatch:
-                    i += 1; wait *= 2
-                    continue
-                else:
-                    break
-                continue
-        return
-
-
-    def _merge_and_normalize(self):
-        merge_and_normalize(
-            self.simulation_context.outputdir,
-            self.eventsdat,
-            self.overwrite_datafiles,
-            )
+        # create post processing script
+        import os
+        path = os.path.join(context.post_processing_scripts_dir, "%s.py" % self.name)
+        content = """from mccomponents.pyre_support.components.DetectorSystemFromXml import merge_and_normalize
+merge_and_normalize(%r, %r, %r)
+""" % (os.path.abspath(self.simulation_context.outputdir),
+       self.eventsdat,
+       self.overwrite_datafiles)
+        open(path, 'wt').write(content)
         return
 
 
