@@ -89,6 +89,8 @@ class DetectorSystemFromXml(ParallelComponent, AbstractComponent):
     def _saveFinalResult(self):
         self._debug.log("Entering _saveFinalResult")
         context = self.simulation_context
+        if context.mpiRank != 0:
+            return
         # create post processing script
         import os
         path = os.path.join(context.post_processing_scripts_dir, "%s.py" % self.name)
