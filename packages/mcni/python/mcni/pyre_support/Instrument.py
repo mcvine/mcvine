@@ -121,14 +121,7 @@ class Instrument( AppInitMixin, CompositeNeutronComponentMixin, base, ParallelCo
         
         geometer = self.geometer
 
-        from mcni.SimulationContext import SimulationContext
-        context = SimulationContext()
-        context.multiple_scattering = self.inventory.multiple_scattering
-        context.tracer = self.tracer
-        context.mpiRank = self.mpi.rank
-        context.mpiSize = self.mpi.size
-        context.outputdir = self.outputdir
-        context.overwrite_datafiles = self.overwrite_datafiles
+        context = self._makeSimContext()
         
         n = int(self.ncount / self.buffer_size)
         assert n>0, 'ncount should be larger than buffer_size: ncount=%s, buffer_size=%s' % (self.ncount, self.buffer_size)
@@ -155,6 +148,18 @@ class Instrument( AppInitMixin, CompositeNeutronComponentMixin, base, ParallelCo
         return
 
 
+    def _makeSimContext(self):
+        from mcni.SimulationContext import SimulationContext
+        context = SimulationContext()
+        context.multiple_scattering = self.inventory.multiple_scattering
+        context.tracer = self.tracer
+        context.mpiRank = self.mpi.rank
+        context.mpiSize = self.mpi.size
+        context.outputdir = self.outputdir
+        context.overwrite_datafiles = self.overwrite_datafiles
+        return context
+
+        
     def _dumpRegsitry(self):
         out = '%s-reg.pkl' % self.name
         import os
