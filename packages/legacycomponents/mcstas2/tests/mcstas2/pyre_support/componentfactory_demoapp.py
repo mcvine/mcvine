@@ -40,6 +40,9 @@ class Instrument(base):
 
 
 
-if __name__ == "__main__": Instrument().run()
+if __name__ == "__main__": 
+    instr = Instrument()
+    instr.run()
+    instr.run_postprocessing()
     
 # End of file 

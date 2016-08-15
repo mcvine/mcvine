@@ -89,6 +89,11 @@ class Instrument( AppInitMixin, CompositeNeutronComponentMixin, base, ParallelCo
         # to another saved registry, for example.
         dumpregistry = pyre.inventory.bool('dump-registry', default=False)
         dumpregistry.meta['tip'] = 'if true, dump the pyre registry to a pkl file'
+
+        # path of the directory with post processing scripts
+        # the components that need post-processing should add scripts
+        # to this directory
+        post_processing_scripts_dir = pyre.inventory.str("post-processing-scripts-dir")
         pass # end of Inventory
 
 
@@ -121,14 +126,7 @@ class Instrument( AppInitMixin, CompositeNeutronComponentMixin, base, ParallelCo
         
         geometer = self.geometer
 
-        from mcni.SimulationContext import SimulationContext
-        context = SimulationContext()
-        context.multiple_scattering = self.inventory.multiple_scattering
-        context.tracer = self.tracer
-        context.mpiRank = self.mpi.rank
-        context.mpiSize = self.mpi.size
-        context.outputdir = self.outputdir
-        context.overwrite_datafiles = self.overwrite_datafiles
+        context = self._makeSimContext()
         
         n = int(self.ncount / self.buffer_size)
         assert n>0, 'ncount should be larger than buffer_size: ncount=%s, buffer_size=%s' % (self.ncount, self.buffer_size)
@@ -150,14 +148,35 @@ class Instrument( AppInitMixin, CompositeNeutronComponentMixin, base, ParallelCo
             context.iteration_no = n
             mcni.simulate( instrument, geometer, neutrons, context=context)
             
-        import os
         print os.times()
         return
 
 
+    def run_postprocessing(self):
+        _run_ppsd(self.post_processing_scripts_dir)
+        return
+
+
+    def _makeSimContext(self):
+        from mcni.SimulationContext import SimulationContext
+        context = SimulationContext()
+        context.multiple_scattering = self.inventory.multiple_scattering
+        context.tracer = self.tracer
+        context.mpiRank = self.mpi.rank
+        context.mpiSize = self.mpi.size
+        context.outputdir = self.outputdir
+        context.overwrite_datafiles = self.overwrite_datafiles
+        pps = self.inventory.post_processing_scripts_dir
+        if not pps:
+            pps = os.path.join(self.outputdir, 'post-processing-scripts')
+        self.post_processing_scripts_dir = context.post_processing_scripts_dir = pps
+        if context.mpiRank==0 and not os.path.exists(pps):
+            os.makedirs(pps)
+        return context
+
+        
     def _dumpRegsitry(self):
         out = '%s-reg.pkl' % self.name
-        import os
         if os.path.exists(out):
             raise RuntimeError, 'dump registry: path %s already exists' % out
 
@@ -367,7 +386,6 @@ class Instrument( AppInitMixin, CompositeNeutronComponentMixin, base, ParallelCo
             outfile = dumppml
 
         # make sure the output path does not exist
-        import os
         if os.path.exists(outfile):
             # save the old configuration 
             timeformat = '%m-%d-%Y--%H-%M-%S'
@@ -404,7 +422,6 @@ class Instrument( AppInitMixin, CompositeNeutronComponentMixin, base, ParallelCo
         stream.write('-->\n\n')
 
         # give a warning when use non-default config filename
-        import os, sys
         base = os.path.basename(outfile)
         if base != default_filename:
             print '*'*70
@@ -496,6 +513,21 @@ def _computeMaximumBufferSize(nodes):
     return n
 
 
+def _run_ppsd(path):
+    "run postprocessing scripts in the given path"
+    import glob
+    scripts = glob.glob(os.path.join(path, '*.py'))
+    for script in scripts:
+        cmd = '%s %s' % (sys.executable, script)
+        _exec(cmd)
+        continue
+    return
+
+def _exec(cmd):
+    if os.system(cmd):
+        raise RuntimeError("%s failed" % cmd)
+    return
+
 def _getCmdStr():
     import sys, os
     argv = list(sys.argv)
@@ -535,7 +567,7 @@ def getPartitionIterator( N, n ):
     return 
 
 
-import os, journal
+import os, sys, journal
 
 
 # version
