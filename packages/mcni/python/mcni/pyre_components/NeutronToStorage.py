@@ -62,61 +62,15 @@ class NeutronToStorage(ParallelComponent, AbstractComponent):
 
     def _saveFinalResult(self):
         context = self.simulation_context
-        # make sure every node reaches here
-        if context.mpiSize:
-            # channel = self.mpi.getUniqueChannel()
-            channel = abs(hash(self.name)) % (10**8)
-            if context.mpiRank:
-                self.mpi.send(context.mpiRank, 0, channel)
-            else:
-                for i in range(1, self.mpi.size):
-                    self.mpi.receive(i, channel)
-        # merge and normalize neutron files
-        if context.mpiRank == 0:
-            import time; time.sleep(60)
-            self._merge_and_normalize()
-        return
-
-
-    def _merge_and_normalize(self):
-        # XXX: should rewrite using mcni.neutron_storage.merge_and_normalize
-        outdir = self.simulation_context.outputdir
-
-        # find all output files
-        from mcni.components.outputs import n_mcsamples_files, mcs_sum
-        import glob, os
-        filename = self.path
-        pattern = os.path.join(outdir, '*', filename)
-        nsfiles = glob.glob(pattern)
-        n_mcsamples = n_mcsamples_files(outdir)
-        assert len(nsfiles) == n_mcsamples, \
-            "neutron storage files %s does not match #mcsample files %s" %(
-            len(nsfiles), n_mcsamples)
-        if not nsfiles:
-            return None, None
-        
-        # output
-        out = os.path.join(outdir, self.path)
-        if self.overwrite_datafiles:
-            if os.path.exists(out):
-                os.remove(out)
-        # merge
-        from mcni.neutron_storage import merge
-        merge(nsfiles, out)
-        
-        # number of neutron events totaly in the neutron file
-        from mcni.neutron_storage.idf_usenumpy import count
-        nevts = count(out)
-
-        # load number_of_mc_samples
-        mcs = mcs_sum(outdir)
-
-        # normalization factor. this is a bit tricky!!!
-        nfactor = mcs/nevts
-        
-        # normalize
-        from mcni.neutron_storage import normalize
-        normalize(out, nfactor)
+        # create post processing script
+        import os
+        path = os.path.join(context.post_processing_scripts_dir, "%s.py" % self.name)
+        content = """from mcni.pyre_components.NeutronToStorage import merge_and_normalize
+merge_and_normalize(%r, %r, %r)
+""" % (os.path.abspath(self.simulation_context.outputdir),
+       self.path,
+       self.overwrite_datafiles)
+        open(path, 'wt').write(content)
         return
 
 
@@ -135,6 +89,44 @@ class NeutronToStorage(ParallelComponent, AbstractComponent):
 
     pass # end of NeutronToStorage
 
+
+def merge_and_normalize(outdir, filename, overwrite_datafiles):
+    # XXX: should rewrite using mcni.neutron_storage.merge_and_normalize
+    # find all output files
+    from mcni.components.outputs import n_mcsamples_files, mcs_sum
+    import glob, os
+    pattern = os.path.join(outdir, '*', filename)
+    nsfiles = glob.glob(pattern)
+    n_mcsamples = n_mcsamples_files(outdir)
+    assert len(nsfiles) == n_mcsamples, \
+        "neutron storage files %s does not match #mcsample files %s" %(
+        len(nsfiles), n_mcsamples)
+    if not nsfiles:
+        return None, None
+
+    # output
+    out = os.path.join(outdir, filename)
+    if overwrite_datafiles:
+        if os.path.exists(out):
+            os.remove(out)
+    # merge
+    from mcni.neutron_storage import merge
+    merge(nsfiles, out)
+
+    # number of neutron events totaly in the neutron file
+    from mcni.neutron_storage.idf_usenumpy import count
+    nevts = count(out)
+
+    # load number_of_mc_samples
+    mcs = mcs_sum(outdir)
+
+    # normalization factor. this is a bit tricky!!!
+    nfactor = mcs/nevts
+
+    # normalize
+    from mcni.neutron_storage import normalize
+    normalize(out, nfactor)
+    return
 
 import os
 
