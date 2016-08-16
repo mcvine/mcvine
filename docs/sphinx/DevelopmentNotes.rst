@@ -14,6 +14,27 @@ Workflow
   - https://github.com/mcvine/training/: subdirs such as ARCS
 
 
+Instrument Simulation App
+-------------------------
+An instrument simulation app is a pyre application.
+Its inventory contains 
+
+* neutron_components: a list of component names
+* each neutron component as a pyre component
+
+The run method of the app first prepare the simulation context,
+then run a loop that send neutrons through the simulation compoonent 
+list.
+
+The run_postprocessing method of the app can be called to 
+run the postprocessing scripts written out by monitor-like
+components (`here <https://github.com/mcvine/mcvine/blob/7cd386bbf545c7bbe8d0259340ac8fa247bfa88d/packages/mcni/python/mcni/pyre_components/NeutronToStorage.py#L67>`_ is an example).
+
+It is better that the run_postprocessing method be called in a different
+process than the process that executes the "run" method.
+This is achieved in `InstrumentBuilder <https://github.com/mcvine/mcvine/blob/7cd386bbf545c7bbe8d0259340ac8fa247bfa88d/packages/mcvine/python/mcvine/applications/InstrumentBuilder.py#L27>`_.
+
+
 SNS instruments
 ---------------
 They are in instruments/.
@@ -29,7 +50,6 @@ the c code at the intialize section to python, and then the mcstas
 instrument is compiled into a mcvine application and an accompanying
 configuratoin script.
 This approach probably should be favored in the long run.
-
 
 After a beam simulation, a beam analysis is carried out.
 ARCS and SEQUOIA has its own script for that, but they are really 
