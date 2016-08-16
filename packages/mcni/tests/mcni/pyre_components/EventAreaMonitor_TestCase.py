@@ -178,6 +178,7 @@ class TestCase(unittest.TestCase):
             ]
 
         instrument.run()
+        instrument.run_postprocessing()
         sys.argv = save
         return
 
@@ -198,6 +199,7 @@ class TestCase(unittest.TestCase):
             ]
 
         instrument.run()
+        instrument.run_postprocessing()
         sys.argv = save
         return
 

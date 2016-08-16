@@ -42,6 +42,7 @@ class TestCase(unittest.TestCase):
         instrument = Instrument('output_dir_option_TestCase')
         instrument.testFacility = self
         instrument.run()
+        instrument.run_postprocessing()
 
         self.assert_( os.path.exists( outdir ) )
         IEh5 = os.path.join( outdir, 'IE.h5' )
