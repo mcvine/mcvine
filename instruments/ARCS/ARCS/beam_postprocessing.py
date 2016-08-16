@@ -101,7 +101,7 @@ def runMonitorsAtSample(E, m2sout, out):
     cmd = ['mcvine instruments arcs analyze_beam']
     cmd += ['--output-dir=%s' % out]
     cmd += ['--ncount=%s' % n]
-    cmd += ['--buffer_size=%s' % min(n, 1e6)]
+    cmd += ['--buffer_size=%s' % min(n, int(1e6))]
     cmd += ['--source.path=%s' % neutronfile]
     # fix monitor params that depend on incident energy
     cmd += ['--monitor.mtof.tofmin=%s' % (t*0.9)]
