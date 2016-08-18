@@ -22,7 +22,7 @@ def populate_monitor_data(sim_out, nxs):
     return
 
 
-def reduce(nxsfile, qaxis, outfile, use_ei_guess=False, ei_guess=None, eaxis=None, tof2E=True):
+def reduce(nxsfile, qaxis, outfile, use_ei_guess=False, ei_guess=None, eaxis=None, tof2E=True, ibnorm='ByCurrent'):
     from mantid.simpleapi import DgsReduction, SofQW3, SaveNexus, Load
     if tof2E:
         if use_ei_guess:
@@ -32,12 +32,14 @@ def reduce(nxsfile, qaxis, outfile, use_ei_guess=False, ei_guess=None, eaxis=Non
                 UseIncidentEnergyGuess=use_ei_guess,
                 OutputWorkspace='reduced',
                 EnergyTransferRange=eaxis,
+                IncidentBeamNormalisation=ibnorm,
                 )
         else:
             DgsReduction(
                 SampleInputFile=nxsfile,
                 OutputWorkspace='reduced',
                 EnergyTransferRange=eaxis,
+                IncidentBeamNormalisation=ibnorm,
                 )
     else: 
         reduced = Load(nxsfile)
