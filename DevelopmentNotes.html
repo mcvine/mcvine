@@ -63,6 +63,7 @@
   <ul>
 <li><a class="reference internal" href="#">Development notes</a><ul>
 <li><a class="reference internal" href="#workflow">Workflow</a></li>
+<li><a class="reference internal" href="#instrument-simulation-app">Instrument Simulation App</a></li>
 <li><a class="reference internal" href="#sns-instruments">SNS instruments</a><ul>
 <li><a class="reference internal" href="#nexus">Nexus</a></li>
 <li><a class="reference internal" href="#add-an-instrument">Add an instrument</a></li>
@@ -118,6 +119,24 @@
 - <a class="reference external" href="https://github.com/mcvine/workflow/tree/master/notebook-examples">https://github.com/mcvine/workflow/tree/master/notebook-examples</a>
 - <a class="reference external" href="https://github.com/mcvine/training/">https://github.com/mcvine/training/</a>: subdirs such as ARCS</li>
 </ul>
+</div>
+<div class="section" id="instrument-simulation-app">
+<h2>Instrument Simulation App<a class="headerlink" href="#instrument-simulation-app" title="Permalink to this headline">¶</a></h2>
+<p>An instrument simulation app is a pyre application.
+Its inventory contains</p>
+<ul class="simple">
+<li>neutron_components: a list of component names</li>
+<li>each neutron component as a pyre component</li>
+</ul>
+<p>The run method of the app first prepare the simulation context,
+then run a loop that send neutrons through the simulation compoonent
+list.</p>
+<p>The run_postprocessing method of the app can be called to
+run the postprocessing scripts written out by monitor-like
+components (<a class="reference external" href="https://github.com/mcvine/mcvine/blob/7cd386bbf545c7bbe8d0259340ac8fa247bfa88d/packages/mcni/python/mcni/pyre_components/NeutronToStorage.py#L67">here</a> is an example).</p>
+<p>It is better that the run_postprocessing method be called in a different
+process than the process that executes the &#8220;run&#8221; method.
+This is achieved in <a class="reference external" href="https://github.com/mcvine/mcvine/blob/7cd386bbf545c7bbe8d0259340ac8fa247bfa88d/packages/mcvine/python/mcvine/applications/InstrumentBuilder.py#L27">InstrumentBuilder</a>.</p>
 </div>
 <div class="section" id="sns-instruments">
 <h2>SNS instruments<a class="headerlink" href="#sns-instruments" title="Permalink to this headline">¶</a></h2>
