@@ -115,7 +115,7 @@ def populate_metadata(ctx, type, beam_outdir, nxs):
 @click.option('--ei_guess', help='guess for Ei', default=0.)
 @click.option('--qaxis', help='Qmin Qmax dQ', default=(0.,13.,0.1))
 @click.option('--eaxis', help='Emin Emax dE', default=(0.,0.,0.))
-@click.option('--tof2E/--no-tof2E', help='If true, input data must be tof events', default=True)
+@click.option('--tof2E/--no-tof2E', help='If true, input data must be tof events', default=None)
 @click.option('--ibnorm',
               help='Incident beam normalization',
               type=click.Choice(['ByCurrent', 'ToMonitor', 'None']))
@@ -124,6 +124,8 @@ def reduce(nxs, out, use_ei_guess, ei_guess, qaxis, eaxis, tof2e, ibnorm):
     "run reduction"
     if ei_guess > 0:
         use_ei_guess = True
+    if tof2e is None:
+        tof2e = 'guess'
 
     qmin, qmax, dq = qaxis
     qaxis = (qmin, dq, qmax)
