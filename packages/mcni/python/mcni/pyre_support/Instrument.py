@@ -16,7 +16,7 @@
 # by default, let us disable this annoying channel.
 # one can always enable it by 
 #  --journal.error.pyre.inventory
-import journal
+import journal, os
 journal.error('pyre.inventory').deactivate()
 
 
@@ -26,8 +26,12 @@ journal.error('pyre.inventory').deactivate()
 DEFAULT_NUMBER_SIM_LOOPS = 5
 # minimum buffer size
 MINIMUM_BUFFER_SIZE = 100
-MAXIMUM_BUFFER_SIZE = int(1e7)
-
+mbs = os.environ.get('MCVINE_MAX_NEUTRON_BUFFER_SIZE')
+if mbs:
+    mbs = int(float(mbs))
+else:
+    mbs = int(1e7)
+MAXIMUM_BUFFER_SIZE = mbs
 
 from MpiApplication import Application as base
 from CompositeNeutronComponentMixin import CompositeNeutronComponentMixin
