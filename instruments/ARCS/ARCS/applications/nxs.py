@@ -28,7 +28,7 @@ def reduce(nxsfile, qaxis, outfile, use_ei_guess=False, ei_guess=None, eaxis=Non
         # XXX: this is a simple guess. all raw data files seem to have root "entry"
         cmd = 'h5ls %s' % nxsfile
         import subprocess as sp
-        o = sp.check_call(cmd).split()).strip().split()[0]
+        o = sp.check_output(cmd).strip().split()[0]
         tof2E = 'o' == 'entry'
     if tof2E:
         if use_ei_guess:
