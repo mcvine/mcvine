@@ -17,7 +17,8 @@ class LauncherSlurm(Launcher):
     def _defaults(self):
         self.inventory.command = "srun"
         self.inventory.nodesopt = "-n"
-        self.inventory.python_mpi = "python-mpi"
+        # self.inventory.python_mpi = "python-mpi"
+        self.inventory.python_mpi = "`which python`"
         return
     
 # End of file 
