@@ -30,6 +30,7 @@ namespace wrap_mccomponents{
   void wrap_kernelcontainer();
 
   void wrap_IsotropicKernel();
+  void wrap_DGSSXResKernel();
 
   void wrap_He3TubeKernel();
   void wrap_EventModeMCA();
@@ -81,6 +82,7 @@ BOOST_PYTHON_MODULE(mccomponentsbp)
   wrap_kernelcontainer();
 
   wrap_IsotropicKernel();
+  wrap_DGSSXResKernel();
 
   wrap_He3TubeKernel();
   wrap_EventModeMCA();

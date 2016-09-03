@@ -15,6 +15,7 @@ set ( SRC_FILES
   wrap_E_Q_Kernel.cc
   wrap_E_vQ_Kernel.cc
   wrap_Broadened_E_Q_Kernel.cc
+  wrap_DGSSXResKernel.cc
   wrap_SQEkernel.cc
   wrap_SQkernel.cc
   wrap_GridSQE.cc
