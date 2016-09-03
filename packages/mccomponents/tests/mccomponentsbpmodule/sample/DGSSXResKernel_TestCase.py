@@ -20,9 +20,10 @@ from mccomponents import mccomponentsbp
 class TestCase(unittest.TestCase):
 
     def test(self):
+        tof_at_sample = 1.
         target_position = mcnibp.Vector3_double(3,0,0);
         target_radius = 0.025
-        tof_at_target = 0.001
+        tof_at_target = 0.001 + tof_at_sample
         dtof = 1e-5
         absorption_coefficient = scattering_coefficient = 1.
         kernel = mccomponentsbp.DGSSXResKernel(
@@ -41,7 +42,7 @@ class TestCase(unittest.TestCase):
         for i in range(10):
             event = mcni.neutron( 
                 r = (0,0,0), v = vi,
-                prob = 1, time = 0 )
+                prob = 1, time = tof_at_sample )
             kernel.scatter( event );
             vf = np.array(event.state.velocity)
             diffv = vi - vf

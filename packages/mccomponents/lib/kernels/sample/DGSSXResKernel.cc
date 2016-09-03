@@ -113,7 +113,7 @@ mccomponents::kernels::DGSSXResKernel
   double tof=math::random(m_tof_at_target-m_dtof/2., m_tof_at_target+m_dtof/2.);
 
   // compute vf length
-  double vf = displacement.length()/tof;
+  double vf = displacement.length()/(tof-ev.time);
   // compute vf vector
   V3d vf_vec = vf_dir * vf;
   // compute final energy
