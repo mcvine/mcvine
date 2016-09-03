@@ -42,6 +42,7 @@ class ScatteringKernel(Node):
         = onE_Q_Kernel = onE_vQ_Kernel = onBroadened_E_Q_Kernel \
         = onConstantEnergyTransferKernel \
         = onConstantQEKernel = onConstantvQEKernel \
+        = onDGSSXResKernel \
         = on_
     
     pass # end of ScatteringKernel

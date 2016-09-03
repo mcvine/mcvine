@@ -32,6 +32,7 @@ class Document(base):
         'E_vQ_Kernel',
         
         'IsotropicKernel',
+        'DGSSXResKernel',
         ]
     
     
