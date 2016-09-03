@@ -22,6 +22,7 @@ set ( SRC_FILES
   kernels/detector/testHe3.cc
   kernels/detector/testevents2iqe.cc
   kernels/sample/test_Broadened_E_Q_Kernel.cc
+  kernels/sample/test_DGSSXResKernel.cc
   kernels/sample/test_E_Q_Kernel.cc
   kernels/sample/test_E_vQ_Kernel.cc
   kernels/sample/test_SQkernel.cc

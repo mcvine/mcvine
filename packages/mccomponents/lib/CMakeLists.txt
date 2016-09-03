@@ -18,6 +18,7 @@ set ( SRC_FILES
   kernels/sample/ConstantEnergyTransferKernel.cc
   kernels/sample/ConstantQEKernel.cc
   kernels/sample/ConstantvQEKernel.cc
+  kernels/sample/DGSSXResKernel.cc
   kernels/sample/diffraction/SimplePowderDiffractionKernel.cc
   kernels/sample/SQkernel.cc
   kernels/sample/SQEkernel.cc
