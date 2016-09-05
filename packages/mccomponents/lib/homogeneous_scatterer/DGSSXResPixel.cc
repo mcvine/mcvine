@@ -3,6 +3,7 @@
 //
 
 
+#include <limits>
 #include "mccomponents/homogeneous_scatterer/DGSSXResPixel.h"
 #include "mccomponents/homogeneous_scatterer/AbstractScatteringKernel.h"
 #include "mccomposite/neutron_propagation.h"
@@ -73,13 +74,14 @@ mccomponents::DGSSXResPixel::interact_path1(mcni::Neutron::Event &ev)
 
   // if tof is already > desired tof, it means the neutron is
   // too fast for the pixel to catch it
-  if (ev.time>m_tof) ev.probability = -1;
+  double epsilon = std::numeric_limits<double>::epsilon();
+  if (ev.time>m_tof) ev.probability = epsilon;
   else {
     // tof before exiting the shape
     // IMPORTANT: it is assumed that the pixel is not of hollow shape
     double tof = tof_before_exit( ev, shape() );
     // neutron too slow:
-    if (ev.time+tof < m_tof) ev.probability=-1;
+    if (ev.time+tof < m_tof) ev.probability = epsilon;
     else {
 
       // tof to detection
