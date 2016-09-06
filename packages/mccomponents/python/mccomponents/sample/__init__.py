@@ -67,6 +67,11 @@ def isotropickernel(*args, **kwds):
     return IsotropicKernel(*args, **kwds)
 
 
+def dgssxreskernel(*args, **kwds):
+    from DGSSXResKernel import DGSSXResKernel
+    return DGSSXResKernel(*args, **kwds)
+
+
 def constantEnergyTransferKernel(*args, **kwds):
     from ConstantEnergyTransferKernel import ConstantEnergyTransferKernel
     return ConstantEnergyTransferKernel(*args, **kwds)

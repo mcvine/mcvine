@@ -11,6 +11,7 @@ set ( SRC_FILES
   math/random/geometry.cc
   math/random/gaussian.cc
   homogeneous_scatterer/CompositeScatteringKernel.cc
+  homogeneous_scatterer/DGSSXResPixel.cc
   kernels/IsotropicKernel.cc
   kernels/detector/EventModeMCA.cc
   kernels/detector/He3.cc
@@ -18,6 +19,7 @@ set ( SRC_FILES
   kernels/sample/ConstantEnergyTransferKernel.cc
   kernels/sample/ConstantQEKernel.cc
   kernels/sample/ConstantvQEKernel.cc
+  kernels/sample/DGSSXResKernel.cc
   kernels/sample/diffraction/SimplePowderDiffractionKernel.cc
   kernels/sample/SQkernel.cc
   kernels/sample/SQEkernel.cc

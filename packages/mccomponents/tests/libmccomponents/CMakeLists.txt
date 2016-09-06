@@ -15,6 +15,7 @@ set ( SRC_FILES
   homogeneous_scatterer/testHomogeneousNeutronScatterer.cc
   homogeneous_scatterer/testCompositeScatteringKernel.cc
   homogeneous_scatterer/testMultipleScattering.cc
+  homogeneous_scatterer/testDGSSXResPixel.cc
   kernels/detector/testTof2Channel.cc
   kernels/detector/testZ2Channel.cc
   kernels/detector/testHe3Tube.cc
@@ -22,6 +23,7 @@ set ( SRC_FILES
   kernels/detector/testHe3.cc
   kernels/detector/testevents2iqe.cc
   kernels/sample/test_Broadened_E_Q_Kernel.cc
+  kernels/sample/test_DGSSXResKernel.cc
   kernels/sample/test_E_Q_Kernel.cc
   kernels/sample/test_E_vQ_Kernel.cc
   kernels/sample/test_SQkernel.cc

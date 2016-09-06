@@ -7,6 +7,7 @@ set ( SRC_FILES
   wrap_AbstractScatteringKernel.cc
   wrap_CompositeScatteringKernel.cc
   wrap_kernelcontainer.cc
+  wrap_DGSSXResPixel.cc
   wrap_He3TubeKernel.cc
   wrap_EventModeMCA.cc
   wrap_ConstantEnergyTransferKernel.cc
@@ -15,6 +16,7 @@ set ( SRC_FILES
   wrap_E_Q_Kernel.cc
   wrap_E_vQ_Kernel.cc
   wrap_Broadened_E_Q_Kernel.cc
+  wrap_DGSSXResKernel.cc
   wrap_SQEkernel.cc
   wrap_SQkernel.cc
   wrap_GridSQE.cc

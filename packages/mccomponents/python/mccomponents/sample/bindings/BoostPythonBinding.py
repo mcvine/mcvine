@@ -87,6 +87,19 @@ class New:
         return b.IsotropicKernel(absorption_cross_section, scattering_cross_section)
 
 
+    def dgssxreskernel(
+            self,
+            target_position, target_radius,
+            tof_at_target, dtof,
+            absorption_cross_section, scattering_cross_section):
+        from mccomposite.bindings.BoostPythonBinding import binding as _b
+        target_position = _b.Vector3_double(*target_position)
+        return b.DGSSXResKernel(
+            target_position, target_radius,
+            tof_at_target, dtof,
+            absorption_cross_section, scattering_cross_section)
+
+
     def constantEnergyTransferKernel(self, E, absorption_coefficient, scattering_coefficient):
         '''constantenergytransferkernel: a kernel scatters isotropically with fixed energy transfer
 
