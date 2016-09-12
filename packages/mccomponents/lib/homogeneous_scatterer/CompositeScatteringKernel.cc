@@ -13,6 +13,7 @@
 
 #include <cassert>
 #include <typeinfo>
+#include "mcni/exceptions.h"
 #include "mccomposite/mccomposite.h"
 #include "mccomponents/exception.h"
 #include "mccomponents/math/random.h"
@@ -162,12 +163,22 @@ mccomponents::CompositeScatteringKernel::scattering_coefficient
 void mccomponents::CompositeScatteringKernel::scatter
 ( mcni::Neutron::Event & ev )
 {
-  size_t index = m_details->select_kernel();
-  ev.probability /= m_weights[index];
-  const rotmat_t &rotmat = m_rotmats[index];
-  tosubkernel(ev.state.velocity, rotmat);
-  m_kernels[index]->scatter( ev );
-  tohostkernel(ev.state.velocity, rotmat);
+  int N_TRY_SELECTING_KERNEL=10;
+  size_t index=0;
+  bool failed=1;
+  for (int i=0; i<N_TRY_SELECTING_KERNEL && failed; i++) {
+    index = m_details->select_kernel();
+    const rotmat_t &rotmat = m_rotmats[index];
+    tosubkernel(ev.state.velocity, rotmat);
+    try {
+      m_kernels[index]->scatter( ev );
+      failed = 0;
+    } catch (const mcni::neutron_fatal_path &e) {
+    }
+    tohostkernel(ev.state.velocity, rotmat);
+  }
+  if (failed) ev.probability = -1;
+  else ev.probability /= m_weights[index];
 }
 
 void mccomponents::CompositeScatteringKernel::absorb
