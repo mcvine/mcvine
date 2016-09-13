@@ -175,7 +175,7 @@ void mccomponents::CompositeScatteringKernel::scatter
     try {
       m_kernels[index]->scatter( ev );
       failed = 0;
-    } catch (const mcni::neutron_fatal_path &e) {
+    } catch (const mcni::Exception &e) {
       ev = saved;
       continue;
     }
