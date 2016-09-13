@@ -166,19 +166,22 @@ void mccomponents::CompositeScatteringKernel::scatter
   int N_TRY_SELECTING_KERNEL=10;
   size_t index=0;
   bool failed=1;
+  mcni::Neutron::Event saved = ev;
   for (int i=0; i<N_TRY_SELECTING_KERNEL && failed; i++) {
     index = m_details->select_kernel();
+    ev.probability /= m_weights[index];
     const rotmat_t &rotmat = m_rotmats[index];
     tosubkernel(ev.state.velocity, rotmat);
     try {
       m_kernels[index]->scatter( ev );
       failed = 0;
     } catch (const mcni::neutron_fatal_path &e) {
+      ev = saved;
+      continue;
     }
     tohostkernel(ev.state.velocity, rotmat);
   }
   if (failed) ev.probability = -1;
-  else ev.probability /= m_weights[index];
 }
 
 void mccomponents::CompositeScatteringKernel::absorb
