@@ -48,3 +48,9 @@ $ mt
 $ cd ~/dv/mcvine/build
 $ mm
 ```
+
+## Test
+```
+$ cd ~/dv/mcvine/build
+$ mt
+```
