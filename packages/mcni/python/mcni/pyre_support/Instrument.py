@@ -132,8 +132,9 @@ class Instrument( AppInitMixin, CompositeNeutronComponentMixin, base, ParallelCo
 
         context = self._makeSimContext()
         
+        if self.ncount < self.buffer_size:
+            self.buffer_size = self.ncount
         n = int(self.ncount / self.buffer_size)
-        assert n>0, 'ncount should be larger than buffer_size: ncount=%s, buffer_size=%s' % (self.ncount, self.buffer_size)
         
         from mcni import journal
         logger = journal.logger(
