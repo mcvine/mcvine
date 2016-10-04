@@ -29,7 +29,7 @@ def reduce(nxsfile, qaxis, outfile, use_ei_guess=False, ei_guess=None, eaxis=Non
         cmd = 'h5ls %s' % nxsfile
         import subprocess as sp, shlex
         o = sp.check_output(shlex.split(cmd)).strip().split()[0]
-        tof2E = 'o' == 'entry'
+        tof2E = o == 'entry'
     if tof2E:
         if use_ei_guess:
             DgsReduction(
