@@ -27,7 +27,7 @@ warning = journal.warning( "mcni.pyre_support.test" )
 class TestCase(unittest.TestCase):
 
 
-    def test(self):
+    def test1(self):
         'mcni.pyre_support: Instrument'
         instrument = Instrument('test')
         instrument.testFacility = self
@@ -48,6 +48,27 @@ class TestCase(unittest.TestCase):
                          instrument.inventory.verifier.count,
                          )
         
+        sys.argv = save
+        return
+
+
+    def test1a(self):
+        'mcni.pyre_support: Instrument. buffer_size>ncount'
+        instrument = Instrument('test')
+        instrument.testFacility = self
+
+        import sys
+        save = sys.argv
+        sys.argv = [
+            __file__,
+            '--ncount=10',
+            '--buffer_size=40',
+            '--output-dir=out-pyre_support_test',
+            '--overwrite-datafiles',
+            ]
+
+        instrument.run()
+
         sys.argv = save
         return
 
