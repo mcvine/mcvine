@@ -133,7 +133,7 @@ class Instrument( AppInitMixin, CompositeNeutronComponentMixin, base, ParallelCo
         context = self._makeSimContext()
         
         if self.ncount < self.buffer_size:
-            self.buffer_size = self.ncount
+            self.buffer_size = int(self.ncount)
         n = int(self.ncount / self.buffer_size)
         
         from mcni import journal
