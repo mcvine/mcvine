@@ -118,7 +118,8 @@ def populate_metadata(ctx, type, beam_outdir, nxs):
 @click.option('--tof2E/--no-tof2E', help='If true, input data must be tof events', default=None)
 @click.option('--ibnorm',
               help='Incident beam normalization',
-              type=click.Choice(['ByCurrent', 'ToMonitor', 'None']))
+              type=click.Choice(['ByCurrent', 'ToMonitor', 'None']),
+              default='ByCurrent')
 @alias("arcs_nxs_reduce", "%s nxs reduce" % cmd_prefix)
 def reduce(nxs, out, use_ei_guess, ei_guess, qaxis, eaxis, tof2e, ibnorm):
     "run reduction"
