@@ -25,7 +25,7 @@
 # $ anaconda upload /home/lj7/anaconda2/conda-bld/linux-64/mcvine-1.0.1-py27_0.tar.bz2
 
 set(PROJECT_NAME "mcvine")
-set(VERSION "1.1")
+set(VERSION "1.1.1")
 set(AUTHOR "Jiao Lin")
 set(AUTHOR_EMAILE "jiao.lin@gmail.com")
 set(VENDOR "DANSE")
