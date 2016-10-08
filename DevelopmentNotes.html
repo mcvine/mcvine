@@ -76,6 +76,7 @@
 </ul>
 </li>
 <li><a class="reference internal" href="#resources">Resources</a></li>
+<li><a class="reference internal" href="#logging">Logging</a></li>
 <li><a class="reference internal" href="#documentation">Documentation</a></li>
 </ul>
 </li>
@@ -235,6 +236,15 @@ parameters to set.</p>
 - hierarchy: matter/temperature/shape/...  For example: V/300K/plate</li>
 </ul>
 <p>McStas component library: its path is set by env var $MCSTAS_COMPONENT_LIBDIR.</p>
+</div>
+<div class="section" id="logging">
+<h2>Logging<a class="headerlink" href="#logging" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Use both pyre journal and python logging</li>
+<li>pyre journal configured by pml files</li>
+<li>logging configured by &#8220;mcvine.conf&#8221; (see mcvine toplevel __init__.py)
+- example: tests/logger/mcvine.conf</li>
+</ul>
 </div>
 <div class="section" id="documentation">
 <h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h2>
