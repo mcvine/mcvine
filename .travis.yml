@@ -45,7 +45,7 @@ install:
   - grep git_rev meta.yaml
   - CORES=2 conda build .
   - anaconda remove -f mcvine/mcvine/$MCVINE_CONDA_PKG_VER/linux-64/mcvine-$MCVINE_CONDA_PKG_VER-py27_0.tar.bz2
-  - anaconda upload /home/travis/mc/conda-bld/linux-64/mcvine-$MCVINE_CONDA_PKG_VER-py27_0.tar.bz2
+  - anaconda upload /home/travis/mc/conda-bld/linux-64/mcvine-$MCVINE_CONDA_PKG_VER-py27_0.tar.bz2 --label unstable
   - cd ../..
   - conda install mcvine --use-local
 
