@@ -117,6 +117,11 @@ sub-cmds are imported from various sub-packages such as mcstas2
 and mcvine.instruments.
 
 
+Provenance
+""""""""""
+is achieved using "save_metadata" decorator.
+See mcvine.cli._provenance for implementation details.
+
 pyre commands
 """""""""""""
 Pyre applications are built using pyre machineries and they
