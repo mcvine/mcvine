@@ -12,6 +12,8 @@
 #
 
 
+import logging
+logging.debug("Gathering deployment info")
 import os, sys
 debug = os.environ.get('DEBUG', False)
 
@@ -37,8 +39,7 @@ else:
             opd = os.path.dirname
             danse_dir = opd(opd(sys.executable))
             msg = "Neither environment variable MCVINE_DIR nor DANSE_DIR was defined. Assumed that it is %s." % danse_dir
-            import warnings
-            warnings.warn(msg)
+            logging.debug(msg)
         mcvinedir = danse_dir
 
 # set EXPORT_ROOT for pyre to pick up components in system etc dir
