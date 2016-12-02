@@ -15,7 +15,7 @@ requirements:
     - h5py
     - mpi4py
     - gsl
-    - boost
+    - boost 1.61.*
     - pyre
     - danse.ins.dsm
     - danse.ins.numpyext
@@ -34,7 +34,7 @@ requirements:
     - h5py
     - mpi4py
     - gsl
-    - boost
+    - boost 1.61.*
     - pyre
     - danse.ins.dsm
     - danse.ins.numpyext
