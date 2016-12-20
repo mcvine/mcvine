@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+
 #
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
@@ -15,7 +16,6 @@
 def phase(neutron_energy, moderator2t0, emission_time=None):
     '''compute phase of t0 chopper
     '''
-    
     if emission_time is None:
         from moderator import estimate_emission_time
         emission_time = estimate_emission_time(neutron_energy)
