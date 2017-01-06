@@ -14,6 +14,14 @@ Workflow
   - https://github.com/mcvine/training/: subdirs such as ARCS
 
 
+Requirements of instrument-specific CLI by DGS workflow
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+* neutrons2nxs: convert scattered neutron to nxs file.
+  - cmd: mcvine instruments ${INSTRUMENT} neutrons2nxs --neutrons=out/scattered-neutrons --nxs=sim.nxs --populate-metadata --beam=beam --nodes=10
+* nxs reduce: reduce nxs file to iqe.nxs
+  - cmd: mcvine instruments ${INSTRUMENT} nxs reduce EVENTMODE.NXS --qaxis=0 15 0.1 --tof2E
+
 Instrument Simulation App
 -------------------------
 An instrument simulation app is a pyre application.
