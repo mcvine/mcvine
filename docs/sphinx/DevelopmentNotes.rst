@@ -75,7 +75,20 @@ Add an instrument
 
 This is a quick guide. not very well organized.
 
-* convert mcstas instrument to python scripts (see script "convert" in HYSPEC/resources)
+* convert mcstas instrument to python scripts
+  - modify mcstas instrument file
+    - convert to unix format ("\r\n"->"\n") using dos2unix
+    - make sure that in the "DEFINE INSTRUMENT" line all parameters have default values
+    - if c code snippets exist in the "DECLARE" or "INITIALIZE", move all of them
+      to "INITIALIZE" section (python vars don't need declaration),
+      and make sure the to convert them into python syntax
+    - clean up the component definitions so that the "AT ..." clause
+      and "ROTATED ..." clause are in two different lines.
+      Also add a space between "AT/ROTATED" and "(...)" if there is none.
+  - $ mcvine mcstas convertinstrument <instrument-file>
+    This cmd generates
+    - "config-SIM" script: use this to generate configuration of the instrument simulation
+    - "SIM" script: run this script to simulate
 * add a high-level script <instrument>-beam that runs the beam and do beam analysis
 * convert mantid instrument xml file for the instrument to a mcvine instrument, by add an instrument factory to the instrument package
 
