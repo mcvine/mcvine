@@ -16,9 +16,10 @@ def phonon():
 @click.option("--end", default=(0.,0.,1.), help='stop Q point')
 @click.option("--npts", default=100, help='number of points to sample')
 @click.option("--cartesian", default=False, is_flag=True, help='indicate whether the Q points are in cartesian or hkl format')
-@click.option("--output", default="", help="image file path to save the plot. empty means plotting interactively. Plotting requires matplotlib installed.")
+@click.option("--output", default="", help="image file path to save the plot. Plotting requires matplotlib installed.")
 @click.option("--branch", default=-1, help="0-based branch index. default value -1 means plot all branches")
-def band(phonon, start, end, npts, cartesian, output, branch):
+@click.option("--output-npy", default="", help="npy data file to save")
+def band(phonon, start, end, npts, cartesian, output, branch, output_npy):
     "Given phonon data in IDF format, plot band structure along one direction"
     # phonon is the path to a directory with IDF phonon data
 
@@ -45,6 +46,9 @@ def band(phonon, start, end, npts, cartesian, output, branch):
     Es = np.array(Es)
     Es.shape = -1, nbr
     # output
+    if not output_npy:
+        output_npy = 'bands-start%s-end%s.npy' % (start, end)
+    np.save(output_npy, Es)
     try:
         import matplotlib as mpl
     except ImportError:

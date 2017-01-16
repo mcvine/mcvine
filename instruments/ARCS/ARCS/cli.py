@@ -75,14 +75,27 @@ Impl.: mcvine.instruments.ARCS.applications.Neutrons2Nxs
 @click.option("--workdir", default='work-arcs-neutrons2nxs', help="working dir to save intermediate data fiels")
 @click.option("--nodes", default=0)
 @click.option("--type", default="raw", type=click.Choice(['processed', 'raw']))
+@click.option("--populate-metadata/--no-populate-metadata", default=False)
+@click.option("--beam", default="", help='beam simulation path. need only when populate-metadata is True')
 @alias("arcs_neutrons2nxs", "%s neutrons2nxs" % cmd_prefix)
 @click.pass_context
-def neutrons2nxs(ctx, neutrons, nxs, workdir, nodes, type):
+def neutrons2nxs(ctx, neutrons, nxs, workdir, nodes, type, populate_metadata, beam):
     if not neutrons:
         click.echo(ctx.get_help(), color=ctx.color)
         return
     from .applications.Neutrons2Nxs import run
     run(neutrons, nxs, type, workdir, nodes)
+
+    if populate_metadata:
+        import os, shutil
+        # save a copy
+        base, ext = os.path.splitext(nxs)
+        nometadata = base+"_no_metadata"+ext
+        shutil.copyfile(nxs, nometadata)
+        # populate
+        from .applications import nxs as nxsmod
+        beam_out = os.path.abspath(os.path.join(beam, 'out'))
+        nxsmod.populate_Ei_data(beam_out, nxs)
     return
 
 
