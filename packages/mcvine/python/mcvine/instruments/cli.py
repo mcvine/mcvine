@@ -11,7 +11,7 @@ from mcvine.cli import mcvine
 def instruments():
     return
 
-instrument_list = ['ARCS', 'SEQUOIA']
+instrument_list = ['ARCS', 'SEQUOIA', 'HYSPEC']
 for inst in instrument_list:
     mod = "mcvine.instruments.%s.cli" % inst
     importlib.import_module(mod)
