@@ -68,7 +68,7 @@ class App(base):
 
 
     def _configure_hyspec(self):
-        cmd = ['config-hyspec_moderator2sample']
+        cmd = ['mcvine instruments hyspec config_mod2sample']
         data = dict(
             Edes = self.inventory.E,
             E_min = self.inventory.Emin,
@@ -90,7 +90,7 @@ class App(base):
             res.instrument('HYSPEC'), 
             'mcstas', 'SNS_TD_30o70p_fit_fit.dat',
             )
-        cmd = ['hyspec_moderator2sample']
+        cmd = ['mcvine instruments hyspec mod2sample']
         from mcni.pyre_support.MpiApplication \
             import mpi_launcher_choice as launcher
         data = {
@@ -111,9 +111,6 @@ class App(base):
         return ['--%s=%s' % (k,v) for k,v in kwds.iteritems()]
 
 
-def main():
-    app = App('hyspec_beam')
-    app.run()
-    return
+name = 'hyspec_beam'
 
-if __name__ == '__main__': main()
+if __name__ == '__main__': App(name).run()
