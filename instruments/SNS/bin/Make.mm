@@ -43,9 +43,6 @@ EXPORT_PYTHON_MODULES = \
 
 
 EXPORT_BINS = \
-	mcvine-sns-neutrons2events \
-	mcvine-sns-events2nxs \
-	mcvine-sns-neutrons2nxs \
 	mcvine-sns-reduce-by-mantid \
 
 
