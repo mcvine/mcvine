@@ -126,7 +126,7 @@ def populateMetadata(entry, sim_out, sample, detector):
     
     # set energy
     setEnergyRequest(entry, Ei)
-    
+
     # set msd
     setDASlogsEntryValue(entry, 'msd', LMS*1000) # unit: mm
     
@@ -172,7 +172,7 @@ npixels = nbanks * pixelsperbank
 import os
 from mcvine import resources as res
 nxs_template = os.path.join(
-    res.instrument('HYSPEC'), 'resources',
+    res.instrument('HYSPEC'), 'nxs',
     'hyspec-raw-events-template.nxs',
     )
 import numpy as np

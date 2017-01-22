@@ -5,7 +5,7 @@ Simulate HYSPEC beam and analyze the beam.
 
 Example:
 
- $ hyspec_beam --fermi_nu=180 --E=20 --Emin=10 --Emax=39 --ncount=1e8
+ $ hyspec_beam --fermi_nu=180 --E=20 --Emin=10 --Emax=39 --LMS=1.8 --ncount=1e8 --nodes=10
 
 For more details of cmd line parameters, run:
 

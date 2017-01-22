@@ -76,6 +76,24 @@ def nxs():
     return
 
 @nxs.command()
+@click.option('--beam_outdir', help='path to the output directory of hyspec beam simulation')
+@click.option('--nxs', help='path to the nexus file to be decorated')
+@click.option('--sample', default=0., help='sample angle (psi)')
+@click.option('--detector', default=0., help='angle of detector system')
+@alias("hyspec_nxs_populate_metadata", "%s nxs populate_metadata" % cmd_prefix)
+@click.pass_context
+def populate_metadata(ctx, beam_outdir, nxs, sample, detector):
+    "populate metadata into the simulated nexus file"
+    if not nxs or not beam_outdir:
+        click.echo(ctx.get_help(), color=ctx.color)
+        return
+    from .applications import nxs as nxsmod
+    f = getattr(nxsmod, "populate_metadata")
+    f(beam_outdir, nxs, sample, detector)
+    return
+
+
+@nxs.command()
 @click.argument("nxs")
 @click.option('--out', default="iqe.nxs", help="output path. Eg. iqe.nxs")
 @click.option('--use_ei_guess', default=False)
