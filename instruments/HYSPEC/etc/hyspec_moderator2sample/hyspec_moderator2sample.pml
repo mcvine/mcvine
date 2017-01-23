@@ -10,8 +10,8 @@
     <property name="G1B_guide">Guide</property>
     <property name="G1C_guide">Guide</property>
     <property name="T0_T1A_guide">Guide</property>
-    <property name="T1A_chopper">Chopper_v_mark</property>
-    <property name="G2_curved_guide">Guide_curved_mark</property>
+    <property name="T1A_chopper">HYSPEC_Chopper_v</property>
+    <property name="G2_curved_guide">HYSPEC_Guide_curved</property>
     <property name="G3_guide">Guide</property>
     <property name="Shutter2_guide">Guide</property>
     <property name="Shutter2_valve_guide">Guide</property>
@@ -19,9 +19,9 @@
     <property name="Mon1_toF">TOF_monitor2</property>
     <property name="Mon1_total">Monitor</property>
     <property name="Mon1_t1b_guide">Guide</property>
-    <property name="T1B_chopper">Chopper_v_mark</property>
+    <property name="T1B_chopper">HYSPEC_Chopper_v</property>
     <property name="T1B_T2_guide">Guide</property>
-    <property name="T2_Fermi">FermiChopper_mark</property>
+    <property name="T2_Fermi">HYSPEC_FermiChopper</property>
     <property name="T2_MON2_guide">Guide</property>
     <property name="Mon2_toF">TOF_monitor2</property>
     <property name="Mon2_total">Monitor</property>

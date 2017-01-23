@@ -2,6 +2,11 @@
 
 # hyspec_moderator2sample
 
+cmd_help = """
+<cmd> --Edes=20. --E_min=10. --E_max=30. --Ortho30=False --toffset_us=-1.0 \
+      --freq=180 --LMS=1.8 --iv=-1.0 --Heusler=False --LM3S=0.72
+"""
+
 class arm1(object):
   name='arm1'
   parameters={}
@@ -71,7 +76,7 @@ class T1A_chopper(object):
   parameters={'n': '1', 'pha': 'phase_1A', 'R': 'radius_1A', 'w': 'wid_1A', 'f': 'ang_freq_1A'}
   extra='\nWHEN( if_T1A > 0.9 && if_T1A < 1.1) \nAT (0, 0, POS_T1A) RELATIVE arm1 \nROTATED (0,0,0) RELATIVE arm1\n\r\n\n\n'
   position=((0.0, 0.0, ' POS_T1A'), 'relative', 'arm1')
-  type='Chopper_v_mark'
+  type='HYSPEC_Chopper_v'
   orientation=((0.0, 0.0, 0.0), 'relative', 'arm1')
 
 class G2_curved_guide(object):
@@ -79,7 +84,7 @@ class G2_curved_guide(object):
   parameters={'dseg': '0.001', 'R0': '0.98', 'W': '0.0001', 'mb': '3.0', 'zout': '0', 'ml': '3.0', 'h1': '0.15', 'l': '0.500', 'xout': '0', 'mt': '3.0', 'Qc': '0.022', 'R': 'Rc', 'w1': '0.04', 'mr': 'Mi', 'alpha': '5.54', 'nseg': '48', 'psi_out': '0'}
   extra=' \nAT (0, 0, L1) RELATIVE arm1 \nROTATED (0,0,0) RELATIVE arm1\n\n\n\n'
   position=((0.0, 0.0, ' L1'), 'relative', 'arm1')
-  type='Guide_curved_mark'
+  type='HYSPEC_Guide_curved'
   orientation=((0.0, 0.0, 0.0), 'relative', 'arm1')
 
 class G3_guide(object):
@@ -143,7 +148,7 @@ class T1B_chopper(object):
   parameters={'n': '1', 'pha': 'phase_1B', 'R': 'radius_1B', 'w': 'wid_1B', 'f': 'ang_freq_1B'}
   extra='\nWHEN( if_T1B > 0.9 && if_T1B < 1.1 ) \nAT (0, 0, POS_T1B) RELATIVE arm1 \nROTATED (0,0,0) RELATIVE arm1\n\n'
   position=((0.0, 0.0, ' POS_T1B'), 'relative', 'arm1')
-  type='Chopper_v_mark'
+  type='HYSPEC_Chopper_v'
   orientation=((0.0, 0.0, 0.0), 'relative', 'arm1')
 
 class T1B_T2_guide(object):
@@ -159,7 +164,7 @@ class T2_Fermi(object):
   parameters={'rad': 'b_radius', 'dist': 'dist_eff', 'ymax': 'b_height_max', 'Vi': 'vi_eff', 'tran': 'trn', 'm': '0', 'slit': 'len', 'alpham': '0', 'Qc': '0', 'Wi': '0.0001', 'w': 'wid', 'R0': '0', 'ymin': 'b_height_min', 'nu': 'freq', 'Nslit': 'nos'}
   extra='\nWHEN( if_Fermi > 0.9 && if_Fermi < 1.1 ) \nAT (0, 0, POS_T2) RELATIVE arm1\n\n'
   position=((0.0, 0.0, ' POS_T2'), 'relative', 'arm1')
-  type='FermiChopper_mark'
+  type='HYSPEC_FermiChopper'
   orientation=((0, 0, 0), 'relative', 'arm1')
 
 class T2_MON2_guide(object):
@@ -574,10 +579,12 @@ class App(base):
     config(**d)
     return
   def help(self):
-    import sys, os
-    h = os.path.basename(sys.argv[0]) + "  "
-    print h,
-    print "--Edes=20. --E_min=10. --E_max=30. --Ortho30=False --toffset_us=-1.0 --freq=180 --LMS=1.8 --iv=-1.0 --Heusler=False --LM3S=0.72"
-def main():
-  App("config-hyspec_moderator2sample").run()
+    # import sys, os
+    # h = os.path.basename(sys.argv[0]) + "  "
+    print cmd_help
+    return
+
+name = 'hyspec_config_mod2sample'
+
+def main(): App(name).run()
 if __name__=='__main__': main()
