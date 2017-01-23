@@ -65,32 +65,17 @@ Impl.: mcvine.instruments.SNS.applications.Neutrons2Nxs
 @click.option("--detsys-z-rot", default=0., help="rotation angle of det sys")
 @click.option("--tofbinsize", default=0.1, help="unit: mus")
 @click.option("--tofmax", default=0.2, help="unit: second")
-@click.option("--populate-metadata/--no-populate-metadata", default=False)
-@click.option("--beam", default="", help='beam simulation path. need only when populate-metadata is True')
 @alias("sns_neutrons2nxs", "%s neutrons2nxs" % cmd_prefix)
 @click.pass_context
 def neutrons2nxs(
         ctx, neutrons, nxs, type, workdir, nodes,
         instrument, detsys, detsys_z_rot, tofbinsize, tofmax,
-        populate_metadata, beam):
+):
     if not neutrons:
         click.echo(ctx.get_help(), color=ctx.color)
         return
     from .applications.Neutrons2Nxs import run
     run(neutrons, nxs, type, workdir, nodes, instrument, detsys_z_rot, detsys, tofbinsize, tofmax)
-
-    if populate_metadata:
-        import os, shutil
-        # save a copy
-        base, ext = os.path.splitext(nxs)
-        nometadata = base+"_no_metadata"+ext
-        shutil.copyfile(nxs, nometadata)
-        # populate
-        prefix = 'mcvine.instruments.%s.nxs' % instrument.upper()
-        mod = '%s.%s' % (prefix, type)
-        nxsmod = __import__(mod, fromlist = [''])
-        beam_out = os.path.abspath(os.path.join(beam, 'out'))
-        nxsmod.populate_Ei_data(beam_out, nxs)
     return
 
 
