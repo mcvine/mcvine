@@ -36,6 +36,7 @@ set ( SRC_FILES
   kernels/sample/phonon/CoherentInelastic_SingleXtal.cc
   kernels/sample/phonon/IncoherentElastic.cc
   kernels/sample/phonon/IncoherentInelastic.cc
+  kernels/sample/phonon/IncoherentInelastic_EnergyFocusing.cc
   kernels/sample/phonon/PeriodicDispersion_3D.cc
   kernels/sample/phonon/Omega_minus_deltaE.cc
   kernels/sample/phonon/TargetCone.cc
