@@ -139,8 +139,8 @@ Details::get_mass_and_xs
 mccomponents::kernels::phonon::IncoherentInelastic_EnergyFocusing::
 IncoherentInelastic_EnergyFocusing
 (const atoms_t &atoms,
- float_t Ef, float_t dEf,
  float_t unitcell_vol,
+ float_t Ef, float_t dEf,
  dos_t & dos,
  dwcalculator_t & dw_calctor,
  float_t temperature,
@@ -148,8 +148,8 @@ IncoherentInelastic_EnergyFocusing
  float_t scattering_xs, float_t absorption_xs
  ) 
   : m_atoms( atoms ),
-    m_Ef( Ef ), m_dEf(dEf),
     m_uc_vol( unitcell_vol ),
+    m_Ef( Ef ), m_dEf(dEf),
     m_dos( &dos ),
     m_DW_calc( &dw_calctor ),
     m_Temperature( temperature ),

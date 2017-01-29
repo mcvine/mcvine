@@ -53,8 +53,8 @@ namespace mccomponents{
 	*/
 	IncoherentInelastic_EnergyFocusing
 	(const atoms_t &atoms,
-	 float_t Ef, float_t dEf,
 	 float_t unitcell_vol,
+	 float_t Ef, float_t dEf,
 	 dos_t & dos,
 	 dwcalculator_t & dw_calctor,
 	 float_t temperature,
@@ -72,8 +72,8 @@ namespace mccomponents{
 	// data
 	atoms_t m_atoms;
 	float_t m_Mass; // average mass in unit cell
-	float_t m_Ef, m_dEf;
 	float_t m_uc_vol;
+	float_t m_Ef, m_dEf;
 	dos_t * m_dos;
 	dwcalculator_t *m_DW_calc;
 	float_t m_Temperature;
