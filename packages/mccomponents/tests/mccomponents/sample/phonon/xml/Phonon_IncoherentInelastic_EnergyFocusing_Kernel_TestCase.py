@@ -3,6 +3,7 @@
 #
 
 standalone = True
+interactive = False
 
 
 import unittestX as unittest
@@ -106,11 +107,13 @@ class TestCase(unittest.TestCase):
             continue
         I, Ebb = np.histogram(Es, bins=100, weights=ps)
         Ec = (Ebb[1:] + Ebb[:-1])/2.
-        import matplotlib as mpl
-        mpl.use('Agg')
-        from matplotlib import pyplot as plt
-        plt.plot(Ec, I)
-        plt.savefig('_fig_test2_Phonon_IncoherentInelastic_EnergyFocusing_Kernel.png')
+        global interactive
+        if interactive:
+            import matplotlib as mpl
+            mpl.use('Agg')
+            from matplotlib import pyplot as plt
+            plt.plot(Ec, I)
+            plt.savefig('_fig_test2_Phonon_IncoherentInelastic_EnergyFocusing_Kernel.png')
         return
 
 
@@ -128,6 +131,8 @@ def pysuite():
 
 
 def main():
+    global interactive
+    interactive = True
     #debug.activate()
     journal.debug('phonon_incoherent_inelastic_kernel').activate()
     #journal.debug('random').activate()
