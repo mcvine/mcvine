@@ -68,6 +68,52 @@ class TestCase(unittest.TestCase):
         return
 
 
+    def test2(self):
+        from sampleassembly.saxml import parse_file
+        import os
+        dir, filename = os.path.split(sampleassembly_xml)
+        save = os.path.abspath(os.curdir)
+        os.chdir(dir)
+        sa = parse_file( filename )
+
+        from mccomponents.sample.sampleassembly_support \
+             import sampleassembly2compositescatterer, \
+             findkernelsfromxmls
+
+        scatterercomposite = findkernelsfromxmls(
+            sampleassembly2compositescatterer( sa ) )
+
+        import mccomponents.homogeneous_scatterer as hs
+        engine = hs.scattererEngine( scatterercomposite )
+
+        os.chdir(save)
+        from mcni.utils import conversion as muc
+        import numpy as np
+        Es = []; ps = []
+        for Ei in np.arange(5., 50., 0.1):
+            vi = 0,0,muc.e2v(Ei)
+            for i in range(100):
+                ev = mcni.neutron( r = (0,0,-5), v = vi )
+                engine.scatter( ev )
+                p = ev.probability
+                if p<0: continue
+                v = np.array(ev.state.velocity)
+                v = np.linalg.norm(v)
+                Ef = muc.v2e(v)
+                E = Ei - Ef
+                Es.append(E)
+                ps.append(p)
+            continue
+        I, Ebb = np.histogram(Es, bins=100, weights=ps)
+        Ec = (Ebb[1:] + Ebb[:-1])/2.
+        import matplotlib as mpl
+        mpl.use('Agg')
+        from matplotlib import pyplot as plt
+        plt.plot(Ec, I)
+        plt.savefig('_fig_test2_Phonon_IncoherentInelastic_EnergyFocusing_Kernel.png')
+        return
+
+
     pass  # end of TestCase
 
 
