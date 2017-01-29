@@ -38,6 +38,13 @@ def incoherentinelastic_kernel(
     return f(dos, **kwds)
 
 
+def incoherentinelastic_energyfocusing_kernel(
+    dos, **kwds
+    ):
+    from IncoherentInelastic_EnergyFocusing_Kernel import IncoherentInelastic_EnergyFocusing_Kernel as f
+    return f(dos, **kwds)
+
+
 def coherentinelastic_polyxtal_kernel(
     dispersion, **kwds):
     from CoherentInelastic_PolyXtal_Kernel import CoherentInelastic_PolyXtal_Kernel as f
