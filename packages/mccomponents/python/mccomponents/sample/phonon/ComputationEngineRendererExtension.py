@@ -95,6 +95,56 @@ class ComputationEngineRendererExtension:
             scattering_xs = scattering_xs, absorption_xs = absorption_xs)
 
 
+    def onPhonon_IncoherentInelastic_EnergyFocusing_Kernel(self, kernel):
+        '''handler to create c++ instance of phonon incoherent inelastic
+        scattering kernel with energy focusing.
+        '''
+        # get unit cell
+        scatterer = kernel.scatterer_origin
+        try: unitcell = scatterer.phase.unitcell
+        except AttributeError, err:
+            raise "Cannot obtain unitcell from scatterer %s, %s" % (
+                scatterer.__class__.__name__, scatterer.name )
+
+        # environment temperature
+        temperature = getTemperature(scatterer)
+        
+        # total mass of unitcell. for DW calculator. this might be reimplemented later.
+        # mass = sum( [ site.getAtom().mass for site in unitcell ] )
+        average_mass = kernel.average_mass
+        if not average_mass:
+            mass = sum( [ atom.mass for atom in unitcell ] )
+            average_mass = mass/len(unitcell)
+        else:
+            average_mass = average_mass/units.u
+            
+        # currently we need dos to calculate DW
+        try:
+            dos = kernel.dos
+        except AttributeError:
+            raise NotImplementedError, "Should implement a way to extract dos"
+        # c object of dos
+        cdos = dos.identify(self)
+        # c object of DW calculator
+        nsampling = 100
+        cdw_calculator = self.factory.dwfromDOS(
+            cdos, average_mass, temperature, nsampling )
+        
+        # additional kernel parameters
+        scattering_xs = kernel.scattering_xs/units.barn \
+            if kernel.scattering_xs else 0.
+        absorption_xs = kernel.absorption_xs/units.barn \
+            if kernel.absorption_xs else 0.
+
+        # focusing parameters
+        Ef, dEf = kernel.Ef/units.meV, kernel.dEf/units.meV
+
+        return self.factory.phonon_incoherentinelastic_energyfocusing_kernel(
+            unitcell, Ef, dEf, cdos, cdw_calculator, temperature,
+            ave_mass = average_mass, 
+            scattering_xs = scattering_xs, absorption_xs = absorption_xs)
+
+
     def onPhonon_CoherentInelastic_PolyXtal_Kernel(self, kernel):
         '''handler to create c++ instance of phonon coherent inelastic polyxtal
         scattering kernel.
