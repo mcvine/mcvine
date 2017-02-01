@@ -8,7 +8,7 @@
     
     <title>Fundamentals &mdash; mcvine 1.0 documentation</title>
     
-    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
@@ -23,10 +23,10 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="mcvine 1.0 documentation" href="index.html" /> 
   </head>
-  <body>
+  <body role="document">
 <div class="header">  
 <table><tr>
 <!--
@@ -44,7 +44,7 @@
 </table>
 </div>
 
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -57,7 +57,7 @@
       </ul>
     </div>
 
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
@@ -90,12 +90,14 @@
 </li>
 </ul>
 
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="_sources/Fundamentals.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/Fundamentals.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
       <input type="text" name="q" />
@@ -114,7 +116,7 @@
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="fundamentals">
 <span id="id1"></span><h1>Fundamentals<a class="headerlink" href="#fundamentals" title="Permalink to this headline">¶</a></h1>
@@ -125,7 +127,7 @@
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">You may want to follow
-<a class="reference internal" href="Tutorials-basics.html#create-sim-app"><em>this tutorial</em></a>.</p>
+<a class="reference internal" href="Tutorials-basics.html#create-sim-app"><span>this tutorial</span></a>.</p>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -171,7 +173,7 @@ as the absolute coordinate system.</p>
 <h4>Relative coordinates<a class="headerlink" href="#relative-coordinates" title="Permalink to this headline">¶</a></h4>
 <p>A coomponent&#8217;s position and orientation can be specified as relative to another
 component. For example</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="o">--</span><span class="n">geometer</span><span class="o">.</span><span class="n">sample</span><span class="o">=</span><span class="n">relative</span><span class="p">(</span><span class="s">&quot;source&quot;</span><span class="p">,(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">)),</span><span class="n">relative</span><span class="p">(</span><span class="s">&quot;source&quot;</span><span class="p">,(</span><span class="mi">0</span><span class="p">,</span><span class="mi">30</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="o">--</span><span class="n">geometer</span><span class="o">.</span><span class="n">sample</span><span class="o">=</span><span class="n">relative</span><span class="p">(</span><span class="s2">&quot;source&quot;</span><span class="p">,(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">)),</span><span class="n">relative</span><span class="p">(</span><span class="s2">&quot;source&quot;</span><span class="p">,(</span><span class="mi">0</span><span class="p">,</span><span class="mi">30</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span>
 </pre></div>
 </div>
 <p>means the sample is at (0,0,10) relative to the coordinate system attached to
@@ -351,7 +353,7 @@ among all computed events:</p>
 <div class="math">
 \[\frac{Err_{intrinsic}(I)}{I} = \Delta_{intrinsic}\]</div>
 <p>The total relative error considering the intrinsic error
-and the error discussed above in <a class="reference internal" href="#fundamentals-errorbar-basic"><em>Basic treatment</em></a>, is then</p>
+and the error discussed above in <a class="reference internal" href="#fundamentals-errorbar-basic"><span>Basic treatment</span></a>, is then</p>
 <div class="math">
 \[\begin{split}{[\frac{Err(I)}{I}]}^2 &amp;= \frac{Var(I)}{I^2} + \Delta_{intrinsic}^2 \\
                        &amp;= \frac{\sum{p_i^2}}{I^2} + \Delta_{intrinsic}^2\end{split}\]</div>
@@ -368,7 +370,7 @@ and the error discussed above in <a class="reference internal" href="#fundamenta
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -380,9 +382,9 @@ and the error discussed above in <a class="reference internal" href="#fundamenta
  
       </ul>
     </div>
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2006-2016, Jiao Lin, Michael Aivazis, and Brent Fultz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.
     </div>
   </body>
 </html>

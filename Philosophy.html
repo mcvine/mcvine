@@ -8,7 +8,7 @@
     
     <title>Concepts &mdash; mcvine 1.0 documentation</title>
     
-    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
@@ -23,10 +23,10 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="mcvine 1.0 documentation" href="index.html" /> 
   </head>
-  <body>
+  <body role="document">
 <div class="header">  
 <table><tr>
 <!--
@@ -44,7 +44,7 @@
 </table>
 </div>
 
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -57,7 +57,7 @@
       </ul>
     </div>
 
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
@@ -76,12 +76,14 @@
 </li>
 </ul>
 
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="_sources/Philosophy.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/Philosophy.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
       <input type="text" name="q" />
@@ -100,7 +102,7 @@
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="concepts">
 <span id="philosophy"></span><h1>Concepts<a class="headerlink" href="#concepts" title="Permalink to this headline">¶</a></h1>
@@ -212,7 +214,7 @@ If a user requests to simulate multiple-scattering,
 the mcvine framework will allow neutrons to scatter multiple
 times until neutrons have negligible probability.</p>
 <p>At this moment, you may want to start trying out mcvine by
-following <a class="reference internal" href="Tutorials.html#tutorials"><em>some tutorials</em></a>.</p>
+following <a class="reference internal" href="Tutorials.html#tutorials"><span>some tutorials</span></a>.</p>
 <p>Up to now, you may find mcvine very flexible and powerful,
 but you will see the design of mcvine is actually even
 more flexible than what have been discussed up to this point.
@@ -285,7 +287,7 @@ shape types.</p>
 <p>In the python and xml layer we are trying to expose the hierarchical
 representation of the neutron scatterers in c++, and make it natural and easy to use.
 The diagrams presented here is then quite similar to the structure
-seen by users as presented in <a class="reference internal" href="#high-level-arch-users"><em>High level architecture from User&#8217;s point of view</em></a>.</p>
+seen by users as presented in <a class="reference internal" href="#high-level-arch-users"><span>High level architecture from User&#8217;s point of view</span></a>.</p>
 <p>At the highest level, we are thinking of simulating neutrons going
 through neutron components in a neutron instrument.
 Below is a diagram for a neutron component:</p>
@@ -330,7 +332,7 @@ additions on scattering kernel types, shape types, etc.</p>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -342,9 +344,9 @@ additions on scattering kernel types, shape types, etc.</p>
  
       </ul>
     </div>
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2006-2016, Jiao Lin, Michael Aivazis, and Brent Fultz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.
     </div>
   </body>
 </html>

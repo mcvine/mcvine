@@ -60,5 +60,9 @@ Why do I...
     whether the option "multiple-scattering" is turned on.
     If "multiple-scattering" is on, it is safer to divide the number 
     you got by another factor of 10.
-    
+    If you are running a MCViNE workflow, sometimes it could be easy to
+    use environment variable to set the maximum neutron buffer size like
+    this::
+      
+      MCVINE_MAX_NEUTRON_BUFFER_SIZE=100000
     

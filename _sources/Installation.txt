@@ -3,8 +3,10 @@
 Installation
 ============
 
-MCViNE can be installed in most of recent linux distributions by using conda::
+MCViNE can be installed in most of recent linux distributions by using conda
 
+.. code-block:: shell
+		
  $ conda create -n mcvine python             # create an environment for mcvine
  $ source activate mcvine                    # activate mcvine environment
  $ conda config --add channels conda-forge   # add conda channels
@@ -26,5 +28,8 @@ please refer to
 Install the latest unstable build
 ---------------------------------
 
-Latest build of mcvine can be installed by 
+Latest build of mcvine can be installed by
+
+.. code-block:: shell
+		
  $ conda install -c mcvine/label/unstable mcvine

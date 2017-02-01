@@ -6,9 +6,9 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Release Notes 1.1.1 - Oct 2016 &mdash; mcvine 1.0 documentation</title>
+    <title>Release Notes 1.2 - Feb 2016 &mdash; mcvine 1.0 documentation</title>
     
-    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
@@ -23,10 +23,10 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="mcvine 1.0 documentation" href="index.html" /> 
   </head>
-  <body>
+  <body role="document">
 <div class="header">  
 <table><tr>
 <!--
@@ -44,7 +44,7 @@
 </table>
 </div>
 
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -57,11 +57,11 @@
       </ul>
     </div>
 
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Release Notes 1.1.1 - Oct 2016</a><ul>
+<li><a class="reference internal" href="#">Release Notes 1.2 - Feb 2016</a><ul>
 <li><a class="reference internal" href="#source-code">Source code</a></li>
 <li><a class="reference internal" href="#installation">Installation</a></li>
 <li><a class="reference internal" href="#training-materials">Training materials</a></li>
@@ -69,12 +69,14 @@
 </li>
 </ul>
 
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="_sources/release-notes.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/release-notes.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
       <input type="text" name="q" />
@@ -93,34 +95,44 @@
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
-  <div class="section" id="release-notes-1-1-1-oct-2016">
-<span id="relnotes"></span><h1>Release Notes 1.1.1 - Oct 2016<a class="headerlink" href="#release-notes-1-1-1-oct-2016" title="Permalink to this headline">¶</a></h1>
-<p>This release is a patch release to
-<a class="reference external" href="http://mcvine.github.io/1.1/release-notes.html">version 1.1</a>.</p>
+  <div class="section" id="release-notes-1-2-feb-2016">
+<span id="relnotes"></span><h1>Release Notes 1.2 - Feb 2016<a class="headerlink" href="#release-notes-1-2-feb-2016" title="Permalink to this headline">¶</a></h1>
 <p>In this release, we</p>
-<ul class="simple">
-<li>added CLI &#8220;mcvine test&#8221;;</li>
-<li>fixed some bugs;</li>
-<li>and improved the implementation of the &#8220;merge&#8221; step
-of some simulation components.</li>
+<ul>
+<li><p class="first">Made the DGS workflow tools more generic and added the HYSPEC workflow (see <a class="reference external" href="https://github.com/mcvine/training/tree/85942f267a085c0b4456ae177c06b5e4c804a12b/HYSPEC">example notebooks</a>);</p>
+</li>
+<li><p class="first">Added CLI &#8220;mcvine phonon&#8221; (see examples in <a class="reference external" href="https://github.com/mcvine/mcvine/blob/a28e6c876f52e8dcf47b9f52692159852c58138a/packages/mcvine/tests/bin/phonon/Phonon_TestCase.py">this python test case</a>);</p>
+</li>
+<li><dl class="first docutils">
+<dt>Made simulation applications more slurm-friendly &#8211; MPI launcher can now be customized by env var</dt>
+<dd><div class="first last highlight-shell"><div class="highlight"><pre>$ <span class="nb">export</span> <span class="nv">MCVINE_MPI_LAUNCHER</span><span class="o">=</span>mpich2<span class="o">(</span>mpirun<span class="o">)</span>/slurm/serial
+</pre></div>
+</div>
+</dd>
+</dl>
+</li>
+<li><p class="first">Added a composite shape for sample specification: SphereShell (<a class="reference external" href="https://github.com/mcvine/mcvine/blob/f09ca1b2b2a1f8e0bde080169025f9da3b64f23d/packages/mccomponents/tests/mccomponents/sample/shape-positioning/sphere-shell/sampleassembly.xml#L9">example xml specification</a>);</p>
+</li>
+<li><p class="first">fixed bugs.</p>
+</li>
 </ul>
-<p>Please refer to <a class="reference external" href="https://github.com/mcvine/mcvine/milestone/6?closed=1">https://github.com/mcvine/mcvine/milestone/6?closed=1</a>
+<p>Please refer to <a class="reference external" href="https://github.com/mcvine/mcvine/milestone/4?closed=1">related tickets</a>
 for more details.</p>
 <div class="section" id="source-code">
 <h2>Source code<a class="headerlink" href="#source-code" title="Permalink to this headline">¶</a></h2>
-<p>can be found at <a class="reference external" href="https://github.com/mcvine/mcvine/releases/tag/v1.1.1">https://github.com/mcvine/mcvine/releases/tag/v1.1.1</a></p>
+<p>can be found at <a class="reference external" href="https://github.com/mcvine/mcvine/releases/tag/v1.2">github</a></p>
 </div>
 <div class="section" id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
-<p>The release can be <a class="reference internal" href="Installation.html#installation"><em>installed</em></a>
+<p>The release can be <a class="reference internal" href="Installation.html#installation"><span>installed</span></a>
 on most of recent linux distributions using conda.</p>
 </div>
 <div class="section" id="training-materials">
 <h2>Training materials<a class="headerlink" href="#training-materials" title="Permalink to this headline">¶</a></h2>
 <p>The MCViNE training materials now hosted at
-<a class="reference external" href="https://github.com/mcvine/training">https://github.com/mcvine/training</a>.</p>
+<a class="reference external" href="https://github.com/mcvine/training">mcvine training github site</a>.</p>
 </div>
 </div>
 
@@ -130,7 +142,7 @@ on most of recent linux distributions using conda.</p>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -142,9 +154,9 @@ on most of recent linux distributions using conda.</p>
  
       </ul>
     </div>
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2006-2016, Jiao Lin, Michael Aivazis, and Brent Fultz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.
     </div>
   </body>
 </html>

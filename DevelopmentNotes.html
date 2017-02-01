@@ -8,7 +8,7 @@
     
     <title>Development notes &mdash; mcvine 1.0 documentation</title>
     
-    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
@@ -23,10 +23,10 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="mcvine 1.0 documentation" href="index.html" /> 
   </head>
-  <body>
+  <body role="document">
 <div class="header">  
 <table><tr>
 <!--
@@ -44,7 +44,7 @@
 </table>
 </div>
 
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -57,12 +57,15 @@
       </ul>
     </div>
 
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Development notes</a><ul>
-<li><a class="reference internal" href="#workflow">Workflow</a></li>
+<li><a class="reference internal" href="#workflow">Workflow</a><ul>
+<li><a class="reference internal" href="#requirements-of-instrument-specific-cli-by-dgs-workflow">Requirements of instrument-specific CLI by DGS workflow</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#instrument-simulation-app">Instrument Simulation App</a></li>
 <li><a class="reference internal" href="#sns-instruments">SNS instruments</a><ul>
 <li><a class="reference internal" href="#nexus">Nexus</a></li>
@@ -72,6 +75,7 @@
 <li><a class="reference internal" href="#xml-parsing">xml parsing</a></li>
 <li><a class="reference internal" href="#geometry">geometry</a></li>
 <li><a class="reference internal" href="#command-line-interface">Command line interface</a><ul>
+<li><a class="reference internal" href="#provenance">Provenance</a></li>
 <li><a class="reference internal" href="#pyre-commands">pyre commands</a></li>
 </ul>
 </li>
@@ -82,12 +86,14 @@
 </li>
 </ul>
 
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="_sources/DevelopmentNotes.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/DevelopmentNotes.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
       <input type="text" name="q" />
@@ -106,7 +112,7 @@
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="development-notes">
 <span id="devnotes"></span><h1>Development notes<a class="headerlink" href="#development-notes" title="Permalink to this headline">¶</a></h1>
@@ -120,6 +126,15 @@
 - <a class="reference external" href="https://github.com/mcvine/workflow/tree/master/notebook-examples">https://github.com/mcvine/workflow/tree/master/notebook-examples</a>
 - <a class="reference external" href="https://github.com/mcvine/training/">https://github.com/mcvine/training/</a>: subdirs such as ARCS</li>
 </ul>
+<div class="section" id="requirements-of-instrument-specific-cli-by-dgs-workflow">
+<h3>Requirements of instrument-specific CLI by DGS workflow<a class="headerlink" href="#requirements-of-instrument-specific-cli-by-dgs-workflow" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>neutrons2nxs: convert scattered neutron to nxs file.
+- cmd: mcvine instruments ${INSTRUMENT} neutrons2nxs &#8211;neutrons=out/scattered-neutrons &#8211;nxs=sim.nxs &#8211;populate-metadata &#8211;beam=beam &#8211;nodes=10</li>
+<li>nxs reduce: reduce nxs file to iqe.nxs
+- cmd: mcvine instruments ${INSTRUMENT} nxs reduce EVENTMODE.NXS &#8211;qaxis=0 15 0.1 &#8211;tof2E</li>
+</ul>
+</div>
 </div>
 <div class="section" id="instrument-simulation-app">
 <h2>Instrument Simulation App<a class="headerlink" href="#instrument-simulation-app" title="Permalink to this headline">¶</a></h2>
@@ -167,10 +182,32 @@ HYSPEC and others: mcvine-sns-neutrons2nxs (instruments/SNS/bin)</p>
 <div class="section" id="add-an-instrument">
 <h3>Add an instrument<a class="headerlink" href="#add-an-instrument" title="Permalink to this headline">¶</a></h3>
 <p>This is a quick guide. not very well organized.</p>
+<ul>
+<li><p class="first">convert mcstas instrument to python scripts
+- modify mcstas instrument file</p>
+<blockquote>
+<div><ul class="simple">
+<li>convert to unix format (&#8220;rn&#8221;-&gt;&#8221;n&#8221;) using dos2unix</li>
+<li>make sure that in the &#8220;DEFINE INSTRUMENT&#8221; line all parameters have default values</li>
+<li>if c code snippets exist in the &#8220;DECLARE&#8221; or &#8220;INITIALIZE&#8221;, move all of them
+to &#8220;INITIALIZE&#8221; section (python vars don&#8217;t need declaration),
+and make sure the to convert them into python syntax</li>
+<li>clean up the component definitions so that the &#8220;AT ...&#8221; clause
+and &#8220;ROTATED ...&#8221; clause are in two different lines.
+Also add a space between &#8220;AT/ROTATED&#8221; and &#8220;(...)&#8221; if there is none.</li>
+</ul>
+</div></blockquote>
 <ul class="simple">
-<li>convert mcstas instrument to python scripts (see script &#8220;convert&#8221; in HYSPEC/resources)</li>
-<li>add a high-level script &lt;instrument&gt;-beam that runs the beam and do beam analysis</li>
-<li>convert mantid instrument xml file for the instrument to a mcvine instrument, by add an instrument factory to the instrument package</li>
+<li>$ mcvine mcstas convertinstrument &lt;instrument-file&gt;
+This cmd generates
+- &#8220;config-SIM&#8221; script: use this to generate configuration of the instrument simulation
+- &#8220;SIM&#8221; script: run this script to simulate</li>
+</ul>
+</li>
+<li><p class="first">add a high-level script &lt;instrument&gt;-beam that runs the beam and do beam analysis</p>
+</li>
+<li><p class="first">convert mantid instrument xml file for the instrument to a mcvine instrument, by add an instrument factory to the instrument package</p>
+</li>
 </ul>
 </div>
 </div>
@@ -204,6 +241,11 @@ lg.orientation(scatterer)</div></blockquote>
 The main command is at /packages/mcvine/python/mcvine/cli.
 sub-cmds are imported from various sub-packages such as mcstas2
 and mcvine.instruments.</p>
+<div class="section" id="provenance">
+<h3>Provenance<a class="headerlink" href="#provenance" title="Permalink to this headline">¶</a></h3>
+<p>is achieved using &#8220;save_metadata&#8221; decorator.
+See mcvine.cli._provenance for implementation details.</p>
+</div>
 <div class="section" id="pyre-commands">
 <h3>pyre commands<a class="headerlink" href="#pyre-commands" title="Permalink to this headline">¶</a></h3>
 <p>Pyre applications are built using pyre machineries and they
@@ -265,7 +307,7 @@ Documentation for the development version</li>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -277,9 +319,9 @@ Documentation for the development version</li>
  
       </ul>
     </div>
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2006-2016, Jiao Lin, Michael Aivazis, and Brent Fultz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.
     </div>
   </body>
 </html>
