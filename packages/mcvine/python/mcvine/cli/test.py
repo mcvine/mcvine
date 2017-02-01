@@ -20,7 +20,7 @@ def test(workdir):
     import os, sys, psutil, subprocess as sp, shutil
     workdir = os.path.abspath(workdir)
     if os.path.exists(workdir):
-        raise RuntimeError("%s already exists")
+        raise RuntimeError("%s already exists" % workdir)
     os.makedirs(workdir)
     os.chdir(workdir)
     # copy test src
