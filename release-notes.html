@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Release Notes 1.2 - Feb 2016 &mdash; mcvine 1.0 documentation</title>
+    <title>Release Notes 1.2.1 - Feb 15th 2017 &mdash; mcvine 1.0 documentation</title>
     
     <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -61,7 +61,7 @@
         <div class="sphinxsidebarwrapper">
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Release Notes 1.2 - Feb 2016</a><ul>
+<li><a class="reference internal" href="#">Release Notes 1.2.1 - Feb 15th 2017</a><ul>
 <li><a class="reference internal" href="#source-code">Source code</a></li>
 <li><a class="reference internal" href="#installation">Installation</a></li>
 <li><a class="reference internal" href="#training-materials">Training materials</a></li>
@@ -97,32 +97,20 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="release-notes-1-2-feb-2016">
-<span id="relnotes"></span><h1>Release Notes 1.2 - Feb 2016<a class="headerlink" href="#release-notes-1-2-feb-2016" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="release-notes-1-2-1-feb-15th-2017">
+<span id="relnotes"></span><h1>Release Notes 1.2.1 - Feb 15th 2017<a class="headerlink" href="#release-notes-1-2-1-feb-15th-2017" title="Permalink to this headline">¶</a></h1>
+<p>This release is a patch release to
+<a class="reference external" href="http://mcvine.github.io/1.2/release-notes.html">version 1.2</a>.</p>
 <p>In this release, we</p>
-<ul>
-<li><p class="first">Made the DGS workflow tools more generic and added the HYSPEC workflow (see <a class="reference external" href="https://github.com/mcvine/training/tree/85942f267a085c0b4456ae177c06b5e4c804a12b/HYSPEC">example notebooks</a>);</p>
-</li>
-<li><p class="first">Added CLI &#8220;mcvine phonon&#8221; (see examples in <a class="reference external" href="https://github.com/mcvine/mcvine/blob/a28e6c876f52e8dcf47b9f52692159852c58138a/packages/mcvine/tests/bin/phonon/Phonon_TestCase.py">this python test case</a>);</p>
-</li>
-<li><dl class="first docutils">
-<dt>Made simulation applications more slurm-friendly &#8211; MPI launcher can now be customized by env var</dt>
-<dd><div class="first last highlight-shell"><div class="highlight"><pre>$ <span class="nb">export</span> <span class="nv">MCVINE_MPI_LAUNCHER</span><span class="o">=</span>mpich2<span class="o">(</span>mpirun<span class="o">)</span>/slurm/serial
-</pre></div>
-</div>
-</dd>
-</dl>
-</li>
-<li><p class="first">Added a composite shape for sample specification: SphereShell (<a class="reference external" href="https://github.com/mcvine/mcvine/blob/f09ca1b2b2a1f8e0bde080169025f9da3b64f23d/packages/mccomponents/tests/mccomponents/sample/shape-positioning/sphere-shell/sampleassembly.xml#L9">example xml specification</a>);</p>
-</li>
-<li><p class="first">fixed bugs.</p>
-</li>
+<ul class="simple">
+<li>Improved cmake rules for wrapped mcstas components</li>
+<li>Fixed a bug in DGS ARCS simulation workflow</li>
 </ul>
-<p>Please refer to <a class="reference external" href="https://github.com/mcvine/mcvine/milestone/4?closed=1">related tickets</a>
+<p>Please refer to <a class="reference external" href="https://github.com/mcvine/mcvine/milestone/7?closed=1">related tickets</a>
 for more details.</p>
 <div class="section" id="source-code">
 <h2>Source code<a class="headerlink" href="#source-code" title="Permalink to this headline">¶</a></h2>
-<p>can be found at <a class="reference external" href="https://github.com/mcvine/mcvine/releases/tag/v1.2">github</a></p>
+<p>can be found at <a class="reference external" href="https://github.com/mcvine/mcvine/releases/tag/v1.2.1">github</a></p>
 </div>
 <div class="section" id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
