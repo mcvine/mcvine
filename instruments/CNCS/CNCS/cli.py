@@ -17,21 +17,16 @@ def cncs():
 cncs_app = lambda name: pyre_app(parent=cncs, appname = name, cmd_prefix=cmd_prefix)
 
 # beam sim
-@cncs_app("cncs_analyze_beam")
-def analyze_beam(ctx):
-    from .applications import BeamAnalysis as mod
-    return mod.App, mod.__file__
-
 @cncs_app('cncs_moderator2sample')
 def mod2sample(ctx):
     "moderator to sample simulation"
     from .applications import Moderator2Sample as mod
     return mod.App, mod.__file__
 
-@cncs_app('cncs_m2s')
-def m2s(ctx):
+@cncs_app('cncs_config_m2s')
+def config_mod2sample(ctx):
     "simplified moderator to sample simulation app"
-    from .applications import M2S as mod
+    from .applications import Config_Moderator2Sample as mod
     return mod.App, mod.__file__
 
 @cncs_app('cncs_beam')
