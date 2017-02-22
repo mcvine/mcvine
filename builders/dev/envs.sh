@@ -1,32 +1,30 @@
-# this script help set up the env vars for development
-#
-# Directory structure
-# assume mapping:
-#   ~/dv/mcvine/<>  -> git clone git@github.com:mcvine/<>
-#     * mcvine
-#     * resources
-# also under ~/dv/mcvine
-#     * build: cmake build
-#     * export: cmake export
+# paths
+export MCVINE_SRC=$HOME/dv/mcvine/mcvine
+export MCVINE_RESOURCES=$HOME/dv/mcvine/resources
+export BUILD_ROOT=$HOME/dv/mcvine/build
+export MCVINE_EXPORT_ROOT=$HOME/dv/mcvine/export
 
-# activate conda environment
+# build parameter
+CORES=30
+
+# conda env
+. ~/.use-miniconda2
 source activate dev-mcvine
 
-CPUCOUNT=7
+# For development
+#   install
+alias mi="cd $BUILD_ROOT; make install"
+#   later builds
+alias mm="cd $BUILD_ROOT; cmake ../mcvine && make -j $CORES && make -j $CORES install"
+alias mmfull="cd $BUILD_ROOT; cmake ../mcvine && make -j $CORES && make reconfigure-to-include-mcstas-components && make wrap-mcstas-components-cmake && make install -j $CORES"
+alias mt='cd $BUILD_ROOT; env CTEST_OUTPUT_ON_FAILURE=1 make test ARGS="-j$CORES"'
+#   first time build
+alias mm0="cmake $MCVINE_SRC -DCMAKE_INSTALL_PREFIX=$EXPORT_ROOT -DDEPLOYMENT_PREFIX=$CONDA_PREFIX"
+alias build0="rm -rf $BUILD_ROOT && mkdir $BUILD_ROOT && cd $BUILD_ROOT && mm0 && mmfull"
 
-export MCVINE_RESOURCES=$HOME/dv/mcvine/resources
-export MCVINE_DIR=$HOME/dv/mcvine/export
-export EXPORT_ROOT=$MCVINE_DIR
+# for users
+export MCVINE_DIR=$MCVINE_EXPORT_ROOT
+export EXPORT_ROOT=$MCVINE_EXPORT_ROOT # pyre etc
 export PATH=$MCVINE_DIR/bin:$PATH
 export PYTHONPATH=$MCVINE_DIR/lib/python2.7/site-packages:$PYTHONPATH
 export LD_LIBRARY_PATH=$MCVINE_DIR/lib:$LD_LIBRARY_PATH
-
-# These aliases should only be run under ~/dv/mcvine/build
-# * mm: normal quick build 
-# * mmfull: full build including mcstas components
-# * mt: run tests
-# * mm0: cmake configure
-alias mm="cmake ../mcvine && make -j $CPUCOUNT install"
-alias mmfull="cmake ../mcvine && make -j $CPUCOUNT && make reconfigure-to-include-mcstas-components && make wrap-mcstas-components-cmake && make install -j $CPUCOUNT"
-alias mt='env CTEST_OUTPUT_ON_FAILURE=1 make test ARGS="-j$CPUCOUNT"'
-alias mm0="cmake -DCMAKE_INSTALL_PREFIX=$EXPORT_ROOT -DDEPLOYMENT_PREFIX=$CONDA_ENV_PATH -DCMAKE_PREFIX_PATH=$CONDA_ENV_PATH ../mcvine"

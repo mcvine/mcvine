@@ -37,20 +37,20 @@ Add it to .bashrc if needed.
 
 ## Build for the first time
 ```
-$ cd ~/dv/mcvine/build
-$ mm0
-$ mmfull
-$ mt
+$ build0
+```
+
+## Install
+```
+$ mi
 ```
 
 ## Build
 ```
-$ cd ~/dv/mcvine/build
 $ mm
 ```
 
 ## Test
 ```
-$ cd ~/dv/mcvine/build
 $ mt
 ```
