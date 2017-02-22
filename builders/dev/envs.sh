@@ -17,7 +17,7 @@ alias mm="cd $BUILD_ROOT; cmake ../mcvine && make -j $CORES && make -j $CORES in
 alias mmfull="cd $BUILD_ROOT; cmake ../mcvine && make -j $CORES && make reconfigure-to-include-mcstas-components && make wrap-mcstas-components-cmake && make install -j $CORES"
 alias mt='cd $BUILD_ROOT; env CTEST_OUTPUT_ON_FAILURE=1 make test ARGS="-j$CORES"'
 #   first time build
-alias mm0="cmake $MCVINE_SRC -DCMAKE_INSTALL_PREFIX=$EXPORT_ROOT -DDEPLOYMENT_PREFIX=$CONDA_PREFIX"
+alias mm0="cmake $MCVINE_SRC -DCMAKE_INSTALL_PREFIX=$MCVINE_EXPORT_ROOT -DDEPLOYMENT_PREFIX=$CONDA_PREFIX"
 alias build0="rm -rf $BUILD_ROOT && mkdir $BUILD_ROOT && cd $BUILD_ROOT && mm0 && mmfull"
 
 # for users
