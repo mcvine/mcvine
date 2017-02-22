@@ -12,9 +12,7 @@ CORES=30
 source activate dev-mcvine
 
 # For development
-#   install
 alias mi="cd $BUILD_ROOT; make install"
-#   later builds
 alias mm="cd $BUILD_ROOT; cmake ../mcvine && make -j $CORES && make -j $CORES install"
 alias mmfull="cd $BUILD_ROOT; cmake ../mcvine && make -j $CORES && make reconfigure-to-include-mcstas-components && make wrap-mcstas-components-cmake && make install -j $CORES"
 alias mt='cd $BUILD_ROOT; env CTEST_OUTPUT_ON_FAILURE=1 make test ARGS="-j$CORES"'

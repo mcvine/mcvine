@@ -35,19 +35,19 @@ $ . envs.sh
 ```
 Add it to .bashrc if needed.
 
-## Build for the first time
+## Build and install for the first time
 ```
 $ build0
-```
-
-## Install
-```
-$ mi
 ```
 
 ## Build
 ```
 $ mm
+```
+
+## Install
+```
+$ mi
 ```
 
 ## Test
