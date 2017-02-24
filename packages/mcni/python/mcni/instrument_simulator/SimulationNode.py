@@ -1,16 +1,8 @@
 #!/usr/bin/env python
 #
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#
-#                                   Jiao Lin
-#                      California Institute of Technology
-#                        (C) 2007  All Rights Reserved
-#
-# {LicenseText}
-#
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
 
+# Enable logging by journal.info.instrument
 
 from danse.ins.dsm.Connectable import Connectable 
 class SimulationNode(Connectable):
@@ -82,7 +74,7 @@ class SimulationNode(Connectable):
             neutrons2 = neutrons.snapshot(len(neutrons))
             # need to swap with the orignal neutron buffer
             neutrons.swap(neutrons2)
-            logger(" %s processing ..." % name)
+            logger(" %s processing started with %s neutrons ..." % (name, len(neutrons)))
             process(neutrons)
             if tracer:
                 tracer(neutrons,  context=processed(self))
