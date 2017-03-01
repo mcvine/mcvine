@@ -56,10 +56,10 @@ class Guide4(object):
 
 class Chopper2(object):
   name='Chopper2'
-  parameters={'h': '0', 'n': '1', 'R': '0.25', 'theta_0': '14.0', 't_0': 'f2_tof', 'omega': 'f2w'}
+  parameters={'yheight': '0', 'nslit': '1', 'radius': '0.25', 'theta_0': '14.0', 'delay': 'f2_tof', 'nu': 'f2'}
   extra='\nAT (0,0,7.515) RELATIVE arm1\nROTATED (0,0,0) RELATIVE arm1\n\n\n\n\n\n\n\n'
   position=((0.0, 0.0, 7.515), 'relative', 'arm1')
-  type='DiskChopper'
+  type='DiskChopper_v2'
   orientation=((0.0, 0.0, 0.0), 'relative', 'arm1')
 
 class Guide5(object):
@@ -96,10 +96,10 @@ class Guide8(object):
 
 class Chopper3(object):
   name='Chopper3'
-  parameters={'h': '0', 'n': '1', 'R': '0.25', 'theta_0': '14.0', 't_0': 'f3_tof', 'omega': 'f3w'}
+  parameters={'yheight': '0', 'nslit': '1', 'radius': '0.25', 'theta_0': '14.0', 'delay': 'f3_tof', 'nu': 'f3'}
   extra='\nAT (0,0,33.020) RELATIVE arm1\n\n\n'
   position=((0.0, 0.0, 33.02), 'relative', 'arm1')
-  type='DiskChopper'
+  type='DiskChopper_v2'
   orientation=((0, 0, 0), 'relative', 'arm1')
 
 class Guide9(object):
@@ -112,18 +112,18 @@ class Guide9(object):
 
 class Chopper41(object):
   name='Chopper41'
-  parameters={'h': '0.065', 'n': '1', 'R': '0.2825', 'theta_0': 'fluxmode', 't_0': 'f41_tof', 'omega': '-f41w'}
+  parameters={'yheight': '0.065', 'nslit': '1', 'radius': '0.2825', 'theta_0': 'fluxmode', 'delay': 'f41_tof', 'nu': '-f41'}
   extra='\nAT (0,0,34.784) RELATIVE arm1\n'
   position=((0.0, 0.0, 34.784), 'relative', 'arm1')
-  type='DiskChopper'
+  type='DiskChopper_v2'
   orientation=((0, 0, 0), 'relative', 'arm1')
 
 class Chopper42(object):
   name='Chopper42'
-  parameters={'h': '0.065', 'n': '1', 'R': '0.2825', 'theta_0': 'fluxmode', 't_0': 'f42_tof', 'omega': 'f42w'}
+  parameters={'yheight': '0.065', 'nslit': '1', 'radius': '0.2825', 'theta_0': 'fluxmode', 'delay': 'f42_tof', 'nu': 'f42'}
   extra='\nAT (0,0,34.785) RELATIVE arm1\nGROUP guide\n\n\n\n\n\n'
   position=((0.0, 0.0, 34.785), 'relative', 'arm1')
-  type='DiskChopper'
+  type='DiskChopper_v2'
   orientation=((0, 0, 0), 'relative', 'arm1')
 
 class tof3a(object):
@@ -152,7 +152,7 @@ class Guide11(object):
 
 class save_neutrons(object):
   name='save_neutrons'
-  parameters={'path': '"neutrons.out"'}
+  parameters={'path': '"neutrons"'}
   extra='\n  AT (0, 0, 36.114) RELATIVE arm1\n\n\n\n\n\n\n\n\n\n'
   position=((0.0, 0.0, 36.114), 'relative', 'arm1')
   type='NeutronToStorage'

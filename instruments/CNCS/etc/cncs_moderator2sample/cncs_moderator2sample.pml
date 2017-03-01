@@ -8,15 +8,15 @@
     <property name="FChopper">FermiChopper</property>
     <property name="tof1b">TOF_monitor</property>
     <property name="Guide4">Guide</property>
-    <property name="Chopper2">DiskChopper</property>
+    <property name="Chopper2">DiskChopper_v2</property>
     <property name="Guide5">Guide</property>
     <property name="Guide6">Bender</property>
     <property name="Guide7">Guide</property>
     <property name="Guide8">Guide</property>
-    <property name="Chopper3">DiskChopper</property>
+    <property name="Chopper3">DiskChopper_v2</property>
     <property name="Guide9">Guide</property>
-    <property name="Chopper41">DiskChopper</property>
-    <property name="Chopper42">DiskChopper</property>
+    <property name="Chopper41">DiskChopper_v2</property>
+    <property name="Chopper42">DiskChopper_v2</property>
     <property name="tof3a">TOF_monitor</property>
     <property name="Guide10">Guide</property>
     <property name="Guide11">Guide</property>
@@ -113,12 +113,12 @@
     </component>
     
     <component name="Chopper2">
-      <property name="h">0</property>
-      <property name="n">1</property>
-      <property name="R">0.25</property>
+      <property name="yheight">0</property>
+      <property name="nslit">1</property>
+      <property name="radius">0.25</property>
       <property name="theta_0">14.0</property>
-      <property name="t_0">0.007727743496</property>
-      <property name="omega">376.991118431</property>
+      <property name="delay">0.007727743496</property>
+      <property name="nu">60.</property>
     </component>
     
     <component name="Guide5">
@@ -185,12 +185,12 @@
     </component>
     
     <component name="Chopper3">
-      <property name="h">0</property>
-      <property name="n">1</property>
-      <property name="R">0.25</property>
+      <property name="yheight">0</property>
+      <property name="nslit">1</property>
+      <property name="radius">0.25</property>
       <property name="theta_0">14.0</property>
-      <property name="t_0">0.0338056991247</property>
-      <property name="omega">376.991118431</property>
+      <property name="delay">0.0338056991247</property>
+      <property name="nu">60</property>
     </component>
     
     <component name="Guide9">
@@ -207,21 +207,21 @@
     </component>
     
     <component name="Chopper41">
-      <property name="h">0.065</property>
-      <property name="n">1</property>
-      <property name="R">0.2825</property>
+      <property name="yheight">0.065</property>
+      <property name="nslit">1</property>
+      <property name="radius">0.2825</property>
       <property name="theta_0">9.0</property>
-      <property name="t_0">0.0356093264028</property>
-      <property name="omega">-1884.95559215</property>
+      <property name="delay">0.0356093264028</property>
+      <property name="nu">-300</property>
     </component>
     
     <component name="Chopper42">
-      <property name="h">0.065</property>
-      <property name="n">1</property>
-      <property name="R">0.2825</property>
+      <property name="yheight">0.065</property>
+      <property name="nslit">1</property>
+      <property name="radius">0.2825</property>
       <property name="theta_0">9.0</property>
-      <property name="t_0">0.0356093264028</property>
-      <property name="omega">1884.95559215</property>
+      <property name="delay">0.0356093264028</property>
+      <property name="nu">300</property>
     </component>
     
     <component name="tof3a">
@@ -262,7 +262,7 @@
     </component>
     
     <component name="save_neutrons">
-      <property name="path">neutrons.out</property>
+      <property name="path">neutrons</property>
     </component>
     
     <component name="Div_monh">
