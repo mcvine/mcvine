@@ -53,7 +53,7 @@ def neutrons2events(neutrons, workdir, nodes, ncount):
 @click.argument("events", default="events.dat")
 @click.argument("nxs", default="cncs-sim.nxs")
 @click.option("--tofbinsize", default=0.1)
-@click.option("--type", default="processed", type=click.Choice(['processed', 'raw']))
+@click.option("--type", default="processed", type=click.Choice(['processed']))
 @click.option("--Ei", default=0., help="nominal incident energy in meV")
 @alias("cncs_events2nxs", "%s events2nxs" % cmd_prefix)
 def events2nxs(events, nxs, tofbinsize, type, ei):
