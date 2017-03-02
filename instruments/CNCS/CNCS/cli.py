@@ -69,7 +69,7 @@ Impl.: mcvine.instruments.CNCS.applications.Neutrons2Nxs
 @click.option("--nxs", default="cncs-sim.nxs", help='nexus output path')
 @click.option("--workdir", default='work-cncs-neutrons2nxs', help="working dir to save intermediate data fiels")
 @click.option("--nodes", default=0)
-@click.option("--type", default="raw", type=click.Choice(['processed', 'raw']))
+@click.option("--type", default="processed", type=click.Choice(['processed']))
 @click.option("--populate-metadata/--no-populate-metadata", default=False)
 @click.option("--beam", default="", help='beam simulation path. need only when populate-metadata is True')
 @alias("cncs_neutrons2nxs", "%s neutrons2nxs" % cmd_prefix)
@@ -101,7 +101,7 @@ def nxs():
     return
 
 @nxs.command()
-@click.option('--type', default="Ei", type=click.Choice(['Ei', 'monitor']), help='type of metadata')
+@click.option('--type', default="Ei", type=click.Choice(['Ei']), help='type of metadata')
 @click.option('--beam_outdir', help='path to the output directory of cncs beam simulation')
 @click.option('--nxs', help='path to the nexus file to be decorated')
 @alias("cncs_nxs_populate_metadata", "%s nxs populate_metadata" % cmd_prefix)

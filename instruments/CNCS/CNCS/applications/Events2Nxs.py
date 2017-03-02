@@ -28,14 +28,16 @@ def run(eventfile, nxsfile, tofbinsize=0.1, type=None, Ei=None):
     """tofbinsize: in microsecond
     """
     assert type=='processed', "Unsupported type %r" % type
-    import warnings
-    warnings.warn("Ei=%s was not utilized" % Ei)
     print (eventfile, nxsfile)
     # read events
     from mccomponents.detector.event_utils import readEvents
     events = readEvents(eventfile)
     # write nxs
     write(events, tofbinsize, nxsfile)
+    #
+    if Ei:
+        from .nxs import setEnergyRequest
+        setEnergyRequest(nxsfile, Ei)
     return
 
 
