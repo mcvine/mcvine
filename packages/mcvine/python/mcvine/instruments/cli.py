@@ -12,7 +12,7 @@ def instruments():
     return
 
 instrument_list = [
-    'SNS', 'ARCS', 'SEQUOIA', 'HYSPEC',
+    'SNS', 'ARCS', 'SEQUOIA', 'HYSPEC', 'CNCS',
 ]
 for inst in instrument_list:
     mod = "mcvine.instruments.%s.cli" % inst
