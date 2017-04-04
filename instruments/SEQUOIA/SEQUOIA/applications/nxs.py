@@ -3,6 +3,7 @@
 # Jiao Lin <jiao.lin@gmail.com>
 #
 
+import numpy as np
 
 def populate_Ei_data(sim_out, nxs):
     import h5py
@@ -28,8 +29,8 @@ def populate_monitor_data(sim_out, nxs):
 # NXSPE may not be necessary because we can just use the code
 # in mcvine workflow single crystal reduce scripts and skip nxspe
 def reduce(nxsfile, qaxis, outfile, use_ei_guess=False, ei_guess=None, eaxis=None, tof2E=True, ibnorm='ByCurrent'):
-    from mantid.simpleapi import DgsReduction, SofQW3, SaveNexus, LoadInstrument, Load, MoveInstrumentComponent, MaskBTP
-    
+    from mantid.simpleapi import DgsReduction, SofQW3, SaveNexus, LoadInstrument, Load, MoveInstrumentComponent, \
+        MaskBTP, ConvertToMD, BinMD, ConvertMDHistoToMatrixWorkspace    
     if tof2E == 'guess':
         # XXX: this is a simple guess. all raw data files seem to have root "entry"
         cmd = 'h5ls %s' % nxsfile
@@ -71,11 +72,25 @@ def reduce(nxsfile, qaxis, outfile, use_ei_guess=False, ei_guess=None, eaxis=Non
     else: 
         reduced = Load(nxsfile)
 
-    SofQW3(
+    qmin, dq, qmax = qaxis; nq = int(round((qmax-qmin)/dq))
+    emin, de, emax = eaxis; ne = int(round((emax-emin)/de))
+    md = ConvertToMD(
         InputWorkspace='reduced',
+        QDimensions='|Q|',
+        dEAnalysisMode='Direct',
+        MinValues="%s,%s" % (qmin, emin),
+        MaxValues="%s,%s" % (qmax, emax),
+        SplitInto="%s,%s" % (nq, ne),
+        )
+    binned = BinMD(
+        InputWorkspace=md,
+        AxisAligned=1,
+        AlignedDim0="|Q|,%s,%s,%s" % (qmin, qmax, nq),
+        AlignedDim1="DeltaE,%s,%s,%s" % (emin, emax, ne),
+        )
+    iqw = ConvertMDHistoToMatrixWorkspace(
+        InputWorkspace='binned',
         OutputWorkspace='iqw',
-        QAxisBinning=qaxis,
-        EMode='Direct',
         )
     SaveNexus(
         InputWorkspace='iqw',
