@@ -74,7 +74,7 @@ def reduce(nxsfile, qaxis, outfile, use_ei_guess=False, ei_guess=None, eaxis=Non
         emin = Edim.getMinimum()
         emax = Edim.getMaximum()
         de = Edim.getX(1) - Edim.getX(0)
-        eaxis = emin, emax, de
+        eaxis = emin, de, emax
         
     qmin, dq, qmax = qaxis; nq = int(round((qmax-qmin)/dq))
     emin, de, emax = eaxis; ne = int(round((emax-emin)/de))
