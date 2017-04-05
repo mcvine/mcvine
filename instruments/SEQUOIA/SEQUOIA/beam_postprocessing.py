@@ -35,6 +35,12 @@ def run(m2sout, out, Ei):
     moveNeutronsToOutputDir(m2sout, out)
     # compute average incident energy at sample
     energy = computeAverageEnergy(out)
+    # compute average tof at sample
+    tof = computeAverageTof(out)
+    # compute emission time
+    from mcni.utils import conversion
+    vi = conversion.e2v(energy)
+    t0 = tof - LSAMPLE/vi
     # compute fwhm of energy spetrum at sample
     fwhm = computeFWHM(out)
     fwhm *= 1e6 # convert to microsecond
@@ -42,6 +48,8 @@ def run(m2sout, out, Ei):
         'flux': '%s counts per 34kJ pulse' % flux,
         'average energy': '%s meV' % energy,
         'tof fwhm': '%s microsecond' % fwhm,
+        "emission time": '%s microsecond' % (t0*1e6),
+        'average tof': '%s microsecond' % (tof*1e6),
         }
     open(os.path.join(out, 'props.json'), 'w').write(str(props))
     return
@@ -68,6 +76,13 @@ def computeAverageEnergy(out):
     h = load(os.path.join(out, 'ienergy.h5'), 'ienergy')
     e = (h.energy * h.I).sum()/h.I.sum()
     return e
+
+
+def computeAverageTof(out):
+    from histogram.hdf import load
+    h = load(os.path.join(out, 'itof.h5'), 'itof')
+    tof = (h.tof * h.I).sum()/h.I.sum()
+    return tof
 
 
 def computeFWHM(out):
