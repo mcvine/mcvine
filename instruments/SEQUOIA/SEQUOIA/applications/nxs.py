@@ -30,7 +30,7 @@ def populate_monitor_data(sim_out, nxs):
 # in mcvine workflow single crystal reduce scripts and skip nxspe
 def reduce(nxsfile, qaxis, outfile, use_ei_guess=False, ei_guess=None, eaxis=None, tof2E=True, ibnorm='ByCurrent'):
     from mantid.simpleapi import DgsReduction, SofQW3, SaveNexus, LoadInstrument, Load, MoveInstrumentComponent, \
-        MaskBTP, ConvertToMD, BinMD, ConvertMDHistoToMatrixWorkspace    
+        MaskBTP, ConvertToMD, BinMD, ConvertMDHistoToMatrixWorkspace, GetEiT0atSNS, GetEi
     if tof2E == 'guess':
         # XXX: this is a simple guess. all raw data files seem to have root "entry"
         cmd = 'h5ls %s' % nxsfile
@@ -39,7 +39,7 @@ def reduce(nxsfile, qaxis, outfile, use_ei_guess=False, ei_guess=None, eaxis=Non
         tof2E = o == 'entry'
     
     if tof2E:
-        ws = Load(nxsfile)
+        ws, mons = Load(nxsfile, LoadMonitors=True)
         # mask packs around beam
         MaskBTP(ws, Bank="98-102")
         if use_ei_guess:
@@ -54,12 +54,12 @@ def reduce(nxsfile, qaxis, outfile, use_ei_guess=False, ei_guess=None, eaxis=Non
         else:
             Eguess=ws.getRun()['EnergyRequest'].getStatistics().mean
             try:
-                Efixed,T0=GetEiT0atSNS(ws,Eguess)
+                Efixed,_p,_i,T0=GetEi(InputWorkspace=mons,Monitor1Spec=1,Monitor2Spec=2,EnergyEstimate=Eguess,FixEi=False)
             except:
                 import warnings
                 warnings.warn("Failed to determine Ei from monitors. Use EnergyRequest log %s" % Eguess)
                 Efixed,T0 = Eguess, 0
-            
+
             DgsReduction(
                 SampleInputWorkspace=ws,
                 IncidentEnergyGuess=Efixed,
