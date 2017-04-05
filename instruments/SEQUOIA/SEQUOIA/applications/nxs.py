@@ -92,15 +92,21 @@ def reduce(nxsfile, qaxis, outfile, use_ei_guess=False, ei_guess=None, eaxis=Non
         AlignedDim0="|Q|,%s,%s,%s" % (qmin, qmax, nq),
         AlignedDim1="DeltaE,%s,%s,%s" % (emin, emax, ne),
         )
-    iqw = ConvertMDHistoToMatrixWorkspace(
-        InputWorkspace='binned',
-        OutputWorkspace='iqw',
-        )
-    SaveNexus(
-        InputWorkspace='iqw',
-        Filename = outfile,
-        Title = 'iqw',
-        )
+    # convert to histogram
+    import histogram as H, histogram.hdf as hh
+    data=binned.getSignalArray().copy()
+    err2=binned.getErrorSquaredArray().copy()
+    nev=binned.getNumEventsArray()
+    data/=nev
+    err2/=(nev*nev)
+    qaxis = H.axis('Q', boundaries=np.arange(qmin, qmax+dq/2., dq), unit='1./angstrom')
+    eaxis = H.axis('E', boundaries=np.arange(emin, emax+de/2., de), unit='meV')
+    hist = H.histogram('IQE', (qaxis, eaxis), data=data, errors=err2)
+    if outfile.endswith('.nxs'):
+        import warnings
+        warnings.warn("reduce function no longer writes iqe.nxs nexus file. it only writes iqe.h5 histogram file")
+        outfile = outfile[:-4] + '.h5'
+    hh.dump(hist, outfile)
     return
 
 
