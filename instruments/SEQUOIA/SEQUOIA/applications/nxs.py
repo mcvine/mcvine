@@ -31,6 +31,8 @@ def populate_monitor_data(sim_out, nxs):
 def reduce(nxsfile, qaxis, outfile, use_ei_guess=False, ei_guess=None, eaxis=None, tof2E=True, ibnorm='ByCurrent'):
     from mantid.simpleapi import DgsReduction, SofQW3, SaveNexus, LoadInstrument, Load, MoveInstrumentComponent, \
         MaskBTP, ConvertToMD, BinMD, ConvertMDHistoToMatrixWorkspace, GetEiT0atSNS, GetEi
+    from mantid import mtd
+    
     if tof2E == 'guess':
         # XXX: this is a simple guess. all raw data files seem to have root "entry"
         cmd = 'h5ls %s' % nxsfile
@@ -42,16 +44,7 @@ def reduce(nxsfile, qaxis, outfile, use_ei_guess=False, ei_guess=None, eaxis=Non
         ws, mons = Load(nxsfile, LoadMonitors=True)
         # mask packs around beam
         MaskBTP(ws, Bank="98-102")
-        if use_ei_guess:
-            DgsReduction(
-                SampleInputWorkspace=ws,
-                IncidentEnergyGuess=ei_guess,
-                UseIncidentEnergyGuess=use_ei_guess,
-                OutputWorkspace='reduced',
-                EnergyTransferRange=eaxis,
-                IncidentBeamNormalisation=ibnorm,
-                )
-        else:
+        if not use_ei_guess:
             Eguess=ws.getRun()['EnergyRequest'].getStatistics().mean
             try:
                 Efixed,_p,_i,T0=GetEi(InputWorkspace=mons,Monitor1Spec=1,Monitor2Spec=2,EnergyEstimate=Eguess,FixEi=False)
@@ -59,19 +52,30 @@ def reduce(nxsfile, qaxis, outfile, use_ei_guess=False, ei_guess=None, eaxis=Non
                 import warnings
                 warnings.warn("Failed to determine Ei from monitors. Use EnergyRequest log %s" % Eguess)
                 Efixed,T0 = Eguess, 0
+        else:
+            Efixed, T0 = ei_guess, 0
 
-            DgsReduction(
-                SampleInputWorkspace=ws,
-                IncidentEnergyGuess=Efixed,
-                UseIncidentEnergyGuess=True,
-                TimeZeroGuess = T0,
-                OutputWorkspace='reduced',
-                EnergyTransferRange=eaxis,
-                IncidentBeamNormalisation=ibnorm,
-                )
+        DgsReduction(
+            SampleInputWorkspace=ws,
+            IncidentEnergyGuess=Efixed,
+            UseIncidentEnergyGuess=True,
+            TimeZeroGuess = T0,
+            OutputWorkspace='reduced',
+            EnergyTransferRange=eaxis,
+            IncidentBeamNormalisation=ibnorm,
+            )
+        reduced = mtd['reduced']
     else: 
         reduced = Load(nxsfile)
 
+    # if eaxis is not specified, use the data in reduced workspace
+    if eaxis is None:
+        Edim = reduced.getXDimension()
+        emin = Edim.getMinimum()
+        emax = Edim.getMaximum()
+        de = Edim.getX(1) - Edim.getX(0)
+        eaxis = emin, emax, de
+        
     qmin, dq, qmax = qaxis; nq = int(round((qmax-qmin)/dq))
     emin, de, emax = eaxis; ne = int(round((emax-emin)/de))
     md = ConvertToMD(
