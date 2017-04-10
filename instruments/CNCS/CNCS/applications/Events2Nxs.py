@@ -19,7 +19,7 @@ import os
 
 
 nbanks = 50
-nmonitors = 0
+nmonitors = 3
 nxs_template = os.path.join(
     resources.instrument('CNCS'), 'nxs', 'cncs-processed-template.nxs')
 
