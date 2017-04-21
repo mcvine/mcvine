@@ -126,6 +126,7 @@ def populate_metadata(ctx, type, beam_outdir, nxs):
 @click.option('--out', default="iqe.nxs", help="output path. Eg. iqe.nxs")
 @click.option('--use_ei_guess', default=False)
 @click.option('--ei_guess', help='guess for Ei', default=0.)
+@click.option('--t0_guess', help='guess for t0, or emission time', default=0.)
 @click.option('--qaxis', help='Qmin Qmax dQ', default=(0.,13.,0.1))
 @click.option('--eaxis', help='Emin Emax dE', default=(0.,0.,0.))
 @click.option('--tof2E/--no-tof2E', help='If true, input data must be tof events', default=None)
@@ -134,7 +135,7 @@ def populate_metadata(ctx, type, beam_outdir, nxs):
               type=click.Choice(['ByCurrent', 'ToMonitor', 'None']),
               default='ByCurrent')
 @alias("arcs_nxs_reduce", "%s nxs reduce" % cmd_prefix)
-def reduce(nxs, out, use_ei_guess, ei_guess, qaxis, eaxis, tof2e, ibnorm):
+def reduce(nxs, out, use_ei_guess, ei_guess, t0_guess, qaxis, eaxis, tof2e, ibnorm):
     "run reduction"
     if ei_guess > 0:
         use_ei_guess = True
@@ -157,6 +158,7 @@ def reduce(nxs, out, use_ei_guess, ei_guess, qaxis, eaxis, tof2e, ibnorm):
         nxsfile = nxs,
         use_ei_guess = use_ei_guess,
         ei_guess = ei_guess,
+        t0_guess = t0_guess,
         qaxis = qaxis,
         eaxis = eaxis,
         outfile = out,

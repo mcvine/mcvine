@@ -22,7 +22,7 @@ def populate_monitor_data(sim_out, nxs):
     return
 
 
-def reduce(nxsfile, qaxis, outfile, use_ei_guess=False, ei_guess=None, eaxis=None, tof2E=True, ibnorm='ByCurrent'):
+def reduce(nxsfile, qaxis, outfile, use_ei_guess=False, ei_guess=None, eaxis=None, tof2E=True, ibnorm='ByCurrent', t0_guess=None):
     from mantid.simpleapi import DgsReduction, SofQW3, SaveNexus, Load, GetEiT0atSNS
     if tof2E == 'guess':
         # XXX: this is a simple guess. all raw data files seem to have root "entry"
@@ -35,6 +35,7 @@ def reduce(nxsfile, qaxis, outfile, use_ei_guess=False, ei_guess=None, eaxis=Non
             DgsReduction(
                 SampleInputFile=nxsfile,
                 IncidentEnergyGuess=ei_guess,
+                TimeZeroGuess = t0_guess,
                 UseIncidentEnergyGuess=use_ei_guess,
                 OutputWorkspace='reduced',
                 EnergyTransferRange=eaxis,
