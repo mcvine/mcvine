@@ -118,6 +118,8 @@ def merge_and_normalize(outdir, filename, overwrite_datafiles):
     # number of neutron events totaly in the neutron file
     from mcni.neutron_storage.idf_usenumpy import count
     nevts = count(out)
+    if nevts == 0: # no neutron saved
+        return
 
     # load number_of_mc_samples
     mcs = mcs_sum(outdir)
