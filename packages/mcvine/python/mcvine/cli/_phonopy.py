@@ -4,18 +4,17 @@
 from . import mcvine, click
 
 @mcvine.group(help='Commands to run phonopy to compute phonon data in IDF format')
-def phononpy():
+def phonopy():
     return
 
 
-@phononpy.command()
-@click.argument("")
+@phonopy.command()
 @click.option("--force-constants", default='FORCE_CONSTANTS', help='path of the FORCE_CONSTANTS file')
 @click.option("--poscar", default='POSCAR', help='path of the POSCAR file')
 @click.option("--species", default="Si", help='comma-separated list of atomic species')
-@click.option("--supercell-matrix", default=[[5,0,0], [0,5,0], [0,0,5]], help='supercell matrix')
-@click.option("--qgrid-dims", default=[51, 51, 51], help='Q grid dimensions')
-def griddisp(force_constants, poscar, species, supercell, qgrid_dims):
+@click.option("--supercell-dims", default=[5,5,5], help='supercell dimensions, eg "5 5 5"', type=int, nargs=3)
+@click.option("--qgrid-dims", default=[51, 51, 51], help='Q grid dimensions, eg "5 5 5"', type=int, nargs=3)
+def griddisp(force_constants, poscar, species, supercell_dims, qgrid_dims):
     species = species.split(',')
     print "* Constructing Q array"
     qgrid_dims = np.array(qgrid_dims, dtype=float)
@@ -33,9 +32,12 @@ def griddisp(force_constants, poscar, species, supercell, qgrid_dims):
     
     # !!! only need one symbol per specie
     # !!! follow vasp convention !!!
+    from phonopy import file_IO
+    from phonopy.interface import vasp
     force_constants=file_IO.parse_FORCE_CONSTANTS(force_constants)
     
     print "* Calling phonopy to compute eigen values and eigen vectors"
+    supercell_matrix = np.diag(supercell_dims)
     qvecs, freq, pols = compute(species, Qs, supercell_matrix, poscar, force_constants, freq2omega=1)
     
     print "* Writing out freqencies"
@@ -71,7 +73,7 @@ def compute(
     
     from phonopy.interface import vasp
     from phonopy.units import VaspToTHz
-    from phonopy import Phonopy, file_IO
+    from phonopy import Phonopy
 
     # set up Si crystal lattice
     bulk = vasp.read_vasp(poscar, atom_chemical_symbols)
