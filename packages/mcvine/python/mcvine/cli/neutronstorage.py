@@ -38,6 +38,25 @@ def extract(inputpath, outputpath, start, end):
     return
 
 
+@neutronstorage.command()
+@click.option("--files", type=str, help='comma-separated list of files')
+@click.option("--out", help='output path')
+def merge(files, out):
+    import os, glob, operator
+    ifiles = [glob.glob(f) for f in files.split(',')]
+    ifiles = reduce(operator.add, ifiles)
+
+    for f in ifiles:
+        if not os.path.exists(f):
+            raise RuntimeError, '%s does not exist' % f
+
+    if os.path.exists(out):
+        raise RuntimeError, '%s already exists' % out
+
+    from mcni.neutron_storage.merge import merge
+    merge(ifiles, out)
+    return
+
 
 
 # End of file 
