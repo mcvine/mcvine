@@ -22,6 +22,13 @@ class TestCase(unittest.TestCase):
         assert count('neutrons.extracted')==10
         return
 
+    def test_print(self):
+        "mcvine neutronstorage extract"
+        cmd = "mcvine neutronstorage print neutrons --start 0 --end 5"
+        if os.system(cmd):
+            raise RuntimeError("%s failed" % cmd)
+        return
+
     def test_merge(self):
         "mcvine neutronstorage merge"
         if os.path.exists('merged_neutrons.1'): os.remove('merged_neutrons.1')

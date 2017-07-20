@@ -58,5 +58,29 @@ def merge(files, out):
     return
 
 
+@neutronstorage.command("print")
+@click.argument("path")
+@click.option("--start", default=0, help='start index')
+@click.option("--end", default=None, type=int, help='stop index')
+@click.option("--n", default=None, type=int, help='number of neutrons')
+def _print(path, start, end, n):
+    if end is not None and n is not None:
+        raise RuntimeError(
+            "Both stop index (%s) and number of neutrons (%s) are specified. Should only specify one of them" % (
+                end, n))
+    if n is None:
+        n = end - start
+    if n<=0:
+        raise ValueError, "Not a valid range: start=%s, end=%s, n=%s" % (
+            start, end, n)
+    #
+    from mcni.neutron_storage.Storage import Storage
+    storage = Storage(path)
+    storage.seek(start, 'start')
+    neutrons = storage.read(n)
+    for e in neutrons:
+        print e
+    return
+
 
 # End of file 
