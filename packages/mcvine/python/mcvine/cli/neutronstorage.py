@@ -19,6 +19,17 @@ def count(path):
 
 
 @neutronstorage.command()
+@click.argument("path")
+def totalintensity(path):
+    from mcni.neutron_storage.idf_usenumpy import read
+    neutrons = read(path)
+    probs = neutrons[:, 9]
+    totalIntensity = probs.sum()
+    print totalIntensity
+    return
+
+
+@neutronstorage.command()
 @click.argument("inputpath")
 @click.argument("outputpath")
 @click.option("--start", default=0, help='start index')

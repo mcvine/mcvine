@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import unittest, os, sys
+import unittest, os, sys, subprocess as sp, shlex, numpy as np
 import mcvine, mcvine.resources
 from mcni.neutron_storage.idf_usenumpy import count
 
@@ -12,6 +12,13 @@ class TestCase(unittest.TestCase):
         cmd = "mcvine neutronstorage count neutrons"
         if os.system(cmd):
             raise RuntimeError("%s failed" % cmd)
+        return
+
+    def test_totalintensity(self):
+        "mcvine neutronstorage totalintensity"
+        cmd = "mcvine neutronstorage totalintensity neutrons"
+        o = sp.check_output(shlex.split(cmd))
+        assert np.isclose(float(o), 6.81612525211e+12)
         return
 
     def test_extract(self):
