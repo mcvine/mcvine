@@ -43,6 +43,7 @@ requirements:
     - danse.ins.matter
     - drchops
     - mcvine-resources
+    - phonopy
     - cmake
 
 build:
