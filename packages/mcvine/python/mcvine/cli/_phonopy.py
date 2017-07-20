@@ -8,12 +8,16 @@ def phonopy():
     return
 
 
+"""
+TODO: output Qgridinfo. See test folder for an example.
+TODO: generate DOS file automatically. See test folder for an example.
+"""
 @phonopy.command()
 @click.option("--force-constants", default='FORCE_CONSTANTS', help='path of the FORCE_CONSTANTS file')
 @click.option("--poscar", default='POSCAR', help='path of the POSCAR file')
 @click.option("--species", default="Si", help='comma-separated list of atomic species')
-@click.option("--supercell-dims", default=[5,5,5], help='supercell dimensions, eg "5 5 5"', type=int, nargs=3)
-@click.option("--qgrid-dims", default=[51, 51, 51], help='Q grid dimensions, eg "5 5 5"', type=int, nargs=3)
+@click.option("--supercell-dims", default=[5,5,5], help='supercell dimensions, eg "5 5 5". should be consistent with the FORCE_CONSTANTS file', type=int, nargs=3)
+@click.option("--qgrid-dims", default=[51, 51, 51], help='Q grid dimensions, eg "51 51 51"', type=int, nargs=3)
 def griddisp(force_constants, poscar, species, supercell_dims, qgrid_dims):
     species = species.split(',')
     print "* Constructing Q array"
