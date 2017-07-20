@@ -30,7 +30,10 @@ class HomogeneousScatterer(base):
         if mcweights:
             mcweights = self._parse( mcweights )
         else:
-            mcweights = 0, 1, 0
+            mcweights = 0, 1, 0.05
+        if mcweights[2] == 0.:
+            import warnings
+            warnings.warn("Transmission weight is zero. This may cause problems for hollow shapes in single-scattering-only simulations (the shadowed parts won't be simulated)")
         self._mcweights = mcweights
         
         # max_multiplescattering_loops
