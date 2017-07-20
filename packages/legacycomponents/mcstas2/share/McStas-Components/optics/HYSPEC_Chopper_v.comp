@@ -1,0 +1,90 @@
+/*******************************************************************************
+* Component: HYSPEC_Chopper_v
+* 
+* %I
+* Written by: Philipp Bernhardt
+* Date: Januar 22 1999
+* Version: $Revision: 1.3 $
+* Origin: McStas release
+* Modified by: Garrett Granroth
+* Date: June 15 2001
+* 
+*
+* Disk chopper.
+*
+* %D
+* Models a disc chopper with n identical slits, which are symmetrically disposed on the disc includes velocity dependent cross section.
+*
+* %P
+* INPUT PARAMETERS:
+*
+* w:       (m)      Width of the slits at the bottom side
+* R:       (m)      Radius of the disc
+* f:       (rad/s)  angular frequency of the Chopper (algebraic sign defines the direction
+*                   of rotation 
+* n:       (1)     Number of slits
+* pha:     (s)      Phase
+*
+* %D
+* Example values: w=0.05 R=0.5 f=2500 n=3 pha=0
+*
+* %E
+*******************************************************************************/
+ 
+DEFINE COMPONENT HYSPEC_Chopper_v
+DEFINITION PARAMETERS ()
+SETTING PARAMETERS (w, R, f, n, pha)
+OUTPUT PARAMETERS (Tg, To)
+STATE PARAMETERS (x, y, z, vx, vy, vz, t, s1, s2, p)
+
+DECLARE
+ %{
+      double Tg, To, top;
+ %}
+
+INITIALIZE
+ %{
+      /* time between two pulses */
+      Tg=2*PI/fabs(f)/n;
+
+      /* how long can neutrons pass the Chopper at a single point */ 
+      To=2*atan(w/fabs(R)/2.0)/fabs(f);
+      top = PI / 2.0 ;
+ %}
+
+TRACE
+ %{
+        double vmag;
+        double toff;
+        double theta_n;
+        double topp ;
+
+        PROP_Z0;
+
+        if( R < 0.0 ) {topp = -1.0 * top ;} ;
+        if( R > 0.0 ) {topp = top ;} ;
+
+        if(fabs(x) > fabs(y+R)){
+           theta_n = atan(fabs(y+R)/fabs(x)) ;
+           } ;
+        if(fabs(x) < fabs(y+R)){
+           theta_n = PI / 2.0 - atan(fabs(x)/fabs(y+R)) ;
+           } ;
+        if( x < 0.0 ) { theta_n = PI - theta_n ; } ;
+        if( (y+R) < 0.0 ) { theta_n = -1. * theta_n ; } ;
+
+        toff=fabs(t - pha + (theta_n - topp)/f ) + To/2.0 ;
+        
+        /* does neutron hit the slit? */
+        if (toff > To){
+/*
+          vmag=sqrt(vx*vx+vy*vy+vz*vz)/1000.0;
+          p*=exp(-45.54/vmag);
+*/
+          p = 0.0 ;
+          ABSORB ;
+         }
+ 
+ %}
+ 
+END

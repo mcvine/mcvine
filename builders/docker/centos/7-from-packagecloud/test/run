@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+docker build -t linjiao/mcvine-centos-test-install-from-packagecloud:7 --no-cache .
+docker run -v $PWD/runtests:/opt/danse/share/mcvine/tests/build/runtests linjiao/mcvine-centos-test-install-from-packagecloud:7 bash runtests

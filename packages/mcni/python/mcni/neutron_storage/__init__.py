@@ -63,7 +63,7 @@ def merge_and_normalize(filename, outputs_dir, overwrite_datafiles=True):
 
 
 def merge( *args, **kwds ):
-    from .merge import merge
+    from ._merge import merge
     merge( *args, **kwds )
     return
 

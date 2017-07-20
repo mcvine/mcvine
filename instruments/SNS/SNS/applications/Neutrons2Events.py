@@ -32,62 +32,30 @@ The detector system is specified by a xml file.
 cmd_help = __doc__
 
 
-# application 
-from pyre.applications.Script import Script as AppBase
-class App(AppBase):
-    
-    class Inventory(AppBase.Inventory):
-        
-        import pyre.inventory
-        neutrons = pyre.inventory.str('neutrons', default='neutrons.dat')
-        workdir = pyre.inventory.str('workdir', default='work-neutrons2events')
-        nodes = pyre.inventory.int('nodes', default=0)
-        
-        tofbinsize = pyre.inventory.float('tofbinsize', default=0.1) # microsecond
-        tofmax = pyre.inventory.float('tofmax', default=0.2) # second
-        
-        # instrument name. if given, assume instrument xml (danse) is 
-        # at $MCVINE_RESOURCES/instruments/<instrument>/detsys/<instrument>.xml.fornxs
-        instrument = pyre.inventory.str('instrument') 
-        
-        # path instrument.xml.fornxs (danse). this overrides the instrument option
-        detsys = pyre.inventory.str('detsys') # detector system xml path
-        z_rotation = pyre.inventory.float('z_rotation') # rotation around z (vertical) applied to detector system
-        
-    def main(self):
-        neutrons = self.inventory.neutrons; neutrons = os.path.abspath(neutrons)
-        workdir = self.inventory.workdir; workdir = os.path.abspath(workdir)
-        if os.path.exists(workdir):
-            raise IOError("%s already exists" % workdir)
-        os.makedirs(workdir)
-        
-        nodes = self.inventory.nodes
-        tofbinsize = self.inventory.tofbinsize
-        tofmax = self.inventory.tofmax
-        z_rotation = self.inventory.z_rotation
-        detsys = self.inventory.detsys
-        if not detsys:
-            instrument = self.inventory.instrument
-            if not instrument:
-                raise RuntimeError("Please specify instrument name or path to <instrument>.xml.fornxs")
-            from mcvine import resources
-            detsys = os.path.join(
-                resources.instrument(instrument.upper()), 
-                'detsys',
-                '%s.xml.fornxs' % instrument)
-        run(neutrons, workdir, 
-            nodes=nodes, tofbinsize=tofbinsize, tofmax=tofmax, 
-            detsys=detsys, z_rotation=z_rotation)
-        return
-
-
-    def help(self):
-        print cmd_help
-    
-
 # main methods
-def run(neutrons, workdir, **kwds):
-    eventdat = sendneutronstodetsys(neutronfile=neutrons, workdir=workdir, **kwds)
+def run(neutrons, workdir, nodes, ncount=None,
+        tofbinsize=0.1, tofmax=0.2,
+        instrument=None,
+        detsys=None,
+        z_rotation=0.):
+    neutrons = os.path.abspath(neutrons)
+    workdir = os.path.abspath(workdir)
+    if os.path.exists(workdir):
+        raise IOError("%s already exists" % workdir)
+    os.makedirs(workdir)
+    if not detsys:
+        if not instrument:
+            raise RuntimeError("Please specify instrument name or path to <instrument>.xml.fornxs")
+        from mcvine import resources
+        detsys = os.path.join(
+            resources.instrument(instrument.upper()), 
+            'detsys',
+            '%s.xml.fornxs' % instrument)
+    eventdat = sendneutronstodetsys(
+        neutronfile=neutrons, workdir=workdir, nodes=nodes, ncount=ncount,
+        tofbinsize=tofbinsize, tofmax=tofmax,
+        detsys=detsys, z_rotation=z_rotation,
+        )
     return
 
 
@@ -136,7 +104,9 @@ def sendneutronstodetsys(
         'source.path': neutronfile,
         }
     if nodes:
-        args['mpirun.nodes'] = nodes
+        from mcni.pyre_support.MpiApplication \
+            import mpi_launcher_choice as launcher
+        args['%s.nodes' % launcher] = nodes
     cmd += ['--%s=%s' % (k,v) for k,v in args.iteritems()]
     cmd = ' '.join(cmd)
     run_sh = os.path.join(workdir, 'run.sh')

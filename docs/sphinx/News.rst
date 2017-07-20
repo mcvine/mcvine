@@ -3,8 +3,27 @@
 News
 ====
 
+2017
+----
+* **Feb 2017**:
+  
+  - Release 1.2.1 (http://mcvine.github.io/1.2.1/release-notes.html) was out
+  - Release 1.2 (http://mcvine.github.io/1.2/release-notes.html) was out
+    
 2016
 ----
+* **Oct 2016**:
+
+  - Release 1.1.1 (http://mcvine.github.io/1.1.1/release-notes.html) was out
+* **August 2016**:
+
+  - Souleymane Omar Diallo's paper *Momentum and energy dependent resolution function of the ARCS neutron chopper spectrometer at high momentum transfer: Comparing simulation and experiment* was published in Nuclear Instruments and Methods in Physics Research A: http://dx.doi.org/10.1016/j.nima.2016.08.027
+* **July 2016**:
+
+  - Release 1.1 (http://mcvine.github.io/1.1/release-notes.html) was out
+* **March 2016**:
+
+  - Release 1.0.1 (http://mcvine.github.io/1.0.1/release-notes.html) was out
 * **Feb 2016**:
 
   - Release 1.0 (http://mcvine.github.io/1.0/releases/rel1.html#relnotes1.0) was out

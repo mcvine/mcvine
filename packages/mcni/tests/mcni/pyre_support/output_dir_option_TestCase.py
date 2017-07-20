@@ -14,6 +14,9 @@
 
 standalone = True
 
+import os
+os.environ['MCVINE_MPI_LAUNCHER'] = 'serial'
+
 
 import unittestX as unittest
 import journal
@@ -23,7 +26,7 @@ warning = journal.warning( "mcni.pyre_support.test" )
 
 
 outdir = 'test-output-dir-option_out'
-import os, sys, mcvine
+import sys, mcvine
 
 
 class TestCase(unittest.TestCase):
@@ -39,6 +42,7 @@ class TestCase(unittest.TestCase):
         instrument = Instrument('output_dir_option_TestCase')
         instrument.testFacility = self
         instrument.run()
+        instrument.run_postprocessing()
 
         self.assert_( os.path.exists( outdir ) )
         IEh5 = os.path.join( outdir, 'IE.h5' )

@@ -16,10 +16,11 @@ def phonon():
 @click.option("--end", default=(0.,0.,1.), help='stop Q point')
 @click.option("--npts", default=100, help='number of points to sample')
 @click.option("--cartesian", default=False, is_flag=True, help='indicate whether the Q points are in cartesian or hkl format')
-@click.option("--output", default="", help="image file path to save the plot. empty means plotting interactively. Plotting requires matplotlib installed.")
+@click.option("--output", default="", help="image file path to save the plot. Plotting requires matplotlib installed.")
 @click.option("--branch", default=-1, help="0-based branch index. default value -1 means plot all branches")
-def band(phonon, start, end, npts, cartesian, output, branch):
-    "Plot band structure along one direction"
+@click.option("--output-npy", default="", help="npy data file to save")
+def band(phonon, start, end, npts, cartesian, output, branch, output_npy):
+    "Given phonon data in IDF format, plot band structure along one direction"
     # phonon is the path to a directory with IDF phonon data
 
     # read phonon data
@@ -45,21 +46,27 @@ def band(phonon, start, end, npts, cartesian, output, branch):
     Es = np.array(Es)
     Es.shape = -1, nbr
     # output
+    if not output_npy:
+        output_npy = 'bands-start%s-end%s.npy' % (start, end)
+    np.save(output_npy, Es)
     try:
-        import pylab
+        import matplotlib as mpl
     except ImportError:
         import warnings
         warnings.warn("Plotting needs matplotlib. Please install python matplotlib")
         return
+    mpl.use("Agg")
+    import matplotlib.pyplot as plt
+    fig = plt.figure(); ax = fig.add_subplot(111)
     if branch == -1:
         for i in range(nbr):
-            pylab.plot(Es[:, i])
+            ax.plot(Es[:, i])
     else:
-        pylab.plot(Es[:, branch])
+        ax.plot(Es[:, branch])
     if output:
-        pylab.savefig(output)
+        fig.savefig(output)
     else:
-        pylab.show()
+        plt.show()
     return
 
 
@@ -73,7 +80,7 @@ def band(phonon, start, end, npts, cartesian, output, branch):
 @click.option("--outhist", default="slice.h5", help="Output histogram file path")
 @click.option("--Eaxis", default=(0., 100., 1.), help="Energy axis. (min, max, step)")
 def slice(crystal, phonon, start, end, npts, cartesian, outhist, eaxis):
-    "Compute slice of SQE data along a specific reciprocal space direction"
+    "Given phonon data in IDF format, compute slice of SQE data along a specific reciprocal space direction"
     # phonon is the path to a directory with IDF phonon data
 
     # read phonon data
@@ -135,8 +142,12 @@ def slice(crystal, phonon, start, end, npts, cartesian, outhist, eaxis):
     # Eaxis = 0, np.max(Es) * 1.1, 1.
     Eaxis = eaxis
     # functor to convert hkl to "x" value
+    from distutils.version import LooseVersion
     def Qtox(hkl):
-        x = np.linalg.norm(hkl-start, axis=-1)
+        if LooseVersion(np.__version__) >= LooseVersion("1.8"):
+            x = np.linalg.norm(hkl-start, axis=-1)
+        else:
+            x = np.array(map(np.linalg.norm, hkl-start))
         mask = x==x
         return x, mask
     # histogramming

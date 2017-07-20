@@ -1,0 +1,59 @@
+package:
+  name: mcvine
+  version: XXXVERSIONXXX
+
+source:
+  git_rev: XXXGIT_REVXXX
+  git_url: https://github.com/mcvine/mcvine.git
+
+requirements:
+  build:
+    - python
+    - pyyaml
+    - numpy
+    - psutil
+    - h5py
+    - mpi4py
+    - gsl
+    - boost 1.61.*
+    - pyre
+    - danse.ins.dsm
+    - danse.ins.numpyext
+    - danse.ins.bpext
+    - histogram
+    - danse.ins.matter
+    - drchops
+    - mcvine-resources
+    - cmake
+
+  run:
+    - python
+    - pyyaml
+    - numpy
+    - psutil
+    - h5py
+    - mpi4py
+    - gsl
+    - boost 1.61.*
+    - pyre
+    - danse.ins.dsm
+    - danse.ins.numpyext
+    - danse.ins.bpext
+    - histogram
+    - danse.ins.matter
+    - drchops
+    - mcvine-resources
+    - cmake
+
+build:
+  script_env:
+    - CORES
+
+test:
+  imports:
+    - mcvine
+  
+about:
+  home: http://mcvine.org
+  license:
+  license_file:

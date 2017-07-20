@@ -20,9 +20,8 @@ def samplecomponent( name, sampleassembly_xml ):
 
     name: name of the sample
     xml: xml file describing the sample assembly
-    '''
-    
-    import mccomposite.extensions.HollowCylinder
+    '''    
+    from mccomposite.extensions import HollowCylinder, SphereShell
     import os
     filename = os.path.realpath( sampleassembly_xml )
     dir, filename = os.path.split( os.path.abspath( filename ) )
@@ -66,6 +65,11 @@ def sqekernel(*args, **kwds):
 def isotropickernel(*args, **kwds):
     from IsotropicKernel import IsotropicKernel
     return IsotropicKernel(*args, **kwds)
+
+
+def dgssxreskernel(*args, **kwds):
+    from DGSSXResKernel import DGSSXResKernel
+    return DGSSXResKernel(*args, **kwds)
 
 
 def constantEnergyTransferKernel(*args, **kwds):

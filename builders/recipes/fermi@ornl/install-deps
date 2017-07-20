@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+
+# missing a lot of external deps at fermi.
+
+mkdir deps
+cd deps
+mkdir -p src downloads
+
+# mpi4py
+cd downloads
+wget https://bitbucket.org/mpi4py/mpi4py/downloads/mpi4py-1.2.2.tar.gz
+cd ../src
+tar xvfz ../downloads/mpi4py-1.2.2.tar.gz
+cd mpi4py-1.2.2/
+python setup.py build
+python setup.py install --prefix /SNS/users/lj7/fermi/mcvine/deps
+cd ../..
+
+# Cython
+cd downloads
+wget http://cython.org/release/Cython-0.24.tar.gz
+cd ../src
+tar xvfz ../downloads/Cython-0.24.tar.gz
+cd Cython-0.24
+python setup.py build
+
+# similarly for 
+* setuptools: https://pypi.python.org/packages/00/d7/5511e82e0645ed4b939bb42f0a07450d0cdf9cf3ed08758b459f3d002747/setuptools-20.9.0.tar.gz#md5=e5f4d80fcb68bcac179b327bf1791dec
+* numpy:
+* h5py: https://pypi.python.org/packages/22/82/64dada5382a60471f85f16eb7d01cc1a9620aea855cd665609adf6fdbb0d/h5py-2.6.0.tar.gz#md5=ec476211bd1de3f5ac150544189b0bf4
+* libyaml: http://pyyaml.org/download/libyaml/yaml-0.1.5.tar.gz
+* yaml: http://pyyaml.org/download/pyyaml/PyYAML-3.11.tar.gz
+* psutil: https://pypi.python.org/packages/source/p/psutil/psutil-4.0.0.tar.gz

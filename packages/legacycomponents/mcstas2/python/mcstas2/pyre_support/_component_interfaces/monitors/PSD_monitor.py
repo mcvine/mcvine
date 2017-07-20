@@ -26,7 +26,7 @@ def get_histogram( monitor ):
     from mcstas2.utils.carray import bpptr2npyarr
     core = monitor.core()
 
-    nx = core.nx; ny =core.ny
+    nx = _int(core.nx); ny =_int(core.ny)
     n = nx * ny
     shape = nx, ny
 
@@ -51,6 +51,13 @@ def get_histogram( monitor ):
 
     h = histogram( 'I(x,y)', [xaxis,yaxis], data = Iarr, errors = E2arr )
     return h
+
+
+def _int(f):
+    i = int(round(f))
+    if abs(i-f)>1e-3:
+        raise ValueError("%s is not close to an integer" % f)
+    return i
 
 
 # version

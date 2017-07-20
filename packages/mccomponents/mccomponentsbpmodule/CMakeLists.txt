@@ -7,6 +7,7 @@ set ( SRC_FILES
   wrap_AbstractScatteringKernel.cc
   wrap_CompositeScatteringKernel.cc
   wrap_kernelcontainer.cc
+  wrap_DGSSXResPixel.cc
   wrap_He3TubeKernel.cc
   wrap_EventModeMCA.cc
   wrap_ConstantEnergyTransferKernel.cc
@@ -15,6 +16,7 @@ set ( SRC_FILES
   wrap_E_Q_Kernel.cc
   wrap_E_vQ_Kernel.cc
   wrap_Broadened_E_Q_Kernel.cc
+  wrap_DGSSXResKernel.cc
   wrap_SQEkernel.cc
   wrap_SQkernel.cc
   wrap_GridSQE.cc
@@ -34,6 +36,7 @@ set ( SRC_FILES
   wrap_LinearlyInterpolatedDispersionOnGrid_3D.cc
   wrap_Phonon_IncoherentElastic_kernel.cc
   wrap_Phonon_IncoherentInelastic_kernel.cc
+  wrap_Phonon_IncoherentInelastic_EnergyFocusing_kernel.cc
   wrap_Phonon_CoherentInelastic_PolyXtal_kernel.cc
   wrap_Phonon_CoherentInelastic_SingleXtal_kernel.cc
   wrap_rootsfinders.cc
@@ -50,6 +53,7 @@ set ( MOD_NAME ${PYBINDING_NAME} )
 include_directories(${EXPORT_HEADERS})
 include_directories(${DEPLOYMENT_PREFIX}/include)
 include_directories(${PYTHON_INCLUDE_DIRS})
+include_directories(${Boost_INCLUDE_DIRS})
 link_directories(${EXPORT_LIB})
 link_directories(${DEPLOYMENT_PREFIX}/${INSTALL_LIB_DIR})
 add_definitions(-DUSE_DANSE_NAMESPACE)

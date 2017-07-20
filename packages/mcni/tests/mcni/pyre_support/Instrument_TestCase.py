@@ -11,6 +11,8 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
 
+import os
+os.environ['MCVINE_MPI_LAUNCHER'] = 'serial'
 
 
 import mcvine
@@ -25,7 +27,7 @@ warning = journal.warning( "mcni.pyre_support.test" )
 class TestCase(unittest.TestCase):
 
 
-    def test(self):
+    def test1(self):
         'mcni.pyre_support: Instrument'
         instrument = Instrument('test')
         instrument.testFacility = self
@@ -33,7 +35,7 @@ class TestCase(unittest.TestCase):
         import sys
         save = sys.argv
         sys.argv = [
-            '',
+            __file__,
             '--ncount=10',
             '--buffer_size=4',
             '--output-dir=out-pyre_support_test',
@@ -50,6 +52,27 @@ class TestCase(unittest.TestCase):
         return
 
 
+    def test1a(self):
+        'mcni.pyre_support: Instrument. buffer_size>ncount'
+        instrument = Instrument('test')
+        instrument.testFacility = self
+
+        import sys
+        save = sys.argv
+        sys.argv = [
+            __file__,
+            '--ncount=10',
+            '--buffer_size=40',
+            '--output-dir=out-pyre_support_test',
+            '--overwrite-datafiles',
+            ]
+
+        instrument.run()
+
+        sys.argv = save
+        return
+
+
     def test_dumppml(self):
         'mcni.pyre_support.Instrument: option dumppml'
         instrument = Instrument('test-dumppml')
@@ -58,7 +81,7 @@ class TestCase(unittest.TestCase):
         import sys
         save = sys.argv
         sys.argv = [
-            '',
+            __file__,
             '--ncount=10',
             '--buffer_size=4',
             '--output-dir=out-Instrument-dumppml',
@@ -83,12 +106,13 @@ class TestCase(unittest.TestCase):
         instrument.inventory.ncount = ncount = 2e3
         self.assertEqual(instrument._getBufferSize(), ncount/DEFAULT_NUMBER_SIM_LOOPS)
 
-        instrument.mpiSize = mpiSize = 10
+        instrument.mpi.size = mpiSize = 10
         self.assertEqual(instrument._getBufferSize(), int(ncount/mpiSize/DEFAULT_NUMBER_SIM_LOOPS))
         
         # for higher values, buffer_size is set by memory limit
         import psutil
-        temp = min(psutil.TOTAL_PHYMEM/2, (psutil.avail_phymem() + psutil.avail_virtmem())*0.7)
+        vm = psutil.virtual_memory()
+        temp = min(vm.total/2, vm.available*0.85)
         temp = int(temp)
         from mcni.neutron_storage.idfneutron import ndblsperneutron
         max = int(temp/ndblsperneutron/8/100/mpiSize) * 100
@@ -179,6 +203,9 @@ class Instrument(base):
 
     def _defaults(self):
         base._defaults(self)
+        self.inventory.mode = 'worker'
+        from mcni.pyre_support.LauncherSerial import LauncherSerial
+        self.inventory.launcher = LauncherSerial()
         self.inventory.sequence = ['source', 'verifier']
         geometer = self.inventory.geometer
         self.inventory.geometer.inventory.verifier = (0,0,1), (0,0,90)

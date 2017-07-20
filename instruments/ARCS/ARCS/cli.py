@@ -18,27 +18,27 @@ arcs_app = lambda name: pyre_app(parent=arcs, appname = name, cmd_prefix=cmd_pre
 
 # beam sim
 @arcs_app("arcs_analyze_beam")
-def analyze_beam(ctx, appname):
-    from .applications.BeamAnalysis import App
-    return App(appname)
+def analyze_beam(ctx):
+    from .applications import BeamAnalysis as mod
+    return mod.App, mod.__file__
 
 @arcs_app('arcs_moderator2sample')
-def mod2sample(ctx, appname):
+def mod2sample(ctx):
     "moderator to sample simulation"
-    from .applications.Moderator2Sample import App
-    return App(appname)
+    from .applications import Moderator2Sample as mod
+    return mod.App, mod.__file__
 
 @arcs_app('arcs_m2s')
-def m2s(ctx, appname):
+def m2s(ctx):
     "simplified moderator to sample simulation app"
-    from .applications.M2S import App
-    return App(appname)
+    from .applications import M2S as mod
+    return mod.App, mod.__file__
 
 @arcs_app('arcs_beam')
-def beam(ctx, appname):
+def beam(ctx):
     "beam simulation. include mod2sample sim and post-processing"
-    from .applications.Beam import App
-    return App(appname)
+    from .applications import Beam as mod
+    return mod.App, mod.__file__
 
 
 # detsys sim
@@ -75,14 +75,27 @@ Impl.: mcvine.instruments.ARCS.applications.Neutrons2Nxs
 @click.option("--workdir", default='work-arcs-neutrons2nxs', help="working dir to save intermediate data fiels")
 @click.option("--nodes", default=0)
 @click.option("--type", default="raw", type=click.Choice(['processed', 'raw']))
+@click.option("--populate-metadata/--no-populate-metadata", default=False)
+@click.option("--beam", default="", help='beam simulation path. need only when populate-metadata is True')
 @alias("arcs_neutrons2nxs", "%s neutrons2nxs" % cmd_prefix)
 @click.pass_context
-def neutrons2nxs(ctx, neutrons, nxs, workdir, nodes, type):
+def neutrons2nxs(ctx, neutrons, nxs, workdir, nodes, type, populate_metadata, beam):
     if not neutrons:
         click.echo(ctx.get_help(), color=ctx.color)
         return
     from .applications.Neutrons2Nxs import run
     run(neutrons, nxs, type, workdir, nodes)
+
+    if populate_metadata:
+        import os, shutil
+        # save a copy
+        base, ext = os.path.splitext(nxs)
+        nometadata = base+"_no_metadata"+ext
+        shutil.copyfile(nxs, nometadata)
+        # populate
+        from .applications import nxs as nxsmod
+        beam_out = os.path.abspath(os.path.join(beam, 'out'))
+        nxsmod.populate_Ei_data(beam_out, nxs)
     return
 
 
@@ -113,13 +126,21 @@ def populate_metadata(ctx, type, beam_outdir, nxs):
 @click.option('--out', default="iqe.nxs", help="output path. Eg. iqe.nxs")
 @click.option('--use_ei_guess', default=False)
 @click.option('--ei_guess', help='guess for Ei', default=0.)
+@click.option('--t0_guess', help='guess for t0, or emission time', default=0.)
 @click.option('--qaxis', help='Qmin Qmax dQ', default=(0.,13.,0.1))
 @click.option('--eaxis', help='Emin Emax dE', default=(0.,0.,0.))
+@click.option('--tof2E/--no-tof2E', help='If true, input data must be tof events', default=None)
+@click.option('--ibnorm',
+              help='Incident beam normalization',
+              type=click.Choice(['ByCurrent', 'ToMonitor', 'None']),
+              default='ByCurrent')
 @alias("arcs_nxs_reduce", "%s nxs reduce" % cmd_prefix)
-def reduce(nxs, out, use_ei_guess, ei_guess, qaxis, eaxis):
+def reduce(nxs, out, use_ei_guess, ei_guess, t0_guess, qaxis, eaxis, tof2e, ibnorm):
     "run reduction"
     if ei_guess > 0:
         use_ei_guess = True
+    if tof2e is None:
+        tof2e = 'guess'
 
     qmin, qmax, dq = qaxis
     qaxis = (qmin, dq, qmax)
@@ -131,13 +152,18 @@ def reduce(nxs, out, use_ei_guess, ei_guess, qaxis, eaxis):
         eaxis = emin, de, emax
     
     nxs = nxs.encode("utf8"); out = out.encode("utf8")
+    ibnorm = ibnorm.encode("utf8")
+    print "* tof2E=%s" % tof2e
     d = dict(
         nxsfile = nxs,
         use_ei_guess = use_ei_guess,
         ei_guess = ei_guess,
+        t0_guess = t0_guess,
         qaxis = qaxis,
         eaxis = eaxis,
         outfile = out,
+        tof2E = tof2e,
+        ibnorm = ibnorm,
         )
     from .applications.nxs import reduce
     reduce(**d)

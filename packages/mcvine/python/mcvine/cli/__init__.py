@@ -40,10 +40,13 @@ def pyre_app(parent, appname, cmd_prefix):
         d2 = click.pass_context
         def _f(ctx):
             # build the sys argv list for pyre app
+            App, path = f(ctx)
             import sys
-            sys.argv = [appname] + ctx.args
+            # path of app need to be sys.argv so that pyre mpi app mechanism
+            # can pick this up and run it using mpirun
+            sys.argv = [path] + ctx.args
             # create app instance
-            app = f(ctx, appname)
+            app = App(appname)
             # and run
             app.run()
             return
@@ -57,10 +60,15 @@ def pyre_app(parent, appname, cmd_prefix):
     return decorator
 
 # sub-cmds
-from . import mpi, sampleassembly, mantid, phonon, _phonopy #, kernel
+from . import test, mpi, mantid, phonon, _phonopy
+from . import sampleassembly #, kernel
 from mcvine.instrument import cli
 from mcvine.instruments import cli
 from mcstas2 import cli
+
+# workflow
+from .. import deployment_info
+from mcvine_workflow import cli
 
 # aliases should be the last cmds to import
 from . import bash

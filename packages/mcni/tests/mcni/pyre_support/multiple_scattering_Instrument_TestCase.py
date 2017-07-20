@@ -14,9 +14,11 @@
 
 standalone = True
 
-
 ncount = 10
 n_multiple_scattering = 1
+
+import os
+os.environ['MCVINE_MPI_LAUNCHER'] = 'serial'
 
 
 import mcvine
@@ -85,6 +87,9 @@ class Instrument(base):
 
     def _defaults(self):
         base._defaults(self)
+        self.inventory.mode = 'worker'
+        from mcni.pyre_support.LauncherSerial import LauncherSerial
+        self.inventory.launcher = LauncherSerial()
         self.inventory.sequence = ['source', 'counter']
         geometer = self.inventory.geometer
         self.inventory.geometer.inventory.source = (0,0,0), (0,0,0)

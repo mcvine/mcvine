@@ -16,8 +16,9 @@ import journal
 
 nsampling = 100
 
-class ComputationEngineRendererExtension:
+from mcni.components.ParallelComponent import MPI
 
+class ComputationEngineRendererExtension:
 
     def onPhonon_IncoherentElastic_Kernel(self, kernel):
         '''handler to create c++ instance of phonon incoherent elastic
@@ -90,6 +91,56 @@ class ComputationEngineRendererExtension:
 
         return self.factory.phonon_incoherentinelastic_kernel(
             unitcell, cdos, cdw_calculator, temperature,
+            ave_mass = average_mass, 
+            scattering_xs = scattering_xs, absorption_xs = absorption_xs)
+
+
+    def onPhonon_IncoherentInelastic_EnergyFocusing_Kernel(self, kernel):
+        '''handler to create c++ instance of phonon incoherent inelastic
+        scattering kernel with energy focusing.
+        '''
+        # get unit cell
+        scatterer = kernel.scatterer_origin
+        try: unitcell = scatterer.phase.unitcell
+        except AttributeError, err:
+            raise "Cannot obtain unitcell from scatterer %s, %s" % (
+                scatterer.__class__.__name__, scatterer.name )
+
+        # environment temperature
+        temperature = getTemperature(scatterer)
+        
+        # total mass of unitcell. for DW calculator. this might be reimplemented later.
+        # mass = sum( [ site.getAtom().mass for site in unitcell ] )
+        average_mass = kernel.average_mass
+        if not average_mass:
+            mass = sum( [ atom.mass for atom in unitcell ] )
+            average_mass = mass/len(unitcell)
+        else:
+            average_mass = average_mass/units.u
+            
+        # currently we need dos to calculate DW
+        try:
+            dos = kernel.dos
+        except AttributeError:
+            raise NotImplementedError, "Should implement a way to extract dos"
+        # c object of dos
+        cdos = dos.identify(self)
+        # c object of DW calculator
+        nsampling = 100
+        cdw_calculator = self.factory.dwfromDOS(
+            cdos, average_mass, temperature, nsampling )
+        
+        # additional kernel parameters
+        scattering_xs = kernel.scattering_xs/units.barn \
+            if kernel.scattering_xs else 0.
+        absorption_xs = kernel.absorption_xs/units.barn \
+            if kernel.absorption_xs else 0.
+
+        # focusing parameters
+        Ef, dEf = kernel.Ef/units.meV, kernel.dEf/units.meV
+
+        return self.factory.phonon_incoherentinelastic_energyfocusing_kernel(
+            unitcell, Ef, dEf, cdos, cdw_calculator, temperature,
             ave_mass = average_mass, 
             scattering_xs = scattering_xs, absorption_xs = absorption_xs)
 
@@ -232,21 +283,44 @@ class ComputationEngineRendererExtension:
         Qmax = kernel.Qmax
         if Qmax:
             Qmax = Qmax * units.angstrom
+        # dQ
+        dQ = kernel.dQ
+        if dQ:
+            dQ = dQ * units.angstrom
+        # Emax
+        Emax = kernel.Emax
+        if Emax:
+            Emax = Emax / units.meV
         
         # sqe
-        from .multiphonon import sqe
-        q,e,s = sqe(
-            dos.energy, dos.I, 
-            Qmax=Qmax,
-            T = temperature,
-            M = average_mass, N = kernel.Nmax,
+        mpi = MPI()
+        if not mpi.parallel or mpi.rank == 0:
+            from .multiphonon import sqe
+            q,e,s = sqe(
+                dos.energy, dos.I, 
+                Qmax=Qmax, dQ=dQ,
+                T = temperature,
+                M = average_mass, N = kernel.Nmax,
             )
-        import histogram as H
+            if mpi.parallel:
+                channel = mpi.getUniqueChannel()
+                for peer in range(1, mpi.size):
+                    mpi.send((q,e,s), peer, channel)
+                    continue
+        else:
+            channel = mpi.getUniqueChannel()
+            q,e,s = mpi.receive(0, channel)
+        
+        import histogram as H, histogram.hdf as hh
         sqehist = H.histogram(
             'S',
             [('Q', q, 'angstrom**-1'),
              ('energy', e, 'meV')],
             s)
+        # usually only a subset of sqe is necessary 
+        if Emax:
+            sqehist = sqehist[(), (None, Emax)].copy()
+        hh.dump(sqehist, 'mp-sqe-%d.h5' % mpi.rank)
         journal.debug("phonon").log("computed multiphonon sqe")
         
         from mccomponents import sample
@@ -254,7 +328,7 @@ class ComputationEngineRendererExtension:
         gsqe = sample.gridsqe(sqehist)
         # q and e range
         qrange = q[0]/units.angstrom, q[-1]/units.angstrom
-        erange = e[0]*units.meV, e[-1]*units.meV
+        erange = e[0]*units.meV, sqehist.energy[-1]*units.meV
         # kernel
         sqekernel = sample.sqekernel(
             # XXX: we may want to support more options

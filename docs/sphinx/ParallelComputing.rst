@@ -35,3 +35,12 @@ Debug
 -----
 
 $ <simapp> --journal.info.mpirun --journal.debug.mpirun
+
+
+Use slurm
+---------
+
+Set environment variable "MCVINE_MPI_LAUNCHER" to "slurm".
+
+Default launcher is "mpich2".
+

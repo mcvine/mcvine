@@ -30,7 +30,8 @@ class TestCase(unittest.TestCase):
         kernels = bp.kernelcontainer( )
         average = False
         weights = bp.vector_double(0)
-        ck = bp.compositekernel( kernels, weights, average )
+        rotmats = bp.vector_rotmat()
+        ck = bp.compositekernel( kernels, weights, rotmats, average )
 
         cylinder = bp.cylinder( 0.02, 0.1 )
 
@@ -40,7 +41,8 @@ class TestCase(unittest.TestCase):
         packing_factor = 0.7
         hs = bp.homogeneousscatterer( 
             cylinder, ck, (0,1,0),
-            max_multiplescattering_loops, min_neutron_probability, packing_factor
+            max_multiplescattering_loops, min_neutron_probability,
+            packing_factor
             )
         return
     

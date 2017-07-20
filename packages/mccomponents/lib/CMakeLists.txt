@@ -1,3 +1,4 @@
+
 # ------------- Modify these -------------
 set (FPARSER_VERSION "4.5.1")
 set ( SRC_FILES 
@@ -10,6 +11,7 @@ set ( SRC_FILES
   math/random/geometry.cc
   math/random/gaussian.cc
   homogeneous_scatterer/CompositeScatteringKernel.cc
+  homogeneous_scatterer/DGSSXResPixel.cc
   kernels/IsotropicKernel.cc
   kernels/detector/EventModeMCA.cc
   kernels/detector/He3.cc
@@ -17,6 +19,7 @@ set ( SRC_FILES
   kernels/sample/ConstantEnergyTransferKernel.cc
   kernels/sample/ConstantQEKernel.cc
   kernels/sample/ConstantvQEKernel.cc
+  kernels/sample/DGSSXResKernel.cc
   kernels/sample/diffraction/SimplePowderDiffractionKernel.cc
   kernels/sample/SQkernel.cc
   kernels/sample/SQEkernel.cc
@@ -33,6 +36,7 @@ set ( SRC_FILES
   kernels/sample/phonon/CoherentInelastic_SingleXtal.cc
   kernels/sample/phonon/IncoherentElastic.cc
   kernels/sample/phonon/IncoherentInelastic.cc
+  kernels/sample/phonon/IncoherentInelastic_EnergyFocusing.cc
   kernels/sample/phonon/PeriodicDispersion_3D.cc
   kernels/sample/phonon/Omega_minus_deltaE.cc
   kernels/sample/phonon/TargetCone.cc
@@ -41,6 +45,7 @@ set ( SRC_FILES
 
 # include python headers
 include_directories( ${PYTHON_INCLUDE_DIRS} )
+include_directories( ${GSL_INCLUDE_DIRS} )
 
 # export headers from this project
 file(COPY boostpython_binding homogeneous_scatterer kernels physics

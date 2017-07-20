@@ -16,3 +16,6 @@ warnings.simplefilter('default')
 """
 
 from mcvine.instruments.ARCS.Instrument import Instrument as App
+name = 'arcs_moderator2sample'
+
+if __name__ == '__main__': App(name).run()

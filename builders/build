@@ -27,12 +27,17 @@ echo "Building mcvine"
 echo "- mcvine resoureces: $MCVINE_RESOURCES"
 echo "- using $CORES cores"
 
-. /opt/danse/bin/setup-danse.sh
+# This should be in .dev-mcvine if it is needed
+# . /opt/danse/bin/setup-danse.sh
 
 rm -rf $BUILD
 mkdir $BUILD
 cd $BUILD
-cmake $SRC -DDEPLOYMENT_PREFIX=/opt/danse -DCMAKE_INSTALL_PREFIX=$INSTALL \
+cmake $SRC \
+    -DCMAKE_INSTALL_PREFIX=$INSTALL \
+    -DDEPLOYMENT_PREFIX=${DEPLOYMENT_PREFIX} \
+    -DPYTHON_LIBRARY=${PYTHON_LIBRARY} \
+    -DPYTHON_INCLUDE_DIR=${PYTHON_INCLUDE_DIR} \
     && make -j$CORES reconfigure-to-include-mcstas-components \
     && make -j$CORES wrap-mcstas-components-cmake \
     && make -j$CORES 

@@ -17,6 +17,7 @@
 #include <vector>
 #include <memory>
 #include "AbstractScatteringKernel.h"
+#include "mccomposite/geometry/RotationMatrix.h"
 
 
 namespace mccomponents{
@@ -29,11 +30,15 @@ namespace mccomponents{
     typedef AbstractScatteringKernel base_t;
     typedef std::vector<AbstractScatteringKernel *> kernels_t;
     typedef std::vector<double> weights_t;
+    typedef mccomposite::geometry::RotationMatrix rotmat_t;
+    typedef std::vector<rotmat_t> rotmats_t;
     
     // meta-methods
     // average: if set: average scattering and absorption coefficients instead of sum
     CompositeScatteringKernel 
-    ( const kernels_t & kernels, const weights_t & weights,
+    ( const kernels_t & kernels,
+      const weights_t & weights,
+      const rotmats_t & rotmats,
       bool average=0);
     virtual ~CompositeScatteringKernel();
 
@@ -49,6 +54,7 @@ namespace mccomponents{
     const kernels_t & m_kernels;
     bool m_average;
     weights_t m_weights;
+    rotmats_t m_rotmats;
     struct Details;
     std::auto_ptr<Details> m_details;
   };

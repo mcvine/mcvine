@@ -3,7 +3,9 @@
 log.*
 /build
 /docker
+/conda
 /packages/instrument
 /packages/sampleassembly
+/packages/workflow
 /packages/legacycomponents/mcstas2/components/*
 /packages/click

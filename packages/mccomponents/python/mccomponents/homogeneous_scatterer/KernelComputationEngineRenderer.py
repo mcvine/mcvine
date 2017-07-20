@@ -11,6 +11,8 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
 
+import numpy as np
+
 
 from AbstractVisitor import AbstractVisitor
 
@@ -33,6 +35,7 @@ class KernelComputationEngineRenderer( AbstractVisitor ):
         
         ckernels = factory.kernelcontainer()
         cweights = factory.binding.vector_double(len(elements))
+        crotmats = factory.binding.vector_rotmat()
         for index, element in enumerate(elements):
             ckernel = element.identify(self) 
             ckernels.append( ckernel )
@@ -49,9 +52,15 @@ class KernelComputationEngineRenderer( AbstractVisitor ):
                     )
             cweights[index] = w or 1.
             print "weight: ", cweights[index]
+            # rotation matrix
+            rm = getattr(element, 'rotmat', None)
+            if rm is None:
+                rm = np.eye(3)
+            crm = factory.binding.orientation(rm)
+            crotmats.append(crm)
             continue
 
-        return factory.compositekernel( ckernels, cweights, composite.average )
+        return factory.compositekernel( ckernels, cweights, crotmats,  composite.average )
 
     
     def onHomogeneousScatterer(self, scatterer):

@@ -2,4 +2,7 @@
 
 rm -rf *out
 rm -f *.dat
-rm -f seq*.pml
+rm -f *.params
+rm -f seq*.pml*
+rm -f README.sequoia_beam run-m2s.sh
+rm -rf _work*

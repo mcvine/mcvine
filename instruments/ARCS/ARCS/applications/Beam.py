@@ -48,7 +48,12 @@ class App(base):
         emission_time = pyre.inventory.float('emission_time', default=-1)
         emission_time.meta['tip'] = 'emission time for moderator unit (microsecond)'
 
+        with_moderator_angling = pyre.inventory.bool('with_moderator_angling', default=True)
+        with_moderator_angling.meta['tip'] = "turn on/of moderator angling"
+
         ncount = pyre.inventory.float('ncount', default=1000000)
+
+        nodes = pyre.inventory.int('nodes', default=0)
 
 
     m2sout = '_m2sout'
@@ -87,6 +92,7 @@ class App(base):
             'T0_nu',
             'E',
             'emission_time',
+            'with_moderator_angling',
             ]
         cmd += self._buildCmdFromInventory(keys)
         cmd += ['--- -dump-pml=yes', '-h'] # , '>arcs-m2s.log']
@@ -110,6 +116,11 @@ class App(base):
             'source_sct521_bu_17_1.dat',
             )
         cmd += ['--moderator.S_filename=%s' % moddat]
+        # mpi nodes
+        from mcni.pyre_support.MpiApplication import mpi_launcher_choice
+        if self.inventory.nodes:
+            cmd += ['--%s.nodes=%s' % (
+                mpi_launcher_choice, self.inventory.nodes)]
         cmd = ' '.join(cmd)
         open('run-m2s.sh', 'wt').write(cmd) # save the running command
         bpp._exec(cmd)
@@ -139,3 +150,7 @@ Dirs and files:
 * run-m2s.sh: script that runs the moderator2sample sim
 * _m2sout: "raw" output from the moderator2sample sim
 """
+
+
+name = 'arcs_beam'
+if __name__ == '__main__': App(name).run()

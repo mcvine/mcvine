@@ -27,7 +27,8 @@ echo "Testing mcvine"
 echo "- mcvine resoureces: $MCVINE_RESOURCES"
 echo "- using $CORES cores"
 
-. /opt/danse/bin/setup-danse.sh
+# This should be in .dev-mcvine if it is needed
+# . /opt/danse/bin/setup-danse.sh
 
 cd $BUILD
 env CTEST_OUTPUT_ON_FAILURE=1 make test ARGS="-j$CORES $ADDI_ARGS"

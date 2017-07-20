@@ -14,10 +14,11 @@
 
 standalone = True
 
+import os
+os.environ['MCVINE_MPI_LAUNCHER'] = 'serial'
 
 import unittestX as unittest
 import journal
-import os
 
 debug = journal.debug( "mcni.pyre_components.test" )
 warning = journal.warning( "mcni.pyre_components.test" )
@@ -60,6 +61,12 @@ class Instrument1(base):
 
     def _defaults(self):
         base._defaults(self)
+        
+        # useserial mode
+        self.inventory.mode = 'worker'
+        from mcni.pyre_support.LauncherSerial import LauncherSerial
+        self.inventory.launcher = LauncherSerial()
+
         self.inventory.sequence = ['source', 'storage']
         
         geometer = self.inventory.geometer
@@ -123,6 +130,11 @@ class Instrument2(base):
 
     def _defaults(self):
         base._defaults(self)
+        # serial mode
+        self.inventory.mode = 'worker'
+        from mcni.pyre_support.LauncherSerial import LauncherSerial
+        self.inventory.launcher = LauncherSerial()
+
         self.inventory.sequence = ['source', 'verifier']
         
         geometer = self.inventory.geometer
@@ -166,6 +178,7 @@ class TestCase(unittest.TestCase):
             ]
 
         instrument.run()
+        instrument.run_postprocessing()
         sys.argv = save
         return
 
@@ -186,6 +199,7 @@ class TestCase(unittest.TestCase):
             ]
 
         instrument.run()
+        instrument.run_postprocessing()
         sys.argv = save
         return
 

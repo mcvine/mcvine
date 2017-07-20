@@ -12,7 +12,7 @@
 namespace misc{
 
   //! if b>0 return abs(a), else return -abs(a)
-  const double & sign( const double &a, const double &b ) ;
+  const double sign( const double &a, const double &b ) ;
 
 }//misc
 

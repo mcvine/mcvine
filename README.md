@@ -5,3 +5,4 @@
 * Homepage: http://www.mcvine.org
 * Examples: http://www.mcvine.org/examples.html
 * Publications: http://www.mcvine.org/publications.html
+* Training: https://github.com/mcvine/training

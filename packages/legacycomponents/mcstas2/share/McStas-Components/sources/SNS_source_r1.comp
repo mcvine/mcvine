@@ -9,7 +9,7 @@
 * %I
 * Written by: G. Granroth
 * Date: March 2004
-* Version: $Revision: 494 $
+* Revised by: J. Lin
 * Origin: SNS Project Oak Ridge National Laboratory
 *
 * A source that produces a time and energy distribution from the SNS moderator files.
@@ -38,12 +38,14 @@
 * yh:     (m)   Height of focusing rectangle
 * Emin: (meV)   minimum energy of neutron to generate
 * Emax: (meV)   maximum energy of neutron to generate
+* angling: (deg) rotation angle of moderator. Ref. pg 300, Windsor. Positive means the moderator is rotated counter-clockwise looking from above
 * %E
 *******************************************************************************/
 
 DEFINE COMPONENT SNS_source_r1
 DEFINITION PARAMETERS ()
-SETTING PARAMETERS (char *S_filename="SNS_moderator_data_file",width=0.1, height=0.12, dist=2.5, xw=0.1, yh=0.12, Emin=50, Emax=70)
+SETTING PARAMETERS (char *S_filename="SNS_moderator_data_file",width=0.1,
+	height=0.12, dist=2.5, xw=0.1, yh=0.12, Emin=50, Emax=70, angling=0.0)
 OUTPUT PARAMETERS (hdiv,vdiv,p_in)
 STATE PARAMETERS (x,y,z,vx,vy,vz,t,s1,s2,p)
 
@@ -664,6 +666,17 @@ TRACE
   vz = v*cos(phi)*cos(theta);   /* Small angle approx. */
   vy = v*sin(phi);
   vx = v*cos(phi)*sin(theta);
+  /* rotation due to angling.
+  postive angling means ccw rotation of moderator looking from above.
+  it means we need to rotate the neutrons cw
+  only x and z changes
+  */
+  double angling_in_radian = angling * PI / 180.;
+  {
+    double vx1 = vx * cos(angling_in_radian) - vz * sin(angling_in_radian);
+    double vz1 = vx * sin(angling_in_radian) + vz * cos(angling_in_radian);
+    vz = vz1; vx = vx1;
+  }
   p*=INorm2/mcget_ncount();
 %}
 FINALLY

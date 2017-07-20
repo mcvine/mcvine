@@ -77,22 +77,22 @@ class HistogramBasedMonitorMixin(MonitorMixin):
         if context is None:
             raise RuntimeError, "context not defined: type - %s, name - %s" % (
                 self.__class__.__name__, self.name)
-        # make sure every node reaches here
-        if context.mpiSize > 1:
-            channel = self.getUniqueChannel()
-            if context.mpiRank:
-                self.mpiSend(context.mpiRank, 0, channel)
-            else:
-                for i in range(1, self.mpiSize):
-                    self.mpiReceive(i, channel)
-        #
-        if context.mpiRank == 0:
-            f = self._getHistogramFilename()
-            outdir = context.outputdir
-            h, n = hist_mcs_sum(outdir, f)
-            h.I/=n
-            h.E2/=n*n
-            return h
+        if context.mpiRank != 0:
+            return
+        # create post processing script
+        import os
+        path = os.path.join(context.post_processing_scripts_dir, "%s.py" % self.name)
+        content = """from mcni.components.HistogramBasedMonitorMixin import hist_mcs_sum
+h,n = hist_mcs_sum(%(outdir)r, %(fn)r)
+h.I/=n
+h.E2/=n*n
+from histogram.hdf import dump
+import os
+p = os.path.join(%(outdir)r, %(fn)r)
+dump(h, p, '/', 'c')
+""" % dict(outdir=os.path.abspath(context.outputdir), fn=self._getHistogramFilename())
+        open(path, 'wt').write(content)
+        return
 
 
     def _getHistogramFilename(self):
@@ -101,10 +101,8 @@ class HistogramBasedMonitorMixin(MonitorMixin):
 
     def _saveResult(self, res, directory):
         """save result to the given directory"""
-        from histogram.hdf import dump
-        import os
-        p = os.path.join(directory, self._getHistogramFilename())
-        dump(res, p, '/', 'c')
+        # this is now done in post-processing script written out
+        # in method _getFinalResult
         return
 
 

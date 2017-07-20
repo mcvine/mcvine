@@ -1,0 +1,7 @@
+Installation on NERSC
+---------------------
+
+* Build and install external dependencies. See install-deps.
+* Build and install danse packages. See danse
+* Build and install mcvine. Need .build-mcvine and build-mcvine.sh
+

@@ -30,6 +30,8 @@ class MultiPhonon_Kernel(base):
         if Nmax: Nmax = int(Nmax)
         kargs = dict(
             Qmax = getval('Qmax'),
+            dQ = getval('dQ'),
+            Emax = getval('Emax'),
             average_mass = getval('average_mass'),
             scattering_xs = getval('scattering_xs'),
             absorption_xs = getval('absorption_xs'),

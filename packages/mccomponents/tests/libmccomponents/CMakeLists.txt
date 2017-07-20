@@ -15,6 +15,7 @@ set ( SRC_FILES
   homogeneous_scatterer/testHomogeneousNeutronScatterer.cc
   homogeneous_scatterer/testCompositeScatteringKernel.cc
   homogeneous_scatterer/testMultipleScattering.cc
+  homogeneous_scatterer/testDGSSXResPixel.cc
   kernels/detector/testTof2Channel.cc
   kernels/detector/testZ2Channel.cc
   kernels/detector/testHe3Tube.cc
@@ -22,6 +23,7 @@ set ( SRC_FILES
   kernels/detector/testHe3.cc
   kernels/detector/testevents2iqe.cc
   kernels/sample/test_Broadened_E_Q_Kernel.cc
+  kernels/sample/test_DGSSXResKernel.cc
   kernels/sample/test_E_Q_Kernel.cc
   kernels/sample/test_E_vQ_Kernel.cc
   kernels/sample/test_SQkernel.cc
@@ -47,7 +49,7 @@ set ( SRC_FILES
 include_directories(${EXPORT_HEADERS})
 include_directories(${DEPLOYMENT_PREFIX}/include)
 include_directories(${PYTHON_INCLUDE_DIRS})
-include_directories(${GLS_INCLUDE_DIR})
+include_directories( ${GSL_INCLUDE_DIRS} )
 link_directories(${EXPORT_LIB})
 link_directories(${DEPLOYMENT_PREFIX}/${INSTALL_LIB_DIR})
 add_definitions(-DUSE_DANSE_NAMESPACE)

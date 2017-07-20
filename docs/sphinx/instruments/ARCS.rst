@@ -3,76 +3,153 @@
 Simulation of ARCS experiments
 ==============================
 
-.. _arcscmds:
+.. note::
+   :ref:`Tricks for $ mcvine command line bash interface" <cli/bash>` 
+   and :ref:`CLI for ARCS <arcscmds>`
+   may be useful
+   if you need to customize the simulations in the following tutorials.
 
-Command line interface for ARCS
--------------------------------
+.. note::
+   Some more examples of ARCS simulations are available at
+   `mcvine resources/ARCS simulations <https://github.com/mcvine/resources/tree/master/instruments/ARCS/simulations>`_.
 
-To find out available simulation applications for the ARCS spectrometer::
+..  `mcvine/resources <https://github.com/mcvine/resources>`_:
 
- $ mcvine instruments arcs
+Tutorial: full simulation of an experiment of a polycrystalline Vanadium sample
+-------------------------------------------------------------------------------
 
-To use bash aliases for ARCS related commands::
+This is a tutorial of a full simulation of an ARCS experiment 
+with a polycrystalline vanadium sample.
 
- $ eval `mcvine bash aliases arcs`
+Following are four essential steps for such a simulation:
+
+* Simulate the neutron beam at the sample position
+* Send neutrons in the simulated neutron beam to the sample to be scattered, and save the scattered neutrons
+* Send the scattered neutrons to the ARCS detector system, which generates "event-mode" nexus data
+* Reduce "event-mode" nexus data to I(Q,E)
 
 
-Tutorial: Simulation of ARCS beam
----------------------------------
+MCViNE has made these steps easier by providing some convenient tools,
+so that you can run the last three steps above using only one command.
+All you need to do is
+
+#. :ref:`Create the workflow <tutorial-arcs-powderV-create-workflow>`
+#. :ref:`Run the beam simulation <tutorial-arcs-powderV-beam>`
+#. :ref:`Run the sample scattering, neutron detection, and reduction using one make command <tutorial-arcs-powderV-sample>`
 
 
-Here we simulate the ARCS instrument from moderator
-down to the sample position.
+.. _tutorial-arcs-powderV-create-workflow:
 
-Create a directory ::
+1. Create workflow
+""""""""""""""""""
+Run ::
 
- $ mkdir mod2sample
- $ cd mod2sample
+   $ mcvine workflow powder --instrument=ARCS --sample=V --workdir=mysim
 
-Suppose
+And a new directory "mysim" will be created. Change to this new directory::
 
-* the incident energy to simulate is 100 meV
-* fermi chopper "100-1.5-SMI" is chosen
-* fermi chopper frequency is set to 600 Hz
-* T0 chopper frequency is set to 120 Hz
-* neutron count is 1e8
+  $ cd mysim
 
-We can run the arcs beam simulation (from moderator to sample)
 
- $ arcs_beam -E=100 -T0_nu=120 -fermi_chopper=100-1.5-SMI -fermi_nu=600 --ncount=1e8
+.. _tutorial-arcs-powderV-beam:
 
-Output: out/neutrons
+2. Incident beam at sample
+""""""""""""""""""""""""""
 
-.. See how many neutrons are there::
-   $ mcvine-neutron-storage-count-neutrons out/neutrons
+In this step we simulate the ARCS instrument from moderator
+down to the sample position::
 
-Output: out/mon1-itof-focused.h5
+  $ cd beam
+  $ ./run-beam.sh
 
-.. Plot::
-   $ PlotHist.py out/mon1-tof.h5
+This command will run the beam simulation and when finished, generate
+output files in mysim/beam/out directory.
 
-Output: out/mon2-itof-focused.h5
+You may want to inspect and modify "run-beam.sh" to change
+some parameters.
+For example, number of neutrons to simulate can be changed using
+option --ncount.
 
-.. Plot::
-   $ PlotHist.py out/mon2-tof.h5
+.. note::
+   More details of beam simulation can be found in 
+   :ref:`a different tutorial below <tut_arcs_beam>`
+
+After this step is finished, we may optionally examine the output files
+(see the note below),
+and then move back to the workflow directory::
+
+  $ cd ..
+
+..
+ * Output: out/neutrons
+   
+   See how many neutrons are there::
+
+     $ mcvine-neutron-storage-count-neutrons out/neutrons
+
+.. note::
+ Following are some output files
+
+ * Output: out/mon1-itof-focused.h5 -- focused monitor 1 histogram
+
+   To plot, execute::
+
+     $ plothist out/mon1-tof-focused.h5
+
+ * Output: out/mon2-itof-focused.h5 -- focused monitor 2 histogram
+
+
+.. _tutorial-arcs-powderV-sample:
+
+3. Sample scattering, neutron detection, and reduction
+""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+These three steps are combined together by the Makefile in this workflow
+directory. All you need to do is to execute::
+
+ $ make
+
+It will run the three steps sequentially.
+Each step will generate a log file. For example, the scattering step
+will generate a log file "log.scatter".
+They may be useful in debugging the simulation.
+If any of the steps failed, the workflow will stop.
+
+Inputs
+......
+
+The main input for the sample scattering step is the "sampleassembly"
+directory, which is explained :ref:`here <SampleAssembly>`.
+
+You may adjust the sample scattering simulation options in
+the script "scatter":
+
+* --ncount: number of neutrons
+* --mpirun.nodes: number of nodes to use for parallel simulation
+* --multiple-scattering: turn multiple scattering on or off
+
+You may adjust the neutron detection simulation options in
+the script "create-nxs":
+
+* --nodes: number of nodes to use for parallel simulation
+
+You may adjust the reduction options in
+the script "reduce2iqe":
+
+* --qaxis: Q axis specification (min, max, step)
+
+
+Outputs
+.......
+
+The main output of this simulation is the I(Q,E) histogram, iqe.h5.
+To plot the result::
+
+ $ make plot-iqe
 
 
 
 ..
-   Tutorial 1: full simulation of an experiment of a polycrystalline Vanadium sample
-   ---------------------------------------------------------------------------------
-
-   Here is an example of a full simulation of an ARCS experiment 
-   using a polycrystalline vanadium sample.
-
-   .. note::
-      The following are steps needed for such a simulation:
-
-      #. simulate the neutron beam at the sample position
-      #. "replay" neutrons at the sample position to send them to the sample to be scattered, and save the scattered neutrons
-      #. send the scattered neutrons to ARCS detector system, which generates "event-mode" nexus data
-      #. reduce "event-mode" nexus data to I(Q,E)
-
    Create a working directory::
 
      $ mkdir -p arcs-polyV
@@ -103,20 +180,6 @@ Output: out/mon2-itof-focused.h5
 
     $ arcs_beam -E=100 -T0_nu=120 -fermi_chopper=100-1.5-SMI -fermi_nu=600 --ncount=1e8
 
-   Output: out/neutrons
-
-   .. See how many neutrons are there::
-      $ mcvine-neutron-storage-count-neutrons out/neutrons
-
-   Output: out/mon1-itof-focused.h5
-
-   .. Plot::
-      $ PlotHist.py out/mon1-tof.h5
-
-   Output: out/mon2-itof-focused.h5
-
-   .. Plot::
-      $ PlotHist.py out/mon2-tof.h5
 
 
    Scattering of incident neutrons by sample
@@ -318,4 +381,67 @@ Output: out/mon2-itof-focused.h5
    * workdir: temporary working dir. default: work
 
 
+.. _tut_arcs_beam:
 
+Tutorial: Simulation of ARCS beam
+---------------------------------
+
+
+Here we simulate the ARCS instrument from moderator
+down to the sample position.
+
+Create a directory ::
+
+ $ mkdir mod2sample
+ $ cd mod2sample
+
+Suppose
+
+* the incident energy to simulate is 100 meV
+* fermi chopper "100-1.5-SMI" is chosen
+* fermi chopper frequency is set to 600 Hz
+* T0 chopper frequency is set to 120 Hz
+* neutron count is 1e8
+
+We can run the arcs beam simulation (from moderator to sample)
+
+ $ arcs_beam -E=100 -T0_nu=120 -fermi_chopper=100-1.5-SMI -fermi_nu=600 --ncount=1e8
+
+Output: out/neutrons
+
+.. See how many neutrons are there::
+   $ mcvine-neutron-storage-count-neutrons out/neutrons
+
+Output: out/mon1-itof-focused.h5
+
+.. Plot::
+   $ plothist out/mon1-tof.h5
+
+Output: out/mon2-itof-focused.h5
+
+.. Plot::
+   $ plothist out/mon2-tof.h5
+
+
+
+Advanced topic - customize ARCS simulation
+""""""""""""""""""""""""""""""""""""""""""
+
+You may need to choose different simulation components
+to achieve a better match with the experimental data.
+
+* `Super-fine Fermi chopper example <https://github.com/mcvine/resources/tree/master/instruments/ARCS/simulations/beam/686.62meV-FC_700-0.5-ASTAnalyticSNSMod-McStasFermiChopper>`_
+
+
+.. _arcscmds:
+
+Command line interface for ARCS
+-------------------------------
+
+To find out available simulation applications for the ARCS spectrometer::
+
+ $ mcvine instruments arcs
+
+To use bash aliases for ARCS related commands::
+
+ $ eval `mcvine bash aliases arcs`

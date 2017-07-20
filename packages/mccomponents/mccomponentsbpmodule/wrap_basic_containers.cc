@@ -14,6 +14,7 @@
 
 #include <boost/python.hpp>
 #include "wrap_vector.h"
+#include "mccomposite/geometry/RotationMatrix.h"
 
 
 namespace wrap_mccomponents {
@@ -25,6 +26,8 @@ namespace wrap_mccomponents {
     wrap_vector<int>( "int" ); 
     wrap_vector<unsigned int>( "uint" ); 
     wrap_vector<double>( "double" ); 
+
+    wrap_vector2<mccomposite::geometry::RotationMatrix>("rotmat");
   }
 }
 

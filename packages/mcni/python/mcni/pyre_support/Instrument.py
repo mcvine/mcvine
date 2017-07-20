@@ -16,7 +16,7 @@
 # by default, let us disable this annoying channel.
 # one can always enable it by 
 #  --journal.error.pyre.inventory
-import journal
+import journal, os
 journal.error('pyre.inventory').deactivate()
 
 
@@ -26,8 +26,12 @@ journal.error('pyre.inventory').deactivate()
 DEFAULT_NUMBER_SIM_LOOPS = 5
 # minimum buffer size
 MINIMUM_BUFFER_SIZE = 100
-MAXIMUM_BUFFER_SIZE = int(1e7)
-
+mbs = os.environ.get('MCVINE_MAX_NEUTRON_BUFFER_SIZE')
+if mbs:
+    mbs = int(float(mbs))
+else:
+    mbs = int(1e7)
+MAXIMUM_BUFFER_SIZE = mbs
 
 from MpiApplication import Application as base
 from CompositeNeutronComponentMixin import CompositeNeutronComponentMixin
@@ -89,6 +93,11 @@ class Instrument( AppInitMixin, CompositeNeutronComponentMixin, base, ParallelCo
         # to another saved registry, for example.
         dumpregistry = pyre.inventory.bool('dump-registry', default=False)
         dumpregistry.meta['tip'] = 'if true, dump the pyre registry to a pkl file'
+
+        # path of the directory with post processing scripts
+        # the components that need post-processing should add scripts
+        # to this directory
+        post_processing_scripts_dir = pyre.inventory.str("post-processing-scripts-dir")
         pass # end of Inventory
 
 
@@ -121,23 +130,17 @@ class Instrument( AppInitMixin, CompositeNeutronComponentMixin, base, ParallelCo
         
         geometer = self.geometer
 
-        from mcni.SimulationContext import SimulationContext
-        context = SimulationContext()
-        context.multiple_scattering = self.inventory.multiple_scattering
-        context.tracer = self.tracer
-        context.mpiRank = self.mpiRank
-        context.mpiSize = self.mpiSize
-        context.outputdir = self.outputdir
-        context.overwrite_datafiles = self.overwrite_datafiles
+        context = self._makeSimContext()
         
+        if self.ncount < self.buffer_size:
+            self.buffer_size = int(self.ncount)
         n = int(self.ncount / self.buffer_size)
-        assert n>0, 'ncount should be larger than buffer_size: ncount=%s, buffer_size=%s' % (self.ncount, self.buffer_size)
         
         from mcni import journal
         logger = journal.logger(
             'info', 'instrument', header='', footer='', format='-> %s')
         for i in range(n):
-            logger("mpi node %s at loop %s" % (self.mpiRank, i))
+            logger("mpi node %s at loop %s" % (self.mpi.rank, i))
             neutrons = mcni.neutron_buffer( self.buffer_size )
             context.iteration_no = i
             mcni.simulate( instrument, geometer, neutrons, context=context)
@@ -145,19 +148,40 @@ class Instrument( AppInitMixin, CompositeNeutronComponentMixin, base, ParallelCo
         
         remain = int(self.ncount % self.buffer_size)
         if remain:
-            logger("mpi node %s at last loop" % (self.mpiRank,))
+            logger("mpi node %s at last loop" % (self.mpi.rank,))
             neutrons = mcni.neutron_buffer(remain)
             context.iteration_no = n
             mcni.simulate( instrument, geometer, neutrons, context=context)
             
-        import os
         print os.times()
         return
 
 
+    def run_postprocessing(self):
+        _run_ppsd(self.post_processing_scripts_dir)
+        return
+
+
+    def _makeSimContext(self):
+        from mcni.SimulationContext import SimulationContext
+        context = SimulationContext()
+        context.multiple_scattering = self.inventory.multiple_scattering
+        context.tracer = self.tracer
+        context.mpiRank = self.mpi.rank
+        context.mpiSize = self.mpi.size
+        context.outputdir = self.outputdir
+        context.overwrite_datafiles = self.overwrite_datafiles
+        pps = self.inventory.post_processing_scripts_dir
+        if not pps:
+            pps = os.path.join(self.outputdir, 'post-processing-scripts')
+        self.post_processing_scripts_dir = context.post_processing_scripts_dir = pps
+        if context.mpiRank==0 and not os.path.exists(pps):
+            os.makedirs(pps)
+        return context
+
+        
     def _dumpRegsitry(self):
         out = '%s-reg.pkl' % self.name
-        import os
         if os.path.exists(out):
             raise RuntimeError, 'dump registry: path %s already exists' % out
 
@@ -204,9 +228,9 @@ class Instrument( AppInitMixin, CompositeNeutronComponentMixin, base, ParallelCo
     
     
     def _setup_outputdir(self):
-        self.mpiBarrier()
+        self.mpi.barrier()
         outputdir = self.outputdir = self.inventory.outputdir
-        if self.parallel and self.mpiRank==0 and self.inventory.mode=='worker':
+        if self.parallel and self.mpi.rank==0 and self.inventory.mode=='worker':
             if not self.overwrite_datafiles and os.path.exists( outputdir ):
                 msg = "output directory %r exists. If you want to overwrite the output directory, please specify option --overwrite-datafiles." % outputdir
                 raise RuntimeError, msg
@@ -240,12 +264,13 @@ class Instrument( AppInitMixin, CompositeNeutronComponentMixin, base, ParallelCo
         self.overwrite_datafiles = self.inventory.overwrite_datafiles
         
         self.sequence = self.inventory.sequence
-        self.buffer_size = self._getBufferSize()
-        self.ncount = self.inventory.ncount
-        if self.parallel:
-            # every node only need to run a portion of the total counts
-            partitions = getPartitions(self.ncount, self.mpiSize)
-            self.ncount = partitions[self.mpiRank]
+        if self.inventory.mode == 'worker':
+            self.buffer_size = self._getBufferSize()
+            self.ncount = self.inventory.ncount
+            if self.parallel:
+                # every node only need to run a portion of the total counts
+                partitions = getPartitions(self.ncount, self.mpi.size)
+                self.ncount = partitions[self.mpi.rank]
 
         # tracer
         tracer = self.inventory.tracer
@@ -261,7 +286,7 @@ class Instrument( AppInitMixin, CompositeNeutronComponentMixin, base, ParallelCo
         super(Instrument, self)._init_before_my_inventory()
 
         # output directory
-        if not self._showHelpOnly: 
+        if not self._showHelpOnly and self.inventory.mode == 'worker': 
             self._setup_outputdir()
 
         #
@@ -275,10 +300,7 @@ class Instrument( AppInitMixin, CompositeNeutronComponentMixin, base, ParallelCo
         # this logic probably should go into class MpiApplication.
         # Please read MpiApplication._init as well!
         # 
-        from MpiApplication import usempi
-        self.mpi_server_mode = usempi \
-            and (self.inventory.launcher.nodes > 1) \
-            and self.inventory.mode == 'server'
+        self.mpi_server_mode = self.inventory.mode == 'server'
         # mpi_server_mode is true means that it is not a worker,
         # and no initialization is necessary for all neutron sub-components
         # we can just set _showHelpOnly for them.
@@ -331,12 +353,12 @@ class Instrument( AppInitMixin, CompositeNeutronComponentMixin, base, ParallelCo
 
 
     def _minimumSuggestedBufferSize(self):
-        return self.inventory.ncount / 1000 / (self.mpiSize or 1)
+        return self.inventory.ncount / 1000 / (self.mpi.size or 1)
     
     
     def _computeBufferSize(self):
         ncount = self.inventory.ncount
-        mpisize = self.mpiSize or 1
+        mpisize = self.mpi.size or 1
         nsteps = DEFAULT_NUMBER_SIM_LOOPS
         candidate = int(ncount/nsteps/mpisize)
         # rare case where ncount is way too small
@@ -350,7 +372,7 @@ class Instrument( AppInitMixin, CompositeNeutronComponentMixin, base, ParallelCo
     def _maximumBufferSize(self):
         # XXX need to tell if we are in the shared memory machine
         # XXX or not. for now, let us play safe
-        nodes = self.mpiSize or 1
+        nodes = self.mpi.size or 1
         return min(
             _computeMaximumBufferSize(nodes),
             MAXIMUM_BUFFER_SIZE,
@@ -369,7 +391,6 @@ class Instrument( AppInitMixin, CompositeNeutronComponentMixin, base, ParallelCo
             outfile = dumppml
 
         # make sure the output path does not exist
-        import os
         if os.path.exists(outfile):
             # save the old configuration 
             timeformat = '%m-%d-%Y--%H-%M-%S'
@@ -406,7 +427,6 @@ class Instrument( AppInitMixin, CompositeNeutronComponentMixin, base, ParallelCo
         stream.write('-->\n\n')
 
         # give a warning when use non-default config filename
-        import os, sys
         base = os.path.basename(outfile)
         if base != default_filename:
             print '*'*70
@@ -481,7 +501,8 @@ def _computeMaximumBufferSize(nodes):
     we should not need to divide the maximum buffer size by nodes.
     """
     import psutil
-    memsize = min(psutil.TOTAL_PHYMEM/2, (psutil.avail_phymem() + psutil.avail_virtmem())*0.7)
+    vm = psutil.virtual_memory()
+    memsize = min(vm.total/2, vm.available*0.85)
     memsize = int(memsize)
     from mcni.neutron_storage.idfneutron import ndblsperneutron
 
@@ -496,6 +517,21 @@ def _computeMaximumBufferSize(nodes):
 
     return n
 
+
+def _run_ppsd(path):
+    "run postprocessing scripts in the given path"
+    import glob
+    scripts = glob.glob(os.path.join(path, '*.py'))
+    for script in scripts:
+        cmd = '%s %s' % (sys.executable, script)
+        _exec(cmd)
+        continue
+    return
+
+def _exec(cmd):
+    if os.system(cmd):
+        raise RuntimeError("%s failed" % cmd)
+    return
 
 def _getCmdStr():
     import sys, os
@@ -536,7 +572,7 @@ def getPartitionIterator( N, n ):
     return 
 
 
-import os, journal
+import os, sys, journal
 
 
 # version

@@ -18,6 +18,8 @@ standalone = True
 # from neutron_storage_normalization_TestCase-app.pml
 ncount = 1e4
 
+# parallel launcher
+from mcni.pyre_support.MpiApplication import mpi_launcher_choice as launcher
 
 # will set this below in the test methods
 outdir = 'out-neutron_storage_mpi_TestCase-app'
@@ -33,7 +35,7 @@ class TestCase(unittest.TestCase):
 
     def test1(self):
         'mpi run of neutron_storage component: overwrite_datafiles is on'
-        cmd = './neutron_storage_normalization_TestCase-app --mpirun.nodes=2 --overwrite-datafiles --output-dir=%s' % outdir
+        cmd = './neutron_storage_normalization_TestCase-app --%s.nodes=2 --overwrite-datafiles --output-dir=%s' % (launcher, outdir)
         import os
         if os.system(cmd):
             raise RuntimeError, "%r failed" % cmd
@@ -60,7 +62,7 @@ class TestCase(unittest.TestCase):
         'mpi run of neutron_storage component: overwrite_datafiles is off'
         import shutil
         shutil.rmtree(outdir)
-        cmd = './neutron_storage_normalization_TestCase-app --mpirun.nodes=2 --overwrite-datafiles=off  --output-dir=%s' % outdir
+        cmd = './neutron_storage_normalization_TestCase-app --%s.nodes=2 --overwrite-datafiles=off  --output-dir=%s' % (launcher, outdir)
         import os
         if os.system(cmd):
             raise RuntimeError, "%r failed" % cmd

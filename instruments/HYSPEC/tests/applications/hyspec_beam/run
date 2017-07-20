@@ -1,3 +1,4 @@
 #!/usr/bin/env bash
 
-rm -rf *out* && hyspec_beam --ncount=1e6
+rm -rf work && mkdir work && cd work && mcvine instruments hyspec beam --ncount=1e6 &>log.run &
+sleep 1 && tail -f work/log.run

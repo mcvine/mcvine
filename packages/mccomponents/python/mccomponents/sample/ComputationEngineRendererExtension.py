@@ -1,14 +1,5 @@
 #!/usr/bin/env python
 #
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#
-#                                   Jiao Lin
-#                      California Institute of Technology
-#                        (C) 2007  All Rights Reserved
-#
-# {LicenseText}
-#
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
 
 
@@ -108,6 +99,42 @@ class ComputationEngineRendererExtension:
         abs, sctt = self._unitsRemover.remove_unit( (abs, sctt), 1./units.length.meter )
         
         return self.factory.isotropickernel(abs, sctt)
+
+
+    def onDGSSXResKernel(self, kernel):
+        t = kernel
+
+        abs = t.absorption_cross_section
+        sctt = t.scattering_cross_section
+
+        if abs is None or sctt is None:
+            #need to get cross section from sample assembly representation
+            # svn://danse.us/inelastic/sample/.../sampleassembly
+            #origin is a node in the sample assembly representation
+            #
+            #scatterer_origin is assigned to kernel when a kernel is
+            #constructed from kernel xml.
+            #see sampleassembly_support.SampleAssembly2CompositeScatterer for details.
+            origin = t.scatterer_origin
+            from sampleassembly import cross_sections
+            abs, inc, coh = cross_sections( origin )
+            sctt = inc + coh
+            pass
+        
+        abs, sctt = self._unitsRemover.remove_unit( 
+            (abs, sctt), 1./units.length.meter )
+        target_position = self._unitsRemover.remove_unit(
+            t.target_position, units.length.meter)
+        target_radius = self._unitsRemover.remove_unit(
+            t.target_radius, units.length.meter)
+        tof_at_target = self._unitsRemover.remove_unit(
+            t.tof_at_target, units.time.second)
+        dtof = self._unitsRemover.remove_unit(
+            t.dtof, units.time.second)
+        return self.factory.dgssxreskernel(
+            target_position, target_radius,
+            tof_at_target, dtof,
+            abs, sctt)
 
 
     def onConstantEnergyTransferKernel(self, kernel):
@@ -339,8 +366,5 @@ registerRendererExtension( ComputationEngineRendererExtension )
 
 import units
 
-
-# version
-__id__ = "$Id$"
 
 # End of file 

@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE scatterer>
+
+<!-- weights: absorption, scattering, transmission -->
+<homogeneous_scatterer mcweights="0, 1, 0">
+  
+  <DGSSXResKernel 
+      target-position="3.*meter,0.*meter,0.*meter"
+      target-radius=".5*inch"
+      tof-at-target="2.*millisecond + 1.*millisecond"
+      dtof="10.*microsecond"
+      />
+  
+</homogeneous_scatterer>

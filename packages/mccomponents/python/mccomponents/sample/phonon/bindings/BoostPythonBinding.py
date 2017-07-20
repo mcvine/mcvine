@@ -270,6 +270,33 @@ class New:
             ave_mass, scattering_xs, absorption_xs)
 
 
+    def phonon_incoherentinelastic_energyfocusing_kernel(
+        self,
+        unitcell,
+        Ef, dEf,
+        dos, dw_calctor,
+        temperature,
+        ave_mass = 0., scattering_xs = 0., absorption_xs = 0.,
+        ):
+
+        # unitcell_vol = unitcell.getVolume()
+        unitcell_vol = unitcell.lattice.getVolume()
+        unitcell_vol = float(unitcell_vol)
+
+        temperature = float(temperature)
+        
+        atoms = [ self.atomicscatterer_fromSite( site ) for site in unitcell ]
+        atom_vector = b.vector_AtomicScatterer(0)
+        for atom in atoms: atom_vector.append( atom )
+
+        return b.Phonon_IncoherentInelastic_EnergyFocusing_kernel(
+            atom_vector, unitcell_vol,
+            Ef, dEf,
+            dos, dw_calctor,
+            temperature,
+            ave_mass, scattering_xs, absorption_xs)
+
+
     def phonon_coherentinelastic_polyxtal_kernel(
         self,
         dispersion, dw_calctor,
@@ -316,7 +343,7 @@ class New:
         
         deltaV_Jacobi = 0.001
         zridd = b.ZRidd(10) # 0.1 - accuracy of velocity (m/s)
-        rootsfinder = b.FindRootsEvenly(zridd, 2000)
+        rootsfinder = b.FindRootsEvenly(zridd, 100)
         targetregion = b.TargetCone(self.vector3(0,0,0),0)
         epsilon = 1.e-10
 

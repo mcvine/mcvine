@@ -15,7 +15,7 @@
 
 def detectorcomponent( name, instrumentxml, coordinate_system, tofparams, outfilename ):
     import mccomposite.extensions.Copy
-    import mccomposite.extensions.HollowCylinder
+    from mccomposite.extensions import HollowCylinder, SphereShell
     import mccomponents.detector.optional_extensions.Detector
     
     from instrument.nixml import parse_file

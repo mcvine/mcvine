@@ -9,9 +9,9 @@ logger = logging.getLogger("mcvine.cli")
 
 
 provenance_opts = [
-    'save_metadata_only',
-    'keep_in_cache',
-    'use_cache',
+    'save_metadata_only', # do not really run the cmd, just save the meta data
+    'keep_in_cache',      # keep results in the cache
+    'use_cache',          # use results from cache if exist
     ]
 
 # decorator to allow a cmd to save cmd parameters 

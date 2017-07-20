@@ -83,9 +83,9 @@ Omega_q_minus_deltaE::float_t mccomponents::kernels::phonon::Omega_q_minus_delta
 #endif
 
   res_phonon = _disp->energy(_branch, K_t(qx, qy, qz));
-  //cout << "vf" << vf << endl;
-  //cout << "qx,qy,qz" << qx <<"," << qy <<"," << qz << endl;
-  //cout << "res_phonon = " << res_phonon << endl;
+  // std::cout << "vf" << vf << std::endl;
+  // std::cout << "qx,qy,qz" << qx <<"," << qy <<"," << qz << std::endl;
+  // std::cout << "res_phonon = " << res_phonon << std::endl;
 
   using mcni::neutron_units_conversion::vsquare2E;
   using std::abs;

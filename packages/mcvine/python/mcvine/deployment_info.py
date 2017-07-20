@@ -12,7 +12,9 @@
 #
 
 
-import os
+import logging
+logging.debug("Gathering deployment info")
+import os, sys
 debug = os.environ.get('DEBUG', False)
 
 
@@ -22,6 +24,7 @@ exportroot = os.environ.get('EXPORT_ROOT')
 pyredir = os.environ.get("PYRE_DIR")
 mcvinedir = os.environ.get("MCVINE_DIR")
 mcvine_resources = os.environ.get("MCVINE_RESOURCES")
+mcvine_workflow = os.environ.get('MCVINE_WORKFLOW')
 
 if dvdir and exportroot: type = 'developer'
 else: 
@@ -30,14 +33,27 @@ else:
     if not mcvinedir:
         danse_dir = os.environ.get("DANSE_DIR")
         if not danse_dir:
-            raise RuntimeError, "Neither environment variable MCVINE_DIR nor DANSE_DIR was not defined. please define it to the path of the mcvine/danse installation"
+            # if nothing is specified, assume that 
+            # mcvine installed alongside the python
+            # that is in use in the current user setting.
+            opd = os.path.dirname
+            danse_dir = opd(opd(sys.executable))
+            msg = "Neither environment variable MCVINE_DIR nor DANSE_DIR was defined. Assumed that it is %s." % danse_dir
+            logging.debug(msg)
         mcvinedir = danse_dir
 
+# set EXPORT_ROOT for pyre to pick up components in system etc dir
+if type=='user' and not exportroot:
+    os.environ['EXPORT_ROOT'] = mcvinedir
+
+if not mcvine_resources and type == 'user':
+    mcvine_resources = os.path.join(mcvinedir, 'share', 'mcvine', 'resources')
 if mcvine_resources:
     mcvine_resources = os.path.abspath(mcvine_resources)
 
-
-# version
-__id__ = "$Id: __init__.py 601 2010-10-03 19:55:29Z linjiao $"
+# default location of mcvine workflow
+if not mcvine_workflow:
+    mcvine_workflow = os.path.join(mcvinedir, 'share', 'mcvine', 'workflow')
+sys.path.insert(0, mcvine_workflow)
 
 # End of file 

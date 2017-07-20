@@ -4,8 +4,6 @@ set(PACKAGE_NAME "mccomponents")
 set (LIB_NAME "${PACKAGE_NAME}")
 set (PKG_NAME "${PACKAGE_NAME}")
 
-find_package(GSL REQUIRED)
-
 # 
 add_subdirectory(lib)
 add_subdirectory(mccomponentsbpmodule)
