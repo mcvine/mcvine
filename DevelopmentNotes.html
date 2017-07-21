@@ -62,26 +62,30 @@
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Development notes</a><ul>
-<li><a class="reference internal" href="#workflow">Workflow</a><ul>
-<li><a class="reference internal" href="#requirements-of-instrument-specific-cli-by-dgs-workflow">Requirements of instrument-specific CLI by DGS workflow</a></li>
-</ul>
-</li>
+<li><a class="reference internal" href="#workflow">Workflow</a></li>
 <li><a class="reference internal" href="#instrument-simulation-app">Instrument Simulation App</a></li>
 <li><a class="reference internal" href="#sns-instruments">SNS instruments</a><ul>
 <li><a class="reference internal" href="#nexus">Nexus</a></li>
 <li><a class="reference internal" href="#add-an-instrument">Add an instrument</a></li>
+<li><a class="reference internal" href="#requirements-of-instrument-specific-cli-by-dgs-workflow">Requirements of instrument-specific CLI by DGS workflow</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#xml-parsing">xml parsing</a></li>
-<li><a class="reference internal" href="#geometry">geometry</a></li>
 <li><a class="reference internal" href="#command-line-interface">Command line interface</a><ul>
 <li><a class="reference internal" href="#provenance">Provenance</a></li>
 <li><a class="reference internal" href="#pyre-commands">pyre commands</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#infrastructure">Infrastructure</a><ul>
 <li><a class="reference internal" href="#resources">Resources</a></li>
 <li><a class="reference internal" href="#logging">Logging</a></li>
 <li><a class="reference internal" href="#documentation">Documentation</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#miscellaneous">Miscellaneous</a><ul>
+<li><a class="reference internal" href="#xml-parsing">xml parsing</a></li>
+<li><a class="reference internal" href="#geometry">geometry</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -126,15 +130,6 @@
 - <a class="reference external" href="https://github.com/mcvine/workflow/tree/master/notebook-examples">https://github.com/mcvine/workflow/tree/master/notebook-examples</a>
 - <a class="reference external" href="https://github.com/mcvine/training/">https://github.com/mcvine/training/</a>: subdirs such as ARCS</li>
 </ul>
-<div class="section" id="requirements-of-instrument-specific-cli-by-dgs-workflow">
-<h3>Requirements of instrument-specific CLI by DGS workflow<a class="headerlink" href="#requirements-of-instrument-specific-cli-by-dgs-workflow" title="Permalink to this headline">¶</a></h3>
-<ul class="simple">
-<li>neutrons2nxs: convert scattered neutron to nxs file.
-- cmd: mcvine instruments ${INSTRUMENT} neutrons2nxs &#8211;neutrons=out/scattered-neutrons &#8211;nxs=sim.nxs &#8211;populate-metadata &#8211;beam=beam &#8211;nodes=10</li>
-<li>nxs reduce: reduce nxs file to iqe.nxs
-- cmd: mcvine instruments ${INSTRUMENT} nxs reduce EVENTMODE.NXS &#8211;qaxis=0 15 0.1 &#8211;tof2E</li>
-</ul>
-</div>
 </div>
 <div class="section" id="instrument-simulation-app">
 <h2>Instrument Simulation App<a class="headerlink" href="#instrument-simulation-app" title="Permalink to this headline">¶</a></h2>
@@ -210,26 +205,16 @@ This cmd generates
 </li>
 </ul>
 </div>
-</div>
-<div class="section" id="xml-parsing">
-<h2>xml parsing<a class="headerlink" href="#xml-parsing" title="Permalink to this headline">¶</a></h2>
-<p>is done in several layers.</p>
+<div class="section" id="requirements-of-instrument-specific-cli-by-dgs-workflow">
+<h3>Requirements of instrument-specific CLI by DGS workflow<a class="headerlink" href="#requirements-of-instrument-specific-cli-by-dgs-workflow" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li>sampleassembly: sampleassembly.saxml package</li>
+<li>neutrons2nxs: convert scattered neutron to nxs file.
+- Usually this is done with a cmd like this: mcvine instruments ${INSTRUMENT} neutrons2nxs &#8211;neutrons=out/scattered-neutrons &#8211;nxs=sim.nxs &#8211;populate-metadata &#8211;beam=beam &#8211;nodes=10
+- In case of HYSPEC, this is done by a special &#8220;create-nxs&#8221; script in its workflow template: <a class="reference external" href="https://github.com/mcvine/workflow/blob/a8e3d462e01bd10241b575f4940243dcac23d4ac/DGS/hyspec/single-crystal/scattering/template/create-nxs">https://github.com/mcvine/workflow/blob/a8e3d462e01bd10241b575f4940243dcac23d4ac/DGS/hyspec/single-crystal/scattering/template/create-nxs</a></li>
+<li>nxs reduce: reduce nxs file to iqe.nxs
+- cmd: mcvine instruments ${INSTRUMENT} nxs reduce EVENTMODE.NXS &#8211;qaxis=0 15 0.1 &#8211;tof2E</li>
 </ul>
 </div>
-<div class="section" id="geometry">
-<h2>geometry<a class="headerlink" href="#geometry" title="Permalink to this headline">¶</a></h2>
-<p>sampleassembly.xml</p>
-<p>Geometry information is registered into a registry.
-Later when needed, positional and orientational
-information of an object can be requested from the registry.</p>
-<p>For example, in mccomponents.sample.sampleassembly_support.onSampleAssembly,
-calls</p>
-<blockquote>
-<div>lg.position(scatterer)
-lg.orientation(scatterer)</div></blockquote>
-<p>request the position and orientation of the scatterer.</p>
 </div>
 <div class="section" id="command-line-interface">
 <h2>Command line interface<a class="headerlink" href="#command-line-interface" title="Permalink to this headline">¶</a></h2>
@@ -257,8 +242,10 @@ for some applications with a lot of components and
 parameters to set.</p>
 </div>
 </div>
+<div class="section" id="infrastructure">
+<h2>Infrastructure<a class="headerlink" href="#infrastructure" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="resources">
-<h2>Resources<a class="headerlink" href="#resources" title="Permalink to this headline">¶</a></h2>
+<h3>Resources<a class="headerlink" href="#resources" title="Permalink to this headline">¶</a></h3>
 <p>Organization:
 * instruments:</p>
 <blockquote>
@@ -280,7 +267,7 @@ parameters to set.</p>
 <p>McStas component library: its path is set by env var $MCSTAS_COMPONENT_LIBDIR.</p>
 </div>
 <div class="section" id="logging">
-<h2>Logging<a class="headerlink" href="#logging" title="Permalink to this headline">¶</a></h2>
+<h3>Logging<a class="headerlink" href="#logging" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>Use both pyre journal and python logging</li>
 <li>pyre journal configured by pml files</li>
@@ -289,7 +276,7 @@ parameters to set.</p>
 </ul>
 </div>
 <div class="section" id="documentation">
-<h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h2>
+<h3>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>github:mcvine/mcvine.org
 mcvine.org site</li>
@@ -298,6 +285,30 @@ Documentation for all releases</li>
 <li>github:mcvine/mcvine:gh-pages
 Documentation for the development version</li>
 </ul>
+</div>
+</div>
+<div class="section" id="miscellaneous">
+<h2>Miscellaneous<a class="headerlink" href="#miscellaneous" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="xml-parsing">
+<h3>xml parsing<a class="headerlink" href="#xml-parsing" title="Permalink to this headline">¶</a></h3>
+<p>is done in several layers.</p>
+<ul class="simple">
+<li>sampleassembly: sampleassembly.saxml package</li>
+</ul>
+</div>
+<div class="section" id="geometry">
+<h3>geometry<a class="headerlink" href="#geometry" title="Permalink to this headline">¶</a></h3>
+<p>sampleassembly.xml</p>
+<p>Geometry information is registered into a registry.
+Later when needed, positional and orientational
+information of an object can be requested from the registry.</p>
+<p>For example, in mccomponents.sample.sampleassembly_support.onSampleAssembly,
+calls</p>
+<blockquote>
+<div>lg.position(scatterer)
+lg.orientation(scatterer)</div></blockquote>
+<p>request the position and orientation of the scatterer.</p>
+</div>
 </div>
 </div>
 

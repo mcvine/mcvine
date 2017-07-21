@@ -358,7 +358,7 @@ other simulations.</p>
 <a class="reference external" href="http://mcstas.org">McStas</a> project to provide
 access to McStas components from mcvine.
 If you run:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ mcvine-list-components
+<div class="highlight-python"><div class="highlight"><pre>$ mcvine component list
 </pre></div>
 </div>
 <p>you will see a lot of components coming from mcstas, for example &#8220;Monitor_4PI&#8221;.
@@ -368,7 +368,7 @@ You can use it like any other mcvine components:</p>
 </div>
 <p>For more details on any McStas component (e.g. Monitor_4PI),
 you can use the mcvine command line interface:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ mcvine-component-info --type=Monitor_4PI
+<div class="highlight-python"><div class="highlight"><pre>$ mcvine component info Monitor_4PI
 </pre></div>
 </div>
 <p>Or you can visit the McStas documentation at
@@ -377,20 +377,20 @@ you can use the mcvine command line interface:</p>
 <span id="id5"></span><h3>User-defined mcstas components<a class="headerlink" href="#user-defined-mcstas-components" title="Permalink to this headline">¶</a></h3>
 <p>It is not unusual that a user wants to use a mcstas component he
 writes himself. To use a user-defined mcstas component, run:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ mcvine-compile-mcstas-component --filename=&lt;user-defined-component-file&gt; --category=&lt;category.&gt;
+<div class="highlight-python"><div class="highlight"><pre>$ mcvine mcstas compilecomponent --filename=&lt;user-defined-component-file&gt; --category=&lt;category.&gt;
 </pre></div>
 </div>
 <p>Here, &lt;user-defined-component-file&gt; is the path to the mcstas component file
 you created, &lt;category&gt; is the category this component belongs to.
 For example:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ mcvine-compile-mcstas-component --filename=Al_window.comp --category=optics
+<div class="highlight-python"><div class="highlight"><pre>$ mcvine mcstas compilecomponent --filename=Al_window.comp --category=optics
 </pre></div>
 </div>
 <p>and mcvine will start compiling the component and put it into the system.
 If the compiling failed, please don&#8217;t hesitate to post your questions
 to <a class="reference external" href="mailto:mcvine-users&#37;&#52;&#48;googlegroups&#46;com">mcvine-users<span>&#64;</span>googlegroups<span>&#46;</span>com</a></p>
 <p>If everything goes smoothly, now you can use this component just like any other components:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ mcvine-component-info --type=Al_window
+<div class="highlight-python"><div class="highlight"><pre>$ mcvine component info Al_window
 </pre></div>
 </div>
 </div>

@@ -249,20 +249,20 @@ The way we set the source component to a monochromatic source is by</p>
 </pre></div>
 </div>
 <p>To find out what are the component types you can use, run</p>
-<div class="highlight-python"><div class="highlight"><pre>$ mcvine-list-components
+<div class="highlight-python"><div class="highlight"><pre>$ mcvine component list
 </pre></div>
 </div>
 <p>You can also tell the command to list components in specific category. For example</p>
-<div class="highlight-python"><div class="highlight"><pre>$ mcvine-list-components --category=monitors
+<div class="highlight-python"><div class="highlight"><pre>$ mcvine component list --category=monitors
 </pre></div>
 </div>
 <p>To find out more information about a specific component you are interested in,
 run</p>
-<div class="highlight-python"><div class="highlight"><pre>$ mcvine-component-info --type=&lt;component-type&gt;
+<div class="highlight-python"><div class="highlight"><pre>$ mcvine component info &lt;component-type&gt;
 </pre></div>
 </div>
 <p>For example:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ mcvine-component-info --type=E_monitor
+<div class="highlight-python"><div class="highlight"><pre>$ mcvine component info E_monitor
 </pre></div>
 </div>
 </div>
@@ -286,8 +286,8 @@ The unit is degrees.</p>
 <h3>Configurations of components<a class="headerlink" href="#configurations-of-components" title="Permalink to this headline">¶</a></h3>
 <p>Each component has several parameters that define the scattering properties of the
 component. To find out the parameters for a component, use the command
-&#8220;mcvine-component-info&#8221;</p>
-<div class="highlight-python"><div class="highlight"><pre>$ mcvine-component-info --type=E_monitor
+&#8220;mcvine component info&#8221;</p>
+<div class="highlight-python"><div class="highlight"><pre>$ mcvine component info E_monitor
 </pre></div>
 </div>
 <p>The output would be</p>

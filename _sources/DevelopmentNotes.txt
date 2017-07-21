@@ -14,13 +14,6 @@ Workflow
   - https://github.com/mcvine/training/: subdirs such as ARCS
 
 
-Requirements of instrument-specific CLI by DGS workflow
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-* neutrons2nxs: convert scattered neutron to nxs file.
-  - cmd: mcvine instruments ${INSTRUMENT} neutrons2nxs --neutrons=out/scattered-neutrons --nxs=sim.nxs --populate-metadata --beam=beam --nodes=10
-* nxs reduce: reduce nxs file to iqe.nxs
-  - cmd: mcvine instruments ${INSTRUMENT} nxs reduce EVENTMODE.NXS --qaxis=0 15 0.1 --tof2E
 
 Instrument Simulation App
 -------------------------
@@ -101,28 +94,14 @@ This is a quick guide. not very well organized.
 * convert mantid instrument xml file for the instrument to a mcvine instrument, by add an instrument factory to the instrument package
 
 
-xml parsing
------------
-is done in several layers.
+Requirements of instrument-specific CLI by DGS workflow
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-* sampleassembly: sampleassembly.saxml package
-
-
-geometry
---------
-sampleassembly.xml
-
-Geometry information is registered into a registry.
-Later when needed, positional and orientational
-information of an object can be requested from the registry.
-
-For example, in mccomponents.sample.sampleassembly_support.onSampleAssembly,
-calls
-
- lg.position(scatterer)
- lg.orientation(scatterer)
-
-request the position and orientation of the scatterer.
+* neutrons2nxs: convert scattered neutron to nxs file.
+  - Usually this is done with a cmd like this: mcvine instruments ${INSTRUMENT} neutrons2nxs --neutrons=out/scattered-neutrons --nxs=sim.nxs --populate-metadata --beam=beam --nodes=10
+  - In case of HYSPEC, this is done by a special "create-nxs" script in its workflow template: https://github.com/mcvine/workflow/blob/a8e3d462e01bd10241b575f4940243dcac23d4ac/DGS/hyspec/single-crystal/scattering/template/create-nxs
+* nxs reduce: reduce nxs file to iqe.nxs
+  - cmd: mcvine instruments ${INSTRUMENT} nxs reduce EVENTMODE.NXS --qaxis=0 15 0.1 --tof2E
 
 
 Command line interface
@@ -155,8 +134,11 @@ for some applications with a lot of components and
 parameters to set.
 
 
+Infrastructure
+--------------
+
 Resources
----------
+"""""""""
 
 Organization:
 * instruments: 
@@ -176,7 +158,7 @@ McStas component library: its path is set by env var $MCSTAS_COMPONENT_LIBDIR.
 
 
 Logging
--------
+"""""""
 
 * Use both pyre journal and python logging
 * pyre journal configured by pml files
@@ -185,7 +167,7 @@ Logging
 
 
 Documentation
--------------
+"""""""""""""
 
 * github:mcvine/mcvine.org
   mcvine.org site
@@ -194,4 +176,30 @@ Documentation
 * github:mcvine/mcvine:gh-pages
   Documentation for the development version
 
+
+Miscellaneous
+-------------  
+
+xml parsing
+"""""""""""
+is done in several layers.
+
+* sampleassembly: sampleassembly.saxml package
+
+
+geometry
+""""""""
+sampleassembly.xml
+
+Geometry information is registered into a registry.
+Later when needed, positional and orientational
+information of an object can be requested from the registry.
+
+For example, in mccomponents.sample.sampleassembly_support.onSampleAssembly,
+calls
+
+ lg.position(scatterer)
+ lg.orientation(scatterer)
+
+request the position and orientation of the scatterer.
 

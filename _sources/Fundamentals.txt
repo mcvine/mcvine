@@ -150,11 +150,11 @@ List of available neutron components
 ------------------------------------
 To list all components::
 
- $ mcvine-list-components
+ $ mcvine component list
 
 To list components of a specific category::
 
- $ mcvine-list-components --category=monitors
+ $ mcvine component list --category=monitors
 
 
 .. _fundamentals-component-info:
@@ -164,11 +164,11 @@ Show component information
 
 To find out more information about a component, run ::
 
- $ mcvine-component-info --type=<component-type>
+ $ mcvine component info <component-type>
 
 For example::
 
- $ mcvine-component-info --type=E_monitor
+ $ mcvine component info E_monitor
 
 
 
