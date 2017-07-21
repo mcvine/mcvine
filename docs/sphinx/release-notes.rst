@@ -1,23 +1,23 @@
 .. _relnotes:
 
-Release Notes 1.2.1 - Feb 15th 2017
-===================================
-
-This release is a patch release to
-`version 1.2 <http://mcvine.github.io/1.2/release-notes.html>`_.
+Release Notes 1.3 - Jul 22th 2017
+=================================
 
 In this release, we
 
-* Improved cmake rules for wrapped mcstas components
-* Fixed a bug in DGS ARCS simulation workflow
+* added powder workflow examples for SEQ and CNCS
+* experimented with DGS resolution calculators, and made them a new package in https://github.com/mcvine/dgsres
+* created a new tool to convert Mantid instrument IDF files for DGS instruments to MCViNE, and made a new package in https://github.com/mcvine/mantid2mcvine
+* added CLI "mcvine neutronstorage" and "mcvine component"
+* Fixed some bugs
 
-Please refer to `related tickets <https://github.com/mcvine/mcvine/milestone/7?closed=1>`_
+Please refer to `related tickets <https://github.com/mcvine/mcvine/milestone/5?closed=1>`_
 for more details.
 
 
 Source code
 -----------
-can be found at `github <https://github.com/mcvine/mcvine/releases/tag/v1.2.1>`_
+can be found at `github <https://github.com/mcvine/mcvine/releases/tag/v1.3>`_
 
 
 Installation
