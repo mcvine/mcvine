@@ -61,6 +61,7 @@ def pyre_app(parent, appname, cmd_prefix):
 
 # sub-cmds
 from . import test, mpi, mantid, phonon, _phonopy
+from . import component
 from . import sampleassembly #, kernel
 from mcvine.instrument import cli
 from mcvine.instruments import cli
