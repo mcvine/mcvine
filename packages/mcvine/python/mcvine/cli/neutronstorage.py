@@ -64,7 +64,7 @@ def merge(files, out):
     if os.path.exists(out):
         raise RuntimeError, '%s already exists' % out
 
-    from mcni.neutron_storage.merge import merge
+    from mcni.neutron_storage import merge
     merge(ifiles, out)
     return
 
