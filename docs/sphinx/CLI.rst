@@ -59,6 +59,16 @@ To reuse the cached results, add option "--use-cache"::
   $ mcvine instruments arcs beam --E=100 --ncount=1e8 --use-cache
 
 
+Components
+----------
+
+Command ::
+
+  $ mcvine component
+
+Subcommands related to simulation components.
+
+
 Neutron storage
 ---------------
 
@@ -66,7 +76,7 @@ Command ::
 
   $ mcvine neutronstorage
 
-Manipulate neutron storage files.
+Subcmds manipulate neutron storage files.
 
 
 phonon

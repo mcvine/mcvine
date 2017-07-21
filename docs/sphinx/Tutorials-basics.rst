@@ -162,11 +162,11 @@ You can also tell the command to list components in specific category. For examp
 To find out more information about a specific component you are interested in,
 run ::
 
- $ mcvine-component-info --type=<component-type>
+ $ mcvine component info <component-type>
 
 For example::
 
- $ mcvine-component-info --type=E_monitor
+ $ mcvine component info E_monitor
 
 Positions of components
 ^^^^^^^^^^^^^^^^^^^^^^^
@@ -190,9 +190,9 @@ Configurations of components
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Each component has several parameters that define the scattering properties of the
 component. To find out the parameters for a component, use the command 
-"mcvine-component-info" ::
+"mcvine component info" ::
 
- $ mcvine-component-info --type=E_monitor
+ $ mcvine component info E_monitor
 
 The output would be ::
 

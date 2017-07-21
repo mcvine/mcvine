@@ -164,11 +164,11 @@ Show component information
 
 To find out more information about a component, run ::
 
- $ mcvine-component-info --type=<component-type>
+ $ mcvine component info <component-type>
 
 For example::
 
- $ mcvine-component-info --type=E_monitor
+ $ mcvine component info E_monitor
 
 
 

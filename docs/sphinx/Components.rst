@@ -279,7 +279,7 @@ You can use it like any other mcvine components::
 For more details on any McStas component (e.g. Monitor_4PI), 
 you can use the mcvine command line interface::
 
- $ mcvine-component-info --type=Monitor_4PI
+ $ mcvine component info Monitor_4PI
 
 Or you can visit the McStas documentation at 
 http://mcstas.org/documentation/
@@ -308,7 +308,7 @@ to mcvine-users@googlegroups.com
 
 If everything goes smoothly, now you can use this component just like any other components::
 
- $ mcvine-component-info --type=Al_window
+ $ mcvine component info Al_window
 
 
 
