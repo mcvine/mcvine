@@ -60,12 +60,14 @@ def pyre_app(parent, appname, cmd_prefix):
     return decorator
 
 # sub-cmds
-from . import test, mpi, mantid, phonon, _phonopy
-from . import component
-from . import sampleassembly #, kernel
+from . import test, mpi
+from . import component, neutronstorage
 from mcvine.instrument import cli
-from mcvine.instruments import cli
 from mcstas2 import cli
+from . import sampleassembly #, kernel
+from . import phonon, _phonopy
+from mcvine.instruments import cli
+from . import mantid
 
 # workflow
 from .. import deployment_info
