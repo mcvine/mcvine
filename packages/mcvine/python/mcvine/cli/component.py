@@ -85,79 +85,63 @@ def _getSpecifier(*args, **kwds):
 
 
 @component.command()
-@click.argument("path")
-def totalintensity(path):
-    from mcni.neutron_storage.idf_usenumpy import read
-    neutrons = read(path)
-    probs = neutrons[:, 9]
-    totalIntensity = probs.sum()
-    print totalIntensity
+@click.option(
+    "--category", type=str, default=None,
+    help=('category of the component.' +
+          'Components are organized into several categories ' +
+          '(following mcstas convention) such as sources and '+
+          'monitors. If not specified, auto-detection will happen.')
+)
+@click.option(
+    "--supplier", type=str, default=None,
+    help=('supplier of the component. In mcvine, components could come from legacy Monte Carlo neutron packages. '\
+          +'If not specified, auto-detection will happen.')
+)
+def list(category, supplier):
+    if category:
+        category = category.encode(encoding)
+    if supplier:
+        supplier = supplier.encode(encoding)
+    suppliername = supplier
+    
+    from mcvine.component_suppliers import component_suppliers
+    from mcvine import listallcomponentcategories, listcomponentsincategory
+
+    if suppliername:
+        supplier = component_suppliers.get(suppliername)
+        if not supplier:
+            print 'supplier %r not found. use command mcinve-list-componnet-suppliers to see the supplier list' % suppliername
+            import sys
+            sys.exit(1)
+
+        if category:
+            comps = supplier.listcomponentsincategory(category)
+            print ' - components in %r category provided by %r' % (category, suppliername)
+            for comp in comps:
+                print '  * %s' % comp
+
+        else:
+            for category in supplier.listallcomponentcategories():
+                print ' - components in %r category provided by %r' % (category, suppliername)
+                comps = supplier.listcomponentsincategory(category)
+                for comp in comps:
+                    print '  * %s' % comp
+                print
+    else:
+        if category:
+            print ' - components in %r category' % (category,)
+            comps = listcomponentsincategory(category)
+            for comp, suppliername in comps:
+                print '  * %s (from %r)' % (comp, suppliername)
+        else:
+            for category in listallcomponentcategories():
+                print ' - components in %r category' % (category,)
+                comps = listcomponentsincategory(category)
+                for comp, suppliername in comps:
+                    print '  * %s (provided by %r)' % (comp, suppliername)
+                print
     return
 
-
-@component.command()
-@click.argument("inputpath")
-@click.argument("outputpath")
-@click.option("--start", default=0, help='start index')
-@click.option("--end", default=None, type=int, help='stop index')
-def extract(inputpath, outputpath, start, end):
-    if start >= end:
-        raise ValueError, "Not a valid range: %s, %s" % (
-            start, end)
-
-    n = end - start
-
-    from mcni.neutron_storage.idf_usenumpy import read, write
-    # read neutrons
-    neutrons = read(inputpath, start=start, n = n)
-    # write them
-    write(neutrons, filename=outputpath)
-    return
-
-
-@component.command()
-@click.option("--files", type=str, help='comma-separated list of files')
-@click.option("--out", help='output path')
-def merge(files, out):
-    import os, glob, operator
-    ifiles = [glob.glob(f) for f in files.split(',')]
-    ifiles = reduce(operator.add, ifiles)
-
-    for f in ifiles:
-        if not os.path.exists(f):
-            raise RuntimeError, '%s does not exist' % f
-
-    if os.path.exists(out):
-        raise RuntimeError, '%s already exists' % out
-
-    from mcni.neutron_storage import merge
-    merge(ifiles, out)
-    return
-
-
-@component.command("print")
-@click.argument("path")
-@click.option("--start", default=0, help='start index')
-@click.option("--end", default=None, type=int, help='stop index')
-@click.option("--n", default=None, type=int, help='number of neutrons')
-def _print(path, start, end, n):
-    if end is not None and n is not None:
-        raise RuntimeError(
-            "Both stop index (%s) and number of neutrons (%s) are specified. Should only specify one of them" % (
-                end, n))
-    if n is None:
-        n = end - start
-    if n<=0:
-        raise ValueError, "Not a valid range: start=%s, end=%s, n=%s" % (
-            start, end, n)
-    #
-    from mcni.neutron_storage.Storage import Storage
-    storage = Storage(path)
-    storage.seek(start, 'start')
-    neutrons = storage.read(n)
-    for e in neutrons:
-        print e
-    return
 
 
 # End of file 

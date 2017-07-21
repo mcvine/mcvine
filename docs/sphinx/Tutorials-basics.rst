@@ -153,11 +153,11 @@ And similarly, we can set the monitor ::
 
 To find out what are the component types you can use, run ::
 
- $ mcvine-list-components
+ $ mcvine component list
 
 You can also tell the command to list components in specific category. For example ::
 
- $ mcvine-list-components --category=monitors
+ $ mcvine component list --category=monitors
 
 To find out more information about a specific component you are interested in,
 run ::

@@ -269,7 +269,7 @@ MCViNE is teamed with
 access to McStas components from mcvine.
 If you run::
 
- $ mcvine-list-components
+ $ mcvine component list
 
 you will see a lot of components coming from mcstas, for example "Monitor_4PI".
 You can use it like any other mcvine components::

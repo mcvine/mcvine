@@ -18,6 +18,18 @@ class TestCase(unittest.TestCase):
         return
 
 
+    def test_list(self):
+        "mcvine component list"
+        cmds = [
+            "mcvine component list --help",
+            "mcvine component list",
+            "mcvine component list --category=sources",
+            "mcvine component list --supplier=mcstas2",
+            ]
+        map(testcmd, cmds)
+        return
+
+
 def testcmd(cmd):
     if os.system(cmd):
         raise RuntimeError("%s failed" % cmd)
