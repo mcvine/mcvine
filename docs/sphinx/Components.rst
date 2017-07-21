@@ -294,13 +294,13 @@ User-defined mcstas components
 It is not unusual that a user wants to use a mcstas component he 
 writes himself. To use a user-defined mcstas component, run::
 
- $ mcvine-compile-mcstas-component --filename=<user-defined-component-file> --category=<category.>
+ $ mcvine mcstas compilecomponent --filename=<user-defined-component-file> --category=<category.>
 
 Here, <user-defined-component-file> is the path to the mcstas component file
 you created, <category> is the category this component belongs to.
 For example::
 
- $ mcvine-compile-mcstas-component --filename=Al_window.comp --category=optics
+ $ mcvine mcstas compilecomponent --filename=Al_window.comp --category=optics
 
 and mcvine will start compiling the component and put it into the system.
 If the compiling failed, please don't hesitate to post your questions
