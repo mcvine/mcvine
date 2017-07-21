@@ -269,7 +269,7 @@ MCViNE is teamed with
 access to McStas components from mcvine.
 If you run::
 
- $ mcvine-list-components
+ $ mcvine component list
 
 you will see a lot of components coming from mcstas, for example "Monitor_4PI".
 You can use it like any other mcvine components::
@@ -279,7 +279,7 @@ You can use it like any other mcvine components::
 For more details on any McStas component (e.g. Monitor_4PI), 
 you can use the mcvine command line interface::
 
- $ mcvine-component-info --type=Monitor_4PI
+ $ mcvine component info Monitor_4PI
 
 Or you can visit the McStas documentation at 
 http://mcstas.org/documentation/
@@ -294,13 +294,13 @@ User-defined mcstas components
 It is not unusual that a user wants to use a mcstas component he 
 writes himself. To use a user-defined mcstas component, run::
 
- $ mcvine-compile-mcstas-component --filename=<user-defined-component-file> --category=<category.>
+ $ mcvine mcstas compilecomponent --filename=<user-defined-component-file> --category=<category.>
 
 Here, <user-defined-component-file> is the path to the mcstas component file
 you created, <category> is the category this component belongs to.
 For example::
 
- $ mcvine-compile-mcstas-component --filename=Al_window.comp --category=optics
+ $ mcvine mcstas compilecomponent --filename=Al_window.comp --category=optics
 
 and mcvine will start compiling the component and put it into the system.
 If the compiling failed, please don't hesitate to post your questions
@@ -308,7 +308,7 @@ to mcvine-users@googlegroups.com
 
 If everything goes smoothly, now you can use this component just like any other components::
 
- $ mcvine-component-info --type=Al_window
+ $ mcvine component info Al_window
 
 
 
