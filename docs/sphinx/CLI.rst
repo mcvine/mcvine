@@ -44,7 +44,7 @@ provide commands for the ARCS spectrometer at SNS
 
 
 Simulation Cache
-----------------
+""""""""""""""""
 
 Simulation results could be cached.
 
@@ -56,7 +56,17 @@ will save the simulation results to a cache.
 
 To reuse the cached results, add option "--use-cache"::
 
- $ mcvine instruments arcs beam --E=100 --ncount=1e8 --use-cache
+  $ mcvine instruments arcs beam --E=100 --ncount=1e8 --use-cache
+
+
+Neutron storage
+---------------
+
+Command ::
+
+  $ mcvine neutronstorage
+
+Manipulate neutron storage files.
 
 
 phonon
