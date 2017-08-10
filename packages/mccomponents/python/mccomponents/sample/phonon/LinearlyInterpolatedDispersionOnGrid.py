@@ -41,7 +41,7 @@ class LinearlyInterpolatedDispersionOnGrid(base):
         if dos:
             e,Z = dos
             from .utils import nice_dos
-            e, Z = nice_dos(e, Z)
+            e, Z = nice_dos(e, Z, force_fitparabolic=True)
             self.dos = histogram( 'dos', [ ('energy', e, 'meV') ], data = Z )
             pass
         return

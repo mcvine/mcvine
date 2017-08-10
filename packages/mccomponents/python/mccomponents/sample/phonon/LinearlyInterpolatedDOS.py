@@ -18,7 +18,7 @@ class LinearlyInterpolatedDOS(base):
     def __init__(self, doshist):
         '''doshist: a histogram instance'''
         from .utils import nice_dos
-        E, g = nice_dos(doshist.energy, doshist.I)
+        E, g = nice_dos(doshist.energy, doshist.I, force_fitparabolic=True)
         import histogram
         self.doshist =  histogram.histogram(
             'dos', 

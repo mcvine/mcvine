@@ -19,7 +19,7 @@ utils for Density of States
 import numpy as np
 
 
-def nice_dos(E, g):
+def nice_dos(E, g, force_fitparabolic=False):
     # .. in crease number of points if necessary
     if len(E) < 500:
         dE = E[-1]/500.
@@ -31,14 +31,15 @@ def nice_dos(E, g):
         E,g = fitparabolic(E,g)
     except ParabolicFittingError:
         g = smooth(g, window_len=21)
-        E,g = fitparabolic(E,g)
+        g[0] = 0
+        E,g = fitparabolic(E,g, force=force_fitparabolic)
     # normalize
     g /= g.sum() * (E[1] - E[0])
     return E,g
 
 
 class ParabolicFittingError(Exception): pass
-def fitparabolic(E, g, N=100, minN = 20):
+def fitparabolic(E, g, N=100, minN = 20, force=False):
     """fit the near zero portion of the dos curve to parabolic
     """
     """
@@ -57,8 +58,12 @@ def fitparabolic(E, g, N=100, minN = 20):
         else: badfit = False; break
         continue
     if badfit:
-        # import pylab; pylab.plot(E, g); pylab.show()
-        raise ParabolicFittingError("Unable to fit DOS to parabolic")
+        msg = "Unable to fit DOS to parabolic"
+        if force:
+            import warnings
+            warnings.warn(msg)
+        else:
+            raise ParabolicFittingError(msg)
     print "DOS: fit first %s points to parbolic" % N
     E1 = E[:N]
     g[:N] = c * E1*E1
