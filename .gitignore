@@ -9,3 +9,5 @@ log.*
 /packages/workflow
 /packages/legacycomponents/mcstas2/components/*
 /packages/click
+*.cmake
+CMakeFiles
