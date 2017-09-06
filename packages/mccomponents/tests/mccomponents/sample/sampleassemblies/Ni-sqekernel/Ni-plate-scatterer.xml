@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE scatterer>
+
+<!-- weights: absorption, scattering, transmission -->
+<homogeneous_scatterer mcweights="1, 1, 1">
+
+  <KernelContainer>
+  <SQEkernel Q-range='0*angstrom**-1,12.*angstrom**-1' energy-range='-48*meV,48*meV'>
+    <GridSQE histogram-hdf-path="uniform-sqe.h5/SQE" auto-normalization="off"/>
+  </SQEkernel>
+
+  <SQEkernel Q-range='0*angstrom**-1,12.*angstrom**-1' energy-range='-.099*meV,.099*meV'>
+    <GridSQE histogram-hdf-path="elastic-line.h5/SQE" auto-normalization="off"/>
+  </SQEkernel>
+  </KernelContainer>
+  
+</homogeneous_scatterer>
+
