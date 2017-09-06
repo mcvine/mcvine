@@ -1,5 +1,12 @@
 #!/usr/bin/env bash
 
+# This test runs two simulations. Both uses two SQEkernels: one with a uniformly distributed
+# SQE in a large Q, E range, another with intensities only around elastic line.
+# In the first simulation below, the "elastic line" has the same intensity as the
+# uniformly distributed SQE;
+# while in the second simulation, the "elastic line" has much stronger intensity.
+# The simulated I(Q,E) spectra should reflect that.
+
 # clean up
 rm -rf out.sqekernel*
 
