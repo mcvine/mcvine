@@ -45,17 +45,22 @@ class GridSQE(AbstractNode):
 
         auto_normalization = kwds.get('auto-normalization')
         if auto_normalization:
-            auto_normalization = bool(auto_normalization)
-            
-        norm = _calcNorm(sqe)
-        if abs(norm-1) > 0.2:
-            if auto_normalization:
-                sqe.I /= norm
+            auto_normalization = auto_normalization.lower()
+            trues = ['on', 'yes', '1', 'true']
+            falses = ['off', 'no', '0', 'false']
+            if auto_normalization in trues:
+                auto_normalization = True
+            elif auto_normalization in falses:
+                auto_normalization = False
             else:
-                raise RuntimeError, "S(Q,E) should average to ~1, got %s" % norm
-        
+                raise ValueError("Unrecognized value for auto-normalization: %s" % auto_normalization)
+                
+        if auto_normalization:
+            norm = _calcNorm(sqe)
+            if abs(norm-1) > 0.2:
+                sqe.I /= norm
         from mccomponents.sample import gridsqe
-        return gridsqe( sqe ) 
+        return gridsqe( sqe )
 
     pass # end of GridSQE
 
