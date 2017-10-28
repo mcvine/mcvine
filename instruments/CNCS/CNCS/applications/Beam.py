@@ -7,6 +7,23 @@ Example:
 
  $ cncs_beam --E=5 --f1=60. --f2=60. --f3=60. --f41=300. --f42=300. --fluxmode=9.0 --ncount=1e8 --nodes=10
 
+Notes:
+
+    Incident energy: Ei (meV)
+
+    Frequency Fermi Chopper 1: (Hz)     typically 60 Hz
+    Frequency Disk Chopper 2: (Hz)      typically 60 Hz
+    Frequency Disk Chopper 3: (Hz)      typically 60 Hz
+
+    fluxmode:
+      High Flux (HF)    = 9.0 deg
+      Intermidiste (AI) = 4.4 deg
+      High Res (HR)     = 2.0 deg
+
+    Frequency DoubleDisk Chopper 1: (Hz)         300 Hz for HF       240 Hz for AI        180 Hz for HR
+    Frequency DoubleDisk Chopper 2: (Hz)         300 Hz for HF       240 Hz for AI        180 Hz for HR
+
+
 For more details of cmd line parameters, run:
 
  $ cncs_beam --help-properties
