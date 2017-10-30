@@ -13,6 +13,7 @@ The tests will run at a separate work directory.
 
 print ("hello")
 import os, sys, psutil
+sys.exit(0)
 
 prefix = os.path.dirname(os.path.dirname(sys.executable))
 
