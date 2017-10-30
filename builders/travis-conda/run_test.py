@@ -11,7 +11,6 @@ $MCVINE_DIR/share/mcvine/tests.
 The tests will run at a separate work directory.
 """
 
-print ("hello")
 import os, sys, psutil
 
 prefix = os.path.dirname(os.path.dirname(sys.executable))
