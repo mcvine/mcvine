@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE scatterer>
+
+<!-- weights: absorption, scattering, transmission -->
+<homogeneous_scatterer mcweights="0, 0, 1">
+  
+  <IsotropicKernel>
+  </IsotropicKernel>
+  
+</homogeneous_scatterer>
+
