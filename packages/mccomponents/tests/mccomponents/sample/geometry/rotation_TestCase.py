@@ -29,9 +29,9 @@ class TestCase(unittest.TestCase):
         sample = samplecomponent( 'test', 'sampleassembly/sampleassembly.xml' )
         check(sample, thickness, height, width)
 
-        shutil.copyfile('sampleassembly/sampleassembly.xml.rot_z90', 'sampleassembly/sampleassembly.xml')
+        shutil.copyfile('sampleassembly/sampleassembly.xml.rot_x90y90', 'sampleassembly/sampleassembly.xml')
         sample = samplecomponent( 'test', 'sampleassembly/sampleassembly.xml' )
-        check(sample, height, width, thickness)
+        check(sample, thickness, width, height)
         return
     
 
@@ -42,13 +42,25 @@ def check(sample, x, y, z):
     sample.scatter(neutron)
     assert np.isclose(neutron.state.position[2], z/2.)
 
+    neutron = mcni.neutron(r=(0,0,1), v=(0,0,-1), prob=1.)
+    sample.scatter(neutron)
+    assert np.isclose(neutron.state.position[2], -z/2.)
+
     neutron = mcni.neutron(r=(0,-1,0), v=(0,1,0), prob=1.)
     sample.scatter(neutron)
     assert np.isclose(neutron.state.position[1], y/2.)
 
+    neutron = mcni.neutron(r=(0,1,0), v=(0,-1,0), prob=1.)
+    sample.scatter(neutron)
+    assert np.isclose(neutron.state.position[1], -y/2.)
+
     neutron = mcni.neutron(r=(-1,0,0), v=(1,0,0), prob=1.)
     sample.scatter(neutron)
     assert np.isclose(neutron.state.position[0], x/2.)
+
+    neutron = mcni.neutron(r=(1,0,0), v=(-1,0,0), prob=1.)
+    sample.scatter(neutron)
+    assert np.isclose(neutron.state.position[0], -x/2.)
     return
 
 def main():
