@@ -62,6 +62,26 @@ class TestCase(unittest.TestCase):
         self._test('sampleassembly/sampleassembly.xml.orientation_90,90,0', height, thickness, width)
         return
 
+    def test4a(self):
+        "orientation: 90deg about x. mcstas convention"
+        self._test('sampleassembly/sampleassembly.xml.orientation_mcstas_90,0,0', width, thickness, height)
+        return
+
+    def test4b(self):
+        "orientation: 90deg about y. mcstas convention"
+        self._test('sampleassembly/sampleassembly.xml.orientation_mcstas_0,90,0', thickness, height, width)
+        return
+
+    def test4c(self):
+        "orientation: 90deg about z. mcstas convention"
+        self._test('sampleassembly/sampleassembly.xml.orientation_mcstas_0,0,90', height, width, thickness)
+        return
+
+    def test4d(self):
+        "orientation: 90deg about x, 90deg about y'. mcstas convention"
+        self._test('sampleassembly/sampleassembly.xml.orientation_mcstas_90,90,0', thickness, width, height)
+        return
+
     def _test(self, xml, x, y, z):
         shutil.copyfile(xml, 'sampleassembly/sampleassembly.xml')
         sample = samplecomponent( 'test', 'sampleassembly/sampleassembly.xml' )

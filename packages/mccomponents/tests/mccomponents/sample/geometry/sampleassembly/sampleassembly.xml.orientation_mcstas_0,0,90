@@ -16,7 +16,7 @@
   
   <LocalGeometer  registry-coordinate-system="McStas">
     <!-- orientation convention: xy'z". z: beam downstream, y: vertical up -->
-    <Register name="Al-plate" position="(0,0,0)" orientation="(90,90,0)"/>
+    <Register name="Al-plate" position="(0,0,0)" orientation="(0,0,90)"/>
   </LocalGeometer>
 
 </SampleAssembly>
