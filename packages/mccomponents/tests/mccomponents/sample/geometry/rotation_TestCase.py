@@ -7,6 +7,10 @@ import os
 os.environ['MCVINE_MPI_BINDING'] = 'NONE'
 
 import mcni, shutil, numpy as np
+from mccomponents.sample import samplecomponent
+
+
+thickness, width, height = 0.01, 0.06, 0.1
 
 
 import unittest
@@ -14,28 +18,58 @@ class TestCase(unittest.TestCase):
 
 
     def test1(self):
-        from mccomponents.sample import samplecomponent
-        shutil.copyfile('sampleassembly/sampleassembly.xml.no-rotation', 'sampleassembly/sampleassembly.xml')
-        thickness, width, height = 0.01, 0.06, 0.1
-        
-        sample = samplecomponent( 'test', 'sampleassembly/sampleassembly.xml' )
-        check(sample, width, height, thickness)
+        "no rotation"
+        self._test('sampleassembly/sampleassembly.xml.no-rotation', width, height, thickness)
+        return
 
-        shutil.copyfile('sampleassembly/sampleassembly.xml.rot_x90', 'sampleassembly/sampleassembly.xml')
-        sample = samplecomponent( 'test', 'sampleassembly/sampleassembly.xml' )
-        check(sample, width, thickness, height)
+    def test2a(self):
+        "rotation: 90deg about x"
+        self._test('sampleassembly/sampleassembly.xml.rot_x90', width, thickness, height)
+        return
 
-        shutil.copyfile('sampleassembly/sampleassembly.xml.rot_y90', 'sampleassembly/sampleassembly.xml')
-        sample = samplecomponent( 'test', 'sampleassembly/sampleassembly.xml' )
-        check(sample, thickness, height, width)
+    def test2b(self):
+        "rotation: 90deg about y"
+        self._test('sampleassembly/sampleassembly.xml.rot_y90', thickness, height, width)
+        return
 
-        shutil.copyfile('sampleassembly/sampleassembly.xml.rot_x90y90', 'sampleassembly/sampleassembly.xml')
+    def test2c(self):
+        "rotation: 90deg about z"
+        self._test('sampleassembly/sampleassembly.xml.rot_z90', height, width, thickness)
+        return
+
+    def test2d(self):
+        "rotation: 90deg about x, 90deg about y'"
+        self._test('sampleassembly/sampleassembly.xml.rot_x90y90', thickness, width, height)
+        return
+
+    def test3a(self):
+        "orientation: 90deg about x"
+        self._test('sampleassembly/sampleassembly.xml.orientation_90,0,0', height, width, thickness)
+        return
+
+    def test3b(self):
+        "orientation: 90deg about y"
+        self._test('sampleassembly/sampleassembly.xml.orientation_0,90,0', width, thickness, height)
+        return
+
+    def test3a(self):
+        "orientation: 90deg about z"
+        self._test('sampleassembly/sampleassembly.xml.orientation_0,0,90', thickness, height, width)
+        return
+
+    def test3d(self):
+        "orientation: 90deg about x, 90deg about y"
+        self._test('sampleassembly/sampleassembly.xml.orientation_90,90,0', height, thickness, width)
+        return
+
+    def _test(self, xml, x, y, z):
+        shutil.copyfile(xml, 'sampleassembly/sampleassembly.xml')
         sample = samplecomponent( 'test', 'sampleassembly/sampleassembly.xml' )
-        check(sample, thickness, width, height)
+        check(sample, x, y, z)
         return
     
-
     pass  # end of TestCase
+
 
 def check(sample, x, y, z):
     neutron = mcni.neutron(r=(0,0,-1), v=(0,0,1), prob=1.)

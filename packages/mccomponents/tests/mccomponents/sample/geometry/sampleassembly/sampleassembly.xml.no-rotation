@@ -17,6 +17,7 @@
   <LocalGeometer registry-coordinate-system="InstrumentScientist">
     <Register name="Al-plate" position="(0,0,0)" orientation="(0,0,0)"/>
   </LocalGeometer>
+
 <!--
   <environment>
     <temperature>300*K</temperature>

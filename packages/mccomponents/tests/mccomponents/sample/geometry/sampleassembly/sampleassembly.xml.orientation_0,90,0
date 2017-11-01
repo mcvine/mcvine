@@ -6,10 +6,7 @@
   
   <PowderSample name="Al-plate" type="sample">
     <Shape>
-      <!-- rotation use the convention: xy'z"; z - beam downstream, y - vertical up -->
-      <rotation angles="0*deg,0*deg,90*deg">
-	<block width="6*cm" height="10*cm" thickness="1*cm" />
-      </rotation>
+      <block width="6*cm" height="10*cm" thickness="1*cm" />
     </Shape>
     <Phase type="crystal">
       <ChemicalFormula>Al</ChemicalFormula>
@@ -18,7 +15,8 @@
   </PowderSample>
   
   <LocalGeometer registry-coordinate-system="InstrumentScientist">
-    <Register name="Al-plate" position="(0,0,0)" orientation="(0,0,0)"/>
+    <!-- orientation convention: xyz. x: beam downstream, z: vertical up -->
+    <Register name="Al-plate" position="(0,0,0)" orientation="(0,90,0)"/>
   </LocalGeometer>
 
 </SampleAssembly>
