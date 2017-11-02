@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE SampleAssembly>
+
+<SampleAssembly name="Al">
+  
+  <PowderSample name="Al-plate" type="sample">
+    <Shape>
+      <block width="6*cm" height="10*cm" thickness="1*cm" />
+    </Shape>
+    <Phase type="crystal">
+      <ChemicalFormula>Al</ChemicalFormula>
+      <xyzfile>Al.xyz</xyzfile>
+    </Phase>
+  </PowderSample>
+  
+  <LocalGeometer registry-coordinate-system="InstrumentScientist">
+    <!-- orientation convention: xyz. x: beam downstream, z: vertical up -->
+    <Register name="Al-plate" position="(0,0,0)" orientation="(0,90,0)"/>
+  </LocalGeometer>
+
+</SampleAssembly>
