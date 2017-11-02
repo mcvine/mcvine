@@ -39,6 +39,12 @@ class TestCase(unittest.TestCase):
         assert np.allclose(neutron.state.position, ((r+width/2)/2, 0, thickness/2))
         return
 
+    def test2a(self):
+        xml = 'sampleassembly/sampleassembly.xml.union_of_plate_hollowcylinder'
+        shutil.copyfile(xml, 'sampleassembly/sampleassembly.xml')
+        sample = samplecomponent( 'test', 'sampleassembly/sampleassembly.xml' )
+        return
+
     pass  # end of TestCase
 
 

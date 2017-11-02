@@ -90,7 +90,6 @@ class TestCase(unittest.TestCase):
     
     pass  # end of TestCase
 
-
 def check(sample, x, y, z):
     neutron = mcni.neutron(r=(0,0,-1), v=(0,0,1), prob=1.)
     sample.scatter(neutron)
