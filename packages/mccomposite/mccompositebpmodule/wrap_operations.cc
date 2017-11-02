@@ -18,21 +18,27 @@
 
 namespace wrap_mccomposite {
 
+  template <typename T>
+  const mccomposite::geometry::AbstractShape & get_body(const T &t)
+  {
+    return t.body;
+  }
+
+
   void wrap_operations()
   {
     using namespace boost::python;
     using namespace mccomposite::geometry;
-
-
+    typedef std::vector< const AbstractShape * > shapes_t;
+       
     class_<Difference, bases<AbstractShape> >
       ("Difference", 
        init< const AbstractShape &, const AbstractShape &>()
        [with_custodian_and_ward<1,2,
 	with_custodian_and_ward<1,3> >()])
+      .def_readonly("shapes", &Difference::shapes)
       ;
 
-    typedef std::vector< const AbstractShape * > shapes_t;
-       
     class_<Union, bases<AbstractShape> >
       ("Union", 
        init< const AbstractShape &, const AbstractShape &>()
@@ -40,6 +46,7 @@ namespace wrap_mccomposite {
 	with_custodian_and_ward<1,3> >()])
       .def( init< const shapes_t & >()
 	    [with_custodian_and_ward<1,2>()] )
+      .def_readonly("shapes", &Union::shapes)
       ;
 
     class_<Intersection, bases<AbstractShape> >
@@ -49,6 +56,7 @@ namespace wrap_mccomposite {
 	with_custodian_and_ward<1,3> >()])
       .def( init< const shapes_t & >()
 	    [with_custodian_and_ward<1,2>()] )
+      .def_readonly("shapes", &Intersection::shapes)
       ;
 
     class_<Dilation, bases<AbstractShape> >
@@ -63,6 +71,8 @@ namespace wrap_mccomposite {
        init< const AbstractShape &,  const RotationMatrix &>()
        [with_custodian_and_ward<1,2>()] 
        )
+      .def("get_body", &get_body<Rotation>, return_internal_reference<>())
+      .def_readonly("rotmat", &Rotation::rotmat)
       ;
 
     class_<Translation, bases<AbstractShape> >
@@ -70,6 +80,8 @@ namespace wrap_mccomposite {
        init< const AbstractShape &,  const Vector &>()
        [with_custodian_and_ward<1,2>()] 
        )
+      .def("get_body", &get_body<Translation>, return_internal_reference<>())
+      .def_readonly("vector", &Translation::vector)
       ;
   }    
 }

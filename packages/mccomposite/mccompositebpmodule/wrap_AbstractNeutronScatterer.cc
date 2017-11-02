@@ -25,6 +25,7 @@ namespace wrap_mccomposite {
     class_<mccomposite::AbstractNeutronScatterer, bases<mcni::AbstractNeutronScatterer>,
       boost::noncopyable>
       ("AbstractNeutronScatterer", no_init)
+      .def("shape", &mccomposite::AbstractNeutronScatterer::shape, return_internal_reference<>())
       ;
 
   }
