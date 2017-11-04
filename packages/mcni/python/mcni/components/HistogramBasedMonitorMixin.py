@@ -28,6 +28,17 @@ e.g.
 
 number_mc_samples_filename = 'number_of_mc_samples'
 
+def merge_and_normalize(histogramfilename, outdir):
+    h, n = hist_mcs_sum(outdir, histogramfilename)
+    h.I/=n
+    h.E2/=n*n
+    import os
+    p = os.path.join(outdir, histogramfilename)
+    from histogram.hdf import dump
+    dump(h, p, '/', 'c')
+    return
+
+
 def hist_mcs_sum(outdir, histogramfilename):
     """compute the summed histogram and summed number of mc samples"""
     import glob, os
@@ -63,7 +74,7 @@ def hist_mcs_sum(outdir, histogramfilename):
     loadmcs = lambda f: float(open(f).read())
     mcs = map(loadmcs, mcsamplesfiles)
     return h1, sum(mcs)
-    
+
 
 from outputs import mcs_sum
     
@@ -82,14 +93,8 @@ class HistogramBasedMonitorMixin(MonitorMixin):
         # create post processing script
         import os
         path = os.path.join(context.post_processing_scripts_dir, "%s.py" % self.name)
-        content = """from mcni.components.HistogramBasedMonitorMixin import hist_mcs_sum
-h,n = hist_mcs_sum(%(outdir)r, %(fn)r)
-h.I/=n
-h.E2/=n*n
-from histogram.hdf import dump
-import os
-p = os.path.join(%(outdir)r, %(fn)r)
-dump(h, p, '/', 'c')
+        content = """from mcni.components.HistogramBasedMonitorMixin import merge_and_normalize
+merge_and_normalize(%(fn)r), %(outdir)r)
 """ % dict(outdir=os.path.abspath(context.outputdir), fn=self._getHistogramFilename())
         open(path, 'wt').write(content)
         return
