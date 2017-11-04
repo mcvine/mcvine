@@ -94,7 +94,7 @@ class HistogramBasedMonitorMixin(MonitorMixin):
         import os
         path = os.path.join(context.post_processing_scripts_dir, "%s.py" % self.name)
         content = """from mcni.components.HistogramBasedMonitorMixin import merge_and_normalize
-merge_and_normalize(%(fn)r), %(outdir)r)
+merge_and_normalize(%(fn)r, %(outdir)r)
 """ % dict(outdir=os.path.abspath(context.outputdir), fn=self._getHistogramFilename())
         open(path, 'wt').write(content)
         return
