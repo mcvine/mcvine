@@ -74,8 +74,7 @@ except ImportError:
     warnings.warn("mcvine.phonon CLI not installed")
 
 # workflow
-from .. import deployment_info
-from mcvine_workflow import cli
+from mcvine.workflow import cli
 
 # aliases should be the last cmds to import
 from . import bash
