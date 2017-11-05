@@ -24,12 +24,6 @@ UPDATE_PACKAGE_FROM_GIT(
   https://github.com/danse-inelastic/sampleassembly
 )
 add_subdirectory(sampleassembly)
-UPDATE_PACKAGE_FROM_GIT(
-  ${CMAKE_CURRENT_SOURCE_DIR}
-  workflow
-  https://github.com/mcvine/workflow
-)
-add_subdirectory(workflow)
 
 # need "click". 
 UPDATE_PACKAGE_FROM_GIT(
