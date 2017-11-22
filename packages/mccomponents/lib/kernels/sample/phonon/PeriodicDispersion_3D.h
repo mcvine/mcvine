@@ -50,6 +50,9 @@ namespace DANSE{
       virtual float_t energy(n_t branch_id, const K_t &k) const;
       virtual epsilon_t polarization(n_t branch_id, n_t atom_id, const K_t &k) const;
     
+      virtual float_t max_energy(n_t branch_id) const {return m_core.max_energy(branch_id);}
+      virtual float_t min_energy(n_t branch_id) const {return m_core.min_energy(branch_id);}
+
     protected:
       // data
       const AbstractDispersion_3D & m_core;

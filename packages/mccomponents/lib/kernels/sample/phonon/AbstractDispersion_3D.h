@@ -49,6 +49,9 @@ namespace DANSE{
     
       virtual float_t energy(n_t branch_id, const K_t &k) const =0;
       virtual epsilon_t polarization(n_t branch_id, n_t atom_id, const K_t &k) const = 0;
+
+      virtual float_t max_energy(n_t branch_id) const =0;
+      virtual float_t min_energy(n_t branch_id) const =0;
     
     protected:
       // data

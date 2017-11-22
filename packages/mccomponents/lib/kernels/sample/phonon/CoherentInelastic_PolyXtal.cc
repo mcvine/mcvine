@@ -67,7 +67,7 @@ struct mccomponents::kernels::phonon::CoherentInelastic_PolyXtal::Details {
   /// knowing vi's length, having chosen the phonon branch,
   /// choose a Q so that the phonon in the chose branch at Q can scatter 
   /// the incident neutron. This is only good for polycrystal
-  void   pick_a_valid_Q_vector
+  bool   pick_a_valid_Q_vector
   (K_t &Q, float_t &v_Q_l, float_t &E_f, float_t &v_f_l,
    float_t E_i, float_t v_i_l, unsigned int branch) const;
 
@@ -76,6 +76,7 @@ struct mccomponents::kernels::phonon::CoherentInelastic_PolyXtal::Details {
 
   // data
   w_t & kernel;
+  std::vector<unsigned int> valid_branches;
 
 private:
 
@@ -94,6 +95,10 @@ mccomponents::kernels::phonon::CoherentInelastic_PolyXtal::
 Details::Details( w_t & i_kernel )
   : kernel(i_kernel)
 {
+  for (unsigned int i=0; i<kernel.m_disp.nBranches(); i++) 
+    if (kernel.m_disp.max_energy(i)>kernel.m_min_omega
+	&& kernel.m_disp.min_energy(i)<kernel.m_max_omega)
+      valid_branches.push_back(i);
 }
 
 
@@ -170,7 +175,7 @@ const
 }
 
 
-void
+bool
 mccomponents::kernels::phonon::CoherentInelastic_PolyXtal::
 Details::pick_a_valid_Q_vector
 (K_t &Q, float_t &v_Q_l, float_t &E_f, float_t &v_f_l,
@@ -179,13 +184,25 @@ Details::pick_a_valid_Q_vector
 {
   namespace conversion = mcni::neutron_units_conversion;
 
-  float_t omega;
+  /*
+  std::cout << "branch " << branch
+	    << ", Emin " << kernel.m_disp.min_energy(branch)
+	    << ", Ei " << E_i
+	    << std::endl;    
+  */
+  float_t omega; unsigned int counter = 0;
   do {
+    if (counter++ > 100000) {
+      std::cerr << "** failed to find a valid Q vector" << std::endl;
+      return 1;
+    }
     // pick Q
     pickQ(E_i, Q);
     v_Q_l = conversion::k2v*Q.length();
     // == phonon energy  ==
     omega = kernel.m_disp.energy( branch, Q );
+    if (omega>kernel.m_max_omega) continue;
+    
     // if phonon energy too small, it is too close to singularity
     if (omega<kernel.m_min_omega) continue;
     // == gain energy or lose energy ==
@@ -209,7 +226,7 @@ Details::pick_a_valid_Q_vector
     // == make sure the Q is good ==
   } while ( v_Q_l<std::abs(v_i_l-v_f_l) || v_Q_l>v_i_l+v_f_l );
   //if ( v_Q_l<abs(v_i_l-v_f_l) || v_Q_l>v_i_l+v_f_l ) absorb(ev);
-
+  return 0;
 }
 
   
@@ -312,6 +329,8 @@ CoherentInelastic_PolyXtal
   for (size_t i=0; i<m_atoms.size(); i++) {
     m_total_absorption_xs += m_atoms[i].absorption_cross_section;
   }
+
+  
 }
 
 
@@ -371,15 +390,17 @@ mccomponents::kernels::phonon::CoherentInelastic_PolyXtal::S
 #endif
 
   // pick branch
-  unsigned int branch = pick_phonon_branch( m_disp.nBranches());
-  prob *= m_disp.nBranches();
+  unsigned int n_valid_br = m_details->valid_branches.size();
+  unsigned int branch = m_details->valid_branches[ pick_phonon_branch( n_valid_br ) ];
+  prob *= n_valid_br;
 
 
   // pick a Q vector
   K_t Q;
   float_t v_Q_l, E_f, v_f_l;
-  m_details->pick_a_valid_Q_vector
+  bool failed = m_details->pick_a_valid_Q_vector
     ( Q, v_Q_l, E_f, v_f_l, E_i, v_i_l, branch);
+  if (failed) {prob=-1.; return;}
   float_t  omega = E_i - E_f;
 
 #ifdef DEEPDEBUG
