@@ -51,18 +51,41 @@ LinearlyInterpolatedDispersionOnGrid_3D
 	( QX, QY, QZ, epsilon_data, indexes );
     }
 
+  // init energy limits
+  m_max_energy.resize(nBranches());
+  m_min_energy.resize(nBranches());
 
   // init energy interpolated grid data
   indexes.resize(4);
-
   indexes[0] = indexes[1] = indexes[2] = -1;
   
   for (n_t branch = 0; branch < nBranches(); branch ++ ) {
     indexes[3] = branch;
     m_Evsbranch[ branch ] = new interp_Earray_t1
       ( QX, QY, QZ, E_data, indexes );
-  }
 
+    // energy limits calculation
+    std::vector<unsigned int> indexes2(4);
+    indexes2[0] = indexes2[1] = indexes2[2] = 0; indexes2[3] = branch;
+    float_t min = E_data[indexes2], max=min;
+    for (n_t i=0; i<QX.n+1; i++) {
+      indexes2[0] = i; 
+      for (n_t j=0; j<QY.n+1; j++) {
+	indexes2[1] = j; 	
+	for (n_t k=0; k<QZ.n+1; k++) {
+	  indexes2[2] = k;
+	  float_t E = E_data[indexes2];
+	  if (E<min) min=E;
+	  if (E>max) max=E;
+	}
+      }
+    }
+    m_max_energy[branch] = max; m_min_energy[branch] = min;
+    std::cout << "branch " << branch
+	      << ", min " << min
+	      << ", max " << max
+	      << std::endl;
+  }
 }
       
 
@@ -94,7 +117,6 @@ energy(n_t branch_id, const K_t &k) const
 {
   return m_Evsbranch[ branch_id ]->interpolated(k.x, k.y, k.z);
 }
-
 
 #endif
 

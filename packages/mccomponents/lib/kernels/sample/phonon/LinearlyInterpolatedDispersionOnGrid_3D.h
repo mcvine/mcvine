@@ -55,6 +55,8 @@ namespace DANSE {
       // methods
       virtual float_t energy(n_t branch_id, const K_t &k) const;
       virtual epsilon_t polarization(n_t branch_id, n_t atom_id, const K_t &k) const;
+      virtual float_t max_energy(n_t branch_id) const {return m_max_energy[branch_id];}
+      virtual float_t min_energy(n_t branch_id) const {return m_min_energy[branch_id];}
 
     private:
       // data
@@ -87,6 +89,7 @@ namespace DANSE {
       };
 
       std::vector<interp_polarray_t1 *> m_polvsbranchatom;
+      std::vector<float_t> m_max_energy, m_min_energy; // energy limits for each branch
     };
 
   } // phonon::
