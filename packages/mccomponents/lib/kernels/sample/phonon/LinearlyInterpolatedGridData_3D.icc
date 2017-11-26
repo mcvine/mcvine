@@ -33,11 +33,13 @@ namespace LinearlyInterpolatedGridData_3D_impl{
     Float r = (value-axis.start)/axis.step;
     if ( r<0 || r >= axis.n ) {
       if (std::abs(r) < 1e-7) r = 0;
+      else if (std::abs(r-axis.n) < 1e-7) r = 0;
       else {
         std::ostringstream oss;
         oss << "value " << value << " is out of bound: ("
             << axis.start << ", " << axis.start + axis.n * axis.step 
-	    << "). axis: start=" << axis.start << ", step=" << axis.step << ", n=" << axis.n;
+	    << "). axis: start=" << axis.start << ", step=" << axis.step << ", n=" << axis.n << std::endl;
+	oss << "(value-start)/step=" << r;
         throw DANSE::phonon::Exception( oss.str() );
       }
     }
