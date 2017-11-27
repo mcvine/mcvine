@@ -34,8 +34,8 @@ def reduce(nxsfile, qaxis, outfile, use_ei_guess=False, ei_guess=None, eaxis=Non
         tof2E = o == 'entry'
 
     if tof2E:
-        ws, mons = Load(nxsfile, LoadMonitors=True)
         if not use_ei_guess:
+            ws, mons = Load(nxsfile, LoadMonitors=True)
             Eguess=ws.getRun()['EnergyRequest'].getStatistics().mean
             try:
                 Efixed,_p,_i,T0=GetEi(InputWorkspace=mons,Monitor1Spec=1,Monitor2Spec=2,EnergyEstimate=Eguess,FixEi=False)
@@ -44,7 +44,8 @@ def reduce(nxsfile, qaxis, outfile, use_ei_guess=False, ei_guess=None, eaxis=Non
                 warnings.warn("Failed to determine Ei from monitors. Use EnergyRequest log %s" % Eguess)
                 Efixed,T0 = Eguess, 0
         else:
-            Efixed, T0 = ei_guess, 0
+            ws = Load(nxsfile)
+            Efixed, T0 = ei_guess, t0_guess or 0.
 
         DgsReduction(
             SampleInputWorkspace=ws,

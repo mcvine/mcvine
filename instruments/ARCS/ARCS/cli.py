@@ -124,7 +124,7 @@ def populate_metadata(ctx, type, beam_outdir, nxs):
 @nxs.command()
 @click.argument("nxs")
 @click.option('--out', default="iqe.nxs", help="output path. Eg. iqe.nxs")
-@click.option('--use_ei_guess', default=False)
+@click.option('--use_ei_guess', default=False, is_flag=True)
 @click.option('--ei_guess', help='guess for Ei', default=0.)
 @click.option('--t0_guess', help='guess for t0, or emission time', default=0.)
 @click.option('--qaxis', help='Qmin Qmax dQ', default=(0.,13.,0.1))
