@@ -201,7 +201,10 @@ Details::pick_a_valid_Q_vector
     v_Q_l = conversion::k2v*Q.length();
     // == phonon energy  ==
     omega = kernel.m_disp.energy( branch, Q );
-    if (omega>kernel.m_max_omega) continue;
+    // this will cause oversampling of modes with smaller ernergy than max_omega,
+    // and it needs an additional MC loop to find out what weight should be applied for doing
+    // this. So let us not do it for now.
+    // if (omega>kernel.m_max_omega) continue;
     
     // if phonon energy too small, it is too close to singularity
     if (omega<kernel.m_min_omega) continue;
