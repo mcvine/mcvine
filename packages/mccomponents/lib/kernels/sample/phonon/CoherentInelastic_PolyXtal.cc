@@ -68,7 +68,7 @@ struct mccomponents::kernels::phonon::CoherentInelastic_PolyXtal::Details {
   /// choose a Q so that the phonon in the chose branch at Q can scatter 
   /// the incident neutron. This is only good for polycrystal
   bool   pick_a_valid_Q_vector
-  (K_t &Q, float_t &v_Q_l, float_t &E_f, float_t &v_f_l,
+  (K_t &Q, float_t &v_Q_l, float_t &E_f, float_t &v_f_l, float_t &prob,
    float_t E_i, float_t v_i_l, unsigned int branch) const;
 
   /// calculate acceisible reciprocal volumn
@@ -178,11 +178,12 @@ const
 bool
 mccomponents::kernels::phonon::CoherentInelastic_PolyXtal::
 Details::pick_a_valid_Q_vector
-(K_t &Q, float_t &v_Q_l, float_t &E_f, float_t &v_f_l,
+(K_t &Q, float_t &v_Q_l, float_t &E_f, float_t &v_f_l, float_t &prob,
  float_t E_i, float_t v_i_l,  unsigned int branch) 
   const
 {
   namespace conversion = mcni::neutron_units_conversion;
+  float_t sampling_fraction = (kernel.m_max_omega-kernel.m_disp.min_energy(branch)) / (kernel.m_disp.max_energy(branch)-kernel.m_disp.min_energy(branch));
 
   /*
   std::cout << "branch " << branch
@@ -204,7 +205,7 @@ Details::pick_a_valid_Q_vector
     // this will cause oversampling of modes with smaller ernergy than max_omega,
     // and it needs an additional MC loop to find out what weight should be applied for doing
     // this. So let us not do it for now.
-    // if (omega>kernel.m_max_omega) continue;
+    if (omega>kernel.m_max_omega) continue;
     
     // if phonon energy too small, it is too close to singularity
     if (omega<kernel.m_min_omega) continue;
@@ -229,6 +230,7 @@ Details::pick_a_valid_Q_vector
     // == make sure the Q is good ==
   } while ( v_Q_l<std::abs(v_i_l-v_f_l) || v_Q_l>v_i_l+v_f_l );
   //if ( v_Q_l<abs(v_i_l-v_f_l) || v_Q_l>v_i_l+v_f_l ) absorb(ev);
+  if (sampling_fraction<1) prob*=sampling_fraction;
   return 0;
 }
 
@@ -402,7 +404,7 @@ mccomponents::kernels::phonon::CoherentInelastic_PolyXtal::S
   K_t Q;
   float_t v_Q_l, E_f, v_f_l;
   bool failed = m_details->pick_a_valid_Q_vector
-    ( Q, v_Q_l, E_f, v_f_l, E_i, v_i_l, branch);
+    ( Q, v_Q_l, E_f, v_f_l, prob, E_i, v_i_l, branch);
   if (failed) {prob=-1.; return;}
   float_t  omega = E_i - E_f;
 
