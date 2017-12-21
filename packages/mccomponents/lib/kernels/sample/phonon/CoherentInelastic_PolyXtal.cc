@@ -184,6 +184,7 @@ Details::pick_a_valid_Q_vector
 {
   namespace conversion = mcni::neutron_units_conversion;
   float_t sampling_fraction = (kernel.m_max_omega-kernel.m_disp.min_energy(branch)) / (kernel.m_disp.max_energy(branch)-kernel.m_disp.min_energy(branch));
+  bool reject_high_energy_modes = sampling_fraction < .3;
 
   /*
   std::cout << "branch " << branch
@@ -204,8 +205,9 @@ Details::pick_a_valid_Q_vector
     omega = kernel.m_disp.energy( branch, Q );
     // this will cause oversampling of modes with smaller ernergy than max_omega,
     // and it needs an additional MC loop to find out what weight should be applied for doing
-    // this. So let us not do it for now.
-    if (omega>kernel.m_max_omega) continue;
+    // this. We are assuming here the weight is linear. This is a crude approximation.
+    // And we only use it when sampling_fraction is small
+    if (reject_high_energy_modes and omega>kernel.m_max_omega) continue;
     
     // if phonon energy too small, it is too close to singularity
     if (omega<kernel.m_min_omega) continue;
@@ -230,7 +232,7 @@ Details::pick_a_valid_Q_vector
     // == make sure the Q is good ==
   } while ( v_Q_l<std::abs(v_i_l-v_f_l) || v_Q_l>v_i_l+v_f_l );
   //if ( v_Q_l<abs(v_i_l-v_f_l) || v_Q_l>v_i_l+v_f_l ) absorb(ev);
-  if (sampling_fraction<1) prob*=sampling_fraction;
+  if (reject_high_energy_modes) prob*=sampling_fraction;
   return 0;
 }
 
