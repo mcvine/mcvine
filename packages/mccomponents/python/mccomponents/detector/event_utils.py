@@ -45,10 +45,12 @@ def mergeEventFiles(files, out):
     import sys, os
     if sys.platform != 'linux2':
         raise NotImplementedError
-    cmd = ['cat'] 
-    cmd += [ '"%s"' % f for f in files ]
-    cmd.append( '> "%s"' % out)
-    cmd = ' '.join(cmd)
+    outdir = os.path.dirname(out)
+    # tempfile to hold the list of files
+    filelist = os.path.join(outdir, 'eventfiles-to-merge.list')
+    with open(filelist, 'wt') as ostream:
+        for f in files: ostream.write("%s\n" % f)
+    cmd = 'cat %s | xargs -0 -d "\n" cat > "%s"' % (filelist, out)
     if os.system(cmd):
         raise RuntimeError, "%s failed" % cmd
     return
