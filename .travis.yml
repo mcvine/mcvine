@@ -49,6 +49,7 @@ install:
 
 script:
 #  - python -c "import mcvine"
+  - echo "mcvine"
 
 notifications:
   email:
