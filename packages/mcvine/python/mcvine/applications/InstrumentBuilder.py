@@ -39,13 +39,14 @@ app.run(*args, **kwds)
 """ % dict(neutron_components=neutron_components, 
            init_params = self._init_params,
            run_params = (args, kwds))
-            open(apppath, 'wt').write(appscript)
+            with open(apppath, 'wt') as ostream:
+                ostream.write(appscript)
             # run the script in a subprocess
             sysargs = ' '.join('"%s"' % a for a in sys.argv[1:])
             ppsd = os.path.join(workdir, 'post-processing-scripts')
             sysargs += ' --post-processing-scripts-dir=%s' % ppsd
             logpath = os.path.join(workdir, 'log.sim')
-            cmd = '%s %s %s&>%s' % (sys.executable, apppath, sysargs, logpath)
+            cmd = '%s %s %s>%s 2>&1' % (sys.executable, apppath, sysargs, logpath)
             _exec(cmd)
             # run the postprocessing script
             from mcni.pyre_support.Instrument import _run_ppsd
