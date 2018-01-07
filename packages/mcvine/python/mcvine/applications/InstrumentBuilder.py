@@ -27,7 +27,7 @@ def build(neutron_components):
         def run(self, *args, **kwds):
             # create a temp work dir
             import tempfile
-            workdir = tempfile.mkdtemp()
+            workdir = tempfile.mkdtemp(dir = os.path.abspath(os.curdir), prefix='simapp-')
             # create an application script
             apppath = os.path.join(workdir, 'simapp.py')
             appscript = """from mcvine.applications.InstrumentBuilder import _build
@@ -44,7 +44,8 @@ app.run(*args, **kwds)
             sysargs = ' '.join('"%s"' % a for a in sys.argv[1:])
             ppsd = os.path.join(workdir, 'post-processing-scripts')
             sysargs += ' --post-processing-scripts-dir=%s' % ppsd
-            cmd = '%s %s %s' % (sys.executable, apppath, sysargs)
+            logpath = os.path.join(workdir, 'log.sim')
+            cmd = '%s %s %s&>%s' % (sys.executable, apppath, sysargs, logpath)
             _exec(cmd)
             # run the postprocessing script
             from mcni.pyre_support.Instrument import _run_ppsd
