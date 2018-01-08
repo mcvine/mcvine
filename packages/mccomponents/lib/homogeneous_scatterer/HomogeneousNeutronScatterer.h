@@ -1,14 +1,6 @@
 // -*- C++ -*-
 //
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
-//                                   Jiao Lin
-//                      California Institute of Technology
-//                         (C) 2005 All Rights Reserved  
-//
-// {LicenseText}
-//
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// Jiao Lin <jiao.lin@gmail.com>
 //
 
 #ifndef MCCOMPONENTS_HOMOGENEOUSNEUTRONSCATTERER_H
@@ -24,7 +16,7 @@ namespace mccomponents{
   typedef mccomposite::AbstractShape AbstractShape;
 
   class AbstractScatteringKernel;
-
+  class AbstractAbsorptionCoefficientCalculator;
 
   //! class for homogeneous neutron scatterers.
   /*! objects of this class are homogeneous neutron scaterers, for example,
@@ -61,11 +53,13 @@ namespace mccomponents{
     
     // meta-methods
     HomogeneousNeutronScatterer
-    ( const AbstractShape & shape, AbstractScatteringKernel & kernel,
-      const Weights & weights );
+    ( const AbstractShape & shape,
+      AbstractScatteringKernel & kernel,
+      const Weights & weights);
     HomogeneousNeutronScatterer
-    ( const AbstractShape & shape, AbstractScatteringKernel & kernel,
-      const Weights & weights, double seed);
+    ( const AbstractShape & shape,
+      AbstractScatteringKernel & kernel, AbstractAbsorptionCoefficientCalculator & mu_calc,
+      const Weights & weights);
     virtual ~HomogeneousNeutronScatterer();
 
     /// scatterer interacts with a neutron in its first section of continuous path thru the scatterer.
@@ -97,8 +91,12 @@ namespace mccomponents{
     /// the only difference between this method and interactM_path1 is that 
     /// it does not propagate neutron to the surface.
     void _interactM1(const mcni::Neutron::Event &, mcni::Neutron::Events &);
+    // calculate absorption coefficient
+    double _mu(const mcni::Neutron::Event &) const;
     // data
     AbstractScatteringKernel & m_kernel;
+    bool m_consult_kernel_for_mu_calc;
+    AbstractAbsorptionCoefficientCalculator & m_mu_calc;
     Weights m_weights;
   };
 
