@@ -5,6 +5,9 @@ News
 
 2017
 ----
+* **Oct 2017**:
+  - Jennifer Niedziela's paper *Design and operating characteristic of a vacuum furnace for time-of-flight inelastic neutron scattering measurements* was published at Review of Scientific Instruments: https://doi.org/10.1063/1.5007089. MCViNE simulations were performed by Hillary Smith to help study the effects on the measured spectra from the scattering by the furnace, the multiple scattering, and the effectiveness of collimator.
+  
 * **July 2017**:
   - Release 1.3 (http://mcvine.github.io/1.3/release-notes.html) was out
   

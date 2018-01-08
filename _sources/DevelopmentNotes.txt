@@ -34,7 +34,7 @@ components (`here <https://github.com/mcvine/mcvine/blob/7cd386bbf545c7bbe8d0259
 It is better that the run_postprocessing method be called in a different
 process than the process that executes the "run" method.
 This is achieved in `InstrumentBuilder <https://github.com/mcvine/mcvine/blob/7cd386bbf545c7bbe8d0259340ac8fa247bfa88d/packages/mcvine/python/mcvine/applications/InstrumentBuilder.py#L27>`_.
-
+Note: use environment variable DEBUG_INSTRUMENT_APP_PROXY to debug this mechanism.
 
 SNS instruments
 ---------------
