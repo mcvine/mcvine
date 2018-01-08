@@ -12,6 +12,7 @@
 //
 
 #include "mccomponents/homogeneous_scatterer/AbstractScatteringKernel.h"
+#include "mccomponents/homogeneous_scatterer/AbstractAbsorptionCoefficientCalculator.h"
 #include "mccomponents/homogeneous_scatterer/HomogeneousNeutronScatterer.h"
 
 #include "mccomposite/boostpython_binding/wrap_scatterer.h"
@@ -30,21 +31,24 @@ namespace wrap_mccomponents {
        init< 
        const mccomponents::AbstractShape &, 
        mccomponents::AbstractScatteringKernel &,
-       const mccomponents::HomogeneousNeutronScatterer::Weights & 
+       const mccomponents::HomogeneousNeutronScatterer::Weights &
        >
        () 
        [with_custodian_and_ward<1,2,
 	with_custodian_and_ward<1,3
 	> > () ]
        )
-      .def( init< const mccomponents::AbstractShape &, 
-	    mccomponents::AbstractScatteringKernel &,
-	    const mccomponents::HomogeneousNeutronScatterer::Weights &,
-	    double>
-	    () 
-	    [with_custodian_and_ward<1,2,
-	     with_custodian_and_ward<1,3
-	     > > () ] )
+      .def(init<const mccomponents::AbstractShape &,
+      	   mccomponents::AbstractScatteringKernel &,
+      	   mccomponents::AbstractAbsorptionCoefficientCalculator &,
+      	   const mccomponents::HomogeneousNeutronScatterer::Weights &
+      	   >
+      	   ()
+      	   [with_custodian_and_ward<1,2,
+      	    with_custodian_and_ward<1,3,
+      	    with_custodian_and_ward<1,4
+      	    > > > () ]
+      	   )
       .def_readwrite("max_multiplescattering_loops", &w_t::max_scattering_loops)
       .def_readwrite("min_neutron_probability", &w_t::min_neutron_probability)
       .def_readwrite("packing_factor", &w_t::packing_factor)
