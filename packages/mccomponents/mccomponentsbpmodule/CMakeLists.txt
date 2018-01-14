@@ -4,6 +4,7 @@ set ( SRC_FILES
   ${PYBINDING_NAME}.cc
   wrap_basic_containers.cc
   wrap_HomogeneousNeutronScatterer.cc
+  wrap_absorptioncoefficientcalculators.cc
   wrap_AbstractScatteringKernel.cc
   wrap_CompositeScatteringKernel.cc
   wrap_kernelcontainer.cc

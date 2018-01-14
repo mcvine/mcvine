@@ -12,6 +12,7 @@ set ( SRC_FILES
   math/random/gaussian.cc
   homogeneous_scatterer/CompositeScatteringKernel.cc
   homogeneous_scatterer/ConsultScatteringKernel.cc
+  homogeneous_scatterer/InverseVelocityAbsorption.cc
   homogeneous_scatterer/DGSSXResPixel.cc
   kernels/IsotropicKernel.cc
   kernels/detector/EventModeMCA.cc
