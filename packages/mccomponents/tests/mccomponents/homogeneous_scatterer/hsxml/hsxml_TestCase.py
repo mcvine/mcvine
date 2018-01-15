@@ -58,6 +58,20 @@ class hsxml_TestCase(unittest.TestCase):
         self.assert_( isinstance( hs1.kernel(), Kernel) )
         return
     
+    def test3(self):
+        'hsxml: InverseVelocityAbsorption'
+        from mccomponents.homogeneous_scatterer.hsxml import parse_file
+        hs = parse_file( 'Ni-scatterer-inversevelocityabsorption.xml' )
+        print hs
+        return
+    
+    def test4(self):
+        'hsxml: InterpolateAbsorptionFromCurve'
+        from mccomponents.homogeneous_scatterer.hsxml import parse_file
+        hs = parse_file( 'Ni-scatterer-interpolateabsorptionfromcurve.xml' )
+        print hs
+        return
+    
     pass  # end of hsxml_TestCase
 
 

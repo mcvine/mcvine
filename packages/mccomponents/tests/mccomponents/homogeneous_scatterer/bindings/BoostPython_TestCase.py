@@ -42,7 +42,7 @@ class TestCase(unittest.TestCase):
         hs = bp.homogeneousscatterer( 
             cylinder, ck, (0,1,0),
             max_multiplescattering_loops, min_neutron_probability,
-            packing_factor
+            packing_factor, mu_calculator=None
             )
         return
     

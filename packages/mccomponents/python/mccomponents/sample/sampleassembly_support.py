@@ -117,6 +117,7 @@ class FindKernelsFromXMLs:
         scatterer.max_multiplescattering_loops = mcscatterer.max_multiplescattering_loops
         scatterer.min_neutron_probability = mcscatterer.min_neutron_probability
         scatterer.packing_factor = mcscatterer.packing_factor
+        scatterer.mu_calculator = mcscatterer.mu_calculator
                                                                
         # transfer shape if necessary
         shape = mcscatterer.shape()

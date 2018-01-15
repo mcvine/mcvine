@@ -14,6 +14,8 @@
 
 #include "mccomponents/homogeneous_scatterer/HomogeneousNeutronScatterer.h"
 #include "mccomponents/homogeneous_scatterer/AbstractScatteringKernel.h"
+#include "mccomponents/homogeneous_scatterer/AbstractAbsorptionCoefficientCalculator.h"
+#include "mccomponents/homogeneous_scatterer/ConsultScatteringKernel.h"
 #include "mccomposite/neutron_propagation.h"
 #include "mccomponents/math/random.h"
 
@@ -35,6 +37,7 @@ namespace mccomponents {
   namespace HomogeneousNeutronScatterer_Impl {
     char jrnltag [] = "HomogeneousNeutronScatterer";
   }
+  extern ConsultScatteringKernel consult_scattering_kernel_for_mu_calc;
 }
 
 
@@ -48,31 +51,49 @@ mccomponents::HomogeneousNeutronScatterer::~HomogeneousNeutronScatterer
 
 
 mccomponents::HomogeneousNeutronScatterer::HomogeneousNeutronScatterer
-( const AbstractShape & shape, AbstractScatteringKernel & kernel,
+( const AbstractShape & shape,
+  AbstractScatteringKernel & kernel,
+  AbstractAbsorptionCoefficientCalculator & mu_calc,
   const Weights & weights)
   : base_t( shape ),
     max_scattering_loops(10),
     min_neutron_probability(0),
     packing_factor(1.),
     m_kernel( kernel ),
+    m_consult_kernel_for_mu_calc( 0 ),
+    m_mu_calc( mu_calc ),
     m_weights( weights )
 {
 }
 
 
 mccomponents::HomogeneousNeutronScatterer::HomogeneousNeutronScatterer
-( const AbstractShape & shape, AbstractScatteringKernel & kernel,
-  const Weights & weights,
-  double seed)
+( const AbstractShape & shape,
+  AbstractScatteringKernel & kernel,
+  const Weights & weights)
   : base_t( shape ),
-    max_scattering_loops(1),
+    max_scattering_loops(10),
     min_neutron_probability(0),
     packing_factor(1.),
     m_kernel( kernel ),
+    m_consult_kernel_for_mu_calc( 1 ),
+    m_mu_calc( consult_scattering_kernel_for_mu_calc ),
     m_weights( weights )
 {
 }
 
+
+double 
+mccomponents::HomogeneousNeutronScatterer::mu
+(const mcni::Neutron::Event &ev) const
+{
+  double mu;
+  if (m_consult_kernel_for_mu_calc)
+    mu = m_kernel.absorption_coefficient(ev);
+  else
+    mu = m_mu_calc(ev);
+  return mu*packing_factor;
+}
 
 mccomponents::HomogeneousNeutronScatterer::InteractionType
 mccomponents::HomogeneousNeutronScatterer::interact_path1(mcni::Neutron::Event &ev)
@@ -115,7 +136,7 @@ mccomponents::HomogeneousNeutronScatterer::interact_path1(mcni::Neutron::Event &
   double distance = tof*ev.state.velocity.length();
   
   // absorption
-  double mu = m_kernel.absorption_coefficient( ev ) * packing_factor;
+  double mu = this->mu(ev);
   // scattering
   double sigma = m_kernel.scattering_coefficient( ev ) * packing_factor;
 
@@ -302,7 +323,7 @@ mccomponents::HomogeneousNeutronScatterer::_interactM1
   double distance = tof*original.state.velocity.length();
   
   // absorption
-  double mu = m_kernel.absorption_coefficient( original ) * packing_factor;
+  double mu = this->mu(original);
   // scattering
   double sigma = m_kernel.scattering_coefficient( original ) * packing_factor;
 
@@ -531,8 +552,7 @@ mccomponents::HomogeneousNeutronScatterer::calculate_attenuation
     if (tof > tofmax) break;
     prev = tof;
   }
-  
-  double mu = m_kernel.absorption_coefficient( ev ) * packing_factor;
+  double mu = this->mu(ev);
   double sigma = m_kernel.scattering_coefficient( ev ) * packing_factor;
   /*
   std::cout

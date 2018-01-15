@@ -59,11 +59,16 @@ class HomogeneousScatterer(base):
         except: shape = None
         #
         kernel = self._kernel
+        try:
+            mu_calculator = self._mu_calculator
+        except:
+            mu_calculator = None # default
+        #
         mcweights = self._mcweights
         max_multiplescattering_loops = self._max_multiplescattering_loops
         min_neutron_probability = self._min_neutron_probability
         packing_factor = self._packing_factor
-        
+
         from mccomponents.homogeneous_scatterer import homogeneousScatterer
         scatterer = homogeneousScatterer(
             shape, kernel,
@@ -71,6 +76,7 @@ class HomogeneousScatterer(base):
             max_multiplescattering_loops = max_multiplescattering_loops,
             min_neutron_probability = min_neutron_probability,
             packing_factor = packing_factor,
+            mu_calculator  = mu_calculator
             )
         
         #parent is the Document node. 
@@ -92,6 +98,14 @@ class HomogeneousScatterer(base):
 
     onCylinder = onBlock = onSphere = onShape
 
+
+    def onMuCalculator(self, mu_calculator):
+        self._mu_calculator = mu_calculator
+        return
+        
+    onInverseVelocityAbsorption = onMuCalculator
+    onInterpolateAbsorptionFromCurve = onMuCalculator
+    
     pass # end of HomogeneousScatterer
     
 

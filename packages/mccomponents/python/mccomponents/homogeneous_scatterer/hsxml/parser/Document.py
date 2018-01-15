@@ -22,6 +22,8 @@ class Document(base):
     tags = [
         "HomogeneousScatterer",
         'CompositeKernel',
+        'InverseVelocityAbsorption',
+        'InterpolateAbsorptionFromCurve',
         ]
 
 

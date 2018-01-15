@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE homogeneous_scatterer>
+
+<!-- weights: absorption, scattering, transmission -->
+<homogeneous_scatterer mcweights="0, 1, 0">
+  <InverseVelocityAbsorption mu_at_2200="1./meter"/>
+  <compositekernel>
+  </compositekernel>
+</homogeneous_scatterer>

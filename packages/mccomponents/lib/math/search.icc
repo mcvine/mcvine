@@ -1,0 +1,29 @@
+// Jiao Lin <jiao.lin@gmail.com>
+
+#ifndef MCCOMPONENTS_MATH_SEARCH_H
+#error search.icc not meaningful outside search.h
+#endif
+
+#include "mccomponents/math/search.h"
+
+// assuming xs is increasing, find the first bin in xs that is larger or equal than x
+template <typename num_t, typename iterator_t>
+num_t mccomponents::math::find_1st_bin_larger_than(num_t x, iterator_t xstart, iterator_t xend)
+{
+  typedef unsigned int uint;
+  uint start=0, end=xend-xstart-1, middle, res;
+  if (*(xstart+end)<=x) return end+1;
+  if (*(xstart)>=x) return 0;
+
+  while (start < end) {
+    // std::cout << "start=" << start << ", end=" << end << std::endl;
+    if (end==start+1) return end;
+    middle = (start+end)/2;
+    if (*(xstart+middle)==x) {res=middle; break;}
+    else if (*(xstart+middle)<x) start=middle;
+    else end=middle;
+  }
+  if (start==end) return start;
+  return res;
+}
+
