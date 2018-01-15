@@ -1,1 +1,15 @@
-../../scatterers/fccNi/Ni-scatterer-SQEkernel.xml
+<?xml version="1.0"?>
+
+<!DOCTYPE scatterer>
+
+<!-- weights: absorption, scattering, transmission -->
+<homogeneous_scatterer mcweights="1, 1, 1">
+
+  <InverseVelocityAbsorption mu_at_2200="30./meter"/>
+  
+  <SQEkernel Q-range='0*angstrom**-1,12.*angstrom**-1' energy-range='-48*meV,48*meV'>
+    <GridSQE idf-data-path="SQE-examples" auto-normalization="1" />
+  </SQEkernel>
+  
+</homogeneous_scatterer>
+

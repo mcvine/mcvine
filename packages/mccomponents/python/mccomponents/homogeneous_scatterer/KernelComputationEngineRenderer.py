@@ -89,6 +89,10 @@ class KernelComputationEngineRenderer( AbstractVisitor ):
         mu_at_2200 = self._unitsRemover.remove_unit(iva.mu_at_2200, 1./units.length.meter)
         return factory.inversevelocityabsorption(mu_at_2200)
 
+    def onInterpolateAbsorptionFromCurve(self, mucalc):
+        factory = self.factory
+        return factory.interpolateabsorptionfromcurve(mucalc.energies, mucalc.mus)
+
     pass # end of KernelComputationEngineRenderer
 
 

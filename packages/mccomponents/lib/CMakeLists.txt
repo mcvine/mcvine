@@ -13,6 +13,7 @@ set ( SRC_FILES
   homogeneous_scatterer/CompositeScatteringKernel.cc
   homogeneous_scatterer/ConsultScatteringKernel.cc
   homogeneous_scatterer/InverseVelocityAbsorption.cc
+  homogeneous_scatterer/InterpolateAbsorptionFromCurve.cc
   homogeneous_scatterer/DGSSXResPixel.cc
   kernels/IsotropicKernel.cc
   kernels/detector/EventModeMCA.cc

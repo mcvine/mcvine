@@ -58,15 +58,41 @@ class TestCase(unittest.TestCase):
         return
     
 
-    def test1(self):
-        'mccomponents.sample.samplecomponent'
+    def test2(self):
+        'mccomponents.sample.samplecomponent: inversevelocityabsorption'
         import mcni
         neutron = mcni.neutron( r = (0,0,0), v = (0,0,3000), time = 0, prob = 1 )
         from mccomponents.sample import samplecomponent
         component2 = samplecomponent( 'Ni', 'sampleassemblies/Ni-inversevelocityabsorption/sampleassembly.xml' )
         # check mu
+        # see sampleassemblies/Ni-inversevelocityabsorption/Ni plate-scatterer.xml
         hs = component2.cscatterers[0]
         assert np.isclose(hs.mu(neutron), 22.)
+        return
+    
+
+    def test3(self):
+        'mccomponents.sample.samplecomponent: interpolateabsorptionfromcurve'
+        import mcni
+        from mccomponents.sample import samplecomponent
+        from mcni.utils import conversion
+        component2 = samplecomponent(
+            'Ni', 'sampleassemblies/Ni-interpolateabsorptionfromcurve/sampleassembly.xml' )
+        hs = component2.cscatterers[0]
+        # see sampleassemblies/Ni-interpolateabsorptionfromcurve/mu.dat
+        # check mu
+        neutron = mcni.neutron( r = (0,0,0), v = (0,0,conversion.e2v(40.)), time = 0, prob = 1 )
+        assert np.isclose(hs.mu(neutron), 100)
+        neutron = mcni.neutron( r = (0,0,0), v = (0,0,conversion.e2v(100.)), time = 0, prob = 1 )
+        assert np.isclose(hs.mu(neutron), 30)
+        neutron = mcni.neutron( r = (0,0,0), v = (0,0,conversion.e2v(70.)), time = 0, prob = 1 )
+        assert np.isclose(hs.mu(neutron), 65)
+        neutron = mcni.neutron( r = (0,0,0), v = (0,0,conversion.e2v(30.)), time = 0, prob = 1 )
+        assert np.isclose(hs.mu(neutron), 100)
+        neutron = mcni.neutron( r = (0,0,0), v = (0,0,conversion.e2v(1e-5)), time = 0, prob = 1 )
+        assert np.isclose(hs.mu(neutron), 100)
+        neutron = mcni.neutron( r = (0,0,0), v = (0,0,conversion.e2v(1000.)), time = 0, prob = 1 )
+        assert np.isclose(hs.mu(neutron), 30)
         return
     
 

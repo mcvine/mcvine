@@ -104,6 +104,7 @@ class HomogeneousScatterer(base):
         return
         
     onInverseVelocityAbsorption = onMuCalculator
+    onInterpolateAbsorptionFromCurve = onMuCalculator
     
     pass # end of HomogeneousScatterer
     

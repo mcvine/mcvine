@@ -12,3 +12,13 @@ class InverseVelocityAbsorption:
         return visitor.onInverseVelocityAbsorption(self)
 
 
+
+class InterpolateAbsorptionFromCurve:
+
+    def __init__(self, energies, mus):
+        self.energies = energies
+        self.mus = mus
+        return
+
+    def identify(self, visitor):
+        return visitor.onInterpolateAbsorptionFromCurve(self)

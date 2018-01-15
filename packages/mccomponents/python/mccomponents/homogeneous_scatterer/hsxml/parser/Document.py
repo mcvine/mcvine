@@ -23,6 +23,7 @@ class Document(base):
         "HomogeneousScatterer",
         'CompositeKernel',
         'InverseVelocityAbsorption',
+        'InterpolateAbsorptionFromCurve',
         ]
 
 

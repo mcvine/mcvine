@@ -9,6 +9,7 @@
 #include "mccomponents/homogeneous_scatterer/AbstractAbsorptionCoefficientCalculator.h"
 #include "mccomponents/homogeneous_scatterer/HomogeneousNeutronScatterer.h"
 #include "mccomponents/homogeneous_scatterer/InverseVelocityAbsorption.h"
+#include "mccomponents/homogeneous_scatterer/InterpolateAbsorptionFromCurve.h"
 
 namespace wrap_mccomponents {
 
@@ -25,6 +26,13 @@ namespace wrap_mccomponents {
 	   bases<AbstractAbsorptionCoefficientCalculator> >
       ("InverseVelocityAbsorption",
        init<double> ()
+       );
+
+    typedef std::vector<double> vec_t;
+    class_<mccomponents::InterpolateAbsorptionFromCurve,
+	   bases<AbstractAbsorptionCoefficientCalculator> >
+      ("InterpolateAbsorptionFromCurve",
+       init<const vec_t&, const vec_t&> ()
        );
   }
 }

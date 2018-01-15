@@ -61,13 +61,24 @@ class BoostPythonBinding(base, Interface):
         return binding.InverseVelocityAbsorption(mu_at_2200)
     
     
+    def interpolateabsorptionfromcurve(self, energies, mus):
+        cenergies = self.list_to_vector_double(energies)
+        cmus = self.list_to_vector_double(mus)
+        return binding.InterpolateAbsorptionFromCurve(cenergies, cmus)
+    
+    
     def vector_double(self, size):
         return binding.vector_double(size)
 
-
     def vector_rotmat(self):
         return binding.vector_rotmat(0)
-    
+
+    def list_to_vector_double(self, l):
+        vec = self.vector_double(len(l))
+        for i, v in enumerate(l):
+            vec[i] = l[i]
+            continue
+        return vec    
 
     pass # end of BoostPythonBinding
 
