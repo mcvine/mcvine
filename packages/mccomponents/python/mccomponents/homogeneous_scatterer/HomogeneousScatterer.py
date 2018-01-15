@@ -17,24 +17,27 @@ from mccomposite.Scatterer import Scatterer
 class HomogeneousScatterer(Scatterer):
 
     def __init__(
-        self, shape, kernel,
-        mcweights = (1,1,1),
-        max_multiplescattering_loops = None,
-        min_neutron_probability = None,
-        packing_factor = 1.,
+            self, shape, kernel,
+            mcweights = (1,1,1),
+            max_multiplescattering_loops = None,
+            min_neutron_probability = None,
+            packing_factor = 1.,
+            mu_calculator = None,
         ):
         '''create a new homogeneous scatterer
         
-    shape: geometric shape
-    kernel: scattering kernel
-    mcweights: monte carlo weights for (absorption, scattering, transmission)
-    '''
+        shape: geometric shape
+        kernel: scattering kernel
+        mcweights: monte carlo weights for (absorption, scattering, transmission)
+        mu_calculator: absorption coefficient calculator
+        '''
         Scatterer.__init__(self, shape)
         self._kernel = kernel
         self.mcweights = mcweights
         self.max_multiplescattering_loops = 5 if max_multiplescattering_loops is None else max_multiplescattering_loops
         self.min_neutron_probability = 0. if min_neutron_probability is None else min_neutron_probability
         self.packing_factor = 1. if packing_factor is None else packing_factor
+        self.mu_calculator = mu_calculator
         return
     
     

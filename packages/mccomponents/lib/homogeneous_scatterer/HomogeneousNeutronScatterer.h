@@ -84,6 +84,9 @@ namespace mccomponents{
 
     virtual void print(std::ostream &os) const;
 
+    // calculate absorption coefficient
+    double mu(const mcni::Neutron::Event &) const;
+    
   private:
     
     // helpers
@@ -91,8 +94,6 @@ namespace mccomponents{
     /// the only difference between this method and interactM_path1 is that 
     /// it does not propagate neutron to the surface.
     void _interactM1(const mcni::Neutron::Event &, mcni::Neutron::Events &);
-    // calculate absorption coefficient
-    double _mu(const mcni::Neutron::Event &) const;
     // data
     AbstractScatteringKernel & m_kernel;
     bool m_consult_kernel_for_mu_calc;

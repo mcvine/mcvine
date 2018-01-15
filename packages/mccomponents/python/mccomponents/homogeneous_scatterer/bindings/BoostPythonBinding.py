@@ -41,15 +41,24 @@ class BoostPythonBinding(base, Interface):
 
 
     def homogeneousscatterer(
-        self, shape, kernel, weights, 
-        max_multiplescattering_loops, min_neutron_probability, packing_factor,
+            self, shape, kernel, weights, 
+            max_multiplescattering_loops, min_neutron_probability, packing_factor,
+            mu_calculator
         ):
         cweights = binding.MCWeights_AbsorptionScatteringTransmission( *weights )
-        engine = binding.HomogeneousNeutronScatterer(shape, kernel, cweights )
+        if mu_calculator is None:
+            engine = binding.HomogeneousNeutronScatterer(shape, kernel, cweights )
+        else:
+            engine = binding.HomogeneousNeutronScatterer(shape, kernel, mu_calculator, cweights )
         engine.max_multiplescattering_loops = max_multiplescattering_loops
         engine.min_neutron_probability = min_neutron_probability
         engine.packing_factor = packing_factor
+        engine.mu_calculator = mu_calculator
         return engine
+
+
+    def inversevelocityabsorption(self, mu_at_2200):
+        return binding.InverseVelocityAbsorption(mu_at_2200)
     
     
     def vector_double(self, size):

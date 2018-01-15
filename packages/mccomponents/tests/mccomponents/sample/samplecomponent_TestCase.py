@@ -12,7 +12,7 @@
 #
 
 
-import os
+import os, numpy as np
 os.environ['MCVINE_MPI_BINDING'] = 'NONE'
 
 
@@ -37,8 +37,11 @@ class TestCase(unittest.TestCase):
         component1 = MonochromaticSource('source', neutron)
         from mccomponents.sample import samplecomponent
         component2 = samplecomponent( 'Ni', 'sampleassemblies/Ni/sampleassembly.xml' )
+        # check mu
+        hs = component2.cscatterers[0]
+        assert np.isclose(hs.mu(neutron), 4 * 4.49e-28 / (3.52e-10)**3*2200/3000)
+        #
         instrument = mcni.instrument( [component1, component2] )
-        
         geometer = mcni.geometer()
         geometer.register( component1, (0,0,0), (0,0,0) )
         geometer.register( component2, (0,0,1), (0,0,0) )
@@ -52,6 +55,18 @@ class TestCase(unittest.TestCase):
             print neutron
             continue
         
+        return
+    
+
+    def test1(self):
+        'mccomponents.sample.samplecomponent'
+        import mcni
+        neutron = mcni.neutron( r = (0,0,0), v = (0,0,3000), time = 0, prob = 1 )
+        from mccomponents.sample import samplecomponent
+        component2 = samplecomponent( 'Ni', 'sampleassemblies/Ni-inversevelocityabsorption/sampleassembly.xml' )
+        # check mu
+        hs = component2.cscatterers[0]
+        assert np.isclose(hs.mu(neutron), 22.)
         return
     
 

@@ -52,6 +52,7 @@ namespace wrap_mccomponents {
       .def_readwrite("max_multiplescattering_loops", &w_t::max_scattering_loops)
       .def_readwrite("min_neutron_probability", &w_t::min_neutron_probability)
       .def_readwrite("packing_factor", &w_t::packing_factor)
+      .def("mu", &w_t::mu)
       ;
 
     

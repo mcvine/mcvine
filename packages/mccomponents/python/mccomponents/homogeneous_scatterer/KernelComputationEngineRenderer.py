@@ -12,10 +12,9 @@
 #
 
 import numpy as np
-
+from .. import units
 
 from AbstractVisitor import AbstractVisitor
-
 class KernelComputationEngineRenderer( AbstractVisitor ):
 
 
@@ -75,12 +74,20 @@ class KernelComputationEngineRenderer( AbstractVisitor ):
         max_multiplescattering_loops = scatterer.max_multiplescattering_loops
         min_neutron_probability = scatterer.min_neutron_probability
         packing_factor = scatterer.packing_factor
+
+        mu_calculator = scatterer.mu_calculator.identify(self) \
+                        if scatterer.mu_calculator else None
         
         return factory.homogeneousscatterer( 
             cshape, ckernel, mcweights, 
             max_multiplescattering_loops, min_neutron_probability, 
-            packing_factor)
-    
+            packing_factor, mu_calculator)
+
+
+    def onInverseVelocityAbsorption(self, iva):
+        factory = self.factory
+        mu_at_2200 = self._unitsRemover.remove_unit(iva.mu_at_2200, 1./units.length.meter)
+        return factory.inversevelocityabsorption(mu_at_2200)
 
     pass # end of KernelComputationEngineRenderer
 

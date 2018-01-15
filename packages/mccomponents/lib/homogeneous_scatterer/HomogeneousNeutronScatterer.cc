@@ -84,7 +84,7 @@ mccomponents::HomogeneousNeutronScatterer::HomogeneousNeutronScatterer
 
 
 double 
-mccomponents::HomogeneousNeutronScatterer::_mu
+mccomponents::HomogeneousNeutronScatterer::mu
 (const mcni::Neutron::Event &ev) const
 {
   double mu;
@@ -136,7 +136,7 @@ mccomponents::HomogeneousNeutronScatterer::interact_path1(mcni::Neutron::Event &
   double distance = tof*ev.state.velocity.length();
   
   // absorption
-  double mu = _mu(ev);
+  double mu = this->mu(ev);
   // scattering
   double sigma = m_kernel.scattering_coefficient( ev ) * packing_factor;
 
@@ -323,7 +323,7 @@ mccomponents::HomogeneousNeutronScatterer::_interactM1
   double distance = tof*original.state.velocity.length();
   
   // absorption
-  double mu = _mu(original);
+  double mu = this->mu(original);
   // scattering
   double sigma = m_kernel.scattering_coefficient( original ) * packing_factor;
 
@@ -552,7 +552,7 @@ mccomponents::HomogeneousNeutronScatterer::calculate_attenuation
     if (tof > tofmax) break;
     prev = tof;
   }
-  double mu = _mu(ev);
+  double mu = this->mu(ev);
   double sigma = m_kernel.scattering_coefficient( ev ) * packing_factor;
   /*
   std::cout
