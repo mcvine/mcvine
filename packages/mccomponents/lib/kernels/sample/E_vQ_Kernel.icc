@@ -223,7 +223,8 @@ mccomponents::kernels::E_vQ_Kernel<E_vQ_functor_t, S_vQ_functor_t>\
   
   ev.probability *= nkf;
   // compute differential
-  double dkf = ki/100, df_dkf = std::abs(eqmd.evaluate(kf+dkf)-eqmd.evaluate(kf-dkf))/2/dkf;
+  double dkf = ki/200, df_dkf;
+  df_dkf = std::abs(-eqmd.evaluate(kf+2*dkf)+8*eqmd.evaluate(kf+dkf)-8*eqmd.evaluate(kf-dkf)+eqmd.evaluate(kf-2*dkf))/12/dkf;
   ev.probability *= 2 * ksq2e * kf / df_dkf;
   
   // kf vector
