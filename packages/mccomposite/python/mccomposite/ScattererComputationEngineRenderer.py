@@ -87,6 +87,7 @@ class ScattererComputationEngineRenderer( AbstractVisitor, ShapeComputationEngin
             )
         ret =  factory.compositescatterer(
             cshape, cscatterers, cgeometer, **kwds)
+        ret.cscatterers = cscatterers; ret.cshape = cshape
         return ret
 
 
