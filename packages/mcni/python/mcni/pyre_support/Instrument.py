@@ -30,7 +30,7 @@ mbs = os.environ.get('MCVINE_MAX_NEUTRON_BUFFER_SIZE')
 if mbs:
     mbs = int(float(mbs))
 else:
-    mbs = int(1e7)
+    mbs = int(2e6)
 MAXIMUM_BUFFER_SIZE = mbs
 
 from MpiApplication import Application as base

@@ -51,16 +51,18 @@ Why do I...
       
       --buffer_size=1000000
 
+    (Most simulation applications accept this option, but some workflow scripts
+    do not accept this option.)
     Optimal buffer_size depends on the memory for the computing nodes.
     For a machine of 1G memory, the maximum buffer_size would be
-    1e9/100 = 1e7 neutrons.
+    1e9/100 = 1e7 neutrons if only one processor is used.
     If, however, you are running parallely on a machine of 10 cpus and 2G
     ram, the maximum buffer_size would be 2e9/100/10 = 2e6.
     It also depends on factors such as
     whether the option "multiple-scattering" is turned on.
     If "multiple-scattering" is on, it is safer to divide the number 
     you got by another factor of 10.
-    If you are running a MCViNE workflow, sometimes it could be easy to
+    If you are running a MCViNE workflow, sometimes it could be more convenient to
     use environment variable to set the maximum neutron buffer size like
     this::
       
