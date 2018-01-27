@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE scatterer>
+
+<!-- weights: absorption, scattering, transmission -->
+<homogeneous_scatterer mcweights="0, 1, 0">
+  
+  <E_Q_Kernel 
+     E_Q="30" 
+     S_Q="pi:=3.1415926535897932384; s:=Q/(4*pi); 0.0288*exp(-25.2068*(s)^2)+0.2973*exp(-11.8311*(s)^2)+0.6954*exp(-4.2117*(s)^2)-0.0213+6*(s)^2*(0.4707*exp(-18.4301*(s)^2)+1.4261*exp(-7.0336*(s)^2)+0.9574*exp(-2.4387*(s)^2)+0.0182)"
+     Qmin="0./angstrom"
+     Qmax="16./angstrom"
+     />
+  
+</homogeneous_scatterer>
+
