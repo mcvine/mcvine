@@ -12,7 +12,8 @@ class TestCase(unittest.TestCase):
 
     def test1(self):
         'kernel: E_Q_Kernel flat S(Q)'
-        shutil.rmtree('out')
+        if os.path.exists('out'):
+            shutil.rmtree('out')
         cmd = "./ssm --ncount=1e5 --journal.debug.instrument"
         args = shlex.split(cmd)
         sp.check_call(args, cwd=here)
