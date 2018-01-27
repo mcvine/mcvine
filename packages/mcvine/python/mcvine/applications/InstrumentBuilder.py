@@ -41,13 +41,21 @@ app.run(*args, **kwds)
            run_params = (args, kwds))
             with open(apppath, 'wt') as ostream:
                 ostream.write(appscript)
-            # run the script in a subprocess
+            # create run.sh
             sysargs = ' '.join('"%s"' % a for a in sys.argv[1:])
             ppsd = os.path.join(workdir, 'post-processing-scripts')
             sysargs += ' --post-processing-scripts-dir=%s' % ppsd
             logpath = os.path.join(workdir, 'log.sim')
-            cmd = '%s %s %s>%s 2>&1' % (sys.executable, apppath, sysargs, logpath)
-            _exec(cmd)
+            cmd = '%s %s %s>%s 2>&1 \n' % (sys.executable, apppath, sysargs, logpath)
+            run_sh_path = os.path.join(workdir, 'run.sh')
+            with open(run_sh_path, 'wt') as ostream:
+                ostream.write(cmd)
+            # run run.sh
+            if DEBUG_INSTRUMENT_APP_PROXY:
+                print "* See run logs at %s" % logpath
+            _exec('bash %s' % run_sh_path)
+            # print output to screen
+            print open(logpath).read()
             # run the postprocessing script
             from mcni.pyre_support.Instrument import _run_ppsd
             _run_ppsd(ppsd)
@@ -64,6 +72,7 @@ def _exec(cmd):
     if DEBUG_INSTRUMENT_APP_PROXY: 
         print "* Running %s" % cmd
     if os.system(cmd):
+        print "* Running %s" % cmd
         raise RuntimeError("%s failed" % cmd)
     return
 
