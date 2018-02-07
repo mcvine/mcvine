@@ -1,3 +1,0 @@
-# -*- Python -*-
-
-# End of file 

@@ -1,3 +1,0 @@
-#!/usr/bin/env sh
-
-ln -s $MCVINE_RESOURCES/instruments/SEQUOIA/detsys/sequoia.xml.fornxs SEQUOIA.xml

@@ -1,9 +1,0 @@
-import mccomponents.sample.sansmodel.xml
-
-def sample():
-    from mcni.pyre_support import componentfactory as component
-    f = component('samples', 'SampleAssemblyFromXml', supplier = 'mcni')
-    return f('sample') 
-
-
-if __name__ == '__main__': sample()

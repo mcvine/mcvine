@@ -1,5 +1,0 @@
-# -*- Python -*-
-
-def neutroncomponent():
-    from mcvine.instruments.VULCAN.DetectorSystem import DetectorSystem
-    return DetectorSystem('detectorsystem')

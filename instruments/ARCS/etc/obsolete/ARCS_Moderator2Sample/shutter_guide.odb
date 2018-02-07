@@ -1,5 +1,0 @@
-
-def shutter_guide():
-    from mcni.pyre_support import componentfactory as component
-    f = component('obsolete', 'Channeled_guide', supplier = 'mcstas2')
-    return f('shutter_guide')

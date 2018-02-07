@@ -1,5 +1,0 @@
-
-def source():
-    from mcni.pyre_support import componentfactory
-    f = componentfactory( 'sources', 'NeutronFromStorage' )
-    return f('neutrons_from_storage')

@@ -1,5 +1,0 @@
-
-def fermi_chopper():
-    from mcni.pyre_support import componentfactory as component
-    f = component('optics', 'Fermi_chop2', supplier = 'mcstas2')
-    return f ('fermi_chopper' )

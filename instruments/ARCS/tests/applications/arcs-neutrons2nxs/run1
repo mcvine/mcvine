@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-
-arcs_neutrons2nxs --neutrons=scattered-neutrons-example --nodes=2

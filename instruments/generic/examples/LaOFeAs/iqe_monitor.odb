@@ -1,6 +1,0 @@
-
-def detector():
-    from mcstas2.pyre_support import componentfactory
-    f = componentfactory( 'monitors', 'IQE_monitor' )
-    ret = f('iqe_monitor')
-    return ret

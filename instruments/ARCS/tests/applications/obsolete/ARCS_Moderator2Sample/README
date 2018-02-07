@@ -1,5 +1,0 @@
-This is obsolete.
-
-There used to be several symlinks to source_sct521_bu_17_1.dat,
-which is now in mcvine/resources.
-They are removed so we don't have dangling pointers.

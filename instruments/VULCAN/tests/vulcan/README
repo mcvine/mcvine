@@ -1,6 +1,0 @@
-
-This test runs Vulcan simulation that replaces PSD_TEW_monitor and Monitor_nD 
-McStas components by NDMonitor McVine component.
-
-This is the Vulcan instrument configuration that will be used in VNF.
-

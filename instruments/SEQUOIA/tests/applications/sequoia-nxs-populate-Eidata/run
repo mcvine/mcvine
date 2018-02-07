@@ -1,2 +1,0 @@
-cp ../sequoia-neutrons2nxs/sequoia-sim.nxs .
-sequoia-nxs-populate-Eidata --mod2sample=../sequoia_beam/out --nxs=sequoia-sim.nxs
