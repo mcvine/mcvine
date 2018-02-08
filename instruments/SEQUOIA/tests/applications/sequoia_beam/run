@@ -1,4 +1,0 @@
-#!/usr/bin/env bash
-
-# sequoia_beam
-mcvine instruments sequoia beam --fermi_chopper=100-2.03-AST --fermi_nu=600 --T0_nu=60 --E=100 --ncount=1e7

@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-config-hyspec_moderator2sample
-hyspec_moderator2sample --ncount=1e5

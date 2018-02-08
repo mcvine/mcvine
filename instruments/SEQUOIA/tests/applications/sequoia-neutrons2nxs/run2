@@ -1,5 +1,0 @@
-#!/usr/bin/env sh
-# 
-# This test requires a data file at the given path.
-# This is only valid for account linjiao @ sns workstations.
-sequoia-neutrons2nxs --neutrons=/SNS/users/linjiao/simulations/SEQUOIA/resolution-calculator/sample-scattering-deltaQE/out/scattered-neutrons

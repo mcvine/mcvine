@@ -1,4 +1,0 @@
-def source():
-    from mcni.pyre_support import componentfactory
-    f = componentfactory( 'sources', 'MonochromaticSource' )
-    return f( 'mono_source' )

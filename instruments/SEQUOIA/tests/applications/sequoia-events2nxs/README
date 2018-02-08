@@ -1,6 +1,0 @@
-sequoia-events2nxs converts events.dat to nexus data file.
-
-events.dat data files need to be generated from mcvine simulation
-that sends scattered neutrons to SEQUOIA det system.
-this is demonsstrated in create-events*
-

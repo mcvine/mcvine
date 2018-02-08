@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-# 
-# This test requires a data file at the given path.
-# This is only valid for account linjiao @ sns workstations.
-arcs-neutrons2nxs --neutrons=/SNS/users/linjiao/simulations/ARCS/resolution-calculator/sample-scattering-deltaQE/out/scattered-neutrons

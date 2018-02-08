@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-
-arcs_beam --fermi_chopper=700-1.5-SMI --ncount=1e7

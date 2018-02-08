@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-
-mcvine-sns-reduce-by-mantid --nxs=hyspec-sim.nxs --psi=5 --powder=off --qaxis=0,6,0.1 --speout=hyspec-sim.nxspe

@@ -1,5 +1,0 @@
-
-def core_vessel_insert():
-    from mcni.pyre_support import componentfactory as component
-    f = component('obsolete', 'Channeled_guide', supplier = 'mcstas2')
-    return f('core_vessel_insert')

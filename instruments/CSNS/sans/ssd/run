@@ -1,8 +1,0 @@
-#!/usr/bin/env bash
-
-rm -rf out
-./ssd --ncount=1e6 --buffer_size=100000
-# ./ssd --ncount=1e7 --buffer_size=1000000
-
-# ./plot_ndmonitor.py out/monitor_0.h5
-

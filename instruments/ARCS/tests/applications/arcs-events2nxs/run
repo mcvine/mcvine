@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-
-arcs_events2nxs --type=raw --Ei=60. create-events/out/events.dat events.nxs

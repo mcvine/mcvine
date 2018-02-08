@@ -1,9 +1,0 @@
-
-def detector():
-    from mcni.pyre_support import componentfactory as component
-    f = component('monitors', 'PSD_monitor', supplier = 'mcstas2')
-    c = f('detector') 
-    return c
-
-
-if __name__ == '__main__': detector()

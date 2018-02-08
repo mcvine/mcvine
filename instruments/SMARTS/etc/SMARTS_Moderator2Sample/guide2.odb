@@ -1,8 +1,0 @@
-
-def guide2():
-    from mcni.pyre_support import componentfactory as component
-    f = component('optics', 'Guide', supplier = 'mcstas2')
-    return f('guide2') 
-
-
-if __name__ == '__main__': guide2()

@@ -1,6 +1,0 @@
-
-def tof_monitor1():
-    from mcni.pyre_support import componentfactory as component
-    f = component('monitors', 'TOF_monitor2', supplier = 'mcstas2')
-    ret =  f('tof_monitor1')
-    return ret

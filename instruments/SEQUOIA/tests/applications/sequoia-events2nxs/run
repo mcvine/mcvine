@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-
-mcvine instruments sequoia events2nxs --type=raw create-events/out/events.dat events.nxs

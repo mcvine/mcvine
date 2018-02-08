@@ -100,7 +100,6 @@ set(BUILDING_MCVINE "yes")
 # create empty cmake file for mcstas2/components
 execute_process(COMMAND ${CMAKE_COMMAND} -E touch ${CMAKE_SOURCE_DIR}/packages/legacycomponents/mcstas2/components/CMakeLists.txt)
 add_subdirectory(packages)
-add_subdirectory(instruments)
 
 # rule to build mcstas components
 # this one use distutils and can only run in series

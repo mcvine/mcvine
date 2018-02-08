@@ -1,9 +1,0 @@
-
-List of instruments:
---------------------
-
-run-mcvine.sh       - PSD_TEW_monitor with time range: [0,100]
-                      (compare with "vanadium-detector-system")
-run-mcvine2.sh      - NDMonitor with time range [0, 1] (replaces PSD_TEW_monitor)
-run-mcvine3.sh      - PSD_TEW_monitor with time range: [0,1]
-                      (compare with run-mcvine2.sh script)
