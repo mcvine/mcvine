@@ -65,7 +65,12 @@ from . import component, neutronstorage
 from mcvine.instrument import cli
 from mcstas2 import cli
 from . import sampleassembly #, kernel
-from mcvine.instruments import cli
+try:
+    from mcvine.instruments import cli
+except ImportError:
+    import warnings
+    warnings.warn("mcvine.instruments CLI not installed")
+
 from . import mantid
 try:
     from mcvine.phonon import cli
