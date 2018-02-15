@@ -33,11 +33,15 @@ Follow what is in the docker files in mcvine/builders/docker/ubuntu/14.04-from-s
 Continuous integration
 ----------------------
 
-This is done by using travis CI.
+This is done by using travis CI and jenkins: mcvine-core (https://github.com/mcvine/mcvine)
+and most mcvine subpackages are using travis CI.
+The systemtests-instruments repo is using jenkins at http://35.168.96.122:8080.
 
-When a test fails in travis CI, one can use mcvine/builders/sim-travis.sh
-to simulate the mcvine travis environment and find out the details of the
-failure in case the log message is not enough for debugging.
+This is obsolete::
+  
+  When a test fails in travis CI, one can use mcvine/builders/sim-travis.sh
+  to simulate the mcvine travis environment and find out the details of the
+  failure in case the log message is not enough for debugging.
 
 
 Deployment testing
