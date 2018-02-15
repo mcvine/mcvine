@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+# XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+# This is obsolete. Just follow what is in .travis.yml
+# XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
 # simulate the travis environment
 # run under ~/dv/mcvine/travis-CI/mcvine
 # ./builders/sim-travis.sh <branch>

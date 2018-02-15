@@ -1,23 +1,28 @@
 .. _relnotes:
 
-Release Notes 1.3 - Jul 22th 2017
-=================================
+Release Notes 1.3.1 - Feb 15th 2018
+===================================
 
 In this release, we
 
-* added powder workflow examples for SEQ and CNCS
-* experimented with DGS resolution calculators, and made them a new package in https://github.com/mcvine/dgsres
-* created a new tool to convert Mantid instrument IDF files for DGS instruments to MCViNE, and made a new package in https://github.com/mcvine/mantid2mcvine
-* added CLI "mcvine neutronstorage" and "mcvine component"
+* refactored to create new subpackages "mcvine.phonon", "mcvine.instruments", and "mcvine.workflow";
+  made "mcvine" a metapackage
+* added support of CSG in sample assemblies
+* added support for non-trivial energy dependence of absorption cross section
+* improved ARCS and SEQ instrument simulation tools (reduction and data rescue)
+* updated SEQUOIA simulation apps to use the new IDF
+* started repositories for running systemtests, "systemtests-instrumnets", "systemtests-sampleassemblies"
+* improved mcvine.applications.InstrumentBuilder
+* made improvements to sample kernels
 * Fixed some bugs
 
-Please refer to `related tickets <https://github.com/mcvine/mcvine/milestone/5?closed=1>`_
+Please refer to `related tickets <https://github.com/mcvine/mcvine/milestone/8?closed=1>`_
 for more details.
 
 
 Source code
 -----------
-can be found at `github <https://github.com/mcvine/mcvine/releases/tag/v1.3>`_
+can be found at `github <https://github.com/mcvine/mcvine/releases/tag/v1.3.1>`_
 
 
 Installation
