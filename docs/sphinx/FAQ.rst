@@ -27,8 +27,24 @@ How do I ...
     to :ref:`fundamentals-instrument`; for a tutorial, see
     :ref:`create-sim-app`.
 
-... What does the intensities at monitors mean?
-    Please refer to :ref:`fundamentals-simulated-intensities`
+... Rescue my instrument simulations?
+    Sometimes SEQ beam simulation may fail or stall, especially if the number of MC count is large.
+    In that case, you can rescue the simulation results by
+
+    1. Killing the process if necessary
+    2. Merge simulated neutrons::
+     
+       $ cd /path/to/sim/_m2sout
+       $ python -c "from mcni.neutron_storage import merge_and_normalize as man; man('neutrons', '.')"
+	 
+    3. Merge monitor outputs::
+   
+       $ python -c "from mcni.components.HistogramBasedMonitorMixin import merge_and_normalize as man; man('IE.h5', '.'); man('mon1-tof.h5', '.'); man('mon2-tof.h5', '.') "
+    
+    4. Run post-processing script (assume Ei=100. please change accordingly)::
+   
+       $ cd /path/to/sim/
+       $ python -c "from mcvine.instruments.SEQUOIA import beam_postprocessing as bpp; bpp.run('./_m2sout', './out', 100.)"
 
 
 Why do I...
@@ -68,3 +84,9 @@ Why do I...
       
       MCVINE_MAX_NEUTRON_BUFFER_SIZE=100000
     
+
+Other FAQs
+----------
+
+... What does the intensities at monitors mean?
+    Please refer to :ref:`fundamentals-simulated-intensities`

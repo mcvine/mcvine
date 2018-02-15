@@ -3,6 +3,9 @@
 News
 ====
 
+* **Feb 2018**:
+  - Release 1.3.1 (http://mcvine.github.io/1.3.1/release-notes.html) was out
+
 2017
 ----
 * **Oct 2017**:

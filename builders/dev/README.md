@@ -25,6 +25,8 @@ $ git clone git@github.com:mcvine/mcvine
 $ git clone git@github.com:mcvine/resources
 ```
 
+May need to clone other mcvine subpackages.
+
 ## env var shell script
 
 See "envs.sh" in this directory.
