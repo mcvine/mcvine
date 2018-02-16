@@ -64,6 +64,7 @@
 <li><a class="reference internal" href="#">Frequently Asked Questions</a><ul>
 <li><a class="reference internal" href="#how-do-i">How do I ...</a></li>
 <li><a class="reference internal" href="#why-do-i">Why do I...</a></li>
+<li><a class="reference internal" href="#other-faqs">Other FAQs</a></li>
 </ul>
 </li>
 </ul>
@@ -121,8 +122,31 @@ For help on common simulation application options, please refer
 to <a class="reference internal" href="Fundamentals.html#fundamentals-instrument"><span>Instrument</span></a>; for a tutorial, see
 <a class="reference internal" href="Tutorials-basics.html#create-sim-app"><span>Create and run your instrument simulation application</span></a>.</p>
 </dd>
-<dt>... What does the intensities at monitors mean?</dt>
-<dd>Please refer to <a class="reference internal" href="Fundamentals.html#fundamentals-simulated-intensities"><span>Simulated intensities</span></a></dd>
+<dt>... Rescue my instrument simulations?</dt>
+<dd><p class="first">Sometimes SEQ beam simulation may fail or stall, especially if the number of MC count is large.
+In that case, you can rescue the simulation results by</p>
+<ol class="last arabic">
+<li><p class="first">Killing the process if necessary</p>
+</li>
+<li><p class="first">Merge simulated neutrons:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ cd /path/to/sim/_m2sout
+$ python -c &quot;from mcni.neutron_storage import merge_and_normalize as man; man(&#39;neutrons&#39;, &#39;.&#39;)&quot;
+</pre></div>
+</div>
+</li>
+<li><p class="first">Merge monitor outputs:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python -c &quot;from mcni.components.HistogramBasedMonitorMixin import merge_and_normalize as man; man(&#39;IE.h5&#39;, &#39;.&#39;); man(&#39;mon1-tof.h5&#39;, &#39;.&#39;); man(&#39;mon2-tof.h5&#39;, &#39;.&#39;) &quot;
+</pre></div>
+</div>
+</li>
+<li><p class="first">Run post-processing script (assume Ei=100. please change accordingly):</p>
+<div class="highlight-python"><div class="highlight"><pre>$ cd /path/to/sim/
+$ python -c &quot;from mcvine.instruments.SEQUOIA import beam_postprocessing as bpp; bpp.run(&#39;./_m2sout&#39;, &#39;./out&#39;, 100.)&quot;
+</pre></div>
+</div>
+</li>
+</ol>
+</dd>
 </dl>
 </div>
 <div class="section" id="why-do-i">
@@ -145,22 +169,31 @@ kept in the memory. To set buffer_size to, say, one million neutrons, do:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="o">--</span><span class="n">buffer_size</span><span class="o">=</span><span class="mi">1000000</span>
 </pre></div>
 </div>
-<p>Optimal buffer_size depends on the memory for the computing nodes.
+<p>(Most simulation applications accept this option, but some workflow scripts
+do not accept this option.)
+Optimal buffer_size depends on the memory for the computing nodes.
 For a machine of 1G memory, the maximum buffer_size would be
-1e9/100 = 1e7 neutrons.
+1e9/100 = 1e7 neutrons if only one processor is used.
 If, however, you are running parallely on a machine of 10 cpus and 2G
 ram, the maximum buffer_size would be 2e9/100/10 = 2e6.
 It also depends on factors such as
 whether the option &#8220;multiple-scattering&#8221; is turned on.
 If &#8220;multiple-scattering&#8221; is on, it is safer to divide the number
 you got by another factor of 10.
-If you are running a MCViNE workflow, sometimes it could be easy to
+If you are running a MCViNE workflow, sometimes it could be more convenient to
 use environment variable to set the maximum neutron buffer size like
 this:</p>
 <div class="last highlight-python"><div class="highlight"><pre><span class="n">MCVINE_MAX_NEUTRON_BUFFER_SIZE</span><span class="o">=</span><span class="mi">100000</span>
 </pre></div>
 </div>
 </dd>
+</dl>
+</div>
+<div class="section" id="other-faqs">
+<h2>Other FAQs<a class="headerlink" href="#other-faqs" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt>... What does the intensities at monitors mean?</dt>
+<dd>Please refer to <a class="reference internal" href="Fundamentals.html#fundamentals-simulated-intensities"><span>Simulated intensities</span></a></dd>
 </dl>
 </div>
 </div>

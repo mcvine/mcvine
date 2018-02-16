@@ -65,8 +65,7 @@
 <li><a class="reference internal" href="#organization">Organization</a></li>
 <li><a class="reference internal" href="#development-environemnt">Development environemnt</a></li>
 <li><a class="reference internal" href="#continuous-integration">Continuous integration</a></li>
-<li><a class="reference internal" href="#deployment-testing">Deployment testing</a></li>
-<li><a class="reference internal" href="#building-release">Building release</a></li>
+<li><a class="reference internal" href="#building-conda-release">Building conda release</a></li>
 <li><a class="reference internal" href="#adding-modifying-adapted-mcstas-components">Adding/modifying Adapted McStas components</a></li>
 <li><a class="reference internal" href="#creating-a-new-scattering-kernel-for-sample">Creating a new scattering kernel for sample</a><ul>
 <li><a class="reference internal" href="#write-c-class">Write c++ class</a></li>
@@ -122,49 +121,52 @@
 <h2>Organization<a class="headerlink" href="#organization" title="Permalink to this headline">¶</a></h2>
 <p>Hosted at github</p>
 <ul class="simple">
-<li>mcvine:
-- src code</li>
-<li>resources:
-- resources needed by some mcvine applications etc
-- usually don&#8217;t change over time. new files are added into it.
-- path specified by env var MCVINE_RESOURCES
-- examples should be explicitly versioned?</li>
-<li>workflow (more details in <a class="reference internal" href="DevelopmentNotes.html#devnotes"><span>Development notes</span></a>):
-- scripts/Makefiles/etc
-- make it easier for users to construct workflow
-- intended to be lightweight</li>
-<li>training:
-- Markdown files and jupyter notebooks</li>
-<li>conda-recipes:
-- recipes to build conda packages</li>
+<li>mcvine:<ul>
+<li>mcvine core src code</li>
+</ul>
+</li>
+<li>resources:<ul>
+<li>resources needed by some mcvine applications etc</li>
+<li>usually don&#8217;t change over time. new files are added into it.</li>
+<li>path specified by env var MCVINE_RESOURCES</li>
+<li>examples should be explicitly versioned?</li>
+</ul>
+</li>
+<li>training:<ul>
+<li>Markdown files and jupyter notebooks</li>
+</ul>
+</li>
+<li>conda-recipes:<ul>
+<li>recipes to build conda packages</li>
+</ul>
+</li>
+<li>repos for subpackages:<ul>
+<li>instruments: ARCS/SEQUOIA/etc</li>
+<li>phonon: phonon-related utils for sample kernels</li>
+<li>workflow (more details in <a class="reference internal" href="DevelopmentNotes.html#devnotes"><span>Development notes</span></a>):<ul>
+<li>scripts/Makefiles/etc</li>
+<li>make it easier for users to construct workflow</li>
+<li>intended to be lightweight</li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </div>
 <div class="section" id="development-environemnt">
 <h2>Development environemnt<a class="headerlink" href="#development-environemnt" title="Permalink to this headline">¶</a></h2>
-<p>The following instructions work for ubuntu 14.04LTS 64bit</p>
-<p>Follow what is in the docker files in mcvine/builders/docker/ubuntu/14.04-from-source.</p>
+<p>Please follow <a class="reference external" href="https://github.com/mcvine/mcvine/tree/master/builders/dev">https://github.com/mcvine/mcvine/tree/master/builders/dev</a></p>
 </div>
 <div class="section" id="continuous-integration">
 <h2>Continuous integration<a class="headerlink" href="#continuous-integration" title="Permalink to this headline">¶</a></h2>
-<p>This is done by using travis CI.</p>
-<p>When a test fails in travis CI, one can use mcvine/builders/sim-travis.sh
-to simulate the mcvine travis environment and find out the details of the
-failure in case the log message is not enough for debugging.</p>
+<p>This is done by using travis CI and jenkins: mcvine-core (<a class="reference external" href="https://github.com/mcvine/mcvine">https://github.com/mcvine/mcvine</a>)
+and most mcvine subpackages are using travis CI.
+The systemtests-instruments repo is using jenkins at <a class="reference external" href="http://35.168.96.122:8080">http://35.168.96.122:8080</a>.</p>
 </div>
-<div class="section" id="deployment-testing">
-<h2>Deployment testing<a class="headerlink" href="#deployment-testing" title="Permalink to this headline">¶</a></h2>
-<p>This is done by travis-CI.</p>
-</div>
-<div class="section" id="building-release">
-<h2>Building release<a class="headerlink" href="#building-release" title="Permalink to this headline">¶</a></h2>
-<p>Use conda:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ cd ~/dv/mcvine/conda-recipes
-$ git pull
-$ . ~/.use-miniconda2
-$ source activate build-mcvine
-$ # run build commands in the current directory
-</pre></div>
-</div>
+<div class="section" id="building-conda-release">
+<h2>Building conda release<a class="headerlink" href="#building-conda-release" title="Permalink to this headline">¶</a></h2>
+<p>Use conda and docker. Follow the commands in
+<a class="reference external" href="https://github.com/mcvine/conda-recipes/blob/master/docker/run_docker_build.sh">https://github.com/mcvine/conda-recipes/blob/master/docker/run_docker_build.sh</a></p>
 </div>
 <div class="section" id="adding-modifying-adapted-mcstas-components">
 <h2>Adding/modifying Adapted McStas components<a class="headerlink" href="#adding-modifying-adapted-mcstas-components" title="Permalink to this headline">¶</a></h2>

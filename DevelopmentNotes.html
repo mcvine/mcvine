@@ -152,7 +152,7 @@ Note: use environment variable DEBUG_INSTRUMENT_APP_PROXY to debug this mechanis
 </div>
 <div class="section" id="sns-instruments">
 <h2>SNS instruments<a class="headerlink" href="#sns-instruments" title="Permalink to this headline">¶</a></h2>
-<p>They are in instruments/.</p>
+<p>They are in <a class="reference external" href="https://github.com/mcvine/instruments/">https://github.com/mcvine/instruments/</a>.</p>
 <p>There are now ARCS, SEQUOIA, and HYSPEC.</p>
 <p>ARCS and SEQUOIA were built earlier, and was translated from mcstas
 instrument to pyre script mostly by hand.</p>
@@ -178,11 +178,9 @@ HYSPEC and others: mcvine-sns-neutrons2nxs (instruments/SNS/bin)</p>
 <div class="section" id="add-an-instrument">
 <h3>Add an instrument<a class="headerlink" href="#add-an-instrument" title="Permalink to this headline">¶</a></h3>
 <p>This is a quick guide. not very well organized.</p>
-<ul>
-<li><p class="first">convert mcstas instrument to python scripts
-- modify mcstas instrument file</p>
-<blockquote>
-<div><ul class="simple">
+<ul class="simple">
+<li>convert mcstas instrument to python scripts<ul>
+<li>modify mcstas instrument file<ul>
 <li>convert to unix format (&#8220;rn&#8221;-&gt;&#8221;n&#8221;) using dos2unix</li>
 <li>make sure that in the &#8220;DEFINE INSTRUMENT&#8221; line all parameters have default values</li>
 <li>if c code snippets exist in the &#8220;DECLARE&#8221; or &#8220;INITIALIZE&#8221;, move all of them
@@ -192,26 +190,33 @@ and make sure the to convert them into python syntax</li>
 and &#8220;ROTATED ...&#8221; clause are in two different lines.
 Also add a space between &#8220;AT/ROTATED&#8221; and &#8220;(...)&#8221; if there is none.</li>
 </ul>
-</div></blockquote>
-<ul class="simple">
+</li>
 <li>$ mcvine mcstas convertinstrument &lt;instrument-file&gt;
-This cmd generates
-- &#8220;config-SIM&#8221; script: use this to generate configuration of the instrument simulation
-- &#8220;SIM&#8221; script: run this script to simulate</li>
+This cmd generates<ul>
+<li>&#8220;config-SIM&#8221; script: use this to generate configuration of the instrument simulation</li>
+<li>&#8220;SIM&#8221; script: run this script to simulate</li>
 </ul>
 </li>
-<li><p class="first">add a high-level script &lt;instrument&gt;-beam that runs the beam and do beam analysis</p>
+</ul>
 </li>
-<li><p class="first">convert mantid instrument xml file for the instrument to a mcvine instrument, by add an instrument factory to the instrument package</p>
+<li>add a high-level script &lt;instrument&gt;-beam that runs the beam and do beam analysis</li>
+<li>convert mantid instrument xml file for the instrument to a mcvine instrument.<ul>
+<li>This was done by add an instrument factory to the instrument package</li>
+<li>It can be now done by using mantid2mcvine. An example can be found with SEQ.
+See <a class="reference external" href="https://github.com/mcvine/mcvine/issues/261">https://github.com/mcvine/mcvine/issues/261</a>, <a class="reference external" href="https://github.com/mcvine/instruments/pull/1">https://github.com/mcvine/instruments/pull/1</a>,
+and <a class="reference external" href="https://github.com/mcvine/instruments/tree/a2840b0cf067a04c5cbf7fd0a77103e17a8e69ec/SEQUOIA/mantid2mcvine">https://github.com/mcvine/instruments/tree/a2840b0cf067a04c5cbf7fd0a77103e17a8e69ec/SEQUOIA/mantid2mcvine</a></li>
+</ul>
 </li>
 </ul>
 </div>
 <div class="section" id="requirements-of-instrument-specific-cli-by-dgs-workflow">
 <h3>Requirements of instrument-specific CLI by DGS workflow<a class="headerlink" href="#requirements-of-instrument-specific-cli-by-dgs-workflow" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li>neutrons2nxs: convert scattered neutron to nxs file.
-- Usually this is done with a cmd like this: mcvine instruments ${INSTRUMENT} neutrons2nxs &#8211;neutrons=out/scattered-neutrons &#8211;nxs=sim.nxs &#8211;populate-metadata &#8211;beam=beam &#8211;nodes=10
-- In case of HYSPEC, this is done by a special &#8220;create-nxs&#8221; script in its workflow template: <a class="reference external" href="https://github.com/mcvine/workflow/blob/a8e3d462e01bd10241b575f4940243dcac23d4ac/DGS/hyspec/single-crystal/scattering/template/create-nxs">https://github.com/mcvine/workflow/blob/a8e3d462e01bd10241b575f4940243dcac23d4ac/DGS/hyspec/single-crystal/scattering/template/create-nxs</a></li>
+<li>neutrons2nxs: convert scattered neutron to nxs file.<ul>
+<li>Usually this is done with a cmd like this: mcvine instruments ${INSTRUMENT} neutrons2nxs &#8211;neutrons=out/scattered-neutrons &#8211;nxs=sim.nxs &#8211;populate-metadata &#8211;beam=beam &#8211;nodes=10</li>
+<li>In case of HYSPEC, this is done by a special &#8220;create-nxs&#8221; script in its workflow template: <a class="reference external" href="https://github.com/mcvine/workflow/blob/a8e3d462e01bd10241b575f4940243dcac23d4ac/DGS/hyspec/single-crystal/scattering/template/create-nxs">https://github.com/mcvine/workflow/blob/a8e3d462e01bd10241b575f4940243dcac23d4ac/DGS/hyspec/single-crystal/scattering/template/create-nxs</a></li>
+</ul>
+</li>
 <li>nxs reduce: reduce nxs file to iqe.nxs
 - cmd: mcvine instruments ${INSTRUMENT} nxs reduce EVENTMODE.NXS &#8211;qaxis=0 15 0.1 &#8211;tof2E</li>
 </ul>
@@ -247,23 +252,25 @@ parameters to set.</p>
 <h2>Infrastructure<a class="headerlink" href="#infrastructure" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="resources">
 <h3>Resources<a class="headerlink" href="#resources" title="Permalink to this headline">¶</a></h3>
-<p>Organization:
-* instruments:</p>
-<blockquote>
-<div><ul class="simple">
-<li>each directory corresponds to one instrument</li>
-<li>subdirs of an instrument
-- moderator
-- detsys
-- nxs
-- simulations</li>
-</ul>
-</div></blockquote>
+<p>Organization:</p>
 <ul class="simple">
-<li>samples:
-- any directory with sampleassembly.xml is a sample assembly folder
-- other directories could provide various kinds of data
-- hierarchy: matter/temperature/shape/...  For example: V/300K/plate</li>
+<li>instruments:<ul>
+<li>each directory corresponds to one instrument</li>
+<li>subdirs of an instrument<ul>
+<li>moderator</li>
+<li>detsys</li>
+<li>nxs</li>
+<li>simulations</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>samples:<ul>
+<li>any directory with sampleassembly.xml is a sample assembly folder</li>
+<li>other directories could provide various kinds of data</li>
+<li>hierarchy: matter/temperature/shape/...  For example: V/300K/plate</li>
+</ul>
+</li>
 </ul>
 <p>McStas component library: its path is set by env var $MCSTAS_COMPONENT_LIBDIR.</p>
 </div>
@@ -272,8 +279,10 @@ parameters to set.</p>
 <ul class="simple">
 <li>Use both pyre journal and python logging</li>
 <li>pyre journal configured by pml files</li>
-<li>logging configured by &#8220;mcvine.conf&#8221; (see mcvine toplevel __init__.py)
-- example: tests/logger/mcvine.conf</li>
+<li>logging configured by &#8220;mcvine.conf&#8221; (see mcvine toplevel __init__.py)<ul>
+<li>example: tests/logger/mcvine.conf</li>
+</ul>
+</li>
 </ul>
 </div>
 <div class="section" id="documentation">
@@ -304,10 +313,11 @@ Documentation for the development version</li>
 Later when needed, positional and orientational
 information of an object can be requested from the registry.</p>
 <p>For example, in mccomponents.sample.sampleassembly_support.onSampleAssembly,
-calls</p>
-<blockquote>
-<div>lg.position(scatterer)
-lg.orientation(scatterer)</div></blockquote>
+calls:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">lg</span><span class="o">.</span><span class="n">position</span><span class="p">(</span><span class="n">scatterer</span><span class="p">)</span>
+<span class="n">lg</span><span class="o">.</span><span class="n">orientation</span><span class="p">(</span><span class="n">scatterer</span><span class="p">)</span>
+</pre></div>
+</div>
 <p>request the position and orientation of the scatterer.</p>
 </div>
 </div>

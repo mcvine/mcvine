@@ -6,56 +6,54 @@ Organization
 Hosted at github
 
 * mcvine:
-  - src code
+  
+  - mcvine core src code
+  
 * resources:
+      
   - resources needed by some mcvine applications etc
   - usually don't change over time. new files are added into it.
   - path specified by env var MCVINE_RESOURCES
   - examples should be explicitly versioned?
-* workflow (more details in :ref:`devnotes`):
-  - scripts/Makefiles/etc
-  - make it easier for users to construct workflow
-  - intended to be lightweight
+
 * training:
+      
   - Markdown files and jupyter notebooks
+  
 * conda-recipes:
+      
   - recipes to build conda packages
+  
+* repos for subpackages:
+      
+  - instruments: ARCS/SEQUOIA/etc
+  - phonon: phonon-related utils for sample kernels
+  - workflow (more details in :ref:`devnotes`):
+  
+    - scripts/Makefiles/etc
+    - make it easier for users to construct workflow
+    - intended to be lightweight
 
 
 Development environemnt
 -----------------------
 
-The following instructions work for ubuntu 14.04LTS 64bit
-
-Follow what is in the docker files in mcvine/builders/docker/ubuntu/14.04-from-source.
+Please follow https://github.com/mcvine/mcvine/tree/master/builders/dev
 
 
 Continuous integration
 ----------------------
 
-This is done by using travis CI.
-
-When a test fails in travis CI, one can use mcvine/builders/sim-travis.sh
-to simulate the mcvine travis environment and find out the details of the
-failure in case the log message is not enough for debugging.
+This is done by using travis CI and jenkins: mcvine-core (https://github.com/mcvine/mcvine)
+and most mcvine subpackages are using travis CI.
+The systemtests-instruments repo is using jenkins at http://35.168.96.122:8080.
 
 
-Deployment testing
-------------------
+Building conda release
+----------------------
 
-This is done by travis-CI.
-
-
-Building release
-----------------
-
-Use conda::
-
- $ cd ~/dv/mcvine/conda-recipes
- $ git pull
- $ . ~/.use-miniconda2
- $ source activate build-mcvine
- $ # run build commands in the current directory
+Use conda and docker. Follow the commands in
+https://github.com/mcvine/conda-recipes/blob/master/docker/run_docker_build.sh
 
 
 Adding/modifying Adapted McStas components
@@ -176,6 +174,7 @@ Create python handlers
 * factory method for the kernel: new method in subpackage mccomponents.sample (__init__.py)
 * handler for computation engine renderer: new method in mccomponents.sample.ComputationEngineRendererExtension
 * xml handler: in subpackage mccomponents.sample.kernelxml
+    
  - Renderer (new handler method)
  - parser.Document (new stub)
  - parser.HomogeneousScatterer (new handler method)
@@ -183,6 +182,7 @@ Create python handlers
  - parser.ScateringKernel (new handler method)
  - parser.<kernel-name> (new module)
  - parser/Make.mm (new entry for the new kernel module)
+  
 * test case: new module in mccomponents/tests/sample
 
 The steps presented here are good for more-or-less generic sample kernels.
