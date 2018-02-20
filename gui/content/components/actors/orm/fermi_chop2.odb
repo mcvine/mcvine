@@ -1,8 +1,0 @@
-# -*- Python -*-
-
-from mcvineui.dom.neutron_components.Fermi_chop2 import Fermi_chop2
-from mcvineui.actors.NeutronComponentOrmActorFactory import factory
-Actor = factory(Fermi_chop2, needauthorization=False)
-def actor():
-    return Actor('orm/fermi_chop2')
-

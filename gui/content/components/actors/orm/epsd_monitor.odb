@@ -1,8 +1,0 @@
-# -*- Python -*-
-
-from mcvineui.dom.neutron_components.EPSD_monitor import EPSD_monitor
-from mcvineui.actors.NeutronComponentOrmActorFactory import factory
-Actor = factory(EPSD_monitor, needauthorization=False)
-def actor():
-    return Actor('orm/epsd_monitor')
-

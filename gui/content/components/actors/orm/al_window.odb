@@ -1,8 +1,0 @@
-# -*- Python -*-
-
-from mcvineui.dom.neutron_components.Al_window import Al_window
-from mcvineui.actors.NeutronComponentOrmActorFactory import factory
-Actor = factory(Al_window, needauthorization=False)
-def actor():
-    return Actor('orm/al_window')
-

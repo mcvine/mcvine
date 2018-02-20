@@ -1,8 +1,0 @@
-# -*- Python -*-
-
-from mcvineui.dom.neutron_components.DivLambda_monitor import DivLambda_monitor
-from mcvineui.actors.NeutronComponentOrmActorFactory import factory
-Actor = factory(DivLambda_monitor, needauthorization=False)
-def actor():
-    return Actor('orm/divlambda_monitor')
-

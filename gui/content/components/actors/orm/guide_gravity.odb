@@ -1,8 +1,0 @@
-# -*- Python -*-
-
-from mcvineui.dom.neutron_components.Guide_gravity import Guide_gravity
-from mcvineui.actors.NeutronComponentOrmActorFactory import factory
-Actor = factory(Guide_gravity, needauthorization=False)
-def actor():
-    return Actor('orm/guide_gravity')
-

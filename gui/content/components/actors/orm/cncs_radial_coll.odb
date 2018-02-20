@@ -1,8 +1,0 @@
-# -*- Python -*-
-
-from mcvineui.dom.neutron_components.CNCS_radial_coll import CNCS_radial_coll
-from mcvineui.actors.NeutronComponentOrmActorFactory import factory
-Actor = factory(CNCS_radial_coll, needauthorization=False)
-def actor():
-    return Actor('orm/cncs_radial_coll')
-

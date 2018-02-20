@@ -1,9 +1,0 @@
-
-def visual(director):
-    import luban.content
-    frame = luban.content.frame(title='mcvine')
-    
-    doc = director.retrieveVisual('start')
-    frame.add(doc)
-    
-    return frame

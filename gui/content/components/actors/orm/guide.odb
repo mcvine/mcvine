@@ -1,8 +1,0 @@
-# -*- Python -*-
-
-from mcvineui.dom.neutron_components.Guide import Guide
-from mcvineui.actors.NeutronComponentOrmActorFactory import factory
-Actor = factory(Guide, needauthorization=False)
-def actor():
-    return Actor('orm/guide')
-

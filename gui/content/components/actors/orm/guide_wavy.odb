@@ -1,8 +1,0 @@
-# -*- Python -*-
-
-from mcvineui.dom.neutron_components.Guide_wavy import Guide_wavy
-from mcvineui.actors.NeutronComponentOrmActorFactory import factory
-Actor = factory(Guide_wavy, needauthorization=False)
-def actor():
-    return Actor('orm/guide_wavy')
-

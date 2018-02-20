@@ -1,8 +1,0 @@
-# -*- Python -*-
-
-from mcvineui.dom.neutron_components.Bender import Bender
-from mcvineui.actors.NeutronComponentOrmActorFactory import factory
-Actor = factory(Bender, needauthorization=False)
-def actor():
-    return Actor('orm/bender')
-

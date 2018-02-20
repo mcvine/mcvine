@@ -1,8 +1,0 @@
-# -*- Python -*-
-
-from mcvineui.dom.neutron_components.IQE_monitor import IQE_monitor
-from mcvineui.actors.NeutronComponentOrmActorFactory import factory
-Actor = factory(IQE_monitor, needauthorization=False)
-def actor():
-    return Actor('orm/iqe_monitor')
-

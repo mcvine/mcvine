@@ -1,8 +1,0 @@
-# -*- Python -*-
-
-from mcvineui.dom.neutron_components.Source_div import Source_div
-from mcvineui.actors.NeutronComponentOrmActorFactory import factory
-Actor = factory(Source_div, needauthorization=False)
-def actor():
-    return Actor('orm/source_div')
-

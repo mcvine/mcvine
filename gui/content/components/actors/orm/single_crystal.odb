@@ -1,8 +1,0 @@
-# -*- Python -*-
-
-from mcvineui.dom.neutron_components.Single_crystal import Single_crystal
-from mcvineui.actors.NeutronComponentOrmActorFactory import factory
-Actor = factory(Single_crystal, needauthorization=False)
-def actor():
-    return Actor('orm/single_crystal')
-

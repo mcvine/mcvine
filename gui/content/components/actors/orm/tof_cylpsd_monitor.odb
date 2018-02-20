@@ -1,8 +1,0 @@
-# -*- Python -*-
-
-from mcvineui.dom.neutron_components.TOF_cylPSD_monitor import TOF_cylPSD_monitor
-from mcvineui.actors.NeutronComponentOrmActorFactory import factory
-Actor = factory(TOF_cylPSD_monitor, needauthorization=False)
-def actor():
-    return Actor('orm/tof_cylpsd_monitor')
-

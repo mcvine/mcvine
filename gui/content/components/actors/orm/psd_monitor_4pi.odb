@@ -1,8 +1,0 @@
-# -*- Python -*-
-
-from mcvineui.dom.neutron_components.PSD_monitor_4PI import PSD_monitor_4PI
-from mcvineui.actors.NeutronComponentOrmActorFactory import factory
-Actor = factory(PSD_monitor_4PI, needauthorization=False)
-def actor():
-    return Actor('orm/psd_monitor_4pi')
-

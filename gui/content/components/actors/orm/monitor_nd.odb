@@ -1,8 +1,0 @@
-# -*- Python -*-
-
-from mcvineui.dom.neutron_components.Monitor_nD import Monitor_nD
-from mcvineui.actors.NeutronComponentOrmActorFactory import factory
-Actor = factory(Monitor_nD, needauthorization=False)
-def actor():
-    return Actor('orm/monitor_nd')
-

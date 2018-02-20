@@ -1,8 +1,0 @@
-# -*- Python -*-
-
-from mcvineui.dom.neutron_components.FermiChopper import FermiChopper
-from mcvineui.actors.NeutronComponentOrmActorFactory import factory
-Actor = factory(FermiChopper, needauthorization=False)
-def actor():
-    return Actor('orm/fermichopper')
-

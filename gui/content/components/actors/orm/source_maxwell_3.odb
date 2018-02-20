@@ -1,8 +1,0 @@
-# -*- Python -*-
-
-from mcvineui.dom.neutron_components.Source_Maxwell_3 import Source_Maxwell_3
-from mcvineui.actors.NeutronComponentOrmActorFactory import factory
-Actor = factory(Source_Maxwell_3, needauthorization=False)
-def actor():
-    return Actor('orm/source_maxwell_3')
-

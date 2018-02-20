@@ -1,8 +1,0 @@
-# -*- Python -*-
-
-from mcvineui.dom.neutron_components.Filter_gen import Filter_gen
-from mcvineui.actors.NeutronComponentOrmActorFactory import factory
-Actor = factory(Filter_gen, needauthorization=False)
-def actor():
-    return Actor('orm/filter_gen')
-

@@ -1,8 +1,0 @@
-# -*- Python -*-
-
-from mcvineui.dom.neutron_components.DetectorSystemFromXml import DetectorSystemFromXml
-from mcvineui.actors.NeutronComponentOrmActorFactory import factory
-Actor = factory(DetectorSystemFromXml, needauthorization=False)
-def actor():
-    return Actor('orm/detectorsystemfromxml')
-

@@ -1,8 +1,0 @@
-# -*- Python -*-
-
-from mcvineui.dom.neutron_components.DiskChopper import DiskChopper
-from mcvineui.actors.NeutronComponentOrmActorFactory import factory
-Actor = factory(DiskChopper, needauthorization=False)
-def actor():
-    return Actor('orm/diskchopper')
-

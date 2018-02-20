@@ -1,8 +1,0 @@
-# -*- Python -*-
-
-from mcvineui.dom.neutron_components.NeutronsOnCone_FixedQE import NeutronsOnCone_FixedQE
-from mcvineui.actors.NeutronComponentOrmActorFactory import factory
-Actor = factory(NeutronsOnCone_FixedQE, needauthorization=False)
-def actor():
-    return Actor('orm/neutronsoncone_fixedqe')
-

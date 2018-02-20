@@ -1,8 +1,0 @@
-# -*- Python -*-
-
-from mcvineui.dom.neutron_components.DivPos_monitor import DivPos_monitor
-from mcvineui.actors.NeutronComponentOrmActorFactory import factory
-Actor = factory(DivPos_monitor, needauthorization=False)
-def actor():
-    return Actor('orm/divpos_monitor')
-
