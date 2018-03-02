@@ -108,11 +108,11 @@ namespace {
     // need to calculate c1 and c2
     // c1 = (AP dot AC*) / (AB dot AC*) where AC* = N X AC
     Position AC_ = N * AC; double c1 = (AP|AC_)/(AB|AC_);
-    if (c1<=0) return;
+    if (c1<0) return;
     // c2 = (AP dot AB*) / (AC dot AB*) where AB* = N X AB
     Position AB_ = N * AB; double c2 = (AP|AB_)/(AC|AB_);
-    if (c2<=0) return;
-    if (c1+c2>=1) return;
+    if (c2<0) return;
+    if (c1+c2>1) return;
     // 
     ts.push_back(t);
   }
@@ -374,7 +374,13 @@ mccomposite::geometry::ArrowIntersector::visit
 #endif
   
   if (!ts.size()) return;
-  if (ts.size() == 1) {
+  // remove duplicates
+  std::sort(ts.begin(), ts.end());  // have to sort otherwise unique does not work well
+  std::vector<double>::iterator new_end = std::unique
+    (ts.begin(), ts.end(), eq_withinepsilon);
+  int N = new_end-ts.begin();
+  //
+  if (N == 1) {
     // this is usually due to numerical errors
 #ifdef DEBUG
     debug
@@ -387,13 +393,16 @@ mccomposite::geometry::ArrowIntersector::visit
 #endif
     return;
   }
-  if (ts.size()!=2) {
+  if (N!=2) {
     std::ostringstream oss;
     oss << "number of intersections between a line and a pyramid should be 0 or 2, "
-	<< "we got " << ts.size() << ". "
-	<< "pyramid: " << pyramid << ", "
-	<< "arrow: " << m_arrow
+	<< "we got " << N << ": " ;
+    for (std::vector<double>::iterator it=ts.begin(); it!=new_end; it++) oss << *it << ", ";
+    oss << std::endl
+	<< pyramid << ", "
+	<< m_arrow << std::endl
       ;
+    oss << std::scientific << ts[2] - ts[0] << std::endl;
     throw Exception(oss.str());
   }
   

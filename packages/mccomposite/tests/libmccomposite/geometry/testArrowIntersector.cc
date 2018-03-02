@@ -22,10 +22,16 @@
 
 #include "journal/debug.h"
 
-using namespace std;
-using namespace mccomposite::geometry;
-char * jrnltag ="testArrowIntersector";
+namespace {
+  using namespace std;
+  using namespace mccomposite::geometry;
+  char * jrnltag ="testArrowIntersector";
+  double epsilon = 1e-7;
 
+  bool isclose(double a, double b) {
+    return std::abs(a-b) < epsilon;
+  }
+}
 
 void test1()
 {
@@ -119,6 +125,61 @@ void test4()
   assert (distances2.size() == 2);
   assert (distances2[0] == -1 );
   assert (distances2[1] == 1 );
+}
+
+void test4a()
+{
+  Pyramid pyramid(2,3,5);
+  Arrow arrow( Position (0,0,-5), Direction(0,0,1) );
+  // vertical
+  ArrowIntersector::distances_t distances = intersect(arrow, pyramid);
+  assert (distances.size() == 2);
+  assert (distances[0] == 5 );
+  assert (distances[1] == 10 );
+
+  // horizontal along x, half height, through axis
+  arrow = Arrow(Position(0,0,2.5), Direction(1,0,0) );
+  distances = intersect(arrow, pyramid);
+  assert (distances.size() == 2);
+  assert (distances[0] == -0.5 );
+  assert (distances[1] == 0.5 );
+
+  // horizontal along y, half height, through axis
+  arrow = Arrow(Position(0,0,2.5), Direction(0,1,0) );
+  distances = intersect(arrow, pyramid);
+  assert (distances.size() == 2);
+  assert (isclose(distances[0], -0.75 ));
+  assert (isclose(distances[1], 0.75 ));
+
+  // horizontal along y, half height, not through axis
+  arrow = Arrow(Position(0.5,0,2.5), Direction(0,1,0) );
+  distances = intersect(arrow, pyramid);
+  assert (distances.size() == 2);
+  assert (isclose(distances[0], -0.75 ));
+  assert (isclose(distances[1], 0.75 ));
+
+  // horizontal along xy diagonal, half height, through axis
+  arrow = Arrow(Position(0,0,2.5), Direction(1,1.5,0) );
+  distances = intersect(arrow, pyramid);
+  assert (distances.size() == 2);
+  assert (isclose(distances[0], -.5 ));
+  assert (isclose(distances[1], .5 ));
+  
+  // horizontal along xy diagonal, base, through axis
+  arrow = Arrow(Position(0,0,0), Direction(1,1.5,0) );
+  distances = intersect(arrow, pyramid);
+  assert (distances.size() == 2);
+  assert (isclose(distances[0], -1 ));
+  assert (isclose(distances[1], 1 ));
+
+  // vertical, offset from axis with dx=.5
+  arrow = Arrow(Position(0.5,0,0), Direction(0,0,1) );
+  distances = intersect(arrow, pyramid);
+  // std::cout << distances << std::endl;
+  assert (distances.size() == 2);
+  assert (isclose(distances[0], 0 ));
+  assert (isclose(distances[1], 2.5 ));
+  
 }
 
 void test5()
@@ -222,6 +283,7 @@ int main()
   test2();
   test3();
   test4();
+  test4a();
   test5();
   test6();
   test7();
