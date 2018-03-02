@@ -30,6 +30,14 @@ class InstrumentScientistCSAdaptor_for_ShapeComputationEngineRenderer:
         diagonal = self._remove_length_unit( diagonal )
         return self.factory.block( diagonal )
 
+    def onPyramid(self, pyramid):
+        # x: downstream. thickness
+        # y: horizontal. width
+        # z: vertical up. height
+        xyz = pyramid.thickness, pyramid.width, pyramid.height
+        xyz = self._remove_length_unit( xyz )
+        return self.factory.pyramid( *xyz )
+
     def onCylinder(self, cylinder):
         p = self._remove_length_unit( (cylinder.radius, cylinder.height) )
         return self.factory.cylinder( *p )

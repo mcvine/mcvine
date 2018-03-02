@@ -25,7 +25,9 @@ class AbstractCSAdaptor_for_ShapeComputationEngineRenderer:
     def onCylinder(self, cylinder):
         raise NotImplementedError
     
-
+    def onPyramid(self, pyramid):
+        raise NotImplementedError
+    
     pass # end of AbstractCSAdaptor_for_ShapeComputationEngineRenderer
 
 

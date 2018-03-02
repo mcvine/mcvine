@@ -30,6 +30,17 @@ class McStasCSAdaptor_for_ShapeComputationEngineRenderer:
         diagonal = self._remove_length_unit( diagonal )
         return self.factory.block( diagonal )
 
+    def onPyramid(self, pyramid):
+        p = self._remove_length_unit( (pyramid.thickness, pyramid.width, pyramid.height) )
+        solid = self.factory.pyramid( *p )
+        # pyramid should have vertical axis. (y axis)
+        # but the pyramid created above is along z axis. need to rotate -90 about x axis
+        r = self.factory.orientation( (-90,0,0) )
+        solid = self.factory.rotate( solid, r )
+        # and then rotate along y by -90.
+        r = self.factory.orientation( (0, -90, 0) )
+        return self.factory.rotate(solid, r)
+
     def onCylinder(self, cylinder):
         p = self._remove_length_unit( (cylinder.radius, cylinder.height) )
         cyl = self.factory.cylinder( *p )

@@ -13,7 +13,7 @@
 
 
 from utils import locate
-import primitives, operations
+from . import primitives, operations
 
 
 def shapeEngine(
