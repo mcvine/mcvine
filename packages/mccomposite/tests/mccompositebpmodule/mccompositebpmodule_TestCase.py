@@ -31,6 +31,16 @@ class mccompositebpmodule_TestCase(unittest.TestCase):
         return
 
 
+    def testShapes(self):
+        'shapes'
+        block = binding.Block(1,1,1)
+        sphere = binding.Sphere(1)
+        cyl = binding.Cylinder(1, 5)
+        pyramid = binding.Pyramid(1, 1.5, 5)
+        print block, sphere, cyl, pyramid
+        return
+    
+
     def testCompositeNeutronScatterer(self):
         'CompositeNeutronScatterer'
         geometer = binding.Geometer_NeutronScatterer( );
