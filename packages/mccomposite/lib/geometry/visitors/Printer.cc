@@ -31,6 +31,17 @@ mccomposite::geometry::Printer::visit
 
 void
 mccomposite::geometry::Printer::visit
+( const Pyramid * pyramid ) 
+{
+  os << "Pyramid("
+     << "edgeX=" << pyramid->edgeX << ","
+     << "edgeY=" << pyramid->edgeY << ","
+     << "height=" << pyramid->height << "," 
+     << ")" ;
+}
+
+void
+mccomposite::geometry::Printer::visit
 ( const Sphere * sphere ) 
 {
   os << "Sphere("

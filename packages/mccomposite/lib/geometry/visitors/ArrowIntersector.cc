@@ -81,6 +81,41 @@ namespace {
     return (direction[0] == 0 && direction[1] == 0 && direction[2] == 0 );
   }
 
+  // calculate the time an arrow intersecting a triangle
+  // the triangle is specified by coordinates of its 3 vertices (a,b,c)
+  // The arrow starts at "r" and has a "velocity" "v"
+  // if there is an intersection, the "time" of the intersection
+  // will be pushed into the result array "ts". if not, nothing will happen
+  void intersectTriangle
+  (const Position & r, const Direction & v,
+   const Position & A, const Position & B, const Position &C,
+   std::vector<double> &ts)
+  {
+    // calculate normal
+    Position AB = B-A, AC = C-A;
+    Position N = AB*AC;
+    N.normalize();
+    double d = (N|A);   // distance from origin to the triangle plane along its normal
+    double v_p = (N|v); // velocity along the normal
+    // std::cout << "v_p=" << v_p << std::endl;
+    if (std::abs(v_p) < 1e-10) return; // speed mostly parallel to the plane of the triangle
+    double t = ( d - (N|r) ) / (N|v); // time is distance / velocity
+    // std::cout << "t=" << t << std::endl;
+    // the intersection of the plane of the triangle and the ray
+    Position P = r + v*t, AP=P-A;
+    // AP = c1 * AB + c2 * AC
+    // the condition for P to be inside ABC is c1>0, c2>0, c1+c2<1.
+    // need to calculate c1 and c2
+    // c1 = (AP dot AC*) / (AB dot AC*) where AC* = N X AC
+    Position AC_ = N * AC; double c1 = (AP|AC_)/(AB|AC_);
+    if (c1<=0) return;
+    // c2 = (AP dot AB*) / (AC dot AB*) where AB* = N X AB
+    Position AB_ = N * AB; double c2 = (AP|AB_)/(AC|AB_);
+    if (c2<=0) return;
+    if (c1+c2>=1) return;
+    // 
+    ts.push_back(t);
+  }
 
   // calculate the time an arrow intersecting a rectangle centered at origin
   // the rectangle is on the x-y plane and its size is (X,Y)
@@ -273,6 +308,108 @@ mccomposite::geometry::ArrowIntersector::visit
     ;
 #endif
 
+  return ;
+}
+
+
+// visiting methods
+void
+mccomposite::geometry::ArrowIntersector::visit
+( const Pyramid * pyramidptr )
+{
+#ifdef DEBUG
+  journal::debug_t debug( ArrowIntersector_impl::jrnltag );
+#endif
+  m_distances.clear();
+  
+  const Pyramid & pyramid = *pyramidptr;
+  
+  const Position & start = m_arrow.start;
+  const Direction & direction = m_arrow.direction;
+  if (isInvaildDirection(direction)) return;
+  
+#ifdef DEBUG
+  debug << journal::at(__HERE__) 
+	<< "pyramid: "<< *pyramidptr << journal::newline
+	<< "start: " << start << journal::newline
+	<< "direction: " << direction
+	<< journal::endl
+    ;
+#endif
+  
+  double x = start.x; 
+  double y = start.y;
+  double z = start.z;
+  
+  double vx = direction.x;
+  double vy = direction.y;
+  double vz = direction.z;
+  
+  double X = pyramid.edgeX, Y = pyramid.edgeY, H = pyramid.height;
+  std::vector<double> ts;
+
+  // base
+  if (vz!=0) {
+    intersectRectangle(x,y,z, vx,vy,vz, X, Y, ts);
+  }
+
+  // 4 triangles as sides
+  intersectTriangle(start, direction,
+		    Position(0, 0, H), Position(X/2, Y/2, 0), Position(X/2, -Y/2, 0),
+		    ts);
+  intersectTriangle(start, direction,
+		    Position(0, 0, H), Position(X/2, -Y/2, 0), Position(-X/2, -Y/2, 0),
+		    ts);
+  intersectTriangle(start, direction,
+		    Position(0, 0, H), Position(-X/2, -Y/2, 0), Position(-X/2, Y/2, 0),
+		    ts);
+  intersectTriangle(start, direction,
+		    Position(0, 0, H), Position(-X/2, Y/2, 0), Position(X/2, Y/2, 0),
+		    ts);
+
+#ifdef DEBUG
+  debug << journal::at(__HERE__) 
+	<< ts << journal::endl
+    ;
+#endif
+  
+  if (!ts.size()) return;
+  if (ts.size() == 1) {
+    // this is usually due to numerical errors
+#ifdef DEBUG
+    debug
+      << journal::at(__HERE__)
+      << "number of intersections between a line and a pyramid should be 0 or 2, "
+      << "we got " << ts.size() << ". " << journal::newline
+      << "pyramid: " << pyramid << ", "
+      << "arrow: " << m_arrow
+      << journal::endl;
+#endif
+    return;
+  }
+  if (ts.size()!=2) {
+    std::ostringstream oss;
+    oss << "number of intersections between a line and a pyramid should be 0 or 2, "
+	<< "we got " << ts.size() << ". "
+	<< "pyramid: " << pyramid << ", "
+	<< "arrow: " << m_arrow
+      ;
+    throw Exception(oss.str());
+  }
+  
+  if (ts[0] < ts[1]) {
+    m_distances.push_back(ts[0]);
+    m_distances.push_back(ts[1]);
+  } else {
+    m_distances.push_back(ts[1]);
+    m_distances.push_back(ts[0]);
+  }
+  
+#ifdef DEBUG
+  debug << journal::at(__HERE__) 
+	<< m_distances << journal::endl
+    ;
+#endif
   return ;
 }
 

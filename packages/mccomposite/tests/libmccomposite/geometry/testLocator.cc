@@ -65,6 +65,69 @@ void test1b()
   assert (locate( Position(0.708,0,-0.708), sphere ) == Locator::outside);
 }
 
+void test1c()
+{
+  Pyramid pyramid(2,3, 5);
+  // center of base
+  assert (locate( Position(0,0,0), pyramid ) == Locator::onborder);
+  // inside, along axis
+  assert (locate( Position(0,0,1), pyramid ) == Locator::inside);
+  assert (locate( Position(0,0,2), pyramid ) == Locator::inside);
+  assert (locate( Position(0,0,4.99), pyramid ) == Locator::inside);
+  // outside, along axis
+  assert (locate( Position(0,0,5.01), pyramid ) == Locator::outside);
+  // base, corner
+  assert (locate( Position(1,1.5,0), pyramid ) == Locator::onborder);
+  // inside, near base, near corner
+  assert (locate( Position(1-0.02,1.5-0.02,0+0.01), pyramid ) == Locator::inside);
+  // inside, near base, near edge
+  assert (locate( Position(1-0.02,0,0+0.01), pyramid ) == Locator::inside);
+  // inside, near base, near another corner
+  assert (locate( Position(1-0.02,-1.5+0.02,0+0.01), pyramid ) == Locator::inside);
+  // inside, near base, near another corner
+  assert (locate( Position(-1+0.02,-1.5+0.02,0+0.01), pyramid ) == Locator::inside);
+  // outside, near base, near corner
+  assert (locate( Position(1+0.02,1.5+0.02,0+0.01), pyramid ) == Locator::outside);
+  // outside, near base, near edge
+  assert (locate( Position(1+0.02,0,0+0.01), pyramid ) == Locator::outside);
+  // outside, near base, near another corner
+  assert (locate( Position(1+0.02,-1.5+0.02,0+0.01), pyramid ) == Locator::outside);
+  // outside, near base, near another corner
+  assert (locate( Position(-1+0.02,-1.5-0.02,0+0.01), pyramid ) == Locator::outside);
+  // base, on border, near a corner
+  assert (locate( Position(-1,-1.5,0), pyramid ) == Locator::onborder);
+  // outside, near tip
+  assert (locate( Position(.2,.2,5), pyramid ) == Locator::outside);
+  // inside, near tip
+  assert (locate( Position(0,0,5-0.01), pyramid ) == Locator::inside);
+  // border, tip
+  assert (locate( Position(0,0,5), pyramid ) == Locator::onborder);
+  // inside, half hight, near corner
+  assert (locate( Position(.5-0.02,.75-0.02,2.5), pyramid ) == Locator::inside);
+  // inside, half hight, near edge
+  assert (locate( Position(.5-0.02,0,2.5), pyramid ) == Locator::inside);
+  // inside, half hight, near another corner
+  assert (locate( Position(.5-0.02,-.75+0.02,2.5), pyramid ) == Locator::inside);
+  // inside, half hight, near another corner
+  assert (locate( Position(-.5+0.02,-.75+0.02,2.5), pyramid ) == Locator::inside);
+  // outside, half hight, near corner
+  assert (locate( Position(.5+0.02,.75+0.02,2.5), pyramid ) == Locator::outside);
+  // outside, half hight, near edge
+  assert (locate( Position(.5+0.02,0,2.5), pyramid ) == Locator::outside);
+  // outside, half hight, near another corner
+  assert (locate( Position(.5+0.02,-.75+0.02,2.5), pyramid ) == Locator::outside);
+  // outside, half hight, near another corner
+  assert (locate( Position(-.5+0.02,-.75-0.02,2.5), pyramid ) == Locator::outside);
+  // onborder, half hight, near corner
+  assert (locate( Position(.5,.75,2.5), pyramid ) == Locator::onborder);
+  // onborder, half hight, near edge
+  assert (locate( Position(.5,0,2.5), pyramid ) == Locator::onborder);
+  // onborder, half hight, near another corner
+  assert (locate( Position(.5,-.75,2.5), pyramid ) == Locator::onborder);
+  // onborder, half hight, near another corner
+  assert (locate( Position(-.5,-.75,2.5), pyramid ) == Locator::onborder);
+}
+
 void test2()
 {
   Box box(1,1,1);
@@ -147,6 +210,7 @@ int main()
   test1();
   test1a();
   test1b();
+  test1c();
   test2();
   test3();
   test4();
