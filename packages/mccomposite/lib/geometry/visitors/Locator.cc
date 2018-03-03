@@ -100,16 +100,16 @@ mccomposite::geometry::Locator::visit
   using std::abs;
 
   // z too large or negative, outside
-  if ( z-height > rtol || z<-rtol) { location = outside; return; }
+  if ( z > rtol || z<-height-rtol) { location = outside; return; }
   
   const double & x = point.x;
   const double & y = point.y;
-  double ratio = (height - z)/height;
+  double ratio = -z/height;
   double X1 = ratio*X, Y1 = ratio*Y;
   // x, y too large, outside
   if ( std::abs(x) > X1/2 + rtol || std::abs(y) > Y1/2 + rtol) { location = outside; return; }
-  // 
-  if ( z < height - rtol && z > rtol ) {
+  // z inside
+  if ( z < - rtol && z > -height+rtol ) {
     // z inside, x, y inside, so inside
     if ( std::abs(x) < X1/2 - rtol && std::abs(y) < Y1/2 - rtol) { location = inside; return; }
   } 

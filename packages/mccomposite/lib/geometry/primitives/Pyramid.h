@@ -13,7 +13,7 @@ namespace mccomposite{ namespace geometry {
     
     //! pyramid: a Shape
     /// a pyramid. its axis is along z direction
-    /// its base is on the xy plane at z=0
+    /// its tip is at the origin. its base is at negative z
     /// edgeX and edgeY are its dimensions at x and y directions
     struct Pyramid : public AbstractShape {
       
