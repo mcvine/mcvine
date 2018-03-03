@@ -34,6 +34,7 @@ class geometry_TestCase(unittest.TestCase):
         block = primitives.block( (1,1,1) )
         sphere = primitives.sphere( 1 )
         cylinder = primitives.cylinder( 2,2.001 )
+        pyramid = primitives.pyramid( 1., 2, 5 )
 
         dilated = operations.dilate( sphere, 2 )
         translated = operations.translate( block, (0,0,0.5) )
@@ -44,8 +45,10 @@ class geometry_TestCase(unittest.TestCase):
         intersect = operations.intersect( rotated, cylinder )
 
         difference = operations.subtract( intersect, sphere )
+
+        united2 = operations.unite( difference, pyramid)
         
-        print geometry.shapeEngine( difference )
+        print geometry.shapeEngine( united2 )
 
         return
 

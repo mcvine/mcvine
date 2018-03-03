@@ -39,6 +39,11 @@ namespace wrap_mccomposite {
        init< double, double >() )
       ;
 
+    class_<Pyramid, bases<AbstractShape> >
+      ("Pyramid", 
+       init< double, double, double >() )
+      ;
+
   }
 }
 

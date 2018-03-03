@@ -89,6 +89,36 @@ mccomposite::geometry::Locator::visit
 
 void
 mccomposite::geometry::Locator::visit
+( const Pyramid * pyramid ) 
+{
+  const double & X = pyramid->edgeX;
+  const double & Y = pyramid->edgeY;
+  const double & height = pyramid->height;
+
+  const double & z = point.z;
+  const double & rtol = roundingErrorTolerance;
+  using std::abs;
+
+  // z too large or negative, outside
+  if ( z-height > rtol || z<-rtol) { location = outside; return; }
+  
+  const double & x = point.x;
+  const double & y = point.y;
+  double ratio = (height - z)/height;
+  double X1 = ratio*X, Y1 = ratio*Y;
+  // x, y too large, outside
+  if ( std::abs(x) > X1/2 + rtol || std::abs(y) > Y1/2 + rtol) { location = outside; return; }
+  // 
+  if ( z < height - rtol && z > rtol ) {
+    // z inside, x, y inside, so inside
+    if ( std::abs(x) < X1/2 - rtol && std::abs(y) < Y1/2 - rtol) { location = inside; return; }
+  } 
+  // z at border, x,y inside or border, so it is border
+  location = onborder; return;
+}
+
+void
+mccomposite::geometry::Locator::visit
 ( const Sphere * sphere ) 
 {
   const double & radius = sphere->radius;

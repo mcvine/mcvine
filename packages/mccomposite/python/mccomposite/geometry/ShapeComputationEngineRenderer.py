@@ -99,6 +99,10 @@ class ShapeComputationEngineRenderer:
         p = self._remove_length_unit( (cylinder.radius, cylinder.height) )
         return self.factory.cylinder( *p )
 
+    def onPyramid(self, pyramid):
+        p = self._remove_length_unit( (pyramid.thickness, pyramid.width, pyramid.height) )
+        return self.factory.pyramid( *p )
+
 
     # helpers
     def _remove_length_unit(self, t):
@@ -136,9 +140,9 @@ def register( shape_type, engine_renderer_method, override = False ):
 _registry = {}
 def _init_registry():
     from operations import Union, Intersection, Difference, Dilation, Translation, Rotation
-    from primitives import Block, Cylinder, Sphere
+    from primitives import Block, Cylinder, Sphere, Pyramid
     for klass in Union, Intersection, Difference, Dilation, Translation, Rotation,\
-            Block, Cylinder, Sphere:
+            Block, Cylinder, Sphere, Pyramid:
         _registry[klass.__name__] = klass
         continue
     return

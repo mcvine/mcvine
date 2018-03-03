@@ -7,6 +7,7 @@ set ( SRC_FILES
   geometry/visitors/ArrowIntersector.cc
   geometry/primitives/Box.cc
   geometry/primitives/Cylinder.cc
+  geometry/primitives/Pyramid.cc
   geometry/visitors/Locator.cc
   geometry/primitives/Sphere.cc
   geometry/visitors/Printer.cc

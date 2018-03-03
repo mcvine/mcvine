@@ -9,6 +9,7 @@ set ( SRC_FILES
   geometry/testDilation.cc
   geometry/testLocator.cc
   geometry/test_intersect.cc
+  geometry/test_intersectTriangle.cc
   mccomposite/testAbstractNeutronScatterer.cc
   mccomposite/testCompositeNeutronScatterer.cc
   mccomposite/testGeometer.cc

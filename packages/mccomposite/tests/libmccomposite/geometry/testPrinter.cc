@@ -29,6 +29,7 @@ void test1()
 
   std::cout << Cylinder(1,2) << std::endl;
   std::cout << Sphere(1) << std::endl;
+  std::cout << Pyramid(1., 2., 5.) << std::endl;
 }
 
 
