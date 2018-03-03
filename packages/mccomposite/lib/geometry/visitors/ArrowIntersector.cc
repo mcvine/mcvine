@@ -350,21 +350,21 @@ mccomposite::geometry::ArrowIntersector::visit
 
   // base
   if (vz!=0) {
-    intersectRectangle(x,y,z, vx,vy,vz, X, Y, ts);
+    intersectRectangle(x,y,z+H, vx,vy,vz, X, Y, ts);
   }
 
   // 4 triangles as sides
   intersectTriangle(start, direction,
-		    Position(0, 0, H), Position(X/2, Y/2, 0), Position(X/2, -Y/2, 0),
+		    Position(0, 0, 0), Position(X/2, Y/2, -H), Position(X/2, -Y/2, -H),
 		    ts);
   intersectTriangle(start, direction,
-		    Position(0, 0, H), Position(X/2, -Y/2, 0), Position(-X/2, -Y/2, 0),
+		    Position(0, 0, 0), Position(X/2, -Y/2, -H), Position(-X/2, -Y/2, -H),
 		    ts);
   intersectTriangle(start, direction,
-		    Position(0, 0, H), Position(-X/2, -Y/2, 0), Position(-X/2, Y/2, 0),
+		    Position(0, 0, 0), Position(-X/2, -Y/2, -H), Position(-X/2, Y/2, -H),
 		    ts);
   intersectTriangle(start, direction,
-		    Position(0, 0, H), Position(-X/2, Y/2, 0), Position(X/2, Y/2, 0),
+		    Position(0, 0, 0), Position(-X/2, Y/2, -H), Position(X/2, Y/2, -H),
 		    ts);
 
 #ifdef DEBUG
