@@ -39,7 +39,8 @@ class McStasCSAdaptor_for_ShapeComputationEngineRenderer:
         solid = self.factory.rotate( solid, r )
         # and then rotate along y by -90.
         r = self.factory.orientation( (0, -90, 0) )
-        return self.factory.rotate(solid, r)
+        solid = self.factory.rotate(solid, r)
+        return solid
 
     def onCylinder(self, cylinder):
         p = self._remove_length_unit( (cylinder.radius, cylinder.height) )
