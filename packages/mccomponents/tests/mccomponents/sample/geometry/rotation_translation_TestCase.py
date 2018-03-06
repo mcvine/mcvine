@@ -19,18 +19,21 @@ class TestCase(unittest.TestCase):
 
     def test1a(self):
         "rotation about x for 90 deg followed by translation along y for 10cm"
-        self._test('sampleassembly/sampleassembly.xml.rot_x90_mov_y0.1', (0., 0.1, 0.), (width, thickness, height))
+        self._test('sampleassembly-variants/sampleassembly.xml.rot_x90_mov_y0.1', (0., 0.1, 0.), (width, thickness, height))
         return
 
     def test1b(self):
         "translation along y for 10cm followed by rotation about x for 90 deg"
-        self._test('sampleassembly/sampleassembly.xml.mov_y0.1_rot_x90', (0., 0, 0.1), (width, thickness, height))
+        self._test('sampleassembly-variants/sampleassembly.xml.mov_y0.1_rot_x90', (0., 0, 0.1), (width, thickness, height))
         return
 
     def _test(self, xml, center, size):
-        shutil.copyfile(xml, 'sampleassembly/sampleassembly.xml')
-        sample = samplecomponent( 'test', 'sampleassembly/sampleassembly.xml' )
+        from utils import createSampleAssembly
+        saxml = createSampleAssembly('.', './sampleassembly', xml)
+        sample = samplecomponent( 'test', saxml)
         check(sample, center, size)
+        import shutil
+        shutil.rmtree(os.path.dirname(saxml))
         return
     
     pass  # end of TestCase

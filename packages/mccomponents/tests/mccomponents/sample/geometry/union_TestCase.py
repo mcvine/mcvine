@@ -19,9 +19,10 @@ class TestCase(unittest.TestCase):
 
 
     def test1a(self):
-        xml = 'sampleassembly/sampleassembly.xml.union_of_plate_cylinder'
-        shutil.copyfile(xml, 'sampleassembly/sampleassembly.xml')
-        sample = samplecomponent( 'test', 'sampleassembly/sampleassembly.xml' )
+        xml = 'sampleassembly-variants/sampleassembly.xml.union_of_plate_cylinder'
+        from utils import createSampleAssembly
+        saxml = createSampleAssembly('.', './sampleassembly', xml)
+        sample = samplecomponent( 'test', saxml)
 
         # neutrons moving along beam direction
         neutron = mcni.neutron(r=(0, 0, -1), v=(0,0,1), prob=1.)
@@ -37,10 +38,13 @@ class TestCase(unittest.TestCase):
         neutron = mcni.neutron(r=((r+width/2)/2, 0, -1), v=(0,0,1), prob=1.)
         sample.scatter(neutron)
         assert np.allclose(neutron.state.position, ((r+width/2)/2, 0, thickness/2))
+
+        import shutil
+        shutil.rmtree(os.path.dirname(saxml))
         return
 
     def test2a(self):
-        xml = 'sampleassembly/sampleassembly.xml.union_of_plate_hollowcylinder'
+        xml = 'sampleassembly-variants/sampleassembly.xml.union_of_plate_hollowcylinder'
         shutil.copyfile(xml, 'sampleassembly/sampleassembly.xml')
         sample = samplecomponent( 'test', 'sampleassembly/sampleassembly.xml' )
         return

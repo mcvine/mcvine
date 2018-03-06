@@ -19,24 +19,27 @@ class TestCase(unittest.TestCase):
 
     def test1a(self):
         "translation: (1,0,0)"
-        self._test('sampleassembly/sampleassembly.xml.mov_1,0,0', (1., 0., 0.), (width, height, thickness))
+        self._test('sampleassembly-variants/sampleassembly.xml.mov_1,0,0', (1., 0., 0.), (width, height, thickness))
         return
 
     def test1b(self):
         "translation: (0,1,0)"
-        self._test('sampleassembly/sampleassembly.xml.mov_0,1,0', (0., 1., 0.), (width, height, thickness))
+        self._test('sampleassembly-variants/sampleassembly.xml.mov_0,1,0', (0., 1., 0.), (width, height, thickness))
         return
 
     def test1c(self):
         "translation: (0,0,1)"
-        self._test('sampleassembly/sampleassembly.xml.mov_0,0,1', (0., 0., 1.), (width, height, thickness))
+        self._test('sampleassembly-variants/sampleassembly.xml.mov_0,0,1', (0., 0., 1.), (width, height, thickness))
         return
 
 
     def _test(self, xml, center, size):
-        shutil.copyfile(xml, 'sampleassembly/sampleassembly.xml')
-        sample = samplecomponent( 'test', 'sampleassembly/sampleassembly.xml' )
+        from utils import createSampleAssembly
+        saxml = createSampleAssembly('.', './sampleassembly', xml)
+        sample = samplecomponent( 'test', saxml)
         check(sample, center, size)
+        import shutil
+        shutil.rmtree(os.path.dirname(saxml))
         return
     
     pass  # end of TestCase
