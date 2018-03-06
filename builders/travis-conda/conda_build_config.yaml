@@ -3,9 +3,9 @@ python:
 gsl:
   - 2.2
 boost:
-  - 1.66
+  - 1.61
 numpy:
-  - 1.14
+  - 1.13
 
 pin_run_as_build:
   boost:
