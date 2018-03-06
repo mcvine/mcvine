@@ -10,12 +10,12 @@ requirements:
   build:
     - python
     - pyyaml
-    - numpy 1.14
+    - numpy                 {{ numpy }}
     - psutil
     - h5py
     - mpi4py
-    - gsl
-    - boost 1.66.*
+    - gsl                   {{ gsl }}
+    - boost                 {{ boost }}
     - pyre
     - danse.ins.dsm
     - danse.ins.numpyext
@@ -29,12 +29,12 @@ requirements:
   run:
     - python
     - pyyaml
-    - numpy 1.14
+    - numpy
     - psutil
     - h5py
     - mpi4py
     - gsl
-    - boost 1.66.*
+    - boost
     - pyre
     - danse.ins.dsm
     - danse.ins.numpyext
