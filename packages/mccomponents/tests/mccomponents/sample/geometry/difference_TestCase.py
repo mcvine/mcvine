@@ -16,13 +16,16 @@ class TestCase(unittest.TestCase):
 
     def test1a(self):
         "difference: two blocks"
-        self._test('sampleassembly/sampleassembly.xml.difference_of_two_blocks', (0., 0., -0.025), (.1, .1, .05))
+        self._test('sampleassembly-variants/sampleassembly.xml.difference_of_two_blocks', (0., 0., -0.025), (.1, .1, .05))
         return
 
     def _test(self, xml, center, size):
-        shutil.copyfile(xml, 'sampleassembly/sampleassembly.xml')
-        sample = samplecomponent( 'test', 'sampleassembly/sampleassembly.xml' )
+        from utils import createSampleAssembly
+        saxml = createSampleAssembly('.', './sampleassembly', xml)
+        sample = samplecomponent( 'test', saxml)
         check(sample, center, size)
+        import shutil
+        shutil.rmtree(os.path.dirname(saxml))
         return
     
     pass  # end of TestCase

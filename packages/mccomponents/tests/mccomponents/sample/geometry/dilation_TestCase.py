@@ -19,13 +19,16 @@ class TestCase(unittest.TestCase):
 
     def test1a(self):
         "dilation: 2"
-        self._test('sampleassembly/sampleassembly.xml.dilate_2', (0., 0., 0.), (2*width, 2*height, 2*thickness))
+        self._test('sampleassembly-variants/sampleassembly.xml.dilate_2', (0., 0., 0.), (2*width, 2*height, 2*thickness))
         return
 
     def _test(self, xml, center, size):
-        shutil.copyfile(xml, 'sampleassembly/sampleassembly.xml')
-        sample = samplecomponent( 'test', 'sampleassembly/sampleassembly.xml' )
+        from utils import createSampleAssembly
+        saxml = createSampleAssembly('.', './sampleassembly', xml)
+        sample = samplecomponent( 'test', saxml)
         check(sample, center, size)
+        import shutil
+        shutil.rmtree(os.path.dirname(saxml))
         return
     
     pass  # end of TestCase

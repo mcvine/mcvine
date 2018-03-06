@@ -16,13 +16,16 @@ class TestCase(unittest.TestCase):
 
     def test1a(self):
         "intersection: two blocks"
-        self._test('sampleassembly/sampleassembly.xml.intersection_of_two_blocks', (0., 0., 0.), (.1, .15, .2))
+        self._test('sampleassembly-variants/sampleassembly.xml.intersection_of_two_blocks', (0., 0., 0.), (.1, .15, .2))
         return
 
     def _test(self, xml, center, size):
-        shutil.copyfile(xml, 'sampleassembly/sampleassembly.xml')
-        sample = samplecomponent( 'test', 'sampleassembly/sampleassembly.xml' )
+        from utils import createSampleAssembly
+        saxml = createSampleAssembly('.', './sampleassembly', xml)
+        sample = samplecomponent( 'test', saxml)
         check(sample, center, size)
+        import shutil
+        shutil.rmtree(os.path.dirname(saxml))
         return
     
     pass  # end of TestCase

@@ -21,9 +21,10 @@ class TestCase(unittest.TestCase):
 
     def test1a(self):
         # hollow cylinder is along beam
-        xml = 'sampleassembly/sampleassembly.xml.rot_x90_hollow_cyl'
-        shutil.copyfile(xml, 'sampleassembly/sampleassembly.xml')
-        sample = samplecomponent( 'test', 'sampleassembly/sampleassembly.xml' )
+        xml = 'sampleassembly-variants/sampleassembly.xml.rot_x90_hollow_cyl'
+        from utils import createSampleAssembly
+        saxml = createSampleAssembly('.', './sampleassembly', xml)
+        sample = samplecomponent( 'test', saxml)
 
         # neutrons moving vertically up, perpendicular to the cylinder
         neutron = mcni.neutron(r=(0, -1, 0), v=(0,1,0), prob=1.)
@@ -57,6 +58,9 @@ class TestCase(unittest.TestCase):
         neutron = mcni.neutron(r=(rm*s45, rm*s45, -1), v=(0,0,1), prob=1.)
         sample.scatter(neutron)
         assert np.allclose(neutron.state.position, [rm*s45,rm*s45,h/2])
+        
+        import shutil
+        shutil.rmtree(os.path.dirname(saxml))
         return
 
     pass  # end of TestCase
