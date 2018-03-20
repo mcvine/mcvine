@@ -10,7 +10,11 @@
   
   <PowderSample name='Ni plate' type='sample'>
     <Shape>
-      <block width="6*cm" height="10*cm" thickness="0.1*cm" />
+      <union>
+	<block width="6*cm" height="10*cm" thickness="0.1*cm" />
+	<block width="6*cm" height="10*cm" thickness="0.1*cm" />
+	<block width="6*cm" height="10*cm" thickness="0.1*cm" />
+      </union>
     </Shape>
     <Phase type="crystal">
       <ChemicalFormula>Ni</ChemicalFormula>
