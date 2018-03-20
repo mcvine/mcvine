@@ -55,6 +55,14 @@ Building conda release
 Use conda and docker. Follow the commands in
 https://github.com/mcvine/conda-recipes/blob/master/docker/run_docker_build.sh
 
+* mcvine-core and other mcvine subpackages are released separately.
+* The mcvine-core package is the central piece
+* "mcvine" is a meta pacakge. It should have a release number that is mostly the same as the mcvine-core release number
+* For testing, the "unstable" releases are built.
+* The "mcvine" unstable release dose not need to be built very often. For example, for mcvine-core master branch
+  between the 1.3.2a1 ... 1.3.2a9 . 1.3.2 releases, we only
+  need one unstable release for mcvine meta package, 1.3.2unstable
+
 
 Adding/modifying Adapted McStas components
 ------------------------------------------
