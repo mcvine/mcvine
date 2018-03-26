@@ -75,8 +75,8 @@ class CompositeScatterer:
         position = g.position(e)
         orientation = g.orientation(e)
         import geometry
-        r = geometry.operations.rotate(s, orientation)
-        t = geometry.operations.translate(r, position)
+        r = geometry.operations.rotate(s, euler_angles=orientation)
+        t = geometry.operations.translate(r, vector=position)
         return t
     
 

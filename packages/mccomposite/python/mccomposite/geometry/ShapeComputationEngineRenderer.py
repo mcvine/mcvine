@@ -72,7 +72,7 @@ class ShapeComputationEngineRenderer:
         factory = self.factory
         body = rotation.body
         cshape = body.identify(self)
-        angles = self._remove_angle_unit( rotation.angles )
+        angles = self._remove_angle_unit( rotation.euler_angles )
         rotmat = factory.orientation( angles )
         return factory.rotate( cshape, rotmat )
 

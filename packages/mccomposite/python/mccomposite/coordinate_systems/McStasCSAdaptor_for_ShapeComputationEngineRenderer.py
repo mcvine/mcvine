@@ -1,14 +1,6 @@
 #!/usr/bin/env python
 #
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#
-#                                   Jiao Lin
-#                      California Institute of Technology
-#                        (C) 2007  All Rights Reserved
-#
-# {LicenseText}
-#
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Jiao Lin <jiao.lin@gmail.com>
 #
 
 
@@ -17,6 +9,12 @@ class McStasCSAdaptor_for_ShapeComputationEngineRenderer:
     '''shape in mc simulation has some special conventions, we need
     this adaptor to make sure we are constructing shapes in ways
     that we really want.
+
+    The objects handled by this class is implemented in instrument.geometry.shapes
+    and instrument.geometry.operations
+
+    This class is combined with mccomposite.geometry.ShapeComputationEngineRenderer
+    in mccomposite.scattererEngine to render c++ instances from python instances.
     '''
 
     def onBlock(self, block):
@@ -50,10 +48,31 @@ class McStasCSAdaptor_for_ShapeComputationEngineRenderer:
         r = self.factory.orientation( (-90,0,0) )
         return self.factory.rotate( cyl, r )
 
+    def onTranslation(self, translation):
+        vector = translation.vector
+        if not translation.implicit_coordinate_system:
+            beam, transversal, vertical = vector
+            vector = (transversal, vertical, beam)
+        body  = translation.body.identify(self)
+        v = self._remove_length_unit( vector )
+        offset = self.factory.position( v )
+        return self.factory.translate(body, offset)
+    
+    def onRotation(self, rotation):
+        if rotation.euler_angles is not None:
+            orientation = self._remove_angle_unit(rotation.euler_angles)
+        else:
+            axis = rotation.axis
+            if not rotation.implicit_coordinate_system:
+                beam, transversal, vertical = axis
+                axis = transversal, vertical, beam
+            angle = self._remove_angle_unit(rotation.angle)
+            orientation = axis, angle
+        rotmat = self.factory.orientation(orientation)
+        body = rotation.body.identify(self)
+        return self.factory.rotate(body, rotmat)
+
     pass # end of McStasCSAdaptor_for_ShapeComputationEngineRenderer
 
-
-# version
-__id__ = "$Id$"
 
 # End of file 
