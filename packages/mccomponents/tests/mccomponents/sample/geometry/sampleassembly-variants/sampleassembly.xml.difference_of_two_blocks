@@ -8,7 +8,8 @@
     <Shape>
       <difference>
 	<block width="10*cm" thickness="10*cm" height="10*cm" />
-	<translation vector="0*m,0*m,5.*cm">
+	<translation>
+	  <vector beam="5.*cm"/>
 	  <block width="10.0001*cm" thickness="10.0001*cm" height="10.0001*cm" />
 	</translation>
       </difference>

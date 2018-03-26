@@ -16,7 +16,6 @@ thickness, width, height = 0.01, 0.06, 0.1
 import unittest
 class TestCase(unittest.TestCase):
 
-
     def test1(self):
         "no rotation"
         self._test('sampleassembly-variants/sampleassembly.xml.no-rotation', width, height, thickness)

@@ -6,8 +6,11 @@
   
   <PowderSample name="Al-plate" type="sample">
     <Shape>
-      <!-- rotation use the convention: xy'z"; z - beam downstream, y - vertical up -->
-      <rotation angles="90*deg,90*deg,0*deg">
+      <rotation>
+	<axis transversal="1" beam="1" vertical="1"/>
+	<angle>
+	  120*deg
+	</angle>
 	<block width="6*cm" height="10*cm" thickness="1*cm" />
       </rotation>
     </Shape>

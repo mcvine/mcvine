@@ -6,7 +6,8 @@
   
   <PowderSample name="Al-plate" type="sample">
     <Shape>
-      <translation vector="1.*m,0.*m,0.*m">
+      <translation>
+	<vector transversal="1*m"/>
 	<block width="6*cm" height="10*cm" thickness="1*cm" />
       </translation>
     </Shape>
