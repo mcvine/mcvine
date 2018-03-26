@@ -6,8 +6,9 @@ import numpy as np, math
 def matrix_rotationaboutaxis(axis, theta):
     """
     Return the rotation matrix associated with clockwise rotation about
-    the given axis by theta radians.
+    the given axis by theta degrees.
     """
+    theta = np.deg2rad(theta)
     axis = np.asarray(axis)
     axis = axis/math.sqrt(np.dot(axis, axis))
     a = math.cos(theta/2.0)
