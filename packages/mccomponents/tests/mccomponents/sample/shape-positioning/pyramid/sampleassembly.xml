@@ -6,7 +6,8 @@
   
   <PowderSample name="X" type="sample">
     <Shape>
-      <translation vector="0.*m,3*cm,0.*m">
+      <translation>
+	<vector vertical="3*cm"/>
 	<pyramid thickness="1*cm" width="2*cm" height="6*cm" />
       </translation>
     </Shape>

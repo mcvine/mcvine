@@ -42,6 +42,13 @@ class InstrumentScientistCSAdaptor_for_ShapeComputationEngineRenderer:
         p = self._remove_length_unit( (cylinder.radius, cylinder.height) )
         return self.factory.cylinder( *p )
 
+
+    def onRotation(self, rotation):
+        raise NotImplementedError("onRotation")
+
+    def onTranslation(self, translation):
+        raise NotImplementedError("onTranslation")
+
     pass # end of InstrumentScientistCSAdaptor_for_ShapeComputationEngineRenderer
 
 

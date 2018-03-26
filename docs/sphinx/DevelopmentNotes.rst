@@ -219,3 +219,8 @@ calls::
 
 request the position and orientation of the scatterer.
 
+
+Rotations: see :ref:`rotations<rotations>`.
+
+
+

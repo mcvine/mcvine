@@ -37,10 +37,12 @@ class geometry_TestCase(unittest.TestCase):
         pyramid = primitives.pyramid( 1., 2, 5 )
 
         dilated = operations.dilate( sphere, 2 )
-        translated = operations.translate( block, (0,0,0.5) )
+        from mcni import units
+        meter = units.length.meter
+        translated = operations.translate( block, vector=(0*meter,0*meter,0.5*meter) )
         united = operations.unite( dilated, translated )
-
-        rotated = operations.rotate( united, (90,0,0) )
+        deg = units.angle.degree
+        rotated = operations.rotate( united, euler_angles=(90*deg,0*deg,0*deg) )
 
         intersect = operations.intersect( rotated, cylinder )
 

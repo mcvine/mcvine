@@ -38,7 +38,7 @@ class ScattererComputationEngineFactory(object):
 
     def orientation(self, orientation):
         'convert orientation (3-tuple) to an object understandable by engine factories'
-        rotmat = self.orientationconvention.angles2matrix( orientation )
+        rotmat = self.orientationconvention.tomatrix( orientation )
         return self.binding.orientation( rotmat )
 
 
