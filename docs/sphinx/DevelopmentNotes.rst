@@ -193,21 +193,11 @@ Documentation
   Documentation for the development version
 
 
-Miscellaneous
--------------  
 
-xml parsing
-"""""""""""
-is done in several layers.
+Geometry
+--------
 
-* sampleassembly: sampleassembly.saxml package
-
-
-geometry
-""""""""
-sampleassembly.xml
-
-Geometry information is registered into a registry.
+In sampleassembly.xml, geometry information is registered into a registry.
 Later when needed, positional and orientational
 information of an object can be requested from the registry.
 
@@ -220,7 +210,45 @@ calls::
 request the position and orientation of the scatterer.
 
 
-Rotations: see :ref:`rotations<rotations>`.
+.. _rotations:
+  
+Rotations
+"""""""""
+A rotation can be specified in three ways (see instrument.geometry.operations).
+
+* Rotation(body, vector, angle): rotate about a vector
+* Rotation(body, beam=, transversal=, vertical=, angle=): similar to Rotation(body, vector, angle); the vector is specified by (beam, transversal, vertical)
+* Rotation(body, euler_angles): see below on Euler angles
+
+
+Euler angles
+""""""""""""
+
+The rotation or orientation is actually represented as Tait-Bryan angles (xy'z")
+at the python layer, before being transformed to rotation matrix to be passed
+into the c++ layer. We still call it euler_angles because that is easier to remember.
+
+The Tait-Bryan angles (xy'z") represents three consecutive intrinsic rotations
+around x, y', and z" axes.
+See `its implementation <https://github.com/mcvine/mcvine/blob/48c288e9269a05304411cc62e4a6f53875df9204/packages/mcni/python/mcni/neutron_coordinates_transformers/mcstasRotations.py>`_ for details.
+One thing to note is that three intrinsic rotations is equivalent to reversed
+three extrinsic rotations. For our case, it would be equivalent to zyx rotations.
 
 
 
+xml parsing
+"""""""""""
+is done in several layers.
+
+* sampleassembly: sampleassembly.saxml package
+* instrument.geometry.pml
+* pyre.geometry.pml
+
+The translation of a neutron scatterer in the sampleassembly.xml is facilitated with many methoda and classes.
+For example:
+
+* mccomponents.sample.samplecomponent
+* mccomponents.sample.sampleassembly_support
+* mccomponents.homogeneous_scatterer.scattererEngine
+* mccomposite.ScattererComputationEngineRenderer
+* mccomposite.coordinate_systems.McStasCSAdaptor_for_ShapeComputationEngineRenderer

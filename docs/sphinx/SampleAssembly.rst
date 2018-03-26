@@ -127,53 +127,75 @@ beam, transversal, and vertical forms a right-hand coordinate system.
 
 Primitives:
 
-* Sphere: centered at origin.
+* Sphere: centered at origin. Example: ``<sphere radius="3*mm"/>``
+  
   - radius: radius of sphere
-* Cylinder: centered at origin. vertical
+  
+* Cylinder: centered at origin. vertical. Example: ``<cylinder radius="3*mm" height="1*cm"/>``
+      
   - radius: radius of cylinder
   - height: height of cylinder
-* Block: centered at origin.
+  
+* Block: centered at origin. Example: ``<block width="5*cm" height="8*cm" thickness="1*mm"/>``
+      
   - thickness: dimension along beam direction
   - width: dimension along transversal direction
   - height: dimension along vertical direction
-* Pyramid: tip is at origin. the whole body is negative vertically
+  
+* Pyramid: tip is at origin. the whole body is negative vertically. Example: ``<pyramid width="5*cm" thickness="5*cm" height="8*cm" />``
+      
   - thickness: dimension of the base along beam direction
   - width: dimension of the base along transversal direction
   - height: dimension along vertical direction
 
 Operations:
-* Union: union of two or more shapes
-* Intersection: intersection of two or more shapes
+    
+* Union: union of two or more shapes. Example:
+
+  .. code-block:: xml
+		
+     <union>
+       <sphere radius="2*cm"/>
+       <cylinder radius="3*mm" height="1*cm"/>
+     </union>
+    
+* Intersection: intersection of two or more shapes. Example:
+       
+  .. code-block:: xml
+		
+     <intersection>
+       <sphere radius="2*cm"/>
+       <cylinder radius="3*mm" height="1*cm"/>
+     </intersection>
+    
 * Difference: difference of two shapes
-* Translation: translate(body, beam=, transversal=, vertical=)
+       
+  .. code-block:: xml
+		
+     <difference>
+       <sphere radius="2*cm"/>
+       <cylinder radius="3*mm" height="1*cm"/>
+     </difference>
+    
+* Translation: translation of a body by an offset
+       
+  .. code-block:: xml
+		
+     <translation>
+       <vector vertical=".1*m" beam="0*m" translation="0*m" />
+       <block width="6*cm" height="10*cm" thickness="1*cm" />
+     </translation>
+    
 * Rotation: rotate(body, beam=, transversal=, vertical=, angle=)
+       
+  .. code-block:: xml
+		
+     <rotation>
+	<axis transversal="1" beam="0" vertical="0"/>
+	<angle>90*deg</angle>
+        <block width="6*cm" height="10*cm" thickness="1*cm" />
+     </rotation>
 
-.. _rotations:
-  
-Rotations
-^^^^^^^^^
-A rotation can be specified in three ways
-
-* Rotation(body, vector, angle): rotate about a vector
-* Rotation(body, beam=, transversal=, vertical=, angle=): similar to Rotation(body, vector, angle); the vector is specified by (beam, transversal, vertical)
-* Rotation(body, euler_angles): see below on Euler angles
-
-Euler angles
-""""""""""""
-
-The rotation or orientation is actually represented as Tait-Bryan angles (xy'z")
-at the python layer, before being transformed to rotation matrix to be passed
-into the c++ layer. We still call it euler_angles because that is easier to remember.
-
-The Tait-Bryan angles (xy'z") represents three consecutive intrinsic rotations
-around x, y', and z" axes.
-See `its implementation <https://github.com/mcvine/mcvine/blob/48c288e9269a05304411cc62e4a6f53875df9204/packages/mcni/python/mcni/neutron_coordinates_transformers/mcstasRotations.py>`_ for details.
-One thing to note is that three intrinsic rotations is equivalent to reversed
-three extrinsic rotations. For our case, it would be equivalent to zyx rotations.
+    
 
 
-Misc
-^^^^
-
-A sampleassembly representation is converted to a mccomposite scatterer representation
-by mccomponents.sample.sampleassembly_support.
