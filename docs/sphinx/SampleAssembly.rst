@@ -186,7 +186,7 @@ Operations:
        <block width="6*cm" height="10*cm" thickness="1*cm" />
      </translation>
     
-* Rotation: rotate(body, beam=, transversal=, vertical=, angle=)
+* Rotation: rotation of a body about an axis
        
   .. code-block:: xml
 		
@@ -195,7 +195,4 @@ Operations:
 	<angle>90*deg</angle>
         <block width="6*cm" height="10*cm" thickness="1*cm" />
      </rotation>
-
-    
-
 
