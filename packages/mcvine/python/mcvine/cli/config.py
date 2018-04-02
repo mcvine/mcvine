@@ -17,6 +17,7 @@ def loadYmlConfig(path):
 class Struct:
     '''The recursive class for building and representing objects with.'''
     def __init__(self, obj):
+        self.orig_dict = obj # keep a reference of the original dict obj
         for k, v in obj.items():
             setattr(self, k, _struct(v))
     def __getitem__(self, val):
