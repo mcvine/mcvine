@@ -3,6 +3,9 @@
 // Jiao Lin <jiao.lin@gmail.com>
 //
 
+/*
+  Implementations details: https://github.com/mcvine/training/blob/7d985bec0b424592236cf6c62ea99173607cc4b6/dev/kernels/E_Q%20kernel.ipynb
+ */
 
 
 #ifndef MCCOMPONENTS_KERNELS_E_Q_KERNEL_H
@@ -110,9 +113,6 @@ mccomponents::kernels::E_Q_Kernel<E_Q_functor_t, S_Q_functor_t>\
 }
 
 
-/*
-  see 
- */
 template< typename E_Q_functor_t, typename S_Q_functor_t>
 void
 mccomponents::kernels::E_Q_Kernel<E_Q_functor_t, S_Q_functor_t>\

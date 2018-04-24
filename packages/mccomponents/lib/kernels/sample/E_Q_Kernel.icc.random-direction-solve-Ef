@@ -4,6 +4,10 @@
 //
 
 
+/*
+Implementation documentation: https://github.com/mcvine/training/blob/7d985bec0b424592236cf6c62ea99173607cc4b6/dev/kernels/E_Q%20kernel%20-%20pick%20scattering%20direction%20first.ipynb
+ */
+
 
 #ifndef MCCOMPONENTS_KERNELS_E_Q_KERNEL_H
 #error E_Q_Kernel.icc not meaningful outside E_Q_Kernel.h
