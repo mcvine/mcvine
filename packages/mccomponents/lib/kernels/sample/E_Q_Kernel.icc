@@ -1,14 +1,6 @@
 // -*- C++ -*-
 //
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
-//                                   Jiao Lin
-//                      California Institute of Technology
-//                      (C) 2006-2010  All Rights Reserved
-//
-// {LicenseText}
-//
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// Jiao Lin <jiao.lin@gmail.com>
 //
 
 
@@ -18,13 +10,13 @@
 #endif
 
 #include <cmath>
-#include <algorithm>
 #include "mccomponents/exception.h"
 #include "mcni/math/number.h"
 #include "mccomponents/math/random.h"
-#include "mccomponents/math/random/geometry.h"
-#include "E_Q_Kernel_helpers.h"
-#include "mccomponents/math/rootfinding.h"
+
+
+// debug
+// #define DEBUG
 
 #ifdef DEBUG
 #include "journal/debug.h"
@@ -36,27 +28,13 @@ struct
 mccomponents::kernels::E_Q_Kernel<E_Q_functor_t, S_Q_functor_t>\
 :: Details {
 
-  typedef mccomponents::kernels::E_Q_Kernel<E_Q_functor_t, S_Q_functor_t> \
-    kernel_t;
-    
 #ifdef DEBUG
   const static char jrnltag[];
   journal::debug_t debug;
+  Details() : debug( jrnltag ) {}
 #endif
-  Details(kernel_t &i_kernel) 
-    :
-    kernel(&i_kernel)
-    ,root_finder(1e-6)
-    ,roots_finder(root_finder, 10000)
-#ifdef DEBUG
-    ,debug( jrnltag )
-#endif
-    {}
 
-  kernel_t * kernel;
-  math::Algorithms::Bracketing::Ridder::ZRidd root_finder;
-  math::FindRootsEvenly roots_finder;
-
+  const static double m_epsilon;
 };
 
 
@@ -66,6 +44,11 @@ const char
 mccomponents::kernels::E_Q_Kernel<E_Q_functor_t, S_Q_functor_t>\
 ::Details::jrnltag[] = "E_Q_Kernel";
 #endif
+
+
+template< typename E_Q_functor_t, typename S_Q_functor_t>
+const double mccomponents::kernels::E_Q_Kernel<E_Q_functor_t, S_Q_functor_t> \
+::Details::m_epsilon = 1e-4;
 
 
 template< typename E_Q_functor_t, typename S_Q_functor_t>
@@ -82,7 +65,7 @@ mccomponents::kernels::E_Q_Kernel<E_Q_functor_t, S_Q_functor_t>\
     m_Qmax(Qmax),
     m_absorption_coefficient( absorption_coefficient ),
     m_scattering_coefficient( scattering_coefficient ),
-    m_details( new Details(*this) )
+    m_details( new Details )
 {
   if (m_Qmin<0) {
     std::cerr << "Qmin must be not negative. Got " << m_Qmin << std::endl;
@@ -94,16 +77,6 @@ mccomponents::kernels::E_Q_Kernel<E_Q_functor_t, S_Q_functor_t>\
 	      << m_Qmax << ")." << std::endl;
     throw;
   }
-  // compute Emin and Emax
-  // this assumes that the E(Q) curve is smooth and does not have spikes
-  const size_t N = 100; // # of data points
-  double E[N], dQ = (Qmax-Qmin)/N;
-  for (size_t i=0; i<N; i++) {
-    double Q = m_Qmin + dQ * i;
-    E[i] = m_E(Q);
-  }
-  std::sort(E, E+N);
-  m_Emin = E[0]; m_Emax = E[N-1];
 }
 
 
@@ -112,8 +85,8 @@ double
 mccomponents::kernels::E_Q_Kernel<E_Q_functor_t, S_Q_functor_t>\
 ::absorption_coefficient(const mcni::Neutron::Event & ev )
 {
-  float_t v = ev.state.velocity.length();
-  return m_absorption_coefficient * (2200/v);
+  // this is a simplified model
+  return m_absorption_coefficient;
 }
 
 
@@ -137,12 +110,19 @@ mccomponents::kernels::E_Q_Kernel<E_Q_functor_t, S_Q_functor_t>\
 }
 
 
+/*
+  see 
+ */
 template< typename E_Q_functor_t, typename S_Q_functor_t>
 void
 mccomponents::kernels::E_Q_Kernel<E_Q_functor_t, S_Q_functor_t>\
 ::S
 ( mcni::Neutron::Event & ev )
 {
+  /*
+    the implemenation here is mostly good, but need more careful
+    treatment regarding invalid Q values in the given Q range
+   */
   namespace conversion = mcni::neutron_units_conversion;
 
   // input neutron state
@@ -151,75 +131,85 @@ mccomponents::kernels::E_Q_Kernel<E_Q_functor_t, S_Q_functor_t>\
   double vi = state.velocity.length();
   // incident neutron energy
   double Ei = conversion::v2E( vi );
-  // if Ei is too small, no scattering
-  if (Ei < m_Emin) return;
+  double Q, E, Ef, vf, ki, kf, cost, cost2;
   
-  // randomly pick scattering direction
-  typedef mcni::Vector3<double> V3d;
+  while (1) {
+    // randomly pick momentum transfer
+    Q = math::random(m_Qmin, m_Qmax);
+  
+    // compute E from Q
+    E = m_E(Q);
 
-  // find Ef
-  size_t nq = 0, count = 0, index=-1;
-  double Q; V3d dir;
-  while (!nq && count++<100) {
-    // randomly choose a direction
-    math::choose_direction( dir );
-    // compute cos(theta)
-    V3d ei = state.velocity; ei.normalize();
-    double cos_t = (ei|dir);
-    // construct functor to find solution
-    E_q_minus_deltaE<E_Q_functor_t> eqmd(m_E, cos_t, Ei);
-    // solve 
-    std::vector<double> _Q_list = m_details->roots_finder.solve( m_Qmin, m_Qmax, eqmd);
-    // hack: the current solver may give fake roots
-    size_t _nq = _Q_list.size(); nq=0;
-    double Q_list[_nq];
-    for (int i=0; i<_nq; i++) {
-      if (std::abs(eqmd.evaluate(_Q_list[i])) < 1e-7) {
-	Q_list[nq++] = _Q_list[i];
-      }
+#ifdef DEBUG
+    std::cout << "E,Q=" << E << ", " << Q << std::endl;
+#endif
+  
+    // final energy
+    Ef = Ei-E;
+
+    if (Ef<0) {
+      std::cerr << "E,Q,Ei,Ef="
+		<< E  << ", "
+		<< Q  << ", "
+		<< Ei << ", "
+		<< Ef << ", "
+		<< std::endl;
+      continue;
     }
-    // .. randomly choose Q
-    if (nq>1) index = math::random(size_t(0), nq);
-    else if (nq==1) index = 0;
-    if (nq) Q = Q_list[index];
-  }
-  // if cannot find solution in several iterations
-  if (nq<1) {
-    std::cerr
-      << "E_Q_Kernel::scatter: failed to find solution for Q. skip."
-      << "Ei=" << Ei
-      << std::endl;
-    return;
-  }
-#ifdef DEBUG
-  std::cout << "nq: " << nq << ", residual: " << eqmd.evaluate(Q) << std::endl;
-#endif
-  // .. get E from Q
-  double E = m_E(Q);
-  // .. final energy
-  double Ef = Ei - E;
-  
-  if (Ef<0) {
-    // should not proceed. non-physical
-    return;
-  }
-  
-#ifdef DEBUG
-  std::cout << "E,Q=" << E << ", " << Q << std::endl;
-#endif
 
-  // final velocity magnitude
-  double vf = conversion::E2v( Ef );
+    // final velocity magnitude
+    vf = conversion::E2v( Ef );
   
-  // final velocity vector
-  V3d vfv = dir * vf;
-  state.velocity = vfv;
+    // theta, phi
+    ki = conversion::v2k* vi;
+    kf = conversion::v2k* vf;
+    cost = (ki*ki+kf*kf-Q*Q)/(2*ki*kf);
+    cost2 = cost*cost;
+    if (cost2>1) {
+      // Ei is too small and we have a problem
+      std::cerr << "ki, kf, Q, cos(theta)="
+		<< ki  << ", "
+		<< kf  << ", "
+		<< Q  << ", "
+		<< cost << ", "
+		<< std::endl;
+      continue;
+    }
+    break;
+  }
+  double sint = std::sqrt(1-cost2);
+  // 
+  double phi = math::random(0., mcni::PI*2);
+  
+  // scattered neutron velocity vector
+  // == coordinate system ==
+  typedef mcni::Vector3<double> V3d;
+  V3d e1 = state.velocity; e1.normalize();
+  // if e1 is not in z-direction
+  // we set e2 to be the cross product of e1 and (0,0,1)
+  // if e1 is right on the z-direction, that means e1 = (0,0,1)
+  // and we set e2 = (1,0,0) or whatever
+  V3d e2;
+  if (std::abs(e1.x)>m_details->m_epsilon || std::abs(e1.y)>m_details->m_epsilon) { 
+    e2 = V3d(0,0,1) * e1; e2.normalize();
+  } else {
+    e2 = V3d(1,0,0);
+  }
+  V3d e3 = e1 * e2;
+  // == v_f ==
+  V3d v_f = sint*cos(phi) * e2 
+    + sint*sin(phi) * e3
+    + cost * e1;
+  v_f = v_f * vf;
  
 #ifdef DEBUG
   std::cout << "S,vf/vi=" << m_S(Q) << ", " << vf/vi << std::endl;
 #endif
   // adjust probability of neutron event
   ev.probability *= m_S(Q) * (vf/vi);
+  ev.probability *=  Q*(m_Qmax-m_Qmin) / (kf*ki) / 2; // * jacobian;
+  //
+  state.velocity = v_f;
 }
 
 
