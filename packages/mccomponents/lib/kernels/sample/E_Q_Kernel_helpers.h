@@ -33,13 +33,12 @@ struct E_q_minus_deltaE: public mccomponents::math::Functor {
     ki = mcni::neutron_units_conversion::E2k(Ei);
   }
     
-  float_t evaluate(float_t Q) const {
-    // Q**2 - ki**2 - kf**2 + 2*ki*kf*cos(theta)
+  float_t evaluate(float_t Ef) const {
     // ki is constant
-    // kf**2 = 2m/hbar**2 * Ef, where Ef = Ei - E(Q)
-    float_t Ef = Ei - E_Q(Q);
     float_t kf = mcni::neutron_units_conversion::E2k(Ef);
-    return Q*Q - ki*ki - kf*kf + 2*ki*kf* cos_t;
+    float_t Q2 = ki*ki + kf*kf - 2*ki*kf*cos_t;
+    float_t Q = std::sqrt(Q2);
+    return E_Q(Q) - (Ei-Ef);
   }
     
   float_t ki, Ei;

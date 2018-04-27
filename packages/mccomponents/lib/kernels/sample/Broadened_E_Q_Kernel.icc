@@ -24,8 +24,6 @@
 #include "mccomponents/math/random.h"
 #include "mccomponents/math/random/gaussian.h"
 #include "mccomponents/math/random/geometry.h"
-#include "E_Q_Kernel_helpers.h"
-#include "mccomponents/math/rootfinding.h"
 
 
 #define DEBUG
@@ -46,18 +44,11 @@ mccomponents::kernels::Broadened_E_Q_Kernel<E_Q_functor_t, S_Q_functor_t, Sigma_
   const static char jrnltag[];
   journal::debug_t debug;
 #endif
-  Details() 
-    :
-    root_finder(1e-6)
-    ,roots_finder(root_finder, 10000)
+  Details()
 #ifdef DEBUG
-    ,debug( jrnltag )
+    : debug( jrnltag )
 #endif
   {}
-  
-  // components
-  math::Algorithms::Bracketing::Ridder::ZRidd root_finder;
-  math::FindRootsEvenly roots_finder;
   
   // data
   const static double m_epsilon;
