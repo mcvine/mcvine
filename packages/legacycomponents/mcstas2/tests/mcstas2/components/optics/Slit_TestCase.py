@@ -47,11 +47,7 @@ class TestCase(unittest.TestCase):
         
         from mcstas2 import componentfactory
         factory = componentfactory( category, componentname )
-        
-        component = factory(
-            'component',
-            radius=0.01, cut=1e-10)
-        
+        component = factory('component', radius=0.01, cut=1e-10)
         
         import mcni
         neutrons = mcni.neutron_buffer( 5 )

@@ -31,7 +31,8 @@ class Registry:
     def register(self, category, type, module):
         self._addType( category, type )
         key = category, type
-        self.factories[ key ] = module.factory
+        from ._proxies import createFactory
+        self.factories[ key ] = createFactory(category, type, module)
         self.infos[ key ] = module.info
         return
 
@@ -40,7 +41,7 @@ class Registry:
         factories = self.factories
         key = category, type
         if not factories.has_key( key ):
-            return self._importComponent( key ).factory
+            self._importComponent( key )
         return factories[ key ]
 
 

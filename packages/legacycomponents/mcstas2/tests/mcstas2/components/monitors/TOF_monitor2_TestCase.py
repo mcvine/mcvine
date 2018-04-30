@@ -35,15 +35,20 @@ class TestCase(unittest.TestCase):
             'component',
             nchan=100,
             xmin=-0.1, xmax=0.1, ymin=-0.1, ymax=0.1,
-            tmin=0.0, tmax=0.00005,
+            tmin=0.0, tmax=0.0006,
             filename="tof.dat",
             )
+        from mcni.SimulationContext import SimulationContext
+        component.simulation_context = SimulationContext()
+        component.simulation_context.overwrite_datafiles = True
+        component.simulation_context.outputdir = "out-TOF_monitor2"
         
         import mcni
         neutrons = mcni.neutron_buffer( 5 )
         for i in range(5):
             neutrons[i] = mcni.neutron(r=(0,0,-1), v=(0,0,3000), time = 0, prob = 1)
             continue
+        component.simulation_context.iteration_no = 0
         component.process( neutrons )
         print neutrons
         return

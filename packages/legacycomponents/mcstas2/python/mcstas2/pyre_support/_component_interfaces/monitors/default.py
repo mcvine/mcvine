@@ -1,14 +1,6 @@
 #!/usr/bin/env python
 #
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#
-#                                   Jiao Lin, Alex Dementsov
-#                      California Institute of Technology
-#                      (C) 2008-2009  All Rights Reserved
-#
-# {LicenseText}
-#
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#  Jiao Lin, Alex Dementsov
 #
 
 
@@ -26,20 +18,14 @@ class ComponentInterface(HistogramBasedMonitorMixin, base, ParallelComponent):
 
 
     def process(self, neutrons):
-        restore_neutron = self.inventory.restore_neutron
-        if restore_neutron:
-            # create a copy to be processed
-            saved = neutrons.snapshot(len(neutrons))
-            
-        # and process neutrons as normal
-        ret = super(ComponentInterface, self).process(neutrons)
-    
-        # dump all calculated data
-        self._dumpData()
-        
-        # restore neutrons if requested
-        if restore_neutron:
-            neutrons.swap(saved)
+        # self.engine is created by self._createEngine()
+        # earlier in self._init.
+        # See mcstas2.utils.pyre_support.ElementaryComponentGenerator
+        # self.engine should be an instance of mcstas2.AbstractComponent.AbstractComponent
+        # and are created by factories methods registered in
+        # mcstas2.components.Registry
+        self.engine.restore_neutron = self.inventory.restore_neutron
+        ret = self.engine.process(neutrons)
             
         # recreate engine to discard the old one
         # now everything is fresh. the monitor data is already saved
