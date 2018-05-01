@@ -16,6 +16,7 @@ def createFactory(category, type, module):
     new_factory.__doc__ = factory.__doc__
     new_factory.info = factory.info
     new_factory.__name__ = name
+    new_factory.__module__ = factory.__module__
     return new_factory
 
 def getProxy(category, type):

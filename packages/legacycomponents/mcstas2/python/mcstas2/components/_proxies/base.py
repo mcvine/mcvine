@@ -4,7 +4,8 @@ from mcni.components.ParallelComponent import ParallelComponent
 class Component(AbstractComponent, ParallelComponent):
 
     def __init__(self, cpp_instance_factory, *args, **kwds):
-        self._input_kwds = kwds
+        for k, v in kwds.items():
+            setattr(self, k, v)
         # self._cpp_instance is an instance created
         # by factory methods auto-generated from mcstas components
         # see template code in mcstas2.wrappers.pymodule.factorymethod_py

@@ -26,7 +26,7 @@ class Component(HistogramBasedMonitorMixin, base):
 
     def _histogramOutputFilename(self):
         # assumes all monitor components have the parameter "filename"
-        filename = self._input_kwds['filename']
+        filename = self.filename
         b, ext = os.path.splitext(filename)
         f = '%s.h5' % b
         return f
