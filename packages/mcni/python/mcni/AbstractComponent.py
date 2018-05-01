@@ -33,6 +33,12 @@ class AbstractComponent:
         raise NotImplementedError
 
 
+    def create_pps(self):
+        "create post-processing script in given dir"
+        # overload this to provide the functionality for a specific component type
+        return
+
+
     def _get_overwrite_datafiles(self):
         import warnings
         msg = "In %s: Deprecated. should use self.simulation_context.overwrite_datafiles" %(
