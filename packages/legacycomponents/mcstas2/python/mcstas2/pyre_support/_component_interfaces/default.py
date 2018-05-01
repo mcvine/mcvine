@@ -24,15 +24,26 @@ from mcni.pyre_support.AbstractComponent import AbstractComponent
 class ComponentInterface(AbstractComponent):
 
     
+    class Inventory(AbstractComponent.Inventory):
+
+        import pyre.inventory
+        restore_neutron = pyre.inventory.bool('restore_neutron')
+
+
     def process(self, neutrons):
+        self.engine.simulation_context = self.simulation_context
+        # self.engine is created by self._createEngine()
+        # earlier in self._init.
+        # See mcstas2.utils.pyre_support.ElementaryComponentGenerator
+        # self.engine should be an instance of mcstas2.AbstractComponent.AbstractComponent
+        # and are created by factories methods registered in
+        # mcstas2.components.Registry
+        self.engine.restore_neutron = self.inventory.restore_neutron
         return self.engine.process(neutrons)
 
 
     def _hasEngine(self):
         return self.__dict__.get('engine')
 
-    
-# version
-__id__ = "$Id$"
 
 # End of file 

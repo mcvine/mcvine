@@ -36,6 +36,7 @@ class TestCase(unittest.TestCase):
         from mcstas2 import componentfactory as cf
         f = cf('sources', 'Source_simple')
         component1 = f(
+            name = "component1",
             E0=60, dE=20,
             height = 0.01, width = 0.01, radius=0,
             dist=4, 

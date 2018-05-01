@@ -18,7 +18,7 @@ fcc Ni scatterer constructed from an xml file
 
 
 import unittestX as unittest
-import journal
+import os, journal
 
 
 
@@ -44,8 +44,14 @@ class TestCase(unittest.TestCase):
             Emin=Emin, Emax=Emax, nE=nE,
             max_angle_out_of_plane=30, min_angle_out_of_plane=-30,
             max_angle_in_plane=120, min_angle_in_plane=-30,
+            filename = 'IQE.dat'
             )
-
+        from mcni.SimulationContext import SimulationContext
+        component.simulation_context = SimulationContext()
+        component.simulation_context.overwrite_datafiles = True
+        component.simulation_context.outputdir = "out-fccNiphononkernelfromxml"
+        component.simulation_context.iteration_no = 0
+        
         scatterer = makeScatterer()
         
         import mcni
@@ -59,14 +65,12 @@ class TestCase(unittest.TestCase):
             continue
         
         component.process( neutrons )
-        
-        hist = get_histogram(component)
-        import os
-        f = os.path.basename(__file__)
-        filename = 'IQE-%s.h5' % f
-        if os.path.exists(filename): os.remove(filename)
+
         import histogram.hdf as hh
-        hh.dump(hist, filename, '/', 'c')
+        outh5 = os.path.join(
+            component.simulation_context.outputdir,
+            'step0', 'IQE.h5')
+        hist = hh.load(outh5)
         
         if self.interactive:
             from histogram.plotter import defaultPlotter
@@ -123,7 +127,7 @@ def makeUnitcell():
 
 
 
-from mcstas2.pyre_support._component_interfaces.monitors.IQE_monitor import get_histogram
+from mcstas2.components._proxies.monitors.IQE_monitor import get_histogram
 import numpy as N
 
 

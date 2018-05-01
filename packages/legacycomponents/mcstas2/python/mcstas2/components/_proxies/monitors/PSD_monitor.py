@@ -1,25 +1,15 @@
 #!/usr/bin/env python
 #
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#
-#                                   Jiao Lin
-#                      California Institute of Technology
-#                        (C) 2008  All Rights Reserved
-#
-# {LicenseText}
-#
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Jiao Lin <jiao.lin@gmail.com>
 #
 
 
+from base import Component as base
 
-from default import ComponentInterface as base
-from default import attr
-
-class ComponentInterface(base):
+class Component(base):
 
     def _get_histogram(self):
-        return get_histogram(self)
+        return get_histogram(self._cpp_instance)
     
 
 def get_histogram( monitor ):
@@ -30,13 +20,8 @@ def get_histogram( monitor ):
     n = nx * ny
     shape = nx, ny
 
-#    xmin = core.x_min; xmax = core.x_max
-#    ymin = core.y_min; ymax = core.y_max
-
-    xmin = attr(core, "xmin", "x_min");
-    xmax = attr(core, "xmax", "x_max");
-    ymin = attr(core, "ymin", "y_min");
-    ymax = attr(core, "ymax", "y_max");
+    xmin = core.x_min; xmax = core.x_max
+    ymin = core.y_min; ymax = core.y_max
 
     dx = (xmax - xmin)/nx
     dy = (ymax - ymin)/ny
@@ -59,8 +44,5 @@ def _int(f):
         raise ValueError("%s is not close to an integer" % f)
     return i
 
-
-# version
-__id__ = "$Id$"
 
 # End of file 

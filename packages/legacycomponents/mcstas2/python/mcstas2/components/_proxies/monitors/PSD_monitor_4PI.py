@@ -1,24 +1,14 @@
 #!/usr/bin/env python
 #
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#
-#                                   Jiao Lin
-#                      California Institute of Technology
-#                        (C) 2008  All Rights Reserved
-#
-# {LicenseText}
-#
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Jiao Lin <jiao.lin@gmail.com>
 #
 
+from base import Component as base
 
-
-from default import ComponentInterface as base
-
-class ComponentInterface(base):
+class Component(base):
     
     def _get_histogram(self):
-        return get_histogram(self)
+        return get_histogram(self._cpp_instance)
 
 
 def get_histogram( monitor ):
@@ -45,8 +35,5 @@ def get_histogram( monitor ):
     h = histogram( 'I(x,y)', [xaxis,yaxis], data = Iarr, errors = E2arr )
     return h
 
-
-# version
-__id__ = "$Id$"
 
 # End of file 

@@ -25,7 +25,7 @@ interactive = False
 
 
 import unittestX as unittest
-import journal
+import os, journal
 
 
 componentname = 'IQE_monitor'
@@ -50,7 +50,12 @@ class TestCase(unittest.TestCase):
             Emin=Emin, Emax=Emax, nE=nE,
             max_angle_out_of_plane=30, min_angle_out_of_plane=-30,
             max_angle_in_plane=120, min_angle_in_plane=-30,
+            filename = 'IQE.dat',
             )
+        from mcni.SimulationContext import SimulationContext
+        component.simulation_context = SimulationContext()
+        component.simulation_context.overwrite_datafiles = True
+        component.simulation_context.outputdir = "out-IQE_monitor"
         
         import mcni
         from mcni.utils import conversion as C
@@ -67,12 +72,13 @@ class TestCase(unittest.TestCase):
                 vfx = vf*sinphi
                 neutrons[count] = mcni.neutron(r=(0,0,0), v=(vfx,0,vfz), time = 0, prob = 1)
                 count += 1
-                continue
+            continue
+
+        component.simulation_context.iteration_no = 0
         component.process( neutrons )
         
-        from mcstas2.pyre_support._component_interfaces.monitors.IQE_monitor import get_histogram
-        hist = get_histogram(component)
-
+        import histogram.hdf as hh
+        hist = hh.load(os.path.join(component.simulation_context.outputdir, 'step0', 'IQE.h5'))
         if interactive:
             from histogram.plotter import defaultPlotter
             defaultPlotter.plot(hist)

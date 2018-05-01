@@ -1,25 +1,17 @@
 #!/usr/bin/env python
 #
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#
-#                                   Jiao Lin
-#                      California Institute of Technology
-#                        (C) 2008  All Rights Reserved
-#
-# {LicenseText}
-#
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Jiao Lin <jiao.lin@gmail.com>
 #
 
 
 
-from default import ComponentInterface as base
+from base import Component as base
 
-class ComponentInterface(base):
+class Component(base):
 
     def _get_histogram(self):
         norm = self._get_normalization()
-        h = get_histogram(self)
+        h = get_histogram(self._cpp_instance)
         return h/norm
 
     
@@ -34,8 +26,8 @@ class ComponentInterface(base):
     def _get_normalization_p(self):
         context = self.simulation_context
         # the master node need to compute the norm
-        if context.mpiRank == 0:
-            norm = getNormalization(self)
+        if not context.mpiRank:
+            norm = getNormalization(self._cpp_instance, factory=self._cpp_instance_factory)
         # if there are no other nodes, we are fine
         if not context.mpiSize:
             return norm
@@ -73,7 +65,7 @@ def get_histogram( monitor ):
     return h
 
 
-def getNormalization(monitor, N=None, epsilon=1e-7):
+def getNormalization(monitor, N=None, epsilon=1e-7, factory=None):
     # randomly shoot neutrons to monitor in 4pi solid angle
     print "* start computing normalizer..."
     core = monitor.core()
@@ -116,8 +108,6 @@ def getNormalization(monitor, N=None, epsilon=1e-7):
         return neutrons
     
     # 2. create a copy of the original monitor
-    from mcstas2 import componentfactory
-    cf = componentfactory(type='IQE_monitor', category='monitors')
     props = [
         'Ei',
         'Emin', 'Emax', 'nE',
@@ -131,7 +121,7 @@ def getNormalization(monitor, N=None, epsilon=1e-7):
     tmpdir = tempfile.mkdtemp()
     outfilename = os.path.join(tmpdir, 'mon.dat')
     kwds['filename'] = outfilename
-    monitorcopy = cf('monitor', **kwds)
+    cppmonitorcopy = factory('monitor', **kwds)
     
     # 3. send neutrons to monitor copy
     N1 = 0; dN = int(1e6)
@@ -139,11 +129,11 @@ def getNormalization(monitor, N=None, epsilon=1e-7):
     while N1 < N:
         n = min(N-N1, dN)
         neutrons = make_neutrons(n)
-        monitorcopy.process(neutrons)
+        cppmonitorcopy.process(neutrons)
         N1 += n
         print "  - processed %s" % N1
         continue
-    h = get_histogram(monitorcopy)
+    h = get_histogram(cppmonitorcopy)
     # for debug
     # import histogram.hdf as hh
     # hh.dump(h, 'tmp.h5', '/', 'c')
@@ -157,7 +147,7 @@ def test1():
     from mcstas2 import componentfactory
     cf = componentfactory(type='IQE_monitor', category='monitors')
     monitor = cf('monitor')
-    getNormalization(monitor, N=1000000)
+    getNormalization(monitor._cpp_instance, N=1000000)
     return
 
 

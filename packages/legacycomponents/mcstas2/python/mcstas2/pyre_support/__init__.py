@@ -27,9 +27,11 @@ given mcstas component category and type.
     
     try: return getattr(module, factoryattributename)
     except: pass
-    
-    factory = module.factory
-    info = module.info
+
+    # non pyre factory
+    from .. import components
+    factory = components.componentfactory(category, type)
+    info = factory.info
     factory.arguments = info.input_parameters
     from mcstas2.utils.pyre_support import elementaryComponentClassGenerator as generator
 
