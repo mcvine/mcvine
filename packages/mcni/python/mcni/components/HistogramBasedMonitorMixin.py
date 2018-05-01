@@ -82,13 +82,12 @@ from outputs import mcs_sum
 from MonitorMixin import MonitorMixin
 class HistogramBasedMonitorMixin(MonitorMixin):
 
-    def _getFinalResult(self):
-        """get the final result of this monitor"""
+    def create_pps(self):
         context = self.simulation_context
         if context is None:
             raise RuntimeError, "context not defined: type - %s, name - %s" % (
                 self.__class__.__name__, self.name)
-        if context.mpiRank != 0:
+        if not context.mpiRank:
             return
         # create post processing script
         import os
@@ -98,6 +97,10 @@ merge_and_normalize(%(fn)r, %(outdir)r)
 """ % dict(outdir=os.path.abspath(context.outputdir), fn=self._getHistogramFilename())
         open(path, 'wt').write(content)
         return
+
+    def _getFinalResult(self):
+        """get the final result of this monitor"""
+        return self.create_pps()
 
 
     def _getHistogramFilename(self):
