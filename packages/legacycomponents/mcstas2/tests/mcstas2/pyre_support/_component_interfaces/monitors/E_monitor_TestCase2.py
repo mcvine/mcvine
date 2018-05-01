@@ -46,6 +46,10 @@ class TestCase(unittest.TestCase):
         # run command
         if os.system(cmd):
             raise RuntimeError, "%s failed" % cmd
+        # run post-processing
+        from mcni.pyre_support.Instrument import _run_ppsd
+        ppsd = os.path.join(outputdir, 'post-processing-scripts') 
+        _run_ppsd(ppsd)
 
         # checks
         import time
