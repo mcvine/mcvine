@@ -17,14 +17,17 @@
 
 class SimulationContext:
 
-    def __init__(self, multiple_scattering=False, tracer=None, iteration_no=None, outputdir=None,
-                 mpiRank=None, mpiSize=None):
+    def __init__(
+            self, multiple_scattering=False, tracer=None, iteration_no=None, outputdir=None,
+            mpiRank=None, mpiSize=None, overwrite_datafiles=False,
+    ):
         self.multiple_scattering = multiple_scattering
         self.tracer = tracer
         self.iteration_no = iteration_no
         self.outputdir = outputdir
         self.mpiRank = mpiRank
         self.mpiSize = mpiSize
+        self.overwrite_datafiles = overwrite_datafiles
         return
 
 
