@@ -17,13 +17,16 @@ def getInterface(category, type):
     thispackage = 'mcstas2.pyre_support._component_interfaces'
     package = '.'.join([thispackage, category, type])
     try:
+        # specific component
         package = _import(package)
     except ImportError:
-        import journal
-        debug = journal.debug('mcstas2.pyre_support')
-        import traceback
-        debug.log(traceback.format_exc())
-        import default as package
+        # category default
+        package = '.'.join([thispackage, category, 'default'])
+        try:
+            package = _import(package)
+        except ImportError:
+            # general default
+            from . import default as package
     return getattr(package, 'ComponentInterface')
 
 
