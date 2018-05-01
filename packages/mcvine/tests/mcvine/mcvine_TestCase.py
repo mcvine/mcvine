@@ -30,7 +30,7 @@ class TestCase(unittest.TestCase):
         g = mcvine.geometer()
         f = mcvine.componentfactory('sources', 'Source_simple', 'mcstas2')
         # help(f)
-        s = f()
+        s = f('source')
         i.append(s)
         g.register(s, (0,0,0), (0,0,0))
         neutrons = mcvine.neutron_buffer(5)
