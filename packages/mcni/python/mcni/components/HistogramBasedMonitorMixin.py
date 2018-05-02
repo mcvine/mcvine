@@ -87,7 +87,7 @@ class HistogramBasedMonitorMixin(MonitorMixin):
         if context is None:
             raise RuntimeError, "context not defined: type - %s, name - %s" % (
                 self.__class__.__name__, self.name)
-        if not context.mpiRank:
+        if context.mpiRank:
             return
         # create post processing script
         import os
