@@ -88,18 +88,10 @@ class DetectorSystemFromXml(ParallelComponent, AbstractComponent):
 
     def _saveFinalResult(self):
         self._debug.log("Entering _saveFinalResult")
-        context = self.simulation_context
-        if context.mpiRank != 0:
-            return
-        # create post processing script
-        import os
-        path = os.path.join(context.post_processing_scripts_dir, "%s.py" % self.name)
-        content = """from mccomponents.pyre_support.components.DetectorSystemFromXml import merge_and_normalize
-merge_and_normalize(%r, %r, %r)
-""" % (os.path.abspath(self.simulation_context.outputdir),
-       self.eventsdat,
-       self.overwrite_datafiles)
-        open(path, 'wt').write(content)
+        engine = self.engine
+        engine.simulation_context = self.simulation_context
+        engine.create_pps()
+        del self.engine
         return
 
 
@@ -123,7 +115,6 @@ merge_and_normalize(%r, %r, %r)
 
     def _fini(self):
         if self.engine:
-            del self.engine
             if not self._showHelpOnly:
                 self._saveFinalResult()
         super(DetectorSystemFromXml, self)._fini()
@@ -137,43 +128,6 @@ merge_and_normalize(%r, %r, %r)
     
 
     pass # end of Source
-
-
-class Storage_MCsample_Mismatch(Exception): pass
-def merge_and_normalize(
-    outputdir='out',
-    eventsdat='events.dat',
-    overwrite_datafiles=True):
-    
-    # find all output files
-    from mcni.components.outputs import n_mcsamples_files, mcs_sum
-    import glob, os
-    filename = eventsdat
-    pattern = os.path.join(outputdir, '*', filename)
-    eventdatfiles = glob.glob(pattern)
-    n_mcsamples = n_mcsamples_files(outputdir)
-    if len(eventdatfiles) != n_mcsamples:
-        msg = "neutron storage files %s does not match #mcsample files %s" %(
-            len(eventdatfiles), n_mcsamples)
-        raise Storage_MCsample_Mismatch(msg)
-    if not eventdatfiles:
-        return
-
-    # output
-    out = os.path.join(outputdir, eventsdat)
-    if overwrite_datafiles:
-        if os.path.exists(out):
-            os.remove(out)
-    # merge
-    from mccomponents.detector import mergeEventFiles
-    mergeEventFiles(eventdatfiles, out)
-    
-    # load number_of_mc_samples
-    mcs = mcs_sum(outputdir)
-    # normalize
-    from mccomponents.detector import normalizeEventFile
-    normalizeEventFile(out, mcs)
-    return
 
 
 
