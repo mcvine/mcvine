@@ -56,6 +56,22 @@ def simulate(
         context = context)
 
 
+def run_ppsd(path):
+    "run postprocessing scripts in the given path"
+    import glob, sys, os
+    scripts = glob.glob(os.path.join(path, '*.py'))
+    for script in scripts:
+        cmd = '%s %s' % (sys.executable, script)
+        _exec(cmd)
+        continue
+    return
+def _exec(cmd):
+    import os
+    if os.system(cmd):
+        raise RuntimeError("%s failed" % cmd)
+    return
+
+
 def geometer( *args, **kwds ):
     'factory constructs a geometer'
     from Geometer import Geometer
