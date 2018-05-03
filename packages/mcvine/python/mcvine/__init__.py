@@ -86,8 +86,8 @@ def componentinfo(type, category=None, supplier=None):
 
 
 import component_suppliers
-
-
+components = component_suppliers.components
+del component_suppliers.components
 
 __all__ = [
     'simulate', 'geometer', 'instrument', 'neutron_buffer', 'neutron',
@@ -95,8 +95,5 @@ __all__ = [
     'listallcomponentcategories', 'listcomponentsincategory',
     ]
 
-
-# version
-__id__ = "$Id$"
 
 # End of file 
