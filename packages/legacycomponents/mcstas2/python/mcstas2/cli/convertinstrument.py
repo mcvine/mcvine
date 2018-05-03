@@ -216,12 +216,12 @@ class InstrumentConfiguratorRenderer(object):
             'components = [%s()]' % ', '.join(
                 [c.name for c in instrument.components])
             )
-        w('from mcvine.instrument.pml import set_instrument_parameters, PmlRenderer')
+        w('from mcvine.pyre_support.pml import set_instrument_parameters, PmlRenderer')
         w('class instrument: pass')
         w('instrument.name=%r' % instrument.name)
         w('instrument.components=components')
         w('set_instrument_parameters(instrument, locals())')
-        w('from mcvine.instrument.pml import PmlRenderer')
+        w('from mcvine.pyre_support.pml import PmlRenderer')
         w('renderer = PmlRenderer()')
         w("text = '\\n'.join(renderer.render(instrument))")
         w("pml = '%s.pml'" % instrument.name)
@@ -266,7 +266,7 @@ def _formatParamStr(params):
         continue
     return ', '.join(l)
 
-from mcvine.instrument.pml import PmlRenderer
+from mcvine.pyre_support.pml import PmlRenderer
 
 
 # version
