@@ -58,23 +58,6 @@ class TestCase(unittest.TestCase):
 
 
 
-def pysuite():
-    suite1 = unittest.makeSuite(TestCase)
-    return unittest.TestSuite( (suite1,) )
-
-def main():
-    #debug.activate()
-    pytests = pysuite()
-    alltests = unittest.TestSuite( (pytests, ) )
-    res = unittest.TextTestRunner(verbosity=2).run(alltests)
-    import sys; sys.exit(not res.wasSuccessful())
-
+if __name__ == "__main__": unittest.main()
     
-    
-if __name__ == "__main__":
-    main()
-    
-# version
-__id__ = "$Id$"
-
 # End of file 
