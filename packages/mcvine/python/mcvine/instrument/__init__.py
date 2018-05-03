@@ -1,18 +1,15 @@
 # -*- Python -*-
 #
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#
-#                                   Jiao Lin
-#                      California Institute of Technology
-#                      (C) 2008-2013  All Rights Reserved
-#
-# {LicenseText}
-#
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Jiao Lin <jiao.lin@gmail.com>
 #
 
-
-# version
-__id__ = "$Id$"
+def main():
+    import __main__ as m
+    import sys
+    assert len(sys.argv)==3
+    ncount, buffer_size = map(int, sys.argv[1:])
+    instrument = m.instrument
+    N_iter = (ncount-1)//buffer_size + 1
+    return
 
 # End of file 
