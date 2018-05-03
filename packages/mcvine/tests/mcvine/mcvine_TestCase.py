@@ -27,22 +27,12 @@ class TestCase(unittest.TestCase):
         # this is the example 1 in the mcvine package documentation
         import mcvine
         i = mcvine.instrument()
-        g = mcvine.geometer()
         # add source
-        f = mcvine.componentfactory('sources', 'Source_simple', 'mcstas2')
-        # help(f)
-        s = f('source')
-        i.append(s); g.register(s, (0,0,0), (0,0,0))
+        i.append(mcvine.components.sources.Source_simple('source'), position=(0,0,0))
         # add monitor
-        f = mcvine.componentfactory('monitors', 'E_monitor', 'mcstas2')
-        m = f('monitor', filename="mon.dat")
-        i.append(m); g.register(m, (0,0,1), (0,0,0))
+        i.append(mcvine.components.monitors.E_monitor('monitor', filename='IE.dat'), position=(0,0,1))
         #
-        neutrons = mcvine.neutron_buffer(5)
-        print neutrons
-        mcvine.simulate(
-            i, g, neutrons,
-            outputdir="out-mcvine", overwrite_datafiles=True, iteration_no=0)
+        neutrons = i.simulate(5,outputdir="out-mcvine", overwrite_datafiles=True, iteration_no=0)
         print neutrons
         return
 

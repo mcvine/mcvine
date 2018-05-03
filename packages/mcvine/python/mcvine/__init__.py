@@ -17,16 +17,13 @@ mcvine: Monte Carlo VIrtual Neutron Experiment
 Example 1: run a simple simulation
 
   >>> import mcvine
-  >>> i = mcvine.instrument() # created an instrument
-  >>> g = mcvine.geometer()   # created a geometer
-  >>> f = mcvine.componentfactory('sources', 'Source_simple', 'mcstas2') # get a component factory
-  >>> help(f)
-  >>> s = f()  # instantiate a Source_simple component
-  >>> i.append(s) # add the component to the instrument
-  >>> g.register(s, (0,0,0), (0,0,0))  # register the new component with the geometer
-  >>> neutrons = mcvine.neutron_buffer(5) # created a neutron buffer of size 5
-  >>> print neutrons  
-  >>> mcvine.simulate(i, g, neutrons)  # run the simulation
+  >>> i = mcvine.instrument()
+  >>> # add source
+  >>> i.append(mcvine.components.sources.Source_simple('source'), position=(0,0,0))
+  >>> # add monitor
+  >>> i.append(mcvine.components.monitors.E_monitor('monitor', filename='IE.dat'), position=(0,0,1))
+  >>> # simulate
+  >>> neutrons = i.simulate(5,outputdir="out-mcvine", overwrite_datafiles=True, iteration_no=0)
   >>> print neutrons
 
 Example 2: find out the types of components in 'sources' category
