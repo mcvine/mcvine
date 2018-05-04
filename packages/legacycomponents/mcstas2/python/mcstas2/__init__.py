@@ -193,11 +193,7 @@ def defaultcomponentpath( category, type ):
 
 
 def defaultcomponentlibrarypath( ):
-    from . import release
-    try:
-        from .release import component_library_dir as dir
-    except Exception as e:
-        raise RuntimeError("release module: %s.\n%s" % (release, e))
+    from .release import component_library_dir as dir
     return dir
 
 
