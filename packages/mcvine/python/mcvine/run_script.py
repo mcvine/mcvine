@@ -29,6 +29,7 @@ An example script:
   # end of script
 
 """
+    ncount = int(ncount); buffer_size = int(buffer_size)    
     assert buffer_size>0
     if ncount < 100:
         nodes = 1; buffer_size = ncount
