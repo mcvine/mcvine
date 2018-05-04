@@ -62,7 +62,7 @@ def pyre_app(parent, appname, cmd_prefix):
 # sub-cmds
 from . import test, mpi
 from . import component, neutronstorage
-from mcvine.instrument import cli
+from . import instrument
 from mcstas2 import cli
 from . import sampleassembly #, kernel
 try:

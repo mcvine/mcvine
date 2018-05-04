@@ -44,8 +44,10 @@ def detectorcomponent( name, instrumentxml, coordinate_system, tofparams, outfil
 
     instrument.geometer = instrument.global_geometer
 
-    cds.name = name
-    return cds
+    from .DetectorSystemFromXml import DetectorSystemFromXml
+    rt = DetectorSystemFromXml(cds, outfilename)
+    rt.name = name
+    return rt
 
 
 def mergeEventFiles(files, out):

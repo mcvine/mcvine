@@ -48,7 +48,4 @@ else:
         'vitess', pyre_component_suppliers.PyModuleAsSupplier('vitess.pyre_components'))
 """
 
-# version
-__id__ = "$Id$"
-
 # End of file 

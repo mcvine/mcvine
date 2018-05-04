@@ -25,17 +25,14 @@ class TestCase(unittest.TestCase):
     def test1(self):
         'mcvine: simulate'
         # this is the example 1 in the mcvine package documentation
-        import mcvine
+        import mcvine, mcvine.components
         i = mcvine.instrument()
-        g = mcvine.geometer()
-        f = mcvine.componentfactory('sources', 'Source_simple', 'mcstas2')
-        # help(f)
-        s = f('source')
-        i.append(s)
-        g.register(s, (0,0,0), (0,0,0))
-        neutrons = mcvine.neutron_buffer(5)
-        print neutrons
-        mcvine.simulate(i, g, neutrons)
+        # add source
+        i.append(mcvine.components.sources.Source_simple('source'), position=(0,0,0))
+        # add monitor
+        i.append(mcvine.components.monitors.E_monitor('monitor', filename='IE.dat'), position=(0,0,1))
+        #
+        neutrons = i.simulate(5,outputdir="out-mcvine", overwrite_datafiles=True, iteration_no=0)
         print neutrons
         return
 
@@ -61,23 +58,6 @@ class TestCase(unittest.TestCase):
 
 
 
-def pysuite():
-    suite1 = unittest.makeSuite(TestCase)
-    return unittest.TestSuite( (suite1,) )
-
-def main():
-    #debug.activate()
-    pytests = pysuite()
-    alltests = unittest.TestSuite( (pytests, ) )
-    res = unittest.TextTestRunner(verbosity=2).run(alltests)
-    import sys; sys.exit(not res.wasSuccessful())
-
+if __name__ == "__main__": unittest.main()
     
-    
-if __name__ == "__main__":
-    main()
-    
-# version
-__id__ = "$Id$"
-
 # End of file 

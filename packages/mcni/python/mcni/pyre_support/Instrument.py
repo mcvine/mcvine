@@ -37,6 +37,7 @@ from MpiApplication import Application as base
 from CompositeNeutronComponentMixin import CompositeNeutronComponentMixin
 from AppInitMixin import AppInitMixin
 from ParallelComponent import ParallelComponent
+from .. import run_ppsd as _run_ppsd
 
 class Instrument( AppInitMixin, CompositeNeutronComponentMixin, base, ParallelComponent ):
 
@@ -517,21 +518,6 @@ def _computeMaximumBufferSize(nodes):
 
     return n
 
-
-def _run_ppsd(path):
-    "run postprocessing scripts in the given path"
-    import glob
-    scripts = glob.glob(os.path.join(path, '*.py'))
-    for script in scripts:
-        cmd = '%s %s' % (sys.executable, script)
-        _exec(cmd)
-        continue
-    return
-
-def _exec(cmd):
-    if os.system(cmd):
-        raise RuntimeError("%s failed" % cmd)
-    return
 
 def _getCmdStr():
     import sys, os

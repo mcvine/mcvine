@@ -25,4 +25,4 @@ mcvine-simulate \
 #    --monitor.help-properties \
  
 
-PlotHist.py out/IE.h5
+plothist out/IE.h5
