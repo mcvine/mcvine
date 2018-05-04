@@ -193,7 +193,7 @@ def defaultcomponentpath( category, type ):
 
 
 def defaultcomponentlibrarypath( ):
-    from release import component_library_dir as dir
+    from .release import component_library_dir as dir
     return dir
 
 
