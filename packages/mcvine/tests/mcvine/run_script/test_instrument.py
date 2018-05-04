@@ -1,4 +1,4 @@
-import mcvine
+import mcvine, mcvine.components
 instrument = mcvine.instrument()
 # add source
 source = mcvine.components.sources.Source_simple('source')

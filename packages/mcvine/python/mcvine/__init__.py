@@ -16,7 +16,7 @@ mcvine: Monte Carlo VIrtual Neutron Experiment
 
 Example 1: run a simple simulation
 
-  >>> import mcvine
+  >>> import mcvine, mcvine.components
   >>> i = mcvine.instrument()
   >>> # add source
   >>> i.append(mcvine.components.sources.Source_simple('source'), position=(0,0,0))
@@ -83,8 +83,6 @@ def componentinfo(type, category=None, supplier=None):
 
 
 import component_suppliers
-components = component_suppliers.components
-del component_suppliers.components
 
 __all__ = [
     'simulate', 'geometer', 'instrument', 'neutron_buffer', 'neutron',

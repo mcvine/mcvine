@@ -25,7 +25,7 @@ class TestCase(unittest.TestCase):
     def test1(self):
         'mcvine: simulate'
         # this is the example 1 in the mcvine package documentation
-        import mcvine
+        import mcvine, mcvine.components
         i = mcvine.instrument()
         # add source
         i.append(mcvine.components.sources.Source_simple('source'), position=(0,0,0))

@@ -48,21 +48,4 @@ else:
         'vitess', pyre_component_suppliers.PyModuleAsSupplier('vitess.pyre_components'))
 """
 
-class _Components(object):
-    "collection of components"
-    pass
-components = _Components()
-from . import listallcomponentcategories, listcomponentsincategory, componentfactory
-for cat in listallcomponentcategories():
-    class K(object):
-        'Component category %r' % cat
-        pass
-    K.__name__ = cat
-    _ = K()
-    setattr(components, cat, _)
-    for name, supplier in listcomponentsincategory(cat):
-        setattr(_, name, componentfactory(cat, name, supplier))
-    continue
-    
-
 # End of file 
