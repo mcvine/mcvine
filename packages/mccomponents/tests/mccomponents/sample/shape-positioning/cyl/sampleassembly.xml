@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 
-<!DOCTYPE SampleAssembly>
+<!DOCTYPE SampleAssembly [
+<!ENTITY shape SYSTEM "cyl.xml">
+]>
 
 <SampleAssembly name="X">
   
   <PowderSample name="X" type="sample">
-    <Shape>
-      <cylinder radius="1*cm" height="6*cm" />
-    </Shape>
+    <Shape>&shape;</Shape>
     <Phase type="crystal">
       <ChemicalFormula>Al</ChemicalFormula>
       <xyzfile>Al.xyz</xyzfile>
