@@ -3,8 +3,9 @@
 #
 
 import os, sys
+from mcni import run_ppsd
 
-def mpi_run(script, workdir, ncount, nodes, buffer_size=int(1e6), overwrite_datafiles=False):
+def run_mpi(script, workdir, ncount, nodes, buffer_size=int(1e6), overwrite_datafiles=False):
     """run a mcvine simulation script on one node. The script must define the instrument.
 Parameters:
 
@@ -28,9 +29,39 @@ An example script:
   # end of script
 
 """
+    assert buffer_size>0
+    if ncount < 100:
+        nodes = 1; buffer_size = ncount
+    else:
+        max_buffer_size = ncount//nodes//5
+        min_buffer_size = 20
+    buffer_size = min(max_buffer_size, buffer_size)
+    buffer_size = max(min_buffer_size, buffer_size)
+    overwrite_datafiles = '--overwrite_datafiles' if overwrite_datafiles else ''
+    cmd = 'python -m "mcvine.run_script" {script} --workdir {workdir} --ncount {ncount} {overwrite_datafiles} --buffer_size {buffer_size}'
+    cmd = cmd.format(script=script, workdir=workdir, ncount=ncount, overwrite_datafiles=overwrite_datafiles, buffer_size=buffer_size)
+    cmd += ' --mpi-mode=worker'
+    cmd = "mpirun -np {} ".format(nodes) + cmd
+    if os.system(cmd):
+        raise RuntimeError("%s failed" % cmd)
+    ppsd = os.path.join(workdir, 'post-processing-scripts')
+    run_ppsd(ppsd)
     return
 
-def run1(script, workdir, ncount, buffer_size=int(1e6), overwrite_datafiles=False):
+
+def run1_mpi(script, workdir, ncount, **kwds):
+    # find out how many neutrons 
+    from mcni.components.ParallelComponent import ParallelComponent
+    pc = ParallelComponent()
+    from mcni.pyre_support.Instrument import getPartitions
+    partitions = getPartitions(ncount, pc.mpi.size)
+    ncount1 = partitions[pc.mpi.rank]
+    kwds.update(mpiSize=pc.mpi.size, mpiRank=pc.mpi.rank, run_pps=False)
+    run1(script, workdir, ncount1, **kwds)
+    return
+
+
+def run1(script, workdir, ncount, buffer_size=int(1e6), overwrite_datafiles=False, run_pps=True, **kwds):
     """run a mcvine simulation script on one node. The script must define the instrument.
 
 Parameters:
@@ -61,21 +92,24 @@ An example script:
     ncount = int(ncount)
     workdir = os.path.abspath(workdir)
     ppsd = os.path.join(workdir, 'post-processing-scripts')
-    if not os.path.exists(ppsd): os.makedirs(ppsd)
+    from mcni.components.ParallelComponent import ParallelComponent
+    pc = ParallelComponent()
+    if pc.mpi.size and pc.mpi.rank==0:
+        if not os.path.exists(ppsd): os.makedirs(ppsd)
     
     N = (ncount-1)//buffer_size+1
     remained = ncount
     for i in range(N):
         n = min(remained, buffer_size)
-        instrument.simulate(n, outputdir=workdir, overwrite_datafiles=overwrite_datafiles, iteration_no=i, post_processing_scripts_dir=ppsd)
+        instrument.simulate(n, outputdir=workdir, overwrite_datafiles=overwrite_datafiles, iteration_no=i, post_processing_scripts_dir=ppsd, **kwds)
         remained -= n
         continue
     assert remained == 0
     for comp in instrument.components:
         comp.create_pps()
         continue
-    from mcni import run_ppsd
-    run_ppsd(ppsd)
+    if run_pps:
+        run_ppsd(ppsd)
     return
 
 
@@ -86,8 +120,24 @@ import click
 @click.option("--ncount", default=int(1e6), help="neutron count")
 @click.option("--overwrite_datafiles", default=False, help="overwrite datafiles", is_flag=True)
 @click.option("--buffer_size", default=int(1e6), help="neutron buffer size")
-def main(script, workdir, ncount, buffer_size=int(1e6), overwrite_datafiles=False):
-    run1(script, workdir, ncount, buffer_size, overwrite_datafiles)
+@click.option("--mpi-mode", default=None)
+@click.option("--nodes", default=1)
+@click.option("--run-pps", default=False, help="run post-processing script. only valid for None mpi mode",
+              is_flag=True)
+def main(
+        script, workdir, ncount,
+        buffer_size=int(1e6), overwrite_datafiles=False, mpi_mode=None, nodes=1, run_pps=False
+):
+    if mpi_mode == 'worker':
+        run1_mpi(
+            script, workdir, ncount,
+            buffer_size=buffer_size, overwrite_datafiles=overwrite_datafiles)
+    elif mpi_mode == 'server':
+        run_mpi(
+            script, workdir, ncount, nodes, buffer_size,
+            overwrite_datafiles=overwrite_datafiles)
+    else:
+        run1(script, workdir, ncount, buffer_size, overwrite_datafiles, run_pps=run_pps)
     return
 
 if __name__ == '__main__': main()
