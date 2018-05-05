@@ -13,7 +13,7 @@
 
 
 # if ran with other tests that wrap components, will segfaults
-skip = True
+# skip = True
 standalone = False
 
 
@@ -30,7 +30,7 @@ class wrap_TestCase(unittest.TestCase):
     def test(self):
         "wrap Single_crystal"
         from mcstas2.wrappers import wrap
-        wrap( componentfile, category )
+        wrap( componentfile, category, buildername='distutils' )
         from mcstas2.components import componentfactory
         factory = componentfactory( category, componentname )
         component = factory(
@@ -60,7 +60,4 @@ def main():
 if __name__ == "__main__":
     main()
     
-# version
-__id__ = "$Id$"
-
 # End of file 
