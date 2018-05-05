@@ -6,17 +6,44 @@ class Component(AbstractComponent, ParallelComponent):
     def __init__(self, cpp_instance_factory, *args, **kwds):
         # args, if exists, must be "name"
         assert len(args) in [0, 1]
+        # get user inputs
         if args: kwds['name' ] = args[0]
         for k, v in kwds.items():
             setattr(self, k, v)
-        # self._cpp_instance is an instance created
-        # by factory methods auto-generated from mcstas components
-        # see template code in mcstas2.wrappers.pymodule.factorymethod_py
-        self._cpp_instance = cpp_instance_factory(**kwds)
+        # get defaults
+        all = dict()
+        iparams = cpp_instance_factory.info.input_parameters
+        for p in iparams: all[p.name] = p.default
+        # combine
+        all.update(kwds)
+        # store
+        self._factory_kwds = all
         self.restore_neutron = False
         self._cpp_instance_factory = cpp_instance_factory
+        self.__cpp_instance = None
         return
-    
+
+    # lazy creation of the cpp instance
+    @property
+    def _cpp_instance(self):
+        if self.__cpp_instance is None:
+            # self.__cpp_instance is an instance created
+            # by factory methods auto-generated from mcstas components
+            # see template code in mcstas2.wrappers.pymodule.factorymethod_py
+            self.__cpp_instance = self._cpp_instance_factory(**self._factory_kwds)
+        return self.__cpp_instance
+
+    # allow change attributes after construction, but before self._cpp_instance is accessed
+    def __setattr__(self, name, value):
+        if hasattr(self, "_factory_kwds") and name in self._factory_kwds:
+            self._factory_kwds[name] = value
+            return value
+        return object.__setattr__(self, name, value)
+
+    def __getattr__(self, name):
+        if name in self._factory_kwds:
+            return self._factory_kwds[name]
+        raise AttributeError(name)
 
     def process(self, neutrons):
         restore_neutron = self.restore_neutron
