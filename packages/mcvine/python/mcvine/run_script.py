@@ -29,6 +29,7 @@ An example script:
   # end of script
 
 """
+    _check_workdir(workdir, overwrite_datafiles)
     ncount = int(ncount); buffer_size = int(buffer_size)    
     assert buffer_size>0
     if ncount < 100:
@@ -86,6 +87,7 @@ An example script:
   # end of script
 
 """
+    _check_workdir(workdir, overwrite_datafiles)
     import imp
     m = imp.load_source('mcvinesim', script)
     assert hasattr(m, 'instrument')
@@ -113,6 +115,14 @@ An example script:
         run_ppsd(ppsd)
     return
 
+
+def _check_workdir(workdir, overwrite_datafiles):
+    if os.path.exists(workdir):
+        if overwrite_datafiles:
+            import shutil; shutil.rmtree(workdir)
+        else:
+            raise IOError("%s exists. set overwrite_datafiles=True to overwrite" % workdir)
+    return
 
 import click
 @click.command()
