@@ -14,15 +14,13 @@
 
 # skip = True
 standalone = True
+is_interactive = False
 
 
 import unittestX as unittest
 import journal
 
 import mcstas2
-
-interactive = False
-
 
 class TestCase(unittest.TestCase):
 
@@ -58,35 +56,16 @@ class TestCase(unittest.TestCase):
             xmin=-0.2, xmax=0.2,
             ymin=-0.2, ymax=0.2,
             Emin=50., Emax=60.)
-        if interactive:
+        if is_interactive:
             help( emonfac )
         return
     
     pass  # end of TestCase
 
 
-
-def pysuite():
-    suite1 = unittest.makeSuite(TestCase)
-    return unittest.TestSuite( (suite1,) )
-
-
-def main():
-    #debug.activate()
-    #journal.debug("CompositeNeutronScatterer_Impl").activate()
-    pytests = pysuite()
-    alltests = unittest.TestSuite( (pytests, ) )
-    res = unittest.TextTestRunner(verbosity=2).run(alltests)
-    import sys; sys.exit(not res.wasSuccessful())
-
-    
-    
 if __name__ == "__main__":
-    global interactive
-    interactive = True
-    main()
+    global is_interactive
+    is_interactive = True
+    unittest.main()
     
-# version
-__id__ = "$Id$"
-
 # End of file 
