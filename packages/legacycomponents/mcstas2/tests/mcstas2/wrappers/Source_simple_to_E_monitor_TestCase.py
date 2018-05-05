@@ -30,7 +30,7 @@ class TestCase(unittest.TestCase):
             radius=0.1, dist=2, xw=0.1, yh=0.1, E0=55, dE=2)
         
         from mcstas2.wrappers import wrap
-        wrap( 'E_monitor.comp', 'monitors' ) 
+        wrap( 'E_monitor.comp', 'monitors', buildername='distutils') 
         emonfac = componentfactory( 'monitors', 'E_monitor' )
         emon = emonfac(
             'emon',
