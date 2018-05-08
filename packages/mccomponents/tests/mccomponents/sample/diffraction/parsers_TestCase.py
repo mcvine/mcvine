@@ -1,25 +1,10 @@
 #!/usr/bin/env python
 #
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#
-#                                   Jiao Lin
-#                      California Institute of Technology
-#                        (C) 2007 All Rights Reserved  
-#
-# {LicenseText}
-#
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
 
-
-
-from mcvine.deployment_info import mcvine_resources
 import os
-if not mcvine_resources:
-    skip = True
-else:
-    aluminum_dir = os.path.join(
-        mcvine_resources, "samples", "Al", "300K")
+here = os.path.dirname(__file__)
+datadir = os.path.join("../../..", 'data')
 
 
 import unittestX as unittest
@@ -36,37 +21,24 @@ class TestCase(unittest.TestCase):
 
 
     def test1(self):
-        laz = os.path.join(aluminum_dir, 'powderdiffr', 'Al.laz')
+        laz = os.path.join(datadir, 'Al.laz')
         text = open(laz).read()
         from mccomponents.sample.diffraction.parsers.laz import parse
         peaks = parse(text).peaks
         print(peaks)
         return
         
+    def test2(self):
+        laz = os.path.join(datadir, 'B4C.laz')
+        text = open(laz).read()
+        from mccomponents.sample.diffraction.parsers.laz import parse
+        peaks = parse(text).peaks
+        print(peaks)
+        return
         
     pass  # end of TestCase
 
 
-def pysuite():
-    suite1 = unittest.makeSuite(TestCase)
-    return unittest.TestSuite( (suite1,) )
-
-
-def main():
-    #debug.activate()
-    #journal.debug('phonon_coherent_inelastic_polyxtal_kernel').activate()
-    #journal.debug('random').activate()
-    pytests = pysuite()
-    alltests = unittest.TestSuite( (pytests, ) )
-    res = unittest.TextTestRunner(verbosity=2).run(alltests)
-    import sys; sys.exit(not res.wasSuccessful())
-
+if __name__ == "__main__": unittest.main()
     
-    
-if __name__ == "__main__":
-    main()
-    
-# version
-__id__ = "$Id: dispersion_TestCase.py 1126 2011-04-10 03:05:40Z linjiao $"
-
 # End of file 
