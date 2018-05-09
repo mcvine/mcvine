@@ -101,14 +101,8 @@ def makeKernel():
         )
 
 
-# import matter package
-try:
-    from danse.ins import matter
-except ImportError:
-    import matter
-    import warnings
-    warnings.warn("Using old matter package. Should use danse.ins.matter")
 def makeMatter():
+    from diffpy import Structure as matter
     atoms = [matter.Atom('Fe', xyz=(0,0,0)), 
              matter.Atom('Al', xyz=(0.5,0.5,0.5))]
     lattice = matter.Lattice(base=((1.,0,0), (0,1.,0), (0,0,1.)))

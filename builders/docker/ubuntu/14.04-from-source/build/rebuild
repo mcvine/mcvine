@@ -1,1 +1,0 @@
-docker build -t linjiao/mcvine-ubuntu-build:14.04 --no-cache .

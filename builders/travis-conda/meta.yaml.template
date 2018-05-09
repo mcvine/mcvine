@@ -21,7 +21,8 @@ requirements:
     - danse.ins.numpyext
     - danse.ins.bpext
     - histogram
-    - danse.ins.matter
+    - diffpy.Structure
+    - periodictable
     - drchops
     - mcvine-resources
     - cmake
@@ -40,7 +41,8 @@ requirements:
     - danse.ins.numpyext
     - danse.ins.bpext
     - histogram
-    - danse.ins.matter
+    - diffpy.Structure
+    - periodictable
     - drchops
     - mcvine-resources
     - phonopy

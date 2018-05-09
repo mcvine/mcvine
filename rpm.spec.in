@@ -33,7 +33,8 @@ Requires: danse.ins.numpyext
 Requires: danse.ins.bpext
 Requires: histogram
 Requires: journal
-Requires: danse.ins.matter
+Requires: diffpy.Structure
+Requires: periodictable
 Requires: drchops
 Requires: mcvine-resources
 

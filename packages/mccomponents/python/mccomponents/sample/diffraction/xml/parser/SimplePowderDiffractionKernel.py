@@ -39,7 +39,7 @@ class SimplePowderDiffractionKernel(base):
             from mccomponents.sample.diffraction.parsers.laz import parse
             laz = parse(open(lazpath).read())
             peaks = laz.peaks
-            unitcell_volume = laz.lattice.getVolume()
+            unitcell_volume = laz.lattice.volume
             xs = laz.cross_sections
         else:
             raise ValueError, "SimplePowderDiffractionKernel needs path to "\

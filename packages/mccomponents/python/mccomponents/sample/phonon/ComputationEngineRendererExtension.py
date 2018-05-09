@@ -13,6 +13,8 @@
 
 
 import journal
+import periodictable
+
 
 nsampling = 100
 
@@ -66,7 +68,7 @@ class ComputationEngineRendererExtension:
         # mass = sum( [ site.getAtom().mass for site in unitcell ] )
         average_mass = kernel.average_mass
         if not average_mass:
-            mass = sum( [ atom.mass for atom in unitcell ] )
+            mass = sum( [ getattr(periodictable, atom.element).mass for atom in unitcell ] )
             average_mass = mass/len(unitcell)
         else:
             average_mass = average_mass/units.u
@@ -113,7 +115,7 @@ class ComputationEngineRendererExtension:
         # mass = sum( [ site.getAtom().mass for site in unitcell ] )
         average_mass = kernel.average_mass
         if not average_mass:
-            mass = sum( [ atom.mass for atom in unitcell ] )
+            mass = sum( [ getattr(periodictable, atom.element).mass for atom in unitcell ] )
             average_mass = mass/len(unitcell)
         else:
             average_mass = average_mass/units.u
@@ -163,7 +165,7 @@ class ComputationEngineRendererExtension:
 
         # total mass of unitcell. for DW calculator. this might be reimplemented later.
         # mass = sum( [ site.getAtom().mass for site in unitcell ] )
-        mass = sum( [ atom.mass for atom in unitcell ] ) / len(unitcell)
+        mass = sum( [ getattr(periodictable, atom.element).mass for atom in unitcell ] ) / len(unitcell)
         # currently we need dos to calculate DW
         try:
             dos = kernel.dispersion.dos
@@ -214,7 +216,7 @@ class ComputationEngineRendererExtension:
 
         # total mass of unitcell. for DW calculator. this might be reimplemented later.
         # mass = sum( [ site.getAtom().mass for site in unitcell ] )
-        mass = sum( [ atom.mass for atom in unitcell ] ) / len(unitcell)
+        mass = sum( [ getattr(periodictable, atom.element).mass for atom in unitcell ] ) / len(unitcell)
         # currently we need dos to calculate DW
         try:
             dos = kernel.dispersion.dos
@@ -274,7 +276,7 @@ class ComputationEngineRendererExtension:
         # ???
         average_mass = kernel.average_mass
         if not average_mass:
-            mass = sum( [ atom.mass for atom in unitcell ] )
+            mass = sum( [ getattr(periodictable, atom.element).mass for atom in unitcell ] )
             average_mass = mass/len(unitcell)
         else:
             average_mass = average_mass/units.u

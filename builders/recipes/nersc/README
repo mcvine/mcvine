@@ -1,7 +1,6 @@
 Installation on NERSC
 ---------------------
 
-* Build and install external dependencies. See install-deps.
-* Build and install danse packages. See danse
-* Build and install mcvine. Need .build-mcvine and build-mcvine.sh
+* install mcvine using conda
+* overwrite mpi4py with the mpi4py package provided in the system conda environment
 
