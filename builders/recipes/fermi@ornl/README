@@ -1,8 +1,6 @@
 Installation on FERMI
 ---------------------
 
-* Build and install external dependencies. See install-deps. 
-  - This step takes the longest
-* Build and install danse packages. See danse
-* Build and install mcvine. Need .build-mcvine and build-mcvine.sh
+* Install mcvine using conda
+* rebuild mpi4py using local mpi lib
 
