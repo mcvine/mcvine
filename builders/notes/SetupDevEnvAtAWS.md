@@ -11,10 +11,11 @@ Install dependencies
 * conda create -n dev-mcvine python
 * source activate dev-mcvine
 * conda config --add channels conda-forge 
+* conda config --add channels diffpy
 * conda config --add channels mcvine
 * conda install mcvine-resources
 * conda install pyyaml numpy h5py psutil mpi4py gsl boost cmake
-* conda install pyre danse.ins.numpyext danse.ins.bpext danse.ins.dsm histogram danse.ins.matter drchops
+* conda install pyre danse.ins.numpyext danse.ins.bpext danse.ins.dsm histogram diffpy.Structure periodictable drchops
 
 Also 
 * conda install scipy matplotlib
