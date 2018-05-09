@@ -1,1 +1,0 @@
-docker build -t linjiao/mcvine-ubuntu-install-from-packagecloud:14.04 .

@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-
-sudo docker run -v $MCVINE_RESOURCES:/opt/mcvine/resources -v $PWD/test:/opt/mcvine/test linjiao/mcvine-ubuntu-build:12.04 sh test
-
-# example: sudo docker run -v /home/linjiao/dv/mcvine-resources:/opt/mcvine/resources -v ~/dv/mcvine-releaser-git/docker/ubuntu/14.04/test/test:/opt/mcvine/test linjiao/mcvine-ubuntu-build sh test

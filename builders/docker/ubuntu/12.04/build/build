@@ -1,1 +1,0 @@
-sudo docker build -t linjiao/mcvine-ubuntu-build:12.04 .

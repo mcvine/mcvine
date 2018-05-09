@@ -1,1 +1,0 @@
-sudo docker build -t linjiao/mcvine-ubuntu-deps:12.04 --no-cache .
