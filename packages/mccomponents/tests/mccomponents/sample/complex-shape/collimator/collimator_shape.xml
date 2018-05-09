@@ -1,0 +1,113 @@
+    <difference>
+        <difference>
+            <difference>
+                <cylinder height="50.*mm" radius="55.*mm"/>
+                <cylinder height="60.*mm" radius="25.*mm"/>
+            </difference>
+            <translation>
+                <block thickness="110*mm" width="110*mm" height="110*mm" />
+                <vector beam="0.*m" transversal="-55.*mm" vertical="0.*m" />
+            </translation>
+        </difference>
+        <union>
+            <rotation>
+                <rotation>
+                    <pyramid thickness="20.*mm" width="20.*mm" height="110.*mm"/>
+                    <angle>90.*deg</angle>
+                    <axis beam="0.0" transversal="1" vertical="0.0" />
+                </rotation>
+                <angle>-160.0*deg</angle>
+                <axis beam="0.0" transversal="0.0" vertical="1" />
+            </rotation>
+            <rotation>
+                <rotation>
+                    <pyramid thickness="20.*mm" width="20.*mm" height="110.*mm"/>
+                    <angle>90.*deg</angle>
+                    <axis beam="0.0" transversal="1" vertical="0.0" />
+                </rotation>
+                <angle>-145.0*deg</angle>
+                <axis beam="0.0" transversal="0.0" vertical="1" />
+            </rotation>
+            <rotation>
+                <rotation>
+                    <pyramid thickness="20.*mm" width="20.*mm" height="110.*mm"/>
+                    <angle>90.*deg</angle>
+                    <axis beam="0.0" transversal="1" vertical="0.0" />
+                </rotation>
+                <angle>-130.0*deg</angle>
+                <axis beam="0.0" transversal="0.0" vertical="1" />
+            </rotation>
+            <rotation>
+                <rotation>
+                    <pyramid thickness="20.*mm" width="20.*mm" height="110.*mm"/>
+                    <angle>90.*deg</angle>
+                    <axis beam="0.0" transversal="1" vertical="0.0" />
+                </rotation>
+                <angle>-115.0*deg</angle>
+                <axis beam="0.0" transversal="0.0" vertical="1" />
+            </rotation>
+            <rotation>
+                <rotation>
+                    <pyramid thickness="20.*mm" width="20.*mm" height="110.*mm"/>
+                    <angle>90.*deg</angle>
+                    <axis beam="0.0" transversal="1" vertical="0.0" />
+                </rotation>
+                <angle>-100.0*deg</angle>
+                <axis beam="0.0" transversal="0.0" vertical="1" />
+            </rotation>
+            <rotation>
+                <rotation>
+                    <pyramid thickness="20.*mm" width="20.*mm" height="110.*mm"/>
+                    <angle>90.*deg</angle>
+                    <axis beam="0.0" transversal="1" vertical="0.0" />
+                </rotation>
+                <angle>-85.0*deg</angle>
+                <axis beam="0.0" transversal="0.0" vertical="1" />
+            </rotation>
+            <rotation>
+                <rotation>
+                    <pyramid thickness="20.*mm" width="20.*mm" height="110.*mm"/>
+                    <angle>90.*deg</angle>
+                    <axis beam="0.0" transversal="1" vertical="0.0" />
+                </rotation>
+                <angle>-70.0*deg</angle>
+                <axis beam="0.0" transversal="0.0" vertical="1" />
+            </rotation>
+            <rotation>
+                <rotation>
+                    <pyramid thickness="20.*mm" width="20.*mm" height="110.*mm"/>
+                    <angle>90.*deg</angle>
+                    <axis beam="0.0" transversal="1" vertical="0.0" />
+                </rotation>
+                <angle>-55.0*deg</angle>
+                <axis beam="0.0" transversal="0.0" vertical="1" />
+            </rotation>
+            <rotation>
+                <rotation>
+                    <pyramid thickness="20.*mm" width="20.*mm" height="110.*mm"/>
+                    <angle>90.*deg</angle>
+                    <axis beam="0.0" transversal="1" vertical="0.0" />
+                </rotation>
+                <angle>-40.0*deg</angle>
+                <axis beam="0.0" transversal="0.0" vertical="1" />
+            </rotation>
+            <rotation>
+                <rotation>
+                    <pyramid thickness="20.*mm" width="20.*mm" height="110.*mm"/>
+                    <angle>90.*deg</angle>
+                    <axis beam="0.0" transversal="1" vertical="0.0" />
+                </rotation>
+                <angle>-25.0*deg</angle>
+                <axis beam="0.0" transversal="0.0" vertical="1" />
+            </rotation>
+            <rotation>
+                <rotation>
+                    <pyramid thickness="20.*mm" width="20.*mm" height="110.*mm"/>
+                    <angle>90.*deg</angle>
+                    <axis beam="0.0" transversal="1" vertical="0.0" />
+                </rotation>
+                <angle>-10.0*deg</angle>
+                <axis beam="0.0" transversal="0.0" vertical="1" />
+            </rotation>
+        </union>
+    </difference>
