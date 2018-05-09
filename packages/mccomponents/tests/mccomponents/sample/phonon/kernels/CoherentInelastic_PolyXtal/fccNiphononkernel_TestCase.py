@@ -67,7 +67,6 @@ class TestCase(unittest.TestCase):
             continue
         
         component.process( neutrons )
-        
         hist = get_histogram(component)
         
         if self.interactive:
@@ -98,19 +97,13 @@ def makeKernel():
         nMCsteps_to_calc_RARV=nMCsteps_to_calc_RARV)
 
 
-# import matter package
-try:
-    from danse.ins import matter
-except ImportError:
-    import matter
-    import warnings
-    warnings.warn("Using old matter package. Should use danse.ins.matter")
 def makeUnitcell():
-    atoms = [matter.Atom('Ni')]
+    from diffpy import Structure
+    atoms = [Structure.Atom('Ni')]
     # positions = [(0,0,0)]
     cellvectors = [ (3.57,0,0), (0,3.57,0), (0,0,3.57) ]
-    lattice = matter.Lattice(base=cellvectors)
-    return matter.Structure(lattice=lattice, atoms=atoms)
+    lattice = Structure.Lattice(base=cellvectors)
+    return Structure.Structure(lattice=lattice, atoms=atoms)
 
 
 def mkDOS():
@@ -137,7 +130,7 @@ def makeDispersion():
 import mccomponents.sample.phonon.bindings as bindings
 b = bindings.get('BoostPython')
 
-from mcstas2.pyre_support._component_interfaces.monitors.IQE_monitor import get_histogram
+from mcstas2.components._proxies.monitors.IQE_monitor import get_histogram
 import numpy as N
 
 

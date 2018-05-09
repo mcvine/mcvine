@@ -100,10 +100,12 @@ class New:
         print "cartesian coordinates of atom:", position
         # atom = site.getAtom()
         atom = site
-        mass = atom.mass
-        coh_xs = atom.average_neutron_coh_xs
-        inc_xs = atom.average_neutron_inc_xs
-        abs_xs = atom.average_neutron_abs_xs
+        import periodictable
+        elem = getattr(periodictable, atom.element)
+        mass = elem.mass
+        coh_xs = elem.neutron.coherent
+        inc_xs = elem.neutron.incoherent
+        abs_xs = elem.neutron.absorption
         
         # !!!!!!!
         # the following is a hack. should get it directly from atom
@@ -231,8 +233,7 @@ class New:
         scattering_xs = 0., absorption_xs = 0.,
         ):
 
-        # unitcell_vol = unitcell.getVolume()
-        unitcell_vol = unitcell.lattice.getVolume()
+        unitcell_vol = unitcell.lattice.volume
         unitcell_vol = float(unitcell_vol)
 
         atoms = [ self.atomicscatterer_fromSite( site ) for site in unitcell ]
@@ -253,8 +254,7 @@ class New:
         ave_mass = 0., scattering_xs = 0., absorption_xs = 0.,
         ):
 
-        # unitcell_vol = unitcell.getVolume()
-        unitcell_vol = unitcell.lattice.getVolume()
+        unitcell_vol = unitcell.lattice.volume
         unitcell_vol = float(unitcell_vol)
 
         temperature = float(temperature)
@@ -279,8 +279,7 @@ class New:
         ave_mass = 0., scattering_xs = 0., absorption_xs = 0.,
         ):
 
-        # unitcell_vol = unitcell.getVolume()
-        unitcell_vol = unitcell.lattice.getVolume()
+        unitcell_vol = unitcell.lattice.volume
         unitcell_vol = float(unitcell_vol)
 
         temperature = float(temperature)
@@ -304,7 +303,6 @@ class New:
         temperature, max_omega,
         ):
 
-        # unitcell_vol = unitcell.getVolume()
         lattice = unitcell.lattice
         base = lattice.base
         aa = self.vector3(base[0])
@@ -331,8 +329,7 @@ class New:
         temperature,
         ):
 
-        # unitcell_vol = unitcell.getVolume()
-        unitcell_vol = unitcell.lattice.getVolume()
+        unitcell_vol = unitcell.lattice.volume
         unitcell_vol = float(unitcell_vol)
 
         temperature = float(temperature)

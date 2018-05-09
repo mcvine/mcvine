@@ -52,7 +52,7 @@ def total_scattering_cross_section(Ei, dp):
     import numpy as np
     k = conv.e2k(Ei)
     l = np.pi * 2 / k
-    ucvol = dp.structure.lattice.getVolume()
+    ucvol = dp.structure.lattice.volume
     # loop over peaks, for each peak that contributes
     # add its contribution
     sigma = 0

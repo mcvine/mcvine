@@ -112,13 +112,8 @@ def makeScatterer():
 
 
 # import matter package
-try:
-    from danse.ins import matter
-except ImportError:
-    import matter
-    import warnings
-    warnings.warn("Using old matter package. Should use danse.ins.matter")
 def makeUnitcell():
+    import diffpy.Structure as matter
     atoms = [matter.Atom('Ni')]
     # positions = [(0,0,0)]
     cellvectors = [ (3.57,0,0), (0,3.57,0), (0,0,3.57) ]

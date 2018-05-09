@@ -67,7 +67,7 @@ class ComputationEngineRendererExtension:
         if unitcell_vol is None:
             origin = t.scatterer_origin
             structure = origin.phase.unitcell
-            unitcell_vol = structure.lattice.getVolume()
+            unitcell_vol = structure.lattice.volume
             # convert to meter^3
             unitcell_vol *= 1.e-30
         
