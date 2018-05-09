@@ -46,6 +46,7 @@ class TestCase(unittest.TestCase):
             Emin=Emin, Emax=Emax, nE=nE,
             max_angle_out_of_plane=30, min_angle_out_of_plane=-30,
             max_angle_in_plane=120, min_angle_in_plane=-30,
+            filename = 'IQE.dat'
             )
 
         scatterer = makeScatterer()
@@ -59,20 +60,14 @@ class TestCase(unittest.TestCase):
             neutrons[i] = neutron
             #print neutrons[i]
             continue
-        
+
+        from mcni.SimulationContext import SimulationContext
+        component.simulation_context = SimulationContext(outputdir="out-fccNiphononkernelfromxml_primitivereciprocalunitcell_TestCase")
         component.process( neutrons )
-        
-        hist = get_histogram(component)
-        import os
-        f = os.path.basename(__file__)
-        filename = 'IQE-%s.h5' % f
-        if os.path.exists(filename): os.remove(filename)
-        import histogram.hdf as hh
-        hh.dump(hist, filename, '/', 'c')
-        
+                
         if self.interactive:
             from histogram.plotter import defaultPlotter
-            defaultPlotter.plot(hist)
+            defaultPlotter.plot(os.path.join(component.simulation_context.outputdir, 'IQE.h5'))
         return
 
     pass  # end of TestCase
@@ -110,13 +105,8 @@ def makeScatterer():
 
 
 # import matter package
-try:
-    from danse.ins import matter
-except ImportError:
-    import matter
-    import warnings
-    warnings.warn("Using old matter package. Should use danse.ins.matter")
 def makeUnitcell():
+    from diffpy import Structure as matter
     atoms = [matter.Atom('Ni')]
     # positions = [(0,0,0)]
     cellvectors = [ (3.57,0,0), (0,3.57,0), (0,0,3.57) ]
@@ -125,31 +115,7 @@ def makeUnitcell():
 
 
 
-from mcstas2.pyre_support._component_interfaces.monitors.IQE_monitor import get_histogram
-import numpy as N
-
-
-def pysuite():
-    TestCase.interactive = True
-    suite1 = unittest.makeSuite(TestCase)
-    return unittest.TestSuite( (suite1,) )
-
-
-def main():
-    #debug.activate()
-    #journal.debug("CompositeNeutronScatterer_Impl").activate()
-    #journal.debug('phonon_coherent_inelastic_polyxtal_kernel').activate()
-    pytests = pysuite()
-    alltests = unittest.TestSuite( (pytests, ) )
-    res = unittest.TextTestRunner(verbosity=2).run(alltests)
-    import sys; sys.exit(not res.wasSuccessful())
+if __name__ == "__main__": unittest.main()
 
     
-    
-if __name__ == "__main__":
-    main()
-    
-# version
-__id__ = "$Id$"
-
 # End of file 
