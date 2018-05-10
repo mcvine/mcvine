@@ -93,6 +93,18 @@ Given phonon data in IDF format, it can
 * extract band structure
 * compute neutron scattering data slice
 
+sample assembly
+------
+
+Command::
+
+$mcvine sampleassembly
+
+sampleassembly related functionalities.
+
+To syntax check a sample assembly use::
+
+$ mcvine sampleassembly check /path/to/sampleassembly.xml
 
 Misc
 ----
