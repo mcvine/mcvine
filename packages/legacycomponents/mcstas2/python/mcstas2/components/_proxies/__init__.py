@@ -22,14 +22,17 @@ def createFactory(category, type, module):
 def getProxy(category, type):
     thispackage = 'mcstas2.components._proxies'
     package = '.'.join([thispackage, category, type])
+    # try the particular type first
     try:
         package = _import(package)
     except ImportError:
-        import journal
-        debug = journal.debug(thispackage)
-        import traceback
-        debug.log(traceback.format_exc())
-        from . import default as package
+        # try category default
+        package = '.'.join([thispackage, category, 'default'])
+        try:
+            package = _import(package)
+        except ImportError:
+            # last resort
+            from . import default as package
     return getattr(package, 'Component')
 
 
