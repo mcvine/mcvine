@@ -93,27 +93,26 @@ Given phonon data in IDF format, it can
 * extract band structure
 * compute neutron scattering data slice
 
+
 sample assembly
-------
+---------------
 
 Command::
 
-$mcvine sampleassembly
+ $ mcvine sampleassembly
 
 sampleassembly related functionalities.
 
 To syntax check a sample assembly use::
 
-$ mcvine sampleassembly check /path/to/sampleassembly.xml
-
-Misc
-----
-
-mcstas support::
-
- $ mcvine mcstas compilecomponent --filename=<path-to-component> --category=<component-category>
+ $ mcvine sampleassembly check /path/to/sampleassembly.xml
 
 
-Check sample assembly xml::
+mcstas support
+--------------
 
- $ mcvine sampleassembly check <xmlpath>
+Command::
+  
+  $ mcvine mcstas compilecomponent --filename=<path-to-component> --category=<component-category>
+
+Compile a mcstas component.
