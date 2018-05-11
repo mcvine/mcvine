@@ -1,0 +1,1 @@
+../../../../data/B4C_mp-696746_conventional_standard.cif

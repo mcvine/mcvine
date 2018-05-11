@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE SampleAssembly>
+
+<SampleAssembly name="B4C">
+  
+  <PowderSample name="B4C-plate" type="sample">
+    <Shape>
+      <block width="6*cm" height="10*cm" thickness="1*cm" />
+    </Shape>
+    <Phase type="crystal">
+      <ChemicalFormula>B4C</ChemicalFormula>
+      <ciffile>B4C.cif</ciffile>
+    </Phase>
+  </PowderSample>
+  
+  <LocalGeometer registry-coordinate-system="InstrumentScientist">
+    <Register name="B4C-plate" position="(0,0,0)" orientation="(0,0,0)"/>
+  </LocalGeometer>
+<!--
+  <environment>
+    <temperature>300*K</temperature>
+    <pressure>1.*atm</pressure>
+  </environment>
+-->
+
+</SampleAssembly>
