@@ -71,7 +71,8 @@
 <li><a class="reference internal" href="#components">Components</a></li>
 <li><a class="reference internal" href="#neutron-storage">Neutron storage</a></li>
 <li><a class="reference internal" href="#phonon">phonon</a></li>
-<li><a class="reference internal" href="#misc">Misc</a></li>
+<li><a class="reference internal" href="#sample-assembly">sample assembly</a></li>
+<li><a class="reference internal" href="#mcstas-support">mcstas support</a></li>
 </ul>
 </li>
 </ul>
@@ -114,6 +115,11 @@ Execute:</p>
 </pre></div>
 </div>
 <p>will list available subcommands.</p>
+<p>Execute:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ mcvine version
+</pre></div>
+</div>
+<p>prints out the version of mcvine being used.</p>
 </div>
 <div class="section" id="bash">
 <span id="cli-bash"></span><h2>bash<a class="headerlink" href="#bash" title="Permalink to this headline">¶</a></h2>
@@ -180,16 +186,25 @@ include a series of aliases starting with prefix &#8220;arcs&#8221;. For example
 <li>compute neutron scattering data slice</li>
 </ul>
 </div>
-<div class="section" id="misc">
-<h2>Misc<a class="headerlink" href="#misc" title="Permalink to this headline">¶</a></h2>
-<p>mcstas support:</p>
+<div class="section" id="sample-assembly">
+<h2>sample assembly<a class="headerlink" href="#sample-assembly" title="Permalink to this headline">¶</a></h2>
+<p>Command:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ mcvine sampleassembly
+</pre></div>
+</div>
+<p>sampleassembly related functionalities.</p>
+<p>To syntax check a sample assembly use:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ mcvine sampleassembly check /path/to/sampleassembly.xml
+</pre></div>
+</div>
+</div>
+<div class="section" id="mcstas-support">
+<h2>mcstas support<a class="headerlink" href="#mcstas-support" title="Permalink to this headline">¶</a></h2>
+<p>Command:</p>
 <div class="highlight-python"><div class="highlight"><pre>$ mcvine mcstas compilecomponent --filename=&lt;path-to-component&gt; --category=&lt;component-category&gt;
 </pre></div>
 </div>
-<p>Check sample assembly xml:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ mcvine sampleassembly check &lt;xmlpath&gt;
-</pre></div>
-</div>
+<p>Compile a mcstas component.</p>
 </div>
 </div>
 

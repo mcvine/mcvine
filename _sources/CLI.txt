@@ -13,6 +13,12 @@ Execute::
 
 will list available subcommands.
 
+Execute::
+
+ $ mcvine version
+
+prints out the version of mcvine being used.
+
 
 .. _cli/bash:
 
@@ -94,14 +100,25 @@ Given phonon data in IDF format, it can
 * compute neutron scattering data slice
 
 
-Misc
-----
+sample assembly
+---------------
 
-mcstas support::
+Command::
 
- $ mcvine mcstas compilecomponent --filename=<path-to-component> --category=<component-category>
+ $ mcvine sampleassembly
+
+sampleassembly related functionalities.
+
+To syntax check a sample assembly use::
+
+ $ mcvine sampleassembly check /path/to/sampleassembly.xml
 
 
-Check sample assembly xml::
+mcstas support
+--------------
 
- $ mcvine sampleassembly check <xmlpath>
+Command::
+  
+  $ mcvine mcstas compilecomponent --filename=<path-to-component> --category=<component-category>
+
+Compile a mcstas component.

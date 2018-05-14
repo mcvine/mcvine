@@ -10,8 +10,9 @@ MCViNE can be installed in most of recent linux distributions by using conda
  $ conda create -n mcvine python=2.7         # create an environment for mcvine
  $ source activate mcvine                    # activate mcvine environment
  $ conda config --add channels conda-forge   # add conda channels
- $ conda config --add channels mcvine
+ $ conda config --add channels diffpy
  $ conda config --add channels mantid
+ $ conda config --add channels mcvine
  $ conda install numpy                       # install
  $ conda install mcvine
 
