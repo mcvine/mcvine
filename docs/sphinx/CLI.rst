@@ -13,6 +13,12 @@ Execute::
 
 will list available subcommands.
 
+Execute::
+
+ $ mcvine version
+
+prints out the version of mcvine being used.
+
 
 .. _cli/bash:
 

@@ -22,6 +22,12 @@ aliases = dict()
 def mcvine():
     return
 
+@mcvine.command()
+def version():
+    from mcvine import version
+    print version
+    return
+
 from ._provenance import save_metadata
 
 # decorator to create bash alias of a command
