@@ -17,17 +17,19 @@ import os, click
 from . import mcstas
 @mcstas.command()
 @click.argument("filename")
-def convertinstrument(filename=None):
+@click.option('--type', default='non-pyre', type=click.Choice(['pyre', 'non-pyre']))
+def convertinstrument(filename=None, type='non-pyre'):
     if not os.path.exists(filename):
         raise IOError("McStas Instrument %r does not exist" % filename)
     click.echo("Converting McStas instrument %s ..." % filename)
-    App().run(filename)
+    App().run(filename, type)
     return
 
 
 class App(object):
 
-    def run(self, input):
+    def run(self, input, type='pyre'):
+        self._type = type
         text = open(input).read()
         from mcstas2.utils.parsers.McStasInstrumentParser import McStasInstrumentParser
         parser = McStasInstrumentParser()
@@ -56,6 +58,44 @@ class App(object):
 
 
     def _render(self, instrument):
+        method = getattr(self, '_render_%s' % self._type.replace('-', '_'))
+        return method(instrument)
+
+
+    def _render_non_pyre(self, instrument):
+        lines = """import mcvine, mcvine.components as mcomps
+instrument = mcvine.instrument()
+""".splitlines()
+        lines.append('')
+        import mcvine.components, mcvine
+        cats = mcvine.listallcomponentcategories()
+        cats = [getattr(mcvine.components, cat) for cat in cats]
+        for comp in instrument.components:
+            type = comp.type
+            for cat in cats:
+                found = hasattr(cat, type)
+                if found: break
+                continue
+            if not found: cat = 'unknown'
+            else: cat = cat.__class__.__name__
+            plist = ', '.join('%s=%s' % (k,v) for k,v in comp.parameters.items())
+            if plist: plist = ', ' + plist
+            lines.append('%s = mcomps.%s.%s(name=%r%s)' % (comp.name, cat, comp.type, comp.name, plist))
+            # comp.position = [vector, "absolute" or "relative", reference]
+            lines.append('instrument.append(%s, position=%s, orientation=%s%s)' % (
+                comp.name,
+                comp.position[0], comp.orientation[0],
+                ', relativeTo=%s'%comp.position[2] if comp.position[1] is 'relative' else ''
+                ))
+            lines.append('')
+            continue
+        out = '%s_mcvine.py' % instrument.name
+        with open(out, 'wt') as stream:
+            stream.write('\n'.join(lines))
+        return
+    
+    
+    def _render_pyre(self, instrument):
         self._dumpAsJsonStr(instrument)
         self._createInstrumentScript(instrument)
         self._createInstrumentConfigurator(instrument)
