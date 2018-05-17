@@ -43,6 +43,7 @@ class DetectorSystemFromXml(ParallelComponent, AbstractComponent):
     def process(self, neutrons):
         # self._debug.log( 'detector accepting neutrons: %s' % (neutrons,) )
         engine = self._resetEngine()
+        self.engine.simulation_context = self.simulation_context
         engine.process(neutrons)
         # engine.close()
         return neutrons
@@ -51,14 +52,6 @@ class DetectorSystemFromXml(ParallelComponent, AbstractComponent):
     def _resetEngine(self):
         if self.engine is None:
             self.engine = self._createEngine()
-            return self.engine
-        outdir = self.simulation_context.getOutputDirInProgress()
-        path = self.eventsdat
-        import os
-        path = os.path.join(outdir, path)
-        if not self.overwrite_datafiles and os.path.exists(path):
-            raise IOError, "%s already exists" % path
-        self._setOutputPath(path)
         return self.engine
 
 
@@ -68,20 +61,10 @@ class DetectorSystemFromXml(ParallelComponent, AbstractComponent):
 
 
     def _createEngine(self):
-        # output file path
-        outdir = self.simulation_context.getOutputDirInProgress()
         path = self.eventsdat
-        import os
-        path = os.path.join(outdir, path)
-        if not self.overwrite_datafiles and os.path.exists(path):
-            raise IOError, "%s already exists" % path
-        
         # other parameters
         instrumentxml = self.instrumentxml
         tofparams = self.tofparams
-
-        # XXX: probably should make coordinate_system a parameter
-        # XXX: in the future
         return enginefactory(
             self.name, instrumentxml, coordinate_system, tofparams, path)
 
