@@ -120,6 +120,10 @@ An example script:
         continue
     assert remained == 0
     for comp in instrument.components:
+        if not hasattr(comp, 'create_pps'):
+            import warnings
+            warnings.warn('Developer: %s does not implement method "create_pps"' % comp)
+            continue
         comp.create_pps()
         continue
     if run_pps:

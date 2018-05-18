@@ -20,6 +20,7 @@ class DetectorSystemFromXml(AbstractComponent):
         if not os.path.isabs(outdir):
             outdir = os.path.abspath(outdir)
         path = os.path.join(outdir, self.eventsdat)
+        if isinstance(path, unicode): path = path.encode()
         self.mca.setOutputFile(path)
         return self._cpp_instance.process(neutrons)
 
