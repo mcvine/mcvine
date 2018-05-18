@@ -33,23 +33,16 @@ class NeutronToStorage( AbstractComponent ):
 
 
     def __init__(self, name, path, append = False):
-        
         AbstractComponent.__init__(self, name)
-
-        if not append and os.path.exists( path ):
-            raise RuntimeError, "Neutron storage %r already exists. To append neutrons to this storage, please use keyword 'append=1'" % path
-        
-        if append: mode='a'
-        else: mode = 'w'
-        
-        from mcni.neutron_storage import storage
-        self._storage = storage( path, mode = mode)
-        self.path = path
+        self._path = path
+        self._append = append
         return
 
 
     def process(self, neutrons):
+        self._createEngine()
         self._storage.write( neutrons )
+        self._storage.close()
         return neutrons
 
 
@@ -68,12 +61,31 @@ class NeutronToStorage( AbstractComponent ):
         content = """from mcni.components.NeutronToStorage import merge_and_normalize
 merge_and_normalize(%r, %r, %r)
 """ % (os.path.abspath(self.simulation_context.outputdir),
-       os.path.basename(self.path),
+       os.path.basename(self._path),
        context.overwrite_datafiles)
         open(path, 'wt').write(content)
         return
         
-    
+
+    def _createEngine(self):
+        path = self._path; append = self._append
+        import os
+        if not os.path.isabs(path):
+            if hasattr(self, 'simulation_context') and self.simulation_context is not None:
+                outdir = self.simulation_context.getOutputDirInProgress() or ''
+            else:
+                outdir = ''
+            path = os.path.join(outdir, path)
+        
+        if not append and os.path.exists( path ):
+            raise RuntimeError, "Neutron storage %r already exists. To append neutrons to this storage, please use keyword 'append=1'" % path
+        
+        if append: mode='a'
+        else: mode = 'w'
+        
+        from mcni.neutron_storage import storage
+        self._storage = storage( path, mode = mode)
+        return
     pass # end of NeutronToStorage
 
 

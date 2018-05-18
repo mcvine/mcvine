@@ -15,6 +15,12 @@ class DetectorSystemFromXml(AbstractComponent):
 
 
     def process(self, neutrons):
+        outdir = self.simulation_context.getOutputDirInProgress() or ''
+        import os
+        if not os.path.isabs(outdir):
+            outdir = os.path.abspath(outdir)
+        path = os.path.join(outdir, self.eventsdat)
+        self.mca.setOutputFile(path)
         return self._cpp_instance.process(neutrons)
 
 
