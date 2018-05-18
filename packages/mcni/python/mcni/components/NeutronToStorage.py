@@ -71,7 +71,10 @@ merge_and_normalize(%r, %r, %r)
         path = self._path; append = self._append
         import os
         if not os.path.isabs(path):
-            outdir = self.simulation_context.getOutputDirInProgress()
+            if hasattr(self, 'simulation_context') and self.simulation_context is not None:
+                outdir = self.simulation_context.getOutputDirInProgress() or ''
+            else:
+                outdir = ''
             path = os.path.join(outdir, path)
         
         if not append and os.path.exists( path ):
