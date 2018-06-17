@@ -13,6 +13,7 @@ requirements:
     - numpy                 {{ numpy }}
     - psutil
     - h5py
+    - mpich
     - mpi4py
     - gsl                   {{ gsl }}
     - boost                 {{ boost }}
@@ -33,6 +34,7 @@ requirements:
     - numpy
     - psutil
     - h5py
+    - mpich
     - mpi4py
     - gsl
     - boost
