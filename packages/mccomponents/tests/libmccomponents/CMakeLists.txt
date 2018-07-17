@@ -17,6 +17,7 @@ set ( SRC_FILES
   homogeneous_scatterer/testCompositeScatteringKernel.cc
   homogeneous_scatterer/testMultipleScattering.cc
   homogeneous_scatterer/testDGSSXResPixel.cc
+  homogeneous_scatterer/testPlate.cc
   kernels/detector/testTof2Channel.cc
   kernels/detector/testZ2Channel.cc
   kernels/detector/testHe3Tube.cc
