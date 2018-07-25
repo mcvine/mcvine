@@ -4,7 +4,11 @@
 
 // timing at heetuu:
 // 1e6: 50s
+// 3e6: 147s
+// 6e6: 293s
 // 1e7: 491s
+// 3e7: 1473s
+// 6e7: 3005s
 // 1e8: 4977s
 
 #include <iostream>
