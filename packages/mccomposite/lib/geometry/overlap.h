@@ -9,16 +9,12 @@
 
 #include <iostream>
 #include "AbstractShape.h"
+#include "BoundingBox.h"
 
 namespace mccomposite {
 
   namespace geometry {
 
-    struct BoundingBox {
-      double cx, cy, cz; // center
-      double sx, sy, sz; // size
-    };
-    
     bool hasOverlap
     (const mccomposite::geometry::AbstractShape & shape1,
      const mccomposite::geometry::AbstractShape & shape2,

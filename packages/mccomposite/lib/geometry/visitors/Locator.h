@@ -22,7 +22,6 @@
 
 
 namespace mccomposite {
-  
   namespace geometry {
 
     /// Determine if a point is inside or outside of a shape

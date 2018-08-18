@@ -9,6 +9,7 @@ set ( SRC_FILES
   geometry/primitives/Cylinder.cc
   geometry/primitives/Pyramid.cc
   geometry/visitors/Locator.cc
+  geometry/visitors/BoundingBoxMaker.cc
   geometry/primitives/Sphere.cc
   geometry/visitors/Printer.cc
   geometry/intersect.cc
