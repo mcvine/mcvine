@@ -76,15 +76,19 @@ void test2()
   assert (bb.sz==1.);
 }
 
-/*
 void test3()
 {
   Box box1(1,1,1);
   Box box2(2,2,2);
   Difference diff(box2, box1);
-  assert (locate( Position(0,0,0), diff ) == Locator::outside);
-  assert (locate( Position(0,0,0.51), diff ) == Locator::inside);
-  assert (locate( Position(0,0,0.5), diff ) == Locator::onborder);
+  BoundingBoxMaker bbm;
+  BoundingBox bb = bbm.make(diff);
+  assert (bb.cx==0.);
+  assert (bb.cy==0.);
+  assert (bb.cz==0);
+  assert (bb.sx==2.);
+  assert (bb.sy==2.);
+  assert (bb.sz==2.);
 }
 
 void test4()
@@ -94,21 +98,35 @@ void test4()
 
   Intersection intersection(box, translation);
 
-  assert (locate( Position(0,0,0), intersection ) == Locator::onborder);
-  assert (locate( Position(0,0,0.51), intersection ) == Locator::outside);
-  assert (locate( Position(0,0,0.2), intersection ) == Locator::inside);
+  BoundingBoxMaker bbm;
+  BoundingBox bb = bbm.make(intersection);
+  assert (bb.cx==0.);
+  assert (bb.cy==0.);
+  assert (bb.cz==0.25);
+  assert (bb.sx==1.);
+  assert (bb.sy==1.);
+  assert (bb.sz==.5);
 
   Box box1(2,2,2);
   Intersection intersection2(box1, translation);
-  assert (locate( Position(0,0,1), intersection2 ) == Locator::onborder);
-  assert (locate( Position(0,0,0), intersection2 ) == Locator::onborder);
+  bb = bbm.make(intersection2);
+  assert (bb.cx==0.);
+  assert (bb.cy==0.);
+  assert (bb.cz==0.5);
+  assert (bb.sx==1.);
+  assert (bb.sy==1.);
+  assert (bb.sz==1.);
 
   Cylinder cylinder(2,2);
   Sphere sphere(2);
   Intersection intersection3(cylinder, sphere);
-  assert (locate( Position(0,0,1), intersection3 ) == Locator::onborder);
-  assert (locate( Position(0,0,2), intersection3 ) == Locator::outside);
-
+  bb = bbm.make(intersection3);
+  assert (bb.cx==0.);
+  assert (bb.cy==0.);
+  assert (bb.cz==0);
+  assert (bb.sx==4);
+  assert (bb.sy==4);
+  assert (bb.sz==2.);
 }
 
 void test5()
@@ -118,9 +136,14 @@ void test5()
 
   Union aunion(box, translation);
 
-  assert (locate( Position(0,0,0), aunion ) == Locator::inside);
-  assert (locate( Position(0,0,1.01), aunion ) == Locator::outside);
-  assert (locate( Position(0,0,1.00), aunion ) == Locator::onborder);
+  BoundingBoxMaker bbm;
+  BoundingBox bb = bbm.make(aunion);
+  assert (bb.cx==0.);
+  assert (bb.cy==0.);
+  assert (bb.cz==0.25);
+  assert (bb.sx==1.);
+  assert (bb.sy==1.);
+  assert (bb.sz==1.5);
 }
 
 void test6()
@@ -128,9 +151,14 @@ void test6()
   Box box(1,1,1);
   Dilation dilation(box, 5);
 
-  assert (locate( Position(0,0,0), dilation ) == Locator::inside);
-  assert (locate( Position(0,0,2.51), dilation ) == Locator::outside);
-  assert (locate( Position(0,0,2.50), dilation ) == Locator::onborder);
+  BoundingBoxMaker bbm;
+  BoundingBox bb = bbm.make(dilation);
+  assert (bb.cx==0.);
+  assert (bb.cy==0.);
+  assert (bb.cz==0);
+  assert (bb.sx==5.);
+  assert (bb.sy==5.);
+  assert (bb.sz==5);
 }
 
 void test7()
@@ -141,11 +169,16 @@ void test7()
 		   0,-1,0);
   Rotation rotated(box, m);
 
-  assert (locate( Position(0,0,0), rotated ) == Locator::inside);
-  assert (locate( Position(0,5.001, 0), rotated ) == Locator::outside);
-  assert (locate( Position(0,5.0, 0), rotated ) == Locator::onborder);
+  BoundingBoxMaker bbm;
+  BoundingBox bb = bbm.make(rotated);
+  assert (bb.cx==0.);
+  assert (bb.cy==0.);
+  assert (bb.cz==0);
+  assert (bb.sx==10.);
+  assert (bb.sy==10.);
+  assert (bb.sz==10);
 }
-*/
+
 int main()
 {
   test1();
@@ -153,13 +186,11 @@ int main()
   test1b();
   test1c();
   test2();
-  /*
   test3();
   test4();
   test5();
   test6();
   test7();
-  */
 }
 
 // End of file 
