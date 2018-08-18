@@ -31,12 +31,17 @@ struct mccomponents::kernels::ConstantQEKernel::Details {
   journal::debug_t debug;
   Details() : debug( jrnltag ) {}
 #endif
+  
+  // data
+  const static double m_epsilon;
 };
 
 
 #ifdef DEBUG
 const char mccomponents::kernels::ConstantQEKernel::Details::jrnltag[] = "ConstantQEKernel";
 #endif
+
+const double mccomponents::kernels::ConstantQEKernel::Details::m_epsilon = 1e-1;
 
 
 mccomponents::kernels::ConstantQEKernel::ConstantQEKernel
@@ -103,12 +108,25 @@ mccomponents::kernels::ConstantQEKernel::S
   double vy = vf*sint*sin(phi);
   double vz = vf*cost;
   
+  typedef mcni::Vector3<double> V3d;
+  V3d ez = state.velocity; ez.normalize();
+  // if e1 is not in z-direction
+  // we set e2 to be the cross product of e1 and (0,0,1)
+  // if e1 is right on the z-direction, that means e1 = (0,0,1)
+  // and we set e2 = (1,0,0) or whatever
+  V3d ex;
+  if (std::abs(ez.x)>m_details->m_epsilon || std::abs(ez.y)>m_details->m_epsilon) { 
+    ex = V3d(0,0,1) * ez; ex.normalize();
+  } else {
+    ex = V3d(1,0,0) * ez; ex.normalize();
+  }
+  V3d ey = ez * ex;
+  // == v_f ==
+  V3d v_f = vx*ex + vy*ey + vz*ez;
+
   // adjust probability of neutron event
   // ev.probability *= 1.;
-  
-  typedef mcni::Vector3<double> V3d;
-  V3d vfv(vx,vy,vz);
-  state.velocity = vfv;
+  state.velocity = v_f;
 }
 
 
