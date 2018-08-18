@@ -24,115 +24,59 @@ void test1()
   assert (bb.sz==3.);
 }
 
-/*
 void test1a()
 {
   Cylinder cylinder(1,2);
-  assert (locate( Position(0,0,0), cylinder ) == Locator::inside);
-  assert (locate( Position(0,0,1), cylinder ) == Locator::onborder);
-  assert (locate( Position(0,0,1.01), cylinder ) == Locator::outside);
-  assert (locate( Position(0,1,0), cylinder ) == Locator::onborder);
-  assert (locate( Position(0,1.01,0), cylinder ) == Locator::outside);
-  assert (locate( Position(1,0,0), cylinder ) == Locator::onborder);
-  assert (locate( Position(1.01,0,0), cylinder ) == Locator::outside);
-  assert (locate( Position(0.708,0.708,0), cylinder ) == Locator::outside);
-  assert (locate( Position(1,0,1), cylinder ) == Locator::onborder);
-  assert (locate( Position(-1,0,1), cylinder ) == Locator::onborder);
-  assert (locate( Position(1,0,-1), cylinder ) == Locator::onborder);
-  assert (locate( Position(-1,0,-1), cylinder ) == Locator::onborder);
+  BoundingBoxMaker bbm;
+  BoundingBox bb = bbm.make(cylinder);
+  assert (bb.cx==0.);
+  assert (bb.cy==0.);
+  assert (bb.cz==0.);
+  assert (bb.sx==2.);
+  assert (bb.sy==2.);
+  assert (bb.sz==2.);
 }
 
 void test1b()
 {
   Sphere sphere(1);
-  assert (locate( Position(0,0,0), sphere ) == Locator::inside);
-  assert (locate( Position(1,0,0), sphere ) == Locator::onborder);
-  assert (locate( Position(-1,0,0), sphere ) == Locator::onborder);
-  assert (locate( Position(0,1,0), sphere ) == Locator::onborder);
-  assert (locate( Position(0,-1,0), sphere ) == Locator::onborder);
-  assert (locate( Position(0,0,1), sphere ) == Locator::onborder);
-  assert (locate( Position(0,0,-1), sphere ) == Locator::onborder);
-  assert (locate( Position(0.707,0.707,0), sphere ) == Locator::inside);
-  assert (locate( Position(0.708,0.708,0), sphere ) == Locator::outside);
-  assert (locate( Position(-0.707,0.707,0), sphere ) == Locator::inside);
-  assert (locate( Position(-0.708,0.708,0), sphere ) == Locator::outside);
-  assert (locate( Position(0.707,0,0.707), sphere ) == Locator::inside);
-  assert (locate( Position(0.708,0,0.708), sphere ) == Locator::outside);
-  assert (locate( Position(0.707,0,-0.707), sphere ) == Locator::inside);
-  assert (locate( Position(0.708,0,-0.708), sphere ) == Locator::outside);
+  BoundingBoxMaker bbm;
+  BoundingBox bb = bbm.make(sphere);
+  assert (bb.cx==0.);
+  assert (bb.cy==0.);
+  assert (bb.cz==0.);
+  assert (bb.sx==2.);
+  assert (bb.sy==2.);
+  assert (bb.sz==2.);
 }
 
 void test1c()
 {
   Pyramid pyramid(2,3, 5);
-  // center of base
-  assert (locate( Position(0,0,-5), pyramid ) == Locator::onborder);
-  // inside, along axis
-  assert (locate( Position(0,0,1-5), pyramid ) == Locator::inside);
-  assert (locate( Position(0,0,2-5), pyramid ) == Locator::inside);
-  assert (locate( Position(0,0,4.99-5), pyramid ) == Locator::inside);
-  // outside, along axis
-  assert (locate( Position(0,0,5.01-5), pyramid ) == Locator::outside);
-  // base, corner
-  assert (locate( Position(1,1.5,0-5), pyramid ) == Locator::onborder);
-  // inside, near base, near corner
-  assert (locate( Position(1-0.02,1.5-0.02,0+0.01-5), pyramid ) == Locator::inside);
-  // inside, near base, near edge
-  assert (locate( Position(1-0.02,0,0+0.01-5), pyramid ) == Locator::inside);
-  // inside, near base, near another corner
-  assert (locate( Position(1-0.02,-1.5+0.02,0+0.01-5), pyramid ) == Locator::inside);
-  // inside, near base, near another corner
-  assert (locate( Position(-1+0.02,-1.5+0.02,0+0.01-5), pyramid ) == Locator::inside);
-  // outside, near base, near corner
-  assert (locate( Position(1+0.02,1.5+0.02,0+0.01-5), pyramid ) == Locator::outside);
-  // outside, near base, near edge
-  assert (locate( Position(1+0.02,0,0+0.01-5), pyramid ) == Locator::outside);
-  // outside, near base, near another corner
-  assert (locate( Position(1+0.02,-1.5+0.02,0+0.01-5), pyramid ) == Locator::outside);
-  // outside, near base, near another corner
-  assert (locate( Position(-1+0.02,-1.5-0.02,0+0.01-5), pyramid ) == Locator::outside);
-  // base, on border, near a corner
-  assert (locate( Position(-1,-1.5,0-5), pyramid ) == Locator::onborder);
-  // outside, near tip
-  assert (locate( Position(.2,.2,5-5), pyramid ) == Locator::outside);
-  // inside, near tip
-  assert (locate( Position(0,0,5-0.01-5), pyramid ) == Locator::inside);
-  // border, tip
-  assert (locate( Position(0,0,5-5), pyramid ) == Locator::onborder);
-  // inside, half hight, near corner
-  assert (locate( Position(.5-0.02,.75-0.02,2.5-5), pyramid ) == Locator::inside);
-  // inside, half hight, near edge
-  assert (locate( Position(.5-0.02,0,2.5-5), pyramid ) == Locator::inside);
-  // inside, half hight, near another corner
-  assert (locate( Position(.5-0.02,-.75+0.02,2.5-5), pyramid ) == Locator::inside);
-  // inside, half hight, near another corner
-  assert (locate( Position(-.5+0.02,-.75+0.02,2.5-5), pyramid ) == Locator::inside);
-  // outside, half hight, near corner
-  assert (locate( Position(.5+0.02,.75+0.02,2.5-5), pyramid ) == Locator::outside);
-  // outside, half hight, near edge
-  assert (locate( Position(.5+0.02,0,2.5-5), pyramid ) == Locator::outside);
-  // outside, half hight, near another corner
-  assert (locate( Position(.5+0.02,-.75+0.02,2.5-5), pyramid ) == Locator::outside);
-  // outside, half hight, near another corner
-  assert (locate( Position(-.5+0.02,-.75-0.02,2.5-5), pyramid ) == Locator::outside);
-  // onborder, half hight, near corner
-  assert (locate( Position(.5,.75,2.5-5), pyramid ) == Locator::onborder);
-  // onborder, half hight, near edge
-  assert (locate( Position(.5,0,2.5-5), pyramid ) == Locator::onborder);
-  // onborder, half hight, near another corner
-  assert (locate( Position(.5,-.75,2.5-5), pyramid ) == Locator::onborder);
-  // onborder, half hight, near another corner
-  assert (locate( Position(-.5,-.75,2.5-5), pyramid ) == Locator::onborder);
+  BoundingBoxMaker bbm;
+  BoundingBox bb = bbm.make(pyramid);
+  assert (bb.cx==0.);
+  assert (bb.cy==0.);
+  assert (bb.cz==-2.5);
+  assert (bb.sx==2.);
+  assert (bb.sy==3.);
+  assert (bb.sz==5.);
 }
 
 void test2()
 {
   Box box(1,1,1);
-  assert (locate( Position(0,0,0), box ) == Locator::inside);
-  assert (locate( Position(0,0,0.51), box ) == Locator::outside);
-  assert (locate( Position(0,0,0.5), box ) == Locator::onborder);
+  BoundingBoxMaker bbm;
+  BoundingBox bb = bbm.make(box);
+  assert (bb.cx==0.);
+  assert (bb.cy==0.);
+  assert (bb.cz==0);
+  assert (bb.sx==1.);
+  assert (bb.sy==1.);
+  assert (bb.sz==1.);
 }
 
+/*
 void test3()
 {
   Box box1(1,1,1);
@@ -205,11 +149,11 @@ void test7()
 int main()
 {
   test1();
-  /*
   test1a();
   test1b();
   test1c();
   test2();
+  /*
   test3();
   test4();
   test5();
