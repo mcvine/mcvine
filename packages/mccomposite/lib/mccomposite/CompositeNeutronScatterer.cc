@@ -23,19 +23,6 @@ mccomposite::CompositeNeutronScatterer::CompositeNeutronScatterer
   : base_t( shape ),
     m_impl( new CompositeNeutronScatterer_Impl( shape, scatterers, geometer ) )
 {
-  // check shapes
-  geometry::BoundingBoxMaker bbm;
-  size_t N = 100;
-  for (size_t i=0; i<scatterers.size(); i++) {
-    AbstractNeutronScatterer *s = scatterers[i];
-    geometry::BoundingBox bb = bbm.make(s->shape());
-    for (size_t j=i+1; j<scatterers.size(); j++) {
-      if (geometry::hasOverlap(s->shape(), scatterers[j]->shape(), bb, N)) {
-	throw Exception("Overlappng shapes");
-      }
-    }
-  }
-  //
   set_max_multiplescattering_loops_among_scatterers(5); // default max number of times of scattering
   set_max_multiplescattering_loops_interactM_path1(1);
   set_min_neutron_probability(0);
@@ -47,6 +34,21 @@ mccomposite::CompositeNeutronScatterer::~CompositeNeutronScatterer
 {
 }
 
+void mccomposite::CompositeNeutronScatterer::checkShapeOverlap() const
+{
+  const scatterercontainer_t & scatterers = m_impl->m_scatterers;
+  geometry::BoundingBoxMaker bbm;
+  size_t N = 100;
+  for (size_t i=0; i<scatterers.size(); i++) {
+    AbstractNeutronScatterer *s = scatterers[i];
+    geometry::BoundingBox bb = bbm.make(s->shape());
+    for (size_t j=i+1; j<scatterers.size(); j++) {
+      if (geometry::hasOverlap(s->shape(), scatterers[j]->shape(), bb, N)) {
+	throw Exception("Overlappng shapes");
+      }
+    }
+  }
+}
 
 void 
 mccomposite::CompositeNeutronScatterer::scatter(mcni::Neutron::Event &ev)

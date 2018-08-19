@@ -35,6 +35,7 @@ namespace wrap_mccomposite {
 	with_custodian_and_ward<1,3,
 	with_custodian_and_ward<1,4> > > () ]
        )
+      .def("checkShapeOverlap", &w_t::checkShapeOverlap)
       .add_property
       ("max_multiplescattering_loops_among_scatterers", 
        &w_t::get_max_multiplescattering_loops_among_scatterers,

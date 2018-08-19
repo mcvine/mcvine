@@ -11,7 +11,8 @@ from . import sampleassembly
 def check(xml):
     # import mccomponents.sample.phonon.xml
     from mccomponents.sample import samplecomponent
-    samplecomponent("s", xml)
+    c = samplecomponent("s", xml)
+    c.checkShapeOverlap()
     return
 
 
