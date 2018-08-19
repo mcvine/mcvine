@@ -55,6 +55,9 @@ namespace mccomposite{
     ( const AbstractShape & shape, const scatterercontainer_t & scatterers, const geometer_t & geometer);
     virtual ~CompositeNeutronScatterer();
 
+    /// check if the shapes of the constituent scatterers overlap
+    void checkShapeOverlap() const;
+    
     /// override method scatter of base class AbstractNeutronScatterer
     virtual void scatter(mcni::Neutron::Event &);
     /// override method scatterM of base class AbstractNeutronScatterer

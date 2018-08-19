@@ -8,6 +8,8 @@ set ( SRC_FILES
   geometry/testArrowIntersector.cc
   geometry/testDilation.cc
   geometry/testLocator.cc
+  geometry/testBoundingBoxMaker.cc
+  geometry/testOverlap.cc
   geometry/test_intersect.cc
   geometry/test_intersectTriangle.cc
   mccomposite/testAbstractNeutronScatterer.cc
