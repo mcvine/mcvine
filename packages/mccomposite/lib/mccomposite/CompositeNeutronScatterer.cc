@@ -12,10 +12,12 @@
 //
 
 
+#include <sstream>
 #include "mccomposite/CompositeNeutronScatterer.h"
 #include "mccomposite/CompositeNeutronScatterer_Impl.h"
 #include "mccomposite/geometry/visitors/BoundingBoxMaker.h"
 #include "mccomposite/geometry/overlap.h"
+#include "mccomposite/geometry/shape2ostream.h"
 #include "mccomposite/exception.h"
 
 mccomposite::CompositeNeutronScatterer::CompositeNeutronScatterer
@@ -44,7 +46,12 @@ void mccomposite::CompositeNeutronScatterer::checkShapeOverlap() const
     geometry::BoundingBox bb = bbm.make(s->shape());
     for (size_t j=i+1; j<scatterers.size(); j++) {
       if (geometry::hasOverlap(s->shape(), scatterers[j]->shape(), bb, N)) {
-	throw Exception("Overlappng shapes");
+	std::ostringstream oss;
+	oss << "Overlapping shapes: " << std::endl
+	    << "  - shape 1: " << s->shape() << std::endl
+	    << "  - shape 2: " << scatterers[j]->shape() << std::endl
+	  ;
+	throw Exception(oss.str());
       }
     }
   }

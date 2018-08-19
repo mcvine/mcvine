@@ -17,10 +17,17 @@ class TestCase(unittest.TestCase):
         try:
             out = sp.check_output(args, stderr=sp.STDOUT)
         except sp.CalledProcessError as e:
-            lastline = e.output.splitlines()[-1]
-            assert 'Overlapping" in lastline'
+            lastlines = '\n'.join(e.output.splitlines()[-5:])
+            assert 'Overlapping' in lastlines
             return
         raise RuntimeError("Expecting exiting with overlapping alert")
+        return
+    
+    def test2(self):
+        import subprocess as sp, shlex
+        cmd = 'mcvine sampleassembly check %s/Ni_and_Al/good-sampleassembly.xml' % here
+        args = shlex.split(cmd)
+        out = sp.check_output(args, stderr=sp.STDOUT)
         return
     
 
