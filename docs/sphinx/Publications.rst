@@ -14,6 +14,10 @@ References
 Publications made use of MCViNE
 -------------------------------
 
+2018
+----
+
+#. Sala, Gabriele, et al. "Conceptual design of CHESS, a new direct‐geometry inelastic neutron spectrometer dedicated to studying small samples." Journal of Applied Crystallography 51.2 (2018): 282-293.  https://doi.org/10.1107/S1600576718002224
 
 2017
 ----

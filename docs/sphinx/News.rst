@@ -3,15 +3,31 @@
 News
 ====
 
+2018
+----
+* **July 2018**:
+
+  - Matt Stone presented *SEQUOIA: Fine-Resolution Fermi Chopper Spectrometer* at WINS conference. MCViNE was used to help design the collimator for SEQUOIA
+  - Doug Abernathy presented *Applications of MCViNE simulations at SNS* at WINS conference
+* **June 2018**:
+
+  - Fahima Islam presented *Super resolution reconstruction of phonon Density of States measured at neutron direct-geometry spectrometers* at ACNS. MCViNE was used to compute resolution functions in this study.
+  - Jiao Lin presented *Applications of MCViNE simulations at SNS* at ACNS
+* **April 2018**:
+
+  - Gabriele Sala's paper *Conceptual design of CHESS, a new direct‐geometry inelastic neutron spectrometer dedicated to studying small samples* was published at Journal of Applied Crystallography: https://doi.org/10.1107/S1600576718002224. MCViNE was used to simulate the future CHESS instrument at STS, ORNL.
 * **Feb 2018**:
+
   - Release 1.3.1 (http://mcvine.github.io/1.3.1/release-notes.html) was out
 
 2017
 ----
 * **Oct 2017**:
+
   - Jennifer Niedziela's paper *Design and operating characteristic of a vacuum furnace for time-of-flight inelastic neutron scattering measurements* was published at Review of Scientific Instruments: https://doi.org/10.1063/1.5007089. MCViNE simulations were performed by Hillary Smith to help study the effects on the measured spectra from the scattering by the furnace, the multiple scattering, and the effectiveness of collimator.
   
 * **July 2017**:
+
   - Release 1.3 (http://mcvine.github.io/1.3/release-notes.html) was out
   
 * **Feb 2017**:
