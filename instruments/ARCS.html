@@ -1,32 +1,22 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>Simulation of ARCS experiments &mdash; mcvine 1.0 documentation</title>
-    
+    <title>Simulation of ARCS experiments &#8212; mcvine 1.0 documentation</title>
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../',
-        VERSION:     '1.0',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
-      };
-    </script>
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="top" title="mcvine 1.0 documentation" href="../index.html" /> 
-  </head>
-  <body role="document">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+  </head><body>
 <div class="header">  
 <table><tr>
 <!--
@@ -84,21 +74,20 @@
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="../_sources/instruments/ARCS.txt"
+      <li><a href="../_sources/instruments/ARCS.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
       <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -113,8 +102,8 @@
 <span id="tutorials-arcs"></span><h1>Simulation of ARCS experiments<a class="headerlink" href="#simulation-of-arcs-experiments" title="Permalink to this headline">¶</a></h1>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last"><a class="reference internal" href="../CLI.html#cli-bash"><span>Tricks for $ mcvine command line bash interface&#8221;</span></a>
-and <a class="reference internal" href="#arcscmds"><span>CLI for ARCS</span></a>
+<p class="last"><a class="reference internal" href="../CLI.html#cli-bash"><span class="std std-ref">Tricks for $ mcvine command line bash interface”</span></a>
+and <a class="reference internal" href="#arcscmds"><span class="std std-ref">CLI for ARCS</span></a>
 may be useful
 if you need to customize the simulations in the following tutorials.</p>
 </div>
@@ -131,25 +120,25 @@ with a polycrystalline vanadium sample.</p>
 <ul class="simple">
 <li>Simulate the neutron beam at the sample position</li>
 <li>Send neutrons in the simulated neutron beam to the sample to be scattered, and save the scattered neutrons</li>
-<li>Send the scattered neutrons to the ARCS detector system, which generates &#8220;event-mode&#8221; nexus data</li>
-<li>Reduce &#8220;event-mode&#8221; nexus data to I(Q,E)</li>
+<li>Send the scattered neutrons to the ARCS detector system, which generates “event-mode” nexus data</li>
+<li>Reduce “event-mode” nexus data to I(Q,E)</li>
 </ul>
 <p>MCViNE has made these steps easier by providing some convenient tools,
 so that you can run the last three steps above using only one command.
 All you need to do is</p>
 <ol class="arabic simple">
-<li><a class="reference internal" href="#tutorial-arcs-powderv-create-workflow"><span>Create the workflow</span></a></li>
-<li><a class="reference internal" href="#tutorial-arcs-powderv-beam"><span>Run the beam simulation</span></a></li>
-<li><a class="reference internal" href="#tutorial-arcs-powderv-sample"><span>Run the sample scattering, neutron detection, and reduction using one make command</span></a></li>
+<li><a class="reference internal" href="#tutorial-arcs-powderv-create-workflow"><span class="std std-ref">Create the workflow</span></a></li>
+<li><a class="reference internal" href="#tutorial-arcs-powderv-beam"><span class="std std-ref">Run the beam simulation</span></a></li>
+<li><a class="reference internal" href="#tutorial-arcs-powderv-sample"><span class="std std-ref">Run the sample scattering, neutron detection, and reduction using one make command</span></a></li>
 </ol>
 <div class="section" id="create-workflow">
 <span id="tutorial-arcs-powderv-create-workflow"></span><h3>1. Create workflow<a class="headerlink" href="#create-workflow" title="Permalink to this headline">¶</a></h3>
 <p>Run</p>
-<div class="highlight-python"><div class="highlight"><pre>$ mcvine workflow powder --instrument=ARCS --sample=V --workdir=mysim
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ mcvine workflow powder --instrument=ARCS --sample=V --workdir=mysim
 </pre></div>
 </div>
-<p>And a new directory &#8220;mysim&#8221; will be created. Change to this new directory:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ cd mysim
+<p>And a new directory “mysim” will be created. Change to this new directory:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cd mysim
 </pre></div>
 </div>
 </div>
@@ -157,38 +146,38 @@ All you need to do is</p>
 <span id="tutorial-arcs-powderv-beam"></span><h3>2. Incident beam at sample<a class="headerlink" href="#incident-beam-at-sample" title="Permalink to this headline">¶</a></h3>
 <p>In this step we simulate the ARCS instrument from moderator
 down to the sample position:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ cd beam
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cd beam
 $ ./run-beam.sh
 </pre></div>
 </div>
 <p>This command will run the beam simulation and when finished, generate
 output files in mysim/beam/out directory.</p>
-<p>You may want to inspect and modify &#8220;run-beam.sh&#8221; to change
+<p>You may want to inspect and modify “run-beam.sh” to change
 some parameters.
 For example, number of neutrons to simulate can be changed using
-option &#8211;ncount.</p>
+option –ncount.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">More details of beam simulation can be found in
-<a class="reference internal" href="#tut-arcs-beam"><span>a different tutorial below</span></a></p>
+<a class="reference internal" href="#tut-arcs-beam"><span class="std std-ref">a different tutorial below</span></a></p>
 </div>
 <p>After this step is finished, we may optionally examine the output files
 (see the note below),
 and then move back to the workflow directory:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ cd ..
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cd ..
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p>Following are some output files</p>
 <ul class="last">
-<li><p class="first">Output: out/mon1-itof-focused.h5 &#8211; focused monitor 1 histogram</p>
+<li><p class="first">Output: out/mon1-itof-focused.h5 – focused monitor 1 histogram</p>
 <p>To plot, execute:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ plothist out/mon1-tof-focused.h5
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ plothist out/mon1-tof-focused.h5
 </pre></div>
 </div>
 </li>
-<li><p class="first">Output: out/mon2-itof-focused.h5 &#8211; focused monitor 2 histogram</p>
+<li><p class="first">Output: out/mon2-itof-focused.h5 – focused monitor 2 histogram</p>
 </li>
 </ul>
 </div>
@@ -197,41 +186,41 @@ and then move back to the workflow directory:</p>
 <span id="tutorial-arcs-powderv-sample"></span><h3>3. Sample scattering, neutron detection, and reduction<a class="headerlink" href="#sample-scattering-neutron-detection-and-reduction" title="Permalink to this headline">¶</a></h3>
 <p>These three steps are combined together by the Makefile in this workflow
 directory. All you need to do is to execute:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ make
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ make
 </pre></div>
 </div>
 <p>It will run the three steps sequentially.
 Each step will generate a log file. For example, the scattering step
-will generate a log file &#8220;log.scatter&#8221;.
+will generate a log file “log.scatter”.
 They may be useful in debugging the simulation.
 If any of the steps failed, the workflow will stop.</p>
 <div class="section" id="inputs">
 <h4>Inputs<a class="headerlink" href="#inputs" title="Permalink to this headline">¶</a></h4>
-<p>The main input for the sample scattering step is the &#8220;sampleassembly&#8221;
-directory, which is explained <a class="reference internal" href="../SampleAssembly.html#sampleassembly"><span>here</span></a>.</p>
+<p>The main input for the sample scattering step is the “sampleassembly”
+directory, which is explained <a class="reference internal" href="../SampleAssembly.html#sampleassembly"><span class="std std-ref">here</span></a>.</p>
 <p>You may adjust the sample scattering simulation options in
-the script &#8220;scatter&#8221;:</p>
+the script “scatter”:</p>
 <ul class="simple">
-<li>&#8211;ncount: number of neutrons</li>
-<li>&#8211;mpirun.nodes: number of nodes to use for parallel simulation</li>
-<li>&#8211;multiple-scattering: turn multiple scattering on or off</li>
+<li>–ncount: number of neutrons</li>
+<li>–mpirun.nodes: number of nodes to use for parallel simulation</li>
+<li>–multiple-scattering: turn multiple scattering on or off</li>
 </ul>
 <p>You may adjust the neutron detection simulation options in
-the script &#8220;create-nxs&#8221;:</p>
+the script “create-nxs”:</p>
 <ul class="simple">
-<li>&#8211;nodes: number of nodes to use for parallel simulation</li>
+<li>–nodes: number of nodes to use for parallel simulation</li>
 </ul>
 <p>You may adjust the reduction options in
-the script &#8220;reduce2iqe&#8221;:</p>
+the script “reduce2iqe”:</p>
 <ul class="simple">
-<li>&#8211;qaxis: Q axis specification (min, max, step)</li>
+<li>–qaxis: Q axis specification (min, max, step)</li>
 </ul>
 </div>
 <div class="section" id="outputs">
 <h4>Outputs<a class="headerlink" href="#outputs" title="Permalink to this headline">¶</a></h4>
 <p>The main output of this simulation is the I(Q,E) histogram, iqe.h5.
 To plot the result:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ make plot-iqe
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ make plot-iqe
 </pre></div>
 </div>
 </div>
@@ -242,21 +231,21 @@ To plot the result:</p>
 <p>Here we simulate the ARCS instrument from moderator
 down to the sample position.</p>
 <p>Create a directory</p>
-<div class="highlight-python"><div class="highlight"><pre>$ mkdir mod2sample
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ mkdir mod2sample
 $ cd mod2sample
 </pre></div>
 </div>
 <p>Suppose</p>
 <ul class="simple">
 <li>the incident energy to simulate is 100 meV</li>
-<li>fermi chopper &#8220;100-1.5-SMI&#8221; is chosen</li>
+<li>fermi chopper “100-1.5-SMI” is chosen</li>
 <li>fermi chopper frequency is set to 600 Hz</li>
 <li>T0 chopper frequency is set to 120 Hz</li>
 <li>neutron count is 1e8</li>
 </ul>
 <p>We can run the arcs beam simulation (from moderator to sample)</p>
 <blockquote>
-<div>$ arcs_beam -E=100 -T0_nu=120 -fermi_chopper=100-1.5-SMI -fermi_nu=600 &#8211;ncount=1e8</div></blockquote>
+<div>$ arcs_beam -E=100 -T0_nu=120 -fermi_chopper=100-1.5-SMI -fermi_nu=600 –ncount=1e8</div></blockquote>
 <p>Output: out/neutrons</p>
 <p>Output: out/mon1-itof-focused.h5</p>
 <p>Output: out/mon2-itof-focused.h5</p>
@@ -272,11 +261,11 @@ to achieve a better match with the experimental data.</p>
 <div class="section" id="command-line-interface-for-arcs">
 <span id="arcscmds"></span><h2>Command line interface for ARCS<a class="headerlink" href="#command-line-interface-for-arcs" title="Permalink to this headline">¶</a></h2>
 <p>To find out available simulation applications for the ARCS spectrometer:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ mcvine instruments arcs
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ mcvine instruments arcs
 </pre></div>
 </div>
 <p>To use bash aliases for ARCS related commands:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ eval `mcvine bash aliases arcs`
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ eval `mcvine bash aliases arcs`
 </pre></div>
 </div>
 </div>
@@ -301,8 +290,8 @@ to achieve a better match with the experimental data.</p>
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &copy; Copyright 2006-2016, Jiao Lin, Michael Aivazis, and Brent Fultz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.
+        &#169; Copyright 2006-2016, Jiao Lin, Michael Aivazis, and Brent Fultz.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.5.
     </div>
   </body>
 </html>

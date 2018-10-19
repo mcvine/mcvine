@@ -1,32 +1,22 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>Concepts &mdash; mcvine 1.0 documentation</title>
-    
+    <title>Concepts &#8212; mcvine 1.0 documentation</title>
     <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    './',
-        VERSION:     '1.0',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
-      };
-    </script>
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="top" title="mcvine 1.0 documentation" href="index.html" /> 
-  </head>
-  <body role="document">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+  </head><body>
 <div class="header">  
 <table><tr>
 <!--
@@ -62,7 +52,7 @@
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Concepts</a><ul>
-<li><a class="reference internal" href="#high-level-architecture-from-user-s-point-of-view">High level architecture from User&#8217;s point of view</a><ul>
+<li><a class="reference internal" href="#high-level-architecture-from-user-s-point-of-view">High level architecture from User’s point of view</a><ul>
 <li><a class="reference internal" href="#instrument-a-component-chain">Instrument: a component chain</a></li>
 <li><a class="reference internal" href="#sample-assembly-an-arbitrary-complex-hierarchy-of-neutron-scatterer">Sample Assembly: an arbitrary complex hierarchy of neutron scatterer</a></li>
 </ul>
@@ -79,21 +69,20 @@
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="_sources/Philosophy.txt"
+      <li><a href="_sources/Philosophy.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
       <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -160,22 +149,22 @@ visitor pattern and composite pattern are employed.</p>
 <p>In the following, we will explain the architecture and design of mcvine
 in more details.</p>
 <div class="section" id="high-level-architecture-from-user-s-point-of-view">
-<span id="high-level-arch-users"></span><h2>High level architecture from User&#8217;s point of view<a class="headerlink" href="#high-level-architecture-from-user-s-point-of-view" title="Permalink to this headline">¶</a></h2>
+<span id="high-level-arch-users"></span><h2>High level architecture from User’s point of view<a class="headerlink" href="#high-level-architecture-from-user-s-point-of-view" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="instrument-a-component-chain">
 <h3>Instrument: a component chain<a class="headerlink" href="#instrument-a-component-chain" title="Permalink to this headline">¶</a></h3>
 <p>To users, the high level structure of mcvine is somewhat similar to
 that of mcstas, IDEAS, vitess: a simulation consists of building
 an instrument from a linear chain of neutron components.</p>
 <a class="reference internal image-reference" href="_images/component-chain.png"><img alt="_images/component-chain.png" src="_images/component-chain.png" style="width: 75%;" /></a>
-<p>Each component is required to implement method &#8220;process&#8221; and
-optionally &#8220;processM&#8221;.</p>
-<p>The &#8220;process&#8221; method takes one input: &#8220;neutrons&#8221;</p>
-<div class="highlight-python"><div class="highlight"><pre>def process(neutrons):
-    # process the input neutrons and generate output neutrons in-place
+<p>Each component is required to implement method “process” and
+optionally “processM”.</p>
+<p>The “process” method takes one input: “neutrons”</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">process</span><span class="p">(</span><span class="n">neutrons</span><span class="p">):</span>
+    <span class="c1"># process the input neutrons and generate output neutrons in-place</span>
 </pre></div>
 </div>
-<p>The &#8220;processM&#8221; method is the multiple-scattering version of
-method &#8220;process&#8221;.</p>
+<p>The “processM” method is the multiple-scattering version of
+method “process”.</p>
 <p>As depicted in the figure, the output of the previous component
 becomes the input for the next component, and the neutrons
 never go backward in the component chain.</p>
@@ -187,7 +176,7 @@ code is its capability of describing sample in a fairly sophisticated
 and generic manner.
 The entities (sample, sample container, furnace etc) at the sample
 position are regarded as one composite entity which
-is termed &#8220;sample assembly&#8221;.
+is termed “sample assembly”.
 A sample assembly consists of a list of neutron scatterers,
 each scatterer has its shape and a list of scattering kernels.
 Shown in the following figure is a typical sample assembly
@@ -214,7 +203,7 @@ If a user requests to simulate multiple-scattering,
 the mcvine framework will allow neutrons to scatter multiple
 times until neutrons have negligible probability.</p>
 <p>At this moment, you may want to start trying out mcvine by
-following <a class="reference internal" href="Tutorials.html#tutorials"><span>some tutorials</span></a>.</p>
+following <a class="reference internal" href="Tutorials.html#tutorials"><span class="std std-ref">some tutorials</span></a>.</p>
 <p>Up to now, you may find mcvine very flexible and powerful,
 but you will see the design of mcvine is actually even
 more flexible than what have been discussed up to this point.
@@ -236,45 +225,45 @@ users to use mcvine from command line with xml input files.</p>
 neutron scattering problem into pieces so that in several layers mcvine
 can be extended and reused.</p>
 <p>The object-oriented design of mcvine starts with the neutron event class
-&#8220;Neutron::Event&#8221;, which describes a neutron event by its state, time of flight,
+“Neutron::Event”, which describes a neutron event by its state, time of flight,
 and probability.
 A neutron state, is decribed by its position, velocity, and spin.</p>
 <a class="reference internal image-reference" href="_images/neutron-class-diagram.png"><img alt="_images/neutron-class-diagram.png" src="_images/neutron-class-diagram.png" style="width: 55%;" /></a>
 <p>Then we define an abstarct base class for all neutron scatterers,
-&#8220;mcni::AbstractNeutronScatterer&#8221;, which does not have any properties,
-but just defines its interface: methods &#8220;scatter&#8221;, &#8220;absorb&#8221;,
-and optionally &#8220;scatterM&#8221; for multiple scattering.</p>
+“mcni::AbstractNeutronScatterer”, which does not have any properties,
+but just defines its interface: methods “scatter”, “absorb”,
+and optionally “scatterM” for multiple scattering.</p>
 <a class="reference internal image-reference" href="_images/scatterer-class-diagram.png"><img alt="_images/scatterer-class-diagram.png" src="_images/scatterer-class-diagram.png" style="width: 65%;" /></a>
-<p>Next, we introduce &#8220;shape&#8221; into our world,
-A new abstract base class &#8220;mccomposite::AbstractNeutronScatterer&#8221;
+<p>Next, we introduce “shape” into our world,
+A new abstract base class “mccomposite::AbstractNeutronScatterer”
 can be simply regarded as
-&#8220;mcni::AbstractNeutronScatterer&#8221; with one additional property, &#8220;shape&#8221;.</p>
-<p>Also introduced at this level is &#8220;mccomposite::CompositeNeutronScatterer&#8221;,
-a class derived from &#8220;mccomposite::AbstractNeutronScatterer&#8221;.
+“mcni::AbstractNeutronScatterer” with one additional property, “shape”.</p>
+<p>Also introduced at this level is “mccomposite::CompositeNeutronScatterer”,
+a class derived from “mccomposite::AbstractNeutronScatterer”.
 It allows users to construct one composite scatter from
 a bunch of scatterers, each of which only needs to be a solid
-instance of &#8220;mccomposite::AbstractNeutronScatterer&#8221;.
-Here, the &#8220;composite&#8221; design pattern is in use.</p>
-<p>In a new namespace, &#8220;mccomopnents&#8221;, we further specialize our abstraction
+instance of “mccomposite::AbstractNeutronScatterer”.
+Here, the “composite” design pattern is in use.</p>
+<p>In a new namespace, “mccomopnents”, we further specialize our abstraction
 of neutron scatterer
-(still quite generic though), by introducing the notion of &#8220;HomogeneousScatterer&#8221;.
-For &#8220;HomogeneousScatterer&#8221;, the position where a neutron scattering happens
+(still quite generic though), by introducing the notion of “HomogeneousScatterer”.
+For “HomogeneousScatterer”, the position where a neutron scattering happens
 does not matter, and the position-independent scattering function is
-described by &#8220;ScatteringKernel&#8221;.</p>
+described by “ScatteringKernel”.</p>
 <a class="reference internal image-reference" href="_images/homogeneous-scatterer-class-diagram.png"><img alt="_images/homogeneous-scatterer-class-diagram.png" src="_images/homogeneous-scatterer-class-diagram.png" style="width: 95%;" /></a>
-<p>The &#8220;mccomopnents::AbstractScatteringKernel&#8221; class is an abstract base class,
+<p>The “mccomopnents::AbstractScatteringKernel” class is an abstract base class,
 which allows users/developers to use/implement various flavors of
 scattering kernels.
 One HomogeneousScatterer can also easily have more-than-one scattering kernels
-with the help of class &#8220;CompositeScatteringKernel&#8221;.</p>
-<p>The gradual increase of specialization of the concept &#8220;neutron scatterer&#8221;
+with the help of class “CompositeScatteringKernel”.</p>
+<p>The gradual increase of specialization of the concept “neutron scatterer”
 is the core of the mcvine c++ library; it allows reuse and extension
 at all the levels of abstractions.
 For example, mcni::AbstractNeutronScatterer is very generic,
 and can be used to, for example, wrap components
 in mcstas/vitess packages, and could be even used to implement scatterers
 than consider wave-nature of the neutrons beam.
-In &#8220;mccomoposite&#8221; namespace, we introduced shape and defined its abstract
+In “mccomoposite” namespace, we introduced shape and defined its abstract
 interface.
 Also defined are basic shapes such as sphere and cylinder, and also
 opeorations such as union, difference, and dilation, to allow users
@@ -287,7 +276,7 @@ shape types.</p>
 <p>In the python and xml layer we are trying to expose the hierarchical
 representation of the neutron scatterers in c++, and make it natural and easy to use.
 The diagrams presented here is then quite similar to the structure
-seen by users as presented in <a class="reference internal" href="#high-level-arch-users"><span>High level architecture from User&#8217;s point of view</span></a>.</p>
+seen by users as presented in <a class="reference internal" href="#high-level-arch-users"><span class="std std-ref">High level architecture from User’s point of view</span></a>.</p>
 <p>At the highest level, we are thinking of simulating neutrons going
 through neutron components in a neutron instrument.
 Below is a diagram for a neutron component:</p>
@@ -297,7 +286,7 @@ registering positions of all components.
 A rough flow diagram of an instrument simulation looks like</p>
 <a class="reference internal image-reference" href="_images/InstrumentSimulationApp-MainLoop.png"><img alt="_images/InstrumentSimulationApp-MainLoop.png" src="_images/InstrumentSimulationApp-MainLoop.png" style="width: 40%;" /></a>
 <p>The interface requirement of a neutron (python) component in mcvine is quite simple;
-all is needed is a &#8220;process&#8221; method that takes one argument &#8220;neutrons&#8221;.
+all is needed is a “process” method that takes one argument “neutrons”.
 This allows integrating legacy components like those of mcstas ones,
 for example.</p>
 <p>For sample assemblies, the composite pattern and the visitor pattern
@@ -345,8 +334,8 @@ additions on scattering kernel types, shape types, etc.</p>
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &copy; Copyright 2006-2016, Jiao Lin, Michael Aivazis, and Brent Fultz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.
+        &#169; Copyright 2006-2016, Jiao Lin, Michael Aivazis, and Brent Fultz.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.5.
     </div>
   </body>
 </html>

@@ -1,32 +1,22 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>Extend MCViNE &mdash; mcvine 1.0 documentation</title>
-    
+    <title>Extend MCViNE &#8212; mcvine 1.0 documentation</title>
     <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    './',
-        VERSION:     '1.0',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
-      };
-    </script>
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="top" title="mcvine 1.0 documentation" href="index.html" /> 
-  </head>
-  <body role="document">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+  </head><body>
 <div class="header">  
 <table><tr>
 <!--
@@ -73,21 +63,20 @@
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="_sources/Extend.txt"
+      <li><a href="_sources/Extend.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
       <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -105,22 +94,22 @@
 <p>To create a neutron component, you will need to</p>
 <ul class="simple">
 <li>subclass mcni.pyre_support.AbstractComponent.AbstractComponent</li>
-<li>implement method &#8220;process&#8221;</li>
+<li>implement method “process”</li>
 </ul>
 <p>Here is an example:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">mcni.pyre_support.AbstractComponent</span> <span class="kn">import</span> <span class="n">AbstractComponent</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mcni.pyre_support.AbstractComponent</span> <span class="k">import</span> <span class="n">AbstractComponent</span>
 <span class="k">class</span> <span class="nc">NeutronPrinter</span><span class="p">(</span> <span class="n">AbstractComponent</span> <span class="p">):</span>
 
   <span class="k">def</span> <span class="nf">process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">neutrons</span><span class="p">):</span>
-      <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">neutrons</span><span class="p">:</span> <span class="k">print</span> <span class="n">n</span>
+      <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">neutrons</span><span class="p">:</span> <span class="nb">print</span> <span class="n">n</span>
 
 <span class="k">def</span> <span class="nf">neutroncomponent</span><span class="p">():</span> <span class="k">return</span> <span class="n">NeutronPrinter</span><span class="p">(</span><span class="s1">&#39;printer&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>This component simply prints out all the neutrons.
-You can save it as file &#8220;printer.odb&#8221;, and it is ready for use.</p>
+You can save it as file “printer.odb”, and it is ready for use.</p>
 <p>Let us create a little example application and use this new component:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ mcvine-create-instrument-simulation-application --name=sd --components=source,detector
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ mcvine-create-instrument-simulation-application --name=sd --components=source,detector
 $ ./sd --source=Souce_simple --detector=printer --dump-pml
 $ ./sd --ncount=5
 </pre></div>
@@ -128,16 +117,16 @@ $ ./sd --ncount=5
 <p>The last command will prints out 5 neutrons generated by Source_simple.</p>
 <div class="section" id="working-with-neutrons-as-numpy-arrays">
 <h3>Working with neutrons as numpy arrays<a class="headerlink" href="#working-with-neutrons-as-numpy-arrays" title="Permalink to this headline">¶</a></h3>
-<p>In the &#8220;process&#8221; method, you could use numpy tools to manipuldate
+<p>In the “process” method, you could use numpy tools to manipuldate
 the neutron data. This would be a very good way to prototype your neutron
 component since numpy is quite fast.</p>
 <p>Here is how to transform neutrons to a numpy array:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">mcni.neutron_storage</span> <span class="kn">import</span> <span class="n">neutrons_as_npyarr</span><span class="p">,</span> <span class="n">ndblsperneutron</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">mcni.neutron_storage</span> <span class="k">import</span> <span class="n">neutrons_as_npyarr</span><span class="p">,</span> <span class="n">ndblsperneutron</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">arr</span> <span class="o">=</span> <span class="n">neutrons_as_npyarr</span><span class="p">(</span><span class="n">neutrons</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">arr</span><span class="o">.</span><span class="n">shape</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">ndblsperneutron</span>
 </pre></div>
 </div>
-<p>The reference &#8220;arr&#8221; now can be manipulated using numpy utilities.</p>
+<p>The reference “arr” now can be manipulated using numpy utilities.</p>
 <p>An example can be found at
 <a class="reference external" href="http://danse.us/trac/MCViNE/browser/trunk/packages/mcni/mcni/components/NDMonitor.py">here</a></p>
 </div>
@@ -163,8 +152,8 @@ component since numpy is quite fast.</p>
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &copy; Copyright 2006-2016, Jiao Lin, Michael Aivazis, and Brent Fultz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.
+        &#169; Copyright 2006-2016, Jiao Lin, Michael Aivazis, and Brent Fultz.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.5.
     </div>
   </body>
 </html>

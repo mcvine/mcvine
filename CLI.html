@@ -1,32 +1,22 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>Command line interface &mdash; mcvine 1.0 documentation</title>
-    
+    <title>Command line interface &#8212; mcvine 1.0 documentation</title>
     <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    './',
-        VERSION:     '1.0',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
-      };
-    </script>
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="top" title="mcvine 1.0 documentation" href="index.html" /> 
-  </head>
-  <body role="document">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+  </head><body>
 <div class="header">  
 <table><tr>
 <!--
@@ -80,21 +70,20 @@
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="_sources/CLI.txt"
+      <li><a href="_sources/CLI.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
       <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -109,14 +98,14 @@
 <span id="cli"></span><h1>Command line interface<a class="headerlink" href="#command-line-interface" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="mcvine">
 <h2>mcvine<a class="headerlink" href="#mcvine" title="Permalink to this headline">¶</a></h2>
-<p>The main command line interface (CLI) of the MCViNE package is the command &#8220;mcvine&#8221;.
+<p>The main command line interface (CLI) of the MCViNE package is the command “mcvine”.
 Execute:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ mcvine
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ mcvine
 </pre></div>
 </div>
 <p>will list available subcommands.</p>
 <p>Execute:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ mcvine version
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ mcvine version
 </pre></div>
 </div>
 <p>prints out the version of mcvine being used.</p>
@@ -125,21 +114,21 @@ Execute:</p>
 <span id="cli-bash"></span><h2>bash<a class="headerlink" href="#bash" title="Permalink to this headline">¶</a></h2>
 <p>If you are using bash, you can use the following command to add bash auto-complete
 support:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ eval &quot;$(_MCVINE_COMPLETE=source mcvine)&quot;
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ eval &quot;$(_MCVINE_COMPLETE=source mcvine)&quot;
 </pre></div>
 </div>
 <p>You can also establish aliases to some long commands. For example:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ eval `mcvine bash aliases arcs`
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ eval `mcvine bash aliases arcs`
 </pre></div>
 </div>
 <p>will create aliases for commands related to the ARCS spectrometer, which
-include a series of aliases starting with prefix &#8220;arcs&#8221;. For example,
-&#8220;arcs_beam&#8221; is an alias of &#8220;mcvine instruments arcs beam&#8221;.</p>
+include a series of aliases starting with prefix “arcs”. For example,
+“arcs_beam” is an alias of “mcvine instruments arcs beam”.</p>
 </div>
 <div class="section" id="instruments">
 <h2>instruments<a class="headerlink" href="#instruments" title="Permalink to this headline">¶</a></h2>
 <p>Subcommands for neutron instruments. For example:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ mcvine instruments arcs
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ mcvine instruments arcs
 </pre></div>
 </div>
 <p>provide commands for the ARCS spectrometer at SNS</p>
@@ -147,12 +136,12 @@ include a series of aliases starting with prefix &#8220;arcs&#8221;. For example
 <h3>Simulation Cache<a class="headerlink" href="#simulation-cache" title="Permalink to this headline">¶</a></h3>
 <p>Simulation results could be cached.</p>
 <p>For example:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ mcvine instruments arcs beam --E=100 --ncount=1e8 --keep-in-cache
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ mcvine instruments arcs beam --E=100 --ncount=1e8 --keep-in-cache
 </pre></div>
 </div>
 <p>will save the simulation results to a cache.</p>
-<p>To reuse the cached results, add option &#8220;&#8211;use-cache&#8221;:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ mcvine instruments arcs beam --E=100 --ncount=1e8 --use-cache
+<p>To reuse the cached results, add option “–use-cache”:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ mcvine instruments arcs beam --E=100 --ncount=1e8 --use-cache
 </pre></div>
 </div>
 </div>
@@ -160,7 +149,7 @@ include a series of aliases starting with prefix &#8220;arcs&#8221;. For example
 <div class="section" id="components">
 <h2>Components<a class="headerlink" href="#components" title="Permalink to this headline">¶</a></h2>
 <p>Command</p>
-<div class="highlight-python"><div class="highlight"><pre>$ mcvine component
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ mcvine component
 </pre></div>
 </div>
 <p>Subcommands related to simulation components.</p>
@@ -168,7 +157,7 @@ include a series of aliases starting with prefix &#8220;arcs&#8221;. For example
 <div class="section" id="neutron-storage">
 <h2>Neutron storage<a class="headerlink" href="#neutron-storage" title="Permalink to this headline">¶</a></h2>
 <p>Command</p>
-<div class="highlight-python"><div class="highlight"><pre>$ mcvine neutronstorage
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ mcvine neutronstorage
 </pre></div>
 </div>
 <p>Subcmds manipulate neutron storage files.</p>
@@ -176,7 +165,7 @@ include a series of aliases starting with prefix &#8220;arcs&#8221;. For example
 <div class="section" id="phonon">
 <h2>phonon<a class="headerlink" href="#phonon" title="Permalink to this headline">¶</a></h2>
 <p>Command:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ mcvine phonon
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ mcvine phonon
 </pre></div>
 </div>
 <p>Phonon-related functionalities.</p>
@@ -189,19 +178,19 @@ include a series of aliases starting with prefix &#8220;arcs&#8221;. For example
 <div class="section" id="sample-assembly">
 <h2>sample assembly<a class="headerlink" href="#sample-assembly" title="Permalink to this headline">¶</a></h2>
 <p>Command:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ mcvine sampleassembly
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ mcvine sampleassembly
 </pre></div>
 </div>
 <p>sampleassembly related functionalities.</p>
 <p>To syntax check a sample assembly use:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ mcvine sampleassembly check /path/to/sampleassembly.xml
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ mcvine sampleassembly check /path/to/sampleassembly.xml
 </pre></div>
 </div>
 </div>
 <div class="section" id="mcstas-support">
 <h2>mcstas support<a class="headerlink" href="#mcstas-support" title="Permalink to this headline">¶</a></h2>
 <p>Command:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ mcvine mcstas compilecomponent --filename=&lt;path-to-component&gt; --category=&lt;component-category&gt;
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ mcvine mcstas compilecomponent --filename=&lt;path-to-component&gt; --category=&lt;component-category&gt;
 </pre></div>
 </div>
 <p>Compile a mcstas component.</p>
@@ -227,8 +216,8 @@ include a series of aliases starting with prefix &#8220;arcs&#8221;. For example
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &copy; Copyright 2006-2016, Jiao Lin, Michael Aivazis, and Brent Fultz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.
+        &#169; Copyright 2006-2016, Jiao Lin, Michael Aivazis, and Brent Fultz.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.5.
     </div>
   </body>
 </html>

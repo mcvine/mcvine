@@ -1,32 +1,22 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>Components &mdash; mcvine 1.0 documentation</title>
-    
+    <title>Components &#8212; mcvine 1.0 documentation</title>
     <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    './',
-        VERSION:     '1.0',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
-      };
-    </script>
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="top" title="mcvine 1.0 documentation" href="index.html" /> 
-  </head>
-  <body role="document">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+  </head><body>
 <div class="header">  
 <table><tr>
 <!--
@@ -79,10 +69,10 @@
 <li><a class="reference internal" href="#neutron-storage">Neutron storage</a><ul>
 <li><a class="reference internal" href="#example-usages">Example usages</a></li>
 <li><a class="reference internal" href="#tools">Tools</a><ul>
-<li><a class="reference internal" href="#count-neutrons-in-a-storage-mcvine-neutron-storage-count-neutrons">Count neutrons in a storage &#8211; &#8220;mcvine-neutron-storage-count-neutrons&#8221;</a></li>
-<li><a class="reference internal" href="#compute-total-intensity-in-a-storage-mcvine-neutron-storage-total-intensity">Compute total intensity in a storage &#8211; &#8220;mcvine-neutron-storage-total-intensity&#8221;</a></li>
-<li><a class="reference internal" href="#merge-neutron-storages-mcvine-neutron-storage-merge">Merge neutron storages &#8211; &#8220;mcvine-neutron-storage-merge&#8221;</a></li>
-<li><a class="reference internal" href="#print-neutrons-mcvine-neutron-storage-print-neutrons">Print neutrons &#8211; &#8220;mcvine-neutron-storage-print-neutrons&#8221;</a></li>
+<li><a class="reference internal" href="#count-neutrons-in-a-storage-mcvine-neutron-storage-count-neutrons">Count neutrons in a storage – “mcvine-neutron-storage-count-neutrons”</a></li>
+<li><a class="reference internal" href="#compute-total-intensity-in-a-storage-mcvine-neutron-storage-total-intensity">Compute total intensity in a storage – “mcvine-neutron-storage-total-intensity”</a></li>
+<li><a class="reference internal" href="#merge-neutron-storages-mcvine-neutron-storage-merge">Merge neutron storages – “mcvine-neutron-storage-merge”</a></li>
+<li><a class="reference internal" href="#print-neutrons-mcvine-neutron-storage-print-neutrons">Print neutrons – “mcvine-neutron-storage-print-neutrons”</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#error-propagation-when-using-neutron-storage">Error propagation when using neutron storage</a></li>
@@ -103,21 +93,20 @@
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="_sources/Components.txt"
+      <li><a href="_sources/Components.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
       <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -142,25 +131,25 @@ The quantities to measure can be specify through command line.</p>
 <div class="section" id="examples">
 <h4>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
-<li>I(tof): &#8211;monitor=NDMonitor(tof)</li>
-<li>I(energy): &#8211;monitor=NDMonitor(energy)</li>
-<li>I(x,y):  &#8211;monitor=NDMonitor(x,y)</li>
-<li>I(x,divergence of x): &#8211;monitor=NDMonitor(x, divx)</li>
-<li>I(x,y,tof):  &#8211;monitor=NDMonitor(x,y,tof)</li>
+<li>I(tof): –monitor=NDMonitor(tof)</li>
+<li>I(energy): –monitor=NDMonitor(energy)</li>
+<li>I(x,y):  –monitor=NDMonitor(x,y)</li>
+<li>I(x,divergence of x): –monitor=NDMonitor(x, divx)</li>
+<li>I(x,y,tof):  –monitor=NDMonitor(x,y,tof)</li>
 </ul>
 </div>
 <div class="section" id="quick-tutorial">
 <h4>Quick tutorial<a class="headerlink" href="#quick-tutorial" title="Permalink to this headline">¶</a></h4>
 <p>Create an instrument simulation application:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ mcvine-create-instrument-simulation-application --name=sd --components=source,detector
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ mcvine-create-instrument-simulation-application --name=sd --components=source,detector
 </pre></div>
 </div>
 <p>Assign components:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ ./sd --source=Source_simple --detector=&quot;NDMonitor(energy)&quot;  --dump-pml
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ ./sd --source=Source_simple --detector=&quot;NDMonitor(energy)&quot;  --dump-pml
 </pre></div>
 </div>
 <p>Configure:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ ./sd \
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ ./sd \
 --geometer.detector=&quot;(0,0,10),(0,0,0)&quot; \
 --source.width=0.1 --source.height=0.1 --source.radius=0 \
 --source.xw=0.1 --source.yh=0.1 --source.dist=10 \
@@ -171,11 +160,11 @@ The quantities to measure can be specify through command line.</p>
 </pre></div>
 </div>
 <p>Run:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ ./sd --ncount=1e5
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ ./sd --ncount=1e5
 </pre></div>
 </div>
 <p>See result:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ PlotHist.py out/ienergy.h5
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ PlotHist.py out/ienergy.h5
 </pre></div>
 </div>
 <a class="reference internal image-reference" href="_images/ndmonitor-ie.png"><img alt="_images/ndmonitor-ie.png" src="_images/ndmonitor-ie.png" style="width: 50%;" /></a>
@@ -188,22 +177,22 @@ It exists mostly for debugging purpose.</p>
 <div class="section" id="id3">
 <h4>Quick tutorial<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h4>
 <p>Create an instrument simulation application:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ mcvine-create-instrument-simulation-application --name=sd --components=source,detector
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ mcvine-create-instrument-simulation-application --name=sd --components=source,detector
 </pre></div>
 </div>
 <p>Assign components and configure:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ ./sd \
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ ./sd \
 --source=MonochromaticSource --source.energy=70 \
 --detector=E_monitor --detector.filename=IE.dat \
 --dump-pml
 </pre></div>
 </div>
 <p>Run:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ ./sd --ncount=1e3
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ ./sd --ncount=1e3
 </pre></div>
 </div>
 <p>See result:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ PlotHist.py out/IE.h5
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ PlotHist.py out/IE.h5
 </pre></div>
 </div>
 <a class="reference internal image-reference" href="_images/monosource-ie.png"><img alt="_images/monosource-ie.png" src="_images/monosource-ie.png" style="width: 50%;" /></a>
@@ -213,19 +202,19 @@ It exists mostly for debugging purpose.</p>
 <span id="neutronprinter"></span><h3>Neutron printer<a class="headerlink" href="#neutron-printer" title="Permalink to this headline">¶</a></h3>
 <p>Neutron printer can be used to print out neutrons in the beam.
 Actually this can be better achieved by uing
-<a class="reference internal" href="Fundamentals.html#fundamentals-tracer"><span>the tracer</span></a>.</p>
+<a class="reference internal" href="Fundamentals.html#fundamentals-tracer"><span class="std std-ref">the tracer</span></a>.</p>
 <div class="section" id="id4">
 <h4>Quick tutorial<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h4>
 <p>Create an instrument simulation application:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ mcvine-create-instrument-simulation-application --name=sd --components=source,detector
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ mcvine-create-instrument-simulation-application --name=sd --components=source,detector
 </pre></div>
 </div>
 <p>Assign components:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ ./sd --source=Source_simple --detector=&quot;NeutronPrinter&quot;  --dump-pml
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ ./sd --source=Source_simple --detector=&quot;NeutronPrinter&quot;  --dump-pml
 </pre></div>
 </div>
 <p>Run:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ ./sd --ncount=5
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ ./sd --ncount=5
 </pre></div>
 </div>
 </div>
@@ -245,31 +234,31 @@ reuse it in later simulations.</p>
 Simulation of an ARCS experiment can be done in two steps.
 The first step is to simulation the neutron component chain
 down to the sample position:</p>
-<div class="highlight-python"><div class="highlight"><pre>moderator -&gt; core-vessel-insert -&gt; shutter-guide -&gt; guide-1 -&gt;
-  ... -&gt; fermi-chopper -&gt; ... -&gt; guide-5 -&gt; neutron-to-storage
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">moderator</span> <span class="o">-&gt;</span> <span class="n">core</span><span class="o">-</span><span class="n">vessel</span><span class="o">-</span><span class="n">insert</span> <span class="o">-&gt;</span> <span class="n">shutter</span><span class="o">-</span><span class="n">guide</span> <span class="o">-&gt;</span> <span class="n">guide</span><span class="o">-</span><span class="mi">1</span> <span class="o">-&gt;</span>
+  <span class="o">...</span> <span class="o">-&gt;</span> <span class="n">fermi</span><span class="o">-</span><span class="n">chopper</span> <span class="o">-&gt;</span> <span class="o">...</span> <span class="o">-&gt;</span> <span class="n">guide</span><span class="o">-</span><span class="mi">5</span> <span class="o">-&gt;</span> <span class="n">neutron</span><span class="o">-</span><span class="n">to</span><span class="o">-</span><span class="n">storage</span>
 </pre></div>
 </div>
 <p>Result of the first simulation step is a data file that contains
 all the neutrons reach the sample position.
 Those neutrons can be reused in various futher simulations.</p>
 <p>For example we can simulate the scattering of neutrons from sample:</p>
-<div class="highlight-python"><div class="highlight"><pre>neutron-from-storage -&gt; sample -&gt; arcs-detector-system
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">neutron</span><span class="o">-</span><span class="n">from</span><span class="o">-</span><span class="n">storage</span> <span class="o">-&gt;</span> <span class="n">sample</span> <span class="o">-&gt;</span> <span class="n">arcs</span><span class="o">-</span><span class="n">detector</span><span class="o">-</span><span class="n">system</span>
 </pre></div>
 </div>
 <p>We can use different samples in different simulations that all
 use the neutrons from the same neutron storage.</p>
 <p>We could also put various monitors to examine the neutrons
 in the storage:</p>
-<div class="highlight-python"><div class="highlight"><pre>neutron-from-storage -&gt; monitor
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">neutron</span><span class="o">-</span><span class="n">from</span><span class="o">-</span><span class="n">storage</span> <span class="o">-&gt;</span> <span class="n">monitor</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="tools">
 <h4>Tools<a class="headerlink" href="#tools" title="Permalink to this headline">¶</a></h4>
 <div class="section" id="count-neutrons-in-a-storage-mcvine-neutron-storage-count-neutrons">
-<h5>Count neutrons in a storage &#8211; &#8220;mcvine-neutron-storage-count-neutrons&#8221;<a class="headerlink" href="#count-neutrons-in-a-storage-mcvine-neutron-storage-count-neutrons" title="Permalink to this headline">¶</a></h5>
+<h5>Count neutrons in a storage – “mcvine-neutron-storage-count-neutrons”<a class="headerlink" href="#count-neutrons-in-a-storage-mcvine-neutron-storage-count-neutrons" title="Permalink to this headline">¶</a></h5>
 <p>Signature:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ mcvine-neutron-storage-count-neutrons &lt;neutron-file&gt;
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ mcvine-neutron-storage-count-neutrons &lt;neutron-file&gt;
 </pre></div>
 </div>
 <ul class="simple">
@@ -278,9 +267,9 @@ in the storage:</p>
 </ul>
 </div>
 <div class="section" id="compute-total-intensity-in-a-storage-mcvine-neutron-storage-total-intensity">
-<h5>Compute total intensity in a storage &#8211; &#8220;mcvine-neutron-storage-total-intensity&#8221;<a class="headerlink" href="#compute-total-intensity-in-a-storage-mcvine-neutron-storage-total-intensity" title="Permalink to this headline">¶</a></h5>
+<h5>Compute total intensity in a storage – “mcvine-neutron-storage-total-intensity”<a class="headerlink" href="#compute-total-intensity-in-a-storage-mcvine-neutron-storage-total-intensity" title="Permalink to this headline">¶</a></h5>
 <p>Signature:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ mcvine-neutron-storage-total-intensity &lt;neutron-file&gt;
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ mcvine-neutron-storage-total-intensity &lt;neutron-file&gt;
 </pre></div>
 </div>
 <ul class="simple">
@@ -289,9 +278,9 @@ in the storage:</p>
 </ul>
 </div>
 <div class="section" id="merge-neutron-storages-mcvine-neutron-storage-merge">
-<h5>Merge neutron storages &#8211; &#8220;mcvine-neutron-storage-merge&#8221;<a class="headerlink" href="#merge-neutron-storages-mcvine-neutron-storage-merge" title="Permalink to this headline">¶</a></h5>
+<h5>Merge neutron storages – “mcvine-neutron-storage-merge”<a class="headerlink" href="#merge-neutron-storages-mcvine-neutron-storage-merge" title="Permalink to this headline">¶</a></h5>
 <p>Signature:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ mcvine-neutron-storage-merge \
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ mcvine-neutron-storage-merge \
     -files=&lt;neutron-files-to-merge&gt; \
     -output=&lt;output-neutron-file&gt;
 </pre></div>
@@ -302,9 +291,9 @@ in the storage:</p>
 </ul>
 </div>
 <div class="section" id="print-neutrons-mcvine-neutron-storage-print-neutrons">
-<h5>Print neutrons &#8211; &#8220;mcvine-neutron-storage-print-neutrons&#8221;<a class="headerlink" href="#print-neutrons-mcvine-neutron-storage-print-neutrons" title="Permalink to this headline">¶</a></h5>
+<h5>Print neutrons – “mcvine-neutron-storage-print-neutrons”<a class="headerlink" href="#print-neutrons-mcvine-neutron-storage-print-neutrons" title="Permalink to this headline">¶</a></h5>
 <p>Signature:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ mcvine-neutron-storage-print-neutrons \
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ mcvine-neutron-storage-print-neutrons \
     -filename=&lt;neutron-file&gt; \
     -n=&lt;number-of-neutrons&gt;
 </pre></div>
@@ -320,17 +309,17 @@ in the storage:</p>
 <p>When we use neutron storage, we need to make sure the
 neutrons saved in the storage have enough statistics
 for the simulations that use the storage to be successful.</p>
-<p>As discussed in <a class="reference internal" href="Fundamentals.html#fundamentals-errorbar-errorprop"><span>Error propagation</span></a>,
+<p>As discussed in <a class="reference internal" href="Fundamentals.html#fundamentals-errorbar-errorprop"><span class="std std-ref">Error propagation</span></a>,
 the error bar of simulated intensity of a simulation using neutron storage
 is given by</p>
-<div class="math">
+<div class="math notranslate nohighlight">
 \[Err^2(I) = \Delta^2_{intrinsic} \times I^2  + \sum{p_i^2}\]</div>
 <p>and the instrinsic error induced by using the neutron
 storage could be approximated from the data of the simulation
 that generated the neutron storage:</p>
-<div class="math">
+<div class="math notranslate nohighlight">
 \[\Delta^2_{instrinsic} = \sum p_{ns, i}^2 / (\sum p_{ns, i})^2\]</div>
-<p>where the subscript &#8220;<span class="math">\(ns\)</span>&#8221; denotes the simulation that generates
+<p>where the subscript “<span class="math notranslate nohighlight">\(ns\)</span>” denotes the simulation that generates
 the neutron storage.</p>
 <p>You can see that the errobar of a simulation involves a neutron
 source that replays neutrons in a neutron storage is limited by
@@ -345,9 +334,9 @@ other simulations.</p>
 <span id="detectorsystem"></span><h3>Detector System<a class="headerlink" href="#detector-system" title="Permalink to this headline">¶</a></h3>
 <p>DetectorSystemFromXml.</p>
 <p>To see the events in an events file:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">mccomponents.detector.event_utils</span> <span class="kn">import</span> <span class="n">readEvents</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mccomponents.detector.event_utils</span> <span class="k">import</span> <span class="n">readEvents</span>
 <span class="n">events</span> <span class="o">=</span> <span class="n">readEvents</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
-<span class="k">print</span> <span class="n">events</span>
+<span class="nb">print</span> <span class="n">events</span>
 </pre></div>
 </div>
 </div>
@@ -358,17 +347,17 @@ other simulations.</p>
 <a class="reference external" href="http://mcstas.org">McStas</a> project to provide
 access to McStas components from mcvine.
 If you run:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ mcvine component list
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ mcvine component list
 </pre></div>
 </div>
-<p>you will see a lot of components coming from mcstas, for example &#8220;Monitor_4PI&#8221;.
+<p>you will see a lot of components coming from mcstas, for example “Monitor_4PI”.
 You can use it like any other mcvine components:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ &lt;simapp&gt; --monitor=Monitor_4PI --dump-pml
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ &lt;simapp&gt; --monitor=Monitor_4PI --dump-pml
 </pre></div>
 </div>
 <p>For more details on any McStas component (e.g. Monitor_4PI),
 you can use the mcvine command line interface:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ mcvine component info Monitor_4PI
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ mcvine component info Monitor_4PI
 </pre></div>
 </div>
 <p>Or you can visit the McStas documentation at
@@ -377,20 +366,20 @@ you can use the mcvine command line interface:</p>
 <span id="id5"></span><h3>User-defined mcstas components<a class="headerlink" href="#user-defined-mcstas-components" title="Permalink to this headline">¶</a></h3>
 <p>It is not unusual that a user wants to use a mcstas component he
 writes himself. To use a user-defined mcstas component, run:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ mcvine mcstas compilecomponent --filename=&lt;user-defined-component-file&gt; --category=&lt;category.&gt;
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ mcvine mcstas compilecomponent --filename=&lt;user-defined-component-file&gt; --category=&lt;category.&gt;
 </pre></div>
 </div>
 <p>Here, &lt;user-defined-component-file&gt; is the path to the mcstas component file
 you created, &lt;category&gt; is the category this component belongs to.
 For example:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ mcvine mcstas compilecomponent --filename=Al_window.comp --category=optics
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ mcvine mcstas compilecomponent --filename=Al_window.comp --category=optics
 </pre></div>
 </div>
 <p>and mcvine will start compiling the component and put it into the system.
-If the compiling failed, please don&#8217;t hesitate to post your questions
+If the compiling failed, please don’t hesitate to post your questions
 to <a class="reference external" href="mailto:mcvine-users&#37;&#52;&#48;googlegroups&#46;com">mcvine-users<span>&#64;</span>googlegroups<span>&#46;</span>com</a></p>
 <p>If everything goes smoothly, now you can use this component just like any other components:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ mcvine component info Al_window
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ mcvine component info Al_window
 </pre></div>
 </div>
 </div>
@@ -420,8 +409,8 @@ to <a class="reference external" href="mailto:mcvine-users&#37;&#52;&#48;googleg
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &copy; Copyright 2006-2016, Jiao Lin, Michael Aivazis, and Brent Fultz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.
+        &#169; Copyright 2006-2016, Jiao Lin, Michael Aivazis, and Brent Fultz.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.5.
     </div>
   </body>
 </html>

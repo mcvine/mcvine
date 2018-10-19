@@ -1,32 +1,22 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>Tutorials – Powder Diffraction Kernel &mdash; mcvine 1.0 documentation</title>
-    
+    <title>Tutorials – Powder Diffraction Kernel &#8212; mcvine 1.0 documentation</title>
     <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    './',
-        VERSION:     '1.0',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
-      };
-    </script>
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="top" title="mcvine 1.0 documentation" href="index.html" /> 
-  </head>
-  <body role="document">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+  </head><body>
 <div class="header">  
 <table><tr>
 <!--
@@ -61,7 +51,7 @@
         <div class="sphinxsidebarwrapper">
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Tutorials &#8211; Powder Diffraction Kernel</a><ul>
+<li><a class="reference internal" href="#">Tutorials – Powder Diffraction Kernel</a><ul>
 <li><a class="reference internal" href="#simulation-with-powder-diffraction-kernel">Simulation with Powder Diffraction Kernel</a><ul>
 <li><a class="reference internal" href="#source-simple">Source_simple</a></li>
 <li><a class="reference internal" href="#sampleassemblyfromxml">SampleAssemblyFromXml</a></li>
@@ -77,21 +67,20 @@
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="_sources/Tutorials-PowderKernel.txt"
+      <li><a href="_sources/Tutorials-PowderKernel.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
       <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -103,30 +92,30 @@
           <div class="body" role="main">
             
   <div class="section" id="tutorials-powder-diffraction-kernel">
-<span id="tutorials-powder-kernel"></span><h1>Tutorials &#8211; Powder Diffraction Kernel<a class="headerlink" href="#tutorials-powder-diffraction-kernel" title="Permalink to this headline">¶</a></h1>
+<span id="tutorials-powder-kernel"></span><h1>Tutorials – Powder Diffraction Kernel<a class="headerlink" href="#tutorials-powder-diffraction-kernel" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="simulation-with-powder-diffraction-kernel">
 <h2>Simulation with Powder Diffraction Kernel<a class="headerlink" href="#simulation-with-powder-diffraction-kernel" title="Permalink to this headline">¶</a></h2>
 <p>In this tutorial we will do experiment with a simple instrument consisting of three
 components:</p>
-<div class="highlight-python"><div class="highlight"><pre>[Source_simple] -&gt; [PowderDiffractionKernel] -&gt; [NDMonitor(x,y,t)]
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">Source_simple</span><span class="p">]</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="n">PowderDiffractionKernel</span><span class="p">]</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="n">NDMonitor</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">t</span><span class="p">)]</span>
 </pre></div>
 </div>
 <p>that uses <strong>SimplePowderDiffractionKernel</strong>, or simply <strong>Powder Diffraction Kernel</strong>. The structure
 of configuration and execution files for the instrument looks like the following:</p>
-<div class="highlight-python"><div class="highlight"><pre>ssd         # execution Python script
-ssd.pml     # main configuration file
-Al/
-    Al-scatterer.xml
-    Al.laz
-    Al.xyz
-    peaks.py
-    sampleassembly.xml
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ssd</span>         <span class="c1"># execution Python script</span>
+<span class="n">ssd</span><span class="o">.</span><span class="n">pml</span>     <span class="c1"># main configuration file</span>
+<span class="n">Al</span><span class="o">/</span>
+    <span class="n">Al</span><span class="o">-</span><span class="n">scatterer</span><span class="o">.</span><span class="n">xml</span>
+    <span class="n">Al</span><span class="o">.</span><span class="n">laz</span>
+    <span class="n">Al</span><span class="o">.</span><span class="n">xyz</span>
+    <span class="n">peaks</span><span class="o">.</span><span class="n">py</span>
+    <span class="n">sampleassembly</span><span class="o">.</span><span class="n">xml</span>
 </pre></div>
 </div>
 <p>The main configuration file ssd.pml defines components, order of components in
-the instrument and parameters for each component. Let&#8217;s take a look at the ssd.pml file</p>
+the instrument and parameters for each component. Let’s take a look at the ssd.pml file</p>
 <p><strong>ssd.pml</strong></p>
-<div class="highlight-python"><div class="highlight"><pre>&lt;?xml version=&quot;1.0&quot;?&gt;
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&lt;?xml version=&quot;1.0&quot;?&gt;
 
 &lt;!-- [Source_simple] -&gt; [PowderDiffractionKernel] -&gt; [NDMonitor(x,y,t)] --&gt;
 
@@ -195,24 +184,24 @@ the instrument and parameters for each component. Let&#8217;s take a look at the
 &lt;/inventory&gt;
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre>Note: Base name of the file ssd.pml should be the same as in tag
-      &lt;component name=&quot;ssd&quot;&gt; otherwise simulation will silently
-      die without doing anything useful.
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Note</span><span class="p">:</span> <span class="n">Base</span> <span class="n">name</span> <span class="n">of</span> <span class="n">the</span> <span class="n">file</span> <span class="n">ssd</span><span class="o">.</span><span class="n">pml</span> <span class="n">should</span> <span class="n">be</span> <span class="n">the</span> <span class="n">same</span> <span class="k">as</span> <span class="ow">in</span> <span class="n">tag</span>
+      <span class="o">&lt;</span><span class="n">component</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;ssd&quot;</span><span class="o">&gt;</span> <span class="n">otherwise</span> <span class="n">simulation</span> <span class="n">will</span> <span class="n">silently</span>
+      <span class="n">die</span> <span class="n">without</span> <span class="n">doing</span> <span class="n">anything</span> <span class="n">useful</span><span class="o">.</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre>Note: Name &quot;ssd&quot; stands for initial letters of source -&gt; sample -&gt; detector
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Note</span><span class="p">:</span> <span class="n">Name</span> <span class="s2">&quot;ssd&quot;</span> <span class="n">stands</span> <span class="k">for</span> <span class="n">initial</span> <span class="n">letters</span> <span class="n">of</span> <span class="n">source</span> <span class="o">-&gt;</span> <span class="n">sample</span> <span class="o">-&gt;</span> <span class="n">detector</span>
 </pre></div>
 </div>
-<p>The ssd.pml file has three components: <code class="docutils literal"><span class="pre">Source_simple</span></code>, <code class="docutils literal"><span class="pre">SampleAssemblyFromXml</span></code> and
-<code class="docutils literal"><span class="pre">NDMonitor(x,y,t)</span></code>. It describes parameters for source and detector components
+<p>The ssd.pml file has three components: <code class="docutils literal notranslate"><span class="pre">Source_simple</span></code>, <code class="docutils literal notranslate"><span class="pre">SampleAssemblyFromXml</span></code> and
+<code class="docutils literal notranslate"><span class="pre">NDMonitor(x,y,t)</span></code>. It describes parameters for source and detector components
 whereas parameters for sample component are defined in a separate file:
-<em>Al/sampleassembly.xml</em>. Let&#8217;s take a closer look at the components.</p>
+<em>Al/sampleassembly.xml</em>. Let’s take a closer look at the components.</p>
 <div class="section" id="source-simple">
 <h3>Source_simple<a class="headerlink" href="#source-simple" title="Permalink to this headline">¶</a></h3>
 <p>Source_simple component is a standard component available in McStas simulation package.
-It generates flux of neutrons uniformly distributed in the energy range <code class="docutils literal"><span class="pre">[E0-dE,</span> <span class="pre">E0+dE]</span></code> in meV.
-In our configuration the energy range is <code class="docutils literal"><span class="pre">[30,</span> <span class="pre">170]</span> <span class="pre">meV</span></code>. Parameters <code class="docutils literal"><span class="pre">xw</span></code>, <code class="docutils literal"><span class="pre">yh</span></code> and
-<code class="docutils literal"><span class="pre">dist</span></code> define width, height and distance to the sample correspondingly. The benefit
+It generates flux of neutrons uniformly distributed in the energy range <code class="docutils literal notranslate"><span class="pre">[E0-dE,</span> <span class="pre">E0+dE]</span></code> in meV.
+In our configuration the energy range is <code class="docutils literal notranslate"><span class="pre">[30,</span> <span class="pre">170]</span> <span class="pre">meV</span></code>. Parameters <code class="docutils literal notranslate"><span class="pre">xw</span></code>, <code class="docutils literal notranslate"><span class="pre">yh</span></code> and
+<code class="docutils literal notranslate"><span class="pre">dist</span></code> define width, height and distance to the sample correspondingly. The benefit
 of using this simple source is to quickly get an estimate of what happens to the neutrons
 in this energy range as they propagates through the instrument.</p>
 </div>
@@ -221,7 +210,7 @@ in this energy range as they propagates through the instrument.</p>
 <p>The SampleAssemblyFromXml component allows to create a sample from detailed pieces
 of information about the material including configuration of unit cell, physical
 properties of atoms with respect to the scattered or absorbed neutrons. Please refer
-to <a class="reference internal" href="Tutorials-SampleAssembly.html#tutorials-sampleassembly"><span>Sample Assebly</span></a> tutorial for some details
+to <a class="reference internal" href="Tutorials-SampleAssembly.html#tutorials-sampleassembly"><span class="std std-ref">Sample Assebly</span></a> tutorial for some details
 of how to write the configuration files for sample assembly.</p>
 <p>In this tutorial we will include <em>SimplePowderDiffractionKernel</em> in the sample assembly
 and describe some properties of the kernel. The purpose of the kernel in the sample
@@ -233,7 +222,7 @@ lattice, scattering cross sections etc.</p>
 keep all the configuration files related to the material in <em>Al</em> directory. The only
 parameter in the <em>ssd.pml</em> file related to sample was the name of xml file: <em>Al/sampleassembly.xml</em></p>
 <p><strong>Al/sampleassembly.xml</strong></p>
-<div class="highlight-python"><div class="highlight"><pre>&lt;?xml version=&quot;1.0&quot;?&gt;
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&lt;?xml version=&quot;1.0&quot;?&gt;
 
 &lt;!DOCTYPE SampleAssembly&gt;
 
@@ -257,33 +246,33 @@ parameter in the <em>ssd.pml</em> file related to sample was the name of xml fil
 </pre></div>
 </div>
 <p>File <em>sampleassembly.xml</em> is the main file that describes general properties of the sample:
-shape, phase type, local geometry and some others. Our sample is a block with sizes: <code class="docutils literal"><span class="pre">6cm*10cm*1cm</span></code>.
+shape, phase type, local geometry and some others. Our sample is a block with sizes: <code class="docutils literal notranslate"><span class="pre">6cm*10cm*1cm</span></code>.
 The phase type is a crystal consisting of just one chemical element <em>Al</em> and the
 unit cell is given in <em>Al.xyz</em> file.</p>
 <p><strong>Al/Al.xyz</strong></p>
-<div class="highlight-python"><div class="highlight"><pre>4
-4.049320 0 0   0 4.049320 0   0 0 4.049320
-Al 0  0  0
-Al 0.5 0.5 0
-Al 0.5 0 0.5
-Al 0 0.5 0.5
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">4</span>
+<span class="mf">4.049320</span> <span class="mi">0</span> <span class="mi">0</span>   <span class="mi">0</span> <span class="mf">4.049320</span> <span class="mi">0</span>   <span class="mi">0</span> <span class="mi">0</span> <span class="mf">4.049320</span>
+<span class="n">Al</span> <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+<span class="n">Al</span> <span class="mf">0.5</span> <span class="mf">0.5</span> <span class="mi">0</span>
+<span class="n">Al</span> <span class="mf">0.5</span> <span class="mi">0</span> <span class="mf">0.5</span>
+<span class="n">Al</span> <span class="mi">0</span> <span class="mf">0.5</span> <span class="mf">0.5</span>
 </pre></div>
 </div>
 <p>The <em>Al.xyz</em> file tells us that the Al atoms comprise FCC unit cell with lattice
 constants:</p>
-<div class="highlight-python"><div class="highlight"><pre>a = b = c = 4.049320 AA
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">b</span> <span class="o">=</span> <span class="n">c</span> <span class="o">=</span> <span class="mf">4.049320</span> <span class="n">AA</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre>Note: .xyz file used here is not a standard .xyz file. Standard .xyz file
-       http://en.wikipedia.org/wiki/XYZ_file_format devotes the 2nd line
-       for comment where as in this case we store meaningful information:
-       lattice parameters.
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Note</span><span class="p">:</span> <span class="o">.</span><span class="n">xyz</span> <span class="n">file</span> <span class="n">used</span> <span class="n">here</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">a</span> <span class="n">standard</span> <span class="o">.</span><span class="n">xyz</span> <span class="n">file</span><span class="o">.</span> <span class="n">Standard</span> <span class="o">.</span><span class="n">xyz</span> <span class="n">file</span>
+       <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">en</span><span class="o">.</span><span class="n">wikipedia</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">wiki</span><span class="o">/</span><span class="n">XYZ_file_format</span> <span class="n">devotes</span> <span class="n">the</span> <span class="mi">2</span><span class="n">nd</span> <span class="n">line</span>
+       <span class="k">for</span> <span class="n">comment</span> <span class="n">where</span> <span class="k">as</span> <span class="ow">in</span> <span class="n">this</span> <span class="n">case</span> <span class="n">we</span> <span class="n">store</span> <span class="n">meaningful</span> <span class="n">information</span><span class="p">:</span>
+       <span class="n">lattice</span> <span class="n">parameters</span><span class="o">.</span>
 </pre></div>
 </div>
 <p>If the <em>Al-scatterer.xml</em> file is present in <em>Al</em> directory, then system will automatically
 recognize it and will turn on the scattering process for the sample.</p>
 <p><strong>Al/Al-scatterer.xml</strong></p>
-<div class="highlight-python"><div class="highlight"><pre>&lt;?xml version=&quot;1.0&quot;?&gt;
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&lt;?xml version=&quot;1.0&quot;?&gt;
 
 &lt;!DOCTYPE scatterer&gt;
 
@@ -298,11 +287,11 @@ recognize it and will turn on the scattering process for the sample.</p>
 </div>
 <p><em>Al-scatterer.xml</em> configuration file describes the scattering process by defining
 the kernel. As mentioned above, we use <em>SimplePowderDiffractionKernel</em> for our experiment.
-We need to specify several parameters for the kernel: relative line width <span class="math">\(\Delta d/d\)</span>
-(<code class="docutils literal"><span class="pre">Dd_over_d</span></code>), Debye-Waller factor (<code class="docutils literal"><span class="pre">DebyeWaller_factor</span></code>) and file containing
-information about the diffraction planes (<code class="docutils literal"><span class="pre">peaks-py-path</span></code>).</p>
+We need to specify several parameters for the kernel: relative line width <span class="math notranslate nohighlight">\(\Delta d/d\)</span>
+(<code class="docutils literal notranslate"><span class="pre">Dd_over_d</span></code>), Debye-Waller factor (<code class="docutils literal notranslate"><span class="pre">DebyeWaller_factor</span></code>) and file containing
+information about the diffraction planes (<code class="docutils literal notranslate"><span class="pre">peaks-py-path</span></code>).</p>
 <p><strong>peaks.py</strong></p>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">mccomponents.sample.diffraction.SimplePowderDiffractionKernel</span> <span class="kn">import</span> <span class="n">Peak</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mccomponents.sample.diffraction.SimplePowderDiffractionKernel</span> <span class="k">import</span> <span class="n">Peak</span>
 
 <span class="n">peaks</span> <span class="o">=</span> <span class="p">[</span>
     <span class="n">Peak</span><span class="p">(</span><span class="n">q</span><span class="o">=</span><span class="mf">2.687561</span><span class="p">,</span> <span class="n">F_squared</span><span class="o">=</span><span class="mf">1.690000</span><span class="p">,</span> <span class="n">multiplicity</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">intrinsic_line_width</span><span class="o">=</span><span class="mf">0.000000</span><span class="p">,</span> <span class="n">DebyeWaller_factor</span><span class="o">=</span><span class="mf">1.000000</span><span class="p">),</span>
@@ -338,134 +327,134 @@ information about the diffraction planes (<code class="docutils literal"><span c
 file</a>
 available in McStas package . We show the Al.laz file here for reference purposes:</p>
 <p><strong>Al/Al.laz</strong></p>
-<div class="highlight-python"><div class="highlight"><pre># TITLE *Aluminum-Al-[FM3-M] Miller, H.P.jr.;DuMond, J.W.M.[1942] at 298 K
-# CELL 4.049320 4.049320 4.049320 90.000000 90.000000 90.000000
-# SPCGRP F M 3 M   CUBIC STRUCTURE
-# ATOM AL 1 0.000000 0.000000 0.000000
-# SCATTERING FACTOR  COEFFICIENTS: AL     F= 0.345 CM-12
-# Reference: Physical Review (1940) 57, 198-206
-#
-# Physical parameters:
-# sigma_coh 1.495   coherent scattering cross section in [barn]
-# sigma_inc 0.0082  incoherent scattering cross section in [barn]
-# sigma_abs 0.231   absorption scattering cross section in [barn]
-# density   2.70    in [g/cm^3]
-# weight    26.98   in [g/mol]
-# nb_atoms  4       in [atoms/unit cell]
-# v_sound   5100    in [m/s]
-# v_sound_l 6420    velocity of longitudinal sound in [m/s]
-# v_sound_t 3040    velocity of transversal sound in [m/s]
-# T_m       933.5   melting temperature in [K]
-# T_b       2792.2  boiling temperature in [K]
-# At_number 13      atomic number Z
-# lattice_a 4.04932 lattice parameter a in [Angs]
-#
-# Format parameters: Lazy format &lt;http://icsd.ill.fr&gt;
-# column_j 17 multiplicity &#39;j&#39;
-# column_d 6  d-spacing &#39;d&#39; in [Angs]
-# column_F 13 norm of scattering factor |F| in [barn^0.5]
-# column_h 1
-# column_k 2
-# column_l 3
-#
-# H  K  L  THETA  2THETA D VALUE  1/D**2 SIN2*1000  H  K  L INTENSITY         /F(HKL)/       A(HKL)      B(HKL) PHA.ANG. MULT   LPG
-  1  1  1  12.35  24.70   2.3379  0.1830    45.74   1  1  1    1000.0              1.3         1.32         0.00    0.00  8  22.38
-  2  0  0  14.30  28.59   2.0247  0.2439    60.99   2  0  0     550.0              1.3         1.30         0.00    0.00  6  16.92
-  2  2  0  20.44  40.88   1.4317  0.4879   121.97   2  2  0     503.5              1.2         1.22         0.00    0.00 12   8.75
-  3  1  1  24.18  48.35   1.2209  0.6709   167.71   3  1  1     686.4              1.2         1.17         0.00    0.00 24   6.54
-  2  2  2  25.32  50.65   1.1689  0.7318   182.96   2  2  2     205.3              1.1         1.15         0.00    0.00  8   6.05
-  4  0  0  29.60  59.20   1.0123  0.9758   243.95   4  0  0     106.3              1.1         1.08         0.00    0.00  6   4.71
-  3  3  1  32.56  65.13   0.9290  1.1587   289.69   3  3  1     337.1              1.0         1.03         0.00    0.00 24   4.10
-  4  2  0  33.52  67.04   0.9055  1.2197   304.93   4  2  0     314.0              1.0         1.02         0.00    0.00 24   3.93
-  4  2  2  37.22  74.45   0.8266  1.4637   365.92   4  2  2     242.5              1.0         0.96         0.00    0.00 24   3.43
-  5  1  1  39.91  79.82   0.7793  1.6466   411.66   5  1  1     204.2              0.9         0.91         0.00    0.00 24   3.17
-  3  3  3  39.91  79.82   0.7793  1.6466   411.66   3  3  3      68.1              0.9         0.91         0.00    0.00  8   3.17
-  4  4  0  44.31  88.61   0.7158  1.9516   487.89   4  4  0      79.3              0.8         0.85         0.00    0.00 12   2.86
-  5  3  1  46.93  93.86   0.6845  2.1345   533.63   5  3  1     277.3              0.8         0.81         0.00    0.00 48   2.74
-  4  4  2  47.81  95.61   0.6749  2.1955   548.88   4  4  2     132.9              0.8         0.80         0.00    0.00 24   2.71
-  6  0  0  47.81  95.61   0.6749  2.1955   548.88   6  0  0      33.2              0.8         0.80         0.00    0.00  6   2.71
-  6  2  0  51.35 102.69   0.6403  2.4395   609.87   6  2  0     113.9              0.7         0.75         0.00    0.00 24   2.63
-  5  3  3  54.07 108.13   0.6175  2.6224   655.61   5  3  3     102.9              0.7         0.72         0.00    0.00 24   2.60
-  6  2  2  54.99 109.98   0.6105  2.6834   670.85   6  2  2      99.8              0.7         0.71         0.00    0.00 24   2.60
-  4  4  4  58.81 117.63   0.5845  2.9274   731.84   4  4  4      29.9              0.7         0.66         0.00    0.00  8   2.64
-  5  5  1  61.86 123.72   0.5670  3.1103   777.58   5  5  1      84.6              0.6         0.63         0.00    0.00 24   2.73
-  7  1  1  61.86 123.72   0.5670  3.1103   777.58   7  1  1      84.6              0.6         0.63         0.00    0.00 24   2.73
-  6  4  0  62.92 125.85   0.5615  3.1713   792.83   6  4  0      83.4              0.6         0.62         0.00    0.00 24   2.77
-  6  4  2  67.52 135.04   0.5411  3.4153   853.82   6  4  2     163.1              0.6         0.59         0.00    0.00 48   3.06
-  5  5  3  71.52 143.05   0.5272  3.5982   899.56   5  5  3      85.2              0.6         0.56         0.00    0.00 24   3.51
-  7  3  1  71.52 143.05   0.5272  3.5982   899.56   7  3  1     170.5              0.6         0.56         0.00    0.00 48   3.51
-  8  0  0  81.05 162.10   0.5062  3.9032   975.79   8  0  0      34.4              0.5         0.52         0.00    0.00  6   6.59
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># TITLE *Aluminum-Al-[FM3-M] Miller, H.P.jr.;DuMond, J.W.M.[1942] at 298 K</span>
+<span class="c1"># CELL 4.049320 4.049320 4.049320 90.000000 90.000000 90.000000</span>
+<span class="c1"># SPCGRP F M 3 M   CUBIC STRUCTURE</span>
+<span class="c1"># ATOM AL 1 0.000000 0.000000 0.000000</span>
+<span class="c1"># SCATTERING FACTOR  COEFFICIENTS: AL     F= 0.345 CM-12</span>
+<span class="c1"># Reference: Physical Review (1940) 57, 198-206</span>
+<span class="c1">#</span>
+<span class="c1"># Physical parameters:</span>
+<span class="c1"># sigma_coh 1.495   coherent scattering cross section in [barn]</span>
+<span class="c1"># sigma_inc 0.0082  incoherent scattering cross section in [barn]</span>
+<span class="c1"># sigma_abs 0.231   absorption scattering cross section in [barn]</span>
+<span class="c1"># density   2.70    in [g/cm^3]</span>
+<span class="c1"># weight    26.98   in [g/mol]</span>
+<span class="c1"># nb_atoms  4       in [atoms/unit cell]</span>
+<span class="c1"># v_sound   5100    in [m/s]</span>
+<span class="c1"># v_sound_l 6420    velocity of longitudinal sound in [m/s]</span>
+<span class="c1"># v_sound_t 3040    velocity of transversal sound in [m/s]</span>
+<span class="c1"># T_m       933.5   melting temperature in [K]</span>
+<span class="c1"># T_b       2792.2  boiling temperature in [K]</span>
+<span class="c1"># At_number 13      atomic number Z</span>
+<span class="c1"># lattice_a 4.04932 lattice parameter a in [Angs]</span>
+<span class="c1">#</span>
+<span class="c1"># Format parameters: Lazy format &lt;http://icsd.ill.fr&gt;</span>
+<span class="c1"># column_j 17 multiplicity &#39;j&#39;</span>
+<span class="c1"># column_d 6  d-spacing &#39;d&#39; in [Angs]</span>
+<span class="c1"># column_F 13 norm of scattering factor |F| in [barn^0.5]</span>
+<span class="c1"># column_h 1</span>
+<span class="c1"># column_k 2</span>
+<span class="c1"># column_l 3</span>
+<span class="c1">#</span>
+<span class="c1"># H  K  L  THETA  2THETA D VALUE  1/D**2 SIN2*1000  H  K  L INTENSITY         /F(HKL)/       A(HKL)      B(HKL) PHA.ANG. MULT   LPG</span>
+  <span class="mi">1</span>  <span class="mi">1</span>  <span class="mi">1</span>  <span class="mf">12.35</span>  <span class="mf">24.70</span>   <span class="mf">2.3379</span>  <span class="mf">0.1830</span>    <span class="mf">45.74</span>   <span class="mi">1</span>  <span class="mi">1</span>  <span class="mi">1</span>    <span class="mf">1000.0</span>              <span class="mf">1.3</span>         <span class="mf">1.32</span>         <span class="mf">0.00</span>    <span class="mf">0.00</span>  <span class="mi">8</span>  <span class="mf">22.38</span>
+  <span class="mi">2</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mf">14.30</span>  <span class="mf">28.59</span>   <span class="mf">2.0247</span>  <span class="mf">0.2439</span>    <span class="mf">60.99</span>   <span class="mi">2</span>  <span class="mi">0</span>  <span class="mi">0</span>     <span class="mf">550.0</span>              <span class="mf">1.3</span>         <span class="mf">1.30</span>         <span class="mf">0.00</span>    <span class="mf">0.00</span>  <span class="mi">6</span>  <span class="mf">16.92</span>
+  <span class="mi">2</span>  <span class="mi">2</span>  <span class="mi">0</span>  <span class="mf">20.44</span>  <span class="mf">40.88</span>   <span class="mf">1.4317</span>  <span class="mf">0.4879</span>   <span class="mf">121.97</span>   <span class="mi">2</span>  <span class="mi">2</span>  <span class="mi">0</span>     <span class="mf">503.5</span>              <span class="mf">1.2</span>         <span class="mf">1.22</span>         <span class="mf">0.00</span>    <span class="mf">0.00</span> <span class="mi">12</span>   <span class="mf">8.75</span>
+  <span class="mi">3</span>  <span class="mi">1</span>  <span class="mi">1</span>  <span class="mf">24.18</span>  <span class="mf">48.35</span>   <span class="mf">1.2209</span>  <span class="mf">0.6709</span>   <span class="mf">167.71</span>   <span class="mi">3</span>  <span class="mi">1</span>  <span class="mi">1</span>     <span class="mf">686.4</span>              <span class="mf">1.2</span>         <span class="mf">1.17</span>         <span class="mf">0.00</span>    <span class="mf">0.00</span> <span class="mi">24</span>   <span class="mf">6.54</span>
+  <span class="mi">2</span>  <span class="mi">2</span>  <span class="mi">2</span>  <span class="mf">25.32</span>  <span class="mf">50.65</span>   <span class="mf">1.1689</span>  <span class="mf">0.7318</span>   <span class="mf">182.96</span>   <span class="mi">2</span>  <span class="mi">2</span>  <span class="mi">2</span>     <span class="mf">205.3</span>              <span class="mf">1.1</span>         <span class="mf">1.15</span>         <span class="mf">0.00</span>    <span class="mf">0.00</span>  <span class="mi">8</span>   <span class="mf">6.05</span>
+  <span class="mi">4</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mf">29.60</span>  <span class="mf">59.20</span>   <span class="mf">1.0123</span>  <span class="mf">0.9758</span>   <span class="mf">243.95</span>   <span class="mi">4</span>  <span class="mi">0</span>  <span class="mi">0</span>     <span class="mf">106.3</span>              <span class="mf">1.1</span>         <span class="mf">1.08</span>         <span class="mf">0.00</span>    <span class="mf">0.00</span>  <span class="mi">6</span>   <span class="mf">4.71</span>
+  <span class="mi">3</span>  <span class="mi">3</span>  <span class="mi">1</span>  <span class="mf">32.56</span>  <span class="mf">65.13</span>   <span class="mf">0.9290</span>  <span class="mf">1.1587</span>   <span class="mf">289.69</span>   <span class="mi">3</span>  <span class="mi">3</span>  <span class="mi">1</span>     <span class="mf">337.1</span>              <span class="mf">1.0</span>         <span class="mf">1.03</span>         <span class="mf">0.00</span>    <span class="mf">0.00</span> <span class="mi">24</span>   <span class="mf">4.10</span>
+  <span class="mi">4</span>  <span class="mi">2</span>  <span class="mi">0</span>  <span class="mf">33.52</span>  <span class="mf">67.04</span>   <span class="mf">0.9055</span>  <span class="mf">1.2197</span>   <span class="mf">304.93</span>   <span class="mi">4</span>  <span class="mi">2</span>  <span class="mi">0</span>     <span class="mf">314.0</span>              <span class="mf">1.0</span>         <span class="mf">1.02</span>         <span class="mf">0.00</span>    <span class="mf">0.00</span> <span class="mi">24</span>   <span class="mf">3.93</span>
+  <span class="mi">4</span>  <span class="mi">2</span>  <span class="mi">2</span>  <span class="mf">37.22</span>  <span class="mf">74.45</span>   <span class="mf">0.8266</span>  <span class="mf">1.4637</span>   <span class="mf">365.92</span>   <span class="mi">4</span>  <span class="mi">2</span>  <span class="mi">2</span>     <span class="mf">242.5</span>              <span class="mf">1.0</span>         <span class="mf">0.96</span>         <span class="mf">0.00</span>    <span class="mf">0.00</span> <span class="mi">24</span>   <span class="mf">3.43</span>
+  <span class="mi">5</span>  <span class="mi">1</span>  <span class="mi">1</span>  <span class="mf">39.91</span>  <span class="mf">79.82</span>   <span class="mf">0.7793</span>  <span class="mf">1.6466</span>   <span class="mf">411.66</span>   <span class="mi">5</span>  <span class="mi">1</span>  <span class="mi">1</span>     <span class="mf">204.2</span>              <span class="mf">0.9</span>         <span class="mf">0.91</span>         <span class="mf">0.00</span>    <span class="mf">0.00</span> <span class="mi">24</span>   <span class="mf">3.17</span>
+  <span class="mi">3</span>  <span class="mi">3</span>  <span class="mi">3</span>  <span class="mf">39.91</span>  <span class="mf">79.82</span>   <span class="mf">0.7793</span>  <span class="mf">1.6466</span>   <span class="mf">411.66</span>   <span class="mi">3</span>  <span class="mi">3</span>  <span class="mi">3</span>      <span class="mf">68.1</span>              <span class="mf">0.9</span>         <span class="mf">0.91</span>         <span class="mf">0.00</span>    <span class="mf">0.00</span>  <span class="mi">8</span>   <span class="mf">3.17</span>
+  <span class="mi">4</span>  <span class="mi">4</span>  <span class="mi">0</span>  <span class="mf">44.31</span>  <span class="mf">88.61</span>   <span class="mf">0.7158</span>  <span class="mf">1.9516</span>   <span class="mf">487.89</span>   <span class="mi">4</span>  <span class="mi">4</span>  <span class="mi">0</span>      <span class="mf">79.3</span>              <span class="mf">0.8</span>         <span class="mf">0.85</span>         <span class="mf">0.00</span>    <span class="mf">0.00</span> <span class="mi">12</span>   <span class="mf">2.86</span>
+  <span class="mi">5</span>  <span class="mi">3</span>  <span class="mi">1</span>  <span class="mf">46.93</span>  <span class="mf">93.86</span>   <span class="mf">0.6845</span>  <span class="mf">2.1345</span>   <span class="mf">533.63</span>   <span class="mi">5</span>  <span class="mi">3</span>  <span class="mi">1</span>     <span class="mf">277.3</span>              <span class="mf">0.8</span>         <span class="mf">0.81</span>         <span class="mf">0.00</span>    <span class="mf">0.00</span> <span class="mi">48</span>   <span class="mf">2.74</span>
+  <span class="mi">4</span>  <span class="mi">4</span>  <span class="mi">2</span>  <span class="mf">47.81</span>  <span class="mf">95.61</span>   <span class="mf">0.6749</span>  <span class="mf">2.1955</span>   <span class="mf">548.88</span>   <span class="mi">4</span>  <span class="mi">4</span>  <span class="mi">2</span>     <span class="mf">132.9</span>              <span class="mf">0.8</span>         <span class="mf">0.80</span>         <span class="mf">0.00</span>    <span class="mf">0.00</span> <span class="mi">24</span>   <span class="mf">2.71</span>
+  <span class="mi">6</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mf">47.81</span>  <span class="mf">95.61</span>   <span class="mf">0.6749</span>  <span class="mf">2.1955</span>   <span class="mf">548.88</span>   <span class="mi">6</span>  <span class="mi">0</span>  <span class="mi">0</span>      <span class="mf">33.2</span>              <span class="mf">0.8</span>         <span class="mf">0.80</span>         <span class="mf">0.00</span>    <span class="mf">0.00</span>  <span class="mi">6</span>   <span class="mf">2.71</span>
+  <span class="mi">6</span>  <span class="mi">2</span>  <span class="mi">0</span>  <span class="mf">51.35</span> <span class="mf">102.69</span>   <span class="mf">0.6403</span>  <span class="mf">2.4395</span>   <span class="mf">609.87</span>   <span class="mi">6</span>  <span class="mi">2</span>  <span class="mi">0</span>     <span class="mf">113.9</span>              <span class="mf">0.7</span>         <span class="mf">0.75</span>         <span class="mf">0.00</span>    <span class="mf">0.00</span> <span class="mi">24</span>   <span class="mf">2.63</span>
+  <span class="mi">5</span>  <span class="mi">3</span>  <span class="mi">3</span>  <span class="mf">54.07</span> <span class="mf">108.13</span>   <span class="mf">0.6175</span>  <span class="mf">2.6224</span>   <span class="mf">655.61</span>   <span class="mi">5</span>  <span class="mi">3</span>  <span class="mi">3</span>     <span class="mf">102.9</span>              <span class="mf">0.7</span>         <span class="mf">0.72</span>         <span class="mf">0.00</span>    <span class="mf">0.00</span> <span class="mi">24</span>   <span class="mf">2.60</span>
+  <span class="mi">6</span>  <span class="mi">2</span>  <span class="mi">2</span>  <span class="mf">54.99</span> <span class="mf">109.98</span>   <span class="mf">0.6105</span>  <span class="mf">2.6834</span>   <span class="mf">670.85</span>   <span class="mi">6</span>  <span class="mi">2</span>  <span class="mi">2</span>      <span class="mf">99.8</span>              <span class="mf">0.7</span>         <span class="mf">0.71</span>         <span class="mf">0.00</span>    <span class="mf">0.00</span> <span class="mi">24</span>   <span class="mf">2.60</span>
+  <span class="mi">4</span>  <span class="mi">4</span>  <span class="mi">4</span>  <span class="mf">58.81</span> <span class="mf">117.63</span>   <span class="mf">0.5845</span>  <span class="mf">2.9274</span>   <span class="mf">731.84</span>   <span class="mi">4</span>  <span class="mi">4</span>  <span class="mi">4</span>      <span class="mf">29.9</span>              <span class="mf">0.7</span>         <span class="mf">0.66</span>         <span class="mf">0.00</span>    <span class="mf">0.00</span>  <span class="mi">8</span>   <span class="mf">2.64</span>
+  <span class="mi">5</span>  <span class="mi">5</span>  <span class="mi">1</span>  <span class="mf">61.86</span> <span class="mf">123.72</span>   <span class="mf">0.5670</span>  <span class="mf">3.1103</span>   <span class="mf">777.58</span>   <span class="mi">5</span>  <span class="mi">5</span>  <span class="mi">1</span>      <span class="mf">84.6</span>              <span class="mf">0.6</span>         <span class="mf">0.63</span>         <span class="mf">0.00</span>    <span class="mf">0.00</span> <span class="mi">24</span>   <span class="mf">2.73</span>
+  <span class="mi">7</span>  <span class="mi">1</span>  <span class="mi">1</span>  <span class="mf">61.86</span> <span class="mf">123.72</span>   <span class="mf">0.5670</span>  <span class="mf">3.1103</span>   <span class="mf">777.58</span>   <span class="mi">7</span>  <span class="mi">1</span>  <span class="mi">1</span>      <span class="mf">84.6</span>              <span class="mf">0.6</span>         <span class="mf">0.63</span>         <span class="mf">0.00</span>    <span class="mf">0.00</span> <span class="mi">24</span>   <span class="mf">2.73</span>
+  <span class="mi">6</span>  <span class="mi">4</span>  <span class="mi">0</span>  <span class="mf">62.92</span> <span class="mf">125.85</span>   <span class="mf">0.5615</span>  <span class="mf">3.1713</span>   <span class="mf">792.83</span>   <span class="mi">6</span>  <span class="mi">4</span>  <span class="mi">0</span>      <span class="mf">83.4</span>              <span class="mf">0.6</span>         <span class="mf">0.62</span>         <span class="mf">0.00</span>    <span class="mf">0.00</span> <span class="mi">24</span>   <span class="mf">2.77</span>
+  <span class="mi">6</span>  <span class="mi">4</span>  <span class="mi">2</span>  <span class="mf">67.52</span> <span class="mf">135.04</span>   <span class="mf">0.5411</span>  <span class="mf">3.4153</span>   <span class="mf">853.82</span>   <span class="mi">6</span>  <span class="mi">4</span>  <span class="mi">2</span>     <span class="mf">163.1</span>              <span class="mf">0.6</span>         <span class="mf">0.59</span>         <span class="mf">0.00</span>    <span class="mf">0.00</span> <span class="mi">48</span>   <span class="mf">3.06</span>
+  <span class="mi">5</span>  <span class="mi">5</span>  <span class="mi">3</span>  <span class="mf">71.52</span> <span class="mf">143.05</span>   <span class="mf">0.5272</span>  <span class="mf">3.5982</span>   <span class="mf">899.56</span>   <span class="mi">5</span>  <span class="mi">5</span>  <span class="mi">3</span>      <span class="mf">85.2</span>              <span class="mf">0.6</span>         <span class="mf">0.56</span>         <span class="mf">0.00</span>    <span class="mf">0.00</span> <span class="mi">24</span>   <span class="mf">3.51</span>
+  <span class="mi">7</span>  <span class="mi">3</span>  <span class="mi">1</span>  <span class="mf">71.52</span> <span class="mf">143.05</span>   <span class="mf">0.5272</span>  <span class="mf">3.5982</span>   <span class="mf">899.56</span>   <span class="mi">7</span>  <span class="mi">3</span>  <span class="mi">1</span>     <span class="mf">170.5</span>              <span class="mf">0.6</span>         <span class="mf">0.56</span>         <span class="mf">0.00</span>    <span class="mf">0.00</span> <span class="mi">48</span>   <span class="mf">3.51</span>
+  <span class="mi">8</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mf">81.05</span> <span class="mf">162.10</span>   <span class="mf">0.5062</span>  <span class="mf">3.9032</span>   <span class="mf">975.79</span>   <span class="mi">8</span>  <span class="mi">0</span>  <span class="mi">0</span>      <span class="mf">34.4</span>              <span class="mf">0.5</span>         <span class="mf">0.52</span>         <span class="mf">0.00</span>    <span class="mf">0.00</span>  <span class="mi">6</span>   <span class="mf">6.59</span>
 </pre></div>
 </div>
 <p>Parameters for <em>peaks.py</em> file are automatically generated from <em>Al.laz</em> file using
 Python script <a class="reference external" href="http://dev.danse.us/trac/MCViNE/browser/trunk/instruments/VULCAN/applications/peak_generator.py">peak_generator.py</a></p>
-<div class="highlight-python"><div class="highlight"><pre>Note: For now peak_generator.py can only be used for cubic lattice types
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Note</span><span class="p">:</span> <span class="n">For</span> <span class="n">now</span> <span class="n">peak_generator</span><span class="o">.</span><span class="n">py</span> <span class="n">can</span> <span class="n">only</span> <span class="n">be</span> <span class="n">used</span> <span class="k">for</span> <span class="n">cubic</span> <span class="n">lattice</span> <span class="n">types</span>
 </pre></div>
 </div>
-<p>Let&#8217;s take a closer look at the parameters provided in <em>peaks.py</em> file.</p>
-<p>Parameters <code class="docutils literal"><span class="pre">q</span></code> is a q-vector in reciprocal lattice related to lattice parameters and
+<p>Let’s take a closer look at the parameters provided in <em>peaks.py</em> file.</p>
+<p>Parameters <code class="docutils literal notranslate"><span class="pre">q</span></code> is a q-vector in reciprocal lattice related to lattice parameters and
 Miller indices (h,k,l). For orthorhombic lattice type q-vector can be simplified as follows:</p>
-<div class="math">
+<div class="math notranslate nohighlight">
 \[\bold{q} = (2\pi h/a)\bold{i} + (2\pi k/b)\bold{j} + (2\pi l/c)\bold{k}\]</div>
-<p>with <code class="docutils literal"><span class="pre">a</span></code>, <code class="docutils literal"><span class="pre">b</span></code> and <code class="docutils literal"><span class="pre">c</span></code> being the lattice constants. For FCC lattice type it
+<p>with <code class="docutils literal notranslate"><span class="pre">a</span></code>, <code class="docutils literal notranslate"><span class="pre">b</span></code> and <code class="docutils literal notranslate"><span class="pre">c</span></code> being the lattice constants. For FCC lattice type it
 can be even further simplified to:</p>
-<div class="math">
+<div class="math notranslate nohighlight">
 \[\bold{q} = 2\pi/a(h\bold{i} + k\bold{j} + l\bold{k})\]</div>
 <p>so that the magnitude of the q-vector will be:</p>
-<div class="math">
+<div class="math notranslate nohighlight">
 \[q = (2\pi/a)\sqrt{h^2 + k^2 + l^2}\]</div>
-<p>Parameter <code class="docutils literal"><span class="pre">F_squared</span></code> is the squared structure factor corresponding to <code class="docutils literal"><span class="pre">|F(hkl)|</span></code> in <em>Al.laz</em> file:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">F_squared</span> <span class="o">=</span> <span class="n">F</span><span class="p">(</span><span class="n">hkl</span><span class="p">)</span><span class="o">^</span><span class="mi">2</span>
+<p>Parameter <code class="docutils literal notranslate"><span class="pre">F_squared</span></code> is the squared structure factor corresponding to <code class="docutils literal notranslate"><span class="pre">|F(hkl)|</span></code> in <em>Al.laz</em> file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">F_squared</span> <span class="o">=</span> <span class="n">F</span><span class="p">(</span><span class="n">hkl</span><span class="p">)</span><span class="o">^</span><span class="mi">2</span>
 </pre></div>
 </div>
-<p>Parameter  <code class="docutils literal"><span class="pre">multiplicity</span></code> corresponds to column <code class="docutils literal"><span class="pre">MULT</span></code> in <em>Al.laz</em> file. Other
-parameters <code class="docutils literal"><span class="pre">intrinsic_line_width</span></code> and <code class="docutils literal"><span class="pre">DebyeWaller_factor</span></code> should be obtained
+<p>Parameter  <code class="docutils literal notranslate"><span class="pre">multiplicity</span></code> corresponds to column <code class="docutils literal notranslate"><span class="pre">MULT</span></code> in <em>Al.laz</em> file. Other
+parameters <code class="docutils literal notranslate"><span class="pre">intrinsic_line_width</span></code> and <code class="docutils literal notranslate"><span class="pre">DebyeWaller_factor</span></code> should be obtained
 from other experimental data.</p>
 </div>
 <div class="section" id="ndmonitor-x-y-t">
 <h3>NDMonitor(x,y,t)<a class="headerlink" href="#ndmonitor-x-y-t" title="Permalink to this headline">¶</a></h3>
 <p>The final component in our simple instrument is <strong>NDMonitor</strong>. It is a generic monitor
-that can plot various dependencies of physical values: <code class="docutils literal"><span class="pre">x</span></code>, <code class="docutils literal"><span class="pre">y</span></code>, <code class="docutils literal"><span class="pre">z</span></code>, <code class="docutils literal"><span class="pre">vx</span></code>,
-<code class="docutils literal"><span class="pre">vy</span></code>, <code class="docutils literal"><span class="pre">vz</span></code>, <code class="docutils literal"><span class="pre">w</span></code>, <code class="docutils literal"><span class="pre">energy</span></code>.
+that can plot various dependencies of physical values: <code class="docutils literal notranslate"><span class="pre">x</span></code>, <code class="docutils literal notranslate"><span class="pre">y</span></code>, <code class="docutils literal notranslate"><span class="pre">z</span></code>, <code class="docutils literal notranslate"><span class="pre">vx</span></code>,
+<code class="docutils literal notranslate"><span class="pre">vy</span></code>, <code class="docutils literal notranslate"><span class="pre">vz</span></code>, <code class="docutils literal notranslate"><span class="pre">w</span></code>, <code class="docutils literal notranslate"><span class="pre">energy</span></code>.
 For the instrument we are interested in neutron
-distribution in <code class="docutils literal"><span class="pre">(x,y)</span></code> plane within some time range <code class="docutils literal"><span class="pre">t</span></code>. For this we will use
-<code class="docutils literal"><span class="pre">NDMonitor(x,y,t)</span></code> component. Other examples of NDMonitor include <code class="docutils literal"><span class="pre">NDMonitor(w,x)</span></code>
-where <code class="docutils literal"><span class="pre">w</span></code> is the wavelength, <code class="docutils literal"><span class="pre">NDMonitor(w)</span></code>, <code class="docutils literal"><span class="pre">NDMonitor(energy,x)</span></code> etc.
+distribution in <code class="docutils literal notranslate"><span class="pre">(x,y)</span></code> plane within some time range <code class="docutils literal notranslate"><span class="pre">t</span></code>. For this we will use
+<code class="docutils literal notranslate"><span class="pre">NDMonitor(x,y,t)</span></code> component. Other examples of NDMonitor include <code class="docutils literal notranslate"><span class="pre">NDMonitor(w,x)</span></code>
+where <code class="docutils literal notranslate"><span class="pre">w</span></code> is the wavelength, <code class="docutils literal notranslate"><span class="pre">NDMonitor(w)</span></code>, <code class="docutils literal notranslate"><span class="pre">NDMonitor(energy,x)</span></code> etc.
 [Need to write a separate section on NDMonitor!!!]</p>
 <p>The application script will look as follows:</p>
 <p><strong>ssd</strong></p>
-<div class="highlight-python"><div class="highlight"><pre><span class="ch">#!/usr/bin/env python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
 
 <span class="kn">import</span> <span class="nn">mcvine</span>
 <span class="kn">import</span> <span class="nn">mccomponents.sample.diffraction.xml</span>
 
 <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
-    <span class="kn">from</span> <span class="nn">mcvine.applications.InstrumentBuilder</span> <span class="kn">import</span> <span class="n">build</span>
+    <span class="kn">from</span> <span class="nn">mcvine.applications.InstrumentBuilder</span> <span class="k">import</span> <span class="n">build</span>
     <span class="n">components</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;source&#39;</span><span class="p">,</span> <span class="s1">&#39;sample&#39;</span><span class="p">,</span> <span class="s1">&#39;detector&#39;</span><span class="p">]</span>
     <span class="n">App</span> <span class="o">=</span> <span class="n">build</span><span class="p">(</span><span class="n">components</span><span class="p">)</span>
     <span class="n">app</span> <span class="o">=</span> <span class="n">App</span><span class="p">(</span><span class="s1">&#39;ssd&#39;</span><span class="p">)</span>
     <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
     <span class="k">return</span>
 
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="n">main</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>After we finished with configuration and execution (application) files, it&#8217;s time
+<p>After we finished with configuration and execution (application) files, it’s time
 to run the experiment simulation:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ python ssd
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python ssd
 </pre></div>
 </div>
 <p>The results of scattered neutrons is displayed on NDMonitor(x,y,t). To get the neutron
-intensity in <code class="docutils literal"><span class="pre">(x,y)</span></code> plane we need to sum neutron intensity over some time period.
-For our system we integrated neutrons over the time range <code class="docutils literal"><span class="pre">[0,</span> <span class="pre">002]</span> <span class="pre">sec</span></code>. To draw
+intensity in <code class="docutils literal notranslate"><span class="pre">(x,y)</span></code> plane we need to sum neutron intensity over some time period.
+For our system we integrated neutrons over the time range <code class="docutils literal notranslate"><span class="pre">[0,</span> <span class="pre">002]</span> <span class="pre">sec</span></code>. To draw
 the plot for the monitor we use the script:</p>
 <p><strong>plot_ndmonitor.py</strong></p>
-<div class="highlight-python"><div class="highlight"><pre><span class="ch">#!/usr/bin/env python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
 
 <span class="c1"># Note: Before using this script make sure that &quot;out/ixyt.h5&quot; is generated!</span>
-<span class="kn">from</span> <span class="nn">histogram.hdf</span> <span class="kn">import</span> <span class="n">load</span>
-<span class="kn">from</span> <span class="nn">histogram.plotter</span> <span class="kn">import</span> <span class="n">defaultPlotter</span> <span class="k">as</span> <span class="n">dp</span>
+<span class="kn">from</span> <span class="nn">histogram.hdf</span> <span class="k">import</span> <span class="n">load</span>
+<span class="kn">from</span> <span class="nn">histogram.plotter</span> <span class="k">import</span> <span class="n">defaultPlotter</span> <span class="k">as</span> <span class="n">dp</span>
 
 <span class="n">h</span>   <span class="o">=</span> <span class="n">load</span><span class="p">(</span><span class="s1">&#39;out/ixyt.h5&#39;</span><span class="p">,</span> <span class="s1">&#39;ix_y_t&#39;</span><span class="p">)</span>
 <span class="n">ixy</span> <span class="o">=</span> <span class="n">h</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="s1">&#39;t&#39;</span><span class="p">)</span>
@@ -483,17 +472,17 @@ diffraction plane, or separate combination of Miller indices (h,k,l)</p>
 </div>
 <div class="section" id="simulation-with-powdern">
 <h2>Simulation with PowderN<a class="headerlink" href="#simulation-with-powdern" title="Permalink to this headline">¶</a></h2>
-<p>In the previous section we used <code class="docutils literal"><span class="pre">SimplePowderDiffractionKernel</span></code> and assembled
+<p>In the previous section we used <code class="docutils literal notranslate"><span class="pre">SimplePowderDiffractionKernel</span></code> and assembled
 our sample using different pieces of information about material structure and
 macroscopic parameters. We can achieve the same result using standard McStas component
-for powder sample called <code class="docutils literal"><span class="pre">PowderN.comp</span></code>. You might ask, why you actually need to have
-PowderDiffractionKernel when one can use <code class="docutils literal"><span class="pre">PowderN</span></code> component instead. The answer is that PowderDiffractionKernel
+for powder sample called <code class="docutils literal notranslate"><span class="pre">PowderN.comp</span></code>. You might ask, why you actually need to have
+PowderDiffractionKernel when one can use <code class="docutils literal notranslate"><span class="pre">PowderN</span></code> component instead. The answer is that PowderDiffractionKernel
 allows more flexibility in defining your sample, especially when you want to investigate
 a complex structure for which the powder pattern file is not available.</p>
-<p>Let&#8217;s replace <code class="docutils literal"><span class="pre">SampleAssemblyFromXml</span></code> component by <code class="docutils literal"><span class="pre">PowderN</span></code> and see if results
+<p>Let’s replace <code class="docutils literal notranslate"><span class="pre">SampleAssemblyFromXml</span></code> component by <code class="docutils literal notranslate"><span class="pre">PowderN</span></code> and see if results
 are consistent.</p>
 <p><strong>ssd2.pml</strong></p>
-<div class="highlight-python"><div class="highlight"><pre>&lt;?xml version=&quot;1.0&quot;?&gt;
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&lt;?xml version=&quot;1.0&quot;?&gt;
 
 &lt;!-- [Source_simple] -&gt; [PowderN] -&gt; [NDMonitor(x,y,t)] --&gt;
 
@@ -569,41 +558,41 @@ are consistent.</p>
 &lt;/inventory&gt;
 </pre></div>
 </div>
-<p>When configuring <code class="docutils literal"><span class="pre">PowderN</span></code> component we intentionally excluded incoherently
-scattered <code class="docutils literal"><span class="pre">frac</span></code> and transmitted <code class="docutils literal"><span class="pre">tfrac</span></code> neutrons.</p>
-<div class="highlight-python"><div class="highlight"><pre>&lt;component name=&quot;sample&quot;&gt;
-    ...
-    &lt;property name=&quot;frac&quot;&gt;0&lt;/property&gt;
-    &lt;property name=&quot;tfrac&quot;&gt;0&lt;/property&gt;
-&lt;/component&gt;
+<p>When configuring <code class="docutils literal notranslate"><span class="pre">PowderN</span></code> component we intentionally excluded incoherently
+scattered <code class="docutils literal notranslate"><span class="pre">frac</span></code> and transmitted <code class="docutils literal notranslate"><span class="pre">tfrac</span></code> neutrons.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">component</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;sample&quot;</span><span class="o">&gt;</span>
+    <span class="o">...</span>
+    <span class="o">&lt;</span><span class="nb">property</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;frac&quot;</span><span class="o">&gt;</span><span class="mi">0</span><span class="o">&lt;/</span><span class="nb">property</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="nb">property</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;tfrac&quot;</span><span class="o">&gt;</span><span class="mi">0</span><span class="o">&lt;/</span><span class="nb">property</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">component</span><span class="o">&gt;</span>
 </pre></div>
 </div>
-<p>We slightly update application script ...</p>
+<p>We slightly update application script …</p>
 <p><strong>ssd2</strong></p>
-<div class="highlight-python"><div class="highlight"><pre><span class="ch">#!/usr/bin/env python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
 
 <span class="kn">import</span> <span class="nn">mcvine</span>
 <span class="kn">import</span> <span class="nn">mccomponents.sample.diffraction.xml</span>
 
 <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
-    <span class="kn">from</span> <span class="nn">mcvine.applications.InstrumentBuilder</span> <span class="kn">import</span> <span class="n">build</span>
+    <span class="kn">from</span> <span class="nn">mcvine.applications.InstrumentBuilder</span> <span class="k">import</span> <span class="n">build</span>
     <span class="n">components</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;source&#39;</span><span class="p">,</span> <span class="s1">&#39;sample&#39;</span><span class="p">,</span> <span class="s1">&#39;detector&#39;</span><span class="p">]</span>
     <span class="n">App</span> <span class="o">=</span> <span class="n">build</span><span class="p">(</span><span class="n">components</span><span class="p">)</span>
     <span class="n">app</span> <span class="o">=</span> <span class="n">App</span><span class="p">(</span><span class="s1">&#39;ssd2&#39;</span><span class="p">)</span>
     <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
     <span class="k">return</span>
 
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="n">main</span><span class="p">()</span>
 </pre></div>
 </div>
 <p>and run again the experiment simulation.</p>
-<div class="highlight-python"><div class="highlight"><pre>$ python ssd2
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python ssd2
 </pre></div>
 </div>
 <p>As you can see we get a very similar picture to what we obtained in the first section
-using  <code class="docutils literal"><span class="pre">SimplePowderDiffractionKernel</span></code>. Results for <code class="docutils literal"><span class="pre">SimplePowderDiffractionKernel</span></code>
-and <code class="docutils literal"><span class="pre">PowderN</span></code> component look consistent.</p>
+using  <code class="docutils literal notranslate"><span class="pre">SimplePowderDiffractionKernel</span></code>. Results for <code class="docutils literal notranslate"><span class="pre">SimplePowderDiffractionKernel</span></code>
+and <code class="docutils literal notranslate"><span class="pre">PowderN</span></code> component look consistent.</p>
 <div class="figure" id="id2">
 <a class="reference internal image-reference" href="_images/powderN.png"><img alt="_images/powderN.png" src="_images/powderN.png" style="width: 600px;" /></a>
 <p class="caption"><span class="caption-text"><em>Fig. 2 Diffraction with PowderN component</em></span></p>
@@ -611,15 +600,15 @@ and <code class="docutils literal"><span class="pre">PowderN</span></code> compo
 </div>
 <div class="section" id="wave-vector-sensitive-monitor">
 <h2>Wave Vector Sensitive Monitor<a class="headerlink" href="#wave-vector-sensitive-monitor" title="Permalink to this headline">¶</a></h2>
-<p>Let&#8217;s now change our initial instrument configuration by replacing <code class="docutils literal"><span class="pre">NDMonitor(x,y,t)</span></code>
-by <code class="docutils literal"><span class="pre">NDMonitor(q)</span></code> as shown below:</p>
-<div class="highlight-python"><div class="highlight"><pre>[Source_simple] -&gt; [PowderDiffractionKernel] -&gt; [NDMonitor(q)]
+<p>Let’s now change our initial instrument configuration by replacing <code class="docutils literal notranslate"><span class="pre">NDMonitor(x,y,t)</span></code>
+by <code class="docutils literal notranslate"><span class="pre">NDMonitor(q)</span></code> as shown below:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">Source_simple</span><span class="p">]</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="n">PowderDiffractionKernel</span><span class="p">]</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="n">NDMonitor</span><span class="p">(</span><span class="n">q</span><span class="p">)]</span>
 </pre></div>
 </div>
-<p>The monitor <code class="docutils literal"><span class="pre">NDMonitor(q)</span></code> is sensitive to the wave vector. Our new configuration
+<p>The monitor <code class="docutils literal notranslate"><span class="pre">NDMonitor(q)</span></code> is sensitive to the wave vector. Our new configuration
 files will look like:</p>
 <p><strong>ssd3.pml</strong></p>
-<div class="highlight-python"><div class="highlight"><pre>&lt;?xml version=&quot;1.0&quot;?&gt;
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&lt;?xml version=&quot;1.0&quot;?&gt;
 
 &lt;!-- [Source_simple] -&gt; [PowderDiffractionKernel] -&gt; [NDMonitor(q)] --&gt;
 
@@ -685,25 +674,25 @@ files will look like:</p>
 </pre></div>
 </div>
 <p><strong>ssd3</strong></p>
-<div class="highlight-python"><div class="highlight"><pre><span class="ch">#!/usr/bin/env python</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
 
 <span class="kn">import</span> <span class="nn">mcvine</span>
 <span class="kn">import</span> <span class="nn">mccomponents.sample.diffraction.xml</span>
 
 <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
-    <span class="kn">from</span> <span class="nn">mcvine.applications.InstrumentBuilder</span> <span class="kn">import</span> <span class="n">build</span>
+    <span class="kn">from</span> <span class="nn">mcvine.applications.InstrumentBuilder</span> <span class="k">import</span> <span class="n">build</span>
     <span class="n">components</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;source&#39;</span><span class="p">,</span> <span class="s1">&#39;sample&#39;</span><span class="p">,</span> <span class="s1">&#39;detector&#39;</span><span class="p">]</span>
     <span class="n">App</span> <span class="o">=</span> <span class="n">build</span><span class="p">(</span><span class="n">components</span><span class="p">)</span>
     <span class="n">app</span> <span class="o">=</span> <span class="n">App</span><span class="p">(</span><span class="s1">&#39;ssd3&#39;</span><span class="p">)</span>
     <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
     <span class="k">return</span>
 
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="n">main</span><span class="p">()</span>
 </pre></div>
 </div>
 <p>Running experiment simulation</p>
-<div class="highlight-python"><div class="highlight"><pre>$ python ssd3
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python ssd3
 $ PlotHist.py out/iq.h5
 </pre></div>
 </div>
@@ -735,8 +724,8 @@ has arbitrary units:</p>
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &copy; Copyright 2006-2016, Jiao Lin, Michael Aivazis, and Brent Fultz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.
+        &#169; Copyright 2006-2016, Jiao Lin, Michael Aivazis, and Brent Fultz.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.5.
     </div>
   </body>
 </html>

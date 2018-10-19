@@ -1,32 +1,22 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>Introduction &mdash; mcvine 1.0 documentation</title>
-    
+    <title>Introduction &#8212; mcvine 1.0 documentation</title>
     <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    './',
-        VERSION:     '1.0',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
-      };
-    </script>
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="top" title="mcvine 1.0 documentation" href="index.html" /> 
-  </head>
-  <body role="document">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+  </head><body>
 <div class="header">  
 <table><tr>
 <!--
@@ -70,21 +60,20 @@
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="_sources/Introduction.txt"
+      <li><a href="_sources/Introduction.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
       <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -105,7 +94,7 @@ useful for simulating neutron experiments.</p>
 </ol>
 <p>A natural question to ask is, how is it different from existing legacy Monte Carlo
 neutron scattering code such as mcstas, vitess, etc?
-Please take a moment to read <a class="reference internal" href="Philosophy.html#philosophy"><span>philosophy of MCViNE</span></a>.</p>
+Please take a moment to read <a class="reference internal" href="Philosophy.html#philosophy"><span class="std std-ref">philosophy of MCViNE</span></a>.</p>
 <div class="section" id="features">
 <span id="id1"></span><h2>Features<a class="headerlink" href="#features" title="Permalink to this headline">¶</a></h2>
 <p>Infrastructure:</p>
@@ -114,37 +103,37 @@ Please take a moment to read <a class="reference internal" href="Philosophy.html
 </ul>
 <blockquote>
 <div><ul class="simple">
-<li>Creation of simulation application (<a class="reference internal" href="Tutorials-basics.html#create-sim-app"><span>tutorial</span></a>, <a class="reference internal" href="Fundamentals.html#fundamentals-instrument"><span>manual</span></a>)</li>
-<li><a class="reference internal" href="Fundamentals.html#fundamentals-list-of-components"><span>Listing available neutron components</span></a></li>
-<li><a class="reference internal" href="Fundamentals.html#fundamentals-component-info"><span>Displaying info about any neutron component</span></a></li>
+<li>Creation of simulation application (<a class="reference internal" href="Tutorials-basics.html#create-sim-app"><span class="std std-ref">tutorial</span></a>, <a class="reference internal" href="Fundamentals.html#fundamentals-instrument"><span class="std std-ref">manual</span></a>)</li>
+<li><a class="reference internal" href="Fundamentals.html#fundamentals-list-of-components"><span class="std std-ref">Listing available neutron components</span></a></li>
+<li><a class="reference internal" href="Fundamentals.html#fundamentals-component-info"><span class="std std-ref">Displaying info about any neutron component</span></a></li>
 </ul>
 </div></blockquote>
 <ul class="simple">
-<li><a class="reference internal" href="Fundamentals.html#fundamentals-tracer"><span>Debugging facility</span></a></li>
-<li><a class="reference internal" href="Extend.html#extend-mcvine"><span>Easily extensible python/c++ interface for neutron component</span></a></li>
-<li><a class="reference internal" href="SampleAssembly.html#sampleassembly"><span>Sample simulation framework</span></a></li>
+<li><a class="reference internal" href="Fundamentals.html#fundamentals-tracer"><span class="std std-ref">Debugging facility</span></a></li>
+<li><a class="reference internal" href="Extend.html#extend-mcvine"><span class="std std-ref">Easily extensible python/c++ interface for neutron component</span></a></li>
+<li><a class="reference internal" href="SampleAssembly.html#sampleassembly"><span class="std std-ref">Sample simulation framework</span></a></li>
 <li>Detector system simulation framework</li>
-<li><a class="reference internal" href="DeveloperGuide.html#wrap-legacy-packages"><span>Wrapping legacy packages and putting them to work in one framework</span></a>.</li>
+<li><a class="reference internal" href="DeveloperGuide.html#wrap-legacy-packages"><span class="std std-ref">Wrapping legacy packages and putting them to work in one framework</span></a>.</li>
 </ul>
 <p>Generic components:</p>
 <ul class="simple">
-<li><a class="reference internal" href="Components.html#neutronprinter"><span>Neutron Printer</span></a></li>
+<li><a class="reference internal" href="Components.html#neutronprinter"><span class="std std-ref">Neutron Printer</span></a></li>
 <li><span class="xref std std-ref">Monochromatic Source</span></li>
-<li><a class="reference internal" href="Components.html#neutronstorage"><span>Neutron storage (reader, writer)</span></a></li>
-<li><a class="reference internal" href="Components.html#ndmonitor"><span>NDMonitor</span></a></li>
-<li><a class="reference internal" href="SampleAssembly.html#sampleassembly"><span>SampleAssemblyFromXml</span></a></li>
+<li><a class="reference internal" href="Components.html#neutronstorage"><span class="std std-ref">Neutron storage (reader, writer)</span></a></li>
+<li><a class="reference internal" href="Components.html#ndmonitor"><span class="std std-ref">NDMonitor</span></a></li>
+<li><a class="reference internal" href="SampleAssembly.html#sampleassembly"><span class="std std-ref">SampleAssemblyFromXml</span></a></li>
 <li>DetectorSystemFromXml</li>
 </ul>
 <p>Sample scattering kernels:</p>
 <ul class="simple">
-<li><a class="reference internal" href="kernels/Isotropic.html#kernel-isotropic"><span>Isotropic</span></a></li>
-<li><a class="reference internal" href="kernels/ConstantEnergyTransfer.html#kernel-constant-energy-transfer"><span>Constant energy transfer</span></a></li>
-<li><a class="reference internal" href="kernels/ConstantQE.html#kernel-constant-qe"><span>Constant Q,E</span></a></li>
-<li><a class="reference internal" href="kernels/SQE.html#kernel-sqe"><span>S(Q,E)</span></a></li>
+<li><a class="reference internal" href="kernels/Isotropic.html#kernel-isotropic"><span class="std std-ref">Isotropic</span></a></li>
+<li><a class="reference internal" href="kernels/ConstantEnergyTransfer.html#kernel-constant-energy-transfer"><span class="std std-ref">Constant energy transfer</span></a></li>
+<li><a class="reference internal" href="kernels/ConstantQE.html#kernel-constant-qe"><span class="std std-ref">Constant Q,E</span></a></li>
+<li><a class="reference internal" href="kernels/SQE.html#kernel-sqe"><span class="std std-ref">S(Q,E)</span></a></li>
 <li><span class="xref std std-ref">S(Q)</span></li>
-<li><a class="reference internal" href="kernels/SimplePowderDiffraction.html#kernel-simplepowderdiffr"><span>Simple powder diffraction (experimental)</span></a></li>
-<li><a class="reference internal" href="kernels/CoherentInelasticPhonon_PolyXtal.html#kernel-coh-inel-phonon-polyxtal"><span>Coherent inelastic phonon scattering for polycrystal</span></a></li>
-<li><a class="reference internal" href="kernels/CoherentInelasticPhononScattering_SingleXtal.html#kernel-coh-inel-phonon-singlextal"><span>Coherent inelastic phonon scattering for single crysal</span></a></li>
+<li><a class="reference internal" href="kernels/SimplePowderDiffraction.html#kernel-simplepowderdiffr"><span class="std std-ref">Simple powder diffraction (experimental)</span></a></li>
+<li><a class="reference internal" href="kernels/CoherentInelasticPhonon_PolyXtal.html#kernel-coh-inel-phonon-polyxtal"><span class="std std-ref">Coherent inelastic phonon scattering for polycrystal</span></a></li>
+<li><a class="reference internal" href="kernels/CoherentInelasticPhononScattering_SingleXtal.html#kernel-coh-inel-phonon-singlextal"><span class="std std-ref">Coherent inelastic phonon scattering for single crysal</span></a></li>
 <li>Detector scattering kernels:<ul>
 <li>He3</li>
 </ul>
@@ -157,7 +146,7 @@ Please take a moment to read <a class="reference internal" href="Philosophy.html
 <li>SEQUOIA (in progress)</li>
 <li>CNCS (in progress)</li>
 </ul>
-<p><a class="reference internal" href="Components.html#mcstas-comp-lib"><span>McStas binding</span></a>:</p>
+<p><a class="reference internal" href="Components.html#mcstas-comp-lib"><span class="std std-ref">McStas binding</span></a>:</p>
 <ul class="simple">
 <li>Availability of reusable mcvine-wrapped mcstas component library upon installation</li>
 <li>Seamless integration of mcvine-wrapped mcstas components</li>
@@ -190,8 +179,8 @@ Please take a moment to read <a class="reference internal" href="Philosophy.html
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &copy; Copyright 2006-2016, Jiao Lin, Michael Aivazis, and Brent Fultz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.
+        &#169; Copyright 2006-2016, Jiao Lin, Michael Aivazis, and Brent Fultz.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.5.
     </div>
   </body>
 </html>

@@ -1,32 +1,22 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>Development notes &mdash; mcvine 1.0 documentation</title>
-    
+    <title>Development notes &#8212; mcvine 1.0 documentation</title>
     <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    './',
-        VERSION:     '1.0',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
-      };
-    </script>
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="top" title="mcvine 1.0 documentation" href="index.html" /> 
-  </head>
-  <body role="document">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+  </head><body>
 <div class="header">  
 <table><tr>
 <!--
@@ -94,21 +84,20 @@
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="_sources/DevelopmentNotes.txt"
+      <li><a href="_sources/DevelopmentNotes.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
       <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -147,7 +136,7 @@ list.</p>
 run the postprocessing scripts written out by monitor-like
 components (<a class="reference external" href="https://github.com/mcvine/mcvine/blob/7cd386bbf545c7bbe8d0259340ac8fa247bfa88d/packages/mcni/python/mcni/pyre_components/NeutronToStorage.py#L67">here</a> is an example).</p>
 <p>It is better that the run_postprocessing method be called in a different
-process than the process that executes the &#8220;run&#8221; method.
+process than the process that executes the “run” method.
 This is achieved in <a class="reference external" href="https://github.com/mcvine/mcvine/blob/7cd386bbf545c7bbe8d0259340ac8fa247bfa88d/packages/mcvine/python/mcvine/applications/InstrumentBuilder.py#L27">InstrumentBuilder</a>.
 Note: use environment variable DEBUG_INSTRUMENT_APP_PROXY to debug this mechanism.</p>
 </div>
@@ -182,20 +171,20 @@ HYSPEC and others: mcvine-sns-neutrons2nxs (instruments/SNS/bin)</p>
 <ul class="simple">
 <li>convert mcstas instrument to python scripts<ul>
 <li>modify mcstas instrument file<ul>
-<li>convert to unix format (&#8220;rn&#8221;-&gt;&#8221;n&#8221;) using dos2unix</li>
-<li>make sure that in the &#8220;DEFINE INSTRUMENT&#8221; line all parameters have default values</li>
-<li>if c code snippets exist in the &#8220;DECLARE&#8221; or &#8220;INITIALIZE&#8221;, move all of them
-to &#8220;INITIALIZE&#8221; section (python vars don&#8217;t need declaration),
+<li>convert to unix format (“rn”-&gt;”n”) using dos2unix</li>
+<li>make sure that in the “DEFINE INSTRUMENT” line all parameters have default values</li>
+<li>if c code snippets exist in the “DECLARE” or “INITIALIZE”, move all of them
+to “INITIALIZE” section (python vars don’t need declaration),
 and make sure the to convert them into python syntax</li>
-<li>clean up the component definitions so that the &#8220;AT ...&#8221; clause
-and &#8220;ROTATED ...&#8221; clause are in two different lines.
-Also add a space between &#8220;AT/ROTATED&#8221; and &#8220;(...)&#8221; if there is none.</li>
+<li>clean up the component definitions so that the “AT …” clause
+and “ROTATED …” clause are in two different lines.
+Also add a space between “AT/ROTATED” and “(…)” if there is none.</li>
 </ul>
 </li>
 <li>$ mcvine mcstas convertinstrument &lt;instrument-file&gt;
 This cmd generates<ul>
-<li>&#8220;config-SIM&#8221; script: use this to generate configuration of the instrument simulation</li>
-<li>&#8220;SIM&#8221; script: run this script to simulate</li>
+<li>“config-SIM” script: use this to generate configuration of the instrument simulation</li>
+<li>“SIM” script: run this script to simulate</li>
 </ul>
 </li>
 </ul>
@@ -214,19 +203,19 @@ and <a class="reference external" href="https://github.com/mcvine/instruments/tr
 <h3>Requirements of instrument-specific CLI by DGS workflow<a class="headerlink" href="#requirements-of-instrument-specific-cli-by-dgs-workflow" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>neutrons2nxs: convert scattered neutron to nxs file.<ul>
-<li>Usually this is done with a cmd like this: mcvine instruments ${INSTRUMENT} neutrons2nxs &#8211;neutrons=out/scattered-neutrons &#8211;nxs=sim.nxs &#8211;populate-metadata &#8211;beam=beam &#8211;nodes=10</li>
-<li>In case of HYSPEC, this is done by a special &#8220;create-nxs&#8221; script in its workflow template: <a class="reference external" href="https://github.com/mcvine/workflow/blob/a8e3d462e01bd10241b575f4940243dcac23d4ac/DGS/hyspec/single-crystal/scattering/template/create-nxs">https://github.com/mcvine/workflow/blob/a8e3d462e01bd10241b575f4940243dcac23d4ac/DGS/hyspec/single-crystal/scattering/template/create-nxs</a></li>
+<li>Usually this is done with a cmd like this: mcvine instruments ${INSTRUMENT} neutrons2nxs –neutrons=out/scattered-neutrons –nxs=sim.nxs –populate-metadata –beam=beam –nodes=10</li>
+<li>In case of HYSPEC, this is done by a special “create-nxs” script in its workflow template: <a class="reference external" href="https://github.com/mcvine/workflow/blob/a8e3d462e01bd10241b575f4940243dcac23d4ac/DGS/hyspec/single-crystal/scattering/template/create-nxs">https://github.com/mcvine/workflow/blob/a8e3d462e01bd10241b575f4940243dcac23d4ac/DGS/hyspec/single-crystal/scattering/template/create-nxs</a></li>
 </ul>
 </li>
 <li>nxs reduce: reduce nxs file to iqe.nxs
-- cmd: mcvine instruments ${INSTRUMENT} nxs reduce EVENTMODE.NXS &#8211;qaxis=0 15 0.1 &#8211;tof2E</li>
+- cmd: mcvine instruments ${INSTRUMENT} nxs reduce EVENTMODE.NXS –qaxis=0 15 0.1 –tof2E</li>
 </ul>
 </div>
 </div>
 <div class="section" id="command-line-interface">
 <h2>Command line interface<a class="headerlink" href="#command-line-interface" title="Permalink to this headline">¶</a></h2>
 <p>The main command:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ mcvine
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ mcvine
 </pre></div>
 </div>
 <p>It is implemented using python-click: <a class="reference external" href="http://click.pocoo.org/">http://click.pocoo.org/</a>.
@@ -235,7 +224,7 @@ sub-cmds are imported from various sub-packages such as mcstas2
 and mcvine.instruments.</p>
 <div class="section" id="provenance">
 <h3>Provenance<a class="headerlink" href="#provenance" title="Permalink to this headline">¶</a></h3>
-<p>is achieved using &#8220;save_metadata&#8221; decorator.
+<p>is achieved using “save_metadata” decorator.
 See mcvine.cli._provenance for implementation details.</p>
 </div>
 <div class="section" id="pyre-commands">
@@ -269,7 +258,7 @@ parameters to set.</p>
 <li>samples:<ul>
 <li>any directory with sampleassembly.xml is a sample assembly folder</li>
 <li>other directories could provide various kinds of data</li>
-<li>hierarchy: matter/temperature/shape/...  For example: V/300K/plate</li>
+<li>hierarchy: matter/temperature/shape/…  For example: V/300K/plate</li>
 </ul>
 </li>
 </ul>
@@ -280,7 +269,7 @@ parameters to set.</p>
 <ul class="simple">
 <li>Use both pyre journal and python logging</li>
 <li>pyre journal configured by pml files</li>
-<li>logging configured by &#8220;mcvine.conf&#8221; (see mcvine toplevel __init__.py)<ul>
+<li>logging configured by “mcvine.conf” (see mcvine toplevel __init__.py)<ul>
 <li>example: tests/logger/mcvine.conf</li>
 </ul>
 </li>
@@ -305,7 +294,7 @@ Later when needed, positional and orientational
 information of an object can be requested from the registry.</p>
 <p>For example, in mccomponents.sample.sampleassembly_support.onSampleAssembly,
 calls:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">lg</span><span class="o">.</span><span class="n">position</span><span class="p">(</span><span class="n">scatterer</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">lg</span><span class="o">.</span><span class="n">position</span><span class="p">(</span><span class="n">scatterer</span><span class="p">)</span>
 <span class="n">lg</span><span class="o">.</span><span class="n">orientation</span><span class="p">(</span><span class="n">scatterer</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -321,11 +310,11 @@ calls:</p>
 </div>
 <div class="section" id="euler-angles">
 <h3>Euler angles<a class="headerlink" href="#euler-angles" title="Permalink to this headline">¶</a></h3>
-<p>The rotation or orientation is actually represented as Tait-Bryan angles (xy&#8217;z&#8221;)
+<p>The rotation or orientation is actually represented as Tait-Bryan angles (xy’z”)
 at the python layer, before being transformed to rotation matrix to be passed
 into the c++ layer. We still call it euler_angles because that is easier to remember.</p>
-<p>The Tait-Bryan angles (xy&#8217;z&#8221;) represents three consecutive intrinsic rotations
-around x, y&#8217;, and z&#8221; axes.
+<p>The Tait-Bryan angles (xy’z”) represents three consecutive intrinsic rotations
+around x, y’, and z” axes.
 See <a class="reference external" href="https://github.com/mcvine/mcvine/blob/48c288e9269a05304411cc62e4a6f53875df9204/packages/mcni/python/mcni/neutron_coordinates_transformers/mcstasRotations.py">its implementation</a> for details.
 One thing to note is that three intrinsic rotations is equivalent to reversed
 three extrinsic rotations. For our case, it would be equivalent to zyx rotations.</p>
@@ -370,8 +359,8 @@ For example:</p>
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &copy; Copyright 2006-2016, Jiao Lin, Michael Aivazis, and Brent Fultz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.
+        &#169; Copyright 2006-2016, Jiao Lin, Michael Aivazis, and Brent Fultz.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.5.
     </div>
   </body>
 </html>

@@ -1,32 +1,22 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>Tutorials – basics &mdash; mcvine 1.0 documentation</title>
-    
+    <title>Tutorials – basics &#8212; mcvine 1.0 documentation</title>
     <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    './',
-        VERSION:     '1.0',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
-      };
-    </script>
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="top" title="mcvine 1.0 documentation" href="index.html" /> 
-  </head>
-  <body role="document">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+  </head><body>
 <div class="header">  
 <table><tr>
 <!--
@@ -61,7 +51,7 @@
         <div class="sphinxsidebarwrapper">
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Tutorials &#8211; basics</a><ul>
+<li><a class="reference internal" href="#">Tutorials – basics</a><ul>
 <li><a class="reference internal" href="#create-and-run-your-instrument-simulation-application">Create and run your instrument simulation application</a><ul>
 <li><a class="reference internal" href="#create-instrument-simulation-application">Create instrument simulation application</a><ul>
 <li><a class="reference internal" href="#instrument-consists-of-a-list-of-components">Instrument consists of a list of components</a></li>
@@ -79,21 +69,20 @@
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="_sources/Tutorials-basics.txt"
+      <li><a href="_sources/Tutorials-basics.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
       <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -105,7 +94,7 @@
           <div class="body" role="main">
             
   <div class="section" id="tutorials-basics">
-<span id="id1"></span><h1>Tutorials &#8211; basics<a class="headerlink" href="#tutorials-basics" title="Permalink to this headline">¶</a></h1>
+<span id="id1"></span><h1>Tutorials – basics<a class="headerlink" href="#tutorials-basics" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="create-and-run-your-instrument-simulation-application">
 <span id="create-sim-app"></span><h2>Create and run your instrument simulation application<a class="headerlink" href="#create-and-run-your-instrument-simulation-application" title="Permalink to this headline">¶</a></h2>
 <p>By going through this tutorial you can get to know</p>
@@ -123,26 +112,26 @@ of mcvine instrument simulation application and the component chain</li>
 <div class="section" id="create-instrument-simulation-application">
 <h3>Create instrument simulation application<a class="headerlink" href="#create-instrument-simulation-application" title="Permalink to this headline">¶</a></h3>
 <p>The command in mcvine to create an instrument simulation application
-is &#8220;mcvine-create-instrument-simulation-application&#8221;.
+is “mcvine-create-instrument-simulation-application”.
 To start, try</p>
-<div class="highlight-python"><div class="highlight"><pre>$ mcvine-create-instrument-simulation-application -h
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ mcvine-create-instrument-simulation-application -h
 </pre></div>
 </div>
 <p>It will prints out some simple help about how to run this command.</p>
 <div class="section" id="instrument-consists-of-a-list-of-components">
 <h4>Instrument consists of a list of components<a class="headerlink" href="#instrument-consists-of-a-list-of-components" title="Permalink to this headline">¶</a></h4>
-<p>To create a mcvine simulation application named &#8220;test&#8221; with two components, source and monitor,
+<p>To create a mcvine simulation application named “test” with two components, source and monitor,
 do</p>
-<div class="highlight-python"><div class="highlight"><pre>$ mcvine-create-instrument-simulation-application  --name=test --components=source,monitor
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ mcvine-create-instrument-simulation-application  --name=test --components=source,monitor
 </pre></div>
 </div>
-<p>A python application will be created and named &#8220;test&#8221;.</p>
+<p>A python application will be created and named “test”.</p>
 <p>You can find out how to run this simulation application by</p>
-<div class="highlight-python"><div class="highlight"><pre>$ ./test -h
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ ./test -h
 </pre></div>
 </div>
 <p>which outputs:</p>
-<div class="highlight-python"><div class="highlight"><pre>------------------------------------------------------------
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>------------------------------------------------------------
 * Instrument simulation application &#39;test&#39;
 ------------------------------------------------------------
 * Sequence of components:
@@ -164,7 +153,7 @@ do</p>
 </div>
 <p>Now, you can run this instrument by specifying more details of the instrument.
 For example:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ ./test --source=MonochromaticSource --monitor=E_monitor
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ ./test --source=MonochromaticSource --monitor=E_monitor
 </pre></div>
 </div>
 <p>will run a simulation of an instrument with two components:</p>
@@ -174,13 +163,13 @@ For example:</p>
 </ul>
 <p>You can save your configuration of the simulation application to a file so that
 it is easier to rerun it. For example:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ ./test --source=MonochromaticSource --monitor=E_monitor --dump-pml
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ ./test --source=MonochromaticSource --monitor=E_monitor --dump-pml
 </pre></div>
 </div>
-<p>will create a file &#8220;test.pml&#8221; in the current working directory.</p>
+<p>will create a file “test.pml” in the current working directory.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">A pml file generated by the &#8211;dump-pml command line option
+<p class="last">A pml file generated by the –dump-pml command line option
 contains the most current simulation configuraton.
 With its existence in the working directory, you can
 further fine-tune your simulation configuration and/or run it.
@@ -189,19 +178,19 @@ any text viewer/editor.</p>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">If you run &#8211;dump-pml again,
-the old &#8220;test.pml&#8221; will be copied to a file named like &#8220;test.pml.saved-&lt;time&gt;&#8221;,
-and the &#8220;test.pml&#8221; will be overwritten.</p>
+<p class="last">If you run –dump-pml again,
+the old “test.pml” will be copied to a file named like “test.pml.saved-&lt;time&gt;”,
+and the “test.pml” will be overwritten.</p>
 </div>
-<p>With this configuration file at the current working directory, you don&#8217;t
+<p>With this configuration file at the current working directory, you don’t
 need to specify the same configuration again. For example, this command</p>
-<div class="highlight-python"><div class="highlight"><pre>$ ./test -h
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ ./test -h
 </pre></div>
 </div>
 <p>now gives the following help message that includes knowledge
 of what the types of the components in the instrument component chain
 are:</p>
-<div class="highlight-python"><div class="highlight"><pre>------------------------------------------------------------
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>------------------------------------------------------------
 * Instrument simulation application &#39;test&#39;
 ------------------------------------------------------------
 * Sequence of components:
@@ -241,106 +230,106 @@ are:</p>
 <p>You already see that we can specify what each of the components
 in the component chain are.
 The way we set the source component to a monochromatic source is by</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="o">--</span><span class="n">source</span><span class="o">=</span><span class="n">MonochromaticSource</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">--</span><span class="n">source</span><span class="o">=</span><span class="n">MonochromaticSource</span>
 </pre></div>
 </div>
 <p>And similarly, we can set the monitor</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="o">--</span><span class="n">monitor</span><span class="o">=</span><span class="n">E_monitor</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">--</span><span class="n">monitor</span><span class="o">=</span><span class="n">E_monitor</span>
 </pre></div>
 </div>
 <p>To find out what are the component types you can use, run</p>
-<div class="highlight-python"><div class="highlight"><pre>$ mcvine component list
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ mcvine component list
 </pre></div>
 </div>
 <p>You can also tell the command to list components in specific category. For example</p>
-<div class="highlight-python"><div class="highlight"><pre>$ mcvine component list --category=monitors
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ mcvine component list --category=monitors
 </pre></div>
 </div>
 <p>To find out more information about a specific component you are interested in,
 run</p>
-<div class="highlight-python"><div class="highlight"><pre>$ mcvine component info &lt;component-type&gt;
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ mcvine component info &lt;component-type&gt;
 </pre></div>
 </div>
 <p>For example:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ mcvine component info E_monitor
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ mcvine component info E_monitor
 </pre></div>
 </div>
 </div>
 <div class="section" id="positions-of-components">
 <h3>Positions of components<a class="headerlink" href="#positions-of-components" title="Permalink to this headline">¶</a></h3>
-<p>Now, you could specify the position and orientation of a component by referring to &#8220;geometer&#8221;</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="o">--</span><span class="n">geometer</span><span class="o">.</span><span class="n">monitor</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span>
+<p>Now, you could specify the position and orientation of a component by referring to “geometer”</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">--</span><span class="n">geometer</span><span class="o">.</span><span class="n">monitor</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span>
 </pre></div>
 </div>
 <p>The syntax is actually</p>
-<div class="highlight-python"><div class="highlight"><pre>--geometer.monitor=&lt;position&gt;,&lt;orientation&gt;
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">--</span><span class="n">geometer</span><span class="o">.</span><span class="n">monitor</span><span class="o">=&lt;</span><span class="n">position</span><span class="o">&gt;</span><span class="p">,</span><span class="o">&lt;</span><span class="n">orientation</span><span class="o">&gt;</span>
 </pre></div>
 </div>
 <p>Position is a 3-vector, and the unit is meter.
 Orientation is a 3-vector that denotes three consecutive rotations along
 x, y, and z axes.
 The unit is degrees.</p>
-<p>More details can found in <a class="reference internal" href="Fundamentals.html#fundamentals-instrument-positioning-of-components"><span>Positioning of Components</span></a>.</p>
+<p>More details can found in <a class="reference internal" href="Fundamentals.html#fundamentals-instrument-positioning-of-components"><span class="std std-ref">Positioning of Components</span></a>.</p>
 </div>
 <div class="section" id="configurations-of-components">
 <h3>Configurations of components<a class="headerlink" href="#configurations-of-components" title="Permalink to this headline">¶</a></h3>
 <p>Each component has several parameters that define the scattering properties of the
 component. To find out the parameters for a component, use the command
-&#8220;mcvine component info&#8221;</p>
-<div class="highlight-python"><div class="highlight"><pre>$ mcvine component info E_monitor
+“mcvine component info”</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ mcvine component info E_monitor
 </pre></div>
 </div>
 <p>The output would be</p>
-<div class="highlight-python"><div class="highlight"><pre>======================================================================
-E_monitor: Energy-sensitive monitor.
-----------------------------------------------------------------------
-A square single monitor that measures the energy of the incoming neutrons.
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">======================================================================</span>
+<span class="n">E_monitor</span><span class="p">:</span> <span class="n">Energy</span><span class="o">-</span><span class="n">sensitive</span> <span class="n">monitor</span><span class="o">.</span>
+<span class="o">----------------------------------------------------------------------</span>
+<span class="n">A</span> <span class="n">square</span> <span class="n">single</span> <span class="n">monitor</span> <span class="n">that</span> <span class="n">measures</span> <span class="n">the</span> <span class="n">energy</span> <span class="n">of</span> <span class="n">the</span> <span class="n">incoming</span> <span class="n">neutrons</span><span class="o">.</span>
 
- Example: E_monitor(name, xmin=-0.1, xmax=0.1, ymin=-0.1, ymax=0.1, Emin=1, Emax=50, nchan=20, filename=&quot;Output.nrj&quot;)
+ <span class="n">Example</span><span class="p">:</span> <span class="n">E_monitor</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">xmin</span><span class="o">=-</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">xmax</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">ymin</span><span class="o">=-</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">ymax</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">Emin</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">Emax</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">nchan</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;Output.nrj&quot;</span><span class="p">)</span>
 
 
-----------------------------------------------------------------------
-Parameters:
-  * Emin: Minimum energy to detect (meV)
-  * Emax: Maximum energy to detect (meV)
-  * filename: Name of file in which to store the detector image (text)
-  * nchan: Number of energy channels (1)
-  * xmax: Upper x bound of detector opening (m)
-  * xmin: Lower x bound of detector opening (m)
-  * ymin: Lower y bound of detector opening (m)
-  * ymax: Upper y bound of detector opening (m)
-======================================================================
+<span class="o">----------------------------------------------------------------------</span>
+<span class="n">Parameters</span><span class="p">:</span>
+  <span class="o">*</span> <span class="n">Emin</span><span class="p">:</span> <span class="n">Minimum</span> <span class="n">energy</span> <span class="n">to</span> <span class="n">detect</span> <span class="p">(</span><span class="n">meV</span><span class="p">)</span>
+  <span class="o">*</span> <span class="n">Emax</span><span class="p">:</span> <span class="n">Maximum</span> <span class="n">energy</span> <span class="n">to</span> <span class="n">detect</span> <span class="p">(</span><span class="n">meV</span><span class="p">)</span>
+  <span class="o">*</span> <span class="n">filename</span><span class="p">:</span> <span class="n">Name</span> <span class="n">of</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">which</span> <span class="n">to</span> <span class="n">store</span> <span class="n">the</span> <span class="n">detector</span> <span class="n">image</span> <span class="p">(</span><span class="n">text</span><span class="p">)</span>
+  <span class="o">*</span> <span class="n">nchan</span><span class="p">:</span> <span class="n">Number</span> <span class="n">of</span> <span class="n">energy</span> <span class="n">channels</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+  <span class="o">*</span> <span class="n">xmax</span><span class="p">:</span> <span class="n">Upper</span> <span class="n">x</span> <span class="n">bound</span> <span class="n">of</span> <span class="n">detector</span> <span class="n">opening</span> <span class="p">(</span><span class="n">m</span><span class="p">)</span>
+  <span class="o">*</span> <span class="n">xmin</span><span class="p">:</span> <span class="n">Lower</span> <span class="n">x</span> <span class="n">bound</span> <span class="n">of</span> <span class="n">detector</span> <span class="n">opening</span> <span class="p">(</span><span class="n">m</span><span class="p">)</span>
+  <span class="o">*</span> <span class="n">ymin</span><span class="p">:</span> <span class="n">Lower</span> <span class="n">y</span> <span class="n">bound</span> <span class="n">of</span> <span class="n">detector</span> <span class="n">opening</span> <span class="p">(</span><span class="n">m</span><span class="p">)</span>
+  <span class="o">*</span> <span class="n">ymax</span><span class="p">:</span> <span class="n">Upper</span> <span class="n">y</span> <span class="n">bound</span> <span class="n">of</span> <span class="n">detector</span> <span class="n">opening</span> <span class="p">(</span><span class="n">m</span><span class="p">)</span>
+<span class="o">======================================================================</span>
 </pre></div>
 </div>
-<p>If you want to change parameter &#8220;nchan&#8221;, for example, you will need</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="o">--</span><span class="n">monitor</span><span class="o">.</span><span class="n">nchan</span><span class="o">=</span><span class="mi">10</span>
+<p>If you want to change parameter “nchan”, for example, you will need</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">--</span><span class="n">monitor</span><span class="o">.</span><span class="n">nchan</span><span class="o">=</span><span class="mi">10</span>
 </pre></div>
 </div>
 <p>So here is what you may want to do when you run your simulation:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ ./test --monitor.nchan=10
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ ./test --monitor.nchan=10
 </pre></div>
 </div>
 <p>You can also see what  are the current parameters for the monitor by:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ ./test --monitor.help-properties
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ ./test --monitor.help-properties
 </pre></div>
 </div>
 <p>Let us do a more careful configuration of the simulation and save
 it:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ ./test --source.energy=60 \
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ ./test --source.energy=60 \
   --monitor.Emin=50 --monitor.Emax=70 --monitor.nchan=200 \
   --dump-pml
 </pre></div>
 </div>
 <p>And then we can run it for a little while:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ ./test -ncount=1e4
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ ./test -ncount=1e4
 </pre></div>
 </div>
 <p>When this command is run, output files will be generated
-in a directory specified by option &#8220;&#8211;output-dir&#8221; which by default
-is &#8220;out&#8221;. For this simulation, you should see a new file
-&#8220;out/IE.h5&#8221;.
+in a directory specified by option “–output-dir” which by default
+is “out”. For this simulation, you should see a new file
+“out/IE.h5”.
 You can run command</p>
-<div class="highlight-python"><div class="highlight"><pre>$ PlotHist.py out/IE.h5
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ PlotHist.py out/IE.h5
 </pre></div>
 </div>
 <p>to see the output histogram.</p>
@@ -368,8 +357,8 @@ You can run command</p>
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &copy; Copyright 2006-2016, Jiao Lin, Michael Aivazis, and Brent Fultz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.
+        &#169; Copyright 2006-2016, Jiao Lin, Michael Aivazis, and Brent Fultz.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.5.
     </div>
   </body>
 </html>

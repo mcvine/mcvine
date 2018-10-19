@@ -1,32 +1,22 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>Workflows &mdash; mcvine 1.0 documentation</title>
-    
+    <title>Workflows &#8212; mcvine 1.0 documentation</title>
     <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    './',
-        VERSION:     '1.0',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
-      };
-    </script>
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="top" title="mcvine 1.0 documentation" href="index.html" /> 
-  </head>
-  <body role="document">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+  </head><body>
 <div class="header">  
 <table><tr>
 <!--
@@ -62,21 +52,20 @@
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="_sources/Workflows.txt"
+      <li><a href="_sources/Workflows.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
       <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -104,51 +93,51 @@ scripts and input files) to a working directory</li>
 to setting up the sample assembly.
 A sample assembly in MCViNE is specified by a directory of xml files
 and associated data files.
-One xml file named <a href="#id2"><span class="problematic" id="id3">``</span></a>sampleassembly.xml&#8217;&#8217; always exists and it is the
+One xml file named <a href="#id2"><span class="problematic" id="id3">``</span></a>sampleassembly.xml’’ always exists and it is the
 leading specification file.
 For each scatterer in the sample assembly, there is one xml file named
-as <a href="#id4"><span class="problematic" id="id5">``</span></a>&lt;name&gt;-scatterer.xml&#8217;&#8216;.</p>
+as <a href="#id4"><span class="problematic" id="id5">``</span></a>&lt;name&gt;-scatterer.xml’‘.</p>
 <p>The following is a simplified sampleassembly.xml for
 a sample assembly consisting of one single
 vanadium plate</p>
-<div class="highlight-python"><div class="highlight"><pre>&lt;SampleAssembly name=&quot;bcc V powder sample assembly&quot; &gt;
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">SampleAssembly</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;bcc V powder sample assembly&quot;</span> <span class="o">&gt;</span>
 
-&lt;PowderSample name=&quot;V&quot; type=&quot;sample&quot;&gt;
-  &lt;Shape&gt;
-    &lt;block width=&quot;50*mm&quot; height=&quot;50*mm&quot; thickness=&quot;1.2*mm&quot; /&gt;
-  &lt;/Shape&gt;
-&lt;/PowderSample&gt;
+<span class="o">&lt;</span><span class="n">PowderSample</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;V&quot;</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;sample&quot;</span><span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="n">Shape</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">block</span> <span class="n">width</span><span class="o">=</span><span class="s2">&quot;50*mm&quot;</span> <span class="n">height</span><span class="o">=</span><span class="s2">&quot;50*mm&quot;</span> <span class="n">thickness</span><span class="o">=</span><span class="s2">&quot;1.2*mm&quot;</span> <span class="o">/&gt;</span>
+  <span class="o">&lt;/</span><span class="n">Shape</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">PowderSample</span><span class="o">&gt;</span>
 
-&lt;LocalGeometer&gt;
-  &lt;Register name=&quot;V&quot; position=&quot;(0,0,0)&quot; orientation=&quot;(0,0,45)&quot;/&gt;
-&lt;/LocalGeometer&gt;
+<span class="o">&lt;</span><span class="n">LocalGeometer</span><span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="n">Register</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;V&quot;</span> <span class="n">position</span><span class="o">=</span><span class="s2">&quot;(0,0,0)&quot;</span> <span class="n">orientation</span><span class="o">=</span><span class="s2">&quot;(0,0,45)&quot;</span><span class="o">/&gt;</span>
+<span class="o">&lt;/</span><span class="n">LocalGeometer</span><span class="o">&gt;</span>
 
-&lt;/SampleAssembly&gt;
+<span class="o">&lt;/</span><span class="n">SampleAssembly</span><span class="o">&gt;</span>
 </pre></div>
 </div>
-<p>The vanadium plate is specified as a powder sample named <a href="#id6"><span class="problematic" id="id7">``</span></a>V&#8217;&#8217;
-with a <a href="#id8"><span class="problematic" id="id9">``</span></a>block&#8217;&#8217; of given dimensions, oriented at 45 degree away from the
+<p>The vanadium plate is specified as a powder sample named <a href="#id6"><span class="problematic" id="id7">``</span></a>V’’
+with a <a href="#id8"><span class="problematic" id="id9">``</span></a>block’’ of given dimensions, oriented at 45 degree away from the
 default position perpendicular to the beam.</p>
-<p>Since the vanadium plate scatterer is named <a href="#id10"><span class="problematic" id="id11">``</span></a>V&#8217;&#8217; in sampleassembly.xml,
-MCViNE expects a <a href="#id12"><span class="problematic" id="id13">``</span></a>V-scatterer.xml&#8217;&#8217; to describe
+<p>Since the vanadium plate scatterer is named <a href="#id10"><span class="problematic" id="id11">``</span></a>V’’ in sampleassembly.xml,
+MCViNE expects a <a href="#id12"><span class="problematic" id="id13">``</span></a>V-scatterer.xml’’ to describe
 scattering properties of that scatterer:</p>
-<div class="highlight-python"><div class="highlight"><pre>&lt;homogeneous_scatterer max_multiplescattering_loops=&quot;4&quot; &gt;
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">homogeneous_scatterer</span> <span class="n">max_multiplescattering_loops</span><span class="o">=</span><span class="s2">&quot;4&quot;</span> <span class="o">&gt;</span>
 
- &lt;KernelContainer average=&quot;yes&quot;&gt;
+ <span class="o">&lt;</span><span class="n">KernelContainer</span> <span class="n">average</span><span class="o">=</span><span class="s2">&quot;yes&quot;</span><span class="o">&gt;</span>
 
-   &lt;Phonon_IncoherentElastic_Kernel dw_core=&#39;0.007014*angstrom**2&#39;/&gt;
+   <span class="o">&lt;</span><span class="n">Phonon_IncoherentElastic_Kernel</span> <span class="n">dw_core</span><span class="o">=</span><span class="s1">&#39;0.007014*angstrom**2&#39;</span><span class="o">/&gt;</span>
 
-   &lt;Phonon_IncoherentInelastic_Kernel&gt;
-     &lt;LinearlyInterpolatedDOS idf-data-path=&quot;V-phonons/DOS&quot;/&gt;
-   &lt;/Phonon_IncoherentInelastic_Kernel&gt;
+   <span class="o">&lt;</span><span class="n">Phonon_IncoherentInelastic_Kernel</span><span class="o">&gt;</span>
+     <span class="o">&lt;</span><span class="n">LinearlyInterpolatedDOS</span> <span class="n">idf</span><span class="o">-</span><span class="n">data</span><span class="o">-</span><span class="n">path</span><span class="o">=</span><span class="s2">&quot;V-phonons/DOS&quot;</span><span class="o">/&gt;</span>
+   <span class="o">&lt;/</span><span class="n">Phonon_IncoherentInelastic_Kernel</span><span class="o">&gt;</span>
 
-   &lt;MultiPhonon_Kernel Qmax=&quot;20/angstrom&quot;&gt;
-     &lt;LinearlyInterpolatedDOS idf-data-path=&quot;V-phonons/DOS&quot;/&gt;
-   &lt;/MultiPhonon_Kernel&gt;
+   <span class="o">&lt;</span><span class="n">MultiPhonon_Kernel</span> <span class="n">Qmax</span><span class="o">=</span><span class="s2">&quot;20/angstrom&quot;</span><span class="o">&gt;</span>
+     <span class="o">&lt;</span><span class="n">LinearlyInterpolatedDOS</span> <span class="n">idf</span><span class="o">-</span><span class="n">data</span><span class="o">-</span><span class="n">path</span><span class="o">=</span><span class="s2">&quot;V-phonons/DOS&quot;</span><span class="o">/&gt;</span>
+   <span class="o">&lt;/</span><span class="n">MultiPhonon_Kernel</span><span class="o">&gt;</span>
 
- &lt;/KernelContainer&gt;
+ <span class="o">&lt;/</span><span class="n">KernelContainer</span><span class="o">&gt;</span>
 
-&lt;/homogeneous_scatterer&gt;
+<span class="o">&lt;/</span><span class="n">homogeneous_scatterer</span><span class="o">&gt;</span>
 </pre></div>
 </div>
 <p>The user specifies the scattering function of the V scatterer
@@ -175,8 +164,8 @@ and setting parameters for the chosen kernels.</p>
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &copy; Copyright 2006-2016, Jiao Lin, Michael Aivazis, and Brent Fultz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.
+        &#169; Copyright 2006-2016, Jiao Lin, Michael Aivazis, and Brent Fultz.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.5.
     </div>
   </body>
 </html>

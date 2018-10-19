@@ -1,32 +1,22 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>Fundamentals &mdash; mcvine 1.0 documentation</title>
-    
+    <title>Fundamentals &#8212; mcvine 1.0 documentation</title>
     <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    './',
-        VERSION:     '1.0',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
-      };
-    </script>
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="top" title="mcvine 1.0 documentation" href="index.html" /> 
-  </head>
-  <body role="document">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+  </head><body>
 <div class="header">  
 <table><tr>
 <!--
@@ -93,21 +83,20 @@
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="_sources/Fundamentals.txt"
+      <li><a href="_sources/Fundamentals.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
       <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -127,7 +116,7 @@
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">You may want to follow
-<a class="reference internal" href="Tutorials-basics.html#create-sim-app"><span>this tutorial</span></a>.</p>
+<a class="reference internal" href="Tutorials-basics.html#create-sim-app"><span class="std std-ref">this tutorial</span></a>.</p>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -135,18 +124,18 @@
 <a class="reference external" href="http://vnf-dev.caltech.edu/mcvine">http://vnf-dev.caltech.edu/mcvine</a></p>
 </div>
 <p>Create an instrument simulation application:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ mcvine-create-instrument-simulation-application  --name=&lt;name&gt; --components=&lt;list of components&gt;
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ mcvine-create-instrument-simulation-application  --name=&lt;name&gt; --components=&lt;list of components&gt;
 </pre></div>
 </div>
 </div>
 <div class="section" id="positioning-of-components">
 <span id="fundamentals-instrument-positioning-of-components"></span><h3>Positioning of Components<a class="headerlink" href="#positioning-of-components" title="Permalink to this headline">¶</a></h3>
-<p>Positioning of components is done through the &#8220;geometer&#8221;:</p>
-<div class="highlight-python"><div class="highlight"><pre>--geometer.&lt;component&gt;=&lt;position&gt;,&lt;orientation&gt;
+<p>Positioning of components is done through the “geometer”:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">--</span><span class="n">geometer</span><span class="o">.&lt;</span><span class="n">component</span><span class="o">&gt;=&lt;</span><span class="n">position</span><span class="o">&gt;</span><span class="p">,</span><span class="o">&lt;</span><span class="n">orientation</span><span class="o">&gt;</span>
 </pre></div>
 </div>
 <p>E.g.:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="o">--</span><span class="n">geometer</span><span class="o">.</span><span class="n">sample</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">),(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">--</span><span class="n">geometer</span><span class="o">.</span><span class="n">sample</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">),(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>The first tuple (0,0,10) means the position of the sample is at (0,0,10).
@@ -157,8 +146,8 @@ as the absolute coordinate system.</p>
 <p>Coordinate system convention:</p>
 <p>mcvine uses the same convention as mcstas.</p>
 <ul class="last simple">
-<li>z &#8211; beam downstream</li>
-<li>y &#8211; vertical up.</li>
+<li>z – beam downstream</li>
+<li>y – vertical up.</li>
 </ul>
 </div>
 <div class="admonition note">
@@ -171,16 +160,16 @@ as the absolute coordinate system.</p>
 </div>
 <div class="section" id="relative-coordinates">
 <h4>Relative coordinates<a class="headerlink" href="#relative-coordinates" title="Permalink to this headline">¶</a></h4>
-<p>A coomponent&#8217;s position and orientation can be specified as relative to another
+<p>A coomponent’s position and orientation can be specified as relative to another
 component. For example</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="o">--</span><span class="n">geometer</span><span class="o">.</span><span class="n">sample</span><span class="o">=</span><span class="n">relative</span><span class="p">(</span><span class="s2">&quot;source&quot;</span><span class="p">,(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">)),</span><span class="n">relative</span><span class="p">(</span><span class="s2">&quot;source&quot;</span><span class="p">,(</span><span class="mi">0</span><span class="p">,</span><span class="mi">30</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">--</span><span class="n">geometer</span><span class="o">.</span><span class="n">sample</span><span class="o">=</span><span class="n">relative</span><span class="p">(</span><span class="s2">&quot;source&quot;</span><span class="p">,(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">)),</span><span class="n">relative</span><span class="p">(</span><span class="s2">&quot;source&quot;</span><span class="p">,(</span><span class="mi">0</span><span class="p">,</span><span class="mi">30</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span>
 </pre></div>
 </div>
 <p>means the sample is at (0,0,10) relative to the coordinate system attached to
-the &#8220;source&#8221; component, and rotated 30 degrees by the y axis of the coordinate
-system attached to the &#8220;source&#8221; component.</p>
+the “source” component, and rotated 30 degrees by the y axis of the coordinate
+system attached to the “source” component.</p>
 <p>The reference component is specified by its name.</p>
-<p>You can also use the keyword &#8220;previous&#8221; to mean the reference
+<p>You can also use the keyword “previous” to mean the reference
 component is the one just before this component in the pipeline.</p>
 </div>
 </div>
@@ -189,41 +178,41 @@ component is the one just before this component in the pipeline.</p>
 <div class="section" id="scattering">
 <h4>Scattering<a class="headerlink" href="#scattering" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
-<li>&#8211;multiple-scattering: indicates whether multiple scattering is on. This option
+<li>–multiple-scattering: indicates whether multiple scattering is on. This option
 is only useful for the components that support this feature.</li>
 </ul>
 </div>
 <div class="section" id="monte-carlo">
 <h4>Monte Carlo<a class="headerlink" href="#monte-carlo" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
-<li>&#8211;ncount=&lt;n&gt;: number of simulation runs</li>
-<li>&#8211;buffer_size=&lt;n&gt;: (optional) number of neutrons buffered in memory. By default a value will be picked for you depending on ncount and memory size.</li>
+<li>–ncount=&lt;n&gt;: number of simulation runs</li>
+<li>–buffer_size=&lt;n&gt;: (optional) number of neutrons buffered in memory. By default a value will be picked for you depending on ncount and memory size.</li>
 </ul>
 </div>
 <div class="section" id="outputs">
 <h4>Outputs<a class="headerlink" href="#outputs" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
-<li>&#8211;overwrite-datafiles:
+<li>–overwrite-datafiles:
 If on, existing outputs will be overwritten.</li>
-<li>&#8211;output-dir=&lt;dir&gt;:
+<li>–output-dir=&lt;dir&gt;:
 The output directory.</li>
 </ul>
 </div>
 <div class="section" id="miscellanesous">
 <h4>Miscellanesous<a class="headerlink" href="#miscellanesous" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
-<li>&#8211;journal.info.instrument: as simulation progress, print out information
+<li>–journal.info.instrument: as simulation progress, print out information
 regarding simulation loops and component processing loops.</li>
-<li>&#8211;dump-pml:
+<li>–dump-pml:
 Writes out pml file for the simulation. A pml file is a configuration file
 that contains all configuration details of the simulation application.
 When this option is on, no real simulation will be done.</li>
-<li>&#8211;tracer:
+<li>–tracer:
 facility to trace neutrons. By default, no tracer will be used. Choices:<ul>
-<li>&#8211;tracer=console: print out neutrons to console. Be sure to turn down ncount.</li>
+<li>–tracer=console: print out neutrons to console. Be sure to turn down ncount.</li>
 </ul>
 </li>
-<li>&#8211;mpirun.nodes=&lt;n&gt;:
+<li>–mpirun.nodes=&lt;n&gt;:
 Select the number of nodes to parallely run the simulation.
 &lt;n&gt; is an integer.
 This option is only valid if mpi binding of mcvine is available.</li>
@@ -234,10 +223,10 @@ This option is only valid if mpi binding of mcvine is available.</li>
 <div class="section" id="using-tracer-to-debug">
 <span id="fundamentals-tracer"></span><h2>Using tracer to debug<a class="headerlink" href="#using-tracer-to-debug" title="Permalink to this headline">¶</a></h2>
 <p>To see how neutrons move through the components,
-use the &#8220;tracer&#8221; facility.</p>
-<p>For example, if your simulation application is named &#8220;myapp&#8221;, please
+use the “tracer” facility.</p>
+<p>For example, if your simulation application is named “myapp”, please
 try the following:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ /path/to/myapp --tracer=console --ncount=10
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ /path/to/myapp --tracer=console --ncount=10
 </pre></div>
 </div>
 <p>The simulation will print out the neutrons before they enter each
@@ -245,28 +234,28 @@ component and after they exit each component.</p>
 </div>
 <div class="section" id="simulated-intensities">
 <span id="fundamentals-simulated-intensities"></span><h2>Simulated intensities<a class="headerlink" href="#simulated-intensities" title="Permalink to this headline">¶</a></h2>
-<p>The simulated intensities at monitors are normalized by &#8220;ncount&#8221;,
+<p>The simulated intensities at monitors are normalized by “ncount”,
 the number of Monte Carlo runs.</p>
 </div>
 <div class="section" id="list-of-available-neutron-components">
 <span id="fundamentals-list-of-components"></span><h2>List of available neutron components<a class="headerlink" href="#list-of-available-neutron-components" title="Permalink to this headline">¶</a></h2>
 <p>To list all components:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ mcvine component list
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ mcvine component list
 </pre></div>
 </div>
 <p>To list components of a specific category:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ mcvine component list --category=monitors
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ mcvine component list --category=monitors
 </pre></div>
 </div>
 </div>
 <div class="section" id="show-component-information">
 <span id="fundamentals-component-info"></span><h2>Show component information<a class="headerlink" href="#show-component-information" title="Permalink to this headline">¶</a></h2>
 <p>To find out more information about a component, run</p>
-<div class="highlight-python"><div class="highlight"><pre>$ mcvine component info &lt;component-type&gt;
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ mcvine component info &lt;component-type&gt;
 </pre></div>
 </div>
 <p>For example:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ mcvine component info E_monitor
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ mcvine component info E_monitor
 </pre></div>
 </div>
 </div>
@@ -274,91 +263,91 @@ the number of Monte Carlo runs.</p>
 <h2>Error bar of simulated intensities<a class="headerlink" href="#error-bar-of-simulated-intensities" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="basic-treatment">
 <span id="fundamentals-errorbar-basic"></span><h3>Basic treatment<a class="headerlink" href="#basic-treatment" title="Permalink to this headline">¶</a></h3>
-<p>Here we examine the variance, or <span class="math">\(\sigma^2\)</span> of the simulated
+<p>Here we examine the variance, or <span class="math notranslate nohighlight">\(\sigma^2\)</span> of the simulated
 intensities at virtual monitors.</p>
 <p>Let us think of a bin in a histogram gathered in a virtual monitor.
 Say, in a virtual experiment that bin get the total intensity,
-<span class="math">\(I\)</span>,</p>
-<div class="math">
+<span class="math notranslate nohighlight">\(I\)</span>,</p>
+<div class="math notranslate nohighlight">
 \[I = \sum p_i\]</div>
-<p>where <span class="math">\(p_i\)</span> is the probability of each neutron event recorded
+<p>where <span class="math notranslate nohighlight">\(p_i\)</span> is the probability of each neutron event recorded
 in the target bin.
-Our purpose here is to find the variance of the intensity <span class="math">\(I\)</span>,
-<span class="math">\(Var(I)\)</span>, or <span class="math">\(\sigma^2_I\)</span>.</p>
+Our purpose here is to find the variance of the intensity <span class="math notranslate nohighlight">\(I\)</span>,
+<span class="math notranslate nohighlight">\(Var(I)\)</span>, or <span class="math notranslate nohighlight">\(\sigma^2_I\)</span>.</p>
 <p>First, let us think about this problem intuitively.
 Apparantly with more events fall in to the target bin,
 we expect the variance will reduce with respect to
-the total intensity <span class="math">\(I\)</span>. A good approximation would be that
-the relative error, <span class="math">\(\frac{\sigma_I}{I}\)</span>, will reduce
-in the order of <span class="math">\(\sqrt{N}\)</span>, where <span class="math">\(N\)</span> is the
+the total intensity <span class="math notranslate nohighlight">\(I\)</span>. A good approximation would be that
+the relative error, <span class="math notranslate nohighlight">\(\frac{\sigma_I}{I}\)</span>, will reduce
+in the order of <span class="math notranslate nohighlight">\(\sqrt{N}\)</span>, where <span class="math notranslate nohighlight">\(N\)</span> is the
 total number of events fall in the bin.</p>
 <p>Now, let us try to do a quantitative treatment of this problem.
 To start, let us not worry about the fact that the number
-of events, <span class="math">\(N\)</span>, is a result of random process. Let us assume
-that <span class="math">\(N\)</span> is a fixed number, and try to find out <span class="math">\(Var(I)\)</span>:</p>
-<div class="math">
+of events, <span class="math notranslate nohighlight">\(N\)</span>, is a result of random process. Let us assume
+that <span class="math notranslate nohighlight">\(N\)</span> is a fixed number, and try to find out <span class="math notranslate nohighlight">\(Var(I)\)</span>:</p>
+<div class="math notranslate nohighlight">
 \[\begin{split}Var_1(I) &amp;= Var(\sum p_i)    \\
        &amp;= \sum Var(p_i)      \\
        &amp;= N Var(\bar{p})\end{split}\]</div>
-<p>where <span class="math">\(\bar{p}\)</span> is the mean value of the collection
-<span class="math">\(\{p_i\}\)</span>, or <span class="math">\(\bar{p}=\frac{1}{N}\sum{p_i}\)</span>.</p>
-<p>The variance of <span class="math">\(\bar{p}\)</span> can be estimated by</p>
-<div class="math">
+<p>where <span class="math notranslate nohighlight">\(\bar{p}\)</span> is the mean value of the collection
+<span class="math notranslate nohighlight">\(\{p_i\}\)</span>, or <span class="math notranslate nohighlight">\(\bar{p}=\frac{1}{N}\sum{p_i}\)</span>.</p>
+<p>The variance of <span class="math notranslate nohighlight">\(\bar{p}\)</span> can be estimated by</p>
+<div class="math notranslate nohighlight">
 \[\begin{split}Var(\bar{p}) &amp;= \frac{1}{N-1} \sum{(p_i-\bar{p})^2} \\
              &amp;= \frac{1}{N-1} (\sum p^2_i - \frac{1}{N} {(\sum p_i)}^2) \\
              &amp;= \frac{1}{N-1} (\sum p^2_i - N \bar{p}^2)\end{split}\]</div>
 <p>and</p>
-<div class="math">
+<div class="math notranslate nohighlight">
 \[Var_1(I) = \frac{N}{N-1} (\sum p^2_i - N \bar{p}^2)\]</div>
 <p>Now, let us think about the effect of number of events being random.
 The variance resulted from that can be estimated as</p>
-<div class="math">
+<div class="math notranslate nohighlight">
 \[\begin{split}Var_2(I) &amp;= Var(N) \times \bar{p}^2 \\
          &amp;= N \times \bar{p}^2\end{split}\]</div>
 <p>So we have</p>
-<div class="math">
+<div class="math notranslate nohighlight">
 \[\begin{split}Var(I) &amp;= Var_1(I) + Var_2(I) \\
        &amp;= \frac{N}{N-1} (\sum{p_i^2} - \bar{p}^2)\end{split}\]</div>
 <p>In most cases, this could be approximated as</p>
-<div class="math">
+<div class="math notranslate nohighlight">
 \[Var(I) = \sum{p_i^2}\]</div>
 <p>To see if this is a reasonable estimate, let us consider a special case
-in which most of <span class="math">\(p_i\)</span> have similar value. In that case,</p>
-<div class="math">
+in which most of <span class="math notranslate nohighlight">\(p_i\)</span> have similar value. In that case,</p>
+<div class="math notranslate nohighlight">
 \[\begin{split}Var(I) &amp;= \sum{\bar{p}^2} \\
        &amp;= N\bar{p}^2 = I^2/N\end{split}\]</div>
 <p>or</p>
-<div class="math">
+<div class="math notranslate nohighlight">
 \[\begin{split}\frac{\sigma_I}{I} &amp;= \frac{\sqrt{Var(I)}}{I} \\
                    &amp;= \frac{1}{\sqrt{N}}\end{split}\]</div>
 <p>which is consistent with our intuitive guess.</p>
 <p>The error bar of the intensity is then</p>
-<div class="math">
+<div class="math notranslate nohighlight">
 \[Err(I) = \sqrt{Var(I)} = \sqrt{\sum{p_i^2}}\]</div>
 <p>or</p>
-<div class="math">
+<div class="math notranslate nohighlight">
 \[Err^2(I) = \sum{p_i^2}\]</div>
 </div>
 <div class="section" id="error-propagation">
 <span id="fundamentals-errorbar-errorprop"></span><h3>Error propagation<a class="headerlink" href="#error-propagation" title="Permalink to this headline">¶</a></h3>
 <p>In the above discussion we assumed that the probablities
-<span class="math">\({p_i}\)</span> are computed precisely and have no errors
+<span class="math notranslate nohighlight">\({p_i}\)</span> are computed precisely and have no errors
 themselves.
-But there are cases that <span class="math">\({p_i}\)</span> itself has intrinsic errors.</p>
+But there are cases that <span class="math notranslate nohighlight">\({p_i}\)</span> itself has intrinsic errors.</p>
 <p>In some cases, the intrinsic relative error can be seen as constant
 among all computed events:</p>
-<div class="math">
+<div class="math notranslate nohighlight">
 \[\frac{Err_{intrinsic}(p_i)}{p_i} = \Delta_{intrinsic}\]</div>
 <p>And the intensity, I, has therefore the same intrinsic relative error:</p>
-<div class="math">
+<div class="math notranslate nohighlight">
 \[\frac{Err_{intrinsic}(I)}{I} = \Delta_{intrinsic}\]</div>
 <p>The total relative error considering the intrinsic error
-and the error discussed above in <a class="reference internal" href="#fundamentals-errorbar-basic"><span>Basic treatment</span></a>, is then</p>
-<div class="math">
+and the error discussed above in <a class="reference internal" href="#fundamentals-errorbar-basic"><span class="std std-ref">Basic treatment</span></a>, is then</p>
+<div class="math notranslate nohighlight">
 \[\begin{split}{[\frac{Err(I)}{I}]}^2 &amp;= \frac{Var(I)}{I^2} + \Delta_{intrinsic}^2 \\
                        &amp;= \frac{\sum{p_i^2}}{I^2} + \Delta_{intrinsic}^2\end{split}\]</div>
 <p>or</p>
-<div class="math">
+<div class="math notranslate nohighlight">
 \[Err^2(I) = \Delta_{intrinsic}^2 \times I^2  + \sum{p_i^2}\]</div>
 </div>
 </div>
@@ -383,8 +372,8 @@ and the error discussed above in <a class="reference internal" href="#fundamenta
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &copy; Copyright 2006-2016, Jiao Lin, Michael Aivazis, and Brent Fultz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.
+        &#169; Copyright 2006-2016, Jiao Lin, Michael Aivazis, and Brent Fultz.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.5.
     </div>
   </body>
 </html>
