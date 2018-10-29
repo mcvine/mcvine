@@ -14,6 +14,7 @@ set ( SRC_FILES
   math/test_Fxyz_fromExpr.cc
   math/test_search.cc
   homogeneous_scatterer/testHomogeneousNeutronScatterer.cc
+  homogeneous_scatterer/testHollowScatterers.cc
   homogeneous_scatterer/testCompositeScatteringKernel.cc
   homogeneous_scatterer/testMultipleScattering.cc
   homogeneous_scatterer/testDGSSXResPixel.cc
