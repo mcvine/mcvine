@@ -72,7 +72,7 @@ INITIALIZE
             printf("TOF_monitor: %s: Null detection area !\n"
                    "ERROR        (xwidth,yheight,xmin,xmax,ymin,ymax). Exiting",
            NAME_CURRENT_COMP);
-      exit(0);
+      throw Exception("TOF_monitor: bad detector dimension");
     }
 
     for (i=0; i<nchan; i++)
