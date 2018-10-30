@@ -87,7 +87,7 @@ INITIALIZE
             printf("Divergence_monitor: %s: Null detection area !\n"
                    "ERROR               (xwidth,yheight,xmin,xmax,ymin,ymax). Exiting",
            NAME_CURRENT_COMP);
-      exit(0);
+      throw Exception("Divergence_monitor: bad detector dimension");
     }
 
     for (i=0; i<nh; i++)

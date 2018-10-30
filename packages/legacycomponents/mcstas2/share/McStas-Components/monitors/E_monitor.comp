@@ -65,7 +65,7 @@ INITIALIZE
 
     if (nchan <= 0) {
       printf("E_monitor: number of channel must be positive.\n" );
-      exit(0);
+      throw Exception("E_monitor: number of channel must be positive");
     }
     E_N = new double[ nchan ];
     E_p = new double[ nchan ];

@@ -86,25 +86,25 @@ INITIALIZE
 
     if(!(strcmp(type,"time")==0) && !(strcmp(type,"energy")==0) && !(strcmp(type,"wavelength")==0)) {
        printf("PSD_TEW: error in type keyword\n stop\n");
-       exit(0);
+       throw Exception("PSD_TEW: error in type keyword");
     }
     if(!(strcmp(format,"table")==0) && !(strcmp(format,"McStas")==0)) {
        printf("PSD_TEW: error in format keyword\n");
        printf("PSD_TEW: data are not recorded!");
-       exit(0);
+       throw Exception("PSD_TEW: error in format keyword");
     }
     if ((xwidth<=0) || (yheight<0)) {
        printf("PSD TOFEL: %s: Null detection area !\n" 
               "ERROR        (xwidth,yheight). Exiting",
               NAME_CURRENT_COMP);
-       exit(0);
+       throw Exception("PSD_TEW: Null detection area");
     }
 
     if ((bmin >= bmax) && (bmax > 0)) {
        printf("PSD tew: %s:  bmin larger bmax !\n" 
               "ERROR        (bmin,bmax). Exiting",
               NAME_CURRENT_COMP);
-        exit(0);
+       throw Exception("PSD_tew: bad bmin, bmax");
     }
 
 
