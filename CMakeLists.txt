@@ -25,7 +25,7 @@
 # $ anaconda upload /home/lj7/anaconda2/conda-bld/linux-64/mcvine-1.0.1-py27_0.tar.bz2
 
 set(PROJECT_NAME "mcvine")
-set(VERSION "1.3.2a10")
+set(VERSION "1.3.2a11")
 set(AUTHOR "Jiao Lin")
 set(AUTHOR_EMAILE "jiao.lin@gmail.com")
 set(VENDOR "DANSE")
@@ -35,7 +35,7 @@ set(RPM_APP_GROUP "Development/Tools")
 set(GITHUB_URL "https://github.com/mcvine/mcvine")
 # can change this to a branch or a tag, for example
 # set(GIT_RELEASE_TAG ${VERSION})
-set(GIT_RELEASE_TAG "v1.3.2a10")
+set(GIT_RELEASE_TAG "v1.3.2a11")
 set (HOMEPAGE ${GITHUB_URL})
 
 # Is this still needed?
