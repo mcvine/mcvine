@@ -63,6 +63,19 @@ void test1c()
   assert (bb.sz==5.);
 }
 
+void test1d()
+{
+  Cone cone(3, 4);
+  BoundingBoxMaker bbm;
+  BoundingBox bb = bbm.make(cone);
+  assert (bb.cx==0.);
+  assert (bb.cy==0.);
+  assert (bb.cz==-2);
+  assert (bb.sx==6);
+  assert (bb.sy==6);
+  assert (bb.sz==4.);
+}
+
 void test2()
 {
   Box box(1,1,1);
@@ -185,6 +198,7 @@ int main()
   test1a();
   test1b();
   test1c();
+  test1d();
   test2();
   test3();
   test4();

@@ -119,6 +119,36 @@ mccomposite::geometry::Locator::visit
 
 void
 mccomposite::geometry::Locator::visit
+( const Cone * cone ) 
+{
+  const double & R = cone->radius;
+  const double & height = cone->height;
+
+  const double & z = point.z;
+  const double & rtol = roundingErrorTolerance;
+  using std::abs;
+
+  // z too large or negative, outside
+  if ( z > rtol || z<-height-rtol) { location = outside; return; }
+  
+  const double & x = point.x;
+  const double & y = point.y;
+  double r = std::sqrt(x*x + y*y);
+  double ratio = -z/height;
+  double R1 = ratio*R;
+  // x, y too large, outside
+  if ( r > R1 + rtol) { location = outside; return; }
+  // z inside
+  if ( z < - rtol && z > -height+rtol ) {
+    // z inside, x, y inside, so inside
+    if ( r < R1 - rtol) { location = inside; return; }
+  } 
+  // z at border, x,y inside or border, so it is border
+  location = onborder; return;
+}
+
+void
+mccomposite::geometry::Locator::visit
 ( const Sphere * sphere ) 
 {
   const double & radius = sphere->radius;

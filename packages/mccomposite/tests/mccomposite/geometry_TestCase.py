@@ -35,6 +35,7 @@ class geometry_TestCase(unittest.TestCase):
         sphere = primitives.sphere( 1 )
         cylinder = primitives.cylinder( 2,2.001 )
         pyramid = primitives.pyramid( 1., 2, 5 )
+        cone = primitives.cone( 2, 5 )
 
         dilated = operations.dilate( sphere, 2 )
         from mcni import units
@@ -48,7 +49,7 @@ class geometry_TestCase(unittest.TestCase):
 
         difference = operations.subtract( intersect, sphere )
 
-        united2 = operations.unite( difference, pyramid)
+        united2 = operations.unite( difference, pyramid, cone)
         
         print geometry.shapeEngine( united2 )
 

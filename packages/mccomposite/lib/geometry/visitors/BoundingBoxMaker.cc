@@ -92,6 +92,16 @@ mccomposite::geometry::BoundingBoxMaker::visit
 
 void
 mccomposite::geometry::BoundingBoxMaker::visit
+( const Cone * cone ) 
+{
+  const double & X = cone->radius*2;
+  const double & height = cone->height;
+  bb.sx = X; bb.sy = X; bb.sz = height;
+  bb.cx = 0; bb.cy = 0; bb.cz = -height/2;
+}
+
+void
+mccomposite::geometry::BoundingBoxMaker::visit
 ( const Sphere * sphere ) 
 {
   bb.cx = bb.cy = bb.cz = 0;

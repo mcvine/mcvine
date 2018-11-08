@@ -42,6 +42,16 @@ mccomposite::geometry::Printer::visit
 
 void
 mccomposite::geometry::Printer::visit
+( const Cone * cone ) 
+{
+  os << "Cone("
+     << "radius=" << cone->radius << ","
+     << "height=" << cone->height << "," 
+     << ")" ;
+}
+
+void
+mccomposite::geometry::Printer::visit
 ( const Sphere * sphere ) 
 {
   os << "Sphere("

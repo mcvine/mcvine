@@ -24,6 +24,7 @@ namespace mccomposite {
     struct Box;
     struct Cylinder;
     struct Pyramid;
+    struct Cone;
     struct Sphere;
     struct Difference;
     struct Dilation;
@@ -45,6 +46,7 @@ namespace mccomposite {
       virtual void visit( const Box * box ) = 0;
       virtual void visit( const Cylinder * cylinder ) = 0;
       virtual void visit( const Pyramid * pyramid ) = 0;
+      virtual void visit( const Cone * cone ) = 0;
       virtual void visit( const Sphere * sphere ) = 0;
       // for operations
       virtual void visit( const Difference * difference ) = 0;

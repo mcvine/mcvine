@@ -106,6 +106,9 @@ class BoostPythonBinding(base, Interface):
     def pyramid(self, thickness, width, height):
         return binding.Pyramid( thickness, width, height )
 
+    def cone(self, radius, height):
+        return binding.Cone( radius, height )
+
     pass # end of BoostPythonBinding
 
 

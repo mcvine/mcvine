@@ -44,6 +44,11 @@ namespace wrap_mccomposite {
        init< double, double, double >() )
       ;
 
+    class_<Cone, bases<AbstractShape> >
+      ("Cone", 
+       init< double, double >() )
+      ;
+
   }
 }
 
