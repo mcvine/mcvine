@@ -40,6 +40,15 @@ class McStasCSAdaptor_for_ShapeComputationEngineRenderer:
         solid = self.factory.rotate(solid, r)
         return solid
 
+    def onCone(self, cone):
+        p = self._remove_length_unit( (cone.radius, cone.height) )
+        solid = self.factory.cone( *p )
+        # cone should have vertical axis. (y axis)
+        # but the cone created above is along z axis. need to rotate -90 about x axis
+        r = self.factory.orientation( (-90,0,0) )
+        solid = self.factory.rotate( solid, r )
+        return solid
+
     def onCylinder(self, cylinder):
         p = self._remove_length_unit( (cylinder.radius, cylinder.height) )
         cyl = self.factory.cylinder( *p )

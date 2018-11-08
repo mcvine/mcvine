@@ -28,6 +28,9 @@ class AbstractCSAdaptor_for_ShapeComputationEngineRenderer:
     def onPyramid(self, pyramid):
         raise NotImplementedError
     
+    def onCone(self, cone):
+        raise NotImplementedError
+    
     pass # end of AbstractCSAdaptor_for_ShapeComputationEngineRenderer
 
 

@@ -38,6 +38,14 @@ class InstrumentScientistCSAdaptor_for_ShapeComputationEngineRenderer:
         xyz = self._remove_length_unit( xyz )
         return self.factory.pyramid( *xyz )
 
+    def onCone(self, cone):
+        # x: downstream. thickness
+        # y: horizontal. width
+        # z: vertical up. height
+        rh = cone.radius, cone.height
+        rh = self._remove_length_unit( rh )
+        return self.factory.cone( *rh )
+
     def onCylinder(self, cylinder):
         p = self._remove_length_unit( (cylinder.radius, cylinder.height) )
         return self.factory.cylinder( *p )
