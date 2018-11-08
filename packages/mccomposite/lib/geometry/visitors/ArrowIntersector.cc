@@ -12,7 +12,6 @@
 
 #include "journal/debug.h"
 
-
 namespace ArrowIntersector_impl{
 
   char * jrnltag = "mccomposite.geometry.ArrowIntersector";
@@ -400,6 +399,158 @@ mccomposite::geometry::ArrowIntersector::visit
     for (std::vector<double>::iterator it=ts.begin(); it!=new_end; it++) oss << *it << ", ";
     oss << std::endl
 	<< pyramid << ", "
+	<< m_arrow << std::endl
+      ;
+    oss << std::scientific << ts[2] - ts[0] << std::endl;
+    throw Exception(oss.str());
+  }
+  
+  if (ts[0] < ts[1]) {
+    m_distances.push_back(ts[0]);
+    m_distances.push_back(ts[1]);
+  } else {
+    m_distances.push_back(ts[1]);
+    m_distances.push_back(ts[0]);
+  }
+  
+#ifdef DEBUG
+  debug << journal::at(__HERE__) 
+	<< m_distances << journal::endl
+    ;
+#endif
+  return ;
+}
+
+
+// visiting methods
+void
+mccomposite::geometry::ArrowIntersector::visit
+( const Cone * coneptr )
+{
+#ifdef DEBUG
+  journal::debug_t debug( ArrowIntersector_impl::jrnltag );
+#endif
+  m_distances.clear();
+  
+  const Cone & cone = *coneptr;
+  
+  const Position & start = m_arrow.start;
+  const Direction & direction = m_arrow.direction;
+  if (isInvaildDirection(direction)) return;
+  
+#ifdef DEBUG
+  debug << journal::at(__HERE__) 
+	<< "cone: "<< *coneptr << journal::newline
+	<< "start: " << start << journal::newline
+	<< "direction: " << direction
+	<< journal::endl
+    ;
+#endif
+  
+  double x = start.x; 
+  double y = start.y;
+  double z = start.z;
+  
+  double vx = direction.x;
+  double vy = direction.y;
+  double vz = direction.z;
+  double vl = direction.length();
+  
+  double R = cone.radius, H = cone.height;
+  std::vector<double> ts;
+
+  //
+  Direction D = direction; D.normalize();
+  Direction V(0, 0, -1);
+  Direction CO(x, y, z);
+  double cos_theta_sq = H*H/(R*R+H*H);
+  // at^2+bt+c=0
+  // a = (D . V)^2 - cos^2(theta)
+  // b = 2( (D.V) (CO.V) - (D.CO) cos^2(theta) )
+  // c = (CO.V)^2 - (CO.CO)cos^2(theta)
+  double DdotV = (D|V);
+  double COdotV = (CO|V);
+  double DdotCO = (D|CO);
+  double a = DdotV*DdotV - cos_theta_sq;
+  double b = 2 * (DdotV*COdotV - DdotCO * cos_theta_sq);
+  double c = COdotV*COdotV - (CO|CO)  * cos_theta_sq;
+  double t1[2]; int N=0;  // temp array to hold t values for the infinite cone
+#ifdef DEBUG
+  debug << journal::at(__HERE__)
+	<< "DdotV=" << DdotV << ", COdotV=" << COdotV << ", DdotCO=" << DdotCO << journal::newline
+	<< "a=" << a << ", b=" << b << ", c=" << c << journal::newline
+	<< journal::endl
+    ;
+#endif
+  
+  if (eq_withinepsilon(a, 0.)) {
+    if (eq_withinepsilon(b, 0.)) {
+      // infinity solutions or no solutions. ingore this
+    } else {
+      t1[0] = -c/b /vl; N = 1; // one solution
+    }
+  } else {
+    // a is not zero
+    double delta = b*b-4*a*c;
+    if (delta >= 0) {
+      // two solutions
+      N = 2;
+      t1[0] = (-b-std::sqrt(delta))/2./a/vl;
+      t1[1] = (-b+std::sqrt(delta))/2./a/vl;
+    }
+  }
+#ifdef DEBUG
+  debug << journal::at(__HERE__)
+	<< "t1=" << journal::newline;
+  for (int i=0; i<N; i++) debug << t1[i] << ", ";
+  debug << journal::endl;
+#endif
+  // limit the cone to be between z=0 and z=-H
+  for (int i=0; i<N; i++) {
+    // compute z
+    double z1 = z+t1[i]*vz;
+    if (z1<epsilon/2 && z1>=-H-epsilon/2) ts.push_back(t1[i]);
+  }
+  
+  // base
+  double t2 = (-H-z)/vz;
+  double x2 = x + vx*t2, y2 = y + vy*t2;
+  if (x2*x2+y2*y2 < R*R) ts.push_back(t2);
+  
+#ifdef DEBUG
+  debug << journal::at(__HERE__)
+	<< "ts=" << journal::newline;
+  for (int i=0; i<ts.size(); i++) debug << ts[i] << ", ";
+  debug << journal::endl;
+#endif
+  
+  if (!ts.size()) return;
+  // remove duplicates
+  std::sort(ts.begin(), ts.end());  // have to sort otherwise unique does not work well
+  std::vector<double>::iterator new_end = std::unique
+    (ts.begin(), ts.end(), eq_withinepsilon);
+  N = new_end-ts.begin();
+  //
+  if (N == 1) {
+    // this is usually due to numerical errors
+#ifdef DEBUG
+    debug
+      << journal::at(__HERE__)
+      << "number of intersections between a line and a cone should be 0 or 2, "
+      << "we got " << ts.size() << ". " << journal::newline
+      << "cone: " << cone << ", "
+      << "arrow: " << m_arrow
+      << journal::endl;
+#endif
+    return;
+  }
+  if (N!=2) {
+    std::ostringstream oss;
+    oss << "number of intersections between a line and a cone should be 0 or 2, "
+	<< "we got " << N << ": " ;
+    for (std::vector<double>::iterator it=ts.begin(); it!=new_end; it++) oss << *it << ", ";
+    oss << std::endl
+	<< cone << ", "
 	<< m_arrow << std::endl
       ;
     oss << std::scientific << ts[2] - ts[0] << std::endl;

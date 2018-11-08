@@ -11,6 +11,7 @@
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //
 
+#define DEBUG
 
 #include <cassert>
 #include <iostream>
@@ -28,8 +29,9 @@ namespace {
   char * jrnltag ="testArrowIntersector";
   double epsilon = 1e-7;
 
-  bool isclose(double a, double b) {
-    return std::abs(a-b) < epsilon;
+  bool isclose(double a, double b, double eps=0) {
+    if (eps==0) eps=epsilon;
+    return std::abs(a-b) < eps;
   }
 }
 
@@ -182,6 +184,61 @@ void test4a()
   
 }
 
+void test4b()
+{
+  Cone cone(3,4);
+  Arrow arrow( Position (0,0,-4-5), Direction(0,0,1) );
+  // vertical
+  ArrowIntersector::distances_t distances = intersect(arrow, cone);
+  assert (distances.size() == 2);
+  assert (distances[0] == 5 );
+  assert (isclose(distances[1], 9, 1e-5));
+
+  // horizontal along x, half height, through axis
+  arrow = Arrow(Position(0,0,2-4), Direction(1,0,0) );
+  distances = intersect(arrow, cone);
+  assert (distances.size() == 2);
+  assert (distances[0] == -1.5 );
+  assert (distances[1] == 1.5 );
+
+  // horizontal along y, half height, through axis
+  arrow = Arrow(Position(0,0,2-4), Direction(0,1,0) );
+  distances = intersect(arrow, cone);
+  assert (distances.size() == 2);
+  assert (isclose(distances[0], -1.5 ));
+  assert (isclose(distances[1], 1.5 ));
+
+  // horizontal along y, half height, not through axis
+  arrow = Arrow(Position(0.9,0,2-4), Direction(0,1,0) );
+  distances = intersect(arrow, cone);
+  assert (distances.size() == 2);
+  assert (isclose(distances[0], -1.2 ));
+  assert (isclose(distances[1], 1.2 ));
+
+  // horizontal along xy diagonal, half height, through axis
+  arrow = Arrow(Position(0,0,2-4), Direction(1,1,0) );
+  distances = intersect(arrow, cone);
+  assert (distances.size() == 2);
+  assert (isclose(distances[0], -1.5/std::sqrt(2) ));
+  assert (isclose(distances[1], 1.5/std::sqrt(2) ));
+  
+  // horizontal along xy diagonal, base, through axis
+  arrow = Arrow(Position(0,0,0-4), Direction(1,1,0) );
+  distances = intersect(arrow, cone);
+  assert (distances.size() == 2);
+  assert (isclose(distances[0], -3/std::sqrt(2) ));
+  assert (isclose(distances[1], 3/std::sqrt(2) ));
+
+  // vertical, offset from axis with dx=.5
+  arrow = Arrow(Position(1.5,0,0-4), Direction(0,0,1) );
+  distances = intersect(arrow, cone);
+  // std::cout << distances << std::endl;
+  assert (distances.size() == 2);
+  assert (isclose(distances[0], 0 ));
+  assert (isclose(distances[1], 2 ));
+  
+}
+
 void test5()
 {
   Box box1(1,1,1);
@@ -274,8 +331,9 @@ void test10()
 
 int main()
 {
+  // define DEBUG on top of this file to enable debugging
 #ifdef DEBUG
-//   journal::debug_t("mccomposite.geometry.ArrowIntersector").activate();
+  journal::debug_t("mccomposite.geometry.ArrowIntersector").activate();
 //   journal::debug_t("mccomposite.geometry.Locator").activate();
 //   journal::debug_t(jrnltag).activate();
 #endif
@@ -284,6 +342,7 @@ int main()
   test3();
   test4();
   test4a();
+  test4b();
   test5();
   test6();
   test7();

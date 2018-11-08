@@ -28,6 +28,7 @@ namespace mccomposite {
       void visit( const Box * box );
       void visit( const Cylinder * cylinder );
       void visit( const Pyramid * pyramid );
+      void visit( const Cone * cone );
       void visit( const Sphere * sphere );
       // for operations      // for operations
       void visit( const Difference * difference );
