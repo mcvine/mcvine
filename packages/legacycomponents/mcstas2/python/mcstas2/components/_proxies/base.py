@@ -46,6 +46,7 @@ class Component(AbstractComponent, ParallelComponent):
         raise AttributeError(name)
 
     def process(self, neutrons):
+        self.__cpp_instance = None # clean up
         restore_neutron = self.restore_neutron
         if restore_neutron:
             # create a copy to be processed
