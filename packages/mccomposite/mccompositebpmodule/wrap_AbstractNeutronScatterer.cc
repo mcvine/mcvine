@@ -14,7 +14,7 @@
 
 #include <boost/python.hpp>
 #include "mccomposite/AbstractNeutronScatterer.h"
-
+#include "mccomposite/geometry/intersect.h"
 
 namespace wrap_mccomposite {
 
@@ -28,6 +28,21 @@ namespace wrap_mccomposite {
       .def("shape", &mccomposite::AbstractNeutronScatterer::shape, return_internal_reference<>())
       ;
 
+  }
+
+  size_t countIntersections(const mcni::Neutron::Event &n, const mccomposite::AbstractShape & shape)
+  {
+    using namespace mccomposite::geometry;
+    Arrow arrow(n.state.position, n.state.velocity);
+    ArrowIntersector::distances_t dists = intersect(arrow, shape);
+    return dists.size();
+  }
+
+  void wrap_countIntersections()
+  {
+    using namespace boost::python;
+
+    def("countIntersections", countIntersections);
   }
 }
 

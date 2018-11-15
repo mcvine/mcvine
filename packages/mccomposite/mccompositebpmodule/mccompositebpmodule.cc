@@ -27,6 +27,7 @@ namespace wrap_mccomposite{
 
   void wrap_geometers();
   void wrap_AbstractNeutronScatterer();
+  void wrap_countIntersections();
   void wrap_scatterercontainer();
   void wrap_CompositeNeutronScatterer();
 }
@@ -51,6 +52,7 @@ BOOST_PYTHON_MODULE(mccompositebp)
 
   wrap_geometers();
   wrap_AbstractNeutronScatterer();
+  wrap_countIntersections();
   wrap_scatterercontainer();
   wrap_CompositeNeutronScatterer();
 }
