@@ -4,7 +4,7 @@
 
 <SampleAssembly 
     name="Ni" 
-    max_multiplescattering_loops_among_scatterers="5"
+    max_multiplescattering_loops_among_scatterers="2"
     max_multiplescattering_loops_interactM_path1="3"
     >
   
