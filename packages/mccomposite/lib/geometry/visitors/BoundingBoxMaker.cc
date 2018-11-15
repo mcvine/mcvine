@@ -113,10 +113,7 @@ mccomposite::geometry::BoundingBoxMaker::visit
 ( const Difference * difference ) 
 {
   const AbstractShape &body1 = *(difference->shapes[0]) ; 
-  const AbstractShape &body2 = *(difference->shapes[1]) ;
-  body1.identify(*this); BoundingBox bb1 = bb;
-  body2.identify(*this); BoundingBox bb2 = bb;
-  bb = uniteBB(bb1, bb2);
+  body1.identify(*this);
 }
 
 void
