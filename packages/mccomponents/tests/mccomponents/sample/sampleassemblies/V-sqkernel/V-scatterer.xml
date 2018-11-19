@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE scatterer>
+
+<!-- weights: absorption, scattering, transmission -->
+<homogeneous_scatterer mcweights="0, 1, 1">
+
+  <SQkernel Q-range='0*angstrom**-1,12.*angstrom**-1'>
+    <SQ_fromexpression expression="exp(-Q^2*0.01)"/>
+  </SQkernel>
+  
+</homogeneous_scatterer>
+
