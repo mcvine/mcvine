@@ -40,7 +40,7 @@ class TestCase(unittest.TestCase):
         geometer.register( component2, (0,0,1), (0,0,0) )
         geometer.register( component3, (0,0,1), (0,0,0) )
         # neutron buffer
-        N0 = 500000
+        N0 = 200000
         neutrons = mcni.neutron_buffer(N0)
         #
         # simulate
@@ -67,8 +67,8 @@ class TestCase(unittest.TestCase):
         iqe = hh.load(os.path.join(workdir, 'stepNone', 'iqe_monitor.h5'))
         iq = iqe.sum('energy')
         Q = iq.Q; I = iq.I
-        I0 = I[0]
-        self.assert_(np.allclose(I/I0, 1., atol=0.15))  # see sampleassemblies/V-sqkernel/V-scatterer.xml
+        I0 = np.mean(I)
+        self.assert_(np.allclose(I/I0, 1., atol=0.1))  # see sampleassemblies/V-sqkernel/V-scatterer.xml
         return
     
 
