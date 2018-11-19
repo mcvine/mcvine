@@ -112,7 +112,7 @@ mccomponents::kernels::SQkernel::S
   // adjust probability of neutron event
   // !!!!!!!!!
   // need normalization factor here
-  ev.probability *= m_sq(Q);
+  ev.probability *= m_sq(Q) * Q * (Qmax-Qmin) / (2*ki*ki);
 
   // figure out the direction of the out-going neutron
   double cost = (kf*kf + ki*ki - Q*Q)/2/kf/ki;
