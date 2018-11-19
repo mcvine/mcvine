@@ -5,7 +5,7 @@
   
   <PowderSample name='V' type='sample'>
     <Shape>
-      <cylinder radius="1*cm" height="5*cm"/>
+      <cylinder radius=".1*cm" height=".1*cm"/>
     </Shape>
     <Phase type="crystal">
       <ChemicalFormula>V</ChemicalFormula>
