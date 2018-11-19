@@ -78,6 +78,54 @@ class New:
             sqe, Qmin, Qmax, Emin, Emax )
     
 
+    def gridsq(self, qbegin, qend, qstep, s ):
+        '''gridsq: S(Q) on grid
+
+        qbegin, qend, qstep: Q axis
+        s: numpy array of S
+        '''
+        shape = s.shape
+        assert len(shape) == 1
+        assert shape[0] == int( (qend-qbegin)/qstep +0.5 ), (
+            'qend: %s, qbegin: %s, qstep: %s, shape0: %s' % (
+            qend, qbegin, qstep, shape[0]) )
+        size = shape[0]
+        
+        svector = b.vector_double( size )
+        saveshape = s.shape
+        s.shape = -1,
+        svector[:] = s
+        s.shape = saveshape
+        
+        fx = b.new_fx(qbegin, qend, qstep, svector)
+        
+        return b.GridSQ( fx )
+
+    
+    def sqFromExpression(self, expr):
+        '''sqFromExpression: S(Q) from analystic expreession
+        '''
+        expr = str(expr)
+        return b.SQ_fromexpression(expr)
+
+    
+    def sqkernel(
+            self,
+            absorption_coefficient, scattering_coefficient,
+            sq, Qrange):
+        '''sqkernel: a kernel takes S(Q) a functor
+
+        absorption_coefficient: 1/absorption_length
+        scattering_coefficient: 1/scattering_length
+        sq: S(Q) functor
+        Qrange: range of Q
+        '''
+        Qmin, Qmax = Qrange
+        return b.SQkernel(
+            absorption_coefficient, scattering_coefficient,
+            sq, Qmin, Qmax)
+    
+
     def isotropickernel(self, absorption_cross_section, scattering_cross_section):
         '''isotropickernel: a kernel scatters isotropically and elastically
 

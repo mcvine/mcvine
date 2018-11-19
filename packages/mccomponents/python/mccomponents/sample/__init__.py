@@ -62,6 +62,21 @@ def sqekernel(*args, **kwds):
     return SQEkernel( *args, **kwds )
 
 
+def gridsq(*args, **kwds):
+    from .GridSQ import GridSQ
+    return GridSQ( *args, **kwds )
+
+
+def sqFromExpression(*args, **kwds):
+    from .SQ_fromexpression import SQ_fromexpression
+    return SQ_fromexpression( *args, **kwds )
+
+
+def sqkernel(*args, **kwds):
+    from .SQkernel import SQkernel
+    return SQkernel( *args, **kwds )
+
+
 def isotropickernel(*args, **kwds):
     from IsotropicKernel import IsotropicKernel
     return IsotropicKernel(*args, **kwds)
