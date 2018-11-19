@@ -34,6 +34,11 @@ namespace mccomponents {
 	return core(Q);
       }
 
+      inline virtual double operator () ( double Q )
+      {
+	return core(Q);
+      }
+
       const SQ & core;
     } ;
     

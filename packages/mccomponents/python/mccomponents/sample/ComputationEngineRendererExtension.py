@@ -76,6 +76,53 @@ class ComputationEngineRendererExtension:
             csqe, Qrange, Erange )
 
 
+    def onGridSQ(self, gridsq):
+        sqhist = gridsq.sqhist
+        
+        qbb = sqhist.axisFromName('Q').binBoundaries().asNumarray()
+        qbegin, qend, qstep = qbb[0], qbb[-1], qbb[1]-qbb[0]
+        
+        s = sqhist.data().storage().asNumarray()
+        
+        return self.factory.gridsq(
+            qbegin, qend+0.01*qstep, qstep,
+            s )
+
+
+    def onSQ_fromexpression(self, sq_fromexpression):
+        expr = sq_fromexpression.expression
+        return self.factory.sqFromExpression(expr)
+
+
+    def onSQkernel(self, sqkernel):
+        
+        t = sqkernel
+        
+        Qrange = t.Qrange
+        Qrange = self._unitsRemover.remove_unit( Qrange, 1./units.length.angstrom )
+        
+        csq = t.SQ.identify(self)
+        
+        abs = t.absorption_coefficient
+        sctt = t.scattering_coefficient
+
+        if abs is None or sctt is None:
+            #need to get cross section from sample assembly representation
+            # svn://danse.us/inelastic/sample/.../sampleassembly
+            #origin is a node in the sample assembly representation
+            #
+            #scatterer_origin is assigned to kernel when a kernel is
+            #constructed from kernel xml.
+            #see sampleassembly_support.SampleAssembly2CompositeScatterer for details.
+            origin = t.scatterer_origin
+            from sampleassembly import compute_absorption_and_scattering_coeffs
+            abs, inc, coh = compute_absorption_and_scattering_coeffs( origin )
+            sctt = inc + coh
+            pass
+        abs, sctt = self._unitsRemover.remove_unit( (abs, sctt), 1./units.length.meter )
+        return self.factory.sqkernel(abs, sctt, csq, Qrange)
+
+
     def onIsotropicKernel(self, kernel):
         t = kernel
 

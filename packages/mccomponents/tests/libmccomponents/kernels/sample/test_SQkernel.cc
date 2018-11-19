@@ -28,7 +28,7 @@ void test1()
   
   class TSQ: public AbstractSQ {
   public:
-    virtual double operator () ( double Q ) const 
+    virtual double operator () ( double Q ) 
     {
       return Q;
     }

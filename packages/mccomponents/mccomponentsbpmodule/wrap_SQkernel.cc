@@ -33,7 +33,7 @@ namespace wrap_mccomponents {
     kernel_wrapper<w_t>::wrap
       ("SQkernel",
        init<double, double,
-       const AbstractSQ &,  
+       AbstractSQ &,  
        double, double> () 
        [with_custodian_and_ward<1,4> () ]
        )

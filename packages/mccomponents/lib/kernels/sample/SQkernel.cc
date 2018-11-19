@@ -42,7 +42,7 @@ const char mccomponents::kernels::SQkernel::Details::jrnltag[] = "SQkernel";
 mccomponents::kernels::SQkernel::SQkernel
 ( double absorption_coefficient,
   double scattering_coefficient,
-  const sample::AbstractSQ & sq, 
+  sample::AbstractSQ & sq, 
   double Qmin, double Qmax)
   : m_absorption_coefficient( absorption_coefficient ),
     m_scattering_coefficient( scattering_coefficient ),
@@ -112,7 +112,7 @@ mccomponents::kernels::SQkernel::S
   // adjust probability of neutron event
   // !!!!!!!!!
   // need normalization factor here
-  ev.probability *= m_sq(Q);
+  ev.probability *= m_sq(Q) * Q * (Qmax-Qmin) / (2*ki*ki);
 
   // figure out the direction of the out-going neutron
   double cost = (kf*kf + ki*ki - Q*Q)/2/kf/ki;

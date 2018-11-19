@@ -54,6 +54,22 @@ class Renderer(base):
         return
 
 
+    def onSQkernel(self, sqkernel):
+
+        self._write(
+            '<SQkernel Q-range="%s">' % (
+            sqkernel.Erange,
+            )
+            )
+
+        self._indent()
+        sqkernel.SQ.identify(self)
+        self._outdent()
+
+        self._write('</SQkernel>')
+        return
+
+
     def onIsotropicKernel(self, kernel):
         self._write('<IsotropicKernel>')
         self._write('</IsotropicKernel>')
@@ -133,6 +149,26 @@ class Renderer(base):
         expr = sqe_fromexpression.expression
         self._write(
             '<SQE_fromexpression expression="%s"/>' % expr
+            )
+        return
+
+
+    def onGridSQ(self, gridsq):
+        sqhist = gridsq.sqhist
+        from histogram.hdf import dump
+        filename = 'sqhist.h5'
+        h5path = 'S(Q)'
+        dump(sqhist, filename, '/', 'c')
+        self._write(
+            '<GridSQ histogram-hdf-path="%s"/>' % '/'.join( [filename, h5path] )
+            )
+        return
+
+
+    def onSQ_fromexpression(self, sq_fromexpression):
+        expr = sq_fromexpression.expression
+        self._write(
+            '<SQ_fromexpression expression="%s"/>' % expr
             )
         return
 

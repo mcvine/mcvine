@@ -22,9 +22,8 @@ class Document(base):
         'HomogeneousScatterer',
         'KernelContainer',
         
-        'SQEkernel',
-        'GridSQE',
-        'SQE_fromexpression',
+        'SQEkernel', 'GridSQE', 'SQE_fromexpression',
+        'SQkernel', 'GridSQ', 'SQ_fromexpression',
         'ConstantEnergyTransferKernel',
         'ConstantQEKernel', 'ConstantvQEKernel',
         'E_Q_Kernel',
