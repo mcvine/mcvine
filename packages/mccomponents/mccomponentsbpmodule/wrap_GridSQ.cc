@@ -43,7 +43,7 @@ namespace wrap_mccomponents {
       ;
     
     def( "new_fx", new_fx, 
-	 with_custodian_and_ward_postcall<0,7,
+	 with_custodian_and_ward_postcall<0,4,
 	 return_value_policy< manage_new_object > > () )
       ;
 

@@ -40,7 +40,7 @@ namespace mccomponents {
       //! ctor
       SQkernel( double absorption_coefficient,
 		double scattering_coefficient,
-		const sample::AbstractSQ & sq, 
+		sample::AbstractSQ & sq, 
 		double Qmin, double Qmax);
       
       // methods
@@ -54,7 +54,7 @@ namespace mccomponents {
       double m_absorption_coefficient, m_scattering_coefficient;
       double m_epsilon;
       double m_Qmin, m_Qmax, m_DQ;
-      const sample::AbstractSQ & m_sq;
+      sample::AbstractSQ & m_sq;
       // impl details
       struct Details;
       std::auto_ptr<Details> m_details;

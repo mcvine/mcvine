@@ -42,7 +42,7 @@ const char mccomponents::kernels::SQkernel::Details::jrnltag[] = "SQkernel";
 mccomponents::kernels::SQkernel::SQkernel
 ( double absorption_coefficient,
   double scattering_coefficient,
-  const sample::AbstractSQ & sq, 
+  sample::AbstractSQ & sq, 
   double Qmin, double Qmax)
   : m_absorption_coefficient( absorption_coefficient ),
     m_scattering_coefficient( scattering_coefficient ),

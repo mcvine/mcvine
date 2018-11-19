@@ -23,13 +23,13 @@ namespace mccomponents {
     /// S(scalar Q)
     struct AbstractSQ
     {
-      virtual double operator () ( double Q ) const = 0;
+      virtual double operator () ( double Q ) = 0;
       virtual ~AbstractSQ() {}
     } ;
 
     /// identity S(scalar Q)
     struct IdentitySQ : public AbstractSQ {
-      virtual double operator() (double Q) const { return 1.; }
+      virtual double operator() (double Q) { return 1.; }
       virtual ~IdentitySQ() {};
     };
 

@@ -26,6 +26,8 @@ set ( SRC_FILES
   kernels/sample/diffraction/SimplePowderDiffractionKernel.cc
   kernels/sample/SQkernel.cc
   kernels/sample/SQEkernel.cc
+  kernels/sample/SQ/GridSQ.cc
+  kernels/sample/SQ/SQ_fromexpression.cc
   kernels/sample/SQE/GridSQE.cc
   kernels/sample/SQE/SQE_fromexpression.cc
   kernels/sample/phonon/AbstractDispersion_3D.cc

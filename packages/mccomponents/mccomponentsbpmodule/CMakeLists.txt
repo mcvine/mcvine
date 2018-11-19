@@ -22,6 +22,8 @@ set ( SRC_FILES
   wrap_SQkernel.cc
   wrap_GridSQE.cc
   wrap_SQE_fromexpression.cc
+  wrap_GridSQ.cc
+  wrap_SQ_fromexpression.cc
   wrap_IsotropicKernel.cc
   wrap_AtomicScatterer.cc
   wrap_NdArray.cc
