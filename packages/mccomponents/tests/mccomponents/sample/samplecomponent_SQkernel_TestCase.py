@@ -59,7 +59,7 @@ class TestCase(unittest.TestCase):
         Q = conversion.V2K * delta_v
         I, qbb = np.histogram(Q, 20, weights=p)
         qbc = (qbb[1:] + qbb[:-1])/2
-        I=I/qbc; I/=I[0]
+        I=I/qbc; I/=np.mean(I)
         self.assert_(np.allclose(I, 1., atol=0.1))
         #
         # check 2: use data in IQE monitor
