@@ -71,11 +71,11 @@ class Peak:
 
     "a powder diffraction peak"
 
-    q = 0
-    F_squared = 0
-    multiplicity = 0
-    intrinsic_line_width = 0
-    DebyeWaller_factor = 0
+    q = 0                         # \AA^-1
+    F_squared = 0                 # barn
+    multiplicity = 0              # 
+    intrinsic_line_width = 0      # 
+    DebyeWaller_factor = 0        # 
     
     def __init__(self, **kwds):
         for k, v in kwds.iteritems():
