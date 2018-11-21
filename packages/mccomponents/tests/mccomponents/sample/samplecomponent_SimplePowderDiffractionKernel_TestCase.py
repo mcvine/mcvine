@@ -46,6 +46,7 @@ class TestCase(unittest.TestCase):
         from mccomponents.sample import samplecomponent
         import mccomponents.sample.diffraction.xml
         component2 = samplecomponent( 'Al', 'sampleassemblies/Al-simplepowderdiffractionkernel/sampleassembly.xml' )
+        
         instrument = mcni.instrument( [component1, component2] )
         
         geometer = mcni.geometer()
@@ -74,6 +75,8 @@ class TestCase(unittest.TestCase):
 
 
 def main():
+    # import journal
+    # journal.debug("SimplePowderDiffractionKernel").activate()
     unittest.main()
     return
     
