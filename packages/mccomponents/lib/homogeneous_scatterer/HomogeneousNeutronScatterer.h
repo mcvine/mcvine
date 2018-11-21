@@ -86,6 +86,9 @@ namespace mccomponents{
 
     // calculate absorption coefficient
     double mu(const mcni::Neutron::Event &) const;
+
+    // kernel
+    AbstractScatteringKernel & getKernel() {return m_kernel;}
     
   private:
     

@@ -179,7 +179,7 @@ mccomponents::kernels::SimplePowderDiffractionKernel::absorption_coefficient(con
   double v_l = state.velocity.length();
   double ret = m_details->absorption_coeff*2200/v_l;  //inversely proportional to velocity
 #ifdef DEBUG
-  debug << "absorption_coeff: " << ret << journal::endl;
+  m_details->debug << "absorption_coeff: " << ret << journal::endl;
 #endif
   return ret;
 }
@@ -192,7 +192,7 @@ mccomponents::kernels::SimplePowderDiffractionKernel::scattering_coefficient(con
     v0 = m_details->unitcell_volume,
     ret = xs/v0;
 #ifdef DEBUG
-  debug
+  m_details->debug
     << "xs=" << xs << "v0=" << v0 
     << "scattering_coefficient:" << ret 
     << journal::endl;

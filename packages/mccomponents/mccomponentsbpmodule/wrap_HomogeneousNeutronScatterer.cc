@@ -24,6 +24,8 @@ namespace wrap_mccomponents {
   {
 
     using namespace mccomposite::boostpython_binding;
+    using namespace boost::python;
+    
     typedef mccomponents::HomogeneousNeutronScatterer w_t;
     scatterer_wrapper<w_t>::wrap
       ("HomogeneousNeutronScatterer", 
@@ -53,6 +55,7 @@ namespace wrap_mccomponents {
       .def_readwrite("min_neutron_probability", &w_t::min_neutron_probability)
       .def_readwrite("packing_factor", &w_t::packing_factor)
       .def("mu", &w_t::mu)
+      .def("getKernel", &w_t::getKernel, return_value_policy<reference_existing_object>())
       ;
 
     
