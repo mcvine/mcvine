@@ -113,5 +113,8 @@ instrument.append(Guide_4_1_2, position=(0.0, 0.0, 12.55105), orientation=(0, 0,
 Guide_5_1_1 = mcomps.optics.Guide_channeled(name='Guide_5_1_1', Qcx=Gu_Qc, R0=Gu_R, W=Gu_W, alphay=Gu_alpha, h2=0.05172, alphax=Gu_alpha, Qcy=Gu_Qc, h1=0.05405, l=0.37920, w2=0.05062, w1=0.05186, k=1, my=Gu_m, mx=Gu_m, d=0.0)
 instrument.append(Guide_5_1_1, position=(0.0, 0.0, 13.0183), orientation=(0, 0, 0), relativeTo=mod)
 
+save_neutrons = mcomps.monitors.NeutronToStorage(name='save_neutrons', path="beam.mcvine")
+instrument.append(save_neutrons, position=(0., 0., LS-0.15), relativeTo=mod)
+
 E_det = mcomps.monitors.E_monitor(name='E_det', nchan=100, ymax=.025, Emin=Emin, Emax=Emax, filename="I_E.dat", xmax=.025, xmin=-.025, ymin=-.025)
 instrument.append(E_det, position=(0.0, 0.0, LS-.001), orientation=(0, 0, 0), relativeTo=mod)
