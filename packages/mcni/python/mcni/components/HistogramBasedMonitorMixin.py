@@ -29,26 +29,26 @@ e.g.
 number_mc_samples_filename = 'number_of_mc_samples'
 
 def merge_and_normalize(histogramfilename, outdir):
-    h, n = hist_mcs_sum_parallel(outdir, histogramfilename)
-    h.I/=n
-    h.E2/=n*n
     import os
-    p = os.path.join(outdir, histogramfilename)
     from histogram.hdf import dump
-    dump(h, p, '/', 'c')
-
-    import os
-    if not os.environ.get('MCVINE_DEBUG_PARALLEL_PPS'): return
     from mpi4py import MPI
     world = MPI.COMM_WORLD
     rank = world.Get_rank()
+    res = hist_mcs_sum_parallel(outdir, histogramfilename)
+    if rank ==0:
+        h, n = res
+        h.I/=n
+        h.E2/=n*n
+        p = os.path.join(outdir, histogramfilename)
+        dump(h, p, '/', 'c')
+
+    if not os.environ.get('MCVINE_DEBUG_PARALLEL_PPS'): return
+    # debugging. save a data file using serial mode
     if rank == 0:
         h, n = hist_mcs_sum(outdir, histogramfilename)
         h.I/=n
         h.E2/=n*n
-        import os
         p = os.path.join(outdir, histogramfilename)
-        from histogram.hdf import dump
         p0, ext = os.path.splitext(p)
         p1 = p0+'-serial'+ext
         dump(h, p1, '/', 'c')
@@ -152,7 +152,8 @@ def hist_mcs_sum_parallel(outdir, histogramfilename):
         world.send(mcs, 0, tag=2018120103)
     # wait for everybody to synchronize _here_
     world.Barrier()
-    return h1, mcs
+    if world.rank==0:
+        return h1, mcs
 
 
 from outputs import mcs_sum
