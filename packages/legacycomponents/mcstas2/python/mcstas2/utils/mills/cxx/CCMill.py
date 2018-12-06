@@ -27,15 +27,16 @@ class CCMill(CxxClassMillBase):
         self._write("#include \"%s.h\"" % klass.name)
         self._write('')
 
-        for line in klass.helpers_implementation: self._write( line )
-        self._write('')
-
         if klass.namespace :
             # DANSE::simulation --> DANSE, simulation
             namespaces = klass.namespace.split('::') 
             self._write( ''.join([ "namespace %s {" % namespace for namespace in namespaces]))
             self._indent()
             pass
+
+        # helper code inside the namespace
+        for line in klass.helpers_implementation: self._write( line )
+        self._write('')
         
         for method in klass.public_methods: method.identify(self)
         for method in klass.private_methods: method.identify(self)
