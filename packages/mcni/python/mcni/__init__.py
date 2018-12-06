@@ -4,7 +4,7 @@
 # 
 #                                  Jiao  Lin
 #                        California Institute of Technology
-#                        (C) 2006-2010  All Rights Reserved
+#                        (C) 2006-2018  All Rights Reserved
 # 
 #  <LicenseText>
 # 
@@ -70,6 +70,17 @@ def _exec(cmd):
     if os.system(cmd):
         raise RuntimeError("%s failed" % cmd)
     return
+
+
+def run_ppsd_in_parallel(path, nodes):
+    "run postprocessing scripts in the given path in parallel using MPI"
+    import glob, sys, os
+    scripts = glob.glob(os.path.join(path, '*.py'))
+    for script in scripts:
+        cmd = 'mpirun -np %s %s %s' % (nodes, sys.executable, script)
+        _exec(cmd)
+        continue
+    return    
 
 
 def geometer( *args, **kwds ):

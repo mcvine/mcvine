@@ -45,8 +45,21 @@ merge_and_normalize(%r, %r, %r)
         return getattr(self._cpp_instance, name)
 
 
-class Storage_MCsample_Mismatch(Exception): pass
 def merge_and_normalize(
+    outputdir='out',
+    eventsdat='events.dat',
+    overwrite_datafiles=True):
+    # just do it in serial mode for now
+    from mpi4py import MPI
+    world = MPI.COMM_WORLD
+    rank = world.Get_rank()
+    if rank ==0:
+        merge_and_normalize_serial(outputdir, eventsdat, overwrite_datafiles)
+    return
+    
+    
+class Storage_MCsample_Mismatch(Exception): pass
+def merge_and_normalize_serial(
     outputdir='out',
     eventsdat='events.dat',
     overwrite_datafiles=True):
