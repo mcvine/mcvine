@@ -140,16 +140,16 @@ def hist_mcs_sum_parallel(outdir, histogramfilename):
         h = h1
         buffer = np.empty(h1.shape(), dtype=np.float)
         for rank in range(1, world.size):
-            world.Recv(buffer, rank, tag=2018120101)
+            world.Recv(buffer, rank, tag=121)
             h.I += buffer
-            world.Recv(buffer, rank, tag=2018120102)
+            world.Recv(buffer, rank, tag=122)
             h.E2 += buffer
-            mcs += world.recv(source=rank, tag=2018120103)
+            mcs += world.recv(source=rank, tag=123)
             continue
     else:
-        world.Send(h1.I.astype(np.float), 0, tag=2018120101)
-        world.Send(h1.E2.astype(np.float), 0, tag=2018120102)
-        world.send(mcs, 0, tag=2018120103)
+        world.Send(h1.I.astype(np.float), 0, tag=121)
+        world.Send(h1.E2.astype(np.float), 0, tag=122)
+        world.send(mcs, 0, tag=123)
     # wait for everybody to synchronize _here_
     world.Barrier()
     if world.rank==0:
