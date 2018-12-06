@@ -56,8 +56,9 @@ app.run(*args, **kwds)
             with open(logpath, 'w') as logstream:
                 _exec('bash %s' % run_sh_path, logstream)
             # run the postprocessing script
-            from mcni.pyre_support.Instrument import _run_ppsd
-            _run_ppsd(ppsd)
+            from mcni import run_ppsd_in_parallel
+            nodes = _get_nodes_option()
+            run_ppsd_in_parallel(ppsd, nodes)
             # clean up
             if not DEBUG_INSTRUMENT_APP_PROXY:
                 shutil.rmtree(workdir)
@@ -66,6 +67,18 @@ app.run(*args, **kwds)
     _Proxy.neutron_components = neutron_components
     return _Proxy
 
+
+def _get_nodes_option():
+    for a in sys.argv:
+        if a.startswith('--') and '.nodes' in a:
+            if DEBUG_INSTRUMENT_APP_PROXY:
+                print "* nodes option: %r" % a
+            # --mpirun.nodes=10
+            opt,v = a.split('=')
+            assert opt.endswith('.nodes')
+            return int(v)
+    return 1
+            
 
 def _exec(cmd, logstream):
     if DEBUG_INSTRUMENT_APP_PROXY: 
