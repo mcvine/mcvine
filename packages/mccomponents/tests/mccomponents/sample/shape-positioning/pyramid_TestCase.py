@@ -28,7 +28,7 @@ class TestCase(unittest.TestCase):
         self.assertEqual(bpb.locate(bpb.position(0., 0.0, 0.), shape), 'inside')
 
         # neutrons
-        N = 1000
+        N = 100000
         neutrons = mcni.neutron_buffer(N)
         neutrons = source.process(neutrons)
         # find neutrons out of target
@@ -56,7 +56,11 @@ class TestCase(unittest.TestCase):
     pass  # end of scattererxml_TestCase
 
 
-def main(): unittest.main()
+def main():
+    import journal
+    debug = journal.debug("mccomposite.geometry.ArrowIntersector")
+    debug.activate()
+    unittest.main()
 
 if __name__ == "__main__": main()
     
