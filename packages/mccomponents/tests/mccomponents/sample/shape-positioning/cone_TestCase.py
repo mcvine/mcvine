@@ -30,7 +30,7 @@ class TestCase(unittest.TestCase):
         self.assertEqual(bpb.locate(bpb.position(0., 0.0, 0.), shape), 'inside')
 
         # neutrons
-        N = 1000
+        N = 100000
         neutrons = mcni.neutron_buffer(N)
         neutrons = source.process(neutrons)
         # find neutrons out of target
@@ -42,7 +42,9 @@ class TestCase(unittest.TestCase):
         # print neutrons
         arr = neutrons.to_npyarr()
         x,y,z = arr[:, :3].T
-        assert (z[missing] < -.9).all()
+        z1 = z[missing]
+        print z1[z1>=-0.9]
+        assert (z1>=-0.0).sum() < 1e-4*N
         hit = arr[np.logical_not(missing), :3]
         x,y,z = hit.T
         assert (
