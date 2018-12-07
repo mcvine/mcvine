@@ -31,6 +31,7 @@
 #endif
 
 
+#include <sstream>
 namespace mcstas2{
 
 
@@ -48,7 +49,15 @@ namespace mcstas2{
 
   };
 
+  inline void exit(int code) {
+    std::stringstream ss;
+    ss << "exit " << code << " called";
+    throw mcstas2::Exception(ss.str().c_str());
+  }
+
 } //mcstas2
+
+
 
 #endif //H_MCSTAS2_EXCEPTION
 

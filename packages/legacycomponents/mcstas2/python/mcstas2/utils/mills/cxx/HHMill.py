@@ -29,7 +29,10 @@ class HHMill(CxxClassMillBase):
             pass
 
         self._write('')
-        for line in klass.helpers_header: self._write( line )
+        for line in klass.helpers_header:
+            # add lines like #include
+            if line.strip().startswith('#include'):
+                self._write( line )
         self._write('')
 
         if klass.namespace:
@@ -38,6 +41,11 @@ class HHMill(CxxClassMillBase):
             self._write( ''.join([ "namespace %s {" % namespace for namespace in namespaces]))
             self._indent()
             pass
+
+        # add function declarations etc from helpers inside the namespace
+        for line in klass.helpers_header:
+            if not line.strip().startswith('#include'):
+                self._write( line )
         
         parentsRep = ','.join( [ "public %s" % parent.name for parent in klass.parents ] )
         
