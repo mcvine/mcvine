@@ -12,6 +12,7 @@ set ( SRC_FILES
   geometry/testOverlap.cc
   geometry/test_intersect.cc
   geometry/test_intersectTriangle.cc
+  geometry/test_intersect_cone.cc
   mccomposite/testAbstractNeutronScatterer.cc
   mccomposite/testCompositeNeutronScatterer.cc
   mccomposite/testGeometer.cc

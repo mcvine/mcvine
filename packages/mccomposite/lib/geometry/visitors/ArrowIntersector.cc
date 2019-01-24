@@ -1,5 +1,6 @@
 #include <algorithm>
 #include <sstream>
+#include <iomanip>
 
 #include "mccomposite/geometry/visitors/ArrowIntersector.h"
 #include "mccomposite/geometry/visitors/Locator.h"
@@ -525,7 +526,7 @@ mccomposite::geometry::ArrowIntersector::visit
   for (int i=0; i<N; i++) {
     // compute z
     double z1 = z+t1[i]*vz;
-    if (z1<tolerance/2 && z1>=-H-tolerance/2) ts.push_back(t1[i]);
+    if (z1<tolerance/10 && z1>=-H-tolerance/10) ts.push_back(t1[i]);
   }
   
   // base
@@ -564,6 +565,7 @@ mccomposite::geometry::ArrowIntersector::visit
     std::ostringstream oss;
     oss << "number of intersections between a line and a cone should be 0 or 2, "
 	<< "we got " << N << ": " ;
+    oss << std::setprecision(20);
     for (std::vector<double>::iterator it=ts.begin(); it!=new_end; it++) oss << *it << ", ";
     oss << std::endl
 	<< cone << ", "
