@@ -26,9 +26,11 @@ def simplepowderdiffractionkernel(
 
 def create_peaks_py(path, structure, T, max_index=5):
     from . import calcpeaks
-    lines_for_peaks = [
-        str(pk) for pk in calcpeaks.iter_peaks(structure, T, max_index)]
-    lines_for_peaks = '\n'.join('    '+l for l in lines_for_peaks)
+    pks = list(calcpeaks.iter_peaks(structure, T, max_index))
+    lines_for_peaks = [str(pk) for pk in pks]
+    qs = [pk.q for pk in pks]
+    lines_for_peaks = [l for (q, l) in sorted(zip(qs, lines_for_peaks))]
+    lines_for_peaks = ',\n'.join('    '+l for l in lines_for_peaks)
     lattice = structure.lattice
     unitcell_volume = lattice.volume
     abs_xs = _abs_xs(structure)
