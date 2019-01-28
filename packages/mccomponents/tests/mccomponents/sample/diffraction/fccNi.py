@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from danse.ins import matter
+from mccomponents.sample import matter
 
 atoms = [matter.Atom('Ni', (0,0,0)), matter.Atom('Ni', (0.5, 0.5, 0)),
          matter.Atom('Ni', (0.5,0,0.5)), matter.Atom('Ni', (0, 0.5, 0.5))]
