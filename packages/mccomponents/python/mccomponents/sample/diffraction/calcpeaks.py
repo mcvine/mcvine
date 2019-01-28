@@ -2,7 +2,7 @@
 
 import numpy as np
 import periodictable as pt
-
+from .powder import Peak
 
 def iter_peaks(structure, T, max_index=5):
     "iterate over unique diffraction peaks"
@@ -13,34 +13,32 @@ def iter_peaks(structure, T, max_index=5):
         for k in range(max_index+1):
             for l in range(max_index+1):
                 if h+k+l==0: continue
-                q1 = h,k,l
-                # print q1
-                if q1 in skip: continue
-                eq_hkls = equivalent_hkls(q1, structure.sg)
+                hkl1 = h,k,l
+                # print hkl1
+                if hkl1 in skip: continue
+                eq_hkls = equivalent_hkls(hkl1, structure.sg)
                 eq_hkls = [tuple(map(int, _)) for _ in eq_hkls]
                 for _ in eq_hkls:
                     skip.add(_)
                 # print skip
-                F1 = F(structure, q1, T)
-                d1 = d(structure.lattice, q1)
-                mult1 = multiplicity(q1, structure.sg)
+                F1 = F(structure, hkl1, T)
+                F_squared = np.abs(F1)**2 / 100 # from fm^2 to barn
+                d1 = d(structure.lattice, hkl1)
+                q1 = q(structure.lattice, hkl1)
+                assert np.isclose(d1*q1, 2*np.pi)
+                mult1 = multiplicity(hkl1, structure.sg)
                 if np.abs(F1) > 1e-7:
-                    yield DiffrPeak(q1, F1, d1, mult1)
+                    yield Peak(hkl=hkl1, d=d1, q=q1, F=F1,
+                               F_squared=F_squared, multiplicity=mult1)
     return
 
 
-class DiffrPeak:
-    
-    def __init__(self, hkl, F, d, mult):
-        self.hkl = hkl
-        self.F = F #unit: fm
-        self.d = d #unit: angstrom
-        self.mult = mult
-        return
-
-    def __repr__(self):
-        return "DiffrPeak(%s, F=%r, d=%r, mult=%r)" % (self.hkl, self.F, self.d, self.mult)
-
+def q(lattice, hkl):
+    "Returns q from (h, k, l) parameters"
+    h,k,l   = hkl
+    rb      = lattice.recbase
+    q       = 2*np.pi*(h*rb[0] + k*rb[1] + l*rb[2])
+    return np.sqrt(np.dot(q,q))
 
 def F(structure, hkl, T):
     "structure factor. unit: fm"
@@ -49,13 +47,13 @@ def F(structure, hkl, T):
     return sum(fs)
 
 def F_i(i, structure, hkl, T):
-    from .atomic_scattering import AtomicScattering
+    from ..atomic_scattering import AtomicScattering
     atom = structure[i]
-    B = AtomicScattering(atom.symbol).B(T)
+    B = AtomicScattering(atom.element).B(T)
     d1 = d(structure.lattice, hkl)
     position = atom.xyz
     o = atom.occupancy
-    b = getattr(pt, atom.symbol).neutron.b_c # unit: fm
+    b = getattr(pt, atom.element).neutron.b_c # unit: fm
     return o*b*np.exp(2*np.pi*1j*np.dot(hkl, position) - B/4/d1/d1)
 
 

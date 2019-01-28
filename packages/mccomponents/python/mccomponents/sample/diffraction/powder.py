@@ -71,8 +71,11 @@ class Peak:
 
     "a powder diffraction peak"
 
-    q = 0                         # \AA^-1
-    F_squared = 0                 # barn
+    hkl = ()                      # miller indexes
+    d = 0                         # d spacing. \AA
+    q = 0                         # q=2pi/d. \AA^-1
+    F = 0                         # form factor
+    F_squared = 0                 # |F|^2. units: barn
     multiplicity = 0              # 
     intrinsic_line_width = 0      # 
     DebyeWaller_factor = 0        # 
@@ -85,8 +88,8 @@ class Peak:
 
 
     def __repr__(self):
-        return "Peak(q=%s, F_squared=%s, multiplicity=%s, intrinsic_line_width=%s, DebyeWaller_factor=%s" % (
-            self.q, self.F_squared, self.multiplicity, self.intrinsic_line_width, self.DebyeWaller_factor)
+        return "Peak(hkl=%s, d=%s, q=%s, F=%s, F_squared=%s, multiplicity=%s, intrinsic_line_width=%s, DebyeWaller_factor=%s" % (
+            self.hkl, self.d, self.q, self.F, self.F_squared, self.multiplicity, self.intrinsic_line_width, self.DebyeWaller_factor)
 
 
 class DiffractionPattern:
