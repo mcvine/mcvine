@@ -88,7 +88,7 @@ class Peak:
 
 
     def __repr__(self):
-        return "Peak(hkl=%s, d=%s, q=%s, F=%s, F_squared=%s, multiplicity=%s, intrinsic_line_width=%s, DebyeWaller_factor=%s" % (
+        return "Peak(hkl=%s, d=%s, q=%s, F=%s, F_squared=%s, multiplicity=%s, intrinsic_line_width=%s, DebyeWaller_factor=%s)" % (
             self.hkl, self.d, self.q, self.F, self.F_squared, self.multiplicity, self.intrinsic_line_width, self.DebyeWaller_factor)
 
 
