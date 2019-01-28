@@ -1,0 +1,14 @@
+    <difference>
+        <translation>
+            <difference>
+                <rotation>
+                    <cone radius="8.9864621074*mm" height="514.834069329*mm"/>
+                    <angle>180*deg</angle>
+                    <axis beam="0" transversal="1" vertical="0" />
+                </rotation>
+                <block thickness="34.63*mm" width="34.63*mm" height="838.152138658*mm" />
+            </difference>
+            <vector beam="0.*m" transversal="0.*m" vertical="-466.955069329*mm" />
+        </translation>
+        <cylinder height="105.758*mm" radius="2.37*mm"/>
+    </difference>

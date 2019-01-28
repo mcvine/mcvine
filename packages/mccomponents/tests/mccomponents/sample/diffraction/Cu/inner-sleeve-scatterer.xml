@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE scatterer>
+
+<!-- weights: absorption, scattering, transmission -->
+<homogeneous_scatterer mcweights="0, 1, 3">
+
+  <SimplePowderDiffractionKernel Dd_over_d="1e-5" DebyeWaller_factor="1." peaks-py-path="fccCu-peaks.py">
+  </SimplePowderDiffractionKernel>
+  
+</homogeneous_scatterer>
+
