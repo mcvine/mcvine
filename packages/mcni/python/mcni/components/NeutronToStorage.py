@@ -90,6 +90,17 @@ merge_and_normalize(%r, %r, %r)
 
 
 def merge_and_normalize(outdir, filename, overwrite_datafiles):
+    # it seems the serial mode is fast enough compared to HistogramBasedMonitorMixin
+    # so we just do it in serial mode
+    from mpi4py import MPI
+    world = MPI.COMM_WORLD
+    rank = world.Get_rank()
+    if rank ==0:
+        merge_and_normalize_serial(outdir, filename, overwrite_datafiles)
+    return
+
+
+def merge_and_normalize_serial(outdir, filename, overwrite_datafiles):
     # XXX: should rewrite using mcni.neutron_storage.merge_and_normalize
     # find all output files
     from mcni.components.outputs import n_mcsamples_files, mcs_sum

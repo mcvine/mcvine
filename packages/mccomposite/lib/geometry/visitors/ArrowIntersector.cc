@@ -1,5 +1,6 @@
 #include <algorithm>
 #include <sstream>
+#include <iomanip>
 
 #include "mccomposite/geometry/visitors/ArrowIntersector.h"
 #include "mccomposite/geometry/visitors/Locator.h"
@@ -16,6 +17,22 @@ namespace ArrowIntersector_impl{
 
   char * jrnltag = "mccomposite.geometry.ArrowIntersector";
   
+}
+
+namespace mccomposite{ namespace geometry{
+    /*
+    inline bool eq_double( double a, double b ) 
+    {
+      double max = std::max(std::abs(a), std::abs(b));
+      return max < tolerance || std::abs((a-b)/max) < tolerance ;
+    }
+    */
+    
+    inline bool eq_withinepsilon(double x, double y)
+    {
+      return std::abs(x-y) < tolerance/5.;
+    }
+  }
 }
 
 
@@ -198,12 +215,6 @@ namespace {
       ts.push_back(t);
   }
 
-  // 
-  const double epsilon = 1.e-7;
-  inline bool eq_withinepsilon(double x, double y)
-  {
-    return std::abs(x-y) < epsilon;
-  }
 }
 
 // visiting methods
@@ -324,8 +335,10 @@ mccomposite::geometry::ArrowIntersector::visit
   const Pyramid & pyramid = *pyramidptr;
   
   const Position & start = m_arrow.start;
-  const Direction & direction = m_arrow.direction;
+  Direction direction = m_arrow.direction;
   if (isInvaildDirection(direction)) return;
+  double length = direction.length();
+  direction= direction * (1./length); // normalize
   
 #ifdef DEBUG
   debug << journal::at(__HERE__) 
@@ -371,7 +384,7 @@ mccomposite::geometry::ArrowIntersector::visit
 	<< ts << journal::endl
     ;
 #endif
-  
+
   if (!ts.size()) return;
   // remove duplicates
   std::sort(ts.begin(), ts.end());  // have to sort otherwise unique does not work well
@@ -385,7 +398,9 @@ mccomposite::geometry::ArrowIntersector::visit
     debug
       << journal::at(__HERE__)
       << "number of intersections between a line and a pyramid should be 0 or 2, "
-      << "we got " << ts.size() << ". " << journal::newline
+      << "we got " << N << ". " << journal::newline;
+    for (std::vector<double>::iterator it=ts.begin(); it!=new_end; it++) oss << *it << ", ";
+    oss << std::endl
       << "pyramid: " << pyramid << ", "
       << "arrow: " << m_arrow
       << journal::endl;
@@ -406,11 +421,11 @@ mccomposite::geometry::ArrowIntersector::visit
   }
   
   if (ts[0] < ts[1]) {
-    m_distances.push_back(ts[0]);
-    m_distances.push_back(ts[1]);
+    m_distances.push_back(ts[0]/length);
+    m_distances.push_back(ts[1]/length);
   } else {
-    m_distances.push_back(ts[1]);
-    m_distances.push_back(ts[0]);
+    m_distances.push_back(ts[1]/length);
+    m_distances.push_back(ts[0]/length);
   }
   
 #ifdef DEBUG
@@ -435,8 +450,10 @@ mccomposite::geometry::ArrowIntersector::visit
   const Cone & cone = *coneptr;
   
   const Position & start = m_arrow.start;
-  const Direction & direction = m_arrow.direction;
+  Direction direction = m_arrow.direction;
   if (isInvaildDirection(direction)) return;
+  double length = direction.length();
+  direction = direction * (1./length); // normalize
   
 #ifdef DEBUG
   debug << journal::at(__HERE__) 
@@ -509,7 +526,7 @@ mccomposite::geometry::ArrowIntersector::visit
   for (int i=0; i<N; i++) {
     // compute z
     double z1 = z+t1[i]*vz;
-    if (z1<epsilon/2 && z1>=-H-epsilon/2) ts.push_back(t1[i]);
+    if (z1<tolerance/10 && z1>=-H-tolerance/10) ts.push_back(t1[i]);
   }
   
   // base
@@ -548,6 +565,7 @@ mccomposite::geometry::ArrowIntersector::visit
     std::ostringstream oss;
     oss << "number of intersections between a line and a cone should be 0 or 2, "
 	<< "we got " << N << ": " ;
+    oss << std::setprecision(20);
     for (std::vector<double>::iterator it=ts.begin(); it!=new_end; it++) oss << *it << ", ";
     oss << std::endl
 	<< cone << ", "
@@ -558,11 +576,11 @@ mccomposite::geometry::ArrowIntersector::visit
   }
   
   if (ts[0] < ts[1]) {
-    m_distances.push_back(ts[0]);
-    m_distances.push_back(ts[1]);
+    m_distances.push_back(ts[0]/length);
+    m_distances.push_back(ts[1]/length);
   } else {
-    m_distances.push_back(ts[1]);
-    m_distances.push_back(ts[0]);
+    m_distances.push_back(ts[1]/length);
+    m_distances.push_back(ts[0]/length);
   }
   
 #ifdef DEBUG
@@ -767,15 +785,6 @@ namespace ArrowIntersector_impl{
 		    isnotonborder); 
   }
 
-}
-
-namespace mccomposite{ namespace geometry{
-    inline bool eq_double( double a, double b ) 
-    {
-      double max = std::max(std::abs(a), std::abs(b));
-      return max < tolerance || std::abs((a-b)/max) < tolerance ;
-    }
-  }
 }
 
 void 

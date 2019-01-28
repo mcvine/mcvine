@@ -40,7 +40,7 @@ class TestCase(unittest.TestCase):
         geometer.register( component2, (0,0,1), (0,0,0) )
         geometer.register( component3, (0,0,1), (0,0,0) )
         # neutron buffer
-        N0 = 200000
+        N0 = 1000000
         neutrons = mcni.neutron_buffer(N0)
         #
         # simulate

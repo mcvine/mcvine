@@ -3,7 +3,7 @@
 #
 
 import os, sys, yaml
-from mcni import run_ppsd
+from mcni import run_ppsd, run_ppsd_in_parallel
 
 def run_mpi(script, workdir, ncount, nodes, buffer_size=int(1e6), overwrite_datafiles=False, **kwds):
     """run a mcvine simulation script on one node. The script must define the instrument.
@@ -53,7 +53,7 @@ An example script:
     if os.system(cmd):
         raise RuntimeError("%s failed" % cmd)
     ppsd = os.path.join(workdir, 'post-processing-scripts')
-    run_ppsd(ppsd)
+    run_ppsd_in_parallel(ppsd, nodes)
     return
 
 
