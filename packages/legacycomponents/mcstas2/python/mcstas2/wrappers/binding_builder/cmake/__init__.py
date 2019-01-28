@@ -7,7 +7,10 @@ def prepare( binding ):
     python_pkg_rel_path = binding.python_package.replace(".", '/')
     python_sources = ' '.join(binding.python_sources)
     include_dirs = ' '.join(binding.c_includes)
-    libs = ' '.join(binding.c_libs)
+    # replace `boost_python` with `${BOOST_LIBRARIES}`
+    c_libs = ['${BOOST_LIBRARIES}' if l=='boost_python' else l
+              for l in binding.c_libs]
+    libs = ' '.join(c_libs)
     libdirs = ' '.join(binding.c_libdirs)
     def define2s(key, val):
         if not val: return "-D%s" % key
