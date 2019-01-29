@@ -21,7 +21,7 @@ namespace wrap_mccomponents {
 
     class_<w_t, bases<mccomponents::sample::AbstractSQ>, boost::noncopyable >
       ("SQ_fromexpression",
-       init<const std::string &>()
+       init<const char *>()
        )
       ;    
   }

@@ -22,8 +22,8 @@ namespace wrap_mccomponents {
 
   Wrap_E_Q_Kernel::kernel_t * 
   Wrap_E_Q_Kernel::newKernel
-  (const std::string & E_Q,
-   const std::string & S_Q,
+  (const char * E_Q,
+   const char * S_Q,
    double Qmin, double Qmax,
    double absorption_cross_section, 
    double scattering_cross_section
@@ -34,7 +34,7 @@ namespace wrap_mccomponents {
        fx_t(S_Q, "Q"),
        Qmin, Qmax,
        absorption_cross_section,
-	 scattering_cross_section
+       scattering_cross_section
        );
   }
 

@@ -29,8 +29,8 @@ namespace wrap_mccomponents {
     kernel_t;
     
     static kernel_t * newKernel
-    (const std::string & E_vQ,
-     const std::string & S_vQ,
+    (const char * E_vQ,
+     const char * S_vQ,
      double Emax,
      double absorption_cross_section, 
      double scattering_cross_section
