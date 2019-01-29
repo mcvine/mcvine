@@ -29,6 +29,7 @@ def build( binding, site_package_path = None ):
     python_sources = binding.python_sources
     c_libs = binding.c_libs
     c_libdirs = binding.c_libdirs
+    if 'boost_python' in c_libs: _find_boostpython_lib(c_libs, c_libdirs)
     c_includes = binding.c_includes
     c_defines = binding.c_defines
     
@@ -78,6 +79,21 @@ def build( binding, site_package_path = None ):
     sys.argv = save
     return
 
+
+def _find_boostpython_lib(libs, libdirs):
+    import sys, glob
+    major, minor = sys.version_info[:2]
+    pyver = '%s%s' % (major, minor)  # "27" for 2.7
+    candidates = 'boost_python', ('boost_python%s' % pyver)
+    found = None
+    for c in candidates:
+        for libdir in libdirs:
+            pattern = '%s/lib%s.*' % (libdir, c)
+            if glob.glob(pattern): found=c; break
+        if found: break
+    # modify libs
+    libs[libs.index('boost_python')] = found
+    return
 
 
 # version
