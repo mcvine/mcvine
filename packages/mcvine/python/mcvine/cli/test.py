@@ -31,6 +31,16 @@ def test(workdir):
     # run tests
     cores = psutil.cpu_count() - 1
     if cores < 1: cores = 1
-    cmd = '''cmake %s && env CTEST_OUTPUT_ON_FAILURE=1 make test ARGS="-j%s"''' % (testsrc, cores)
+    major, minor = sys.version_info[:2]
+    pyver = '%s.%s' % (major, minor)
+    opd = os.path.dirname; prefix = opd(opd(sys.executable))
+    py_lib = '%s/lib/libpython%s.so' % (prefix, pyver)
+    py_include = '%s/include/python%s' % (prefix, pyver)
+    cmd = [
+        'cmake -DPYTHON_LIBRARY=%s -DPYTHON_INCLUDE_DIR=%s %s' % (py_lib, py_include, testsrc),
+        'CTEST_OUTPUT_ON_FAILURE=1 make test ARGS="-j%s"' % (cores,)
+        ]
+    cmd = ' && '.join(cmd)
+    print cmd
     sp.check_call(cmd, shell=True)
     return
