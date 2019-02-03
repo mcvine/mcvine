@@ -29,7 +29,9 @@ def test(workdir):
     testsrc = os.path.join(workdir, 'src')
     shutil.copytree(testsdir, testsrc)
     # run tests
-    cores = psutil.cpu_count() - 1
+    cores = os.environ.get('CORES', None)
+    if cores: cores = int(cores)
+    else: cores = psutil.cpu_count() - 1
     if cores < 1: cores = 1
     major, minor = sys.version_info[:2]
     pyver = '%s.%s' % (major, minor)
