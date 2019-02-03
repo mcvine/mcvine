@@ -8,9 +8,8 @@ PYVER_MAJOR=${CONDA_PY:0:1}
 PYVER_MINOR=${CONDA_PY:1:1}
 PYVER=${PYVER_MAJOR}.${PYVER_MINOR}
 
-# $MCVINE_CONDA_BUILD_WORK_DIR is defined in .travis.yml
-ERRLOG=$MCVINE_CONDA_BUILD_WORK_DIR/log.error
-echo $ERRLOG
+ERRLOG=/home/travis/build/log.error
+echo "ERRLOG=" $ERRLOG
 
 mkdir build
 cd build
