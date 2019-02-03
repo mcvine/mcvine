@@ -44,6 +44,7 @@ install:
   - grep version meta.yaml
   - grep git_rev meta.yaml
   - export MCVINE_CONDA_BUILD_WORK_DIR=$PWD
+  - echo $MCVINE_CONDA_BUILD_WORK_DIR
   - CORES=2 conda build .
   - anaconda -t $CONDA_UPLOAD_TOKEN upload --force /home/travis/mc/conda-bld/linux-64/mcvine-core-$MCVINE_CONDA_PKG_VER-*.tar.bz2 --label unstable
 #  - cd ../..
