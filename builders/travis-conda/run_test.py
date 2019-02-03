@@ -12,6 +12,7 @@ The tests will run at a separate work directory.
 """
 
 import os
+print "CORES:", os.environ.get('CORES')
 cmd = 'mcvine test'
 if os.system(cmd):
     raise RuntimeError("%s failed" % cmd)
