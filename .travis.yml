@@ -43,7 +43,7 @@ install:
   - ./create_meta_yaml $MCVINE_CONDA_PKG_VER $GIT_FULL_HASH
   - grep version meta.yaml
   - grep git_rev meta.yaml
-  - export ERRLOG=/home/travis/build/log.err
+  - export ERRLOG=/home/travis/build/log.error
   - echo "ERRLOG=" $ERRLOG
   - CORES=2 conda build .
   - anaconda -t $CONDA_UPLOAD_TOKEN upload --force /home/travis/mc/conda-bld/linux-64/mcvine-core-$MCVINE_CONDA_PKG_VER-*.tar.bz2 --label unstable
