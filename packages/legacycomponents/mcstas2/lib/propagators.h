@@ -18,6 +18,7 @@
 
 //strip off from mcstas-r.h
 
+#include <cmath>
 #include "geometry.h"
 #include "Component.h"
 #include "tracing_macros.h"
@@ -171,32 +172,34 @@ inline void prop_x0
     } \
   } while(0)
 
-#define rotate(x, y, z, vx, vy, vz, phi, ax, ay, az) \
-  do { \
-    double mcrt_tmpx = (ax), mcrt_tmpy = (ay), mcrt_tmpz = (az); \
-    double mcrt_vp, mcrt_vpx, mcrt_vpy, mcrt_vpz; \
-    double mcrt_vnx, mcrt_vny, mcrt_vnz, mcrt_vn1x, mcrt_vn1y, mcrt_vn1z; \
-    double mcrt_bx, mcrt_by, mcrt_bz; \
-    double mcrt_cos, mcrt_sin; \
-    NORM(mcrt_tmpx, mcrt_tmpy, mcrt_tmpz); \
-    mcrt_vp = scalar_prod((vx), (vy), (vz), mcrt_tmpx, mcrt_tmpy, mcrt_tmpz); \
-    mcrt_vpx = mcrt_vp*mcrt_tmpx; \
-    mcrt_vpy = mcrt_vp*mcrt_tmpy; \
-    mcrt_vpz = mcrt_vp*mcrt_tmpz; \
-    mcrt_vnx = (vx) - mcrt_vpx; \
-    mcrt_vny = (vy) - mcrt_vpy; \
-    mcrt_vnz = (vz) - mcrt_vpz; \
-    vec_prod(mcrt_bx, mcrt_by, mcrt_bz, \
-	     mcrt_tmpx, mcrt_tmpy, mcrt_tmpz, mcrt_vnx, mcrt_vny, mcrt_vnz); \
-    mcrt_cos = cos((phi)); mcrt_sin = sin((phi)); \
-    mcrt_vn1x = mcrt_vnx*mcrt_cos + mcrt_bx*mcrt_sin; \
-    mcrt_vn1y = mcrt_vny*mcrt_cos + mcrt_by*mcrt_sin; \
-    mcrt_vn1z = mcrt_vnz*mcrt_cos + mcrt_bz*mcrt_sin; \
-    (x) = mcrt_vpx + mcrt_vn1x; \
-    (y) = mcrt_vpy + mcrt_vn1y; \
-    (z) = mcrt_vpz + mcrt_vn1z; \
-  } while(0)
-
+namespace mcstas2 {
+  inline void rotate(double &x, double &y, double &z, double &vx, double &vy, double &vz,
+		     double phi, double ax, double ay, double az)
+  {
+    double mcrt_tmpx = (ax), mcrt_tmpy = (ay), mcrt_tmpz = (az);	
+    double mcrt_vp, mcrt_vpx, mcrt_vpy, mcrt_vpz;			
+    double mcrt_vnx, mcrt_vny, mcrt_vnz, mcrt_vn1x, mcrt_vn1y, mcrt_vn1z; 
+    double mcrt_bx, mcrt_by, mcrt_bz;					
+    double mcrt_cos, mcrt_sin;						
+    NORM(mcrt_tmpx, mcrt_tmpy, mcrt_tmpz);				
+    mcrt_vp = scalar_prod((vx), (vy), (vz), mcrt_tmpx, mcrt_tmpy, mcrt_tmpz); 
+    mcrt_vpx = mcrt_vp*mcrt_tmpx;					
+    mcrt_vpy = mcrt_vp*mcrt_tmpy;					
+    mcrt_vpz = mcrt_vp*mcrt_tmpz;					
+    mcrt_vnx = (vx) - mcrt_vpx;						
+    mcrt_vny = (vy) - mcrt_vpy;						
+    mcrt_vnz = (vz) - mcrt_vpz;						
+    vec_prod(mcrt_bx, mcrt_by, mcrt_bz,					
+	     mcrt_tmpx, mcrt_tmpy, mcrt_tmpz, mcrt_vnx, mcrt_vny, mcrt_vnz); 
+    mcrt_cos = cos((phi)); mcrt_sin = sin((phi));			
+    mcrt_vn1x = mcrt_vnx*mcrt_cos + mcrt_bx*mcrt_sin;			
+    mcrt_vn1y = mcrt_vny*mcrt_cos + mcrt_by*mcrt_sin;			
+    mcrt_vn1z = mcrt_vnz*mcrt_cos + mcrt_bz*mcrt_sin;			
+    (x) = mcrt_vpx + mcrt_vn1x;						
+    (y) = mcrt_vpy + mcrt_vn1y;						
+    (z) = mcrt_vpz + mcrt_vn1z;						
+  }
+}
 
 #endif //H_MCSTAS2_PROPAGATORS
 

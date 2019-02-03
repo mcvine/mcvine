@@ -8,6 +8,9 @@ source:
 
 requirements:
   build:
+    - {{ compiler('cxx') }}  # [linux]
+    - cmake
+  host:
     - python
     - pyyaml
     - numpy                 {{ numpy }}
@@ -26,7 +29,6 @@ requirements:
     - periodictable
     - drchops
     - mcvine-resources
-    - cmake
 
   run:
     - python

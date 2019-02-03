@@ -25,7 +25,8 @@ def create_sources_for_components(path):
             # don't by pass if the source code is newer
             componentpath = defaultcomponentpath( category, type )
             componentsrcdir = os.path.join(path, component_src_subdir(category, type))
-            if os.path.getmtime(componentsrcdir) < os.path.getmtime(componentpath):
+            if os.path.exists(componentsrcdir) and \
+               os.path.getmtime(componentsrcdir) < os.path.getmtime(componentpath):
                 bypass = False
                 import shutil
                 shutil.rmtree(componentsrcdir)

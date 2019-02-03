@@ -12,10 +12,10 @@ branches:
 
 # services:
 # 
-# matrix:
-#   include:
-#     - os: linux
-#      compiler: gcc
+matrix:
+  include:
+    - env: NUMPY_VERSION=1.14.0
+    - env: NUMPY_VERSION=1.16.0
 
 before_install:
   - if [[ ${TRAVIS_PYTHON_VERSION:0:1} == "2" ]]; then wget http://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86_64.sh -O miniconda.sh; else wget http://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh; fi
@@ -43,7 +43,9 @@ install:
   - ./create_meta_yaml $MCVINE_CONDA_PKG_VER $GIT_FULL_HASH
   - grep version meta.yaml
   - grep git_rev meta.yaml
-  - CORES=2 conda build .
+  - export ERRLOG=/home/travis/build/log.error
+  - echo "ERRLOG=" $ERRLOG
+  - CORES=2 conda build --numpy=$NUMPY_VERSION .
   - anaconda -t $CONDA_UPLOAD_TOKEN upload --force /home/travis/mc/conda-bld/linux-64/mcvine-core-$MCVINE_CONDA_PKG_VER-*.tar.bz2 --label unstable
 #  - cd ../..
 #  - conda install mcvine --use-local
@@ -51,6 +53,11 @@ install:
 script:
 #  - python -c "import mcvine"
   - echo "mcvine"
+
+after_failure:
+  # dump the last 2000 lines of error log (including warnings).
+  # see build.sh in builders/travis-conda
+  - tail --lines=2000 $ERRLOG
 
 notifications:
   email:

@@ -96,6 +96,9 @@ find_package ( BoostPython REQUIRED )
 #
 enable_testing()
 
+# ABI
+add_definitions(-D_GLIBCXX_USE_CXX11_ABI=0)
+
 # subdirs
 set(BUILDING_MCVINE "yes")
 # create empty cmake file for mcstas2/components
