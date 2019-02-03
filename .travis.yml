@@ -57,7 +57,7 @@ script:
 after_failure:
   # dump the last 2000 lines of error log (including warnings).
   # see build.sh in builders/travis-conda
-  - tail --lines=2000 $MCVINE_CONDA_BUILD_WORK_DIR/log.error
+  - tail --lines=2000 $ERRLOG
 
 notifications:
   email:
