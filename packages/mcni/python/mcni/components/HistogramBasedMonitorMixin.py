@@ -120,36 +120,49 @@ def hist_mcs_sum_parallel(outdir, histogramfilename):
     npernode = (N-1)//world.size + 1
     sl = slice(npernode*world.rank, npernode*(world.rank+1))
     histfiles1 = histfiles[sl]
-    # load the first one
-    import histogram.hdf as hh
-    h1 = hh.load(histfiles1[0])
-    # remained files
-    remained = histfiles1[1:]
-    for f in remained:
-        h = hh.load(f)
-        h1.I += h.I
-        h1.E2 += h.E2
-        continue
-    # load number_of_mc_samples
-    loadmcs = lambda f: float(open(f).read())
-    mcs = map(loadmcs, mcsamplesfiles[sl])
-    mcs = sum(mcs)
+    # print "%s: %s" % (world.rank, histfiles1)
+    if len(histfiles1):
+        # load the first one
+        import histogram.hdf as hh
+        h1 = hh.load(histfiles1[0])
+        # remained files
+        remained = histfiles1[1:]
+        for f in remained:
+            h = hh.load(f)
+            h1.I += h.I
+            h1.E2 += h.E2
+            continue
+        # load number_of_mc_samples
+        loadmcs = lambda f: float(open(f).read())
+        mcs = map(loadmcs, mcsamplesfiles[sl])
+        mcs = sum(mcs)
+    else:
+        # no data
+        # print "No data for %s" % world.rank
+        h1 = None
     # merge results from all nodes
     import numpy as np
     if world.rank==0:
         h = h1
         buffer = np.empty(h1.shape(), dtype=np.float)
         for rank in range(1, world.size):
-            world.Recv(buffer, rank, tag=121)
-            h.I += buffer
-            world.Recv(buffer, rank, tag=122)
-            h.E2 += buffer
-            mcs += world.recv(source=rank, tag=123)
+            hasdata = world.recv(source=rank, tag=120)
+            if hasdata:
+                world.Recv(buffer, rank, tag=121)
+                h.I += buffer
+                world.Recv(buffer, rank, tag=122)
+                h.E2 += buffer
+                mcs += world.recv(source=rank, tag=123)
             continue
     else:
-        world.Send(h1.I.astype(np.float), 0, tag=121)
-        world.Send(h1.E2.astype(np.float), 0, tag=122)
-        world.send(mcs, 0, tag=123)
+        # tag:120: has data or not
+        if h1 is None:
+            world.send(False, 0, tag=120)
+        else:
+            world.send(True, 0, tag=120)
+            world.Send(h1.I.astype(np.float), 0, tag=121)
+            world.Send(h1.E2.astype(np.float), 0, tag=122)
+            world.send(mcs, 0, tag=123)
     # wait for everybody to synchronize _here_
     world.Barrier()
     if world.rank==0:
