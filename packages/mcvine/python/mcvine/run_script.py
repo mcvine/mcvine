@@ -37,8 +37,8 @@ An example script:
     else:
         max_buffer_size = ncount//nodes//5
         min_buffer_size = 20
-    buffer_size = min(max_buffer_size, buffer_size)
-    buffer_size = max(min_buffer_size, buffer_size)
+        buffer_size = min(max_buffer_size, buffer_size)
+        buffer_size = max(min_buffer_size, buffer_size)
     overwrite_datafiles = '--overwrite_datafiles' if overwrite_datafiles else ''
     if kwds:
         kwds_file = 'mcvine_run_script_kwds.yml'
