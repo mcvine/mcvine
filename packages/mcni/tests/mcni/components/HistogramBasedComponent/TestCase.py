@@ -11,7 +11,7 @@ class TestCase(unittest.TestCase):
 
 
     def test1(self):
-        outdir = 'testdata'
+        outdir = os.path.join(here, 'testdata')
         from mcni import run_ppsd_in_parallel
         run_ppsd_in_parallel(os.path.join(outdir, 'post-processing-scripts'), nodes=2)
         return
