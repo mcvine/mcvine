@@ -110,6 +110,7 @@ an Al-scatterer.xml file ::
  * Inside a scatterer tag, there is one kernel tag. See :ref:`kernel documentation <kernels>`.
 
 
+.. _constructive_solid_geometry:
 
 Constructive solid geometry
 ===========================
@@ -147,6 +148,12 @@ Primitives:
   - thickness: dimension of the base along beam direction
   - width: dimension of the base along transversal direction
   - height: dimension along vertical direction
+
+* Cone: tip is at origin. The tip is pointng up vertically. Example: ``<cone radius="3*cm" height="10*cm" />``
+
+  - radius: radius of the base
+  - height: height of the cone
+
 
 Operations:
     

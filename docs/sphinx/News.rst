@@ -3,8 +3,19 @@
 News
 ====
 
+2019
+----
+* **Feb 2019**:
+
+  - Release 1.3.2 (http://mcvine.github.io/1.3.2/release-notes.html) was out
+
+.. QIKR simulation??
+    
 2018
 ----
+* **September 2018**:
+
+  - Paper *Dipolar-octupolar Ising antiferromagnetism in Sm2Ti2O7: A moment fragmentation candidate* was published at Physical Review B: https://doi.org/10.1103/PhysRevB.98.100401. Gabriele used MCViNE to study the absorption correction.
 * **July 2018**:
 
   - Matt Stone presented *SEQUOIA: Fine-Resolution Fermi Chopper Spectrometer* at WINS conference. MCViNE was used to help design the collimator for SEQUOIA
