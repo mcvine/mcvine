@@ -7,6 +7,7 @@ News
 ----
 * **Feb 2019**:
 
+  - Jon Leiner's paper *Frustrated magnetism in Mott insulating (V_{1−x}Cr_{x})_2O_3* was accepted at PRX. MCViNE was used to study the resolution effects
   - Release 1.3.2 (http://mcvine.github.io/1.3.2/release-notes.html) was out
 
 .. QIKR simulation??
