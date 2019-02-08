@@ -1,0 +1,92 @@
+.. _faq:
+
+Frequently Asked Questions
+==========================
+
+How do I ...
+------------
+
+... Use a mcstas component that I wrote myself?
+    An automatic tools is available to wrap a mcstas component to a mcvine component.
+    Please take a look at :ref:`user-defined-mcstas-components`.
+
+... Check whether parallel mcvine simulation is available for my system?
+    Run the following command::
+
+      $ mpirun -np 2 python -c "import mpi; print mpi.world().rank"
+
+    If you see two number "0" and "1" (random sequence), parallel mcvine is available.
+
+... Get help on the instrument simulation application I have created?
+    Say if your application is mysimapp.py, you can do::
+
+      $ mysimapp.py -h
+
+    to see what this app is about, and the available options. 
+    For help on common simulation application options, please refer 
+    to :ref:`fundamentals-instrument`; for a tutorial, see
+    :ref:`create-sim-app`.
+
+... Rescue my instrument simulations?
+    Sometimes SEQ beam simulation may fail or stall, especially if the number of MC count is large.
+    In that case, you can rescue the simulation results by
+
+    1. Killing the process if necessary
+    2. Merge simulated neutrons::
+     
+       $ cd /path/to/sim/_m2sout
+       $ python -c "from mcni.neutron_storage import merge_and_normalize as man; man('neutrons', '.')"
+	 
+    3. Merge monitor outputs::
+   
+       $ python -c "from mcni.components.HistogramBasedMonitorMixin import merge_and_normalize as man; man('IE.h5', '.'); man('mon1-tof.h5', '.'); man('mon2-tof.h5', '.') "
+    
+    4. Run post-processing script (assume Ei=100. please change accordingly)::
+   
+       $ cd /path/to/sim/
+       $ python -c "from mcvine.instruments.SEQUOIA import beam_postprocessing as bpp; bpp.run('./_m2sout', './out', 100.)"
+
+
+Why do I...
+-----------
+
+... get nothing from my simulation?
+    You may want to check if your configuration is done correctly.
+    A good thing to check is if the components are assign correctly::
+    
+      $ mysimapp.py --help-persistence
+      
+    It prints out looking-up of all components (not only neutron components, but also
+    other components that help make the simulation application possible,
+    such as geometer). 
+    You may see hints of why some components are not really loaded successfully.
+
+... get MemoryError?
+    You may need to reduce buffer_size. It determines how many neutrons are
+    kept in the memory. To set buffer_size to, say, one million neutrons, do::
+      
+      --buffer_size=1000000
+
+    (Most simulation applications accept this option, but some workflow scripts
+    do not accept this option.)
+    Optimal buffer_size depends on the memory for the computing nodes.
+    For a machine of 1G memory, the maximum buffer_size would be
+    1e9/100 = 1e7 neutrons if only one processor is used.
+    If, however, you are running parallely on a machine of 10 cpus and 2G
+    ram, the maximum buffer_size would be 2e9/100/10 = 2e6.
+    It also depends on factors such as
+    whether the option "multiple-scattering" is turned on.
+    If "multiple-scattering" is on, it is safer to divide the number 
+    you got by another factor of 10.
+    If you are running a MCViNE workflow, sometimes it could be more convenient to
+    use environment variable to set the maximum neutron buffer size like
+    this::
+      
+      MCVINE_MAX_NEUTRON_BUFFER_SIZE=100000
+    
+
+Other FAQs
+----------
+
+... What does the intensities at monitors mean?
+    Please refer to :ref:`fundamentals-simulated-intensities`
