@@ -31,6 +31,8 @@ requirements:
     - mcvine-resources
 
   run:
+    - {{ compiler('cxx') }}  # [linux]
+    - cmake
     - python
     - pyyaml
     - numpy
@@ -50,7 +52,6 @@ requirements:
     - drchops
     - mcvine-resources
     - phonopy
-    - cmake
 
 build:
   script_env:
