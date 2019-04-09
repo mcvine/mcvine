@@ -61,6 +61,9 @@ class TestCase(unittest.TestCase):
         Qs = np.zeros((5,3))
         Es = np.zeros((5, disp.nBranches()))
         disp.energy_arr(binding.ndarray(Qs), binding.ndarray(Es))
+        realpols = np.zeros((5, disp.nBranches(), disp.nAtoms(), 3))
+        imagpols = np.zeros((5, disp.nBranches(), disp.nAtoms(), 3))
+        disp.polarization_arr(binding.ndarray(Qs), binding.ndarray(realpols), binding.ndarray(imagpols))
         return
 
     pass  # end of TestCase
