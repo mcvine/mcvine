@@ -20,7 +20,9 @@ debug = journal.debug( "LinearlyInterpolatedDispersion_3D_TestCase" )
 warning = journal.warning( "LinearlyInterpolatedDispersion_3D_TestCase" )
 
 
+import numpy as np
 import mcni
+from mcni import mcnibp
 from mccomposite import mccompositebp 
 from mccomponents import mccomponentsbp
 
@@ -49,6 +51,16 @@ class TestCase(unittest.TestCase):
 
         disp = mccomponentsbp.LinearlyInterpolatedDispersionOnGrid_3D_dblarrays(
             nAtoms, Qx_axis, Qy_axis, Qz_axis, eps_arr, E_arr )
+
+        print "# of branches %s, # of atoms %s" % (disp.nBranches(), disp.nAtoms())
+        Q = mcnibp.Vector3_double(0,0,0)
+        Es = [disp.energy(i, Q) for i in range(disp.nBranches())]
+
+        from mccomponents.homogeneous_scatterer.bindings import default
+        binding = default()
+        Qs = np.zeros((5,3))
+        Es = np.zeros((5, disp.nBranches()))
+        disp.energy_arr(binding.ndarray(Qs), binding.ndarray(Es))
         return
 
     pass  # end of TestCase
