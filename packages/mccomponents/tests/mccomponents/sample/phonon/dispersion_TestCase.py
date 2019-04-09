@@ -14,6 +14,7 @@
 
 
 import unittestX as unittest
+import numpy as np
 import journal
 
 #debug = journal.debug( "TestCase" )
@@ -62,15 +63,26 @@ class TestCase(unittest.TestCase):
         qs = [ (0, 0, ra * i/N) for i in range(N) ]
         from mccomponents.sample.phonon.bindings import default
         binding = default()
-        es = [ disp.energy(0, binding.Q(q)) for q in qs ]
-        print qs, es
+        es = [
+            [ disp.energy(ibr, binding.Q(q)) for ibr in range(3) ]
+            for q in qs
+        ]
 
         q = qx, qy, qz = 1.2, 0.3, 0.22
         Q = binding.Q( q )
         self.assertAlmostEqual(
             disp.energy(0, binding.Q( qx + 2*ra, qy + 8*ra, qz - 6*ra )),
             disp.energy(0, Q ), 3 )
-                                            
+
+        Qarr = np.array(qs)
+        Es = np.zeros((len(qs), disp.nBranches()))
+        disp.energy_arr(binding.ndarray(Qarr), binding.ndarray(Es))
+        self.assert_(np.allclose( np.array(es), Es ))
+
+        Nq = 1000000
+        Qbigarr = np.zeros((Nq, 3))
+        Ebigarr = np.zeros((Nq, disp.nBranches()))
+        disp.energy_arr(binding.ndarray(Qbigarr), binding.ndarray(Ebigarr))
         return
         
         
