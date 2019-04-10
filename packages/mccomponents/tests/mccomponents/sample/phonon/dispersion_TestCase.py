@@ -14,6 +14,7 @@
 
 
 import unittestX as unittest
+import numpy as np
 import journal
 
 #debug = journal.debug( "TestCase" )
@@ -62,15 +63,40 @@ class TestCase(unittest.TestCase):
         qs = [ (0, 0, ra * i/N) for i in range(N) ]
         from mccomponents.sample.phonon.bindings import default
         binding = default()
-        es = [ disp.energy(0, binding.Q(q)) for q in qs ]
-        print qs, es
+        Es1 = [
+            [ disp.energy(ibr, binding.Q(q)) for ibr in range(3) ]
+            for q in qs
+        ]
+        pols1 = [
+            [[disp.polarization(ibr, iatom, binding.Q(q)) for iatom in range(1)]
+             for ibr in range(3)]
+            for q in qs
+        ]
 
         q = qx, qy, qz = 1.2, 0.3, 0.22
         Q = binding.Q( q )
         self.assertAlmostEqual(
             disp.energy(0, binding.Q( qx + 2*ra, qy + 8*ra, qz - 6*ra )),
             disp.energy(0, Q ), 3 )
-                                            
+
+        Qarr = np.array(qs)
+        Es2 = np.zeros((len(qs), disp.nBranches()))
+        disp.energy_arr(binding.ndarray(Qarr), binding.ndarray(Es2))
+        self.assert_(np.allclose( np.array(Es1), Es2 ))
+
+        real_pols2 = np.zeros( (len(qs), disp.nBranches(), disp.nAtoms(), 3) )
+        imag_pols2 = np.zeros( (len(qs), disp.nBranches(), disp.nAtoms(), 3) )
+        disp.polarization_arr(binding.ndarray(Qarr), binding.ndarray(real_pols2), binding.ndarray(imag_pols2))
+        pols2 = real_pols2 + 1j*imag_pols2
+        self.assert_(np.allclose( np.array(pols1), pols2 ))
+
+        Nq = 1000000
+        Qbigarr = np.zeros((Nq, 3))
+        Ebigarr = np.zeros((Nq, disp.nBranches()))
+        disp.energy_arr(binding.ndarray(Qbigarr), binding.ndarray(Ebigarr))
+        realpolbigarr = np.zeros((Nq, disp.nBranches(), disp.nAtoms(), 3))
+        imagpolbigarr = np.zeros((Nq, disp.nBranches(), disp.nAtoms(), 3))
+        disp.polarization_arr(binding.ndarray(Qarr), binding.ndarray(realpolbigarr), binding.ndarray(imagpolbigarr))
         return
         
         
