@@ -16,7 +16,10 @@ Publications made use of MCViNE
 
 2019
 ~~~~
-#. Jon Leiner et al., "Frustrated magnetism in Mott insulating (V_{1−x}Cr_{x})_2O_3", PRX, accepted.
+
+#. Jiao Y.Y. Lin, Arnab Banerjee, Fahima Islam, Manh D. Le, Douglas L. Abernathy, Energy dependence of the flux and elastic resolution for the ARCS neutron spectrometer, Physica B: Condensed Matter, 562, 2019, https://doi.org/10.1016/j.physb.2018.11.027
+#. M.B. Stone, G. Sala, J.Y.Y. Lin, Design of a radial collimator for the SEQUOIA direct geometry chopper spectrometer, Physica B: Condensed Matter, 2019, https://doi.org/10.1016/j.physb.2018.11.042
+#. J. C. Leiner, H. O. Jeschke, R. Valentí, S. Zhang, A. T. Savici, J. Y. Y. Lin, M. B. Stone, M. D. Lumsden, Jiawang Hong, O. Delaire, Wei Bao, and C. L. Broholm, "Frustrated magnetism in Mott insulating (V_{1−x}Cr_{x})_2O_3", Phys. Rev. X 9, 011035, February 2019
 
 
 2018

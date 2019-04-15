@@ -5,6 +5,15 @@ News
 
 2019
 ----
+* **April 2019**:
+
+  - Release 1.3.3 (https://github.com/mcvine/mcvine/issues/375) was out
+  - Jiao Lin's paper *Energy dependence of the flux and elastic resolution for the ARCS neutron spectrometer* was published at
+    Physica B: Condensed Matter. https://doi.org/10.1016/j.physb.2018.11.027. MCViNE was used to study elastic resolution of the ARCS instrument.
+  - Matt Stone's paper *Design of a radial collimator for the SEQUOIA direct geometry chopper spectrometer* was published at
+    Physica B: Condensed Matter. https://doi.org/10.1016/j.physb.2018.11.042. MCViNE was used to study the performance of
+    the collimator design for the SEQUOIA instrument
+
 * **Feb 2019**:
 
   - Jon Leiner's paper *Frustrated magnetism in Mott insulating (V_{1−x}Cr_{x})_2O_3* was accepted at PRX. MCViNE was used to study the resolution effects
