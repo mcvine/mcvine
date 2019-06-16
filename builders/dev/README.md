@@ -3,7 +3,7 @@
 ## Use conda to create an env with mcvine dependencies
 
 ```
-$ conda create -n dev-mcvine python
+$ conda create -n dev-mcvine python=2
 $ conda install <deps>
 ```
 
