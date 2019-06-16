@@ -8,7 +8,7 @@ $ conda install <deps>
 ```
 
 The full list of dependencies can be found in 
-https://github.com/mcvine/conda-recipes/blob/master/mcvine/meta.yaml
+https://github.com/mcvine/conda-recipes/blob/master/mcvine-core/meta.yaml
 
 ## Activate the new env
 
