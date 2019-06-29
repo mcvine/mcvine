@@ -30,11 +30,11 @@ install:
   - export MCVINE_CONDA_PKG_VER=${VERSION}unstable
   - echo ${TRAVIS_PYTHON_VERSION}
   - conda config --set always_yes true
-  - conda install conda=4.6
+  - conda install conda
   - conda config --add channels conda-forge
   - conda config --add channels diffpy
   - conda config --add channels mcvine
-  - conda install -n root conda-build=3.17
+  - conda install -n root conda-build
   - conda create -n testenv python=$TRAVIS_PYTHON_VERSION
   - conda install -n testenv anaconda-client
   - source activate testenv
