@@ -230,7 +230,7 @@ def reflected(x,y):
 
     
 def coth(x):
-    return np.cosh(x)/np.sinh(x)
+    return 1/np.tanh(x)
 
 def gamma0(E, g, beta, dE):
     """Compute gamma0

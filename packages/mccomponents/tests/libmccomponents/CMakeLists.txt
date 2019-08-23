@@ -13,6 +13,7 @@ set ( SRC_FILES
   math/test_Fx_fromExpr.cc
   math/test_Fxyz_fromExpr.cc
   math/test_search.cc
+  physics/test_statistics.cc
   homogeneous_scatterer/testHomogeneousNeutronScatterer.cc
   homogeneous_scatterer/testHollowScatterers.cc
   homogeneous_scatterer/testCompositeScatteringKernel.cc
