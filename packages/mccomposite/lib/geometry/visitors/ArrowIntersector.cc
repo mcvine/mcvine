@@ -551,7 +551,7 @@ mccomposite::geometry::ArrowIntersector::visit
   //
   if (N==2) ;
   else {
-#ifdef DEBUG
+    //
     std::ostringstream oss;
     oss << "number of intersections between a line and a cone should be 0 or 2, "
 	<< "we got " << N << ": " ;
@@ -561,10 +561,8 @@ mccomposite::geometry::ArrowIntersector::visit
 	<< cone << ", "
 	<< m_arrow << std::endl
       ;
-    debug << journal::at(__HERE__)
-	  << oss.str()
-	  << journal::endl;
-#endif
+    std::cout << oss.str();
+    
     if (N == 1) {
       // this is usually due to numerical errors
       return;
