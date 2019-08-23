@@ -34,6 +34,16 @@ void test1()
   ArrowIntersector::distances_t dists = intersect( arrow, cone );
 }
 
+// special case where cone intersection has failed
+void test1a()
+{
+  Cone cone(0.003, 0.0034511052216630289623);
+  Position start(-0.00097927717039767337055,0.0010997739235647412473,-0.0033772481264620654411);
+  Direction direction(1475.9436564500226723, -247.43779961270627155, -27.61918786913855683);
+  Arrow arrow(start, direction);
+  ArrowIntersector::distances_t dists = intersect( arrow, cone );
+}
+
 
 // run a Monte Carlo
 void test2()
@@ -56,6 +66,7 @@ void test2()
 }
 
 
+
 int main()
 {
 #ifdef DEBUG
@@ -64,6 +75,7 @@ int main()
 //   journal::debug_t("mccomposite.geometry.intersect").activate();
 #endif
   test1();
+  test1a();
   test2();
 }
 

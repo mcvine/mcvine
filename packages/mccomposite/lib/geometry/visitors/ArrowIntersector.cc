@@ -547,21 +547,11 @@ mccomposite::geometry::ArrowIntersector::visit
   std::vector<double>::iterator new_end = std::unique
     (ts.begin(), ts.end(), eq_withinepsilon);
   N = new_end-ts.begin();
+
   //
-  if (N == 1) {
-    // this is usually due to numerical errors
+  if (N==2) ;
+  else {
 #ifdef DEBUG
-    debug
-      << journal::at(__HERE__)
-      << "number of intersections between a line and a cone should be 0 or 2, "
-      << "we got " << ts.size() << ". " << journal::newline
-      << "cone: " << cone << ", "
-      << "arrow: " << m_arrow
-      << journal::endl;
-#endif
-    return;
-  }
-  if (N!=2) {
     std::ostringstream oss;
     oss << "number of intersections between a line and a cone should be 0 or 2, "
 	<< "we got " << N << ": " ;
@@ -571,8 +561,26 @@ mccomposite::geometry::ArrowIntersector::visit
 	<< cone << ", "
 	<< m_arrow << std::endl
       ;
-    oss << std::scientific << ts[2] - ts[0] << std::endl;
-    throw Exception(oss.str());
+    debug << journal::at(__HERE__)
+	  << oss.str()
+	  << journal::endl;
+#endif
+    if (N == 1) {
+      // this is usually due to numerical errors
+      return;
+    } else if (N==3) {
+      // most likely the line crosses an edge and duplicated intersections were recorded
+      // both for the infinite cone and the base.
+      // just merge the two that are closer together
+      // since ts array is already sorted, this is easy.
+      // we will return ts[0] and ts[1] later. so only when ts[0] and ta[1] is closer, we
+      // need to move ts[2] up.
+      if (ts[1]<(ts[0]+ts[2])/2.) {
+	ts[1] = ts[2];
+      }
+    } else {
+      throw Exception("Something went wrong. Max number of intersections between a line and a cone is 3");
+    }
   }
   
   if (ts[0] < ts[1]) {
