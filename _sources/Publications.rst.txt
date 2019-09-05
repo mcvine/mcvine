@@ -8,6 +8,7 @@ Publications
 
 References
 ----------
+#. Jiao YY Lin, Fahima Islam, Gabriele Sala, Ian Lumsden, Hillary Smith, Mathieu Doucet, Matthew B Stone, Douglas L Abernathy, Georg Ehlers, John F Ankner, and Garrett E Granroth, Recent developments of MCViNE and its applications at SNS, https://doi.org/10.1088/2399-6528/ab3622
 #. Jiao YY Lin, Hillary L Smith, Garrett E Granroth, Douglas L Abernathy, Mark D Lumsden, Barry Winn, Adam A Aczel, Michael Aivazis, and Brent Fultz, MCViNE--An object oriented Monte Carlo neutron ray tracing simulation package, http://dx.doi.org/10.1016/j.nima.2015.11.118
 
 
@@ -17,6 +18,7 @@ Publications made use of MCViNE
 2019
 ~~~~
 
+#. Jiao YY Lin, Fahima Islam, Gabriele Sala, Ian Lumsden, Hillary Smith, Mathieu Doucet, Matthew B Stone, Douglas L Abernathy, Georg Ehlers, John F Ankner, and Garrett E Granroth, Recent developments of MCViNE and its applications at SNS, https://doi.org/10.1088/2399-6528/ab3622
 #. Jiao Y.Y. Lin, Arnab Banerjee, Fahima Islam, Manh D. Le, Douglas L. Abernathy, Energy dependence of the flux and elastic resolution for the ARCS neutron spectrometer, Physica B: Condensed Matter, 562, 2019, https://doi.org/10.1016/j.physb.2018.11.027
 #. M.B. Stone, G. Sala, J.Y.Y. Lin, Design of a radial collimator for the SEQUOIA direct geometry chopper spectrometer, Physica B: Condensed Matter, 2019, https://doi.org/10.1016/j.physb.2018.11.042
 #. J. C. Leiner, H. O. Jeschke, R. Valentí, S. Zhang, A. T. Savici, J. Y. Y. Lin, M. B. Stone, M. D. Lumsden, Jiawang Hong, O. Delaire, Wei Bao, and C. L. Broholm, "Frustrated magnetism in Mott insulating (V_{1−x}Cr_{x})_2O_3", Phys. Rev. X 9, 011035, February 2019
