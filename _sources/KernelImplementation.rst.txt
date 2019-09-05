@@ -19,7 +19,7 @@ of a unit cell and :math:`v_0` is the unit cell volume,
 if the material is crystalline.
 
 The method S(neutron) resembles the dynamic structure factor
-:math:`S({\bold Q}, E)`.
+:math:`S({\textbf Q}, E)`.
 In this method, we need to choose a scattering direction and 
 its speed, and adjust the probability of the neutron
 according to the dynamic structure factor.
@@ -29,11 +29,11 @@ of the scattered neutrons, while the total amount of scattering
 is determined by the cross section, which is already taken
 care of by the scattering_coefficient method.
 Another useful fact is when the scattering is isotropic,
-:math:`S({\bold Q})=1`.
+:math:`S({\textbf Q})=1`.
 The method S(neutron) is more complicated than just
-computing :math:`S({\bold Q}, E)`, however.
+computing :math:`S({\textbf Q}, E)`, however.
 It involves Monte Carlo selection and the random variables
-are usually not simply :math:`\bold Q` and :math:`E`.
+are usually not simply :math:`\textbf Q` and :math:`E`.
 
 In the following, typical implementations for some 
 kernels are documented. 
@@ -53,7 +53,7 @@ solid angle.
 
 S(Q,E) kernel
 -------------
-This kernel works with scalar Q instead of :math:`\bold Q`
+This kernel works with scalar Q instead of :math:`\textbf Q`
 vector, meaning it is most useful for powder studies.
 
 Start from the definition of dynamic structure factor:
@@ -121,15 +121,15 @@ be treated similarly)
    \frac{\left( 2\pi \right)^3}{v_0}
    e^{-2W}
    \frac{1}{2M} 
-   \sum_{\bold Q}
-   \frac{\left( {\bold Q}\cdot {\bold e}_{{\bold Q},\alpha}\right)^2}
-   {\omega_{{\bold Q},\alpha}} 
-   \langle n_{{\bold Q},\alpha} + 1 \rangle
-   \delta(\omega_i-\omega_f-\omega_{{\bold Q},\alpha}) 
-   \delta({\bold k}_i-{\bold k}_f - {\bold Q} )
+   \sum_{\textbf Q}
+   \frac{\left( {\textbf Q}\cdot {\textbf e}_{{\textbf Q},\alpha}\right)^2}
+   {\omega_{{\textbf Q},\alpha}} 
+   \langle n_{{\textbf Q},\alpha} + 1 \rangle
+   \delta(\omega_i-\omega_f-\omega_{{\textbf Q},\alpha}) 
+   \delta({\textbf k}_i-{\textbf k}_f - {\textbf Q} )
 
 
-We want to compute the total cross section for a specific :math:`\bold Q`.
+We want to compute the total cross section for a specific :math:`\textbf Q`.
 Note that the differential solid angle above is for the scattered neutron,
 i.e., :math:`d\Omega = d\Omega_f`.
 Also note that for ideal powder sample, there are small crystallites
@@ -138,24 +138,24 @@ distributed in the :math:`4\pi` solid angle.
 Therefore, the integration we are looking for is
 
 .. math:: 
-   \sigma_{\bold Q} = \int dE_f d\Omega_f \frac{d\Omega_i}{4\pi}
-   \left( \frac{d^2 \sigma}{d\Omega dE_f} \right)_{\bold Q}
+   \sigma_{\textbf Q} = \int dE_f d\Omega_f \frac{d\Omega_i}{4\pi}
+   \left( \frac{d^2 \sigma}{d\Omega dE_f} \right)_{\textbf Q}
    :label: sigma_Q
 
 where
 
 .. math::
-   \left( \frac{d^2 \sigma}{d\Omega dE_f} \right)_{\bold Q} =
+   \left( \frac{d^2 \sigma}{d\Omega dE_f} \right)_{\textbf Q} =
    \frac{\sigma_{coh}}{4\pi} 
    \frac{k_f}{k_i}
    \frac{\left( 2\pi \right)^3}{v_0}
    e^{-2W}
    \frac{1}{2M} 
-   \frac{\left( {\bold Q}\cdot {\bold e}_{{\bold Q},\alpha}\right)^2}
-   {\omega_{{\bold Q},\alpha}} 
-   \langle n_{{\bold Q},\alpha} + 1 \rangle
-   \delta(\omega_i-\omega_f-\omega_{{\bold Q},\alpha}) 
-   \delta({\bold k}_i-{\bold k}_f - {\bold Q} )
+   \frac{\left( {\textbf Q}\cdot {\textbf e}_{{\textbf Q},\alpha}\right)^2}
+   {\omega_{{\textbf Q},\alpha}} 
+   \langle n_{{\textbf Q},\alpha} + 1 \rangle
+   \delta(\omega_i-\omega_f-\omega_{{\textbf Q},\alpha}) 
+   \delta({\textbf k}_i-{\textbf k}_f - {\textbf Q} )
    :label: dd_sigma_Q
    
 We observe that
@@ -164,14 +164,14 @@ We observe that
    k_i^2 + Q^2 - 2k_i Q \cos\theta = k_f^2
 
 where :math:`\theta` is the angle
-between :math:`\bold k_i` and :math:`\bold Q`.
+between :math:`\textbf k_i` and :math:`\textbf Q`.
 Differentiate the equation and we obtain:
 
 .. math::
    \frac{2m}{\hbar^2} dE_f = 2 k_i Q \sin\theta d\theta
    :label: diff_kiQkf_geom
 
-Since :math:`{\bold k_i}` is at a cone about :math:`\bold Q`
+Since :math:`{\textbf k_i}` is at a cone about :math:`\textbf Q`
 at angle :math:`\theta`, we have
 
 .. math::
@@ -181,25 +181,25 @@ at angle :math:`\theta`, we have
 On the other hand,
 
 .. math::
-   d{\bold k_f} = k_f^2 dk_f d\Omega_f = \frac{m k_f}{\hbar^2} dE_f d\Omega_f
+   d{\textbf k_f} = k_f^2 dk_f d\Omega_f = \frac{m k_f}{\hbar^2} dE_f d\Omega_f
    :label: d_k_f
 
 Plug Eqs :eq:`dd_sigma_Q`, :eq:`diff_kiQkf_geom`, :eq:`dOmega_i`, :eq:`d_k_f` into :eq:`sigma_Q`, we obtain
 
 .. math::
-   \sigma_{\bold Q} = 
+   \sigma_{\textbf Q} = 
    \frac{\sigma_{coh}}{4\pi} 
    \frac{k_f}{k_i}
    \frac{\left( 2\pi \right)^3}{v_0}
    e^{-2W}
-   \frac{\hbar^2 ({\bold Q}\cdot {\bold e})^2}{2M \hbar\omega} 
+   \frac{\hbar^2 ({\textbf Q}\cdot {\textbf e})^2}{2M \hbar\omega} 
    \langle n + 1 \rangle
    \frac{1}{2 k_i k_f Q}
    
 In the implementation, we need to randomly select a branch and a 
-:math:`\bold Q`, and then compute 
-:math:`\sigma_{\bold Q}`.
-Due to randomly selection of :math:`\bold Q`, 
+:math:`\textbf Q`, and then compute 
+:math:`\sigma_{\textbf Q}`.
+Due to randomly selection of :math:`\textbf Q`, 
 a multiplication factor of 
 number of possible Q points to choose from.
 Consider the number of Q points in one reciprocal
@@ -222,7 +222,7 @@ the probablity multiplication factor is
    \frac{1}{4\pi} 
    \frac{k_f}{k_i}
    e^{-2W}
-   \frac{\hbar^2 ({\bold Q}\cdot {\bold e})^2}{2M \hbar\omega} 
+   \frac{\hbar^2 ({\textbf Q}\cdot {\textbf e})^2}{2M \hbar\omega} 
    \langle n + 1 \rangle
    \frac{V_{r,accessible}}{2 k_i k_f Q}
 
@@ -240,12 +240,12 @@ Now we are considering more complex examples. Suppose we are working on a single
    \frac{\sigma_{coh}}{4\pi} \frac{k_f}{k_i}
    \frac{\left( 2\pi \right)^3}{v_0}\frac{1}{2M} 
    e^{-2W}
-   \sum_{\bold Q}\frac{\left( {\bold Q}\cdot {\bold e}_{{\bold Q},\alpha}\right)^2}
-   {\omega_{{\bold Q},\alpha}} \langle n_{{\bold Q},\alpha} + 1 \rangle
-   \delta(\omega_i-\omega_f-\omega_{{\bold Q},\alpha}) 
-   \delta({\bold k}_i-{\bold k}_f - {\bold Q} )
+   \sum_{\textbf Q}\frac{\left( {\textbf Q}\cdot {\textbf e}_{{\textbf Q},\alpha}\right)^2}
+   {\omega_{{\textbf Q},\alpha}} \langle n_{{\textbf Q},\alpha} + 1 \rangle
+   \delta(\omega_i-\omega_f-\omega_{{\textbf Q},\alpha}) 
+   \delta({\textbf k}_i-{\textbf k}_f - {\textbf Q} )
 
-where :math:`{\bold Q}` is the wave vector of phonon, :math:`\alpha` is the index for phonon branch, :math:`\omega_{{\bold Q},\alpha}` is the phonon enregy, :math:`i` and :math:`f` represents initial and final states of neutron, :math:`\sigma_{coh}` is the coherent scattering cross section, :math:`v_0` is the volume of the unit cell, :math:`M` is the mass of the atom.
+where :math:`{\textbf Q}` is the wave vector of phonon, :math:`\alpha` is the index for phonon branch, :math:`\omega_{{\textbf Q},\alpha}` is the phonon enregy, :math:`i` and :math:`f` represents initial and final states of neutron, :math:`\sigma_{coh}` is the coherent scattering cross section, :math:`v_0` is the volume of the unit cell, :math:`M` is the mass of the atom.
 
 For convenience, define
 
@@ -253,10 +253,10 @@ For convenience, define
    C = \frac{\sigma_{coh}}{4\pi} \frac{k_f}{k_i}
    \frac{\left( 2\pi \right)^3}{v_0}\frac{1}{2M} e^{-2W}
 
-In the case of large crystal, the density of Q points in the reciprocal space is high, and the summation over :math:`{\bold Q}` can be replaced by an integration:
+In the case of large crystal, the density of Q points in the reciprocal space is high, and the summation over :math:`{\textbf Q}` can be replaced by an integration:
 
 .. math::
-   \sum_{\bold Q} = \int \frac{V}{(2\pi)^3} d{\bold Q}
+   \sum_{\textbf Q} = \int \frac{V}{(2\pi)^3} d{\textbf Q}
 
 (C.1) reduces to 
 
@@ -265,10 +265,10 @@ In the case of large crystal, the density of Q points in the reciprocal space is
    =C \times
    \frac{V}{(2\pi)^3} 
    \left.\left[ 
-   \frac{\left( {\bold Q}\cdot {\bold e}_{{\bold Q},\alpha}\right)^2}
-   {\omega_{{\bold Q},\alpha}} \langle n_{{\bold Q},\alpha} + 1 \rangle
-   \delta(\omega_i-\omega_f-\omega_{{\bold Q},\alpha})
-   \right]\right|_{{\bold Q}={\bold k}_i-{\bold k}_f}
+   \frac{\left( {\textbf Q}\cdot {\textbf e}_{{\textbf Q},\alpha}\right)^2}
+   {\omega_{{\textbf Q},\alpha}} \langle n_{{\textbf Q},\alpha} + 1 \rangle
+   \delta(\omega_i-\omega_f-\omega_{{\textbf Q},\alpha})
+   \right]\right|_{{\textbf Q}={\textbf k}_i-{\textbf k}_f}
 
 The "evaluate at" symbol reminds us the momentum conservation condition resulted from the integration of one of the delta functions in (C.1).
 
@@ -276,13 +276,13 @@ We now want to evaluate the differntial cross section
 :math:`\frac{d\sigma}{d\Omega}`
 by doing an integration over :math:`E_f`
 
-This means that we fix the scattering direction, :math:`\frac{{\bold k}_f}{k_f}`. By changing :math:`E_f`, we are changing the length of scattering wave vector, :math:`k_f`, and therefore changing :math:`{\bold Q}` and :math:`\omega_{{\bold Q},\alpha}`
+This means that we fix the scattering direction, :math:`\frac{{\textbf k}_f}{k_f}`. By changing :math:`E_f`, we are changing the length of scattering wave vector, :math:`k_f`, and therefore changing :math:`{\textbf Q}` and :math:`\omega_{{\textbf Q},\alpha}`
 
 Thus
 
 .. math::
-   \int \delta(\omega_i-\omega_f-\omega_{{\bold Q},\alpha}) d E_f
-   = \frac{\hbar}{ d(\omega_f + \omega_{{\bold Q},\alpha}) / {d\omega_f} } 
+   \int \delta(\omega_i-\omega_f-\omega_{{\textbf Q},\alpha}) d E_f
+   = \frac{\hbar}{ d(\omega_f + \omega_{{\textbf Q},\alpha}) / {d\omega_f} } 
 
 The differential cross section is then
 
@@ -290,12 +290,12 @@ The differential cross section is then
    \left( \frac{d \sigma}{d\Omega} \right)_{coh+1}
    = C \times \frac{V}{(2\pi)^3} 
    \left.\left[
-   \frac{\left( {\bold Q}\cdot {\bold e}_{{\bold Q},\alpha}\right)^2}{\omega_{{\bold Q},\alpha}}
-   \langle n_{{\bold Q},\alpha} + 1 \rangle
-   \frac{\hbar}{ d(\omega_f + \omega_{{\bold Q},\alpha}) / {d\omega_f} }
+   \frac{\left( {\textbf Q}\cdot {\textbf e}_{{\textbf Q},\alpha}\right)^2}{\omega_{{\textbf Q},\alpha}}
+   \langle n_{{\textbf Q},\alpha} + 1 \rangle
+   \frac{\hbar}{ d(\omega_f + \omega_{{\textbf Q},\alpha}) / {d\omega_f} }
    \right]\right|_{
-   {\bold Q}={\bold k}_i-{\bold k}_f;
-   \omega_{{\bold Q},\alpha}=\omega_i-\omega_f
+   {\textbf Q}={\textbf k}_i-{\textbf k}_f;
+   \omega_{{\textbf Q},\alpha}=\omega_i-\omega_f
    }
 
 .. math::
@@ -304,9 +304,9 @@ The differential cross section is then
    N
    \frac{1}{2M} e^{-2W}
    \left[
-   \frac{\left( {\bold Q}\cdot {\bold e}_{{\bold Q},\alpha}\right)^2}{\omega_{{\bold Q},\alpha}}
-   \langle n_{{\bold Q},\alpha} + 1 \rangle
-   \frac{\hbar}{ d(\omega_f + \omega_{{\bold Q},\alpha}) / {d\omega_f} }
+   \frac{\left( {\textbf Q}\cdot {\textbf e}_{{\textbf Q},\alpha}\right)^2}{\omega_{{\textbf Q},\alpha}}
+   \langle n_{{\textbf Q},\alpha} + 1 \rangle
+   \frac{\hbar}{ d(\omega_f + \omega_{{\textbf Q},\alpha}) / {d\omega_f} }
    \right]
 
 in which we neglect the "evaluate at" symbol.
@@ -328,9 +328,9 @@ So the final result of Monte-Carlo probability multiplication factor is
    \frac{1}{2M} e^{-2W}
    e^{-\frac{\sigma_a(v_i)+\sigma_i}{v_0} l_i} e^{-\frac{\sigma_a(v_f)+\sigma_i}{v_0} l_f} 
    \left[
-   \frac{\left( {\bold Q}\cdot {\bold e}_{{\bold Q},\alpha}\right)^2}{\omega_{{\bold Q},\alpha}}
-   \langle n_{{\bold Q},\alpha} + 1 \rangle
-   \frac{\hbar}{ d(\omega_f + \omega_{{\bold Q},\alpha}) / {d\omega_f} }
+   \frac{\left( {\textbf Q}\cdot {\textbf e}_{{\textbf Q},\alpha}\right)^2}{\omega_{{\textbf Q},\alpha}}
+   \langle n_{{\textbf Q},\alpha} + 1 \rangle
+   \frac{\hbar}{ d(\omega_f + \omega_{{\textbf Q},\alpha}) / {d\omega_f} }
    \right]
 
 where :math:`l_i,\, l_f` are the length of entering and leaving paths.
@@ -349,16 +349,16 @@ Scattering from single crystal analytical dispersion function
    \frac{d^2 \sigma}{d\Omega dE_f} =
    \frac{\sigma}{4\pi} 
    \frac{k_f}{k_i}
-   N S({\bold Q},E)
+   N S({\textbf Q},E)
    
 .. math::
-   S({\bold Q},E) = \delta(E-E({\bold Q})) S({\bold Q})
+   S({\textbf Q},E) = \delta(E-E({\textbf Q})) S({\textbf Q})
 
 The algorithm first randomly choose a direction in the
 4pi solid angle, and that takes care of 
 :math:`d\Omega`.
 
-Along a chosen direction :math:`{\bold e}_f`,
+Along a chosen direction :math:`{\textbf e}_f`,
 we can use :math:`k_f` as 
 a parameter, and get two functions for energy transfer:
 
@@ -368,19 +368,19 @@ a parameter, and get two functions for energy transfer:
 and 
 
 .. math::
-   E2(k_f) = E({\bold Q}) = E({\bold k}_i - k_f \; {\bold e}_f) 
+   E2(k_f) = E({\textbf Q}) = E({\textbf k}_i - k_f \; {\textbf e}_f) 
 
 The delta function in the structure factor requires these two
 functions to equal.
 We seek to transform the integration of delta function:
 
 .. math::
-   \int \delta(E-E({\bold Q})) dE_f = \int \delta(f(k_f)) dk_f \; \frac{dE_f}{dk_f}
+   \int \delta(E-E({\textbf Q})) dE_f = \int \delta(f(k_f)) dk_f \; \frac{dE_f}{dk_f}
    
 or
 
 .. math::
-   \int \delta(E-E({\bold Q})) dE_f = \left| \frac{d f}{dk_f} \right|^{-1} \; \frac{dE_f}{dk_f}
+   \int \delta(E-E({\textbf Q})) dE_f = \left| \frac{d f}{dk_f} \right|^{-1} \; \frac{dE_f}{dk_f}
 
 
 Advanced topics

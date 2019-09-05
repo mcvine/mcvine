@@ -5,6 +5,16 @@ News
 
 2019
 ----
+
+* **August 2019**:
+  
+  - Jiao's paper `Recent developments of MCViNE and its applications at SNS <https://iopscience.iop.org/article/10.1088/2399-6528/ab3622/meta>`_ was published
+  - Release 1.3.4 (https://github.com/mcvine/mcvine/issues/380) was out
+
+* **June 2019**:
+      
+  - Fahima's paper `Super-resolution energy spectra from neutron direct-geometry spectrometers <https://arxiv.org/abs/1906.09482>`_ was submitted to arxiv preprint server.
+
 * **April 2019**:
 
   - Release 1.3.3 (https://github.com/mcvine/mcvine/issues/375) was out
@@ -37,6 +47,8 @@ News
 * **April 2018**:
 
   - Gabriele Sala's paper *Conceptual design of CHESS, a new direct‐geometry inelastic neutron spectrometer dedicated to studying small samples* was published at Journal of Applied Crystallography: https://doi.org/10.1107/S1600576718002224. MCViNE was used to simulate the future CHESS instrument at STS, ORNL.
+
+
 * **Feb 2018**:
 
   - Release 1.3.1 (http://mcvine.github.io/1.3.1/release-notes.html) was out
