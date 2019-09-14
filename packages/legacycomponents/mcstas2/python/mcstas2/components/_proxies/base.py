@@ -70,7 +70,7 @@ class Component(AbstractComponent, ParallelComponent):
             func = getattr(painter, f)
             args = ast.literal_eval(args)
             if not isinstance(args, tuple): args = args,
-            func(*args)
+            func(getattr(_painting_action_translator, f)(*args))
         return
 
     def get_display_instructions(self):
@@ -100,7 +100,7 @@ class Component(AbstractComponent, ParallelComponent):
     def _dumpData(self):
         return
 
-class Painter:
+class _PaintingActionTranslation:
 
     def multiline(self, *x):
         import numpy as np
@@ -108,10 +108,24 @@ class Painter:
         x = np.array(x[1:])
         x.shape = -1, 3
         assert x.shape[0] == N
-        print "Lines: " + '->'.join(str(v) for v in x)
+        return x
 
     def circle(self, plane, cx, cy, cz, r):
-        print "Circle: In plane %r, center at %r, radius %r" % (plane, (cx,cy,cz), r)
+        c = cx,cy,cz
+        return plane, c, r
+
+    def magnify(self, plane):
+        return plane
+_painting_action_translator = _PaintingActionTranslation()
+
+
+class Painter:
+
+    def multiline(self, x):
+        print "Lines: " + '->'.join(str(v) for v in x)
+
+    def circle(self, plane, c, r):
+        print "Circle: In plane %r, center at %r, radius %r" % (plane, c, r)
 
     def magnify(self, plane):
         print "Magnify: plane %r" % plane
