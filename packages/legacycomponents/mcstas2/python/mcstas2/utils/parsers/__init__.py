@@ -45,19 +45,20 @@ def parseComponent( component_file ):
     share               = _format_share_str(sections["share"])
 
     return ComponentInfo(
-                        name,
-                        header["copyright"],
-                        header["simple_description"],
-                        full_description,
-                        input_parameters,
-                        output_parameters,
-                        state_parameters,
-                        '%s' % sections["declare"],
-                        '%s' % sections["initialize"],
-                        '%s' % sections["trace"],
-                        '%s' % sections["save"],
-                        '%s' % sections["finalize"],
-                        share)
+        name,
+        header["copyright"],
+        header["simple_description"],
+        full_description,
+        input_parameters,
+        output_parameters,
+        state_parameters,
+        '%s' % sections["declare"],
+        '%s' % sections["initialize"],
+        '%s' % sections["trace"],
+        '%s' % sections["save"],
+        '%s' % sections["finalize"],
+        '%s' % sections["mcdisplay"],
+        share)
 
 
 def _format_share_str( share ):

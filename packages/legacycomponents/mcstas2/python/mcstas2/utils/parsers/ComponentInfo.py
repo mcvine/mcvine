@@ -32,7 +32,7 @@ class ComponentInfo:
                  output_parameters = [],
                  state_parameters = [],
                  declare = '',
-                 initialize='', trace='', save='', finalize='',
+                 initialize='', trace='', save='', finalize='', display='',
                  share = ('', ''),
                  ):
         self.name = name
@@ -47,6 +47,7 @@ class ComponentInfo:
         self.trace = trace
         self.save = save
         self.finalize = finalize
+        self.display = display
         self.share = share
         return
 
