@@ -51,18 +51,33 @@ class Component(AbstractComponent, ParallelComponent):
         if restore_neutron:
             # create a copy to be processed
             saved = neutrons.snapshot(len(neutrons))
-            
         # and process neutrons as normal
         ret = self._cpp_instance.process(neutrons)
-    
         # dump all calculated data
         self._dumpData()
-        
         # restore neutrons if requested
         if restore_neutron:
             neutrons.swap(saved)
-            
         return ret
+
+    def get_display(self):
+        "obtain a list of display instructions"
+        # this is done by running the mcstas display function in a subprocess.
+        # and obtain the output. mcstas display function always prints to stdout.
+        # after getting the output, parse it and only retain the display instructions
+        # 1. temp file to save the constructor information for the C++ component
+        import os, tempfile
+        tmpdir = tempfile.mkdtemp()
+        path = os.path.join(tmpdir, 'ctor.pkl')
+        import pickle
+        pickle.dump((self._cpp_instance_factory, self._factory_kwds), open(path, 'w'))
+        # 2. run python cmd in subprocess that calls mcstas display function
+        cmd = 'python -m "mcstas2.components._proxies.base" display --path="%s"' % path
+        import subprocess as sp, shlex
+        out = sp.check_output(shlex.split(cmd))
+        # 3. parse output
+        prefix = 'MCDISPLAY: '
+        return [l.lstrip(prefix) for l in out.splitlines() if l.startswith(prefix)]
 
     def _display(self):
         "call the mcstas C code for display. this will prints to stdout"
@@ -72,5 +87,21 @@ class Component(AbstractComponent, ParallelComponent):
     def _dumpData(self):
         return
 
+import click
+@click.command()
+@click.argument("action")
+@click.option("--path", help="path to display")
+def main(action, path):
+    assert action == 'display'
+    # load constructor info for the component
+    import pickle
+    f, kwds = pickle.load(open(path))
+    # create component instance
+    instance = f(**kwds)
+    # call display method
+    instance.core().display()
+    return
+
+if __name__ == '__main__': main()
 
 # End of file 
