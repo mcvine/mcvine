@@ -38,12 +38,12 @@ class wrap_TestCase(unittest.TestCase):
             xmin=-0.2, xmax=0.2,
             ymin=-0.2, ymax=0.2,
             Emin=50, Emax=60)
-        emon._display()
+        emon._call_mcstas_display()
         expected = [
             "magnify('xy')",
             'multiline(5,-0.1,-0.1,0,0.1,-0.1,0,0.1,0.1,0,-0.1,0.1,0,-0.1,-0.1,0)'
         ]
-        self.assertEqual(emon.get_display(), expected)
+        self.assertEqual(emon.get_display_instructions(), expected)
         return
 
     pass  # end of wrap_TestCase

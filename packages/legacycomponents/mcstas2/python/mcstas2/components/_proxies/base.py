@@ -60,7 +60,11 @@ class Component(AbstractComponent, ParallelComponent):
             neutrons.swap(saved)
         return ret
 
-    def get_display(self):
+    def draw(self, painter):
+        "draw this component using the painter"
+        return
+
+    def get_display_instructions(self):
         "obtain a list of display instructions"
         # this is done by running the mcstas display function in a subprocess.
         # and obtain the output. mcstas display function always prints to stdout.
@@ -79,7 +83,7 @@ class Component(AbstractComponent, ParallelComponent):
         prefix = 'MCDISPLAY: '
         return [l.lstrip(prefix) for l in out.splitlines() if l.startswith(prefix)]
 
-    def _display(self):
+    def _call_mcstas_display(self):
         "call the mcstas C code for display. this will prints to stdout"
         self._cpp_instance.core().display()
         return
