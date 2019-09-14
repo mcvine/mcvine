@@ -44,6 +44,8 @@ class wrap_TestCase(unittest.TestCase):
             'multiline(5,-0.1,-0.1,0,0.1,-0.1,0,0.1,0.1,0,-0.1,0.1,0,-0.1,-0.1,0)'
         ]
         self.assertEqual(emon.get_display_instructions(), expected)
+        from mcstas2.components._proxies import base
+        emon.draw(base.Painter())
         return
 
     pass  # end of wrap_TestCase
