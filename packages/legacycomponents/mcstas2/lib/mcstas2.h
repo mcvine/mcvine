@@ -12,6 +12,7 @@
 #include "misc.h"
 #include "misc_macros.h"
 #include "tracing_macros.h"
+#include "display.h"
 //#include "cross_ref_macros.h"
 
 

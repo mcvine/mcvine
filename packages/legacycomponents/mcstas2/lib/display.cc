@@ -51,21 +51,22 @@ void mcdis_dashed_line(double x1, double y1, double z1,
 }
 
 void mcdis_multiline(int count, ...){
-  va_list ap;
-  double x,y,z;
+    va_list ap;
+    double x,y,z;
 
-  printf("MCDISPLAY: multiline(%d", count);
-  va_start(ap, count);
-  while(count--)
-    {
-    x = va_arg(ap, double);
-    y = va_arg(ap, double);
-    z = va_arg(ap, double);
-    printf(",%g,%g,%g", x, y, z);
-    }
-  va_end(ap);
-  printf(")\n");
+    printf("MCDISPLAY: multiline(%d", count);
+    va_start(ap, count);
+    while(count--)
+      {
+        x = va_arg(ap, double);
+        y = va_arg(ap, double);
+        z = va_arg(ap, double);
+        printf(",%g,%g,%g", x, y, z);
+      }
+    va_end(ap);
+    printf(")\n");
 }
+
 
 void mcdis_rectangle(char* plane, double x, double y, double z,
 		     double width, double height){
@@ -118,6 +119,26 @@ void mcdis_box(double x, double y, double z,
 
 void mcdis_circle(char *plane, double x, double y, double z, double r){
   printf("MCDISPLAY: circle('%s',%g,%g,%g,%g)\n", plane, x, y, z, r);
+}
+
+
+namespace mcstas2 {
+  void multiline(int count, ...){
+    va_list ap;
+    double x,y,z;
+
+    printf("MCDISPLAY: multiline(%d", count);
+    va_start(ap, count);
+    while(count--)
+      {
+        x = va_arg(ap, double);
+        y = va_arg(ap, double);
+        z = va_arg(ap, double);
+        printf(",%g,%g,%g", x, y, z);
+      }
+    va_end(ap);
+    printf(")\n");
+  }
 }
 
 

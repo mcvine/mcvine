@@ -64,6 +64,10 @@ class Component(AbstractComponent, ParallelComponent):
             
         return ret
 
+    def _display(self):
+        "call the mcstas C code for display. this will prints to stdout"
+        self._cpp_instance.core().display()
+        return
 
     def _dumpData(self):
         return
