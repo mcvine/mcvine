@@ -28,13 +28,15 @@ namespace wrap_mccomponents {
     typedef typename w_t::n_t n_t;
     typedef typename w_t::epsilonarray_t epsilonarray_t;
     typedef typename w_t::Earray_t Earray_t;
+    typedef typename w_t::vec_float_t vec_float_t;
 
     class_<w_t, bases< base_t >, boost::noncopyable >
       (classname, 
        init< 
        n_t,
        const axis_t & , const axis_t &, const axis_t &, 
-       epsilonarray_t & , Earray_t &
+       epsilonarray_t & , Earray_t &,
+       const vec_float_t &, const vec_float_t &
        > () 
        [ with_custodian_and_ward<1,3, 
 	 with_custodian_and_ward<1,4,

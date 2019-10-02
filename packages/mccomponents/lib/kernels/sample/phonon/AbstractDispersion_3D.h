@@ -16,11 +16,10 @@
 #define PHONON_ABSTRACTDISPERSION_3D_H
 
 
-
 #include "vector3.h"
 
 namespace DANSE{
-  
+
   namespace phonon{
 
     //! phonon dispersion
@@ -29,9 +28,8 @@ namespace DANSE{
       ! energy() and polarization() return phonon energy and polarization 
     */
     class AbstractDispersion_3D{
-    
+
     public:
-      
       // types:
       typedef double float_t;
       typedef mcni::Vector3<float_t> K_t;
@@ -46,16 +44,15 @@ namespace DANSE{
       // methods
       virtual n_t nBranches() const;
       virtual n_t nAtoms() const;
-    
       virtual float_t energy(n_t branch_id, const K_t &k) const =0;
       virtual epsilon_t polarization(n_t branch_id, n_t atom_id, const K_t &k) const = 0;
-    
+      virtual float_t min_energy(n_t branch_id) const = 0;
+      virtual float_t max_energy(n_t branch_id) const = 0;
     protected:
       // data
       n_t m_nAtoms, m_nBranches;
-    
     };
-  
+
   } // phonon::
 } //DANSE::
 

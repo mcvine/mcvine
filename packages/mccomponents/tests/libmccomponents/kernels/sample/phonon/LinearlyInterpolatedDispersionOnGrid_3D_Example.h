@@ -22,10 +22,23 @@ namespace test {
   using namespace DANSE::phonon;
 
   const unsigned int nQs = 11, nAtoms = 5, nDims = 3, nBranches = nAtoms*nDims;
-  
-    
+  std::vector<double> getEmins()
+  {
+    std::vector<double> res;
+    for (int i=0; i<nBranches; i++)
+      res[i] = -50.;
+    return res;
+  }
+  std::vector<double> getEmaxs()
+  {
+    std::vector<double> res;
+    for (int i=0; i<nBranches; i++)
+      res[i] = 50.;
+    return res;
+  }
+
   struct LinearlyInterpolatedDispersionOnGrid_3D_Example {
-    
+
     typedef NdArray<double *, double, unsigned int, size_t, 7> array_7d_t;
     typedef NdArray<double *, double, unsigned int, size_t, 4> array_4d_t;
   
@@ -37,6 +50,7 @@ namespace test {
     double E_data[ nQs*nQs*nQs*nBranches ];
     const static w_t::n_t E_shape[4];
 
+
     array_7d_t eps_array;
     array_4d_t E_array;
 
@@ -46,9 +60,9 @@ namespace test {
 
     LinearlyInterpolatedDispersionOnGrid_3D_Example()
       : eps_array( eps_data, eps_shape ),
-	E_array( E_data, E_shape ),
-	QX(-15, 3, nQs-1), QY(-15, 3, nQs-1), QZ(-15, 3, nQs-1),
-	disp( nAtoms, QX,QY,QZ, eps_array, E_array )
+        E_array( E_data, E_shape ),
+        QX(-15, 3, nQs-1), QY(-15, 3, nQs-1), QZ(-15, 3, nQs-1),
+        disp( nAtoms, QX,QY,QZ, eps_array, E_array, getEmins(), getEmaxs() )
     {
       
       w_t::n_t indexes[7];
