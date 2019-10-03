@@ -17,6 +17,7 @@
 
 
 #include <complex>
+#include <vector>
 #include "mcni/geometry/Vector3.h"
 #include "histogram/NdArraySlice.h"
 #include "LinearlyInterpolatedGridData_3D.h"
@@ -37,7 +38,7 @@ namespace DANSE {
     public:
       // types
       typedef double float_t;
-      typedef std::vector<double> vec_float_t;
+      typedef std::vector<float_t> vec_float_t;
       typedef AbstractDispersion_3D::n_t n_t;
       typedef Array_7D epsilonarray_t;
       typedef Array_4D Earray_t;
