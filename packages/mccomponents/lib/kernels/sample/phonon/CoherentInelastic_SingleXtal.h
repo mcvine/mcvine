@@ -92,7 +92,7 @@ namespace mccomponents{
 	// actual implementation of method "scatter"
 	void pick_a_final_state( neutron_t & ev ) const;
 
-	void   pick_v_f
+	bool   pick_v_f
 	(std::vector<float_t> & prob, V_t & v_f, int branch, 
 	 const V_t & v_i, float_t v_i_l) const;
 
