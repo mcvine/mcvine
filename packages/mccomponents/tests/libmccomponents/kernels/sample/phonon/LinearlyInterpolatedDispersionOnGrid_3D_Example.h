@@ -22,16 +22,16 @@ namespace test {
   using namespace DANSE::phonon;
 
   const unsigned int nQs = 11, nAtoms = 5, nDims = 3, nBranches = nAtoms*nDims;
-  std::vector<double> getEmins()
+  std::vector<double> getEmins(size_t N)
   {
-    std::vector<double> res;
-    for (int i=0; i<nBranches; i++)
+    std::vector<double> res(N);
+    for (int i=0; i<N; i++)
       res[i] = -50.;
     return res;
   }
-  std::vector<double> getEmaxs()
+  std::vector<double> getEmaxs(size_t N)
   {
-    std::vector<double> res;
+    std::vector<double> res(N);
     for (int i=0; i<nBranches; i++)
       res[i] = 50.;
     return res;
@@ -62,9 +62,8 @@ namespace test {
       : eps_array( eps_data, eps_shape ),
         E_array( E_data, E_shape ),
         QX(-15, 3, nQs-1), QY(-15, 3, nQs-1), QZ(-15, 3, nQs-1),
-        disp( nAtoms, QX,QY,QZ, eps_array, E_array, getEmins(), getEmaxs() )
+        disp( nAtoms, QX,QY,QZ, eps_array, E_array, getEmins(nBranches), getEmaxs(nBranches) )
     {
-      
       w_t::n_t indexes[7];
       w_t::n_t & ix = indexes[0];
       w_t::n_t & iy = indexes[1];
@@ -73,26 +72,27 @@ namespace test {
       w_t::n_t & iatom = indexes[4];
       w_t::n_t & idir = indexes[5];
       w_t::n_t & iri = indexes[6];
-      
+      // fill data array
       for (ix = 0; ix <= QX.n; ix ++ )
-	for (iy = 0; iy <= QY.n; iy ++ )
-	  for (iz = 0; iz <= QZ.n; iz ++ ) {
-	    double x = QX.start + QX.step * ix;
-	    double y = QY.start + QY.step * iy;
-	    double z = QZ.start + QZ.step * iz;
-	    
-	    for (ibranch = 0; ibranch<nBranches; ibranch++) {
-	      for (iatom = 0; iatom < nAtoms; iatom ++ )
-		for (idir =0; idir<nDims; idir ++) 
-		  for (iri = 0; iri<2; iri++) {
-		    eps_array[ indexes ] = (iri?1/std::sqrt(3):0);
-		  }
-	      // E_array[indexes] = std::abs( (x*x+y*y+z*z)/15/15/3 ) * 50;
-	      E_array[indexes] = std::abs(std::sin( (x*x+y*y+z*z)/15/15/3*2*3.14*10 )) * 50;
-	    }
-	  }
-
-    } 
+        for (iy = 0; iy <= QY.n; iy ++ )
+          for (iz = 0; iz <= QZ.n; iz ++ ) {
+            double x = QX.start + QX.step * ix;
+            double y = QY.start + QY.step * iy;
+            double z = QZ.start + QZ.step * iz;
+            //
+            for (ibranch = 0; ibranch<nBranches; ibranch++) {
+              for (iatom = 0; iatom < nAtoms; iatom ++ )
+                for (idir =0; idir<nDims; idir ++) 
+                  for (iri = 0; iri<2; iri++) {
+                    eps_array[ indexes ] = (iri?1/std::sqrt(3):0);
+                  }
+              // E_array[indexes] = std::abs( (x*x+y*y+z*z)/15/15/3 ) * 50;
+              E_array[indexes] = std::abs(std::sin( (x*x+y*y+z*z)/15/15/3*2*3.14*10 )) * 50;
+            }
+          }
+      //
+      std::cout << "LinearlyInterpolatedDispersionOnGrid_3D_Example created" << std::endl;
+    }
 
   };// LinearlyInterpolatedDispersionOnGrid_3D_Example
 

@@ -47,11 +47,10 @@ int main()
   // debug2.activate();
   journal::debug_t debug3("Omega_minus_deltaE ctor");
   debug3.activate();
-  
+  // Create kernel
   w_t_Example example;
-  
   w_t & kernel = example.kernel;
-
+  // test kernel
   runTests(kernel);
 
   std::cout << "* test of scatering kernel CoherentInelastic_SingleXtal succeed." << std::endl;
