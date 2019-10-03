@@ -16,6 +16,8 @@
 #error LinearlyInterpolatedDispersionOnGrid_3D.icc not meaningful outside LinearlyInterpolatedDispersionOnGrid_3D.h
 #else
 
+#include "mcni/test/exception.h"
+
 template <typename Array_7D, typename Array_4D>
 DANSE::phonon::LinearlyInterpolatedDispersionOnGrid_3D<Array_7D, Array_4D>::
 LinearlyInterpolatedDispersionOnGrid_3D
@@ -43,12 +45,27 @@ LinearlyInterpolatedDispersionOnGrid_3D
   assert (E_data.shape()[2] == QZ.n+1 );
   assert (E_data.shape()[3] == nBranches() );
 
-  assert (min_energies.size() == nBranches());
-  assert (max_energies.size() == nBranches());
+  unsigned int nbr = nBranches();
+  if (m_min_energies.size() != nbr || m_max_energies.size() != nbr) {
+    std::ostringstream oss;
+    oss << "** Error: min_energies size: " << m_min_energies.size()
+        << "; max_energies_size: " << m_max_energies.size()
+        << "; number of branches: " << nbr
+        << std::endl;
+    throw mcni::Exception(oss.str());
+  }
+  for (int i=0; i<m_min_energies.size(); i++)
+    if (m_min_energies[i]>m_max_energies[i]) {
+      std::ostringstream oss;
+      oss << "** Error: item " << i
+          << ": min=" << m_min_energies[i]
+          << ", max=" << m_max_energies[i]
+          << std::endl;
+    }
 
   std::vector<int> indexes(7);
   indexes[0] = indexes[1] = indexes[2] = indexes[5] = indexes[6] = -1;
-  
+
   for (n_t branch = 0; branch < nBranches(); branch ++ )
     for (n_t atom = 0; atom < nAtoms; atom ++ ) {
       indexes[3] = branch;
