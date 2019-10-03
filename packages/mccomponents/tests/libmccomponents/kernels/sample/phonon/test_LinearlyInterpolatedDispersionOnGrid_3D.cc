@@ -79,6 +79,9 @@ void test()
   w_t::epsilon_t eps = disp.polarization( branch, atom, w_t::K_t(x, y, z) );
   std::cout << eps << std::endl;
 
+  std::cout << "Min energy for branch 1:" << disp.min_energy(1) << std::endl;
+  std::cout << "Max energy for branch 1:" << disp.max_energy(1) << std::endl;
+
   double t = x+y+z + branch* 10000 + atom*100;
   assert ( std::abs( eps.x.real() - t ) < 0.001 ) ;
   assert ( std::abs( eps.x.imag() - (t+1) ) < 0.001 ) ;

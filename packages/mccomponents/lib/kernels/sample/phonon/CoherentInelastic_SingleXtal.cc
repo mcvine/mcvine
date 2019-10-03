@@ -289,10 +289,17 @@ mccomponents::kernels::phonon::CoherentInelastic_SingleXtal::pick_a_final_state
   prob_factors.push_back(solid_angle);
 
   // pick branch
-  unsigned int branch = pick_phonon_branch(m_disp.nBranches());
-  prob_factors.push_back( m_disp.nBranches() );
-  
-  
+  std::vector<unsigned int> good_branches;
+  for (int br=0; br<m_disp.nBranches(); br++) {
+    // if a branch is too high compared to Ei, it rarely will make contributions to
+    // scattering.
+    if (m_disp.min_energy(br)<E_i*1.5)
+      good_branches.push_back((unsigned int)br);
+  }
+  unsigned int branch = good_branches[(int)math::random(size_t(0), good_branches.size())];
+  //  unsigned int branch = pick_phonon_branch(m_disp.nBranches());
+  prob_factors.push_back( good_branches.size() );
+
 #ifdef DEEPDEBUG
   debug << journal::at(__HERE__) << "v_i = " << v_i << journal::endl;
 #endif
@@ -346,11 +353,11 @@ mccomponents::kernels::phonon::CoherentInelastic_SingleXtal::pick_a_final_state
   // convert the q**2 in that term to be in energy unit (meV), which
   // will cancel with meV unit of phonon energy
   prob_factors.push_back(neutron_units_conversion::ksquare2E( norm_of_slsum )/std::abs(omega));
- 
+
   // thermal factor
   float_t therm_factor = kernels::phonon::phonon_bose_factor(omega, m_Temperature);
-  
-  // debye waller factor	  
+
+  // debye waller factor
   float_t DW = exp( -m_DW_calc->DW( Q_l ) );
 
   prob_factors.push_back( k_f_l/k_i_l );
