@@ -141,7 +141,7 @@ mccomponents::kernels::phonon::CoherentInelastic_SingleXtal::CoherentInelastic_S
 }
 
 
-void
+bool
 mccomponents::kernels::phonon::CoherentInelastic_SingleXtal::pick_v_f
 (std::vector<float_t> & prob_factors, 
  V_t & v_f,
@@ -171,7 +171,6 @@ const
 	<< journal::endl;
 #endif
   // function omega(Q)-dE
-  
   Omega_q_minus_deltaE omq_m_dE(branch, v_f, v_i, v_i_l, m_disp);
 
 #ifdef DEBUG
@@ -180,10 +179,11 @@ const
 	<< journal::endl;
 #endif
   // find roots of function omega(Q)-dE
-  std::vector<float_t> vf_list = m_roots_finder.solve( 0, v_i_l*2, omq_m_dE );
-
+  std::vector<float_t> vf_list;
   // number of roots
+  vf_list = m_roots_finder.solve( 0, v_i_l*2, omq_m_dE );
   size_t nf = vf_list.size(); 
+
 #ifdef DEBUG
   debug << journal::at(__HERE__)
 	<< "found " << nf << "roots." 
@@ -191,13 +191,17 @@ const
 #endif
 
   if (nf<1) {
-    omq_m_dE.print(std::cout, 0, v_i_l*2, v_i_l/10);
+    std::cerr << "** Unable to find solution for function omega(Q)-dE";
+    omq_m_dE.print(std::cerr, 0, v_i_l*2, v_i_l/10);
+    std::cerr << std::endl;
+    return true;
+    /*
     mcni::throw_fatal_path_error
       ( phonon_cohinel_sc_journal_channel,
-	journal::at(__HERE__),
-	"Unable to find solution for function omega(Q)-dE");
+        journal::at(__HERE__),
+        "Unable to find solution for function omega(Q)-dE");
+    */
   }
-  
 #ifdef DEBUG
   debug << journal::at(__HERE__)
 	<< "choose a root from the roots" 
@@ -216,7 +220,7 @@ const
   v_f.normalize(); v_f = v_f * v_f_l;
   // adjust prob
   prob_factors.push_back(nf);
-  
+
   // calculate Jacobi factor
 #ifdef DEBUG
   debug << journal::at(__HERE__)
@@ -246,6 +250,7 @@ const
 	<< "probability factors" << prob_factors
 	<< journal::endl;
 #endif
+  return false;
 }
 
 
@@ -282,26 +287,49 @@ mccomponents::kernels::phonon::CoherentInelastic_SingleXtal::pick_a_final_state
 	<< journal::endl;
 #endif
 
-  // pick direction of scattered neutron
-  V_t v_f; 
-  float_t solid_angle = kernels::choose_scattering_direction(v_f, *m_target_region); 
-  v_f.normalize();
-  prob_factors.push_back(solid_angle);
-
-  // pick branch
-  unsigned int branch = pick_phonon_branch(m_disp.nBranches());
-  prob_factors.push_back( m_disp.nBranches() );
-  
-  
+  // establish "good" branches (not too higher than Ei)
 #ifdef DEEPDEBUG
-  debug << journal::at(__HERE__) << "v_i = " << v_i << journal::endl;
+  std::cout << "Total number of branches: " << m_disp.nBranches() << std::endl;
+  std::cout << "Good branches: ";
 #endif
-  
-  // pick the final velocity of neutron
-  pick_v_f(prob_factors, v_f, branch, v_i, v_i_l);
-  
+  std::vector<unsigned int> good_branches;
+  for (int br=0; br<m_disp.nBranches(); br++) {
+    // if a branch is too high compared to Ei, it rarely will make contributions to
+    // scattering.
+    if (m_disp.min_energy(br)<E_i*1.5) {
+      good_branches.push_back((unsigned int)br);
+    }
+  }
+  V_t v_f;
+  float_t solid_angle;
+  bool pick_vf_failed;
+  int Niters = 100, iteration;
+  unsigned int branch;
+  for (iteration=0; iteration<Niters; iteration++) {
+    // pick direction of scattered neutron
+    solid_angle = kernels::choose_scattering_direction(v_f, *m_target_region); 
+    v_f.normalize();
+    // pick branch
+    branch = good_branches[(int)math::random(size_t(0), good_branches.size())];
+    // old implementation: unsigned int branch = pick_phonon_branch(m_disp.nBranches());
+    // pick the final velocity of neutron
+    pick_vf_failed = pick_v_f(prob_factors, v_f, branch, v_i, v_i_l);
+    if (!pick_vf_failed) break;
+  }
+  if (pick_vf_failed) {
 #ifdef DEEPDEBUG
-  debug << journal::at(__HERE__) << "v_i = " << v_i << journal::endl;
+    std::cout << "Failed to find a good scattering direction in " << Niters << " iterations." << std::endl;
+#endif
+    return;
+  } else {
+#ifdef DEEPDEBUG
+    std::cout << "Found solution at iteration " << iteration << std::endl;
+#endif
+  }
+  prob_factors.push_back(solid_angle);
+  prob_factors.push_back( good_branches.size() );
+#ifdef DEEPDEBUG
+    debug << journal::at(__HERE__) << "v_i = " << v_i << journal::endl;
 #endif
   
   float_t v_f_l = v_f.length();
@@ -346,11 +374,11 @@ mccomponents::kernels::phonon::CoherentInelastic_SingleXtal::pick_a_final_state
   // convert the q**2 in that term to be in energy unit (meV), which
   // will cancel with meV unit of phonon energy
   prob_factors.push_back(neutron_units_conversion::ksquare2E( norm_of_slsum )/std::abs(omega));
- 
+
   // thermal factor
   float_t therm_factor = kernels::phonon::phonon_bose_factor(omega, m_Temperature);
-  
-  // debye waller factor	  
+
+  // debye waller factor
   float_t DW = exp( -m_DW_calc->DW( Q_l ) );
 
   prob_factors.push_back( k_f_l/k_i_l );

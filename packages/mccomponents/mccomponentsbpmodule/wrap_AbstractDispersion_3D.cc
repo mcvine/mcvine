@@ -78,6 +78,8 @@ namespace wrap_mccomponents {
       .def("polarization", &w_t::polarization )
       .def("energy_arr", disp_energies)
       .def("polarization_arr", disp_pols)
+      .def("max_energy", &w_t::max_energy)
+      .def("min_energy", &w_t::min_energy)
       ;
   }
 
