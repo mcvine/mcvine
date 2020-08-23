@@ -31,7 +31,7 @@ requirements:
     - mcvine-resources
 
   run:
-    - {{ compiler('cxx') }}  # [linux]
+    - {{ compiler('cxx') }} 7 # [linux]
     - cmake
     - python
     - pyyaml
