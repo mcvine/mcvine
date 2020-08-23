@@ -8,7 +8,7 @@ source:
 
 requirements:
   build:
-    - {{ compiler('cxx') }}  # [linux]
+    - {{ compiler('cxx') }} 7 # [linux]
     - cmake
   host:
     - python
