@@ -8,6 +8,8 @@ boost:
 numpy:
   - 1.14.0
   - 1.16.0
+journal:
+  - 0.8.2
 
 zip_keys:
   - boost
