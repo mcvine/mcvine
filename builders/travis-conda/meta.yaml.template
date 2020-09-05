@@ -20,6 +20,7 @@ requirements:
     - mpi4py
     - gsl                   {{ gsl }}
     - boost                 {{ boost }}
+    - journal               {{ journal }}
     - pyre
     - danse.ins.dsm
     - danse.ins.numpyext
@@ -42,6 +43,7 @@ requirements:
     - mpi4py
     - gsl
     - boost
+    - journal
     - pyre
     - danse.ins.dsm
     - danse.ins.numpyext
