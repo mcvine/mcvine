@@ -76,6 +76,9 @@ ELSE(EXISTS "cmake_utils/")
 ENDIF(EXISTS "cmake_utils/")
 set(CMAKE_MODULE_PATH ${PROJECT_BINARY_DIR}/cmake_utils)
 
+# ABI
+add_definitions(-D_GLIBCXX_USE_CXX11_ABI=0)
+
 # use utils
 include(System) # system info
 include(Dirs)   # directory structure
@@ -90,9 +93,10 @@ find_package ( PythonInterp REQUIRED )
 # python installation path
 set(INSTALL_PY_PATH "${INSTALL_LIB_DIR}/python${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}/site-packages")
 # needs boost python
-find_package ( Boost REQUIRED )
+set(PYVER_MAJORMINOR ${PYTHON_VERSION_MAJOR}${PYTHON_VERSION_MINOR})
+find_package ( Boost COMPONENTS python${PYVER_MAJORMINOR} )
 message(" - Boost lib and header dirs: ${Boost_LIBRARY_DIRS} ${Boost_INCLUDE_DIRS}")
-find_package ( BoostPython REQUIRED )
+# find_package ( BoostPython REQUIRED )
 #
 enable_testing()
 
