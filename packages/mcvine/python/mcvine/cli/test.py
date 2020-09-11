@@ -43,6 +43,6 @@ def test(workdir):
         'CTEST_OUTPUT_ON_FAILURE=1 make test ARGS="-j%s"' % (cores,)
         ]
     cmd = ' && '.join(cmd)
-    print cmd
+    print(cmd)
     sp.check_call(cmd, shell=True)
     return

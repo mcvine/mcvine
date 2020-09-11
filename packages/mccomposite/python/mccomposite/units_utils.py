@@ -32,7 +32,7 @@ class UnitsRemover:
     UnitsRemover( length_unit = meter, angle_unit = degree, ... )
     '''
         post = '_unit'
-        for k,v in kwds.iteritems():
+        for k,v in kwds.items():
             assert k.endswith( post )
             category = k[:-len(post)]
             assert category in self.categories
@@ -64,9 +64,9 @@ def remove_unit( something, unit ):
     remove_unit( (1*meter, 2*meter), meter ) --> (1,2)
     remove_unit( (1*meter, 1*cm), meter ) --> (1,0.01)
     '''
-    if isinstance(something, basestring):
-        raise ValueError , "remove_unit cannot work directly with strings: %r" % (
-            something, )
+    if isinstance(something, str):
+        raise ValueError("remove_unit cannot work directly with strings: %r" % (
+            something, ))
     if '__iter__' in dir(something):
         if not is_unitless_vector( something ):
             return remove_unit_of_vector( something, unit)
@@ -87,7 +87,7 @@ def remove_unit_of_scalar( s, unit ):
         s+unit
         return s/unit
     except:
-        raise ValueError, "incommpatible unit: %s, %s" % (s, unit)
+        raise ValueError("incommpatible unit: %s, %s" % (s, unit))
     
 
 def is_unitless_vector( v ):
@@ -111,8 +111,8 @@ def remove_unit_of_vector( v, unit ):
 
     for i in v:
         if not isinstance(i, float):
-            raise ValueError , "v should have unit of length: %s" %(
-                v, )
+            raise ValueError("v should have unit of length: %s" %(
+                v, ))
         continue
     # this means v already is a unitless vector
     return v

@@ -28,8 +28,8 @@ def removedirs( thepath ):
                 try:
                     removedirs(item)
                 except:
-                    print "cannot empty directory %s"% item
-                    raise 'cannot empty the directory'
+                    print("cannot empty directory %s"% item)
+                    raise RuntimeError('cannot empty the directory')
     rmdir(thepath)
 
 

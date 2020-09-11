@@ -21,7 +21,7 @@
 
 
 def builder( name ):
-    exec 'import %s as package' % name
+    exec('import %s as package' % name)
     #package = __import__(name, {}, {},  [])
     return package
 
@@ -29,7 +29,7 @@ def builder( name ):
 def binding( *args, **kwds ):
     deps = kwds.get( 'dependencies' )
     del kwds['dependencies']
-    from Binding import Binding
+    from .Binding import Binding
     ret = Binding( *args, **kwds )
     if deps:
         for dep in deps: _addDep( dep, ret )

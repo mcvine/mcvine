@@ -27,14 +27,14 @@ class TestCase(unittest.TestCase):
 
     def test(self):
         'mcni: component factory'
-        print 'mcni, sources, MonochromaticSource',  componentfactory( 'sources', 'MonochromaticSource'), componentinfo( 'sources', 'MonochromaticSource' )
-        print 'mcni, sources, MonochromaticSource',  componentfactory( 'sources', 'MonochromaticSource', 'mcni'), componentinfo( 'sources', 'MonochromaticSource', 'mcni' )
+        print('mcni, sources, MonochromaticSource',  componentfactory( 'sources', 'MonochromaticSource'), componentinfo( 'sources', 'MonochromaticSource' ))
+        print('mcni, sources, MonochromaticSource',  componentfactory( 'sources', 'MonochromaticSource', 'mcni'), componentinfo( 'sources', 'MonochromaticSource', 'mcni' ))
         return
 
     def test2(self):
         'mcni: component factory for mcstas components'
         import mcstas2
-        print 'mcstas2, sources, Source_simple',  componentfactory( 'sources', 'Source_simple', 'mcstas2'), componentinfo( 'sources', 'Source_simple', 'mcstas2' )
+        print('mcstas2, sources, Source_simple',  componentfactory( 'sources', 'Source_simple', 'mcstas2'), componentinfo( 'sources', 'Source_simple', 'mcstas2' ))
         return
     
         

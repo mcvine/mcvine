@@ -12,7 +12,7 @@
 #
 
 
-from AbstractNeutronTracer import AbstractNeutronTracer as base
+from .AbstractNeutronTracer import AbstractNeutronTracer as base
 
 class ConsoleNeutronTracer(base):
 
@@ -26,16 +26,16 @@ class ConsoleNeutronTracer(base):
             context.identify(self)
 
         for neutron in neutrons:
-            print neutron
-        print
+            print(neutron)
+        print()
 
 
     def onBefore(self, context):
-        print 'Before entering %s' % context.obj
+        print('Before entering %s' % context.obj)
 
 
     def onProcessed(self, context):
-        print 'After processed by %s' % context.obj
+        print('After processed by %s' % context.obj)
 
 
 # version

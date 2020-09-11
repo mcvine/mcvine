@@ -5,7 +5,7 @@ def main():
     outf = 'out-test_gaussian_gsl'
     os.system('./test_gaussian_gsl > %s' % outf)
     y = open(outf).readlines()
-    y = map(float, y)
+    y = list(map(float, y))
     import numpy
     x = numpy.arange(-5, 5, 10./200)
     import pylab

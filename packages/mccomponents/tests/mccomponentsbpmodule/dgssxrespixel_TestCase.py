@@ -25,7 +25,7 @@ class TestCase(unittest.TestCase):
         
         ev = mcni.neutron( r = (0,0,-3), v = (0,0,3000) )
         pixel.scatter(ev)
-        print ev.probability
+        print(ev.probability)
         return
 
     pass  # end of TestCase

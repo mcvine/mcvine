@@ -65,7 +65,7 @@ class detector_TestCase(unittest.TestCase):
         cds = mh.scattererEngine( detectorSystem, coordinate_system = coordinate_system )
 
         for i in range(nevents):
-            if i%1000 == 0: print i
+            if i%1000 == 0: print(i)
             ev = mcni.neutron( r = (0,0,0), v = (1500,0,2000) )
             cds.scatter(ev)
             continue
@@ -81,14 +81,14 @@ class detector_TestCase(unittest.TestCase):
         t = struct.unpack( fmt * (len(s) / struct.calcsize( fmt )) , s )
         #print t
         n = len(t)/len(fmt)
-        print "number of cases where absorption happen: ", n
-        self.assert_( abs(n-(nevents*absorption_weight)) < 3*N.sqrt(n) )
+        print("number of cases where absorption happen: ", n)
+        self.assertTrue( abs(n-(nevents*absorption_weight)) < 3*N.sqrt(n) )
 
         t = N.array(t)
         t.shape = n, 3
         p = t[:, 2].sum()
-        print "absorbed neutrons: ", p
-        self.assert_( p>nevents*0.9 and p<nevents )
+        print("absorbed neutrons: ", p)
+        self.assertTrue( p>nevents*0.9 and p<nevents )
         return
 
     pass  # end of detector_TestCase

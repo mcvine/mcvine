@@ -34,7 +34,7 @@ class scattererxml_TestCase(unittest.TestCase):
         scatterer = parse_file( scattererxml )
 
         kernel = scatterer.kernel()
-        self.assert_( isKernel( kernel ) )
+        self.assertTrue( isKernel( kernel ) )
         return
     
 
@@ -49,7 +49,7 @@ class scattererxml_TestCase(unittest.TestCase):
         scatterer = parse_file( scattererxml )
         
         renderedxml = "%s.rendered" % scattererxml
-        print >>open(renderedxml,'w'), '\n'.join(render(scatterer))
+        print('\n'.join(render(scatterer)), file=open(renderedxml,'w'))
 
         scatterer1 = parse_file( renderedxml )
         return
@@ -63,7 +63,7 @@ def _remove( files ):
     for path in files:
         if os.path.exists( path ):
             if not os.path.isfile(path):
-                raise IOError , "%s is not a file" % path
+                raise IOError("%s is not a file" % path)
             os.remove( path )
             pass
         continue

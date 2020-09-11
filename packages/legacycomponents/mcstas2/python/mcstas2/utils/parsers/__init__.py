@@ -15,8 +15,8 @@
 ## Parsers to parse Riseo McStas files such as
 ##  - McStas component file
 
-from ComponentInfo import ComponentInfo, Parameter
-from McStasComponentParser import McStasComponentParser
+from .ComponentInfo import ComponentInfo, Parameter
+from .McStasComponentParser import McStasComponentParser
 
 def parseComponent( component_file ):
     "Parses component"
@@ -61,7 +61,7 @@ def parseComponent( component_file ):
 
 
 def _format_share_str( share ):
-    from ShareIncludeParser import include
+    from .ShareIncludeParser import include
     lines = share.split( '\n' )
     if len(lines) == 0: return '', ''
     if len(lines) == 1: return '', ''
@@ -100,7 +100,7 @@ def _format_share_str( share ):
 %s
 // ----------- added by YOUR NAME --------
 """ % implementation_start_signature
-        raise RuntimeError, "invalid component share section. No separator to separate implementation code from header code: %s\nHeader start example:\n%s\nImplementation start example:\n%s\n" % (share, separator_example_header, separator_example_implementation)
+        raise RuntimeError("invalid component share section. No separator to separate implementation code from header code: %s\nHeader start example:\n%s\nImplementation start example:\n%s\n" % (share, separator_example_header, separator_example_implementation))
 
     return ('\n'.join( lines[:start_of_implementation] ),
             '\n'.join( lines[start_of_implementation:] ) )

@@ -82,7 +82,7 @@ def componentinfo(type, category=None, supplier=None):
     return  componentinfo(type=type, category=category, supplier=supplier)
 
 
-import component_suppliers
+from . import component_suppliers
 
 __all__ = [
     'simulate', 'geometer', 'instrument', 'neutron_buffer', 'neutron',

@@ -43,7 +43,7 @@ class TestCase(unittest.TestCase):
         arr = neutrons.to_npyarr()
         x,y,z = arr[:, :3].T
         z1 = z[missing]
-        print z1[z1>=-0.9]
+        print(z1[z1>=-0.9])
         assert (z1>=-0.0).sum() < 1e-4*N
         hit = arr[np.logical_not(missing), :3]
         x,y,z = hit.T

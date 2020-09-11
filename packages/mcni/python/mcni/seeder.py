@@ -21,7 +21,7 @@ def register( seeding_function ):
 
 def feed( ):
     'feed seeds to all functions that need seed'
-    import rng_seed
+    from . import rng_seed
     for seeding_function in _registry:
         seed = rng_seed.seed( )
         seeding_function( seed )

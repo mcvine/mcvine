@@ -13,12 +13,12 @@ def bash():
 @bash.command()
 def complete():
     "Instructions for bash complete support"
-    print """
+    print("""
 To enable bash auto complete for mcvine command, run
 
  $ eval "$(_MCVINE_COMPLETE=source mcvine)"
 
-"""
+""")
     return
 
 
@@ -43,11 +43,11 @@ def aliases(ctx, keyword):
         return
     cmds = []
     from .  import aliases
-    for alias, cmd in aliases.iteritems():
+    for alias, cmd in aliases.items():
         if keyword=='all' or keyword in alias:
             cmds.append(alias_cmd(alias, cmd))
         continue
-    print '\n'.join(cmds)
+    print('\n'.join(cmds))
     return
 
 

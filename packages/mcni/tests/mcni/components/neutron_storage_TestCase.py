@@ -71,7 +71,7 @@ class Verifier( AbstractComponent ):
         return
 
     def process(self, neutrons):
-        for n in neutrons: print n
+        for n in neutrons: print(n)
         for i in range(len(neutrons)):
             r = list( neutrons[i].state.position )
 

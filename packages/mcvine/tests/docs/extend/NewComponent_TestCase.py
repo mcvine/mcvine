@@ -18,14 +18,14 @@ outdir = 'out'
 import os, glob, shutil
 def cleanup():
     pmls = glob.glob('sd.pml*')
-    map(os.remove, pmls)
+    for _ in pmls: os.remove(_)
     if os.path.exists(outdir):
         shutil.rmtree('out')
 
 
 def execute(cmd):
     if os.system(cmd):
-        raise RuntimeError, "%r failed" %cmd
+        raise RuntimeError("%r failed" %cmd)
 
 
 import unittest

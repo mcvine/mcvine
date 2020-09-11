@@ -12,7 +12,7 @@
 #
 
 
-from CxxClassMillBase import CxxClassMillBase
+from .CxxClassMillBase import CxxClassMillBase
 
 
 class CCMill(CxxClassMillBase):
@@ -78,7 +78,7 @@ def _arg_str( arg ):
 
 
 def test():
-    from Class import example
+    from .Class import example
     klass = example()
 
     from pyre.applications.Script import Script
@@ -88,7 +88,7 @@ def test():
             weaver = self.weaver
             weaver.renderer = CCMill()
             r = weaver.render( klass )
-            print "\n".join(r)
+            print("\n".join(r))
             return
 
         pass # end of App

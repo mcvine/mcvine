@@ -35,7 +35,7 @@ given mcstas component category and type.
     factory.arguments = info.input_parameters
     from mcstas2.utils.pyre_support import elementaryComponentClassGenerator as generator
 
-    from _component_interfaces import getInterface
+    from ._component_interfaces import getInterface
     interface = getInterface(category, type)
 
     f = generator( ctor_takes_name = True, baseclass = interface )( factory )

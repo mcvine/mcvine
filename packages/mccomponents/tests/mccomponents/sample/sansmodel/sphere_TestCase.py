@@ -48,11 +48,11 @@ class TestCase(unittest.TestCase):
         from mccomponents.sample import scattererEngine
         kengine = scattererEngine( k )
 
-        print dir(kengine)
+        print(dir(kengine))
 
         n = mcni.neutron( r = (0,0,0), v = (0,0,3000) )
         kengine.scatter( n )
-        print n
+        print(n)
         return
 
         

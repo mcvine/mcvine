@@ -57,7 +57,7 @@ class TestCase(unittest.TestCase):
         disp = mccomponentsbp.LinearlyInterpolatedDispersionOnGrid_3D_dblarrays(
             nAtoms, Qx_axis, Qy_axis, Qz_axis, eps_arr, E_arr, v_Emin, v_Emax)
 
-        print "# of branches %s, # of atoms %s" % (disp.nBranches(), disp.nAtoms())
+        print("# of branches %s, # of atoms %s" % (disp.nBranches(), disp.nAtoms()))
         Q = mcnibp.Vector3_double(0,0,0)
         Es = [disp.energy(i, Q) for i in range(disp.nBranches())]
 

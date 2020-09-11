@@ -32,13 +32,13 @@ class TestCase(unittest.TestCase):
     
     def test2(self):
         'list component categories'
-        print mcstas2.listallcomponentcategories( )
+        print(mcstas2.listallcomponentcategories( ))
         return
 
 
     def test3(self):
         'list components of a category'
-        print mcstas2.listcomponentsincategory( 'monitors' )
+        print(mcstas2.listcomponentsincategory( 'monitors' ))
         return
 
 

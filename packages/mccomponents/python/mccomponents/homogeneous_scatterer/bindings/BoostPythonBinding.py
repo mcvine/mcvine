@@ -18,7 +18,7 @@ mccomposite.bindings.get('BoostPython')
 import mccomponents.mccomponentsbp as binding
 
 
-from AbstractBinding import AbstractBinding as Interface
+from .AbstractBinding import AbstractBinding as Interface
 from mccomposite.bindings.BoostPythonBinding import BoostPythonBinding as base
 
 
@@ -87,9 +87,9 @@ def register( methodname, method, override = False ):
     '''register a new handling method'''
     if hasattr(BoostPythonBinding, methodname):
         if not override:
-            raise ValueError , "Cannot register handler %s. "\
+            raise ValueError("Cannot register handler %s. "\
                   "It was already registered." % (
-                methodname )
+                methodname ))
         pass
     
     setattr( BoostPythonBinding, methodname, method )

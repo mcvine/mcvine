@@ -42,7 +42,7 @@ class GetDetectorHierarchyDimensions(Visitor):
         self._indexShape = []
         self._level = 0
         Visitor.render( self, instrument, geometer )
-        ret = zip(self._layers, self._indexShape)
+        ret = list(zip(self._layers, self._indexShape))
         del self._level, self._indexShape, self._layers
         return ret
 
@@ -79,8 +79,8 @@ class GetDetectorHierarchyDimensions(Visitor):
                     typeName, e.__class__.__name__ )
                 continue
         else:
-            raise RuntimeError , "shape: %s, level: %s" %(
-                self._indexShape, self._level)
+            raise RuntimeError("shape: %s, level: %s" %(
+                self._indexShape, self._level))
         self._level += 1
         for element in container: element.identify( self )
         self._level -= 1

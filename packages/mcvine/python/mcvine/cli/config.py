@@ -18,7 +18,7 @@ class Struct:
     '''The recursive class for building and representing objects with.'''
     def __init__(self, obj):
         self.orig_dict = obj # keep a reference of the original dict obj
-        for k, v in obj.items():
+        for k, v in list(obj.items()):
             setattr(self, k, _struct(v))
     def __getitem__(self, val):
         return self.__dict__[val]
@@ -27,13 +27,13 @@ class Struct:
         return val
     def __repr__(self):
         return '{%s}' % str(', '.join('%s : %s' % (k, repr(v)) for
-                                      (k, v) in self.__dict__.items()))
+                                      (k, v) in list(self.__dict__.items())))
 
 def _struct(v):
     if isinstance(v, dict):
         return Struct(v)
     elif isinstance(v, list):
-        return map(_struct, v)
+        return list(map(_struct, v))
     else:
         return v
                                      

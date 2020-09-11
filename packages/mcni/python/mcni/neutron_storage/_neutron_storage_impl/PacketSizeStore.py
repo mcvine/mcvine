@@ -37,22 +37,22 @@ class PacketSizeStore:
         if self.size is None:
             text = self.handle.read()
             if len(text) == 0: return 
-            size = long( text )
+            size = int( text )
             self.size = size
         return self.size
 
 
     def setsize(self, size):
-        if self.size  and  size != self.size: raise RuntimeError, "packet size cannot be changed"
-        if size <= 0: raise ValueError, "packet size must be positive: size=%s" % size
-        if self._check_size_type(size): raise TypeError, "packet size must be an integer"
+        if self.size  and  size != self.size: raise RuntimeError("packet size cannot be changed")
+        if size <= 0: raise ValueError("packet size must be positive: size=%s" % size)
+        if self._check_size_type(size): raise TypeError("packet size must be an integer")
         self.handle.write( '%s'% size )
         self.size = size
         return size
     
 
     def _check_size_type(self, size):
-        types = [int, long]
+        types = [int, int]
         for type in types:
             if isinstance( size, type): return False
             continue

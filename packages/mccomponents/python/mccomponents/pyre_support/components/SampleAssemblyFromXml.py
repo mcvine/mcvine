@@ -30,14 +30,14 @@ class SampleAssemblyFromXml( AbstractComponent ):
     def process(self, neutrons):
         engine = self.engine
         if not engine:
-            raise RuntimeError, "engine not initialized"
+            raise RuntimeError("engine not initialized")
         return self.engine.process( neutrons )
 
 
     def processM(self, neutrons):
         engine = self.engine
         if not engine:
-            raise RuntimeError, "engine not initialized"
+            raise RuntimeError("engine not initialized")
         return self.engine.processM( neutrons )
 
 

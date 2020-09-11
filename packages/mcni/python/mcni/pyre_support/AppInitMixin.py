@@ -15,7 +15,7 @@
 # Mixin to alter pyre app behavior on initialization
 
 
-from ComponentInitMixin import ComponentInitMixin
+from .ComponentInitMixin import ComponentInitMixin
 class AppInitMixin(ComponentInitMixin):
 
 

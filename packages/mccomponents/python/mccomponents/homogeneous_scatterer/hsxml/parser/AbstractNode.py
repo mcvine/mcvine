@@ -16,7 +16,7 @@ debug = journal.debug("homogeneous_scatterer.xmlparser")
 
 
 from pyre.xml.Node import Node
-import urllib
+import urllib.request, urllib.parse, urllib.error
 
 
 

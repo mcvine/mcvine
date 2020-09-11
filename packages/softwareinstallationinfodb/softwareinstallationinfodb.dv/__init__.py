@@ -12,7 +12,7 @@
 #
 
 def info( name ):
-    exec 'import %s as m' % name.replace('-', '_')
+    exec('import %s as m' % name.replace('-', '_'))
     return m.info
 
 

@@ -63,35 +63,35 @@ def events2IQE(
     Ei: incident energy
     Qaxis, Eaxis: (min, max, step) of Q and E
     '''
-    if not isinstance(eventsfile, basestring):
-        raise ValueError, "%s is not a str" % eventsfile
+    if not isinstance(eventsfile, str):
+        raise ValueError("%s is not a str" % eventsfile)
     import os
     if not os.path.exists(eventsfile):
-        raise IOError, "%s does not exist" % eventsfile
+        raise IOError("%s does not exist" % eventsfile)
     
     try:
         nevents  = int(nevents)
     except:
-        raise ValueError, "Cannot convert %s to integer" % nevents
+        raise ValueError("Cannot convert %s to integer" % nevents)
 
-    if not isinstance(intensityfile, basestring):
-        raise ValueError, "%s is not a str" % intensityfile
+    if not isinstance(intensityfile, str):
+        raise ValueError("%s is not a str" % intensityfile)
     
-    if not isinstance(pixelpositionsfile, basestring):
-        raise ValueError, "%s is not a str" % pixelpositionsfile
+    if not isinstance(pixelpositionsfile, str):
+        raise ValueError("%s is not a str" % pixelpositionsfile)
     import os
     if not os.path.exists(pixelpositionsfile):
-        raise IOError, "%s does not exist" % pixelpositionsfile
+        raise IOError("%s does not exist" % pixelpositionsfile)
     
-    if not isinstance(solidanglesfile, basestring):
-        raise ValueError, "%s is not a str" % solidanglesfile
+    if not isinstance(solidanglesfile, str):
+        raise ValueError("%s is not a str" % solidanglesfile)
     if not os.path.exists(solidanglesfile):
-        raise IOError, "%s does not exist" % solidanglesfile
+        raise IOError("%s does not exist" % solidanglesfile)
 
     try:
         npixels  = int(npixels)
     except:
-        raise ValueError, "Cannot convert %s to integer" % npixels
+        raise ValueError("Cannot convert %s to integer" % npixels)
 
     # for details of units used
     # see Event2QE.h
@@ -123,7 +123,7 @@ def events2IQE(
     p = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     out, err = p.communicate()
     if p.wait():
-        raise RuntimeError, "%s failed" % cmd
+        raise RuntimeError("%s failed" % cmd)
     nQ, nE = eval(out.strip().splitlines()[-1])
 
     import numpy
@@ -144,7 +144,7 @@ def events2IQE(
     return iqe
 
 
-from event_utils import readEvents as readevents
+from .event_utils import readEvents as readevents
 
 
 # version

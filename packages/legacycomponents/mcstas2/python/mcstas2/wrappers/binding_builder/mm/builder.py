@@ -12,13 +12,13 @@
 #
 
 
-import binding_mk
-import pythonpackage_mk
-import local_def
+from . import binding_mk
+from . import pythonpackage_mk
+from . import local_def
 import os
 
-from utils import callmm
-from temporaryfiles import temporarydir
+from .utils import callmm
+from .temporaryfiles import temporarydir
 from shutil import rmtree
 
 

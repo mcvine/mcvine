@@ -40,7 +40,7 @@ class Component(AbstractComponent):
         out, err = p.communicate(vnb.getCharPtr())
         rt = p.wait()
         if rt:
-            raise RuntimeError, "%s failed" % cmd
+            raise RuntimeError("%s failed" % cmd)
         n = len(out)/VITESS_NEUTRON_SIZE
         neutrons.resize(n)
         vitessbuffer2mcvinebuffer(out, n, neutrons)
@@ -50,7 +50,7 @@ class Component(AbstractComponent):
     def _get_vitessmodulespath(self):
         path = os.environ.get('VITESS_MODULES_DIR')
         if not path:
-            raise RuntimeError, "Cannot find vitess modules. please set env var VITESS_MODULES_DIR"
+            raise RuntimeError("Cannot find vitess modules. please set env var VITESS_MODULES_DIR")
         return path
     vitessmodulespath = property(_get_vitessmodulespath)
 

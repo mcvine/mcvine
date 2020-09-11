@@ -22,7 +22,7 @@ n1, n2, n3 are number of points along directions of b1, b2, b3 respectively
 def read( path ):
     lines = open(path).readlines()
     for line in lines:
-        exec line in locals()
+        exec(line, locals())
         continue
     return (b1,b2,b3), (n1,n2,n3)
 

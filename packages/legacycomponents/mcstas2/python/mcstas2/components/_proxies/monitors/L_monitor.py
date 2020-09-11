@@ -4,7 +4,7 @@
 #
 
 
-from base import Component as base
+from .base import Component as base
 
 class Component(base):
     

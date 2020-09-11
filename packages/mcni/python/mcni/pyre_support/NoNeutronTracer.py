@@ -12,7 +12,7 @@
 #
 
 
-from AbstractNeutronTracer import AbstractNeutronTracer as base
+from .AbstractNeutronTracer import AbstractNeutronTracer as base
 
 class NoNeutronTracer(base):
 

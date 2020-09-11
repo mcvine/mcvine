@@ -12,7 +12,7 @@
 #
 
 
-from AbstractNode import AbstractNode, debug
+from .AbstractNode import AbstractNode, debug
 
 
 class LinearlyInterpolatedDispersion(AbstractNode):
@@ -26,8 +26,8 @@ class LinearlyInterpolatedDispersion(AbstractNode):
         if datapath:
             pass
         else:
-            raise ValueError, "LinearlyInterpolatedDispersion needs path to "\
-                  "idf data files"
+            raise ValueError("LinearlyInterpolatedDispersion needs path to "\
+                  "idf data files")
         
         from mccomponents.sample.phonon import periodicdispersion_fromidf
         return periodicdispersion_fromidf( datapath )

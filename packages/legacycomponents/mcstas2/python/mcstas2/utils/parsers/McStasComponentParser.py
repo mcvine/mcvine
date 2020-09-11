@@ -77,7 +77,7 @@ import re
 import sys
 import os.path
 from time import localtime, strftime
-from orderedDict import OrderedDict
+from .orderedDict import OrderedDict
 
 # Constants:
 # Directives
@@ -243,15 +243,15 @@ class McStasComponentParser(object):
 
     def toString(self, br="\n"):
         str     = ""
-        for (key, value) in self._header.iteritems():
+        for (key, value) in self._header.items():
             str += "%s: %s%s" % (key, value, br)
 
         str += br
-        for (key, value) in self._sections.iteritems():
+        for (key, value) in self._sections.items():
             str += "%s: %s%s" % (key, value, br)
 
         str += br
-        for (key, value) in self._defs.iteritems():
+        for (key, value) in self._defs.items():
             str += "%s: %s%s" % (key, value, br)
 
         return str
@@ -653,10 +653,10 @@ def main():
             elif parts[0] in CONFIG:
                 conv    = McStasComponentParser(config=parts[1])
 
-            print conv.toString()
+            print(conv.toString())
             return
 
-    print USAGE_MESSAGE
+    print(USAGE_MESSAGE)
     return
 
 

@@ -12,7 +12,7 @@
 #
 
 
-import units
+from . import units
 meV = units.energy.meV
 angstrom = units.length.angstrom
 
@@ -20,7 +20,7 @@ angstrom = units.length.angstrom
 def simplepowderdiffractionkernel(
     Dd_over_d, DebyeWaller_factor, peaks, **kwds
     ):
-    from SimplePowderDiffractionKernel import SimplePowderDiffractionKernel as f
+    from .SimplePowderDiffractionKernel import SimplePowderDiffractionKernel as f
     return f(Dd_over_d, DebyeWaller_factor, peaks, **kwds)
 
 
@@ -53,11 +53,11 @@ class cross_sections:
     return
     
 
-import ComputationEngineRendererExtension
+from . import ComputationEngineRendererExtension
 
 #make bindings available
 def _import_bindings():
-    import bindings
+    from . import bindings
     return
 
 _import_bindings()

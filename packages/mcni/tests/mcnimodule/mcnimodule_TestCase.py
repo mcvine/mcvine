@@ -66,7 +66,7 @@ class mcnimodule_TestCase(unittest.TestCase):
         events = mcni.neutron_buffer(2)
         events.fromCevents( cevents, 2 )
 
-        for event in events: print event
+        for event in events: print(event)
         return
 
     pass  # end of mcnimodule_TestCase

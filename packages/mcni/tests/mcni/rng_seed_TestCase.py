@@ -31,7 +31,7 @@ class TestCase(unittest.TestCase):
         'mcni: generate seeds for random number generator'
         from mcni.rng_seed import seed
         for i in range(10):
-            print seed()
+            print(seed())
         return
     
         

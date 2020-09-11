@@ -26,7 +26,7 @@ class hsxml_TestCase(unittest.TestCase):
         'hsxml: parsing'
         from mccomponents.homogeneous_scatterer.hsxml import parse_file
         hs = parse_file( 'Ni-scatterer.xml' )
-        print hs
+        print(hs)
         return
     
     def test1(self):
@@ -37,7 +37,7 @@ class hsxml_TestCase(unittest.TestCase):
         self.assertEqual( shape.__class__.__name__, 'Sphere' )
 
         from mccomponents.homogeneous_scatterer.Kernel import Kernel
-        self.assert_( isinstance( hs.kernel(), Kernel) )
+        self.assertTrue( isinstance( hs.kernel(), Kernel) )
         return
 
     def test2(self):
@@ -55,21 +55,21 @@ class hsxml_TestCase(unittest.TestCase):
         self.assertEqual( shape.__class__.__name__, 'Sphere' )
 
         from mccomponents.homogeneous_scatterer.Kernel import Kernel
-        self.assert_( isinstance( hs1.kernel(), Kernel) )
+        self.assertTrue( isinstance( hs1.kernel(), Kernel) )
         return
     
     def test3(self):
         'hsxml: InverseVelocityAbsorption'
         from mccomponents.homogeneous_scatterer.hsxml import parse_file
         hs = parse_file( 'Ni-scatterer-inversevelocityabsorption.xml' )
-        print hs
+        print(hs)
         return
     
     def test4(self):
         'hsxml: InterpolateAbsorptionFromCurve'
         from mccomponents.homogeneous_scatterer.hsxml import parse_file
         hs = parse_file( 'Ni-scatterer-interpolateabsorptionfromcurve.xml' )
-        print hs
+        print(hs)
         return
     
     pass  # end of hsxml_TestCase

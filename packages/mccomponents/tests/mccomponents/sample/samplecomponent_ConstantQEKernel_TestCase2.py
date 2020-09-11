@@ -61,7 +61,7 @@ class TestCase(unittest.TestCase):
         for i in range(10):
             neutron = neutrons[i]
             Vf = np.array(neutron.state.velocity)
-            print Vf
+            print(Vf)
 
             ef = conversion.v2e(nl.norm(Vf))
             E = ei-ef

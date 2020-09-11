@@ -20,8 +20,8 @@ class CxxClassRenderer(object):
     def onArgument(self, argument): self._nie("onArgument")
 
     def _nie(self, name):
-        raise NotImplementedError, "%s must provide method '%s'" % (
-            self.__class__.__name__, name)
+        raise NotImplementedError("%s must provide method '%s'" % (
+            self.__class__.__name__, name))
 
     pass # end of CxxClassRenderer
 

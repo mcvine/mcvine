@@ -24,7 +24,7 @@ class Renderer(object):
 
     def onInventory(self, inventory):
         self.d = self.cd = {}
-        for facility in inventory.facilities.itervalues():
+        for facility in inventory.facilities.values():
             facility.identify(self)
         return self.d
 

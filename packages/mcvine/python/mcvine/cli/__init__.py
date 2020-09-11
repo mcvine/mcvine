@@ -25,7 +25,7 @@ def mcvine():
 @mcvine.command()
 def version():
     from mcvine import version
-    print version
+    print(version)
     return
 
 from ._provenance import save_metadata

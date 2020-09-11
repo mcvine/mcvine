@@ -13,18 +13,18 @@
 
 
 def srandom( seed ):
-    from bindings import default
+    from .bindings import default
     binding = default()
     return binding.srandom( seed )
 
 
 def compositeKernel( *args, **kwds ):
-    from CompositeKernel import CompositeKernel
+    from .CompositeKernel import CompositeKernel
     return CompositeKernel( *args, **kwds )
 
 
 def homogeneousScatterer( shape, kernel, **kwds ):
-    from HomogeneousScatterer import HomogeneousScatterer
+    from .HomogeneousScatterer import HomogeneousScatterer
     return HomogeneousScatterer(shape, kernel, **kwds)
 
 
@@ -55,7 +55,7 @@ def scattererEngine(
     from mccomposite.bindings import classes
     bindingClass1 = classes() [ binding ]
     
-    from bindings import classes
+    from .bindings import classes
     bindingClass2 = classes() [ binding ]
 
     class B(bindingClass1, bindingClass2): pass
@@ -67,7 +67,7 @@ def scattererEngine(
     
     # 3. factory
     from mccomposite.ScattererComputationEngineFactory import ScattererComputationEngineFactory as S
-    from KernelComputationEngineFactory import KernelComputationEngineFactory as K
+    from .KernelComputationEngineFactory import KernelComputationEngineFactory as K
     class F(S,K):
         def __init__(self, binding, orientation_convention):
             S.__init__(self, binding, orientation_convention)
@@ -85,12 +85,12 @@ def kernelEngine( kernel, binding = "BoostPythonBinding" ):
     
     This factory method can only deal with kernels, but not scatterers.
     """
-    from bindings import classes as bindingClasses
+    from .bindings import classes as bindingClasses
     binding = bindingClasses() [ binding ] ()
     
-    from KernelComputationEngineFactory import KernelComputationEngineFactory
+    from .KernelComputationEngineFactory import KernelComputationEngineFactory
     factory = KernelComputationEngineFactory( binding )
-    from KernelComputationEngineRenderer import KernelComputationEngineRenderer
+    from .KernelComputationEngineRenderer import KernelComputationEngineRenderer
     return KernelComputationEngineRenderer( factory ).render( kernel )
 
 
@@ -117,13 +117,13 @@ def register( newtype, renderer_handler, binding_handlers):
 def register_engine_renderer_handler( newtype, renderer_handler ):
     """register a new scatterer type and its engine constructor handler
     """
-    import KernelComputationEngineRenderer
+    from . import KernelComputationEngineRenderer
     KernelComputationEngineRenderer.register(newtype, renderer_handler)
     return
 
 
 def register_binding_handlers( newtype, binding_handlers ):
-    import bindings
+    from . import bindings
     bindings.register( newtype.__name__.lower(), binding_handlers )
     return
 
@@ -134,7 +134,7 @@ def register_binding_handlers( newtype, binding_handlers ):
 # bases
 def _rendererBases():
     from mccomposite.ScattererComputationEngineRenderer import ScattererComputationEngineRenderer 
-    from KernelComputationEngineRenderer import KernelComputationEngineRenderer
+    from .KernelComputationEngineRenderer import KernelComputationEngineRenderer
     return [ KernelComputationEngineRenderer, ScattererComputationEngineRenderer ]
 
 
@@ -163,7 +163,7 @@ def _inherit( klasses ):
     P = klasses
     code = "class _( %s ): pass" % ','.join( [ 'P[%s]' % i for i in range(len(P)) ] )
     #print code
-    exec code in locals()
+    exec(code, locals())
     return _
 
 

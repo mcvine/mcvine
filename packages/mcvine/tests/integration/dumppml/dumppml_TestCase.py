@@ -21,14 +21,15 @@ os.environ['MCVINE_MPI_LAUNCHER'] = 'serial'
 import glob, shutil
 def cleanup():
     # clean up
-    map(os.remove, glob.glob('ssd.pml*'))
+    pmls = glob.glob('ssd.pml*')
+    for _ in pmls: os.remove(_)
     if os.path.exists(outdir):
         shutil.rmtree('out')
 
 
 def execute(cmd):
     if os.system(cmd):
-        raise RuntimeError, "%r failed" %cmd
+        raise RuntimeError("%r failed" %cmd)
 
 
 import unittest
@@ -45,27 +46,27 @@ class TestCase(unittest.TestCase):
         cmd = './ssd -dump-pml'
         execute(cmd)
         # make sure output directory is not created
-        self.assert_(not os.path.exists(outdir))
+        self.assertTrue(not os.path.exists(outdir))
         # make sure ssd.pml is created
-        self.assert_(os.path.exists(pml))
+        self.assertTrue(os.path.exists(pml))
 
         # do dump pml second time
         cmd = './ssd -dump-pml'
         execute(cmd)
         # make sure output directory is not created
-        self.assert_(not os.path.exists(outdir))
+        self.assertTrue(not os.path.exists(outdir))
         # make sure ssd.pml-<time> is created
         timeformat = '%m-%d-%Y--'
         import time
         timestr = time.strftime(timeformat)
         pattern = '%s.saved-%s*' % (pml, timestr)
-        self.assert_(glob.glob(pattern))
+        self.assertTrue(glob.glob(pattern))
 
         # run simulation
         cmd = './ssd'
         execute(cmd)
         # make sure output directory is created
-        self.assert_(os.path.exists(outdir))
+        self.assertTrue(os.path.exists(outdir))
 
         return
 

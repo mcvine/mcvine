@@ -3,7 +3,7 @@
 #
 
 
-from AbstractNode import AbstractNode, debug
+from .AbstractNode import AbstractNode, debug
 
 
 class SQ_fromexpression(AbstractNode):

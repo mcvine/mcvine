@@ -12,7 +12,7 @@ class TestCase(unittest.TestCase):
             "mcvine mcstas compilecomponent --help",
             # "mcvine mcstas compilecomponent --filename=Al_window.comp --category=optics"
             ]
-        map(testcmd, cmds)
+        for c in cmds: testcmd(c)
         return
 
 

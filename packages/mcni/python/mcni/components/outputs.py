@@ -35,7 +35,7 @@ def mcs_sum(outdir):
         return 0
     # load number_of_mc_samples
     loadmcs = lambda f: float(open(f).read())
-    mcs = map(loadmcs, files)
+    mcs = list(map(loadmcs, files))
     return sum(mcs)
 
 

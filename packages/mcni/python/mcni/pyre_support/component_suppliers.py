@@ -50,7 +50,7 @@ class PyModuleAsSupplier(Supplier):
         try:
             m = __import__(self.pymodulename, {}, {}, [''] )
         except ImportError :
-            raise SupplierMissing, "%s" % (self.pymodulename,)
+            raise SupplierMissing("%s" % (self.pymodulename,))
         return getattr(m, name)
 
     

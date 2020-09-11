@@ -12,13 +12,13 @@
 #
 
 
-from RegistryBase import RegistryBase as base
+from .RegistryBase import RegistryBase as base
 
 class Registry(base):
 
 
     def setup_repos(self):
-        from repositories import all as repos
+        from .repositories import all as repos
         repos = list(repos)
         repos.reverse()
         self.repos = repos

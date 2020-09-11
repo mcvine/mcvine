@@ -57,14 +57,14 @@ class Instrument(base):
         tag = 999
         if mpirank != 0:
             arr = n2a( self.inventory.recorder.neutrons )
-            print "Node %s: sending array of shape %s" % (mpirank, arr.shape,)
+            print("Node %s: sending array of shape %s" % (mpirank, arr.shape,))
             send(arr , 0, tag )
         else:
             for peer in range(1, world.size):
                 arr = receive( peer, tag )
                 arr.shape = -1, ndblsperneutron
                 neutrons[ peer ] = a2n( arr )
-                print "Node %s: received array of shape %s" % (mpirank, arr.shape)
+                print("Node %s: received array of shape %s" % (mpirank, arr.shape))
                 continue
             neutrons[ 0] = self.inventory.recorder.neutrons
 

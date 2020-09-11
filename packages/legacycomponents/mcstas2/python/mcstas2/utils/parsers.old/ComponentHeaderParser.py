@@ -14,7 +14,7 @@
 
 """ComponentHeaderParser.py parses the header portion of mcstas component files."""
 
-from pyparsing.pyparsing import *
+from .pyparsing.pyparsing import *
 
 class Header:
     """class Header holds the parsed information from the headers of mcstas 
@@ -106,7 +106,7 @@ def parse( header_text ):
         msg = "mal-formed 'simple description' for component %r" % \
             component_name
         msg += 'removing trailing white spaces may solve the problem'
-        raise RuntimeError, msg
+        raise RuntimeError(msg)
     simple_description = part2[0]
 
     # Parse full description
@@ -115,10 +115,10 @@ def parse( header_text ):
     try:
         tmp_token0 = tmp_tokens[0]
     except IndexError:
-        raise RuntimeError, ' '.join([
+        raise RuntimeError(' '.join([
                 'failed to find description. please add \%D section ',
                 'to header of component %s' % component_name
-                ])
+                ]))
     full_description = tmp_token0.full_description
 
     # Parse parameters
@@ -230,10 +230,10 @@ testtext = """
 # Test the parsing
 if __name__ == "__main__":
     results = parse(testtext)
-    print "component:", results.componentname
-    print "copyright:", results.copyright
-    print "simple description:", results.simple_description
-    print "full description:", results.full_description
-    print "input parameters:", results.input_parameters
-    print "output parameters:", results.output_parameters
+    print("component:", results.componentname)
+    print("copyright:", results.copyright)
+    print("simple description:", results.simple_description)
+    print("full description:", results.full_description)
+    print("input parameters:", results.input_parameters)
+    print("output parameters:", results.output_parameters)
     

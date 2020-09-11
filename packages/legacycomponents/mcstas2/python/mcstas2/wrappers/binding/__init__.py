@@ -12,7 +12,7 @@
 #
 
 def binding( name ):
-    exec 'import %s as package' % name
+    exec('import %s as package' % name)
     return package
 
 # version

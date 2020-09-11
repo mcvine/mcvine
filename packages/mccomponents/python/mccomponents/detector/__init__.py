@@ -52,17 +52,17 @@ def detectorcomponent( name, instrumentxml, coordinate_system="McStas", tofparam
 
 def mergeEventFiles(files, out):
     "merge event data files into one output file"
-    from event_utils import mergeEventFiles
+    from .event_utils import mergeEventFiles
     return mergeEventFiles(files, out)
 
 
 def normalizeEventFile(file, n):
     "normalize the event data file by the number n"
-    from event_utils import normalizeEventFile
+    from .event_utils import normalizeEventFile
     return normalizeEventFile(file, n)
 
 
-import units
+from . import units
 
 def he3tube_withpixels(
     radius = units.length.inch/2, height = units.length.meter,
@@ -80,7 +80,7 @@ def he3tube_withpixels(
     elif direction == 'z':
         shape = cylinder
     else:
-        raise ValueError, "direction must be x, y, or z: %s" % direction
+        raise ValueError("direction must be x, y, or z: %s" % direction)
     
     ret = he3tube(
         cylinder, id = id,
@@ -109,32 +109,32 @@ def he3tube_withpixels(
 
 
 def pack( *args, **kwds ):
-    from elements.DetectorPack import DetectorPack
+    from .elements.DetectorPack import DetectorPack
     return DetectorPack(*args, **kwds)
 
 
 def he3tubeKernel( *args, **kwds ):
-    from elements.He3TubeKernel import He3TubeKernel
+    from .elements.He3TubeKernel import He3TubeKernel
     return He3TubeKernel(*args, **kwds )
 
 
 def he3tube( *args, **kwds ):
-    from elements.He3Tube import He3Tube
+    from .elements.He3Tube import He3Tube
     return He3Tube(*args, **kwds)
 
 
 def pixel( *args, **kwds):
-    from elements.Pixel import Pixel
+    from .elements.Pixel import Pixel
     return Pixel(*args, **kwds)
 
 
 def detectorSystem( *args, **kwds ):
-    from elements.DetectorSystem import DetectorSystem
+    from .elements.DetectorSystem import DetectorSystem
     return DetectorSystem( *args, **kwds )
 
 
 def eventModeMCA( *args, **kwds ):
-    from elements.EventModeMCA import EventModeMCA
+    from .elements.EventModeMCA import EventModeMCA
     return EventModeMCA( *args, **kwds )
 
 
@@ -165,11 +165,11 @@ def he3_transmission_percentage(energy, pressure, length):
 default_mc_weights_for_detector_scatterer = 0.9, 0.0, 0.1 # absorption, scattering, transmission
 
 
-import ComputationEngineRendererExtension
+from . import ComputationEngineRendererExtension
 
 def _import_bindings():
     try:
-        import bindings
+        from . import bindings
     except ImportError:
         import warnings
         warnings.warn('binding not imported')

@@ -44,9 +44,9 @@ class TestCase(unittest.TestCase):
         n = neutron(r=(0,0,0), v=(0,0,3000), time=1000., prob=10.)
         n = neutron(r=(0,0,0), v=(0,0,3000), s=(0,1), time=1000., prob=10.)
         # printing
-        print n
-        print n.state
-        print n.state.velocity
+        print(n)
+        print(n.state)
+        print(n.state.velocity)
         # setting values
         n.state.position = mcni.position(1,2,3)
         self.assertEqual(tuple(n.state.position), (1,2,3))

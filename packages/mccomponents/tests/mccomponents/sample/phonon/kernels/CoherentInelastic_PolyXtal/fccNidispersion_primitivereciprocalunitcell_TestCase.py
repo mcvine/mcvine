@@ -28,9 +28,9 @@ class TestCase(unittest.TestCase):
         Q = bp.vector3
         a = 3.57 # angstrom
         b = 2*N.pi/a
-        print disp.energy(0, Q(0,0,0))
+        print(disp.energy(0, Q(0,0,0)))
         for i in range(3):
-            print disp.energy(i, Q(b*1.05,b*1.05,b*1.05))
+            print(disp.energy(i, Q(b*1.05,b*1.05,b*1.05)))
         return
 
     pass  # end of TestCase

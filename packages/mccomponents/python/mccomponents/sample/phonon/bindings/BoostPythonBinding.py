@@ -94,7 +94,7 @@ class New:
     '''
         # position = site.getPosition()
         position = site.xyz_cartn
-        print "cartesian coordinates of atom:", position
+        print("cartesian coordinates of atom:", position)
         # atom = site.getAtom()
         atom = site
         import periodictable

@@ -30,12 +30,12 @@ class AcceptArbitraryInputMixin:
     def _listing(self, registry):
         if not registry: return []
         listing = [
-            (name, descriptor.value) for name, descriptor in registry.properties.iteritems()
+            (name, descriptor.value) for name, descriptor in registry.properties.items()
             ]
 
         listing += [
             ("%s.%s" % (nodename, name), value)
-            for nodename, node in registry.facilities.iteritems()
+            for nodename, node in registry.facilities.items()
             for name, value in self._listing(node)
             ]
 

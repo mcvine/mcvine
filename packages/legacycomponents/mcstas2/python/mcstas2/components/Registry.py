@@ -40,7 +40,7 @@ class Registry:
     def getFactory(self, category, type ):
         factories = self.factories
         key = category, type
-        if not factories.has_key( key ):
+        if key not in factories:
             self._importComponent( key )
         return factories[ key ]
 
@@ -48,19 +48,19 @@ class Registry:
     def getInfo(self, category, type):
         infos = self.infos
         key = category, type
-        if not infos.has_key( key ):
+        if key not in infos:
             return self._importComponent( key ).info
         return infos[ key ]
 
 
     def importAllComponents(self):
-        from repositories import all as repos
+        from .repositories import all as repos
         repos = list(repos)
         
         for repo in repos:
             pkg = __import__(repo, {}, {}, [''])
             cats = self._listCategoriesInPythonPackage(pkg)
-            map(self._importComponentsInCategory, cats)
+            for cat in cats: self._importComponentsInCategory(cat)
             continue
         return
 
@@ -74,7 +74,7 @@ class Registry:
             if not os.path.isdir(p):
                 continue
             if e.find('.')!=-1:
-                raise NotImplementedError, str(e)
+                raise NotImplementedError(str(e))
             initpy = os.path.join(p, '__init__.py')
             if not os.path.exists(initpy):
                 continue
@@ -115,7 +115,7 @@ class Registry:
 
     
     def _importComponent( self, key ):
-        from repositories import all as repos
+        from .repositories import all as repos
         repos = list(repos)
         # look in the last repository first
         repos.reverse()
@@ -135,7 +135,7 @@ class Registry:
         if module:
             self.register( category, type, module )
         else:
-            raise NotRegisteredError, "component %r of category %r " % (type, category)
+            raise NotRegisteredError("component %r of category %r " % (type, category))
         
         return module
 

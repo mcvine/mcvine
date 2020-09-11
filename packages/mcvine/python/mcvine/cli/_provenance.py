@@ -90,7 +90,7 @@ def copy_withhardlinks(src, dest):
 
 def arg_str(params, args):
     "create unique arg str from given params and args"
-    plist = sorted([ '%s=%s' % (k,v) for k, v in params.iteritems() ])
+    plist = sorted([ '%s=%s' % (k,v) for k, v in params.items() ])
     pstr = ' '.join(params)
     args = sorted(args)
     astr = ' '.join(args)

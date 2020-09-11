@@ -19,7 +19,7 @@ choices = [
 
 def computationEngineRenderAdpator( coordinate_system = "McStas" ):
     klassname = "%sCSAdaptor_for_ShapeComputationEngineRenderer" % coordinate_system
-    exec 'from %s import %s as klass' % (klassname, klassname)
+    exec('from %s import %s as klass' % (klassname, klassname))
     return klass
 
 

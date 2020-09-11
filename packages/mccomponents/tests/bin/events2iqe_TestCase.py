@@ -12,8 +12,8 @@ class TestCase(unittest.TestCase):
         p = sp.Popen(cmd, shell=True, stdout=sp.PIPE, stderr=sp.PIPE)
         out, err = p.communicate()
         if p.wait():
-            raise RuntimeError, "%s failed with error:\n%s\n" % (
-                cmd, err)
+            raise RuntimeError("%s failed with error:\n%s\n" % (
+                cmd, err))
         self.assertEqual(eval( out), (20,40))
         return
 

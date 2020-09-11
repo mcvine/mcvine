@@ -31,10 +31,10 @@ def generate_binding_sources( bindingname, klass, path ):
     '''
     wrapmethodname = 'wrap_' + klass.name
     
-    from module_cc import generate
+    from .module_cc import generate
     module_cc = generate( bindingname, wrapmethodname, path )
     
-    from wrap_cc import generate
+    from .wrap_cc import generate
     wrap_cc = generate( klass, path, wrapmethodname )
 
     return {

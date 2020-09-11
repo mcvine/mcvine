@@ -9,7 +9,7 @@ def events2Idpt( events, instrument, tofparams ):
     dims = getDetectorHierarchyDimensions( instrument )
     # 1st attempt to create axes
     from histogram import histogram, axis, arange
-    axes = [ axis('%sID' % name.lower(), range(n)) for name, n in dims ]
+    axes = [ axis('%sID' % name.lower(), list(range(n))) for name, n in dims ]
 
     # the first level of detectors (tubes, packs, or others) need
     # special attention. ids of that level could be not continuous.

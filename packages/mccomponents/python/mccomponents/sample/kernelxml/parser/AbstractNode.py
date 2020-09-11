@@ -16,7 +16,7 @@ debug = journal.debug("scatteringkernel.xmlparser")
 
 
 from pyre.xml.Node import Node
-import urllib
+import urllib.request, urllib.parse, urllib.error
 
 
 
@@ -30,7 +30,7 @@ class AbstractNode(Node):
 
         # convert to dictionary
         attrs = {}
-        for k,v in attributes.items(): attrs[str(k)] = v
+        for k,v in list(attributes.items()): attrs[str(k)] = v
 
         # new element
         self.element = self.elementFactory(**attrs)
@@ -50,7 +50,7 @@ class AbstractNode(Node):
         debug.log( "content=%s" % content )
         content = content.strip()
         if len(content)==0: return
-        self.element.appendContent( urllib.unquote(content).strip() )
+        self.element.appendContent( urllib.parse.unquote(content).strip() )
         self.locator = self.document.locator
         return
 

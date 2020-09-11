@@ -31,7 +31,7 @@ def samplecomponent( name, sampleassembly_xml ):
     from sampleassembly.saxml import parse_file
     sa = parse_file( filename )
 
-    from sampleassembly_support import sampleassembly2compositescatterer, \
+    from .sampleassembly_support import sampleassembly2compositescatterer, \
          findkernelsfromxmls
 
     scatterercomposite = findkernelsfromxmls(
@@ -48,17 +48,17 @@ def samplecomponent( name, sampleassembly_xml ):
 
 
 def gridsqe(*args, **kwds):
-    from GridSQE import GridSQE
+    from .GridSQE import GridSQE
     return GridSQE( *args, **kwds )
 
 
 def sqeFromExpression(*args, **kwds):
-    from SQE_fromexpression import SQE_fromexpression
+    from .SQE_fromexpression import SQE_fromexpression
     return SQE_fromexpression( *args, **kwds )
 
 
 def sqekernel(*args, **kwds):
-    from SQEkernel import SQEkernel
+    from .SQEkernel import SQEkernel
     return SQEkernel( *args, **kwds )
 
 
@@ -78,57 +78,57 @@ def sqkernel(*args, **kwds):
 
 
 def isotropickernel(*args, **kwds):
-    from IsotropicKernel import IsotropicKernel
+    from .IsotropicKernel import IsotropicKernel
     return IsotropicKernel(*args, **kwds)
 
 
 def dgssxreskernel(*args, **kwds):
-    from DGSSXResKernel import DGSSXResKernel
+    from .DGSSXResKernel import DGSSXResKernel
     return DGSSXResKernel(*args, **kwds)
 
 
 def constantEnergyTransferKernel(*args, **kwds):
-    from ConstantEnergyTransferKernel import ConstantEnergyTransferKernel
+    from .ConstantEnergyTransferKernel import ConstantEnergyTransferKernel
     return ConstantEnergyTransferKernel(*args, **kwds)
 
 
 def constantQEKernel(*args, **kwds):
-    from ConstantQEKernel import ConstantQEKernel
+    from .ConstantQEKernel import ConstantQEKernel
     return ConstantQEKernel(*args, **kwds)
 
 
 def constantvQEKernel(*args, **kwds):
-    from ConstantvQEKernel import ConstantvQEKernel
+    from .ConstantvQEKernel import ConstantvQEKernel
     return ConstantvQEKernel(*args, **kwds)
 
 
 def make_E_Q_Kernel(*args, **kwds):
-    from E_Q_Kernel import E_Q_Kernel as factory
+    from .E_Q_Kernel import E_Q_Kernel as factory
     return factory(*args, **kwds)
 
 
 def broadened_E_Q_Kernel(*args, **kwds):
-    from Broadened_E_Q_Kernel import Broadened_E_Q_Kernel
+    from .Broadened_E_Q_Kernel import Broadened_E_Q_Kernel
     return Broadened_E_Q_Kernel(*args, **kwds)
 
 
 def make_E_vQ_Kernel(*args, **kwds):
-    from E_vQ_Kernel import E_vQ_Kernel as factory
+    from .E_vQ_Kernel import E_vQ_Kernel as factory
     return factory(*args, **kwds)
 
 
 def kernelcontainer(*args, **kwds):
-    from KernelContainer import KernelContainer
+    from .KernelContainer import KernelContainer
     return KernelContainer( *args, **kwds )
 
 
 
 #make renderer extension available
-import ComputationEngineRendererExtension
+from . import ComputationEngineRendererExtension
 
 #make bindings available
 def _import_bindings():
-    import bindings
+    from . import bindings
     return
 
 _import_bindings()
@@ -137,8 +137,8 @@ _import_bindings()
 #make additional kernels available
 def _import_kernels():
     try:
-        import phonon.xml
-        import diffraction.xml
+        from . import phonon.xml
+        from . import diffraction.xml
     except ImportError as e:
         import warnings, traceback
         s = "kernels not available: phonon, diffraction:\n%s: %s.\n%s" % (

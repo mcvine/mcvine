@@ -80,12 +80,12 @@ class TestCase(unittest.TestCase):
             r = n.state.position
             # not always true but usually true
             r0 = neutron0.state.position
-            self.assert_(r[0]!=r0[0])
-            self.assert_(r[1]!=r0[1])
+            self.assertTrue(r[0]!=r0[0])
+            self.assertTrue(r[1]!=r0[1])
             # always true
-            self.assert_(abs(r[0]-r0[0])<=dx/2)
-            self.assert_(abs(r[1]-r0[1])<=dy/2)
-            self.assert_(abs(r[2])==r0[2])
+            self.assertTrue(abs(r[0]-r0[0])<=dx/2)
+            self.assertTrue(abs(r[1]-r0[1])<=dy/2)
+            self.assertTrue(abs(r[2])==r0[2])
 
             self.assertEqual(
                 tuple(n.state.velocity),
@@ -158,8 +158,8 @@ class TestCase(unittest.TestCase):
 
             continue
 
-        self.assert_( abs(n_in_onesigma*1./N-0.68) < 0.01)
-        self.assert_( abs(n_in_twosigma*1./N-0.95) < 0.01)
+        self.assertTrue( abs(n_in_onesigma*1./N-0.68) < 0.01)
+        self.assertTrue( abs(n_in_twosigma*1./N-0.95) < 0.01)
         return
         
 

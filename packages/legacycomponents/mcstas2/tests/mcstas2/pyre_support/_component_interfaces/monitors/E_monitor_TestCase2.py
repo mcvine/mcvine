@@ -45,7 +45,7 @@ class TestCase(unittest.TestCase):
         
         # run command
         if os.system(cmd):
-            raise RuntimeError, "%s failed" % cmd
+            raise RuntimeError("%s failed" % cmd)
         # run post-processing
         from mcni.pyre_support.Instrument import _run_ppsd
         ppsd = os.path.join(outputdir, 'post-processing-scripts') 
@@ -56,7 +56,7 @@ class TestCase(unittest.TestCase):
         ctime = time.time()
 
         #check output directory exists
-        self.assert_( os.path.exists( outputdir ) )
+        self.assertTrue( os.path.exists( outputdir ) )
         
         # make sure that the final histogram is identical to the 
         # sum of all the final histograms in different nodes

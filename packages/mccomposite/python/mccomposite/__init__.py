@@ -15,14 +15,14 @@
 def composite( *args ):
     '''create a new scatterer composite
     '''
-    from CompositeScatterer import CompositeScatterer
+    from .CompositeScatterer import CompositeScatterer
     return CompositeScatterer( *args )
 
 
 def scatterercopy( *args, **kwds ):
     '''create a copy of a scatterer
     '''
-    from ScattererCopy import ScattererCopy
+    from .ScattererCopy import ScattererCopy
     return ScattererCopy( *args, **kwds )
 
 
@@ -32,18 +32,18 @@ def scattererEngine( scatterer,
                      coordinate_system = 'McStas'):
     "render the c++ engine of the given scatterer"
     
-    from bindings import get as getBinding
+    from .bindings import get as getBinding
     binding = getBinding( binding )
 
-    from orientation_conventions import get
+    from .orientation_conventions import get
     orientation_convention = get( orientation_convention )
 
-    from coordinate_systems import computationEngineRenderAdpator
+    from .coordinate_systems import computationEngineRenderAdpator
     Adaptor = computationEngineRenderAdpator( coordinate_system )
 
-    from ScattererComputationEngineFactory import ScattererComputationEngineFactory
+    from .ScattererComputationEngineFactory import ScattererComputationEngineFactory
     factory = ScattererComputationEngineFactory( binding, orientation_convention )
-    from ScattererComputationEngineRenderer import ScattererComputationEngineRenderer
+    from .ScattererComputationEngineRenderer import ScattererComputationEngineRenderer
     class R(Adaptor, ScattererComputationEngineRenderer): pass
     return R( factory ).render( scatterer )
 
@@ -64,13 +64,13 @@ def register( newtype, renderer_handler, binding_handlers, override = False):
 def register_engine_renderer_handler( newtype, renderer_handler, override = False):
     """register a new scatterer type and its engine renderer handler
     """
-    import ScattererComputationEngineRenderer
+    from . import ScattererComputationEngineRenderer
     ScattererComputationEngineRenderer.register(newtype, renderer_handler, override = override )
     return
 
 
 def register_binding_handlers( newtype, binding_handlers, override = False):
-    import bindings
+    from . import bindings
     bindings.register( newtype.__name__.lower(), binding_handlers, override = override )
     return
 

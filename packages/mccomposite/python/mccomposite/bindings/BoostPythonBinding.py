@@ -27,7 +27,7 @@ class _BindingProxy:
         return getattr(mcnibp, key)
 binding = _BindingProxy()
 
-from AbstractBinding import AbstractBinding as Interface
+from .AbstractBinding import AbstractBinding as Interface
 from mcni.bindings.boostpython import Binding as base
 
 class BoostPythonBinding(base, Interface):
@@ -116,9 +116,9 @@ def register( methodname, method, override = False ):
     '''register a new handling method'''
     if hasattr(BoostPythonBinding, methodname):
         if not override:
-            raise ValueError , "Cannot register handler %s. "\
+            raise ValueError("Cannot register handler %s. "\
                   "It was already registered." % (
-                methodname )
+                methodname ))
         pass
     
     setattr( BoostPythonBinding, methodname, method )

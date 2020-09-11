@@ -43,7 +43,7 @@ class App(base):
 
     def main(self):
         super(App, self).main()
-        print "in app.main()"
+        print("in app.main()")
         return
 
 

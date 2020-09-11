@@ -29,7 +29,7 @@ class TestCase(unittest.TestCase):
             import mpi_launcher_choice as launcher            
         cmd = './testmpi -%s.nodes=2' % launcher
         if os.system(cmd):
-            raise RuntimeError, "%r failed" % cmd
+            raise RuntimeError("%r failed" % cmd)
 
         from histogram.hdf import load
         from histogram.hdf.utils import getOnlyEntry

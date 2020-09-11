@@ -3,7 +3,7 @@
 #
 
 
-from AbstractNode import AbstractNode, debug
+from .AbstractNode import AbstractNode, debug
 
 
 class GridSQ(AbstractNode):
@@ -21,7 +21,7 @@ class GridSQ(AbstractNode):
             f = os.path.dirname(hdfpath)
             e = os.path.basename(hdfpath)
             t = traceback.format_exc()
-            raise IOError, "unable to load histogram from hdf5 file %s, entry %s. Original traceback:\n%s" % (f, e, t)
+            raise IOError("unable to load histogram from hdf5 file %s, entry %s. Original traceback:\n%s" % (f, e, t))
         from mccomponents.sample import gridsq
         return gridsq( sq )
 

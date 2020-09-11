@@ -13,7 +13,7 @@
 
 
 from pyre.weaver.mills.CxxMill import CxxMill
-from CxxClassRenderer import CxxClassRenderer
+from .CxxClassRenderer import CxxClassRenderer
 
 
 class CxxClassMillBase(CxxClassRenderer, CxxMill):

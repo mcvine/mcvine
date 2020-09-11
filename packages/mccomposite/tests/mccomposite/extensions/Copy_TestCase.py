@@ -28,12 +28,12 @@ class TestCase(unittest.TestCase):
 
     def test_copy(self):
         '''copy'''
-        print "This test creates two identical blocks, each of which "\
+        print("This test creates two identical blocks, each of which "\
               "does not interact with neutrons. They print the info "\
               "about the neutrons passing thru them, however. "\
               "This test then send one neutron through these two "\
               "blocks, so we should see two printings of neutron info, "\
-              "differing only on time-of-flight."
+              "differing only on time-of-flight.")
         # create a shape
         from mccomposite.geometry import primitives
         smallblock = primitives.block( (1,1,1) )

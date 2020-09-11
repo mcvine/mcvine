@@ -61,7 +61,7 @@ class Generator:
             class Inventory(base.Inventory):
                 import pyre.inventory as pinv
                 for arg in arguments:
-                    exec _trait_str( arg ) in locals()
+                    exec(_trait_str( arg ), locals())
                     continue
                 if 'arg' in locals():
                     del arg
@@ -82,9 +82,9 @@ class Generator:
                     debug.log( traceback.format_exc() )
                     engine = self.__dict__.get( 'engine' )
                     if engine is None:
-                        raise RuntimeError, "engine not established"
+                        raise RuntimeError("engine not established")
                     return getattr( engine, name )
-                raise RuntimeError , "Should not reach here"
+                raise RuntimeError("Should not reach here")
 
             def _init(self):
                 base._init(self)
@@ -160,7 +160,7 @@ def _trait_str( arg ):
     try:
         description = arg.description
         lines.append( indent + '%s.meta["tip"] = %r' % (arg.name, description) )
-    except Exception, msg:
+    except Exception as msg:
         pass
     return '\n'.join( lines )
 

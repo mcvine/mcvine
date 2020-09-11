@@ -18,8 +18,8 @@ from mcni.components.RegistryBase import RegistryBase as base
 class Registry(base):
     
     def setup_repos(self):
-        import repositories
-        from repositories import all as repos
+        from . import repositories
+        from .repositories import all as repos
         repos = list(repos)
         repos.reverse()
         self.repos = repos

@@ -50,7 +50,7 @@ class TestCase(unittest.TestCase):
             continue
         component.simulation_context.iteration_no = 0
         component.process( neutrons )
-        print neutrons
+        print(neutrons)
         return
 
     pass  # end of TestCase

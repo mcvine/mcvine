@@ -84,11 +84,11 @@ def hist_mcs_sum(outdir, histogramfilename):
         h1.I += h.I
         h1.E2 += h.E2
         return
-    map(_addhistfile, histfiles[1:])
+    for hf in histfiles[1:]: _addhistfile(hf)
     
     # load number_of_mc_samples
     loadmcs = lambda f: float(open(f).read())
-    mcs = map(loadmcs, mcsamplesfiles)
+    mcs = list(map(loadmcs, mcsamplesfiles))
     return h1, sum(mcs)
 
 
@@ -134,7 +134,7 @@ def hist_mcs_sum_parallel(outdir, histogramfilename):
             continue
         # load number_of_mc_samples
         loadmcs = lambda f: float(open(f).read())
-        mcs = map(loadmcs, mcsamplesfiles[sl])
+        mcs = list(map(loadmcs, mcsamplesfiles[sl]))
         mcs = sum(mcs)
     else:
         # no data
@@ -169,17 +169,17 @@ def hist_mcs_sum_parallel(outdir, histogramfilename):
         return h1, mcs
 
 
-from outputs import mcs_sum
+from .outputs import mcs_sum
     
 
-from MonitorMixin import MonitorMixin
+from .MonitorMixin import MonitorMixin
 class HistogramBasedMonitorMixin(MonitorMixin):
 
     def create_pps(self):
         context = self.simulation_context
         if context is None:
-            raise RuntimeError, "context not defined: type - %s, name - %s" % (
-                self.__class__.__name__, self.name)
+            raise RuntimeError("context not defined: type - %s, name - %s" % (
+                self.__class__.__name__, self.name))
         if context.mpiRank:
             return
         # create post processing script

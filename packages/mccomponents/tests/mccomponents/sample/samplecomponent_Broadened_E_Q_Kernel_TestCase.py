@@ -65,7 +65,7 @@ class TestCase(unittest.TestCase):
             ef = conversion.v2e(nl.norm(vf))
             E = ei - ef
             E1 = eval(E_Q)
-            print E, Q, neutron, E-E1
+            print(E, Q, neutron, E-E1)
             continue
 
         return

@@ -5,7 +5,7 @@
 
 
 
-from base import Component as base
+from .base import Component as base
 
 class Component(base):
 
@@ -67,7 +67,7 @@ def get_histogram( monitor ):
 
 def getNormalization(monitor, N=None, epsilon=1e-7, factory=None):
     # randomly shoot neutrons to monitor in 4pi solid angle
-    print "* start computing normalizer..."
+    print("* start computing normalizer...")
     core = monitor.core()
     if N is None:
         N = core.nQ * core.nE * 10000
@@ -125,13 +125,13 @@ def getNormalization(monitor, N=None, epsilon=1e-7, factory=None):
     
     # 3. send neutrons to monitor copy
     N1 = 0; dN = int(1e6)
-    print "  - total neutrons needed :", N
+    print("  - total neutrons needed :", N)
     while N1 < N:
         n = min(N-N1, dN)
         neutrons = make_neutrons(n)
         cppmonitorcopy.process(neutrons)
         N1 += n
-        print "  - processed %s" % N1
+        print("  - processed %s" % N1)
         continue
     h = get_histogram(cppmonitorcopy)
     # for debug
@@ -139,7 +139,7 @@ def getNormalization(monitor, N=None, epsilon=1e-7, factory=None):
     # hh.dump(h, 'tmp.h5', '/', 'c')
     h.I[h.I<epsilon] = 1
     #
-    print "  - done computing normalizer"
+    print("  - done computing normalizer")
     return h
 
 

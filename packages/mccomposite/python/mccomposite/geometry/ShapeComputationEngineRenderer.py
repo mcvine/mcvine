@@ -11,7 +11,7 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
 
-import units
+from . import units
 
 
 
@@ -26,7 +26,7 @@ class ShapeComputationEngineRenderer:
         angle_unit = units.angle.degree ):
         
         self.factory = factory
-        from units_utils import UnitsRemover
+        from .units_utils import UnitsRemover
         self._unitsRemover = UnitsRemover(
             length_unit = length_unit,
             angle_unit = angle_unit,
@@ -130,9 +130,9 @@ def register( shape_type, engine_renderer_method, override = False ):
     methodname = 'on%s' % name
     if hasattr(ShapeComputationEngineRenderer, methodname):
         if not override:
-            raise ValueError , "Cannot register handler for type %s"\
+            raise ValueError("Cannot register handler for type %s"\
                   "%s already registered as handler for type %s" % (
-                shape_type, methodname, _registry[name] )
+                shape_type, methodname, _registry[name] ))
         pass
     
     setattr( ShapeComputationEngineRenderer, methodname, engine_renderer_method )
@@ -143,8 +143,8 @@ def register( shape_type, engine_renderer_method, override = False ):
 
 _registry = {}
 def _init_registry():
-    from operations import Union, Intersection, Difference, Dilation, Translation, Rotation
-    from primitives import Block, Cylinder, Sphere, Pyramid, Cone
+    from .operations import Union, Intersection, Difference, Dilation, Translation, Rotation
+    from .primitives import Block, Cylinder, Sphere, Pyramid, Cone
     for klass in Union, Intersection, Difference, Dilation, Translation, Rotation,\
             Block, Cylinder, Sphere, Pyramid, Cone:
         _registry[klass.__name__] = klass

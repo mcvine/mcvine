@@ -37,7 +37,7 @@ class Phonon_CoherentInelastic_SingleXtal_Kernel(base):
     pass # end of Phonon_CoherentInelastic_SingleXtal_Kernel
 
 
-from HomogeneousScatterer import HomogeneousScatterer
+from .HomogeneousScatterer import HomogeneousScatterer
 HomogeneousScatterer.onPhonon_CoherentInelastic_SingleXtal_Kernel = HomogeneousScatterer.onKernel
 
 

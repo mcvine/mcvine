@@ -52,7 +52,7 @@ def mergeEventFiles(files, out):
         for f in files: ostream.write("%s\n" % f)
     cmd = 'cat %s | xargs -0 -d "\n" cat > "%s"' % (filelist, out)
     if os.system(cmd):
-        raise RuntimeError, "%s failed" % cmd
+        raise RuntimeError("%s failed" % cmd)
     return
 
 

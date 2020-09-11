@@ -93,7 +93,7 @@ class Component:
     def onComponent(self, component):
         self._write('<component name="%s">' % component.name)
         self._indent()
-        for k,v in component.parameters.iteritems():
+        for k,v in component.parameters.items():
             v = self._formatValue(v)
             self._property(k,v)
             continue
@@ -152,7 +152,7 @@ def set_instrument_parameters(instrument, d):
             continue
         return d
     def set(comp, d):
-        for k,v in d.iteritems():
+        for k,v in d.items():
             setattr(comp, k, v)
             continue
         return
@@ -174,7 +174,7 @@ def propagate_values(dest, src):
         dest = [propagate_values(item, src) for item in dest]
         return t(dest)
     if isinstance(dest, dict):
-        for k, v in dest.iteritems():
+        for k, v in dest.items():
             if k.startswith('_'): continue
             v = propagate_values(v, src)
             dest[k] = v

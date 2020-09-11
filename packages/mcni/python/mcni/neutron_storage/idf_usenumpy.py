@@ -20,7 +20,7 @@ import numpy
 
 
 from struct import pack, unpack
-from idfneutron import version, headerfmtstr, headersize, neutronsfmtstr, ndblsperneutron, filetype, neutronsize
+from .idfneutron import version, headerfmtstr, headersize, neutronsfmtstr, ndblsperneutron, filetype, neutronsize
 
 
 

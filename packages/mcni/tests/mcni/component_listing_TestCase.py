@@ -28,8 +28,8 @@ class TestCase(unittest.TestCase):
     def test(self):
         'mcni: component listing'
         from mcni import listallcomponentcategories, listcomponentsincategory
-        print 'component categories:',  listallcomponentcategories()
-        print 'components in "sources" category:',  listcomponentsincategory( 'sources' )
+        print('component categories:',  listallcomponentcategories())
+        print('components in "sources" category:',  listcomponentsincategory( 'sources' ))
         return
     
         

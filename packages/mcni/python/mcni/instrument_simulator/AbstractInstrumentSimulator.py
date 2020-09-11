@@ -68,7 +68,7 @@ class AbstractInstrumentSimulator:
 
         neutron_coordinates_transformer = self.neutron_coordinates_transformer
         
-        from SimulationChain import SimulationChain
+        from .SimulationChain import SimulationChain
         chain = SimulationChain( 
             components, geometer, neutron_coordinates_transformer, 
             context = context,

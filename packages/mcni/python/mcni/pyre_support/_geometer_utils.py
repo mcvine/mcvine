@@ -18,14 +18,14 @@ def buildGeometer(componentnames, name=None):
         8*' ' + '%s = Register("%s")' % (name, name) for name in componentnames ]
     declarations = '\n'.join( declarations )
     
-    from Geometer import Geometer as base, Register
+    from .Geometer import Geometer as base, Register
     code = '''
 class Geometer1(base):
     class Inventory(base.Inventory):
 %s
 ''' % declarations
     
-    exec code in locals()
+    exec(code, locals())
 
     return Geometer1(geometer_name)
 
@@ -34,11 +34,9 @@ def buildGeometerFromInventory(Inventory, name=None):
     #find all components
     componentnames = dir(Inventory)
 
-    from NeutronComponentFacility import NeutronComponentFacility
-    componentnames = filter(
-        lambda name: isinstance(
-            getattr(Inventory, name), NeutronComponentFacility ),
-        componentnames )
+    from .NeutronComponentFacility import NeutronComponentFacility
+    componentnames = [name for name in componentnames if isinstance(
+            getattr(Inventory, name), NeutronComponentFacility )]
     
     return buildGeometer(componentnames, name=name)
 

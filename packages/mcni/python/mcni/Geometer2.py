@@ -32,7 +32,7 @@ class RelativeCoord(Coord):
     
     def __init__(self, value, to=None):
         if to is None:
-            raise ValueError, "relative coord must specify the reference"
+            raise ValueError("relative coord must specify the reference")
         super(RelativeCoord, self).__init__(value)
         self.reference = to
         self.isabsolute = False
@@ -46,7 +46,7 @@ class RelativeCoord(Coord):
 
     def __repr__(self):
         v = self.value
-        if not isinstance(v, basestring):
+        if not isinstance(v, str):
             v = str(tuple(v))
         ref = self.reference
         return "relative(%s, to='%s')" % (v, ref)
@@ -67,11 +67,11 @@ class AbsoluteCoord(Coord):
 
     def __repr__(self):
         v = self.value
-        if isinstance(v, basestring): return v
+        if isinstance(v, str): return v
         return str(tuple(self.value))
 
 
-from coordinate_system_transformers.mcstas import transformCoordinateSystem as defaultCoordTransformer
+from .coordinate_system_transformers.mcstas import transformCoordinateSystem as defaultCoordTransformer
 
 
 def _toCoord(candidate):
@@ -84,7 +84,7 @@ import numpy as np
 
 
 
-from Geometer import Geometer as base
+from .Geometer import Geometer as base
 class Geometer(base):
 
     #
@@ -154,10 +154,10 @@ class Geometer(base):
         if ref == 'previous':
             seq = self.element_sequence
             if seq is None:
-                raise RuntimeError, "sequence of elements were not set. Won't be able to deduce position/orientation using keyword 'previous'. To fix this, you will need to set attribute 'element_sequence' for this geometer instance"
+                raise RuntimeError("sequence of elements were not set. Won't be able to deduce position/orientation using keyword 'previous'. To fix this, you will need to set attribute 'element_sequence' for this geometer instance")
             i = seq.index(element)
             if i == 0:
-                raise RuntimeError, "there is no previous element for %s" % element
+                raise RuntimeError("there is no previous element for %s" % element)
             return seq[i-1]
         return ref
     

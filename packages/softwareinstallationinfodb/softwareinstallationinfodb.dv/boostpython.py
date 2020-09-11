@@ -12,7 +12,7 @@
 #
 
 
-from Info import Info
+from .Info import Info
 import os
 libdir = os.environ.get('BOOSTPYTHON_LIBDIR')
 incdir = os.environ.get('BOOSTPYTHON_INCDIR')

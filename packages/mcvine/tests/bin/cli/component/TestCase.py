@@ -14,7 +14,7 @@ class TestCase(unittest.TestCase):
             "mcvine component info NDMonitor --args=x,y",
             "mcvine component info Source_simple --supplier=mcstas2 --category=sources",
             ]
-        map(testcmd, cmds)
+        for c in cmds: testcmd(c)
         return
 
 
@@ -26,7 +26,7 @@ class TestCase(unittest.TestCase):
             "mcvine component list --category=sources",
             "mcvine component list --supplier=mcstas2",
             ]
-        map(testcmd, cmds)
+        for c in cmds: testcmd(c)
         return
 
 

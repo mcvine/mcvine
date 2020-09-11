@@ -31,7 +31,7 @@ class RegistryBase:
 
     def listcomponentsincategory(self, category):
         components = self.listallcomponents()
-        components = filter( lambda component: component[0] == category, components )
+        components = [component for component in components if component[0] == category]
         return [ type for category, type in components ]
 
 
@@ -39,7 +39,7 @@ class RegistryBase:
         '''return a list of (category, type) tuples
         '''
         static_components = self._getStaticComponentList( )
-        dynamic_components = self.factories.keys()
+        dynamic_components = list(self.factories.keys())
         return uniquelist( static_components + dynamic_components )
     
 
@@ -62,7 +62,7 @@ class RegistryBase:
     def getFactory(self, category, type ):
         factories = self.factories
         key = category, type
-        if not factories.has_key( key ):
+        if key not in factories:
             return self._getStaticComponent( key )
         return factories[ key ]
 
@@ -113,13 +113,13 @@ class RegistryBase:
 
         if module:
             if category != module.category :
-                raise RuntimeError, "component %r is a %r, not a %r" % (
-                    type, module.category, category )
+                raise RuntimeError("component %r is a %r, not a %r" % (
+                    type, module.category, category ))
             factory = getattr(module, type)
             self.register( category, type, factory )
         else:
-            raise NotRegisteredError, "component %r of category %r " % (
-                type, category )
+            raise NotRegisteredError("component %r of category %r " % (
+                type, category ))
         
         return factory
 
@@ -135,7 +135,7 @@ class RegistryBase:
         else:
             types[category] = [type]
             return
-        raise "Should not reach here"
+        raise RuntimeError("Should not reach here")
     
     pass # end of Registry
 

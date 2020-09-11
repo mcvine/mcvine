@@ -75,7 +75,7 @@ class mccomposite_TestCase(unittest.TestCase):
 
         difference = operations.subtract( intersect, sphere )
         
-        print mccomposite.scattererEngine( difference )
+        print(mccomposite.scattererEngine( difference ))
 
         shape = difference
         #shape = block

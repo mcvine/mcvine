@@ -49,8 +49,8 @@ class TestCase(unittest.TestCase):
         os.chdir(save)
 
         kernel = scatterer.kernel()
-        print kernel
-        self.assert_( isKernel( kernel ) )
+        print(kernel)
+        self.assertTrue( isKernel( kernel ) )
         
         return
 

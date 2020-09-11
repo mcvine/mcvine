@@ -31,11 +31,11 @@ class TestCase(unittest.TestCase):
     def test0(self):
         from mccomponents.sample.idf.Polarizations import read
         (filetype, version, comment), Polarizations = read( path )
-        print filetype, version, comment
+        print(filetype, version, comment)
         self.assertEqual( filetype, 'Polarizations' )
         import numpy
         self.assertEqual( type(Polarizations), numpy.ndarray )
-        print len(Polarizations)
+        print(len(Polarizations))
         return
 
     pass  # end of TestCase

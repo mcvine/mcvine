@@ -13,7 +13,7 @@
 
 # XXX: Get rid of pyparsing dependency!
 
-from pyparsing.pyparsing import *
+from .pyparsing.pyparsing import *
 
 def include():
     return Suppress( '%include') + quotedString.setResultsName( 'header' )
@@ -23,7 +23,7 @@ def test():
     text = '''
 %include "read_table-lib"
 '''
-    print '%r' % include().parseString( text ).header
+    print('%r' % include().parseString( text ).header)
     return
 
 

@@ -47,12 +47,12 @@ class TestCase(unittest.TestCase):
 
         for i in range(10):
             neutron = neutrons[i]
-            print neutron
+            print(neutron)
             continue
 
         # N should be about 2/3 of N0. this is determined by
         # the mc weights in Al-isotropic-kernel-plate-scatterer.xml
-        self.assert_( N < 0.72*N0 and N > 0.6*N0)
+        self.assertTrue( N < 0.72*N0 and N > 0.6*N0)
 
         return
     

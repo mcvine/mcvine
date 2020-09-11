@@ -52,7 +52,7 @@ app.run(*args, **kwds)
                 ostream.write(cmd)
             # run run.sh
             if DEBUG_INSTRUMENT_APP_PROXY:
-                print "* Logs are also saved at %s" % logpath
+                print("* Logs are also saved at %s" % logpath)
             with open(logpath, 'w') as logstream:
                 _exec('bash %s' % run_sh_path, logstream)
             # run the postprocessing script
@@ -72,7 +72,7 @@ def _get_nodes_option():
     for a in sys.argv:
         if a.startswith('--') and '.nodes' in a:
             if DEBUG_INSTRUMENT_APP_PROXY:
-                print "* nodes option: %r" % a
+                print("* nodes option: %r" % a)
             # --mpirun.nodes=10
             opt,v = a.split('=')
             assert opt.endswith('.nodes')
@@ -82,7 +82,7 @@ def _get_nodes_option():
 
 def _exec(cmd, logstream):
     if DEBUG_INSTRUMENT_APP_PROXY: 
-        print "* Running %s" % cmd
+        print("* Running %s" % cmd)
     #
     import subprocess as sp, shlex
     args = shlex.split(cmd)
@@ -109,7 +109,7 @@ def _build(neutron_components):
             for name in neutron_components:
                 code = '%s = facility("%s", default="mcni://optics/Dummy" )' % (
                     name, name)
-                exec code in locals()
+                exec(code, locals())
                 continue
             del code, name
             pass # end of Inventory

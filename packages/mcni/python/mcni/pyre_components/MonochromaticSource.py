@@ -84,7 +84,7 @@ class MonochromaticSource( AbstractComponent ):
 
         energy_width = self.inventory.energy_width
         if energy_width < 0:
-            raise ValueError, "energy width must be not negative"
+            raise ValueError("energy width must be not negative")
         self.energy_width = energy_width
             
         position = self.inventory.position

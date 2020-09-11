@@ -19,7 +19,7 @@ if version_info[0] <=2 and version_info[1] <= 3 \
     def uniquelist( l ):
         u = {}
         for i in l: u[i] = 1
-        return u.keys()
+        return list(u.keys())
     
 else:
     def uniquelist( l ):
@@ -29,7 +29,7 @@ del version_info
 
 
 
-from conversion import *
+from .conversion import *
 
 
 
