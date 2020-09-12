@@ -30,7 +30,7 @@ class AbstractNode(Node):
 
         # convert to dictionary
         attrs = {}
-        for k,v in list(attributes.items()): attrs[str(k)] = v
+        for k,v in attributes.items(): attrs[str(k)] = v
 
         # new element
         self.element = self.elementFactory(**attrs)

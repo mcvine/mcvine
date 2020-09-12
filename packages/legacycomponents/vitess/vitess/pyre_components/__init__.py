@@ -42,7 +42,7 @@ def registercomponent( category, type, factory ):
     return
 
 
-from . import Registry
+# from . import Registry
 from .Registry import Registry
 _registry = Registry()
 del Registry

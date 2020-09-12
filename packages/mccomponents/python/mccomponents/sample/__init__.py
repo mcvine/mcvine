@@ -137,8 +137,8 @@ _import_bindings()
 #make additional kernels available
 def _import_kernels():
     try:
-        from . import phonon.xml
-        from . import diffraction.xml
+        from .phonon import xml
+        from .diffraction import xml
     except ImportError as e:
         import warnings, traceback
         s = "kernels not available: phonon, diffraction:\n%s: %s.\n%s" % (

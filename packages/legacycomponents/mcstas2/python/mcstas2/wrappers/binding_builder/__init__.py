@@ -21,7 +21,7 @@
 
 
 def builder( name ):
-    exec('import %s as package' % name)
+    exec('import %s as package' % name, locals())
     #package = __import__(name, {}, {},  [])
     return package
 

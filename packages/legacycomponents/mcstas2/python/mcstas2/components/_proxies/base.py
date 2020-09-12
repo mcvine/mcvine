@@ -8,7 +8,7 @@ class Component(AbstractComponent, ParallelComponent):
         assert len(args) in [0, 1]
         # get user inputs
         if args: kwds['name' ] = args[0]
-        for k, v in list(kwds.items()):
+        for k, v in kwds.items():
             setattr(self, k, v)
         # get defaults
         all = dict()

@@ -40,7 +40,7 @@ def parse(text, line_width=0, dw_factor=1):
                 ky=tmplst[1].strip()
                 if ky.lower().startswith('atom'):
                     ky=ky+'_'+tmplst[2]
-                if ky in list(Comments_dict.keys()):
+                if ky in Comments_dict.keys():
                     raise RuntimeError ("Duplicate Comment %s in laz file" %(tmplst[1]))
                 Comments_dict[ky] = l
                 if 'nb_atoms' in ky:
@@ -63,7 +63,7 @@ def getCrossSections(comments):
     # get nb_atoms
     nb_atoms = int(comments['nb_atoms'].strip().split()[2])
     # sigma
-    sigma_list = [x for x in list(comments.keys()) if x.startswith('sigma')]
+    sigma_list = [x for x in comments.keys() if x.startswith('sigma')]
     assert len(sigma_list) == 3
     class xs: pass
     for sig_l in sigma_list:
@@ -86,7 +86,7 @@ def getPeaks(text, comments, lat, line_width=0, dw_factor=1):
     Parse the peaks information from the laz file.
     """
     # figure out columns
-    column_list = [x for x in list(comments.keys()) if x.startswith('column')]
+    column_list = [x for x in comments.keys() if x.startswith('column')]
     # peaks records
     peaks = []
 

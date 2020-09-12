@@ -12,6 +12,8 @@
 #
 
 
+import sys
+
 def store( path ):
     store = _stores.get(path)
     if store is None:
@@ -52,7 +54,10 @@ class PacketSizeStore:
     
 
     def _check_size_type(self, size):
-        types = [int, int]
+        if sys.version_info < (3,0):
+            types = [int, long]
+        else:
+            types = [int]
         for type in types:
             if isinstance( size, type): return False
             continue

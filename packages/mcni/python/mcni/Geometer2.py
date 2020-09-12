@@ -17,6 +17,8 @@ coordinates relative to peers
 '''
 
 
+from mcni._2to3 import isstr
+
 I = ( (1.,0,0),
       (0,1.,0),
       (0,0,1.), )
@@ -46,7 +48,7 @@ class RelativeCoord(Coord):
 
     def __repr__(self):
         v = self.value
-        if not isinstance(v, str):
+        if not isstr(v):
             v = str(tuple(v))
         ref = self.reference
         return "relative(%s, to='%s')" % (v, ref)
@@ -67,7 +69,7 @@ class AbsoluteCoord(Coord):
 
     def __repr__(self):
         v = self.value
-        if isinstance(v, str): return v
+        if isstr(v): return v
         return str(tuple(self.value))
 
 

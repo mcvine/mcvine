@@ -14,6 +14,8 @@
 #Generate <component_name>.py, which contains a "factory" method
 #to create instance of the boost python binding of mcstas component 
 
+from mcni._2to3 import isstr
+
 template = '''
 def factory( %(ctor_kwds)s ):
     from mcstas2.bindings import boostpython
@@ -74,7 +76,7 @@ a.name = 'a'
     ret = []
     if isinstance(inst, int) or isinstance(inst, float):
         ret.append( '%s = %r' % (name, inst) )
-    elif isinstance(inst, str ):
+    elif isstr(inst):
         ret.append( '%s = """%s"""' % (name, inst) )
     elif isinstance(inst, list) or isinstance(inst, tuple):
         for index, item in enumerate(inst):

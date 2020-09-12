@@ -11,6 +11,7 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
 
+from .._2to3 import isstr
 
 from pyre.components.Component import Component
 class DefaultTransformer(Component):
@@ -40,7 +41,7 @@ class Register(Property):
 
     def _cast(self, value):
         # examples of good values:
-        if isinstance(value, str):
+        if isstr(value):
             env = {'relative': RelativeCoord}
             value = eval(value, env)
             pass
@@ -150,7 +151,7 @@ class Geometer(Component, base):
                 i = seq.index(element)
             except:
                 seq = [c.name for c in seq]
-                if not isinstance(element, str):
+                if not isstr(element):
                     element = element.name
                 i = seq.index(element)
             if i == 0:

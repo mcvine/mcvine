@@ -2,6 +2,7 @@
 A proxy class for DetectorSytem cpp instance
 """
 
+import sys
 from mcni.AbstractComponent import AbstractComponent
 
 
@@ -20,7 +21,8 @@ class DetectorSystemFromXml(AbstractComponent):
         if not os.path.isabs(outdir):
             outdir = os.path.abspath(outdir)
         path = os.path.join(outdir, self.eventsdat)
-        if isinstance(path, str): path = path.encode()
+        if sys.version_info < (3,0) and isinstance(path, unicode):
+            path = path.encode()
         self.mca.setOutputFile(path)
         return self._cpp_instance.process(neutrons)
 
