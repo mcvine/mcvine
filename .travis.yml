@@ -46,7 +46,7 @@ install:
   - export ERRLOG=/home/travis/build/log.error
   - echo "ERRLOG=" $ERRLOG
   - export CORES=2
-  - travis_wait 60 conda build --numpy=$NUMPY_VERSION .
+  - travis_wait 100 conda build --numpy=$NUMPY_VERSION .
   - anaconda -t $CONDA_UPLOAD_TOKEN upload --force /home/travis/mc/conda-bld/linux-64/mcvine-core-$MCVINE_CONDA_PKG_VER-*.tar.bz2 --label unstable
 #  - cd ../..
 #  - conda install mcvine --use-local
