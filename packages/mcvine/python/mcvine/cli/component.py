@@ -53,14 +53,14 @@ def _info_help(name):
           +'If not specified, auto-detection will happen.')
 )
 def info(type, category, args, supplier):
-    type = type.encode(encoding)
+    type = _tounicode(type)
     if args:
-        args = args.encode(encoding)
+        args = _tounicode(args)
         args = args.split(',')
     if category:
-        category = category.encode(encoding)
+        category = _tounicode(category)
     if supplier:
-        supplier = supplier.encode(encoding)
+        supplier = _tounicode(supplier)
     from mcvine.pyre_support import componentinfo
     print(componentinfo(*args, type=type, category=category, supplier=supplier))
     print()
@@ -99,9 +99,9 @@ def _getSpecifier(*args, **kwds):
 )
 def list(category, supplier):
     if category:
-        category = category.encode(encoding)
+        category = _tounicode(category)
     if supplier:
-        supplier = supplier.encode(encoding)
+        supplier = _tounicode(supplier)
     suppliername = supplier
     
     from mcvine.component_suppliers import component_suppliers
@@ -142,6 +142,11 @@ def list(category, supplier):
                 print()
     return
 
+import sys
+def _tounicode(s):
+    if sys.version_info < (3,0):
+        return s.encode(encoding)
+    return s
 
 
 # End of file 

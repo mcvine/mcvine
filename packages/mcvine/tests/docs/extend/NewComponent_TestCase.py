@@ -41,7 +41,7 @@ class TestCase(unittest.TestCase):
         cmd = 'mcvine-create-instrument-simulation-application --name=sd --components=source,detector'
         execute(cmd)
         
-        cmd = 'MCVINE_MPI_LAUNCHER=serial ./sd --source=Souce_simple --detector=printer --dump-pml'
+        cmd = 'MCVINE_MPI_LAUNCHER=serial ./sd --source=Source_simple --detector=printer --dump-pml'
         execute(cmd)
         
         cmd = 'MCVINE_MPI_LAUNCHER=serial ./sd -ncount=5'

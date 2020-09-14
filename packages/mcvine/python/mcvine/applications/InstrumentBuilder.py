@@ -54,7 +54,9 @@ app.run(*args, **kwds)
             if DEBUG_INSTRUMENT_APP_PROXY:
                 print("* Logs are also saved at %s" % logpath)
             with open(logpath, 'w') as logstream:
-                _exec('bash %s' % run_sh_path, logstream)
+                cmd = 'bash %s' % run_sh_path
+                print(cmd)
+                _exec(cmd, logstream)
             # run the postprocessing script
             from mcni import run_ppsd_in_parallel
             nodes = _get_nodes_option()
@@ -86,12 +88,13 @@ def _exec(cmd, logstream):
     #
     import subprocess as sp, shlex
     args = shlex.split(cmd)
-    process = sp.Popen(args, stdout=sp.PIPE)
-    for line in iter(process.stdout.readline, ''):
-        sys.stdout.write(line)
-        logstream.write(line)
-    process.wait()
-    errcode = process.returncode
+    with sp.Popen(args, stdout=sp.PIPE) as process:
+        for line in iter(process.stdout.readline, b''):
+            sys.stdout.write(line.decode())
+            logstream.write(line.decode())
+        process.wait()
+        errcode = process.returncode
+        process.kill()
     if errcode:
         raise RuntimeError("%s failed" % cmd)
     return
