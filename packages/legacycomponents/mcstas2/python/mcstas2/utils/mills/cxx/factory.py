@@ -50,7 +50,7 @@ def createHHandCC( klass, pathToSave ):
     from os import makedirs
     try: makedirs( pathToSave )
     except OSError as msg:
-        if "File exists" in msg: pass
+        if "File exists" in str(msg): pass
         else: raise
         pass
 

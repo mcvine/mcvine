@@ -21,9 +21,10 @@
 
 
 def builder( name ):
-    exec('import %s as package' % name, locals())
+    import importlib
+    # exec('import %s as package' % name, locals())
     #package = __import__(name, {}, {},  [])
-    return package
+    return importlib.import_module('.'+name, __name__)
 
 
 def binding( *args, **kwds ):

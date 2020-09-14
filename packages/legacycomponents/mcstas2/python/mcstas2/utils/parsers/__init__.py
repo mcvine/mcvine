@@ -24,7 +24,6 @@ def parseComponent( component_file ):
     header      = parser.header()
     defs        = parser.definitions()
     sections    = parser.sections()
-
     name        = defs["name"]
     assert header["componentname"] == defs["name"]
 

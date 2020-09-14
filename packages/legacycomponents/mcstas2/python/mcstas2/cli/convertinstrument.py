@@ -78,7 +78,7 @@ instrument = mcvine.instrument()
                 continue
             if not found: cat = 'unknown'
             else: cat = cat.__class__.__name__
-            plist = ', '.join('%s=%s' % (k,v) for k,v in list(comp.parameters.items()))
+            plist = ', '.join('%s=%s' % (k,v) for k,v in sorted(comp.parameters.items()))
             if plist: plist = ', ' + plist
             lines.append('%s = mcomps.%s.%s(name=%r%s)' % (comp.name, cat, comp.type, comp.name, plist))
             # comp.position = [vector, "absolute" or "relative", reference]
@@ -103,11 +103,15 @@ instrument = mcvine.instrument()
 
     
     def _dumpAsJsonStr(self, instrument):
+        from collections import OrderedDict
         def comp2dict(comp):
-            return dict(
-                type = comp.type,
+            params = OrderedDict()
+            for k, v in sorted(comp.parameters.items()):
+                params[k] = v
+            return OrderedDict(
                 name = comp.name,
-                parameters = comp.parameters,
+                type = comp.type,
+                parameters = params,
                 position = comp.position,
                 orientation = comp.orientation,
                 )
@@ -274,7 +278,7 @@ class InstrumentConfiguratorRenderer(object):
     def onComponent(self, component):
         self._write('class %s(object):' % component.name)
         self._indent()
-        for k,v in component.__dict__.items():
+        for k,v in sorted(component.__dict__.items()):
             if k.startswith('_'): continue
             self._property(k,v)
             continue

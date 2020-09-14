@@ -12,7 +12,9 @@
 #
 
 def binding( name ):
-    exec('import %s as package' % name, locals())
+    # exec('from . import %s as package' % name, locals())
+    import importlib
+    package = importlib.import_module('.'+name, __name__)
     return package
 
 # version

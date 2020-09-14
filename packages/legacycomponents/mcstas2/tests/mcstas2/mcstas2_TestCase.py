@@ -17,6 +17,7 @@ standalone = True
 is_interactive = False
 
 
+import os, sys
 import unittestX as unittest
 import journal
 
@@ -56,6 +57,7 @@ class TestCase(unittest.TestCase):
             xmin=-0.2, xmax=0.2,
             ymin=-0.2, ymax=0.2,
             Emin=50., Emax=60.)
+        # global is_interactive
         if is_interactive:
             help( emonfac )
         return
@@ -64,7 +66,7 @@ class TestCase(unittest.TestCase):
 
 
 if __name__ == "__main__":
-    global is_interactive
+    # global is_interactive
     is_interactive = True
     unittest.main()
     

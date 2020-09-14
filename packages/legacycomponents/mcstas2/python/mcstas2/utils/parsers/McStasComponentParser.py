@@ -77,7 +77,8 @@ import re
 import sys
 import os.path
 from time import localtime, strftime
-from .orderedDict import OrderedDict
+# from .orderedDict import OrderedDict
+from collections import OrderedDict
 
 # Constants:
 # Directives

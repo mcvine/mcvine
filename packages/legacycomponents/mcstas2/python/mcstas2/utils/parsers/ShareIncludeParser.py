@@ -13,7 +13,8 @@
 
 # XXX: Get rid of pyparsing dependency!
 
-from .pyparsing.pyparsing import *
+# from .pyparsing.pyparsing import *
+from pyparsing import *
 
 def include():
     return Suppress( '%include') + quotedString.setResultsName( 'header' )
