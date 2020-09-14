@@ -30,7 +30,7 @@ binding = _BindingProxy()
 from .AbstractBinding import AbstractBinding as Interface
 from mcni.bindings.boostpython import Binding as base
 
-class BoostPythonBinding(base, Interface):
+class BoostPythonBinding(base):
 
     '''factory class of boost python computing engine of scatterers
     '''
