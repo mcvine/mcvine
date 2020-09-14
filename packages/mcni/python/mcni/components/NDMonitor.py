@@ -56,7 +56,8 @@ class NDMonitor(object):
         from numpy import sqrt  # some expressions use 'sqrt()' function
         from numpy import histogramdd as hdd
         from mcni.utils import conversion
-        sample = [eval(e) for e in self.expressions]
+        d = locals()
+        sample = [eval(e, d) for e in self.expressions]
         
         bins = self.bins
         ranges = self.ranges

@@ -20,7 +20,7 @@ debug = journal.debug( "mcnimodule_TestCase" )
 warning = journal.warning( "mcnimodule_TestCase" )
 
 
-import mcni, mcni.mcni
+import mcni, mcni._mcni
 import numpy
 try:
     from danse.ins.numpyext import getdataptr

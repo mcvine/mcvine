@@ -24,9 +24,9 @@ class Geometer1(base):
     class Inventory(base.Inventory):
 %s
 ''' % declarations
-    
-    exec(code, locals())
-
+    d = locals()
+    exec(code, d)
+    Geometer1 = d['Geometer1']
     return Geometer1(geometer_name)
 
 

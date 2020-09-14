@@ -43,7 +43,7 @@ warning = journal.warning( "mcni.components.test" )
 neutron_storage_path = 'neutrons'
 ntotneutrons = 53
 packetsize = 10
-npackets = ntotneutrons/packetsize
+npackets = ntotneutrons//packetsize
 
 import mcni
 neutron = mcni.neutron( r = (0,0,0),
@@ -130,6 +130,7 @@ class TestCase(unittest.TestCase):
         geometer.register( component1, (0,0,0), (0,0,0) )
         geometer.register( component2, (0,0,0), (0,0,0) )
         
+        import pdb; pdb.set_trace()
         neutrons = mcni.neutron_buffer( packetsize*(npackets+1) )
 
         mcni.simulate( instrument, geometer, neutrons )

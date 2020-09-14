@@ -29,7 +29,8 @@ def _find_mpi_binding():
     return
 
 def use_mpi_binding(name):
-    exec("from . import use_%s as mod" % name, locals())
+    import importlib
+    mod = importlib.import_module('.use_%s' % name, __name__)
     if mod.world:
         return mod
 

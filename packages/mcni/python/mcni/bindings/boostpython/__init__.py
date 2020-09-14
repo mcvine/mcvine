@@ -84,7 +84,7 @@ class Binding:
 def _import():
     import mcni.mcnibp
     from . import _patch_neutronevents_bp_interface
-    import mcni.mcni
+    import mcni._mcni
     try:
         from danse.ins import bpext
     except ImportError:

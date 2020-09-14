@@ -73,7 +73,7 @@ class Storage:
         self._readonly = mode in ['r']
 
         # file stream
-        self.stream = open(path, mode)
+        self.stream = open(path, mode+'b')
         self._closed = False
 
         #
@@ -196,7 +196,7 @@ class Storage:
                 # n2 may be still larger than ntotal 
                 # we may need to read the whole file several times
                 if n2 >= ntotal:
-                    ntimes = n2/ntotal
+                    ntimes = n2//ntotal
                     allneutrons = idfio.read(stream=self.stream)
                     for i in range(ntimes):
                         npyarr = numpy.concatenate((npyarr, allneutrons))

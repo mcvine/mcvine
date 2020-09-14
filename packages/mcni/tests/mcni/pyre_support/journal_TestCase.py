@@ -24,7 +24,7 @@ class TestCase(unittest.TestCase):
  -- journal_test_app(debug)
  -- hello
 """
-        assert expected in out
+        assert expected in out.decode()
         return
     
         

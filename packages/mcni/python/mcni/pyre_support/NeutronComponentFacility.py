@@ -102,6 +102,7 @@ class NeutronComponentFacility( Facility ):
 
 
     def _set(self, instance, component, locator):
+        from .._2to3 import isstr
         if isstr(component):
             # bypass the standard pyre component specification syntax
             # of component:args. only use the "component" part. the 

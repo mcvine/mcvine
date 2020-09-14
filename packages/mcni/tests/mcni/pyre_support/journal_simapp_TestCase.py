@@ -26,7 +26,7 @@ class TestCase(unittest.TestCase):
  >> ./journal_test_sim_app.py:18:process
  -- source(info)
  -- loop #1"""
-        assert expected in out
+        assert expected in out.decode()
         return
     
         
