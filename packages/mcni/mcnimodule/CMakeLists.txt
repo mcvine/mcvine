@@ -1,5 +1,5 @@
 # ------------- Modify these -------------
-set (PYBINDING_NAME "${PACKAGE_NAME}module")
+set (PYBINDING_NAME "_${PACKAGE_NAME}")
 set ( SRC_FILES 
   ${PYBINDING_NAME}.cc
   bindings.cc

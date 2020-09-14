@@ -37,11 +37,11 @@ char pymcni_module__doc__[] = "";
 
 // Initialization function for the module (*must* be called initmcni)
 extern "C"
-MOD_INIT(mcni)
+MOD_INIT(_mcni)
 {
     // create the module and add the functions
     PyObject * m;
-    MOD_DEF(m, "mcni", pymcni_module__doc__, pymcni_methods)
+    MOD_DEF(m, "_mcni", pymcni_module__doc__, pymcni_methods)
     if (m == NULL)
         return MOD_ERROR_VAL;
 
