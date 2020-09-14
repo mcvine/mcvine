@@ -28,18 +28,21 @@ def checkformat(filename=None, stream=None):
     """check whether the given file is in the right format
     return: 1-format good;  0-no good
     """
-    if not stream: stream = open(filename, 'rb')
+    local_stream = stream is None
+    if local_stream: stream = open(filename, 'rb')
     stream.seek(0)
     h = stream.read(headersize)
     filetype1, version1, comment, N = unpack( headerfmtstr, f[ : headersize] )
+    if local_stream: stream.close()
     return filetype == filetype1 and version == version1
-
 
 
 def count(filename=None, stream=None):
     'return number of neutrons'
-    if not stream: stream = open(filename, 'rb')
+    local_stream = stream is None
+    if local_stream: stream = open(filename, 'rb')
     stream.seek(0,2); end = stream.tell()
+    if local_stream: stream.close()
     return (end-headersize)//neutronsize
 
 
@@ -55,7 +58,8 @@ def totalintensity(filename=None, stream=None):
 def read(filename=None, stream=None, start=None, n=None):
     """read neutrons[start:end] from given file (or stream)
     """
-    if not stream: stream = open(filename, 'rb')
+    local_stream = stream is None
+    if local_stream: stream = open(filename, 'rb')
     if start is None and n is None:
         start = 0
         n = count(stream=stream)
@@ -64,6 +68,7 @@ def read(filename=None, stream=None, start=None, n=None):
 
     # nothing to read, just return
     if n == 0:
+        if local_stream: stream.close()
         return
     
     assert start >= 0 and n > 0
@@ -71,21 +76,24 @@ def read(filename=None, stream=None, start=None, n=None):
     s = stream.read(n*neutronsize)
     neutrons = numpy.fromstring(s, numpy.double)
     neutrons.shape = -1, ndblsperneutron
+    if local_stream: stream.close()
     return neutrons
 
 
 def readall(filename=None, stream=None):
-    if stream is None:
+    local_stream = stream is None
+    if local_stream:
         stream = open(filename,'rb')
     # read everything
     stream.seek(0)
     f = stream.read()
     #
     filetype, version, comment, N = unpack( headerfmtstr, f[ : headersize] )
-
     neutrons = numpy.fromstring( f[headersize:], numpy.double )
-
     neutrons.shape = -1, ndblsperneutron
+    # clean up
+    if local_stream:
+        stream.close()
     return (
         filetype.strip(b'\x00').decode(), version,
         comment.strip(b'\x00').decode(), neutrons
@@ -94,7 +102,8 @@ def readall(filename=None, stream=None):
 
 def write( neutrons, filename='neutrons', comment = '', stream=None):
     assert neutrons.dtype == numpy.double
-    if not stream:
+    local_stream = stream is None
+    if local_stream:
         stream=open(filename,'wb')
     header = pack(
         headerfmtstr, 
@@ -104,12 +113,16 @@ def write( neutrons, filename='neutrons', comment = '', stream=None):
     stream.write( header )
     neutrons.shape = -1,
     stream.write( neutrons.tostring() )
+    if local_stream:
+        stream.close()
     return
 
 
 def append(neutrons, filename=None, stream=None):
-    if not stream: stream = open(filename, 'ab')
+    local_stream = stream is None
+    if local_stream: stream = open(filename, 'ab')
     stream.write(neutrons.tostring() )
+    if local_stream: stream.close()
     return
 
 
