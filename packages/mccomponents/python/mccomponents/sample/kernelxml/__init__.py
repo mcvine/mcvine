@@ -98,10 +98,12 @@ def create_renderer():
 def _inherit( klasses ):
     #print klasses
     P = klasses
-    code = "class _( %s ): pass" % ','.join( [ 'P[%s]' % i for i in range(len(P)) ] )
-    #print code
-    exec(code, locals())
-    return _
+    code = "class ExtendedRenderer( %s ): pass" % (
+        ','.join( [ 'P[%s]' % i for i in range(len(P)) ] )
+    )
+    d = locals()
+    exec(code, d)
+    return d['ExtendedRenderer']
 
 
 

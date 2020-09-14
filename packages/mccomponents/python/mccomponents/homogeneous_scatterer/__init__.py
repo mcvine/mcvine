@@ -58,7 +58,8 @@ def scattererEngine(
     from .bindings import classes
     bindingClass2 = classes() [ binding ]
 
-    class B(bindingClass1, bindingClass2): pass
+    # class B(bindingClass1, bindingClass2): pass
+    class B(bindingClass2, bindingClass1): pass
     binding = B()
 
     # 2. orientation convention
@@ -163,8 +164,9 @@ def _inherit( klasses ):
     P = klasses
     code = "class _( %s ): pass" % ','.join( [ 'P[%s]' % i for i in range(len(P)) ] )
     #print code
-    exec(code, locals())
-    return _
+    d = locals()
+    exec(code, d)
+    return d['_']
 
 
 # version

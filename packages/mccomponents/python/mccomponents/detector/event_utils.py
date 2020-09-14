@@ -43,7 +43,7 @@ def normalizeEventFile(file, n):
 def mergeEventFiles(files, out):
     "merge event data files into one output file"
     import sys, os
-    if sys.platform != 'linux2':
+    if not sys.platform.startswith('linux'):
         raise NotImplementedError
     outdir = os.path.dirname(out)
     # tempfile to hold the list of files

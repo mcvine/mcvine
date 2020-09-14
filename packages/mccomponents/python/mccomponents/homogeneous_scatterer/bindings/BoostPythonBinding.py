@@ -22,7 +22,8 @@ from .AbstractBinding import AbstractBinding as Interface
 from mccomposite.bindings.BoostPythonBinding import BoostPythonBinding as base
 
 
-class BoostPythonBinding(base, Interface):
+class BoostPythonBinding(base):
+# class BoostPythonBinding:
 
     '''factory class of boost python computing engine of scatterers
     '''
@@ -96,13 +97,15 @@ def register( methodname, method, override = False ):
 
     return
 
-
+_original = BoostPythonBinding
+_klasses = [_original]
 def extend( klass ):
     "extend binding class with the new class"
+    if klass in _klasses: return
+    _klasses.insert(0, klass)
+    class BPB(*_klasses): pass
     global BoostPythonBinding
-    old = BoostPythonBinding
-    class _( klass, old ): pass
-    BoostPythonBinding = _
+    BoostPythonBinding = BPB
     return
 
 
