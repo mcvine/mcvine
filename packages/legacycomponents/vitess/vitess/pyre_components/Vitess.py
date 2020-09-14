@@ -14,7 +14,7 @@
 category = 'optics'
 
 def Vitess(*args, **kwds):
-    from .vitess import vitess
+    from ._vitess import vitess
     return vitess(*args, **kwds)
 Vitess.factoryfactory = True
 
