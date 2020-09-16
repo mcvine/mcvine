@@ -40,7 +40,7 @@ install:
   - grep git_rev meta.yaml
   - export ERRLOG=/home/travis/build/log.error
   - echo "ERRLOG=" $ERRLOG
-  - export CORES=2
+  - export CORES=1
   - travis_wait 100 conda build --numpy=$NUMPY_VERSION .
   - conda install anaconda-client
   - conda config --set anaconda_upload no
