@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 
-if [ -z "$CORES" ];
-    then CORES=2;
+let CORES=`grep -c ^processor /proc/cpuinfo`
+let CORES-=1
+if ((CORES < 1)); then
+    CORES = 1;
 fi
 
 PYVER_MAJOR=`python -c "import sys; print sys.version_info[0]"`
