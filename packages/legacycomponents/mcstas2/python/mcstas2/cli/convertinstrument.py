@@ -12,7 +12,8 @@
 #
 
 
-import os, click
+import os, sys, click
+from collections import OrderedDict
 
 from . import mcstas
 @mcstas.command()
@@ -36,6 +37,8 @@ class App(object):
         instrument = parser.parse(text)
         
         fname = os.path.basename(input)
+        if sys.version_info < (3,0) and isinstance(fname, unicode):
+            fname = fname.encode()
         instrname, ext = os.path.splitext(fname)
 
         instrument.name = instrname
@@ -103,11 +106,8 @@ instrument = mcvine.instrument()
 
     
     def _dumpAsJsonStr(self, instrument):
-        from collections import OrderedDict
         def comp2dict(comp):
-            params = OrderedDict()
-            for k, v in sorted(comp.parameters.items()):
-                params[k] = v
+            params = _toOrderedDictSortedByKey(comp.parameters)
             return OrderedDict(
                 name = comp.name,
                 type = comp.type,
@@ -280,6 +280,7 @@ class InstrumentConfiguratorRenderer(object):
         self._indent()
         for k,v in sorted(component.__dict__.items()):
             if k.startswith('_'): continue
+            if isinstance(v, dict): v = _toOrderedDictSortedByKey(v)
             self._property(k,v)
             continue
         self._outdent()
@@ -288,7 +289,11 @@ class InstrumentConfiguratorRenderer(object):
 
     
     def _property(self, k, v):
-        self._write('%s=%r' % (k,v))
+        if isinstance(v, OrderedDict):
+            text = '%s=%s' % (k, _od2str(v))
+        else:
+            text = '%s=%r' % (k,v)
+        self._write(text)
         return
 
     
@@ -309,6 +314,15 @@ def _formatParamStr(params):
         l.append(s)
         continue
     return ', '.join(l)
+
+def _toOrderedDictSortedByKey(d):
+    o = OrderedDict()
+    for k, v in sorted(d.items()): o[k] = v
+    return o
+
+def _od2str(d):
+    "convert ordereddict to str"
+    return '{' + ', '.join('%r: %r'%(k,v) for k,v in d.items()) + '}'
 
 from mcvine.pyre_support.pml import PmlRenderer
 
