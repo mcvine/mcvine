@@ -1,6 +1,7 @@
 version: 0.2
 env:
   variables:
+      DEBUG_MCVINE_BUILD: 0
 
 phases:
   install:
