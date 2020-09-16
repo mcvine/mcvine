@@ -125,14 +125,10 @@ class TestCase(unittest.TestCase):
         component1 = NeutronFromStorage('storage', '%s-saved' % neutron_storage_path)
         component2 = Verifier( 'verifier', self)
         instrument = mcni.instrument( [component1, component2] )
-        
         geometer = mcni.geometer()
         geometer.register( component1, (0,0,0), (0,0,0) )
         geometer.register( component2, (0,0,0), (0,0,0) )
-        
-        import pdb; pdb.set_trace()
         neutrons = mcni.neutron_buffer( packetsize*(npackets+1) )
-
         mcni.simulate( instrument, geometer, neutrons )
         return
 
