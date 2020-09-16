@@ -7,9 +7,9 @@ boost:
 numpy:
   - 1.16.0
 
-zip_keys:
-  - boost
-  - numpy
+# zip_keys:
+#   - boost
+#   - numpy
 
 pin_run_as_build:
   boost:
