@@ -66,7 +66,7 @@ componentname = lambda m: 'm' + '_'.join([q for q in m])
 
 
 def _Component(quantities, name):
-    from .ndmonitor import ndmonitor
+    from ._ndmonitor import ndmonitor
     base = ndmonitor(*quantities)
     class Component(base):
 
