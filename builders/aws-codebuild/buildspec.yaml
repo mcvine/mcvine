@@ -1,7 +1,6 @@
 version: 0.2
 env:
   variables:
-      PYTHON_VERSION: "2.7"
 
 phases:
   install:
