@@ -14,7 +14,7 @@ class source(object):
   extra='\n AT (0,0,0) RELATIVE arm\n\n'
   name='source'
   orientation=((0, 0, 0), 'relative', 'arm')
-  parameters={'radius': '0.015', 'dist': '1', 'xw': '0.024', 'yh': '0.015', 'E0': '5', 'dE': '0.2'}
+  parameters={'E0': '5', 'dE': '0.2', 'dist': '1', 'radius': '0.015', 'xw': '0.024', 'yh': '0.015'}
   position=((0.0, 0.0, 0.0), 'relative', 'arm')
   type='Source_simple'
 
@@ -22,7 +22,7 @@ class collimator(object):
   extra='\n  AT (0, 0, 0.4) RELATIVE arm\n\n'
   name='collimator'
   orientation=((0, 0, 0), 'relative', 'arm')
-  parameters={'len': '0.2', 'divergence': 'coll_div', 'xmin': '-0.02', 'xmax': '0.02', 'ymin': '-0.03', 'ymax': '0.03'}
+  parameters={'divergence': 'coll_div', 'len': '0.2', 'xmax': '0.02', 'xmin': '-0.02', 'ymax': '0.03', 'ymin': '-0.03'}
   position=((0.0, 0.0, 0.4), 'relative', 'arm')
   type='Collimator_linear'
 
@@ -30,7 +30,7 @@ class target(object):
   extra='\n  AT (0,0,1) RELATIVE arm\n\n'
   name='target'
   orientation=((0, 0, 0), 'relative', 'arm')
-  parameters={'zthick': '0.004', 'xwidth': '0.02', 'yheight': '0.015', 'focus_r': '0', 'pack': '1', 'target_x': '0', 'target_y': '0', 'target_z': '1'}
+  parameters={'focus_r': '0', 'pack': '1', 'target_x': '0', 'target_y': '0', 'target_z': '1', 'xwidth': '0.02', 'yheight': '0.015', 'zthick': '0.004'}
   position=((0.0, 0.0, 1.0), 'relative', 'arm')
   type='V_sample'
 
@@ -46,7 +46,7 @@ class PSD_4pi(object):
   extra='\n  AT (0,0,0) RELATIVE arm2\n  \nEND\n\n'
   name='PSD_4pi'
   orientation=((0, 0, 0), 'relative', 'arm2')
-  parameters={'radius': '10', 'nx': '101', 'ny': '51', 'filename': '"vanadium.psd"'}
+  parameters={'filename': '"vanadium.psd"', 'nx': '101', 'ny': '51', 'radius': '10'}
   position=((0.0, 0.0, 0.0), 'relative', 'arm2')
   type='PSD_monitor_4PI'
 
