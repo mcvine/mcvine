@@ -11,5 +11,6 @@ cd builders/aws-codebuild/conda-recipe
 ./create_meta_yaml $MCVINE_CONDA_PKG_VER $GIT_FULL_HASH
 grep version meta.yaml
 grep git_rev meta.yaml
+cat meta.yaml
 CORES=2
-conda build --numpy=1.16 .
+conda build .
