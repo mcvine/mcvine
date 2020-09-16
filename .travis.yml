@@ -34,10 +34,6 @@ install:
   - conda config --add channels diffpy
   - conda config --add channels mcvine
   - conda install -n root conda-build
-  - conda create -n testenv python=$TRAVIS_PYTHON_VERSION
-  - conda install -n testenv anaconda-client
-  - source activate testenv
-  - conda config --set anaconda_upload no
   - cd builders/travis-conda
   - ./create_meta_yaml $MCVINE_CONDA_PKG_VER $GIT_FULL_HASH
   - grep version meta.yaml
@@ -46,6 +42,8 @@ install:
   - echo "ERRLOG=" $ERRLOG
   - export CORES=2
   - travis_wait 60 conda build --numpy=$NUMPY_VERSION .
+  - conda install anaconda-client
+  - conda config --set anaconda_upload no
   - anaconda -t $CONDA_UPLOAD_TOKEN upload --force /home/travis/mc/conda-bld/linux-64/mcvine-core-$MCVINE_CONDA_PKG_VER-*.tar.bz2 --label unstable
 #  - cd ../..
 #  - conda install mcvine --use-local
@@ -55,9 +53,9 @@ script:
   - echo "mcvine"
 
 after_failure:
-  # dump the last 2000 lines of error log (including warnings).
+  # dump the last 3000 lines of error log (including warnings).
   # see build.sh in builders/travis-conda
-  - tail --lines=2000 $ERRLOG
+  - tail --lines=3000 $ERRLOG
 
 notifications:
   email:
