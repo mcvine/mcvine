@@ -13,6 +13,7 @@
 
 # XXX: Get rid of pyparsing dependency!
 
+from __future__ import absolute_import
 # from .pyparsing.pyparsing import *
 from pyparsing import *
 

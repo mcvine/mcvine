@@ -11,6 +11,9 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
 
+from future.standard_library import install_aliases
+install_aliases()
+
 import journal
 debug = journal.debug("homogeneous_scatterer.xmlparser")
 

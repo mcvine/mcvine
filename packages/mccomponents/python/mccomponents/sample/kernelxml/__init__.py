@@ -12,6 +12,7 @@
 #
 
 
+from __future__ import print_function
 
 def parse( stream, *args ):
     parser = create_parser()

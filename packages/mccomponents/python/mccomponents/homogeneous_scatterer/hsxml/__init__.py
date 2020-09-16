@@ -12,6 +12,8 @@
 #
 
 
+from __future__ import print_function
+
 from .Parser import Parser
 default_parser = Parser()
 
