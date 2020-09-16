@@ -103,7 +103,17 @@ def extend( klass ):
     "extend binding class with the new class"
     if klass in _klasses: return
     _klasses.insert(0, klass)
-    class BPB(*_klasses): pass
+    import sys
+    if sys.version_info < (3,0):
+        BPB = _klasses[-1]
+        for kls in _klasses[-2::-1]:
+            K = BPB
+            class BPB(kls, K): pass
+            continue
+    else:
+        from ._py3 import make_subclass
+        BPB = make_subclass(_klasses)
+    BPB.__name__ = 'BoostPythonBinding'
     global BoostPythonBinding
     BoostPythonBinding = BPB
     return
