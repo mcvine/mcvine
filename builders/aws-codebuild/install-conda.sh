@@ -10,4 +10,5 @@ which conda
 conda config --add channels conda-forge
 conda config --add channels diffpy
 conda config --add channels mcvine
+conda update conda
 conda install -n root conda-build
