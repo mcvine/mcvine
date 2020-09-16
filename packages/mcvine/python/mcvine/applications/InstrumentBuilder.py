@@ -87,14 +87,15 @@ def _exec(cmd, logstream):
         print("* Running %s" % cmd)
     #
     import subprocess as sp, shlex
+    import psutil
     args = shlex.split(cmd)
-    with sp.Popen(args, stdout=sp.PIPE) as process:
+    with psutil.Popen(args, stdout=sp.PIPE) as process:
         for line in iter(process.stdout.readline, b''):
             sys.stdout.write(line.decode())
             logstream.write(line.decode())
         process.wait()
         errcode = process.returncode
-        process.kill()
+        # process.kill()
     if errcode:
         raise RuntimeError("%s failed" % cmd)
     return
