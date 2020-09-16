@@ -24,9 +24,11 @@ class Geometer1(base):
     class Inventory(base.Inventory):
 %s
 ''' % declarations
-    d = locals()
-    exec(code, d)
-    Geometer1 = d['Geometer1']
+    # not sure why but for py2 have to use combination of g and l instead of just l itself
+    g, l = globals(), locals()
+    g.update(l)
+    exec(code, g)
+    Geometer1 = g['Geometer1']
     return Geometer1(geometer_name)
 
 
@@ -35,8 +37,8 @@ def buildGeometerFromInventory(Inventory, name=None):
     componentnames = dir(Inventory)
 
     from .NeutronComponentFacility import NeutronComponentFacility
-    componentnames = [name for name in componentnames if isinstance(
-            getattr(Inventory, name), NeutronComponentFacility )]
+    componentnames = [cname for cname in componentnames if isinstance(
+            getattr(Inventory, cname), NeutronComponentFacility )]
     
     return buildGeometer(componentnames, name=name)
 
