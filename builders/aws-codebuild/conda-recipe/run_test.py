@@ -12,7 +12,6 @@ The tests will run at a separate work directory.
 """
 
 import os
-os.environ['CORES']='2'
-cmd = 'mcvine test'
+cmd = 'CORES=2 mcvine test'
 if os.system(cmd):
     raise RuntimeError("%s failed" % cmd)
