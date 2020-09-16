@@ -6,7 +6,6 @@ env:
 phases:
   install:
     runtime-versions:
-      python: 3.8
     commands:
       - free -h
       - df -h
