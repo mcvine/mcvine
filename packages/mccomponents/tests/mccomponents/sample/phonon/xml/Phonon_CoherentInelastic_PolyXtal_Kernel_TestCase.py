@@ -83,7 +83,7 @@ class TestCase(unittest.TestCase):
         return
 
 
-    def test2(self):
+    def _test2(self):
         'instrument: monochromatic source, sample, S(Q,E) detector'
         from SSD import App
         app = App("test-phonon_coherentinelastic_polyxtal_kernel")
