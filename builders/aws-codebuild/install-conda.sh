@@ -7,3 +7,8 @@ chmod +x miniconda.sh
 ./miniconda.sh -b -p $HOME/mc
 export PATH=$HOME/mc/bin:$PATH
 which conda
+conda config --add channels conda-forge
+conda config --add channels diffpy
+conda config --add channels mcvine
+conda install -n root conda-build
+-
