@@ -6,8 +6,8 @@ if ((CORES < 1)); then
     CORES = 1;
 fi
 
-PYVER_MAJOR=`python -c "import sys; from __future__ import print_function; print(sys.version_info[0])"`
-PYVER_MINOR=`python -c "import sys; from __future__ import print_function; print(sys.version_info[1])"`
+PYVER_MAJOR=`python -c "from __future__ import print_function; import sys; print(sys.version_info[0])"`
+PYVER_MINOR=`python -c "from __future__ import print_function; import sys; print(sys.version_info[1])"`
 PYVER=${PYVER_MAJOR}.${PYVER_MINOR}
 
 mkdir build
