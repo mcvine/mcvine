@@ -26,7 +26,7 @@ before_install:
 install:
   - export GIT_FULL_HASH=`git rev-parse HEAD`
   - export GIT_VER=`git describe --tags`
-  - export VERSION=`python -c "print '$GIT_VER'.split('-')[0][1:]"`
+  - export VERSION=`git describe --tags | cut -d '-' -f1`
   - export MCVINE_CONDA_PKG_VER=${VERSION}unstable
   - echo ${TRAVIS_PYTHON_VERSION}
   - conda config --set always_yes true
