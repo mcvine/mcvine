@@ -13,7 +13,7 @@ batch:
       env:
         variables:
           PYTHON_VERSION: 3.8
-  phases:
+phases:
   install:
     commands:
       - free -h
