@@ -1,5 +1,6 @@
 #!/bin/bash
 
+set -x
 export PATH=$HOME/mc/bin:$PATH
 export GIT_FULL_HASH=`git rev-parse HEAD`
 export GIT_VER=`git describe --tags`

@@ -5,6 +5,7 @@ env:
 phases:
   install:
     commands:
+      - set -x
       - free -h
       - df -h
       - mount
@@ -13,7 +14,9 @@ phases:
       - ls -tl ./
       - which git
       - which python
-      - ./builders/aws-codebuild/install-conda.sh
+      - echo $PYTHON_VERSION
+      - echo $NUMPY_VERSION
+      - # ./builders/aws-codebuild/install-conda.sh
   pre_build:
     commands:
       - echo PreBuild started on `date`
@@ -21,7 +24,7 @@ phases:
   build:
     commands:
       - echo Build started on `date`
-      - ./builders/aws-codebuild/build_and_test.sh
+      - # ./builders/aws-codebuild/build_and_test.sh
       - df -h
       - echo Build ended on `date`
   post_build:
