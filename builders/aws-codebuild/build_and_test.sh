@@ -12,5 +12,4 @@ cd builders/aws-codebuild/conda-recipe
 grep version meta.yaml
 grep git_rev meta.yaml
 cat meta.yaml
-CORES=2
-conda build .
+conda build --python $PYTHON_VERSION --numpy $NUMPY_VERSION .

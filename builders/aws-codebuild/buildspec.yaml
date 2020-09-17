@@ -2,7 +2,19 @@ version: 0.2
 env:
   variables:
       DEBUG_MCVINE_BUILD: 0
-
+batch:
+  fast-fail: false
+  build-list:
+    - identifier: py27
+      env:
+        variables:
+          PYTHON_VERSION: 2.7
+          NUMPY_VERSION: 1.16
+    - identifier: py38
+      env:
+        variables:
+          PYTHON_VERSION: 3.8
+          NUMPY_VERSION: 1.19
 phases:
   install:
     commands:
