@@ -37,7 +37,7 @@ class TestCase(unittest.TestCase):
         for i in range(10):
             neutron = neutrons[i]
             # print neutron
-            self.assert_(np.allclose(neutron.state.velocity, [3000, 0, 0], atol=20))
+            self.assertTrue(np.allclose(neutron.state.velocity, [3000, 0, 0], atol=20))
             continue
 
         return

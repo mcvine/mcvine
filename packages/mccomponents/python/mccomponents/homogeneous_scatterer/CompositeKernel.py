@@ -13,7 +13,7 @@
 
 
 
-from Kernel import Kernel
+from .Kernel import Kernel
 class CompositeKernel(Kernel):
     
 

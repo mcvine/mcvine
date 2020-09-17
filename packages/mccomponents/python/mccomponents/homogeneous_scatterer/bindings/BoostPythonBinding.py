@@ -18,11 +18,12 @@ mccomposite.bindings.get('BoostPython')
 import mccomponents.mccomponentsbp as binding
 
 
-from AbstractBinding import AbstractBinding as Interface
+from .AbstractBinding import AbstractBinding as Interface
 from mccomposite.bindings.BoostPythonBinding import BoostPythonBinding as base
 
 
-class BoostPythonBinding(base, Interface):
+class BoostPythonBinding(base):
+# class BoostPythonBinding:
 
     '''factory class of boost python computing engine of scatterers
     '''
@@ -87,22 +88,34 @@ def register( methodname, method, override = False ):
     '''register a new handling method'''
     if hasattr(BoostPythonBinding, methodname):
         if not override:
-            raise ValueError , "Cannot register handler %s. "\
+            raise ValueError("Cannot register handler %s. "\
                   "It was already registered." % (
-                methodname )
+                methodname ))
         pass
     
     setattr( BoostPythonBinding, methodname, method )
 
     return
 
-
+_original = BoostPythonBinding
+_klasses = [_original]
 def extend( klass ):
     "extend binding class with the new class"
+    if klass in _klasses: return
+    _klasses.insert(0, klass)
+    import sys
+    if sys.version_info < (3,0):
+        BPB = _klasses[-1]
+        for kls in _klasses[-2::-1]:
+            K = BPB
+            class BPB(kls, K): pass
+            continue
+    else:
+        from ._py3 import make_subclass
+        BPB = make_subclass(_klasses)
+    BPB.__name__ = 'BoostPythonBinding'
     global BoostPythonBinding
-    old = BoostPythonBinding
-    class _( klass, old ): pass
-    BoostPythonBinding = _
+    BoostPythonBinding = BPB
     return
 
 

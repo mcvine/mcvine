@@ -12,6 +12,7 @@
 #
 
 
+from __future__ import print_function
 
 def parse( stream, *args ):
     parser = create_parser()
@@ -57,7 +58,7 @@ def weave( scatterer, stream = None ):
         stream = sys.stdout
         pass
 
-    print >> stream, '\n'.join( render(scatterer) )
+    print('\n'.join( render(scatterer) ), file=stream)
     return
 
 
@@ -79,14 +80,14 @@ def removeRendererExtension( extension_class ):
 
 
 def create_parser():
-    from Parser import Parser
+    from .Parser import Parser
     parser = Parser()
     return parser
 
 
 renderer_extensions = []
 def create_renderer():
-    from Renderer import Renderer
+    from .Renderer import Renderer
     klasses = [Renderer] + renderer_extensions
     klasses.reverse()
     klass = _inherit( klasses )
@@ -98,10 +99,12 @@ def create_renderer():
 def _inherit( klasses ):
     #print klasses
     P = klasses
-    code = "class _( %s ): pass" % ','.join( [ 'P[%s]' % i for i in range(len(P)) ] )
-    #print code
-    exec code in locals()
-    return _
+    code = "class ExtendedRenderer( %s ): pass" % (
+        ','.join( [ 'P[%s]' % i for i in range(len(P)) ] )
+    )
+    d = locals()
+    exec(code, d)
+    return d['ExtendedRenderer']
 
 
 

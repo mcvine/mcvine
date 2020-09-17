@@ -43,7 +43,7 @@ warning = journal.warning( "mcni.components.test" )
 neutron_storage_path = 'neutrons'
 ntotneutrons = 53
 packetsize = 10
-npackets = ntotneutrons/packetsize
+npackets = ntotneutrons//packetsize
 
 import mcni
 neutron = mcni.neutron( r = (0,0,0),
@@ -71,7 +71,7 @@ class Verifier( AbstractComponent ):
         return
 
     def process(self, neutrons):
-        for n in neutrons: print n
+        for n in neutrons: print(n)
         for i in range(len(neutrons)):
             r = list( neutrons[i].state.position )
 
@@ -125,13 +125,10 @@ class TestCase(unittest.TestCase):
         component1 = NeutronFromStorage('storage', '%s-saved' % neutron_storage_path)
         component2 = Verifier( 'verifier', self)
         instrument = mcni.instrument( [component1, component2] )
-        
         geometer = mcni.geometer()
         geometer.register( component1, (0,0,0), (0,0,0) )
         geometer.register( component2, (0,0,0), (0,0,0) )
-        
         neutrons = mcni.neutron_buffer( packetsize*(npackets+1) )
-
         mcni.simulate( instrument, geometer, neutrons )
         return
 

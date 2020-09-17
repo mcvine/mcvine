@@ -36,7 +36,7 @@ def doshist_fromascii(datapath, x_unit=None):
             continue
         tokens = line.split()
         try:
-            numbers = map(float, tokens)
+            numbers = list(map(float, tokens))
         except Exception as e:
             msg = 'Skip line %s' % line
             warnings.warn(msg)

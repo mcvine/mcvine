@@ -46,7 +46,7 @@ class Phonon_IncoherentInelastic_Kernel(base):
     pass # end of Phonon_IncoherentInelastic_Kernel
 
 
-from HomogeneousScatterer import HomogeneousScatterer
+from .HomogeneousScatterer import HomogeneousScatterer
 HomogeneousScatterer.onPhonon_IncoherentInelastic_Kernel = HomogeneousScatterer.onKernel
 
 

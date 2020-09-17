@@ -59,13 +59,13 @@ class TestCase(unittest.TestCase):
         mcni.simulate( instrument, geometer, neutrons )
 
         N = len(neutrons)
-        print N
+        print(N)
 
         import numpy.linalg as nl, numpy as np
         for i in range(10):
             neutron = neutrons[i]
             Vf = np.array(neutron.state.velocity)
-            print Vf
+            print(Vf)
             continue
 
         return

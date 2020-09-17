@@ -26,14 +26,14 @@ class Struct:
         self.__dict__[key] = val
         return val
     def __repr__(self):
-        return '{%s}' % str(', '.join('%s : %s' % (k, repr(v)) for
-                                      (k, v) in self.__dict__.items()))
+        return '{%s}' % (', '.join('%s : %s' % (k, repr(v)) for
+                                   (k, v) in self.__dict__.items()))
 
 def _struct(v):
     if isinstance(v, dict):
         return Struct(v)
     elif isinstance(v, list):
-        return map(_struct, v)
+        return list(map(_struct, v))
     else:
         return v
                                      

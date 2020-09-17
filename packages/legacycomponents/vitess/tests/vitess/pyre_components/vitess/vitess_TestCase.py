@@ -42,7 +42,7 @@ class TestCase(unittest.TestCase):
         cmd = 'mcvine-simulate -components=source,fc,monitor --- -ncount=1e4 -buffer_size=1000 -source=Source_simple -fc="Vitess(chopper_fermi_Linux)"  -fc.a=10.2 -fc.b=5 -fc.c=3 -fc.l=30 -fc.m=0.015 -fc.r=0.08 -fc.n=300 -fc.q=  -fc.G=FC_geom_circ.dat  -monitor="NDMonitor(energy)" -geometer.fc="(0,0,10),(0,0,0)" -geometer.monitor="(0,0,12),(0,0,0)" -source.E0=60 -source.dE=30 -dist=10 -width=0.05 -height=0.05 -xw=0.05 -yh=0.05 -fc. -monitor.energymin=0 -monitor.energymax=100 -monitor.nenergy=100 -monitor.filename=ienergy.h5 --output-dir=out-test3'
         import os
         if os.system(cmd):
-            raise RuntimeError, "%r failed" % cmd
+            raise RuntimeError("%r failed" % cmd)
 
         from histogram.hdf import load
         from histogram.hdf.utils import getOnlyEntry

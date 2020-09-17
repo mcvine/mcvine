@@ -17,7 +17,7 @@ def execute(cmd):
     p = sp.Popen(cmd, stdout=sp.PIPE, stderr=sp.PIPE, shell=True)
     rt = p.wait()
     if rt:
-        raise RuntimeError, "%r failed" %cmd
+        raise RuntimeError("%r failed" %cmd)
 
 
     

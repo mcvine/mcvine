@@ -73,7 +73,7 @@ class He3Tube_TestCase(unittest.TestCase):
 
         del tube, mca
 
-        s = open( datafile ).read()
+        s = open( datafile, 'rb' ).read()
         import struct
         pixelID, tofChannelNo, prob1 = struct.unpack( 'IId', s )
         self.assertEqual( pixelID, detID * npixels + npixels/2 )

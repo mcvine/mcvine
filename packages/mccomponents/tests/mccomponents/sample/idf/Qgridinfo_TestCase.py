@@ -31,7 +31,7 @@ class TestCase(unittest.TestCase):
     def test0(self):
         from mccomponents.sample.idf.Qgridinfo import read
         Qgridinfo = read( path )
-        print Qgridinfo
+        print(Qgridinfo)
         return
 
     pass  # end of TestCase

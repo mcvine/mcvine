@@ -20,10 +20,10 @@ def srandom( seed ):
     '''change the seed for random number generator
     '''
     try:
-        from bindings.boostpython import binding
+        from .bindings.boostpython import binding
     except ImportError:
-        import bindings
-        raise RuntimeError, "imported wrong 'bindings' module? %s" % bindings
+        from . import bindings
+        raise RuntimeError("imported wrong 'bindings' module? %s" % bindings)
     
     return binding.srandom( seed )
 
@@ -38,8 +38,8 @@ def componentfactory( category, type ):
 Examples:
   componentfactory( 'monitors', 'E_monitor' )
   '''
-    from components import componentfactory
-    from components.Registry import NotRegisteredError
+    from .components import componentfactory
+    from .components.Registry import NotRegisteredError
     try: f = componentfactory( category, type )
     except NotRegisteredError: f = defaultcomponentfactory( category, type )
     return f
@@ -59,7 +59,7 @@ def printcomponentinfo( category, type ):
 Examples:
   printcomponentinfo( 'monitors', 'E_monitor' )
   '''
-    print componentinfo( category, type )
+    print(componentinfo( category, type ))
     return
 
 
@@ -68,21 +68,21 @@ def componentinfo( category, type ):
 Examples:
   componentinfo( 'monitors', 'E_monitor' )
   '''    
-    import components
+    from . import components
     if components.registered( category, type ):
-        from components import componentinfo
+        from .components import componentinfo
         info = componentinfo( category, type )
     else:
-        from utils.parsers import parseComponent
+        from .utils.parsers import parseComponent
         path = defaultcomponentpath( category, type )
         info = parseComponent( path )
     return info
 
 
 def wrapcomponent( componentfilename, componentcategory, **kwds ):
-    from release import type as releasetype
+    from .release import type as releasetype
     if releasetype == 'user':
-        from mcstascomponentspythontreeathome import init_category
+        from .mcstascomponentspythontreeathome import init_category
         init_category( componentcategory )
         pass
 
@@ -96,7 +96,7 @@ def wrapcomponent( componentfilename, componentcategory, **kwds ):
     if kwds.get('buildername') is None: kwds['buildername'] = builders[releasetype]
 
     #set appropriate python export path
-    from pythonexportathome import path as pytreeathome
+    from .pythonexportathome import path as pytreeathome
     import os
     pythontrees = {
         # 'developer': None,
@@ -107,20 +107,20 @@ def wrapcomponent( componentfilename, componentcategory, **kwds ):
 
     #set appropriate python package
     if releasetype == 'user':
-        from mcstascomponentspythontreeathome import packagename
+        from .mcstascomponentspythontreeathome import packagename
         pythonpackage = '%s.%s' % (packagename, componentcategory )
     else:
         pythonpackage = None
     if kwds.get('pythonpackage') is None: kwds['pythonpackage'] = pythonpackage
     
-    from wrappers import wrap
+    from .wrappers import wrap
     return wrap( componentfilename, componentcategory, **kwds )
 
 
 def listallcomponentcategories( ):
     '''list all component categories'''
     defaultcategories = listalldefaultcomponentcategories()
-    import components
+    from . import components
     categoriesinregistry = components.categoriesInRegistry()
     return uniquelist( defaultcategories + categoriesinregistry )
 
@@ -130,7 +130,7 @@ def listcomponentsincategory( category ):
     if category not in categories: return []
     
     defaultcomponents = listdefaultcomponentsincategory( category )
-    import components 
+    from . import components 
     components.importallcomponents()
     
     registered = components.registeredComponentsInCategory( category )
@@ -140,7 +140,7 @@ def listcomponentsincategory( category ):
 def defaultcomponentfactory( category, type ):
     path = defaultcomponentpath( category, type )
     wrapcomponent( path, category )
-    from components import componentfactory
+    from .components import componentfactory
     return componentfactory( category, type )
 
 
@@ -150,10 +150,7 @@ def listalldefaultcomponentcategories( ):
     from os.path import isdir, join
     excluded = ['CVS', 'data']
     items = os.listdir( libdir )
-    items = filter(
-        lambda item:
-        not item.startswith( '.' ) and item not in excluded and isdir( join(libdir, item) ),
-        items )
+    items = [item for item in items if not item.startswith( '.' ) and item not in excluded and isdir( join(libdir, item) )]
     return items
 
 
@@ -164,11 +161,8 @@ def listdefaultcomponentsincategory( category ):
     excluded = ['CVS']
     items = os.listdir( path )
     postfix = '.comp'
-    items = filter(
-        lambda item:
-        not item.startswith( '.' ) and item not in excluded and isfile( join(path, item) ) \
-        and item.endswith( postfix ),
-        items )
+    items = [item for item in items if not item.startswith( '.' ) and item not in excluded and isfile( join(path, item) ) \
+        and item.endswith( postfix )]
     return [item[: -len(postfix) ] for item in items]
 
 
@@ -177,8 +171,8 @@ def defaultcategorypath( category ):
     import os
     path = os.path.join( libdir, category )
     if not os.path.exists( path ) or not os.path.isdir(path):
-        raise RuntimeError, "default component category %s does not exist. Cannot find %s" % (
-            category, path )
+        raise RuntimeError("default component category %s does not exist. Cannot find %s" % (
+            category, path ))
     return path
 
 
@@ -187,8 +181,8 @@ def defaultcomponentpath( category, type ):
     import os
     path = os.path.join( libdir, category, '%s.comp' % type )
     if not os.path.exists( path ) or not os.path.isfile(path):
-        raise RuntimeError, "default component (%s, %s) does not exist. Cannot find %s" % (
-            category, type, path )
+        raise RuntimeError("default component (%s, %s) does not exist. Cannot find %s" % (
+            category, type, path ))
     return path
 
 
@@ -213,15 +207,15 @@ def iterComponents():
 from mcni.utils import uniquelist
 
 def _init():
-    from release import type as releasetype
+    from .release import type as releasetype
     if releasetype == 'user':
         #add user python tree to path if necessary
-        from pythonexportathome import path as pytreeathome
+        from .pythonexportathome import path as pytreeathome
         import sys
         sys.path = [pytreeathome] + sys.path
         
         #init mcstas components python tree if necessary
-        from mcstascomponentspythontreeathome import init 
+        from .mcstascomponentspythontreeathome import init 
         init()
         pass
     return

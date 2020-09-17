@@ -17,12 +17,12 @@
 
 
 def parseComponent( component_file ):
-    from ComponentParser import component as componentParser
+    from .ComponentParser import component as componentParser
     parser = componentParser()
     s = open(component_file).read()
     info = parser.parseString( s )
 
-    from ComponentHeaderParser import parse
+    from .ComponentHeaderParser import parse
     header = parse( info.header )
 
     name = '%s' % info.name    
@@ -34,7 +34,7 @@ def parseComponent( component_file ):
     definition_parameters = _addDescription( info.definition_parameters, inputParamDescs )
     setting_parameters = _addDescription( info.setting_parameters, inputParamDescs )
 
-    from ComponentInfo import Parameter
+    from .ComponentInfo import Parameter
     name_parameter = Parameter( 'name', 'char *', name.lower(), 'component name' )
     input_parameters = [name_parameter] + definition_parameters + setting_parameters
     
@@ -51,7 +51,7 @@ def parseComponent( component_file ):
 
     share = _format_share_str( info.share )
     
-    from ComponentInfo import ComponentInfo
+    from .ComponentInfo import ComponentInfo
     return ComponentInfo(
         name,
         header.copyright, header.simple_description,
@@ -67,7 +67,7 @@ def parseComponent( component_file ):
 
 
 def _format_share_str( share ):
-    from ShareIncludeParser import include
+    from .ShareIncludeParser import include
     lines = share.split( '\n' )
     if len(lines) == 0: return '', ''
     if len(lines) == 1: return '', ''
@@ -96,7 +96,7 @@ def _format_share_str( share ):
 
     if start_of_implementation == -1:
         # did not find separator
-        raise RuntimeError, "invalid component share section. No separator to separate implementation code from header code: %s" % share
+        raise RuntimeError("invalid component share section. No separator to separate implementation code from header code: %s" % share)
 
     return ('\n'.join( lines[:start_of_implementation] ),
             '\n'.join( lines[start_of_implementation:] ) )
@@ -105,7 +105,7 @@ implementation_start_signature = '// ----------  implementation for SHARE ------
 
 
 def _addDescription( parameters, descriptions ):
-    from ComponentInfo import Parameter
+    from .ComponentInfo import Parameter
     ret = []
     for param in parameters:
         name = param.name

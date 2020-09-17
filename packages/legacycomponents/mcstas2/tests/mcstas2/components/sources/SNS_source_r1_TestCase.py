@@ -41,7 +41,7 @@ class TestCase(unittest.TestCase):
             neutrons[i] = mcni.neutron(r=(0,0,-1), v=(0,0,3000), time = 0, prob = 1)
             continue
         component.process( neutrons )
-        print neutrons
+        print(neutrons)
         return
 
     def test2(self):

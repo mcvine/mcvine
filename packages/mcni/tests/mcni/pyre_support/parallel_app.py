@@ -20,14 +20,14 @@ class App(base):
     def main(self):
         super(App, self).main()
         from mcni.utils.mpi import world, size, rank, send, receive
-        print "in app.main(): mpi world %s, size %s" % (world, size)
-        print "mode=%s, rank=%s" % (
-            self.inventory.mode, rank)
+        print("in app.main(): mpi world %s, size %s" % (world, size))
+        print("mode=%s, rank=%s" % (
+            self.inventory.mode, rank))
         
         send(rank, 1-rank, tag=100)
         received = receive(1-rank, tag=100)
-        print "my rank: %s, received from %s: %s(%s)" % (
-            rank, 1-rank, received, type(received))
+        print("my rank: %s, received from %s: %s(%s)" % (
+            rank, 1-rank, received, type(received)))
         
         assert 1-rank == received
         assert type(received) == int

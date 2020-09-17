@@ -3,7 +3,7 @@ Parses original McStas instrument definition files.
 """
 __author__="Jiao Lin"
 
-from pyparsing.pyparsing import *
+from .pyparsing.pyparsing import *
 
 # numbers: 1, 30.0, 1e-5, -99, for parsing parameter values
 number = Combine( Optional('-') + ( '0' | Word('123456789',nums) ) + \
@@ -13,7 +13,7 @@ number = Combine( Optional('-') + ( '0' | Word('123456789',nums) ) + \
 def convertNumbers(s,l,toks):
     n = toks[0]
     try: return int(n)
-    except ValueError, ve: return float(n)
+    except ValueError as ve: return float(n)
     raise
 
 number.setParseAction( convertNumbers )
@@ -162,20 +162,20 @@ def component():
            + Optional(finalize()) 
 
 def test_define():
-    print "test parsing define block...",
+    print("test parsing define block...", end=' ')
     d = define()
     parsed = d.parseString( "DEFINE COMPONENT E_monitor" )
-    print parsed
+    print(parsed)
     assert parsed[0] == "E_monitor" 
     return
 
 
 def test_def_parms():
-    print "test parsing definition parmeters block...",
+    print("test parsing definition parmeters block...", end=' ')
     d = def_parms()
     s = """ DEFINITION PARAMETERS (int nchan=20, char *filename="e.dat", xmin=-0.2)"""
     parsed = d.parseString( s )
-    print parsed
+    print(parsed)
     expected = [ ["int", "nchan", 20],
                  ["char *", "filename", "e.dat"],
                  ["", "xmin", -0.2] ]
@@ -188,26 +188,26 @@ def test_def_parms():
 
     s = """ DEFINITION PARAMETERS ()"""
     parsed = d.parseString( s )
-    print parsed
+    print(parsed)
     return
     
 
 def test_set_parms():
-    print "test parsing setting parmeters block...",
+    print("test parsing setting parmeters block...", end=' ')
     d = set_parms()
     s = """ SETTING PARAMETERS (int nchan=20, char *filename="e.dat", xmin=-0.2)"""
     parsed = d.parseString( s )
-    print parsed
-    for parm in parsed: print "%s %s = %s" % (parm.type, parm.name, parm.value)
+    print(parsed)
+    for parm in parsed: print("%s %s = %s" % (parm.type, parm.name, parm.value))
     return
     
 
 def test_output_parms():
-    print "test parsing output parmeters block...",
+    print("test parsing output parmeters block...", end=' ')
     d = output_parms()
     s = """ OUTPUT PARAMETERS (E_N, E_p, E_p2)"""
     parsed = d.parseString( s )
-    print parsed
+    print(parsed)
     expected = ["E_N", "E_p", "E_p2"]
     
     for e,parm in zip(expected, parsed):  assert e == parm
@@ -215,51 +215,51 @@ def test_output_parms():
     #empty parameter list
     s = """OUTPUT PARAMETERS ()"""
     parsed = d.parseString( s )
-    print parsed
+    print(parsed)
     
     return
     
 
 def test_state_parms():
-    print "test parsing state parmeters block...",
+    print("test parsing state parmeters block...", end=' ')
     d = state_parms()
     s = """STATE PARAMETERS (x, y, z)"""
     parsed = d.parseString( s )
-    print parsed
+    print(parsed)
     expected = ["x", "y", "z"]
     
     for e,parm in zip(expected, parsed):  assert e == parm
     
     s = """STATE PARAMETERS ()"""
     parsed = d.parseString( s )
-    print parsed
+    print(parsed)
     return
     
 
 def test_component():
     s = E_monitor
-    print "test component ... "
+    print("test component ... ")
     parsed = component().parseString(s)
-    print parsed.header
-    print parsed.name
-    print 'definition parameters: '
+    print(parsed.header)
+    print(parsed.name)
+    print('definition parameters: ')
     for param in parsed.definition_parameters:
-        print '  name: %s, type: %s, value: %s' % (
-            param.name, param.type, param.value )
-    print 'setting parameters: '
+        print('  name: %s, type: %s, value: %s' % (
+            param.name, param.type, param.value ))
+    print('setting parameters: ')
     for param in parsed.setting_parameters:
-        print '  name: %s, type: %s, value: %s' % (
-            param.name, param.type, param.value )
-    print 'output parameters: '
+        print('  name: %s, type: %s, value: %s' % (
+            param.name, param.type, param.value ))
+    print('output parameters: ')
     for param in parsed.output_parameters:
-        print '  name: %s, type: %s, value: %s' % (
-            param.name, param.type, param.value )
-    print 'state parameters:', parsed.state_parameters
-    print 'declare: ', parsed.declare
-    print 'initialize: ', parsed.initialize
-    print 'trace: ', parsed.trace
-    print 'save: ', parsed.save
-    print 'finalize: ', parsed.finalize
+        print('  name: %s, type: %s, value: %s' % (
+            param.name, param.type, param.value ))
+    print('state parameters:', parsed.state_parameters)
+    print('declare: ', parsed.declare)
+    print('initialize: ', parsed.initialize)
+    print('trace: ', parsed.trace)
+    print('save: ', parsed.save)
+    print('finalize: ', parsed.finalize)
     return
 
 

@@ -17,7 +17,7 @@
 
 packagename = 'mcstas2_components'
 
-from pythonexportathome import path as pythonexportathome, init_package as _init_package
+from .pythonexportathome import path as pythonexportathome, init_package as _init_package
 import os
 packagepath = os.path.join( pythonexportathome, packagename )
 

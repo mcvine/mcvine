@@ -32,9 +32,9 @@ class TestCase(unittest.TestCase):
         g.register(m, (0,0,1), (0,0,0))  # register the new component with the geometer
         #
         neutrons = mcni.neutron_buffer(5) # created a neutron buffer of size 5
-        print neutrons  
+        print(neutrons)  
         mcni.simulate(i, g, neutrons, outputdir='out-instrument0', iteration_no=0, overwrite_datafiles=True)  # run the simulation
-        print neutrons
+        print(neutrons)
         return
 
     pass  # end of TestCase

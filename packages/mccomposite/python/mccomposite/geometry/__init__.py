@@ -12,7 +12,7 @@
 #
 
 
-from utils import locate
+from .utils import locate
 from . import primitives, operations
 
 
@@ -23,17 +23,17 @@ def shapeEngine(
     
     "render the c++ engine of the given shape"
     
-    from bindings import classes as bindingClasses
+    from .bindings import classes as bindingClasses
     bindingClass = bindingClasses()[ binding ]
     binding = bindingClass()
 
-    from orientation_conventions import classes
+    from .orientation_conventions import classes
     conventionClass = classes()[ orientation_convention ]
     orientation_convention = conventionClass()
 
-    from ShapeComputationEngineFactory import ShapeComputationEngineFactory
+    from .ShapeComputationEngineFactory import ShapeComputationEngineFactory
     factory = ShapeComputationEngineFactory( binding, orientation_convention )
-    from ShapeComputationEngineRenderer import ShapeComputationEngineRenderer
+    from .ShapeComputationEngineRenderer import ShapeComputationEngineRenderer
     return ShapeComputationEngineRenderer( factory ).render( shape )
 
 
@@ -53,13 +53,13 @@ def register( newtype, renderer_handler, binding_handlers, override = False):
 def register_engine_renderer_handler( newtype, renderer_handler, override = False ):
     """register a new shape type and its engine renderer handler
     """
-    import ShapeComputationEngineRenderer
+    from . import ShapeComputationEngineRenderer
     ShapeComputationEngineRenderer.register(newtype, renderer_handler, override = override)
     return
 
 
 def register_binding_handlers( newtype, binding_handlers, override = False ):
-    import bindings
+    from . import bindings
     bindings.register( newtype.__name__.lower(), binding_handlers, override = override )
     return
 

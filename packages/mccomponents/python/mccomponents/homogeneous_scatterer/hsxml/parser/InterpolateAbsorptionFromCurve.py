@@ -4,7 +4,7 @@
 #
 
 
-from AbstractNode import AbstractNode
+from .AbstractNode import AbstractNode
 
 
 class InterpolateAbsorptionFromCurve(AbstractNode):
@@ -16,7 +16,7 @@ class InterpolateAbsorptionFromCurve(AbstractNode):
         AbstractNode.__init__(self, document )
         # convert to dictionary
         attrs = {}
-        for k,v in attributes.items(): attrs[str(k)] = v
+        for k,v in list(attributes.items()): attrs[str(k)] = v
 
         # new element
         self.element = self.elementFactory(**attrs)

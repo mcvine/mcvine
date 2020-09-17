@@ -21,7 +21,7 @@ def copyright():
 
 def simulator(neutron_coordinates_transformer):
     t = neutron_coordinates_transformer
-    from AbstractInstrumentSimulator import AbstractInstrumentSimulator as base
+    from .AbstractInstrumentSimulator import AbstractInstrumentSimulator as base
     class Simulator(base):
         neutron_coordinates_transformer = t
         pass

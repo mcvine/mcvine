@@ -48,7 +48,7 @@ def findAllTests():
 
 
 def _iterTestCases(mod):
-    for item in mod.__dict__.itervalues():
+    for item in mod.__dict__.values():
         if item == unittest.TestCase:
             continue
         try:

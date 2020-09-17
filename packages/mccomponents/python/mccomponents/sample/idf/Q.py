@@ -11,10 +11,10 @@ strSize = calcsize('<s')
 
 def write(Q,filename='Q',comment=''):
   """Takes numpy Q in with shape (N_q,D) and writes to binary file."""
-  f=open(filename,'w')
-  f.write(pack('<64s','Q'))
+  f=open(filename,'wb')
+  f.write(pack('<64s',b'Q'))
   f.write(pack('<i',version))
-  f.write(pack('<1024s',comment))
+  f.write(pack('<1024s',comment.encode('ascii')))
   f.write(pack('<i',Q.shape[1]))
   f.write(pack('<i',Q.shape[0]))
   Q = tuple( Q.reshape(-1) )
@@ -23,7 +23,7 @@ def write(Q,filename='Q',comment=''):
 
 def read(filename='Q'):
   """Takes filename, returns a tuple with information and Q as a numpy."""
-  f=open(filename,'r').read()
+  f=open(filename,'rb').read()
   i = 0
   filetype,= unpack('<64s',f[i:i+64*strSize])          ; i += 64*strSize
   version, = unpack('<i',f[i:i+intSize])               ; i += intSize
@@ -32,5 +32,5 @@ def read(filename='Q'):
   Q        = unpack('<%id' % (N_q*D),f[i:])
   Q = numpy.array(Q)
   Q.shape = (N_q,D)
-  return (filetype.strip('\x00'),version,comment.strip('\x00')),Q
+  return (filetype.strip(b'\x00').decode(),version,comment.strip(b'\x00').decode()),Q
 

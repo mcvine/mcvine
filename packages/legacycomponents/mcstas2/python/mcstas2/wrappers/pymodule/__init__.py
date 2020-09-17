@@ -16,7 +16,7 @@
 
 
 def generate( componentinfo, bindingname, path ):
-    from factorymethod_py import generate
+    from .factorymethod_py import generate
     factorymethod_py = generate( componentinfo, bindingname, path )
     return [factorymethod_py]
 

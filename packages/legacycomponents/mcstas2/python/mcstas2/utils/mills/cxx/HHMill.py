@@ -12,7 +12,7 @@
 #
 
 
-from CxxClassMillBase import CxxClassMillBase
+from .CxxClassMillBase import CxxClassMillBase
 
 
 class HHMill(CxxClassMillBase):
@@ -105,7 +105,7 @@ def _build_args_str( args ):
 def _arg_str( arg ):
     if arg.default is None:
         return "%s %s" % (arg.type, arg.name)
-    elif isinstance( arg.default, basestring ):
+    elif isinstance( arg.default, str ):
         return "%s %s=\"%s\"" % (arg.type, arg.name, arg.default)
     else:
         return "%s %s=%s" % (arg.type, arg.name, arg.default)
@@ -113,7 +113,7 @@ def _arg_str( arg ):
 
 
 def test():
-    from Class import example
+    from .Class import example
     klass = example()
     
     from pyre.applications.Script import Script
@@ -123,7 +123,7 @@ def test():
             weaver = self.weaver
             weaver.renderer = HHMill()
             r = weaver.render( klass )
-            print "\n".join(r)
+            print("\n".join(r))
             return
 
         pass # end of App

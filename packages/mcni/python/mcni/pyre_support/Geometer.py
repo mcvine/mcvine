@@ -11,6 +11,7 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
 
+from .._2to3 import isstr
 
 from pyre.components.Component import Component
 class DefaultTransformer(Component):
@@ -40,7 +41,7 @@ class Register(Property):
 
     def _cast(self, value):
         # examples of good values:
-        if isinstance(value, basestring):
+        if isstr(value):
             env = {'relative': RelativeCoord}
             value = eval(value, env)
             pass
@@ -48,12 +49,12 @@ class Register(Property):
         try:
             n = len(value)
         except:
-            raise ValueError, "%s. Should be a 2-tuple. Good examples: %s" % (
-                value, good_records)
+            raise ValueError("%s. Should be a 2-tuple. Good examples: %s" % (
+                value, good_records))
 
         if n != 2:
-            raise ValueError, "%s. Should be a 2-tuple. Good examples: %s" % (
-                value, good_records)
+            raise ValueError("%s. Should be a 2-tuple. Good examples: %s" % (
+                value, good_records))
 
         pos, ori = value
         pos = _toCoord(pos)
@@ -113,7 +114,7 @@ class Geometer(Component, base):
                 #end to try out all aliases
                 aliases = getattr(element, 'aliases', None)
                 if aliases is None:
-                    raise RuntimeError, 'failed to find %r' % (element, )
+                    raise RuntimeError('failed to find %r' % (element, ))
                 
                 for alias in element.aliases:
                     try: return base._positionRecord( self, alias )
@@ -132,7 +133,7 @@ class Geometer(Component, base):
             except:
                 aliases = getattr(element, 'aliases', None)
                 if aliases is None:
-                    raise RuntimeError, 'failed to find %r' % (element, )
+                    raise RuntimeError('failed to find %r' % (element, ))
 
                 #end to try out all aliases
                 for alias in element.aliases:
@@ -150,11 +151,11 @@ class Geometer(Component, base):
                 i = seq.index(element)
             except:
                 seq = [c.name for c in seq]
-                if not isinstance(element, basestring):
+                if not isstr(element):
                     element = element.name
                 i = seq.index(element)
             if i == 0:
-                raise RuntimeError, "there is no previous element for %s" % element
+                raise RuntimeError("there is no previous element for %s" % element)
             return seq[i-1]
         return ref
     
@@ -195,7 +196,7 @@ class Geometer(Component, base):
                 continue
             continue
         
-        print '\n'.join(lines)
+        print('\n'.join(lines))
         return
 
     pass # end of Geometer
@@ -212,7 +213,7 @@ def test():
     g = G()
     g._configure()
     g._init()
-    print g.position( 'a' ), g.orientation( 'a' )
+    print(g.position( 'a' ), g.orientation( 'a' ))
     return
 
 if __name__ == '__main__': test()

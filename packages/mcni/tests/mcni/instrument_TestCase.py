@@ -28,7 +28,7 @@ class TestCase(unittest.TestCase):
         i.append(m, position=(0,0,1))
         #
         neutrons = i.simulate(5, outputdir="out-instrument", overwrite_datafiles=True, iteration_no=0)
-        print neutrons
+        print(neutrons)
         return
 
     

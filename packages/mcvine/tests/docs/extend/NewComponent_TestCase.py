@@ -18,14 +18,14 @@ outdir = 'out'
 import os, glob, shutil
 def cleanup():
     pmls = glob.glob('sd.pml*')
-    map(os.remove, pmls)
+    for _ in pmls: os.remove(_)
     if os.path.exists(outdir):
         shutil.rmtree('out')
 
 
 def execute(cmd):
     if os.system(cmd):
-        raise RuntimeError, "%r failed" %cmd
+        raise RuntimeError("%r failed" %cmd)
 
 
 import unittest
@@ -41,7 +41,7 @@ class TestCase(unittest.TestCase):
         cmd = 'mcvine-create-instrument-simulation-application --name=sd --components=source,detector'
         execute(cmd)
         
-        cmd = 'MCVINE_MPI_LAUNCHER=serial ./sd --source=Souce_simple --detector=printer --dump-pml'
+        cmd = 'MCVINE_MPI_LAUNCHER=serial ./sd --source=Source_simple --detector=printer --dump-pml'
         execute(cmd)
         
         cmd = 'MCVINE_MPI_LAUNCHER=serial ./sd -ncount=5'

@@ -3,15 +3,13 @@ python:
 gsl:
   - 2.4
 boost:
-  - 1.66
   - 1.69
 numpy:
-  - 1.14.0
   - 1.16.0
 
-zip_keys:
-  - boost
-  - numpy
+# zip_keys:
+#   - boost
+#   - numpy
 
 pin_run_as_build:
   boost:

@@ -24,7 +24,7 @@ class TestCase(unittest.TestCase):
         outdir = 'out-neutron_storage_normalization_TestCase-app'
         outfile = os.path.join(outdir, 'neutrons')
         if os.system(cmd):
-            raise RuntimeError, "%r failed" % cmd
+            raise RuntimeError("%r failed" % cmd)
         
         # make sure the final result is normalized
         from mcni.neutron_storage import readneutrons_asnpyarr
@@ -36,7 +36,7 @@ class TestCase(unittest.TestCase):
                     0.,
                     1.]
         for n in neutrons:
-            self.assert_((n==expected).all())
+            self.assertTrue((n==expected).all())
             continue
         return
 
@@ -46,7 +46,7 @@ class TestCase(unittest.TestCase):
         outdir = 'out-neutron_storage_normalization_TestCase-app2'
         outfile = os.path.join(outdir, 'neutrons')
         if os.system(cmd):
-            raise RuntimeError, "%r failed" % cmd
+            raise RuntimeError("%r failed" % cmd)
         
         # make sure the final result is normalized
         from mcni.neutron_storage import readneutrons_asnpyarr
@@ -58,7 +58,7 @@ class TestCase(unittest.TestCase):
                     0.,
                     1./10]
         for n in neutrons:
-            self.assert_((n==expected).all())
+            self.assertTrue((n==expected).all())
             continue
         return
 

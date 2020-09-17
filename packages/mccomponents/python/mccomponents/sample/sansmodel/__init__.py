@@ -12,21 +12,21 @@
 #
 
 
-import units
+from . import units
 meV = units.energy.meV
 angstrom = units.length.angstrom
 
 
 def sansspheremodel_kernel(*args, **kwds):
-    from SANSSphereModelKernel import SANSSphereModelKernel
+    from .SANSSphereModelKernel import SANSSphereModelKernel
     return SANSSphereModelKernel(*args, **kwds)
 
 
-import ComputationEngineRendererExtension
+from . import ComputationEngineRendererExtension
 
 #make bindings available
 def _import_bindings():
-    import bindings
+    from . import bindings
     return
 
 _import_bindings()

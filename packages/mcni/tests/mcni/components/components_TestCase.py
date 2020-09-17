@@ -27,8 +27,8 @@ class TestCase(unittest.TestCase):
     def test(self):
         'mcni.components factory methods'
         from mcni.components import listallcomponentcategories, listcomponentsincategory
-        print 'component categories:',  listallcomponentcategories()
-        print 'components in "sources" category:',  listcomponentsincategory( 'sources' )
+        print('component categories:',  listallcomponentcategories())
+        print('components in "sources" category:',  listcomponentsincategory( 'sources' ))
         return
 
     pass # end of TestCase

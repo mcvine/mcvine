@@ -42,7 +42,7 @@ class TestCase(unittest.TestCase):
         mass = 50
         temperature = 300
         dw.calc_DW_core( mass, temperature )
-        print dw( 10 )
+        print(dw( 10 ))
         return
 
     pass  # end of TestCase

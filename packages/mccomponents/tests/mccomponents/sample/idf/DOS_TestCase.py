@@ -32,13 +32,13 @@ class TestCase(unittest.TestCase):
     def test0(self):
         from mccomponents.sample.idf.DOS import read
         (filetype, version, comment), e, Z = read( path )
-        print filetype, version, comment
+        print(filetype, version, comment)
         self.assertEqual( filetype, 'DOS' )
         if interactive:
             import pylab
             pylab.plot( e, Z )
             pylab.show()
-            raw_input('Press ENTER to continue...')
+            input('Press ENTER to continue...')
         return
 
     pass  # end of TestCase

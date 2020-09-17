@@ -82,7 +82,7 @@ class detector_TestCase(unittest.TestCase):
         for i in range(nevents):
             if i%1000 == 0 and interactive: 
                 # print i
-                print '.',
+                print('.', end=' ')
                 sys.stdout.flush()
             ev = mcni.neutron( r = (-L,0,0), v = (vi,0,0) )
             cds.scatter(ev)
@@ -96,18 +96,18 @@ class detector_TestCase(unittest.TestCase):
         from mccomponents.detector.reduction_utils import readevents
         events = readevents( 'events.dat' )
         n = len(events)
-        self.assert_( abs(n-(nevents*absorption_weight)) < 3*N.sqrt(n) )
+        self.assertTrue( abs(n-(nevents*absorption_weight)) < 3*N.sqrt(n) )
 
         p = sum([ e[2] for e in events ] )
         # print "%s should be almost equalt to %s" % (p, nevents*absorption_probability)
-        self.assert_( abs( p-(nevents*absorption_probability) ) < 3*N.sqrt(p) )
+        self.assertTrue( abs( p-(nevents*absorption_probability) ) < 3*N.sqrt(p) )
         # self.assert_( abs( p-(nevents*0.908484) ) < 3*N.sqrt(p) )
 
         t = L/vi
         tchannel = int( (t-tmin)/tstep )
         for e in events:
             # should hit center of tube
-            self.assert_( abs(e[0] - (npixels/2)) <= 1 )
+            self.assertTrue( abs(e[0] - (npixels/2)) <= 1 )
             self.assertEqual( e[1], tchannel )
             # 
             continue

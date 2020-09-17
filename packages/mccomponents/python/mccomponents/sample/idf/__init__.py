@@ -12,21 +12,22 @@
 #
 
 import os
+from functools import reduce
 
 def readSQE( datapath, Q = 'Q', E = 'E', Sqe = 'Sqe' ):
     'read idf Q,E,Sqe and construct a S(Q,E) histogram'
     qpath = os.path.join( datapath, Q )
-    import Q
+    from . import Q
     q = Q.read( qpath)[1]
     q.shape = q.size,
 
     epath = os.path.join( datapath, E )
-    import E
+    from . import E
     e = E.read( epath)[1]
     e.shape = e.size,
 
     sqepath = os.path.join( datapath, Sqe )
-    import Sqe
+    from . import Sqe
     s = Sqe.read( sqepath)[1]
 
     import histogram as H
@@ -48,14 +49,14 @@ def writeSQE( sqehist, datapath = '.', Q='Q', E = 'E', Sqe = 'Sqe' ):
     e = eaxis.binBoundaries().asNumarray()
 
     q.shape = len(q), 1
-    from Q import write as writeQ
+    from .Q import write as writeQ
     writeQ(q, os.path.join( datapath, Q) )
 
-    from E import write as writeE
+    from .E import write as writeE
     writeE(e, os.path.join( datapath, E) )
 
     data = sqehist.data().storage().asNumarray()
-    from Sqe import write as writeSqe
+    from .Sqe import write as writeSqe
     writeSqe(data, os.path.join( datapath, Sqe) )
     return
 
@@ -71,17 +72,17 @@ def readDispersion(
     Polarizations = os.path.join( datapath, Polarizations )
     DOS = os.path.join( datapath, DOS )
 
-    from DOS import read
+    from .DOS import read
     dummy, v, Z = read( DOS )
     # v is in terahertz, and it is not angular frequency
     from math import pi
     E = v * 2*pi * 1e12 * hertz2mev
     dos = E,Z
 
-    from Qgridinfo import read
+    from .Qgridinfo import read
     reciprocalcell, ngridpnts = read( Qgridinfo )
 
-    from Omega2 import read as readOmega2
+    from .Omega2 import read as readOmega2
     omega2 = readOmega2( Omega2 )[1]
     #!!!
     # sometime omega2 has negative values. have to make sure all values are
@@ -91,7 +92,7 @@ def readDispersion(
     import numpy as N
     energies = N.sqrt(omega2) * hertz2mev
 
-    from Polarizations import read as readP
+    from .Polarizations import read as readP
     polarizations = readP( Polarizations )[1]
     
     N_q, N_b_times_D, N_b, D, temp = polarizations.shape
@@ -113,12 +114,12 @@ def readDispersion(
     #    (0, length(reciprocalcell[i]) / (ngridpnts[i] - 1), ngridpnts[i])
     #    for i in range( D )
     #    ]
-    Qaxes = zip(reciprocalcell, ngridpnts)
+    Qaxes = list(zip(reciprocalcell, ngridpnts))
     return nAtoms, dimension, Qaxes, polarizations, energies, dos
 
 
 def readDOS(datapath):
-    from DOS import read
+    from .DOS import read
     dummy, v, Z = read( datapath )
     # v is in terahertz, and it is not angular frequency
     from math import pi

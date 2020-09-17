@@ -44,7 +44,7 @@ def parse(text, line_width=0, dw_factor=1):
                     raise RuntimeError ("Duplicate Comment %s in laz file" %(tmplst[1]))
                 Comments_dict[ky] = l
                 if 'nb_atoms' in ky:
-                    print ('\n key: '+ky+":"+Comments_dict[ky]+" \n")
+                    print(('\n key: '+ky+":"+Comments_dict[ky]+" \n"))
 
     class laz:
         lattice = getLattice(Comments_dict['CELL'])
@@ -63,7 +63,7 @@ def getCrossSections(comments):
     # get nb_atoms
     nb_atoms = int(comments['nb_atoms'].strip().split()[2])
     # sigma
-    sigma_list = filter(lambda x: x.startswith('sigma'),comments.keys())
+    sigma_list = [x for x in comments.keys() if x.startswith('sigma')]
     assert len(sigma_list) == 3
     class xs: pass
     for sig_l in sigma_list:
@@ -73,7 +73,7 @@ def getCrossSections(comments):
         name = tokens[0]
         value = tokens[1]
         comment = ' '.join(tokens[2:])
-        print(name, value, comment)
+        print((name, value, comment))
         assert comment[-6:] == '[barn]'
         setattr(xs, name[6:], float(value) * nb_atoms)
         continue
@@ -86,7 +86,7 @@ def getPeaks(text, comments, lat, line_width=0, dw_factor=1):
     Parse the peaks information from the laz file.
     """
     # figure out columns
-    column_list = filter(lambda x: x.startswith('column'),comments.keys())
+    column_list = [x for x in comments.keys() if x.startswith('column')]
     # peaks records
     peaks = []
 

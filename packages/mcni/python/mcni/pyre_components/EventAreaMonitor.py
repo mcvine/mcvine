@@ -90,7 +90,7 @@ class EventAreaMonitor(ParallelComponent, AbstractComponent):
         path = os.path.join(outdir, path)
         # output file path
         if not self.overwrite_datafiles and os.path.exists(path):
-            raise IOError, "%s already exists" % path
+            raise IOError("%s already exists" % path)
         return path
 
 

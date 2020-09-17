@@ -1,0 +1,34 @@
+version: 0.2
+env:
+  variables:
+      DEBUG_MCVINE_BUILD: 0
+phases:
+  install:
+    commands:
+      - free -h
+      - df -h
+      - mount
+      - apt-get update && apt-get install -y procps freeglut3-dev libglu1-mesa unzip
+      - pwd
+      - ls -tl ./
+      - which git
+      - which python
+      - echo $PYTHON_VERSION
+      - echo $NUMPY_VERSION
+      - ./builders/aws-codebuild/install-conda.sh
+  pre_build:
+    commands:
+      - echo PreBuild started on `date`
+      - echo PreBuild ended on `date`
+  build:
+    commands:
+      - echo Build started on `date`
+      - ./builders/aws-codebuild/build_and_test.sh
+      - df -h
+      - echo Build ended on `date`
+  post_build:
+    commands:
+      - echo PostBuild completed on `date`
+      - echo PostBuild ended on `date`
+artifacts:
+  files:

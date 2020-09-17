@@ -89,7 +89,7 @@ class TestCase(unittest.TestCase):
         self.assertEqual(len(neutrons), N)
         for neutron in neutrons:
             np.allclose(neutron.state.velocity, vf)
-            self.assert_(neutron.probability > 0)
+            self.assertTrue(neutron.probability > 0)
             continue
         return
     

@@ -33,10 +33,10 @@ else:
     mbs = int(2e6)
 MAXIMUM_BUFFER_SIZE = mbs
 
-from MpiApplication import Application as base
-from CompositeNeutronComponentMixin import CompositeNeutronComponentMixin
-from AppInitMixin import AppInitMixin
-from ParallelComponent import ParallelComponent
+from .MpiApplication import Application as base
+from .CompositeNeutronComponentMixin import CompositeNeutronComponentMixin
+from .AppInitMixin import AppInitMixin
+from .ParallelComponent import ParallelComponent
 from .. import run_ppsd as _run_ppsd
 
 class Instrument( AppInitMixin, CompositeNeutronComponentMixin, base, ParallelComponent ):
@@ -59,7 +59,7 @@ class Instrument( AppInitMixin, CompositeNeutronComponentMixin, base, ParallelCo
         buffer_size = pyre.inventory.int  ('buffer_size', default = 0)
         buffer_size.meta['tip']= 'size of neutron buffer. This is for optimizing the preformance of the simulation. When it is too large, it will occupy too much memory. When it is too small, the simulation will be slow. If you are not sure, please just leave it unset so that the default value will be used.'
 
-        from List import List
+        from .List import List
         sequence = List( 'sequence', default = '' )
         sequence.meta['tip'] = 'sequence of neutron components in this instrument'
 
@@ -70,14 +70,14 @@ class Instrument( AppInitMixin, CompositeNeutronComponentMixin, base, ParallelCo
 
         #geometer. this is a place holder. should derive from Geometer
         #to create a new Geometer for the specific instrument.
-        from Geometer import Geometer
+        from .Geometer import Geometer
         geometer = pyre.inventory.facility(
             'geometer', default = Geometer() )
         geometer.meta['tip'] = 'geometer of instrument'
 
         # tracer
-        from NoNeutronTracer import NoNeutronTracer
-        from NeutronTracerFacility import NeutronTracerFacility
+        from .NoNeutronTracer import NoNeutronTracer
+        from .NeutronTracerFacility import NeutronTracerFacility
         tracer = NeutronTracerFacility('tracer', default=NoNeutronTracer())
 
         # this option overrides "dumpconfiguration" to provide an iinterface
@@ -109,15 +109,15 @@ class Instrument( AppInitMixin, CompositeNeutronComponentMixin, base, ParallelCo
 
 
     def help(self):
-        print '------------------------------------------------------------'
-        print '* Instrument simulation application %r' % self.name
-        print '------------------------------------------------------------'
-        print '* Sequence of components:'
-        print '  ', self._componentListStr()
-        print '------------------------------------------------------------'
-        print '* Command:'
-        print self._cmdlineDemoStr()
-        print '------------------------------------------------------------'
+        print('------------------------------------------------------------')
+        print('* Instrument simulation application %r' % self.name)
+        print('------------------------------------------------------------')
+        print('* Sequence of components:')
+        print('  ', self._componentListStr())
+        print('------------------------------------------------------------')
+        print('* Command:')
+        print(self._cmdlineDemoStr())
+        print('------------------------------------------------------------')
         return
 
 
@@ -154,7 +154,7 @@ class Instrument( AppInitMixin, CompositeNeutronComponentMixin, base, ParallelCo
             context.iteration_no = n
             mcni.simulate( instrument, geometer, neutrons, context=context)
             
-        print os.times()
+        print(os.times())
         return
 
 
@@ -184,12 +184,12 @@ class Instrument( AppInitMixin, CompositeNeutronComponentMixin, base, ParallelCo
     def _dumpRegsitry(self):
         out = '%s-reg.pkl' % self.name
         if os.path.exists(out):
-            raise RuntimeError, 'dump registry: path %s already exists' % out
+            raise RuntimeError('dump registry: path %s already exists' % out)
 
         from pyre.applications.Application import retrieveConfiguration
         reg = self.createRegistry()
         retrieveConfiguration(self.inventory, reg)
-        from RegistryToDict import Renderer
+        from .RegistryToDict import Renderer
         renderer = Renderer()
         reg = renderer.render(reg)
         
@@ -211,9 +211,9 @@ class Instrument( AppInitMixin, CompositeNeutronComponentMixin, base, ParallelCo
         
         for name in self.sequence:
             if name not in neutron_components:
-                raise RuntimeError , "Neutron component %s specified in sequence %s does not " \
+                raise RuntimeError("Neutron component %s specified in sequence %s does not " \
                       "correspond to any known simulation components: %s" % (
-                    name, self.sequence, neutron_components )
+                    name, self.sequence, neutron_components ))
             continue
 
         import mcni
@@ -234,7 +234,7 @@ class Instrument( AppInitMixin, CompositeNeutronComponentMixin, base, ParallelCo
         if self.parallel and self.mpi.rank==0 and self.inventory.mode=='worker':
             if not self.overwrite_datafiles and os.path.exists( outputdir ):
                 msg = "output directory %r exists. If you want to overwrite the output directory, please specify option --overwrite-datafiles." % outputdir
-                raise RuntimeError, msg
+                raise RuntimeError(msg)
 
             if not os.path.exists( outputdir ):
                 os.makedirs( outputdir )
@@ -310,7 +310,7 @@ class Instrument( AppInitMixin, CompositeNeutronComponentMixin, base, ParallelCo
         # There should be a more systematic way of dealing with this
         # in pyre.
         if self.mpi_server_mode:
-            for comp in self.neutron_components.itervalues():
+            for comp in self.neutron_components.values():
                 comp._showHelpOnly = True
         return
 
@@ -430,10 +430,10 @@ class Instrument( AppInitMixin, CompositeNeutronComponentMixin, base, ParallelCo
         # give a warning when use non-default config filename
         base = os.path.basename(outfile)
         if base != default_filename:
-            print '*'*70
-            print "Warning: you will need to rename file %s to %s, otherwise this file won't be used by the simulation application %s" % (
-                outfile, default_filename, os.path.basename(sys.argv[0]))
-            print '*'*70
+            print('*'*70)
+            print("Warning: you will need to rename file %s to %s, otherwise this file won't be used by the simulation application %s" % (
+                outfile, default_filename, os.path.basename(sys.argv[0])))
+            print('*'*70)
         return
     
     
@@ -455,7 +455,7 @@ class Instrument( AppInitMixin, CompositeNeutronComponentMixin, base, ParallelCo
         skipappprops=['name', 'typos', 'journal', 'geometer', 'sequence', 'weaver']+\
             self.inventory.sequence
 
-        from _invutils import getComponentPropertyNameTipPairs
+        from ._invutils import getComponentPropertyNameTipPairs
         appopts = getComponentPropertyNameTipPairs(self, skipappprops)
         opts += [(n, '<%s>'%tip) for n, tip in appopts]
         for comp in self.inventory.sequence:
@@ -514,7 +514,7 @@ def _computeMaximumBufferSize(nodes):
         *MINIMUM_BUFFER_SIZE
 
     if n<minsize:
-        raise RuntimeError, "Not enough memory"
+        raise RuntimeError("Not enough memory")
 
     return n
 
@@ -530,7 +530,7 @@ def _getCmdStr():
 
 
 def _build_geometer( instrument ):
-    from _geometer_utils import buildGeometerFromInventory
+    from ._geometer_utils import buildGeometerFromInventory
     Inventory = instrument.Inventory
     g = buildGeometerFromInventory(Inventory)
     g.instrument = instrument

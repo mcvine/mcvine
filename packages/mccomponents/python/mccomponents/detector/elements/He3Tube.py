@@ -12,7 +12,7 @@
 #
 
 
-import units
+from . import units
 
 from mccomposite.CompositeScatterer import CompositeScatterer as base
 

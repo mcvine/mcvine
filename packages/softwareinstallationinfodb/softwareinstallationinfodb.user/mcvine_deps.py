@@ -12,7 +12,7 @@
 #
 
 
-from Info import Info
+from .Info import Info
 from os import environ
 from os.path import join
 root = environ['MCVINEDEPS']

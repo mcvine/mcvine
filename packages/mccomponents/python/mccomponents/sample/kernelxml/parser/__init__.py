@@ -22,7 +22,7 @@ def getDocument():
     return _Document
 
 
-from Document import Document as _Document
+from .Document import Document as _Document
 
 
 # version

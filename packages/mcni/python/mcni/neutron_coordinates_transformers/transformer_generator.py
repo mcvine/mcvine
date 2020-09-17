@@ -25,7 +25,7 @@ def generateTransformer( convention, binding ):
 
 
 def generateTransformerClass( convention, binding ):
-    from AbstractNeutronCoordinatesTransformer import AbstractNeutronCoordinatesTransformer as base
+    from .AbstractNeutronCoordinatesTransformer import AbstractNeutronCoordinatesTransformer as base
     class _(base):
 
         relativePositionOrientation = staticmethod(convention.relativePositionOrientation)

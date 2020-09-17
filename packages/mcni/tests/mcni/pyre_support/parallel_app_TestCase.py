@@ -20,7 +20,7 @@ class TestCase(unittest.TestCase):
         from mcni.pyre_support.MpiApplication \
             import mpi_launcher_choice as launcher
         cmd = "python parallel_app.py --%(launcher)s.nodes=2" % locals()
-        print cmd
+        print(cmd)
         if os.system(cmd):
             raise RuntimeError("%s failed" % cmd)
         return

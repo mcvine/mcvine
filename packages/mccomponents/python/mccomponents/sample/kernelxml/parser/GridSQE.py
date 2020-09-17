@@ -12,7 +12,7 @@
 #
 
 
-from AbstractNode import AbstractNode, debug
+from .AbstractNode import AbstractNode, debug
 
 
 class GridSQE(AbstractNode):
@@ -36,12 +36,12 @@ class GridSQE(AbstractNode):
                 f = os.path.dirname(hdfpath)
                 e = os.path.basename(hdfpath)
                 t = traceback.format_exc()
-                raise IOError, "unable to load histogram from hdf5 file %s, entry %s. Original traceback:\n%s" % (f, e, t)
+                raise IOError("unable to load histogram from hdf5 file %s, entry %s. Original traceback:\n%s" % (f, e, t))
             pass
         else:
-            raise ValueError, "GridSQE needs path to "\
+            raise ValueError("GridSQE needs path to "\
                   "idf data files or "\
-                  "histogram hdf5 file "
+                  "histogram hdf5 file ")
 
         auto_normalization = kwds.get('auto-normalization')
         if auto_normalization:

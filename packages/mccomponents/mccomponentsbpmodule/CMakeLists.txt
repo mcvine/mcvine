@@ -1,5 +1,5 @@
 # ------------- Modify these -------------
-set (PYBINDING_NAME "${PACKAGE_NAME}bpmodule")
+set (PYBINDING_NAME "${PACKAGE_NAME}bp")
 set ( SRC_FILES 
   ${PYBINDING_NAME}.cc
   wrap_basic_containers.cc

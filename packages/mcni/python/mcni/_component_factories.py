@@ -25,7 +25,7 @@ def %s( category, type, supplier = 'mcni'):
     f = getattr(supplier, %r)
     return f(category, type)
 ''' % (method, method, )
-        exec code in locals()
+        exec(code, locals())
         methods[method] = eval(method)
         continue
     return methods
@@ -37,8 +37,8 @@ methods = build_methods(
       ]
     )
 
-for name, method in methods.iteritems():
-    exec '%s = method' % name
+for name, method in methods.items():
+    exec('%s = method' % name)
 
 
 componentinfo.__doc__ = '''constructs a ComponentInfo object for the given component. You can print the returned object to see the information of the component.
@@ -65,7 +65,7 @@ You can also use method componentinfo to find information of a component
 
 '''
         
-__all__ = methods.keys()
+__all__ = list(methods.keys())
 
 # version
 __id__ = "$Id$"

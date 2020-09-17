@@ -12,7 +12,7 @@
 #
 
 
-from CompositeDetector import CompositeDetector as base
+from .CompositeDetector import CompositeDetector as base
 
 class DetectorSystem(base):
 

@@ -38,8 +38,8 @@ class TestCase(unittest.TestCase):
         scatterer = parse_file( scattererxml )
 
         kernel = scatterer.kernel()
-        print kernel
-        self.assert_( isKernel( kernel ) )
+        print(kernel)
+        self.assertTrue( isKernel( kernel ) )
         
         return
 
@@ -61,7 +61,7 @@ class TestCase(unittest.TestCase):
         for i in range(10):
             ev = mcni.neutron( r = (0,0,-5), v = (0,0,3000) )
             engine.scatter( ev )
-            print ev
+            print(ev)
             continue
 
         return
@@ -126,7 +126,7 @@ class TestCase(unittest.TestCase):
         scatterer = parse_file( scattererxml )
         
         renderedxml = "%s.rendered" % scattererxml
-        print >>open(renderedxml,'w'), '\n'.join(render(scatterer))
+        print('\n'.join(render(scatterer)), file=open(renderedxml,'w'))
 
         scatterer1 = parse_file( renderedxml )
         return

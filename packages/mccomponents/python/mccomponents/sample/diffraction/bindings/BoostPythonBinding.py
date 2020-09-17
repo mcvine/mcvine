@@ -40,7 +40,7 @@ class New:
             ]
         for prop in props:
             val = getattr(data, prop)
-            print val
+            print(val)
             setattr(bdata, prop, val)
             continue
 

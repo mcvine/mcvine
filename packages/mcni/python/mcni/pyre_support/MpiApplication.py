@@ -72,7 +72,7 @@ class Application(base):
         launcher = self.inventory.launcher
         launched = launcher.launch()
         if not launched:
-            raise RuntimeError, "application not launched"
+            raise RuntimeError("application not launched")
         
         return
 

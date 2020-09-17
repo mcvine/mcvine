@@ -57,7 +57,7 @@ class TestCase(unittest.TestCase):
             tubeLength, npixels, axisDirection, pixel0position,
             t2c, mca)
 
-        print dir(he3tubekernel)
+        print(dir(he3tubekernel))
         neutron = binding.neutron( r = neutronPosition, time = neutronT, prob = prob )
 
         he3tubekernel.absorb( neutron )

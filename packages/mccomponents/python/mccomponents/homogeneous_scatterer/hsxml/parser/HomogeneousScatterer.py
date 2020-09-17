@@ -13,7 +13,7 @@
 
 
 #from pyre.xml.Node import Node
-from AbstractNode import AbstractNode as base
+from .AbstractNode import AbstractNode as base
 
 
 class HomogeneousScatterer(base):

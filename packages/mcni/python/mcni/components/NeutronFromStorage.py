@@ -20,7 +20,7 @@ debug = journal.debug('NeutronStorage')
 
 from mcni.neutron_storage.idfneutron import ndblsperneutron, filesize
 
-from ParallelComponent import ParallelComponent
+from .ParallelComponent import ParallelComponent
 from mcni.AbstractComponent import AbstractComponent
 
 class NeutronFromStorage( ParallelComponent, AbstractComponent ):
@@ -89,10 +89,10 @@ class NeutronFromStorage( ParallelComponent, AbstractComponent ):
         path = self.path = os.path.abspath( path )
         
         if not os.path.exists( path ):
-            raise IOError , "path %r does not exist" % path
+            raise IOError("path %r does not exist" % path)
         
         if os.path.isdir( path ):
-            raise IOError , "path %r is a directory" % path
+            raise IOError("path %r is a directory" % path)
 
         from mcni.neutron_storage import storage
         self._storage = storage( path, 'r' )

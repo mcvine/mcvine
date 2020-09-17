@@ -98,10 +98,10 @@ class TestCase(unittest.TestCase):
             return load(f, getOnlyEntry(f))
 
         m1 = loadhist('out-test3/m1.h5')
-        self.assert_(numpy.abs(m1.I - 1e-4).max() < 1.5e-5)
+        self.assertTrue(numpy.abs(m1.I - 1e-4).max() < 1.5e-5)
 
         m2 = loadhist('out-test3/m2.h5')
-        self.assert_(numpy.abs(m2.I - 1e-4).max() < 1.5e-5)
+        self.assertTrue(numpy.abs(m2.I - 1e-4).max() < 1.5e-5)
         return
 
     pass # end of TestCase
@@ -110,7 +110,7 @@ class TestCase(unittest.TestCase):
 def execute(cmd):
     import os
     if os.system(cmd):
-        raise RuntimeError, "%s failed" % cmd
+        raise RuntimeError("%s failed" % cmd)
 
 def pysuite():
     suite1 = unittest.makeSuite(TestCase)

@@ -13,7 +13,7 @@
 
 
 def packetsize_store( path ):
-    from PacketSizeStore import store
+    from .PacketSizeStore import store
     return store( path )
 
 

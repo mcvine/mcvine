@@ -20,7 +20,7 @@ debug = journal.debug( "mcnimodule_TestCase" )
 warning = journal.warning( "mcnimodule_TestCase" )
 
 
-import mcni, mcni.mcni
+import mcni, mcni._mcni
 import numpy
 try:
     from danse.ins.numpyext import getdataptr
@@ -66,7 +66,7 @@ class mcnimodule_TestCase(unittest.TestCase):
         events = mcni.neutron_buffer(2)
         events.fromCevents( cevents, 2 )
 
-        for event in events: print event
+        for event in events: print(event)
         return
 
     pass  # end of mcnimodule_TestCase

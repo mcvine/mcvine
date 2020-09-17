@@ -48,7 +48,7 @@ def _init():
     mpirank = mpi.rank
     mpisize = mpi.world.size
     if mpisize != 3:
-        raise RuntimeError, __doc__
+        raise RuntimeError(__doc__)
 
     import os
     channel = 1000

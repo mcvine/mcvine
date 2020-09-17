@@ -67,7 +67,7 @@ class TestCase(unittest.TestCase):
             
             dV = np.array(Vi) - np.array(Vf)
             Q = dV * conversion.V2K
-            print E, Q, neutron.probability
+            print(E, Q, neutron.probability)
             self.assertAlmostEqual(E, E0, 1)
             for i in range(3):
                 self.assertAlmostEqual(Q[i], Q0[i], 7)

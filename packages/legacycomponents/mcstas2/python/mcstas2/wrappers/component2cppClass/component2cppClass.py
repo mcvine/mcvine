@@ -199,7 +199,7 @@ def _parse_declaration( declaration ):
     if len(declaration) == 0: return []
     n1 = declaration.find( ' ' )
     if n1 == -1: 
-        raise RuntimeError , "%r is not a declaration" % declaration
+        raise RuntimeError("%r is not a declaration" % declaration)
     typestr = declaration[:n1].strip();
     vars = declaration[n1+1:].split( ',' )
     members = []

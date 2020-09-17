@@ -23,7 +23,7 @@ def run(*args, **kwds):
     print()
     print('actions:')
     for action in actions:
-        print('  %s %s %s' % (cliname, cmdname, action))
+        print(('  %s %s %s' % (cliname, cmdname, action)))
         continue
     return
     

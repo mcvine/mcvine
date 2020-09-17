@@ -53,26 +53,26 @@ def _info_help(name):
           +'If not specified, auto-detection will happen.')
 )
 def info(type, category, args, supplier):
-    type = type.encode(encoding)
+    type = _tounicode(type)
     if args:
-        args = args.encode(encoding)
+        args = _tounicode(args)
         args = args.split(',')
     if category:
-        category = category.encode(encoding)
+        category = _tounicode(category)
     if supplier:
-        supplier = supplier.encode(encoding)
+        supplier = _tounicode(supplier)
     from mcvine.pyre_support import componentinfo
-    print componentinfo(*args, type=type, category=category, supplier=supplier)
-    print
-    print "To use this component, use the specifier"
-    print
+    print(componentinfo(*args, type=type, category=category, supplier=supplier))
+    print()
+    print("To use this component, use the specifier")
+    print()
     specifier = _getSpecifier(*args, type=type, category=category, supplier=supplier)
-    print "   %s" % specifier
-    print 
-    print "E.g."
-    print
-    print '   --component1="%s"' % specifier
-    print
+    print("   %s" % specifier)
+    print() 
+    print("E.g.")
+    print()
+    print('   --component1="%s"' % specifier)
+    print()
     return
 def _getSpecifier(*args, **kwds):
     # this is a simplified implementation
@@ -99,9 +99,9 @@ def _getSpecifier(*args, **kwds):
 )
 def list(category, supplier):
     if category:
-        category = category.encode(encoding)
+        category = _tounicode(category)
     if supplier:
-        supplier = supplier.encode(encoding)
+        supplier = _tounicode(supplier)
     suppliername = supplier
     
     from mcvine.component_suppliers import component_suppliers
@@ -110,38 +110,43 @@ def list(category, supplier):
     if suppliername:
         supplier = component_suppliers.get(suppliername)
         if not supplier:
-            print 'supplier %r not found. use command mcinve-list-componnet-suppliers to see the supplier list' % suppliername
+            print('supplier %r not found. use command mcinve-list-componnet-suppliers to see the supplier list' % suppliername)
             import sys
             sys.exit(1)
 
         if category:
             comps = supplier.listcomponentsincategory(category)
-            print ' - components in %r category provided by %r' % (category, suppliername)
+            print(' - components in %r category provided by %r' % (category, suppliername))
             for comp in comps:
-                print '  * %s' % comp
+                print('  * %s' % comp)
 
         else:
             for category in supplier.listallcomponentcategories():
-                print ' - components in %r category provided by %r' % (category, suppliername)
+                print(' - components in %r category provided by %r' % (category, suppliername))
                 comps = supplier.listcomponentsincategory(category)
                 for comp in comps:
-                    print '  * %s' % comp
-                print
+                    print('  * %s' % comp)
+                print()
     else:
         if category:
-            print ' - components in %r category' % (category,)
+            print(' - components in %r category' % (category,))
             comps = listcomponentsincategory(category)
             for comp, suppliername in comps:
-                print '  * %s (from %r)' % (comp, suppliername)
+                print('  * %s (from %r)' % (comp, suppliername))
         else:
             for category in listallcomponentcategories():
-                print ' - components in %r category' % (category,)
+                print(' - components in %r category' % (category,))
                 comps = listcomponentsincategory(category)
                 for comp, suppliername in comps:
-                    print '  * %s (provided by %r)' % (comp, suppliername)
-                print
+                    print('  * %s (provided by %r)' % (comp, suppliername))
+                print()
     return
 
+import sys
+def _tounicode(s):
+    if sys.version_info < (3,0):
+        return s.encode(encoding)
+    return s
 
 
 # End of file 

@@ -44,7 +44,7 @@ def wrap(
             path = path, componentname = componentname,
             bindingname = bindingname, bindingtype = bindingtype
             )
-    from binding_builder import builder
+    from .binding_builder import builder
     builder( buildername ).build( bindingobj, pythonexportroot )
     
     # register the new factory
@@ -79,7 +79,7 @@ def createBindingObject(
         pass
     
     if not path:
-        import temporaryfiles
+        from . import temporaryfiles
         path = temporaryfiles.temporarydir()
         debug.log('generateing wrapper in %s' % path)
         pass
@@ -95,19 +95,19 @@ def createBindingObject(
     compInfo = parseComponent( componentfilename )
 
     # generate c++ sources for the component
-    from component2cppClass.component2cppClass import componentInfo2cppClass
+    from .component2cppClass.component2cppClass import componentInfo2cppClass
     klass = componentInfo2cppClass( compInfo )
     from mcstas2.utils.mills.cxx.factory import createHHandCC
     hh, cc = createHHandCC( klass, path )
 
     # generate bindings for the c++ class
-    from binding import binding
+    from .binding import binding
     binding = binding( bindingtype )
     bindingsources = binding.generate_binding_sources(
         bindingname, klass, path )
 
     # genearte python code to wrap the binding into a factory method
-    from pymodule import generate
+    from .pymodule import generate
     pysources = generate( compInfo, bindingname, path ) 
     if bindingsources.get( 'python' ) is None:
         bindingsources['python'] = pysources
@@ -124,7 +124,7 @@ def createBindingObject(
         os.path.join(danse_dir, 'lib64'),
         os.path.join(danse_dir, 'lib'),
         ]
-    from binding_builder import binding as bindingdataobject
+    from .binding_builder import binding as bindingdataobject
     bindingobj = bindingdataobject(
         python_package = pythonpackage, binding_module = bindingname,
         c_headers = [ hh ],

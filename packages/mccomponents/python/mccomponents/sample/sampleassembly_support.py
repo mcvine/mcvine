@@ -108,7 +108,7 @@ class FindKernelsFromXMLs:
         origin = scatterer.origin
         name = origin.name
         xmlfilename = '%s-scatterer.xml' % name
-        from kernelxml import parse_file
+        from .kernelxml import parse_file
         mcscatterer = parse_file( xmlfilename )
         
         # DEV NOTES: need to transfer all properties 

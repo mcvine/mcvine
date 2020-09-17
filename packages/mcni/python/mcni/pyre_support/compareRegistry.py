@@ -26,7 +26,7 @@ def compare(reg1, reg2, name=None):
 
     diff = {}
     diff['name'] = name or reg1['name']
-    for k, v1 in reg1.iteritems():
+    for k, v1 in reg1.items():
         if k == 'components':
             continue
         v2 = reg2.get(k)
@@ -34,8 +34,8 @@ def compare(reg1, reg2, name=None):
             diff[k] = v1, v2
         continue
 
-    for k, v2 in reg2.iteritems():
-        if k in reg1.keys(): continue
+    for k, v2 in reg2.items():
+        if k in list(reg1.keys()): continue
         v1 = reg1.get(k)
         if v1 != v2:
             diff[k] = v1, v2
@@ -46,13 +46,13 @@ def compare(reg1, reg2, name=None):
         return diff
         
     cdiff = diff['components'] = {}
-    for name, comp1 in components1.iteritems():
+    for name, comp1 in components1.items():
         comp2 = components2.get(name)
         cdiff[name] = compare(comp1, comp2, name=name)
         continue
 
-    for name, comp2 in components2.iteritems():
-        if name in components1.keys(): continue
+    for name, comp2 in components2.items():
+        if name in list(components1.keys()): continue
         cdiff[name] = compare(None, comp2, name=name)
     
     return diff
@@ -63,7 +63,7 @@ def createReport(diff, indent=0, name=None):
     pre = ' ' * indent
     name = name or diff['name']
     ret.append(pre + '[%s]' % (name,))
-    for k, v in diff.iteritems():
+    for k, v in diff.items():
         if k in ['name', 'components']: continue
         v1, v2 = v
         ret.append(pre + ' - %s' % k)
@@ -74,7 +74,7 @@ def createReport(diff, indent=0, name=None):
     comps = diff.get('components')
     if comps:
         ret.append(pre + ' - components:')
-        for name, c in comps.iteritems():
+        for name, c in comps.items():
             if isinstance(c, tuple):
                 v1, v2 = c
                 ret.append(pre + '  [%s]' % name)
@@ -126,7 +126,7 @@ def test2():
                 }
             }
     diff = compare(reg1, reg2)
-    print '\n'.join(createReport(diff))
+    print('\n'.join(createReport(diff)))
     assert diff == {
         'name': 'a', 'k1': (3,5),
         'components': {

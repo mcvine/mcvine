@@ -28,7 +28,7 @@ class TestCase(unittest.TestCase):
         ret = os.system(cmd)
 
         if ret:
-            raise RuntimeError, '%s failed ' % cmd
+            raise RuntimeError('%s failed ' % cmd)
         return
     
 

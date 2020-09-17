@@ -12,7 +12,8 @@
 #
 
 
-import os, click
+import os, sys, click
+from collections import OrderedDict
 
 from . import mcstas
 @mcstas.command()
@@ -36,6 +37,8 @@ class App(object):
         instrument = parser.parse(text)
         
         fname = os.path.basename(input)
+        if sys.version_info < (3,0) and isinstance(fname, unicode):
+            fname = fname.encode()
         instrname, ext = os.path.splitext(fname)
 
         instrument.name = instrname
@@ -44,16 +47,16 @@ class App(object):
         except:
             import traceback
             traceback.print_exc()
-            print
+            print()
             self._onError()
         return
 
     
     def _onError(self):
-        print '*'*70
-        print 'This conversion script is still experimental'
-        print 'Please make sure:'
-        print '"AT" clause and "ROTATED" clause are in different lines'
+        print('*'*70)
+        print('This conversion script is still experimental')
+        print('Please make sure:')
+        print('"AT" clause and "ROTATED" clause are in different lines')
         return
 
 
@@ -78,7 +81,7 @@ instrument = mcvine.instrument()
                 continue
             if not found: cat = 'unknown'
             else: cat = cat.__class__.__name__
-            plist = ', '.join('%s=%s' % (k,v) for k,v in comp.parameters.items())
+            plist = ', '.join('%s=%s' % (k,v) for k,v in sorted(comp.parameters.items()))
             if plist: plist = ', ' + plist
             lines.append('%s = mcomps.%s.%s(name=%r%s)' % (comp.name, cat, comp.type, comp.name, plist))
             # comp.position = [vector, "absolute" or "relative", reference]
@@ -104,10 +107,11 @@ instrument = mcvine.instrument()
     
     def _dumpAsJsonStr(self, instrument):
         def comp2dict(comp):
-            return dict(
-                type = comp.type,
+            params = _toOrderedDictSortedByKey(comp.parameters)
+            return OrderedDict(
                 name = comp.name,
-                parameters = comp.parameters,
+                type = comp.type,
+                parameters = params,
                 position = comp.position,
                 orientation = comp.orientation,
                 )
@@ -117,7 +121,7 @@ instrument = mcvine.instrument()
         import json
         out = '%s.json' % instrument.name
         json.dump(data, open(out, 'wt'))
-        print '* generated instrument description in "%s"' % out
+        print('* generated instrument description in "%s"' % out)
         return
 
     
@@ -132,7 +136,7 @@ instrument = mcvine.instrument()
         import os, stat
         path = os.path.abspath(out); os.chmod(path, stat.S_IRWXU)
         # done
-        print '* generated instrument configurator "%s"' % out
+        print('* generated instrument configurator "%s"' % out)
         return
 
 
@@ -145,8 +149,8 @@ instrument = mcvine.instrument()
         cmd = 'mcvine-create-instrument-simulation-application -name=%(name)s -components=%(components)s' % d
         cmd += '> /dev/null'
         if os.system(cmd):
-            raise RuntimeError, "%s failed"  % cmd
-        print '* generated mcvine app "%s"' % instrument.name
+            raise RuntimeError("%s failed"  % cmd)
+        print('* generated mcvine app "%s"' % instrument.name)
 
 
     def _createPml(self, instrument):
@@ -160,7 +164,7 @@ instrument = mcvine.instrument()
         text = PmlRenderer().render(instrument)
         text = '\n'.join(text)
         open(out, 'w').write(text)
-        print '* generated configuration "%s"' % out
+        print('* generated configuration "%s"' % out)
         return
 
     pass
@@ -274,8 +278,9 @@ class InstrumentConfiguratorRenderer(object):
     def onComponent(self, component):
         self._write('class %s(object):' % component.name)
         self._indent()
-        for k,v in component.__dict__.iteritems():
+        for k,v in sorted(component.__dict__.items()):
             if k.startswith('_'): continue
+            if isinstance(v, dict): v = _toOrderedDictSortedByKey(v)
             self._property(k,v)
             continue
         self._outdent()
@@ -284,7 +289,11 @@ class InstrumentConfiguratorRenderer(object):
 
     
     def _property(self, k, v):
-        self._write('%s=%r' % (k,v))
+        if isinstance(v, OrderedDict):
+            text = '%s=%s' % (k, _od2str(v))
+        else:
+            text = '%s=%r' % (k,v)
+        self._write(text)
         return
 
     
@@ -305,6 +314,15 @@ def _formatParamStr(params):
         l.append(s)
         continue
     return ', '.join(l)
+
+def _toOrderedDictSortedByKey(d):
+    o = OrderedDict()
+    for k, v in sorted(d.items()): o[k] = v
+    return o
+
+def _od2str(d):
+    "convert ordereddict to str"
+    return '{' + ', '.join('%r: %r'%(k,v) for k,v in d.items()) + '}'
 
 from mcvine.pyre_support.pml import PmlRenderer
 

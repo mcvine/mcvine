@@ -14,7 +14,7 @@
 
 ## export directory of python modules at user's home directory
 
-from dotmcstas import dotmcstas
+from .dotmcstas import dotmcstas
 import os
 path = os.path.join( dotmcstas, 'python' )
 
@@ -27,7 +27,7 @@ def init_package( package ):
     """
     packagepath = os.path.join( path, package.replace( '.', '/' ) )
     if os.path.exists( packagepath ) and not os.path.isdir(packagepath):
-        raise IOError, "%s exists and not a directory. " % packagepath
+        raise IOError("%s exists and not a directory. " % packagepath)
 
     #make path
     if not os.path.exists(packagepath):

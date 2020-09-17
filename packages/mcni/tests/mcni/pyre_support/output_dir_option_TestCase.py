@@ -44,13 +44,13 @@ class TestCase(unittest.TestCase):
         instrument.run()
         instrument.run_postprocessing()
 
-        self.assert_( os.path.exists( outdir ) )
+        self.assertTrue( os.path.exists( outdir ) )
         IEh5 = os.path.join( outdir, 'IE.h5' )
-        self.assert_( os.path.exists( IEh5 ) )
+        self.assertTrue( os.path.exists( IEh5 ) )
         import time
         ctime = time.time()
         mtime = os.path.getmtime( IEh5 )
-        self.assert_( ctime >= mtime and ctime < mtime + 10 )
+        self.assertTrue( ctime >= mtime and ctime < mtime + 10 )
         return
     
         

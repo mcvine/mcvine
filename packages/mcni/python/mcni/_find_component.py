@@ -16,11 +16,11 @@ def find(type, category=None, supplier=None):
     if category and supplier:
         return type, category, supplier
 
-    from component_suppliers import all as getsuppliers
+    from .component_suppliers import all as getsuppliers
     suppliers = getsuppliers()
     
     if supplier is None:
-        suppliernames = suppliers.iterkeys()
+        suppliernames = iter(suppliers.keys())
     else:
         suppliernames = [supplier]
     
@@ -53,8 +53,8 @@ def find(type, category=None, supplier=None):
         return
 
     if len(found) > 1:
-        raise RuntimeError, 'found more than 1 component for type %s: %s' % (
-            type, found)
+        raise RuntimeError('found more than 1 component for type %s: %s' % (
+            type, found))
     
     category, suppliername = found[0]
     return type, category, suppliername

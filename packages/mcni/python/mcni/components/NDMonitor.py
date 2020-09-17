@@ -56,7 +56,8 @@ class NDMonitor(object):
         from numpy import sqrt  # some expressions use 'sqrt()' function
         from numpy import histogramdd as hdd
         from mcni.utils import conversion
-        sample = [eval(e) for e in self.expressions]
+        d = locals()
+        sample = [eval(e, d) for e in self.expressions]
         
         bins = self.bins
         ranges = self.ranges
@@ -114,9 +115,9 @@ class NDMonitor(object):
                 
             # validation
             if len(r) != 2:
-                raise ValueError, "Invalid range: %s. A range has to be a 2-tuple" % (r, )
+                raise ValueError("Invalid range: %s. A range has to be a 2-tuple" % (r, ))
             if r[0] >= r[1]:
-                raise ValueError, "Invalid range: %s" % (r,)
+                raise ValueError("Invalid range: %s" % (r,))
             
             expressions.append(e)
             ranges.append(r)
@@ -148,7 +149,7 @@ class Axis(object):
     range = (0, 0)
 
     def __init__(self, **kwds):
-        for k,v in kwds.iteritems():
+        for k,v in kwds.items():
             setattr(self, k, v)
 
 

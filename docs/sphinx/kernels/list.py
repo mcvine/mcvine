@@ -39,4 +39,4 @@ for entry in os.listdir(dir):
 
 rstlist.sort()
 content = header + '\n'.join("  %s" % n for n in rstlist) + "\n"
-print content
+print(content)

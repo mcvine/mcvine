@@ -68,7 +68,7 @@ class TestCase(unittest.TestCase):
         I, qbb = np.histogram(Q, 20, weights=p)
         qbc = (qbb[1:] + qbb[:-1])/2
         I=I/qbc; I/=np.mean(I)
-        self.assert_(1.0*np.isclose(I, 1., atol=0.1).size/I.size>0.9)
+        self.assertTrue(1.0*np.isclose(I, 1., atol=0.1).size/I.size>0.9)
         #
         # check 2: use data in IQE monitor
         import histogram.hdf as hh
@@ -77,7 +77,7 @@ class TestCase(unittest.TestCase):
         Q = iq.Q; I = iq.I
         I0 = np.mean(I); I/=I0
         # check that most of the intensity is similar to I0
-        self.assert_(1.0*np.isclose(I, 1., atol=0.1).size/I.size>0.9)
+        self.assertTrue(1.0*np.isclose(I, 1., atol=0.1).size/I.size>0.9)
         return
     
 

@@ -19,7 +19,7 @@ import numpy
 
 
 from struct import pack, unpack
-from idfneutron import version, headerfmtstr, headersize, neutronsfmtstr, ndblsperneutron, filetype
+from .idfneutron import version, headerfmtstr, headersize, neutronsfmtstr, ndblsperneutron, filetype
 
 
 def read( filename ):

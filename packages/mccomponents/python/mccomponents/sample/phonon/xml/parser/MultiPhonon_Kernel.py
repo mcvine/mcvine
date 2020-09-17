@@ -51,7 +51,7 @@ class MultiPhonon_Kernel(base):
     pass # end of MultiPhonon_Kernel
 
 
-from HomogeneousScatterer import HomogeneousScatterer
+from .HomogeneousScatterer import HomogeneousScatterer
 HomogeneousScatterer.onMultiPhonon_Kernel = HomogeneousScatterer.onKernel
 
 

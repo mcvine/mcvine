@@ -35,7 +35,7 @@ class Component(AbstractComponent, ParallelComponent):
 
     # allow change attributes after construction, but before self._cpp_instance is accessed
     def __setattr__(self, name, value):
-        if hasattr(self, "_factory_kwds") and name in self._factory_kwds:
+        if "_factory_kwds" in self.__dict__ and name in self._factory_kwds:
             self._factory_kwds[name] = value
             return value
         return object.__setattr__(self, name, value)

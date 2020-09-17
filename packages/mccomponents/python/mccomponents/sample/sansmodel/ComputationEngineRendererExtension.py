@@ -47,9 +47,9 @@ def register( type, renderer_handler_method, override = False ):
     methodname = 'on%s' % name
     if hasattr(Renderer, methodname):
         if not override:
-            raise ValueError , "Cannot register handler for type %s"\
+            raise ValueError("Cannot register handler for type %s"\
                   "%s already registered as handler for type %s" % (
-                type, methodname, _registry[name] )
+                type, methodname, _registry[name] ))
         pass
     
     setattr( Renderer, methodname, renderer_handler_method )
@@ -64,7 +64,7 @@ from mccomponents.homogeneous_scatterer import registerRendererExtension
 registerRendererExtension( ComputationEngineRendererExtension )
 
 
-import units
+from . import units
 
 
 # version

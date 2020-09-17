@@ -58,8 +58,7 @@ def generate( klass, path, wrapmethodname, headername = None ):
     #convert args to a string
     ctor_args_str = _build_args_str( ctor_args )
     ctor_policies_str = _build_policies( ctor_args )
-    datamembers = filter( lambda m: not _ispointer(m) and _isofbasictype(m),
-                          klass.public_members )
+    datamembers = [m for m in klass.public_members if not _ispointer(m) and _isofbasictype(m)]
     expose_datamembers_str = _build_expose_datamembers( datamembers )
     ptr_members = _ptr_members( klass.public_members )
     ptrmethods = _build_ptrmethods( ptr_members, klass )
@@ -121,8 +120,7 @@ with_custodian_and_ward<1, 5,
     
     indexes_of_args_need_wards = []
     for index, arg in enumerate(args):
-        if arg.type not in types: raise NotImplementedError , \
-           "type not supported: %s" % (arg.type, )
+        if arg.type not in types: raise NotImplementedError("type not supported: %s" % (arg.type, ))
         if arg.type in pointertypes:
             indexes_of_args_need_wards.append( index + 2 )
             continue
@@ -139,7 +137,7 @@ with_custodian_and_ward<1, 5,
 
 
 def _ptr_members( members ):
-    return filter( _ispointer, members )
+    return list(filter( _ispointer, members ))
 
 
 def _build_ptrmethods( ptrs, klass ):
@@ -168,7 +166,7 @@ def _ptrs_having_accessor_methods( ptrs ):
     to filter thme out. this method return a list of
     pointers that can have accessor methods"""
     # pointer to pointer (double **, for example) is not yet handled
-    return filter( lambda p: not p.type[-2:] == '**', ptrs)
+    return [p for p in ptrs if not p.type[-2:] == '**']
 
 
 # version

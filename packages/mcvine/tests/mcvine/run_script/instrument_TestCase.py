@@ -43,9 +43,9 @@ class TestCase(unittest.TestCase):
         h1 = hh.load('./out-instrument-run_mpi/IE.h5')
         h2 = hh.load('./out-instrument-run_mpi/IE-serial.h5')
         self.assertEqual(h1.axisNameList(), h2.axisNameList())
-        self.assert_(np.allclose(h1.energy, h2.energy))
-        self.assert_(np.allclose(h1.I, h2.I))
-        self.assert_(np.allclose(h1.E2, h2.E2))
+        self.assertTrue(np.allclose(h1.energy, h2.energy))
+        self.assertTrue(np.allclose(h1.I, h2.I))
+        self.assertTrue(np.allclose(h1.E2, h2.E2))
         mcvine.run_script.run_mpi('test_instrument.py', outdir, 1e5, nodes=2, overwrite_datafiles=True)
         with self.assertRaises(IOError):
             mcvine.run_script.run_mpi('test_instrument.py', outdir, 1e5, nodes=2, overwrite_datafiles=False)

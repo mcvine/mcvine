@@ -18,7 +18,7 @@
 
 
 def srandom( seed ):
-    from homogeneous_scatterer import srandom
+    from .homogeneous_scatterer import srandom
     return srandom( seed )
 from mcni.seeder import register
 register( srandom )
@@ -28,10 +28,10 @@ del register
 def _register_components():
     from mcni.components import registercomponent
     
-    from sample import samplecomponent
+    from .sample import samplecomponent
     registercomponent( 'samples', 'SampleAssemblyFromXml', samplecomponent )
 
-    from detector import detectorcomponent
+    from .detector import detectorcomponent
     registercomponent( 'detectors', 'DetectorSystemFromXml', detectorcomponent )
     return
 
