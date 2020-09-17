@@ -43,7 +43,7 @@ install:
   - export ERRLOG=/home/travis/build/log.error
   - echo "ERRLOG=" $ERRLOG
   - export CORES=1
-  - travis_wait 100 conda build --python=$TRAVIS_PYTHON_VERSION .
+  - conda build --python=$TRAVIS_PYTHON_VERSION .
   - conda install anaconda-client
   - conda config --set anaconda_upload no
   - anaconda -t $CONDA_UPLOAD_TOKEN upload --force /home/travis/mc/conda-bld/linux-64/mcvine-core-$MCVINE_CONDA_PKG_VER-*.tar.bz2 --label unstable
