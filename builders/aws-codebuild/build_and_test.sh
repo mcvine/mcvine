@@ -14,4 +14,4 @@ grep version meta.yaml
 grep git_rev meta.yaml
 cat meta.yaml
 cat conda_build_config.yaml
-conda build --python $PYTHON_VERSION --numpy $NUMPY_VERSION .
+conda build --python $PYTHON_VERSION .
