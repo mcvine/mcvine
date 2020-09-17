@@ -11,7 +11,7 @@ requirements:
     - {{ compiler('cxx') }} 7 # [linux]
     - cmake
   host:
-    - python
+    - python                {{ python }}
     - pyyaml
     - numpy                 {{ numpy }}
     - psutil

@@ -13,9 +13,6 @@ echo "ERRLOG=" $ERRLOG
 
 mkdir build
 cd build
-# somehow in conda build at travis machine, cmake finds
-# python 3 instead of python 2, even when -DCMAKE_SYSTEM_LIBRARY_PATH=$PREFIX
-# is used.
 cmake \
     -DCMAKE_INSTALL_PREFIX=$PREFIX \
     -DDEPLOYMENT_PREFIX=$PREFIX \
