@@ -5,6 +5,7 @@ language: python
 
 python:
   - 2.7
+  - 3.8
 
 branches:
   only:
@@ -12,9 +13,9 @@ branches:
 
 # services:
 # 
-matrix:
-  include:
-    - env: NUMPY_VERSION=1.16.0
+# matrix:
+#   include:
+#     - env: NUMPY_VERSION=1.16.0
 
 before_install:
   - if [[ ${TRAVIS_PYTHON_VERSION:0:1} == "2" ]]; then wget http://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86_64.sh -O miniconda.sh; else wget http://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh; fi
@@ -41,7 +42,7 @@ install:
   - export ERRLOG=/home/travis/build/log.error
   - echo "ERRLOG=" $ERRLOG
   - export CORES=1
-  - travis_wait 100 conda build --numpy=$NUMPY_VERSION .
+  - travis_wait 100 conda build --python=$TRAVIS_PYTHON_VERSION .
   - conda install anaconda-client
   - conda config --set anaconda_upload no
   - anaconda -t $CONDA_UPLOAD_TOKEN upload --force /home/travis/mc/conda-bld/linux-64/mcvine-core-$MCVINE_CONDA_PKG_VER-*.tar.bz2 --label unstable
