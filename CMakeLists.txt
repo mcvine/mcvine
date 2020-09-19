@@ -95,8 +95,11 @@ set(INSTALL_PY_PATH "${INSTALL_LIB_DIR}/python${PYTHON_VERSION_MAJOR}.${PYTHON_V
 # needs boost python
 set(PYVER_MAJORMINOR ${PYTHON_VERSION_MAJOR}${PYTHON_VERSION_MINOR})
 find_package ( Boost COMPONENTS python${PYVER_MAJORMINOR} )
+IF (NOT Boost_FOUND)
+   find_package ( Boost COMPONENTS python${PYTHON_VERSION_MAJOR} REQUIRED )
+ENDIF (NOT Boost_FOUND)
 message(" - Boost lib and header dirs: ${Boost_LIBRARY_DIRS} ${Boost_INCLUDE_DIRS}")
-# find_package ( BoostPython REQUIRED )
+# obsolete: find_package ( BoostPython REQUIRED )
 #
 enable_testing()
 
