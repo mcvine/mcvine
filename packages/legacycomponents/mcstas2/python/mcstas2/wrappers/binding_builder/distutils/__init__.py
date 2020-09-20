@@ -12,6 +12,8 @@
 #
 
 
+import os
+
 import journal
 debug = journal.debug('binding_builder.distutils')
 
@@ -85,12 +87,21 @@ def _find_boostpython_lib(libs, libdirs):
     major, minor = sys.version_info[:2]
     pyver = '%s%s' % (major, minor)  # "27" for 2.7
     candidates = 'boost_python', ('boost_python%s' % pyver)
+    exts = '.so', '.dylib'
     found = None
     for c in candidates:
         for libdir in libdirs:
-            pattern = '%s/lib%s.*' % (libdir, c)
-            if glob.glob(pattern): found=c; break
+            for ext in exts:
+                pattern = '%s/lib%s*%s' % (libdir, c, ext)
+                files = glob.glob(pattern)
+                if files:
+                    found=os.path.basename(files[0])[3: -len(ext)]
+                    break
+                if glob.glob(pattern): found=c; break
+            if found: break
         if found: break
+    if not found:
+        raise RuntimeError("Did not find boostpython library in {}".format(', '.join(libdirs)))
     # modify libs
     libs[libs.index('boost_python')] = found
     return
