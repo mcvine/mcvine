@@ -18,7 +18,7 @@ def write(Omega2,filename='Omega2',comment='',D=3):
     #f.write(pack('<i',Omega2.shape[2]))
     f.write(pack('<i',D))
     # maybe there should be some further checking on integer division below:
-    f.write(pack('<i',Omega2.shape[1] / D))
+    f.write(pack('<i',Omega2.shape[1] // D))
     f.write(pack('<i',Omega2.shape[0]))
     Omega2 = tuple( Omega2.reshape(-1) )
     f.write(pack('<%id' % len(Omega2),*Omega2))
