@@ -86,7 +86,7 @@ def _find_boostpython_lib(libs, libdirs):
     import sys, glob
     major, minor = sys.version_info[:2]
     pyver = '%s%s' % (major, minor)  # "27" for 2.7
-    candidates = 'boost_python', ('boost_python%s' % pyver)
+    candidates = 'boost_python%s' % pyver, 'boost_python%s' % major, 'boost_python'
     exts = '.so', '.dylib'
     found = None
     for c in candidates:
