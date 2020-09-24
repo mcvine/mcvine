@@ -27,7 +27,7 @@ before_install:
 install:
   - export GIT_FULL_HASH=`git rev-parse HEAD`
   - export GIT_VER=`git describe --tags`
-  - export VERSION=`git describe --tags | cut -d '-' -f1`
+  - export VERSION=`git describe --tags | cut -d '-' -f1` | cut -c2-
   - echo ${VERSION}
   - export MCVINE_CONDA_PKG_VER=${VERSION}unstable
   - echo ${TRAVIS_PYTHON_VERSION}
