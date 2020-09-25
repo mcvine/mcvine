@@ -28,7 +28,7 @@ install:
   - export GIT_VER=`git describe --tags`
   - export VERSION=`git describe --tags | cut -d '-' -f1`
   - echo ${VERSION}
-  - export MCVINE_CONDA_PKG_VER=${VERSION}unstable
+  - export MCVINE_CONDA_PKG_VER=${VERSION}.unstable
   - echo ${TRAVIS_PYTHON_VERSION}
   - conda config --set always_yes true
   - conda install conda
