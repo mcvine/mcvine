@@ -11,18 +11,19 @@ strSize = calcsize('<s')
 
 def write(E,filename='E',comment=''):
   """Takes numpy E in with shape (N_e) and writes to binary file."""
-  f=open(filename,'wb')
-  f.write(pack('<64s',b'E'))
-  f.write(pack('<i',version))
-  f.write(pack('<1024s',comment.encode('ascii')))
-  f.write(pack('<i',E.shape[0]))
-  E = tuple( E )
-  f.write(pack('<%id' % len(E),*E))
+  with open(filename,'wb') as f:
+    f.write(pack('<64s',b'E'))
+    f.write(pack('<i',version))
+    f.write(pack('<1024s',comment.encode('ascii')))
+    f.write(pack('<i',E.shape[0]))
+    E = tuple( E )
+    f.write(pack('<%id' % len(E),*E))
   return
 
 def read(filename='E'):
   """Takes filename, returns a tuple with information and E as a numpy."""
-  f=open(filename,'rb').read()
+  with open(filename,'rb') as stream:
+    f=stream.read()
   i = 0
   filetype, = unpack('<64s',f[i:i+64*strSize])          ; i += 64*strSize
   version,  = unpack('<i',f[i:i+intSize])               ; i += intSize

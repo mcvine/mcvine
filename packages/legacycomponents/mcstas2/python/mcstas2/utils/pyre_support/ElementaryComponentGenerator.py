@@ -82,7 +82,7 @@ class Generator:
                     debug.log( traceback.format_exc() )
                     engine = self.__dict__.get( 'engine' )
                     if engine is None:
-                        raise RuntimeError("engine not established")
+                        raise AttributeError("engine not established")
                     return getattr( engine, name )
                 raise RuntimeError("Should not reach here")
 
