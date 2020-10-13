@@ -3,7 +3,7 @@
 # Jiao Lin <jiao.lin@gmail.com>
 #
 
-import click, os, json, subprocess as sp
+import click, os, sys, json, subprocess as sp
 import logging
 logger = logging.getLogger("mcvine.cli")
 
@@ -100,6 +100,8 @@ def arg_str(params, args):
 def unique_identifier(params, args):
     "create a unique string identifier of the given parameters and arguments"
     s = arg_str(params, args)
+    if sys.version_info >= (3,0):
+        s = s.encode()
     import hashlib
     return hashlib.md5(s).hexdigest()
 
