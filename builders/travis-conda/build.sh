@@ -20,6 +20,7 @@ echo "ERRLOG=" $ERRLOG
 mkdir build
 cd build
 cmake \
+    -DCMAKE_BUILD_TYPE=Debug \
     -DCMAKE_INSTALL_PREFIX=$PREFIX \
     -DDEPLOYMENT_PREFIX=$PREFIX \
     -DPYTHON_INCLUDE_DIR=${PY_INCLUDE_DIR} \
