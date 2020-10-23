@@ -399,8 +399,9 @@ mccomposite::geometry::ArrowIntersector::visit
       << journal::at(__HERE__)
       << "number of intersections between a line and a pyramid should be 0 or 2, "
       << "we got " << N << ". " << journal::newline;
-    for (std::vector<double>::iterator it=ts.begin(); it!=new_end; it++) oss << *it << ", ";
-    oss << std::endl
+    for (std::vector<double>::iterator it=ts.begin(); it!=new_end; it++)
+      debug << *it << ", ";
+    debug << journal::endl
       << "pyramid: " << pyramid << ", "
       << "arrow: " << m_arrow
       << journal::endl;

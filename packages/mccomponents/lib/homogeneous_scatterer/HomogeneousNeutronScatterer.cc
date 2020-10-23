@@ -24,7 +24,7 @@
 // #define DEBUG2  // for debugging distribution of random x (position along path)
 
 #ifdef DEBUG
-#include "portinfo"
+// #include "portinfo"
 #include "journal/debug.h"
 #endif
 
