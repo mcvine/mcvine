@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd `basename "$0"`
+cd `dirname "$0"`
 # cd builders/travis-conda
 ./create_meta_yaml $MCVINE_CONDA_PKG_VER $GIT_FULL_HASH
 grep version meta.yaml
