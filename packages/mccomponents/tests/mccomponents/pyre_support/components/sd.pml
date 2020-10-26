@@ -10,7 +10,7 @@
 
         <property name="multiple-scattering">False</property>
 
-        <property name="ncount">100000</property>
+        <property name="ncount">10000</property>
 
         <property name="output-dir">out</property>
         <property name="overwrite-datafiles">1</property>
