@@ -38,22 +38,12 @@ install:
   - conda config --add channels diffpy
   - conda config --add channels mcvine
   - conda install -n root conda-build
-  - cd builders/travis-conda
-  - ./create_meta_yaml $MCVINE_CONDA_PKG_VER $GIT_FULL_HASH
-  - grep version meta.yaml
-  - grep git_rev meta.yaml
-  - export ERRLOG=/home/travis/build/log.error
-  - echo "ERRLOG=" $ERRLOG
-  - export CORES=1
-  - conda build --python=$TRAVIS_PYTHON_VERSION .
+  - ./builders/travis-conda/run-travis-build.sh
   - conda install anaconda-client
   - conda config --set anaconda_upload no
   - anaconda -t $CONDA_UPLOAD_TOKEN upload --force /home/travis/mc/conda-bld/linux-64/mcvine-core-$MCVINE_CONDA_PKG_VER-*.tar.bz2 --label unstable
-#  - cd ../..
-#  - conda install mcvine --use-local
 
 script:
-#  - python -c "import mcvine"
   - echo "mcvine"
 
 after_failure:
