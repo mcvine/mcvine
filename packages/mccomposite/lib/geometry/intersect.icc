@@ -132,7 +132,16 @@ namespace mccomposite {
 	now = distances[point_index];
 	Position middle_point = start + (previous + now)/2*direction;
 	ret = find_shape_containing_point<index_t>( middle_point, shapes );
-	if (ret>=0 && ret<nIntersections) return ret;
+#ifdef DEBUG
+  debug << journal::at(__HERE__)
+        << "point_index " << point_index
+        << ", now " << now
+        << ", middle_point" << middle_point
+        << ", ret" << ret
+        << journal::endl;
+#endif
+	// if (ret>=0 && ret<nIntersections) return ret;
+	if (ret>=0) return ret;
 	previous = now;
       }
       return -1;
