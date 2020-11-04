@@ -44,6 +44,15 @@
 
 #define SCATTERED mcScattered
 
+extern int mcallowbackprop;
+#define ALLOW_BACKPROP                          \
+  do {                                          \
+    mcallowbackprop = 1;                        \
+  } while(0)
+#define DISALLOW_BACKPROP                       \
+  do {                                          \
+    mcallowbackprop = 0;                        \
+  } while(0)
 
 #endif //H_MCSTAS2_TRACING_MACROS
 

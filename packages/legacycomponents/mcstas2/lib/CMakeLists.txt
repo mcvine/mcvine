@@ -11,6 +11,7 @@ set ( SRC_FILES
   misc_macros.cc
   propagators.cc
   random_numbers.cc
+  tracing_macros.cc
   )
 # ----------------------------------------
 
