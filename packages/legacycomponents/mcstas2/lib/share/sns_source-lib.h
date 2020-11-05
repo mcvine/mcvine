@@ -1,3 +1,8 @@
+/*
+ * Author: Garrett Granroth
+ * Extracted from SNS_source components and Adapted to MCViNE by Jiao Lin
+ */
+
 #ifndef SNS_SOURCE_LIB_H
 #define SNS_SOURCE_LIB_H
 
