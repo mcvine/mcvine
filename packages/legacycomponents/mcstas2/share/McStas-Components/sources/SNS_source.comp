@@ -80,7 +80,7 @@ DECLARE
 %}
 INITIALIZE
 %{  
-  using namespace SNSsource;
+  using namespace mcstas2::SNSsource;
   FILE *fp;
   double llim, hlim,ltlim,htlim,junk;  
   double tycol[200];
@@ -148,7 +148,7 @@ printf("Finished calculating probability distribution\n");
 %}
 TRACE
 %{    
-  using namespace SNSsource;
+  using namespace mcstas2::SNSsource;
  Pfunc pfunc( xylength, inxvec, Pvec );
  TPfunc tpfunc( ntvals, txval, tyval );
 

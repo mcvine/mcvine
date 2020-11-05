@@ -1,6 +1,7 @@
+#include "mcstas2/exception.h"
 #include "sns_source-lib.h"
 
-namespace SNSsource {
+namespace mcstas2 { namespace SNSsource {
 
   /* ----------------------------------------------------------------
      routine to load E, I and t I data from SNS source files
@@ -25,7 +26,7 @@ namespace SNSsource {
     fp=fopen(filename,"r");
     if (fp==NULL){
       printf("Error opening file");
-      exit(-1);
+      mcstas2::exit(-1);
       }
     /* skip header lines any line that begin with # */
     while((fgets(line,Maxlength,fp)!=NULL)&&(strchr(line,'#')!=NULL)){      
@@ -255,7 +256,7 @@ namespace SNSsource {
     }
     if (idx1<1){
       printf("Error: lower energy limit is out of bounds\n");
-      exit(0);
+      mcstas2::exit(0);
     }
     *idxstart=idx1;  
     Prob[idx1]=integ1(func,llim,xvec[idx1],0.001);
@@ -314,4 +315,4 @@ namespace SNSsource {
     }
   }
 
-}
+}}

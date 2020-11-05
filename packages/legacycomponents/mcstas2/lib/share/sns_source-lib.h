@@ -5,7 +5,7 @@
 #include <string.h>
 #include <functional>
 
-namespace SNSsource {
+namespace mcstas2 { namespace SNSsource {
   // functor
   struct F1: public std::unary_function<double, double> {
     virtual double operator()(double) const = 0;
@@ -135,6 +135,6 @@ namespace SNSsource {
     int m_ntvals;
     double *m_txval, *m_tyval;
   };
-}
+}}
 
 #endif
