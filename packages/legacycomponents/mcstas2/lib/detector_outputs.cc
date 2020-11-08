@@ -1535,7 +1535,7 @@ static int mcfile_data(FILE *f, struct mcformats_struct format,
 } /* mcfile_data */
 
 double
-mcdetector_out(char *cname, double p0, double p1, double p2, char *filename)
+mcdetector_out(const char *cname, double p0, double p1, double p2, const char *filename)
 {
   printf("Detector: %s_I=%g %s_ERR=%g %s_N=%g",
          cname, p1, cname, mcestimate_error(p0,p1,p2), cname, p0);

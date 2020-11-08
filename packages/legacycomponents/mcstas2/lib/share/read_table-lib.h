@@ -1,7 +1,7 @@
 /*******************************************************************************
 *
 * McStas, neutron ray-tracing package
-*         Copyright (C) 1997-2007, All rights reserved
+*         Copyright 1997-2002, All rights reserved
 *         Risoe National Laboratory, Roskilde, Denmark
 *         Institut Laue Langevin, Grenoble, France
 *
@@ -11,8 +11,8 @@
 * Written by: EF
 * Date: Aug 28, 2002
 * Origin: ILL
-* Release: McStas 1.11
-* Version: $Revision: 1.21 $
+* Release: McStas 1.6
+* Version: $Revision$
 *
 * This file is to be imported by components that may read data from table files
 * It handles some shared functions.
@@ -22,69 +22,12 @@
 * Usage: within SHARE
 * %include "read_table-lib"
 *
-*
-* $Id$
-*
-* $Log: read_table-lib.h,v $
-* Revision 1.21  2006/11/27 15:29:39  farhi
-* Small improvement in interpolation methods of read-table lib.
-*
-* Revision 1.20  2006/03/15 16:04:14  farhi
-* interpolation decl.
-*
-* Revision 1.19  2005/10/14 11:38:28  farhi
-* Corrected missing #define
-*
-* Revision 1.18  2005/10/12 14:04:29  farhi
-* Added function to parse header, Table_ParseHeader(header, "symbol1", ... , NULL)
-* Useful for complex sample components, as well as mcformat/mcconvert stuff.
-*
-* Revision 1.17  2005/09/30 14:53:04  farhi
-* REdiced length of title line in subplot's
-*
-* Revision 1.16  2005/07/25 14:55:08  farhi
-* DOC update:
-* checked all parameter [unit] + text to be OK
-* set all versions to CVS Revision
-*
-* Revision 1.15  2005/07/20 13:08:43  farhi
-* Changed Table_Init calling sequence (overrides Table_Alloc)
-*
-* Revision 1.14  2005/07/12 14:46:34  farhi
-* Added Table_Alloc to create a user empty Table
-* and Table_SetElement
-*
-* Revision 1.13  2005/07/05 14:25:59  farhi
-* Added filesize in t_Table struct
-*
-* Revision 1.12  2005/07/05 12:06:40  farhi
-* added new functions for table Array handling
-* to be used in Isotropic_sqw and mcformat
-*
-* Revision 1.10  2005/01/20 14:16:43  farhi
-* New functions to read separately all numerical bmocks in a text data file
-* Will be used for Data conversion from PGPLOT/McStas (mcformat tool)
-*
-* Revision 1.9  2004/09/10 15:12:02  farhi
-* Make these libs easier to externalize (lower dependencies) and add comment about how to make these independent for external linkage.
-*
-* Revision 1.8  2003/02/11 12:28:46  farhi
-* Variouxs bug fixes after tests in the lib directory
-* mcstas_r  : disable output with --no-out.. flag. Fix 1D McStas output
-* read_table:corrected MC_SYS_DIR -> MCSTAS define
-* monitor_nd-lib: fix Log(signal) log(coord)
-* HOPG.trm: reduce 4000 points -> 400 which is enough and faster to resample
-* Progress_bar: precent -> percent parameter
-* CS: ----------------------------------------------------------------------
-*
-* Revision 1.1 2002/08/29 11:39:00 ef
-* Initial revision extracted from lib/optics/Monochromators...
 *******************************************************************************/
 
 #ifndef READ_TABLE_LIB_H
-#define READ_TABLE_LIB_H "$Revision: 1.21 $"
+#define READ_TABLE_LIB_H "$Revision$"
 
-#define READ_TABLE_STEPTOL  0.02 /* tolerancy for constant step approx */
+#define READ_TABLE_STEPTOL  0.04 /* tolerancy for constant step approx */
 
 #ifndef MC_PATHSEP_C
 #ifdef WIN32
@@ -121,12 +64,64 @@
 #include <string.h>
 #include <math.h>
 #include "mcstas2/misc_macros.h"
-// ----------- added by Jiao Lin --------
 
+// copied from mcstas 2.6
+#ifndef CHAR_BUF_LENGTH
+#define CHAR_BUF_LENGTH 1024
+#endif
+
+/* main DETECTOR structure which stores most information to write to data files */
+struct mcdetector_struct {
+  char   filename[CHAR_BUF_LENGTH];   /* file name of monitor */
+  char   position[CHAR_BUF_LENGTH];   /* position of detector component */
+  char   component[CHAR_BUF_LENGTH];  /* component instance name */
+  char   instrument[CHAR_BUF_LENGTH]; /* instrument name */
+  char   type[CHAR_BUF_LENGTH];       /* data type, e.g. 0d, 1d, 2d, 3d */
+  char   user[CHAR_BUF_LENGTH];       /* user name, e.g. HOME */
+  char   date[CHAR_BUF_LENGTH];       /* date of simulation end/write time */
+  char   title[CHAR_BUF_LENGTH];      /* title of detector */
+  char   xlabel[CHAR_BUF_LENGTH];     /* X axis label */
+  char   ylabel[CHAR_BUF_LENGTH];     /* Y axis label */
+  char   zlabel[CHAR_BUF_LENGTH];     /* Z axis label */
+  char   xvar[CHAR_BUF_LENGTH];       /* X variable name */
+  char   yvar[CHAR_BUF_LENGTH];       /* Y variable name */
+  char   zvar[CHAR_BUF_LENGTH];       /* Z variable name */
+  char   ncount[CHAR_BUF_LENGTH];     /* number of events initially generated */
+  char   limits[CHAR_BUF_LENGTH];     /* X Y Z limits, e.g. [xmin xmax ymin ymax zmin zmax] */
+  char   variables[CHAR_BUF_LENGTH];  /* variables written into data block */
+  char   statistics[CHAR_BUF_LENGTH]; /* center, mean and half width along axis */
+  char   signal[CHAR_BUF_LENGTH];     /* min max and mean of signal (data block) */
+  char   values[CHAR_BUF_LENGTH];     /* integrated values e.g. [I I_err N] */
+  double xmin,xmax;                   /* min max of axes */
+  double ymin,ymax;
+  double zmin,zmax;
+  double intensity;                   /* integrated values for data block */
+  double error;
+  double events;
+  double min;                         /* statistics for data block */
+  double max;
+  double mean;
+  double centerX;                     /* statistics for axes */
+  double halfwidthX;
+  double centerY;
+  double halfwidthY;
+  int    rank;                        /* dimensionaly of monitor, e.g. 0 1 2 3 */
+  char   istransposed;                /* flag to transpose matrix for some formats */
+
+  long   m,n,p;                       /* dimensions of data block and along axes */
+  long   date_l;                      /* same as date, but in sec since 1970 */
+
+  double *p0, *p1, *p2;               /* pointers to saved data, NULL when freed */
+  char   format[CHAR_BUF_LENGTH];    /* format for file generation */
+};
+
+typedef struct mcdetector_struct MCDETECTOR;
+
+// ----------- added by Jiao Lin --------
 
   typedef struct struct_table
   {
-    char    filename[256];
+    char    filename[1024];
     long    filesize;
     char   *header;  /* text header, e.g. comments */
     double *data;    /* vector { x[0], y[0], ... x[n-1], y[n-1]... } */
@@ -145,6 +140,16 @@
     char    method[32];    /* interpolation method: nearest, linear */
   } t_Table;
 
+/*maximum number of rows to rebin a table = 1M*/
+enum { mcread_table_rebin_maxsize = 1000000 };
+
+typedef struct t_Read_table_file_item {
+    int ref_count;
+    t_Table *table_ref;
+} t_Read_table_file_item;
+
+typedef enum enum_Read_table_file_actions {STORE,FIND,GC}  t_Read_table_file_actions;
+
 /* read_table-lib function prototypes */
 /* ========================================================================= */
 
@@ -154,27 +159,36 @@ long     Table_Read_Offset       (t_Table *Table, char *File, long block_number,
                                   long *offset, long max_lines);
 long     Table_Read_Offset_Binary(t_Table *Table, char *File, char *Type,
                                   long *Offset, long Rows, long Columns);
-long     Table_Rebin(t_Table *Table);
+long     Table_Rebin(t_Table *Table); /* rebin table with regular 1st column and interpolate all columns 2:end */
 long     Table_Info (t_Table Table);
-double   Table_Index(t_Table Table,   long i, long j);
-double   Table_Value(t_Table Table, double X, long j);
+double   Table_Index(t_Table Table,   long i, long j); /* get indexed value */
+double   Table_Value(t_Table Table, double X, long j); /* search X in 1st column and return interpolated value in j-column */
 t_Table *Table_Read_Array(char *File, long *blocks);
 void     Table_Free_Array(t_Table *Table);
 long     Table_Info_Array(t_Table *Table);
 int      Table_SetElement(t_Table *Table, long i, long j, double value);
-long     Table_Init(t_Table *Table, long rows, long columns);
+long     Table_Init(t_Table *Table, long rows, long columns); /* create a Table */
+double   Table_Value2d(t_Table Table, double X, double Y);    /* same as Table_Index with non-integer indices and 2d interpolation */
+MCDETECTOR Table_Write(t_Table Table, char*file, char*xl, char*yl, 
+           double x1, double x2, double y1, double y2); /* write Table to disk */
+void * Table_File_List_Handler(t_Read_table_file_actions action, void *item, void *item_modifier);
+t_Table *Table_File_List_find(char *name, int block, int offset);
+int Table_File_List_gc(t_Table *tab);
+void *Table_File_List_store(t_Table *tab);
 
-char **Table_ParseHeader(char *header, ...);
+#define Table_ParseHeader(header, ...) \
+  Table_ParseHeader_backend(header,__VA_ARGS__,NULL);
+
+char **Table_ParseHeader_backend(char *header, ...);
 
 /* private functions */
-
 void Table_Free(t_Table *Table);
-long Table_Read_Handle(t_Table *Table, FILE *fid, long block_number, long max_lines);
+long Table_Read_Handle(t_Table *Table, FILE *fid, long block_number, long max_lines, char *name);
 static void Table_Stat(t_Table *Table);
 double Table_Interp1d(double x, double x1, double y1, double x2, double y2);
 double Table_Interp1d_nearest(double x, double x1, double y1, double x2, double y2);
 double Table_Interp2d(double x, double y, double x1, double y1, double x2, double y2,
-  double z11, double z12, double z21, double z22);
+double z11, double z12, double z21, double z22);
 
 #endif
 

@@ -57,7 +57,7 @@ struct mcformats_struct {
 /* function prototypes */
 void mcuse_format(char *format);
 void mcuse_dir(char *dir);
-double mcdetector_out(char *cname, double p0, double p1, double p2, char *filename);
+double mcdetector_out(const char *cname, double p0, double p1, double p2, const char *filename);
 double mcdetector_out_0D(const char *t, double p0, double p1, double p2, char *c);
 double mcdetector_out_1D(const char *t, char *xl, char *yl,
 			 char *xvar, double x1, double x2, int n,
