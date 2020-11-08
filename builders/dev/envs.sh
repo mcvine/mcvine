@@ -1,39 +1,60 @@
-# Be careful with this.
-# If using ubuntu 16.04 or older, the default gcc is 5.4.0
-# mcvine needs 4.*.
-# So before building mcvine, have to do the switch by
-#  $ sudo update-alternatives --config gcc
-#  $ sudo update-alternatives --config g++
-# And after the build, have to switch back running the similar cmds
+# To use this env setup script
+#
+# * git clone mcvine to ~/dv/mcvine/mcvine
+# * git clone resources to ~/dv/mcvine/resources
+# * install conda
+# * create conda environment dev-mcvine-py{VER} with deps. e.g.
+#   $ conda create -n dev-mcvine-py36 -c mcvine/label/unstable python=3.6 pyyaml numpy cmake gxx_linux-64=7 psutil h5py mpi4py gsl=2.4 boost=1.66 numpy=1.14.0 danse.ins.numpyext=0.1.3 danse.ins.bpext=0.1.4 histogram=0.3.7 drchops=2.0.3 pyre danse.ins.dsm diffpy.Structure periodictable matplotlib ipython
+#
+# * activate the environment. e.g.
+#   $ . ~/.use-mc3
+#   $ source activate dev-mcvine-py36
+#
+# * Then source this script
+#   $ . envs.sh
+
+# build parameter
+CORES=7
+
+PREFIX=$CONDA_PREFIX
+PYVER_MAJOR=`python -c "from __future__ import print_function; import sys; print(sys.version_info[0])"`
+PYVER_MINOR=`python -c "from __future__ import print_function; import sys; print(sys.version_info[1])"`
+PYVER=${PYVER_MAJOR}.${PYVER_MINOR}
+echo $PYVER
+echo $PREFIX
+
+PY_INCLUDE_DIR=${PREFIX}/include/`ls ${PREFIX}/include/|grep python${PYVER}`
+PY_SHAREDLIB=${PREFIX}/lib/`ls ${PREFIX}/lib/|grep libpython${PYVER}[a-z]*.so$`
+PY_SITE_PKG=${PREFIX}/lib/`ls ${PREFIX}/lib/|grep ^python${PYVER}[a-z]*$`/site-packages
+echo $PY_INCLUDE_DIR
+echo $PY_SHAREDLIB
+echo $PY_SITE_PKG
 
 # SSH agent needed for git
-. ~/.ssh/start-agent
+# . ~/.ssh/start-agent
 
 # paths
 export MCVINE_SRC=$HOME/dv/mcvine/mcvine
 export MCVINE_RESOURCES=$HOME/dv/mcvine/resources
-export BUILD_ROOT=$HOME/dv/mcvine/build
-export MCVINE_EXPORT_ROOT=$HOME/dv/mcvine/export
-
-# build parameter
-CORES=30
-
-# conda env
-. ~/.use-miniconda2
-source activate dev-mcvine
+export BUILD_ROOT=$HOME/dv/mcvine/build-$PYVER
+export MCVINE_EXPORT_ROOT=$HOME/dv/mcvine/export-$PYVER
+MCVINE_SRC_MCSTAS_COMPONENTS_INTERMEDIATE_DIR=$MCVINE_SRC/packages/legacycomponents/mcstas2/components
 
 # helper functions
 mcvine_cmake0 () {
     __SRC_DIR=$1
     __BUILD_DIR=$2
+    mkdir -p $__BUILD_DIR
     cd $__BUILD_DIR
     cmake $__SRC_DIR \
-	  -DCMAKE_INSTALL_PREFIX=$MCVINE_EXPORT_ROOT \
-	  -DDEPLOYMENT_PREFIX=$CONDA_PREFIX \
-	  -DCMAKE_SYSTEM_LIBRARY_PATH=$CONDA_PREFIX/lib \
-	  -DPYTHON_LIBRARY=${CONDA_PREFIX}/lib/libpython${PYVER}.so \
-	  -DPYTHON_INCLUDE_DIR=${CONDA_PREFIX}/include/python${PYVER} \
-	  -DBOOST_ROOT=$CONDA_PREFIX
+          -DCMAKE_BUILD_TYPE=Debug \
+          -DCMAKE_CXX_FLAGS="-D DEBUG" \
+	        -DCMAKE_INSTALL_PREFIX=$MCVINE_EXPORT_ROOT \
+	        -DDEPLOYMENT_PREFIX=$CONDA_PREFIX \
+	        -DCMAKE_SYSTEM_LIBRARY_PATH=$CONDA_PREFIX/lib \
+	        -DPYTHON_LIBRARY=$PY_SHAREDLIB \
+	        -DPYTHON_INCLUDE_DIR=$PY_INCLUDE_DIR \
+	        -DBOOST_ROOT=$CONDA_PREFIX
     cd -
 }
 mcvine_build_subpkg () {
@@ -45,7 +66,8 @@ mcvine_build_subpkg () {
 
 # For development
 # clean up everything and build everything
-alias build0="rm -rf $BUILD_ROOT && mkdir $BUILD_ROOT && cd $BUILD_ROOT && mm0 && mmfull"
+alias clear_intermediate_mcstas_components_dir="cd $MCVINE_SRC_MCSTAS_COMPONENTS_INTERMEDIATE_DIR && rm -rf * && git checkout ."
+alias build0="clear_intermediate_mcstas_components_dir && rm -rf $BUILD_ROOT && mkdir $BUILD_ROOT && cd $BUILD_ROOT && mm0 && mmfull"
 # run cmake for the first time
 alias mm0="mcvine_cmake0 $MCVINE_SRC $BUILD_ROOT"
 # full build including wrapping mcstas components
@@ -65,5 +87,5 @@ alias mm_workflow="mcvine_build_subpkg $HOME/dv/mcvine/workflow $HOME/dv/mcvine/
 export MCVINE_DIR=$MCVINE_EXPORT_ROOT
 export EXPORT_ROOT=$MCVINE_EXPORT_ROOT # pyre etc
 export PATH=$MCVINE_DIR/bin:$PATH
-export PYTHONPATH=$MCVINE_DIR/lib/python2.7/site-packages:$PYTHONPATH
+export PYTHONPATH=$MCVINE_DIR/lib/python$PYVER/site-packages:$PYTHONPATH
 export LD_LIBRARY_PATH=$MCVINE_DIR/lib:$LD_LIBRARY_PATH
