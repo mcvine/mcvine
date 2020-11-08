@@ -52,6 +52,7 @@ inline void prop_dt_withgravity
   t  += dt; 
 }
 
+const double prop_dt_epsilon = 1e-15;
 
 inline void prop_dt
 (const double & dt, const mcstas2::Component & comp,
@@ -60,7 +61,9 @@ inline void prop_dt
  double &p,
  double &t)
 {
-  if (dt<0) {ABSORB; return;}
+  if (dt<-prop_dt_epsilon) {
+    ABSORB; return;
+  }
   const mcstas2::Gravity & g = comp.gravity();
 
   if (comp.gravityIsOn()) prop_dt_withgravity( dt, g.x, g.y, g.z, x,y,z, vx,vy,vz, t);
