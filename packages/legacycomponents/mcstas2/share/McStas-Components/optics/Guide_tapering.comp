@@ -120,6 +120,18 @@ double rotation_h, rotation_v;
 
 INITIALIZE
 %{
+printf(
+  "Input parameters: w1=%g,h1=%g,l=%g,linw=%g,loutw=%g,linh=%g,louth=%g\n",
+  w1, h1, l, linw, loutw, linh, louth
+);
+printf(
+  "Input parameters: R0=%g,Qcx=%g,Qcy=%g,alphax=%g,alphay=%g,W=%g,mx=%g,my=%g\n",
+  R0, Qcx, Qcy, alphax, alphay, W, mx, my
+);
+printf(
+  "Input parameters: segno=%g,curvature=%g,curvature_v=%g,option=%s\n",
+  segno, curvature, curvature_v, option
+);
 rotation_h=0;
 rotation_v=0;
 
