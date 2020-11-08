@@ -30,7 +30,10 @@ class Component(AbstractComponent, ParallelComponent):
             # self.__cpp_instance is an instance created
             # by factory methods auto-generated from mcstas components
             # see template code in mcstas2.wrappers.pymodule.factorymethod_py
-            self.__cpp_instance = self._cpp_instance_factory(**self._factory_kwds)
+            kwds = self._factory_kwds
+            key = 'restore_neutron'
+            if key in kwds: del kwds[key]
+            self.__cpp_instance = self._cpp_instance_factory(**kwds)
         return self.__cpp_instance
 
     # allow change attributes after construction, but before self._cpp_instance is accessed
@@ -51,17 +54,13 @@ class Component(AbstractComponent, ParallelComponent):
         if restore_neutron:
             # create a copy to be processed
             saved = neutrons.snapshot(len(neutrons))
-            
         # and process neutrons as normal
         ret = self._cpp_instance.process(neutrons)
-    
         # dump all calculated data
         self._dumpData()
-        
         # restore neutrons if requested
         if restore_neutron:
             neutrons.swap(saved)
-            
         return ret
 
 
