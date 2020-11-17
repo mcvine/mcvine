@@ -68,7 +68,11 @@ namespace mcni{
     Vector3 <T> operator*(const Vector3 <T> & b) const;
     inline const T & operator[]( size_t i ) const;
     inline T & operator[]( size_t i ) ;
-    
+    /// operator ==
+    inline bool operator==(const Vector3<T> & other) const {
+      return x==other.x && y==other.y && z==other.z;
+    }
+
   private:
     T m_data[3];
   };

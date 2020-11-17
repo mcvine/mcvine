@@ -42,13 +42,15 @@ namespace mcni { namespace Neutron {
       inline Spin(double i_s1, double i_s2);
       inline Spin();
 
-      
       // methods
       /// print to an output stream.
-      /// This is useful to support << operator 
+      /// This is useful to support << operator
       inline void print( std::ostream &os ) const;
+      /// operator ==
+      inline bool operator==(const Spin & other) const {
+        return s1==other.s1 && s2==other.s2;
+      }
 
- 
       // data
       double s1, s2;
 
