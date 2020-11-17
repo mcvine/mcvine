@@ -35,6 +35,7 @@ set ( SRC_FILES
   kernels/sample/test_SQE_fromexpression.cc
   kernels/sample/test_SvQ_fromexpression.cc
   kernels/sample/diffraction/test_SimplePowderDiffractionKernel.cc
+  kernels/sample/diffraction/test_SingleCrystalDiffractionKernel.cc
   kernels/sample/phonon/test_LinearlyInterpolatedGridData_3D.cc
   kernels/sample/phonon/test_LinearlyInterpolatedPolarizationOnGrid_3D.cc
   kernels/sample/phonon/test_LinearlyInterpolatedDispersionOnGrid_3D.cc
