@@ -7,45 +7,12 @@
 #ifndef MCCOMPONENTS_KERNELS_SINGLECRYSTALDIFFRACTIONPEAKDATA_H
 #define MCCOMPONENTS_KERNELS_SINGLECRYSTALDIFFRACTIONPEAKDATA_H
 
-#include "mcni/neutron.h"
 #include <vector>
+#include "mcni/neutron.h"
+#include "mccomponents/kernels/sample/crystal.h"
 
 namespace mccomponents {
   namespace kernels {
-
-    // types
-    typedef double float_t;
-    typedef mcni::Vector3<float_t> K_t;
-    typedef mcni::Vector3<float_t> R_t;
-
-    struct Lattice{
-      R_t a, b, c;                   /* unit cell unit vectors (direct space, AA) */
-      K_t ra, rb, rc;                /* reciprocal lattice unit vectors (1/AA) with 2PI */
-      float_t al, bl, cl;            /* lattice parameter lengths */
-      float_t V0;                    /* Unit cell volume (AA**3) abs(a.bXc) */
-      Lattice(const R_t &i_a, const R_t &i_b, const R_t &i_c)
-        : a(i_a),
-          b(i_b),
-          c(i_c)
-      {
-        using mcni::PI;
-        V0 = (a | (b*c));
-        float_t _ = 2*PI/V0;
-        ra = (b*c)*_;
-        rb = (c*a)*_;
-        rc = (a*b)*_;
-        V0 = std::abs(V0);
-        al = a.length(); bl = b.length(); cl = c.length();
-      }
-    };
-
-    struct HKL{
-      int h,k,l;
-      float_t F2;                    /* unit: barn */
-      bool operator<(const HKL rhs) const {
-        return this->h < rhs.h;
-      }
-    };
 
     namespace SingleCrystalDiffractionData {
 
