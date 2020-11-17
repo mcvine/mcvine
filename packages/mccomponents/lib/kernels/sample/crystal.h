@@ -43,6 +43,13 @@ namespace mccomponents {
     struct HKL{
       int h,k,l;
       float_t F2;                    /* unit: barn */
+      HKL(int _h, int _k, int _l, float_t _F2)
+        :h(_h),
+         k(_k),
+         l(_l),
+         F2(_F2)
+      {}
+      HKL() {}
       bool operator<(const HKL rhs) const {
         if (this->h < rhs.h) return true;
         if (this->h > rhs.h) return false;

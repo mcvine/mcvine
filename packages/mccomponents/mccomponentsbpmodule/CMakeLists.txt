@@ -46,6 +46,7 @@ set ( SRC_FILES
   wrap_targetregion.cc
   wrap_RandomNumberGenerator.cc
   wrap_SimplePowderDiffractionKernel.cc
+  wrap_SingleCrystalDiffractionKernel.cc
   )
 # ----------------------------------------
 
