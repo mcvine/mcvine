@@ -68,6 +68,7 @@ namespace wrap_mccomponents{
   void wrap_Phonon_CoherentInelastic_SingleXtal_kernel();
   void wrap_RandomNumberGenerator();
   void wrap_SimplePowderDiffractionKernel();
+  void wrap_SingleCrystalDiffractionKernel();
 
   struct Wrap_E_Q_Kernel;
   struct Wrap_Broadened_E_Q_Kernel;
@@ -133,6 +134,7 @@ BOOST_PYTHON_MODULE(mccomponentsbp)
   wrap_RandomNumberGenerator();
 
   wrap_SimplePowderDiffractionKernel();
+  wrap_SingleCrystalDiffractionKernel();
 
   Wrap_E_Q_Kernel wrap_e_q_kernel;
   Wrap_Broadened_E_Q_Kernel wrap_broadened_e_q_kernel;
