@@ -24,13 +24,19 @@ namespace wrap_mccomponents {
       ("Lattice",
        init<const R_t &, const R_t &, const R_t &>()
        )
-      .def_readonly("ra", &Lattice::ra);
+      .def_readonly("ra", &Lattice::ra)
+      .def_readonly("rb", &Lattice::rb)
+      .def_readonly("rc", &Lattice::rc)
+      ;
 
     class_<HKL>
       ("HKL",
        init<int, int, int, w_t::float_t>()
        )
-      .def_readonly("h", &HKL::h);
+      .def_readonly("h", &HKL::h)
+      .def_readonly("k", &HKL::k)
+      .def_readonly("l", &HKL::l)
+      ;
 
     wrap_vector2<HKL>( "HKL" );
 
