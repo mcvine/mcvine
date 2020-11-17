@@ -181,12 +181,29 @@ mccomponents::kernels::SingleCrystalDiffractionKernel::Details::setup_tau_info_l
   for (size_t i=0; i<hkllist.size(); i++){
     /* Assuming reflections are sorted, stop search when max tau exceeded. */
     const hkl_t hkl = hkllist[i];
+#ifdef DEBUG
+    debug << journal::at(__HERE__)
+          << "hkl=" << hkl.hkl.h << ", " << hkl.hkl.k << ", " << hkl.hkl.l
+          << "tau=" << hkl.tau << ", "
+          << "tau_max=" << tau_max
+          << journal::endl;
+#endif
     if (hkl.tau_length>tau_max) break;
     K_t rho = ki - hkl.tau;
+#ifdef DEBUG
+    debug << journal::at(__HERE__)
+          << "ki=" << ki << ", rho=" << rho
+          << journal::endl;
+#endif
     float_t rho_length = rho.length();
     float_t diff = abs(rho_length-ki_length);
     // Check if scattering is possible (cutoff of Gaussian tails).
-    if (diff > hkl.cutoff) break;
+    if (diff > hkl.cutoff) continue;
+#ifdef DEBUG
+    debug << journal::at(__HERE__)
+          << "Found a reflection"
+          << journal::endl;
+#endif
     tau_t & tau = taulist[itau];
     /* Store reflection. */
     tau.index = i;
