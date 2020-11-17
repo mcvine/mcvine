@@ -26,6 +26,7 @@ namespace mccomponents {
     class SingleCrystalDiffractionKernel: public AbstractScatteringKernel{
     public:
       // typedefs
+      typedef double float_t;
       typedef mcni::Vector3<float_t> R_t;
       typedef mcni::Vector3<float_t> K_t;
       typedef mcni::Vector3<float_t> V_t;

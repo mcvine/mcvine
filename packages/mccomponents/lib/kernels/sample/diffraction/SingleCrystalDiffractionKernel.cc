@@ -330,6 +330,11 @@ mccomponents::kernels::SingleCrystalDiffractionKernel::scatter
               << "(r = " << r << ", sum = " << sum << ").\n";
     j = m_details->n_reflections - 1;
   }
+#ifdef DEBUG
+  m_details->debug << journal::at(__HERE__)
+        << "Reflection " << j << " was selected"
+        << journal::endl;
+#endif
   typedef SingleCrystalDiffractionData::Tau tau_t;
   const tau_t &tau = m_details->taulist[j];
 
