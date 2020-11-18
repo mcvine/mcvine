@@ -21,7 +21,7 @@ import mccomposite.mccompositebp as b1
 import mcni.mcnibp as b2
 
 
-import numpy
+import numpy as np
 
 
 
@@ -31,15 +31,21 @@ class New:
             self, basis_vectors, hkllist,
             mosaic, delta_d_d, abs_xs
     ):
-        """
-        avec, bvec, cvec: basis vectors
-        hkllist: list of (h,k,l, F^2)
+        """Create BP instance of SingleCrystalDiffractionKernel
+
+        Parameters
+        ----------
+
+        avec, bvec, cvec : vectors
+            basis vectors
+        hkllist : list of tuples
+            list of (h,k,l, F^2)
         """
         avec, bvec, cvec = basis_vectors
-        a = b2.Vector3_double(*avec)
-        b = b2.Vector3_double(*bvec)
-        c = b2.Vector3_double(*cvec)
-        lattice = b.Lattice(a,b,c)
+        a_ = b2.Vector3_double(*avec)
+        b_ = b2.Vector3_double(*bvec)
+        c_ = b2.Vector3_double(*cvec)
+        lattice = b.Lattice(a_,b_,c_)
         ra = np.array(lattice.ra)
         rb = np.array(lattice.rb)
         rc = np.array(lattice.rc)
@@ -51,15 +57,15 @@ class New:
         tosort = sorted(tosort)
         hkllist2 = b.vector_HKL(0)
         for _, (h,k,l,F2) in tosort:
-            hkl = mccomponentsbp.HKL(h,k,l, F2)
+            hkl = b.HKL(h,k,l, F2)
             hkllist2.append(hkl)
             continue
-        bkernel = b.SimplePowderDiffractionKernel(
+        bkernel = b.SingleCrystalDiffractionKernel(
             lattice, hkllist2, mosaic, delta_d_d, abs_xs
         )
         return bkernel
 
-     def simplepowderdiffractionkernel(self, data):
+    def simplepowderdiffractionkernel(self, data):
         "data should be an instance of class ..SimplePowderDiffractionKernel.Data"
         bdata = b.SimplePowderDiffractionData()
         props = [
@@ -79,10 +85,9 @@ class New:
             bpeak = self.simplepowderdiffractionpeak(peak)
             bdata.peaks.append(bpeak)
             continue
-    
+
         bkernel = b.SimplePowderDiffractionKernel(bdata)
         return bkernel
-    
 
     def simplepowderdiffractionpeak(self, peak):
         "peak should be an instance of ..SimplePowderDiffractionKernel.Peak"
@@ -96,16 +101,9 @@ class New:
             setattr(bpeak, prop, val)
             continue
         return bpeak
-    
-    
+
     pass # end of BoostPythonBinding
 
-
-
 extend( New )
-
-
-# version
-__id__ = "$Id$"
 
 # End of file 

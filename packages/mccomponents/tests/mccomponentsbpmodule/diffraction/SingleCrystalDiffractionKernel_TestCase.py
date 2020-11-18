@@ -37,7 +37,7 @@ class TestCase(unittest.TestCase):
                     tosort.append((np.linalg.norm(q), hkl))
         tosort = sorted(tosort)
         hkllist = mccomponentsbp.vector_HKL(0)
-        for q, (h,k,l) in tosort:
+        for _, (h,k,l) in tosort:
             hkl = mccomponentsbp.HKL(h,k,l, 1.)
             hkllist.append(hkl)
         mosaic=5./60/180*np.pi
