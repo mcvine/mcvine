@@ -26,9 +26,40 @@ import numpy
 
 
 class New:
-    
-    
-    def simplepowderdiffractionkernel(self, data):
+
+    def singlecrystaldiffractionkernel(
+            self, basis_vectors, hkllist,
+            mosaic, delta_d_d, abs_xs
+    ):
+        """
+        avec, bvec, cvec: basis vectors
+        hkllist: list of (h,k,l, F^2)
+        """
+        avec, bvec, cvec = basis_vectors
+        a = b2.Vector3_double(*avec)
+        b = b2.Vector3_double(*bvec)
+        c = b2.Vector3_double(*cvec)
+        lattice = b.Lattice(a,b,c)
+        ra = np.array(lattice.ra)
+        rb = np.array(lattice.rb)
+        rc = np.array(lattice.rc)
+        tosort = []
+        for h,k,l,F2 in hkllist:
+            q = h*ra + k*rb + l*rc
+            tosort.append((np.linalg.norm(q), (h,k,l,F2)))
+            continue
+        tosort = sorted(tosort)
+        hkllist2 = b.vector_HKL(0)
+        for _, (h,k,l,F2) in tosort:
+            hkl = mccomponentsbp.HKL(h,k,l, F2)
+            hkllist2.append(hkl)
+            continue
+        bkernel = b.SimplePowderDiffractionKernel(
+            lattice, hkllist2, mosaic, delta_d_d, abs_xs
+        )
+        return bkernel
+
+     def simplepowderdiffractionkernel(self, data):
         "data should be an instance of class ..SimplePowderDiffractionKernel.Data"
         bdata = b.SimplePowderDiffractionData()
         props = [
