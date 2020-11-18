@@ -244,7 +244,7 @@ mccomponents::kernels::SingleCrystalDiffractionKernel::Details::setup_tau_info_l
       - (y0x*y0x*n11 + y0y*y0y*n22 + 2*y0x*y0y*n12);
     tau.refl = xs_factor*det_L*exp(-alpha)/hkl.sig123;  /* intensity of that Bragg */
     total_refl += tau.refl;                             /* total scatterable intensity */
-    tau.xs = tau.refl*hkl.hkl.F2;
+    tau.xs = tau.refl*hkl.hkl.F2*1e-2;                  // convert to barn
     total_xs += tau.xs;
     itau++;
   }
