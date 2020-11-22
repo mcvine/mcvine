@@ -59,6 +59,10 @@ namespace mcni { namespace Neutron {
       /// print to an output stream.
       /// Useful for defining operator << 
       inline void print( std::ostream &os ) const;
+      /// operator ==
+      inline bool operator==(const State & other) const {
+        return position==other.position && velocity==other.velocity && spin==other.spin;
+      }
 
       // data
       position_t position;

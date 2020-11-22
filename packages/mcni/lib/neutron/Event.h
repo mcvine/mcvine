@@ -64,7 +64,10 @@ namespace mcni{ namespace Neutron {
       inline void print( std::ostream &os) const ;
       /// neutron energy
       inline double energy( ) const { return state.energy(); }
-      
+      /// operator ==
+      inline bool operator==(const Event & other) const {
+        return state==other.state && time==other.time && probability==other.probability;
+      }
       // data
       State state;
       double time, probability; 

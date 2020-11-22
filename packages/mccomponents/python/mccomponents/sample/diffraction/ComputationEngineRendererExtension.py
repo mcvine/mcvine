@@ -11,6 +11,7 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
 
+import os, numpy as np
 
 import journal
 debug = journal.debug('mccomponents.sample.diffraction')
@@ -19,6 +20,36 @@ nsampling = 100
 
 class ComputationEngineRendererExtension:
 
+
+    def onSingleCrystalDiffractionKernel(self, kernel):
+        '''handler to create c++ instance of a single crystal diffraction kernel.
+        '''
+        # kernel object is created in the parser components
+        # get unit cell
+        scatterer = kernel.scatterer_origin
+        try:
+            unitcell = scatterer.phase.unitcell
+        except AttributeError as err:
+            raise RuntimeError("Cannot obtain unitcell from scatterer %s, %s" % (
+                scatterer.__class__.__name__, scatterer.name ))
+        assert np.allclose(unitcell.lattice.base, kernel.basis_vectors, atol=1e-3), (
+            "basis vectors mismatch. From crystal data: {}; from diffraction data: {}".format(
+                unitcell.lattice.base, kernel.basis_vectors))
+        # hkllist is a list of mccomponents.sample.diffraction.singlecrystal.HKL instance
+        # need to convert to a list of h,k,l,F2
+        hkllist2 = []
+        for hkl in kernel.hkllist:
+            h,k,l = hkl.hkl
+            F2 = hkl.F_squared
+            hkllist2.append((h,k,l,F2))
+            continue
+        from sampleassembly import cross_sections
+        abs_xs, inc_xs, coh_xs = cross_sections( scatterer, include_density=False)
+        abs_xs /= units.area.barn
+        mosaic = kernel.mosaic / units.angle.radian
+        delta_d_d = kernel.Dd_over_d
+        return self.factory.singlecrystaldiffractionkernel(
+            kernel.basis_vectors, hkllist2, mosaic, delta_d_d, abs_xs)
 
     def onSimplePowderDiffractionKernel(self, kernel):
         '''handler to create c++ instance of a simple powder diffraction kernel.

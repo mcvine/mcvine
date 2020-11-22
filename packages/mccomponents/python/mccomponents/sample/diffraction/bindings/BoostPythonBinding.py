@@ -21,13 +21,52 @@ import mccomposite.mccompositebp as b1
 import mcni.mcnibp as b2
 
 
-import numpy
+import numpy as np
 
 
 
 class New:
-    
-    
+
+    def singlecrystaldiffractionkernel(
+            self, basis_vectors, hkllist,
+            mosaic, delta_d_d, abs_xs
+    ):
+        """Create BP instance of SingleCrystalDiffractionKernel
+
+        Parameters
+        ----------
+
+        avec, bvec, cvec : vectors
+            basis vectors
+        hkllist : list of tuples
+            list of (h,k,l, F^2)
+        """
+        avec, bvec, cvec = basis_vectors
+        a_ = b2.Vector3_double(*avec)
+        b_ = b2.Vector3_double(*bvec)
+        c_ = b2.Vector3_double(*cvec)
+        lattice = b.Lattice(a_,b_,c_)
+        ra = np.array(lattice.ra)
+        rb = np.array(lattice.rb)
+        rc = np.array(lattice.rc)
+        tosort = []
+        for h,k,l,F2 in hkllist:
+            q = h*ra + k*rb + l*rc
+            if F2>0:
+                tosort.append((np.linalg.norm(q), (h,k,l,F2)))
+            continue
+        tosort = sorted(tosort)
+        hkllist2 = b.vector_HKL(0)
+        assert len(tosort), "hkl list should not be empty"
+        for _, (h,k,l,F2) in tosort:
+            hkl = b.HKL(h,k,l, F2)
+            hkllist2.append(hkl)
+            continue
+        bkernel = b.SingleCrystalDiffractionKernel(
+            lattice, hkllist2, mosaic, delta_d_d, abs_xs
+        )
+        return bkernel
+
     def simplepowderdiffractionkernel(self, data):
         "data should be an instance of class ..SimplePowderDiffractionKernel.Data"
         bdata = b.SimplePowderDiffractionData()
@@ -48,10 +87,9 @@ class New:
             bpeak = self.simplepowderdiffractionpeak(peak)
             bdata.peaks.append(bpeak)
             continue
-    
+
         bkernel = b.SimplePowderDiffractionKernel(bdata)
         return bkernel
-    
 
     def simplepowderdiffractionpeak(self, peak):
         "peak should be an instance of ..SimplePowderDiffractionKernel.Peak"
@@ -65,16 +103,9 @@ class New:
             setattr(bpeak, prop, val)
             continue
         return bpeak
-    
-    
+
     pass # end of BoostPythonBinding
 
-
-
 extend( New )
-
-
-# version
-__id__ = "$Id$"
 
 # End of file 
