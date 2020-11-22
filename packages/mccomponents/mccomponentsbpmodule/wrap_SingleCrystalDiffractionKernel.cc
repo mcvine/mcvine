@@ -36,6 +36,7 @@ namespace wrap_mccomponents {
       .def_readonly("h", &HKL::h)
       .def_readonly("k", &HKL::k)
       .def_readonly("l", &HKL::l)
+      .def_readonly("F2", &HKL::F2)
       ;
 
     wrap_vector2<HKL>( "HKL" );
@@ -43,6 +44,8 @@ namespace wrap_mccomponents {
     kernel_wrapper<w_t>::wrap
       ("SingleCrystalDiffractionKernel",
        init<const Lattice &, const w_t::hkllist_t &, w_t::float_t, w_t::float_t, w_t::float_t>()
+       [with_custodian_and_ward<1,2,
+        with_custodian_and_ward<1,3> >()]
        );
   }
 }
