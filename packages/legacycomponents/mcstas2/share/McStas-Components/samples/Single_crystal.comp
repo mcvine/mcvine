@@ -198,6 +198,10 @@ SHARE
 
   /* used for reading data table from file */
   %include "read_table-lib"
+#ifdef DEBUG
+#include "journal/debug.h"
+#endif
+
 /* Declare structures and functions only once in each instrument. */
 #ifndef SINGLE_CRYSTAL_DECL
 #define SINGLE_CRYSTAL_DECL
@@ -266,6 +270,9 @@ SHARE
   read_hkl_data(char *SC_file, struct hkl_info_struct *info,
     double SC_mosaic, double SC_mosaic_h, double SC_mosaic_v, double SC_mosaic_n)
   {
+#ifdef DEBUG
+    journal::debug_t debug("mcstas_Single_crystal");
+#endif
     struct hkl_data *list = NULL;
     int size = 0;
     t_Table sTable; /* sample data table structure from SC_file */
@@ -415,6 +422,13 @@ SHARE
     info->csx = 2*PI/info->V0*tmp_x;
     info->csy = 2*PI/info->V0*tmp_y;
     info->csz = 2*PI/info->V0*tmp_z;
+#ifdef DEBUG
+    debug << journal::at(__HERE__)
+          << "reciprocal basis vectors" << journal::newline
+          << info->asx << ", " << info->asy << ", " << info->asz << journal::newline
+          << info->bsx << ", " << info->bsy << ", " << info->bsz << journal::newline
+          << info->csx << ", " << info->csy << ", " << info->csz << journal::endl;
+#endif
 
     if (flag) return(-1);
 
@@ -629,6 +643,9 @@ INITIALIZE
 
 TRACE
 %{
+#ifdef DEBUG
+  journal::debug_t debug("mcstas_Single_crystal");
+#endif
   double t1, t2=0;                /* Entry and exit times in sample */
   struct hkl_data *L;           /* Structure factor list */
   int i;                        /* Index into structure factor list */
@@ -675,6 +692,11 @@ TRACE
       PROP_DT(t1);                /* Move to crystal surface if not inside */
     v  = sqrt(vx*vx + vy*vy + vz*vz);
     ki = V2K*v;
+#ifdef DEBUG
+    debug << journal::at(__HERE__)
+          << "v=" << v << ", ki=" << ki
+          << journal::endl;
+#endif
     event_counter = 0;
     abs_xsect = hkl_info.sigma_a*2200/v;
     inc_xsect = hkl_info.sigma_i;
@@ -797,7 +819,39 @@ TRACE
           T[j].refl = xsect_factor*det_L*exp(-alpha)/L[i].sig123; /* intensity of that Bragg */
           coh_refl += T[j].refl;                                  /* total scatterable intensity */
           T[j].xsect = T[j].refl*L[i].F2;
+          // Jiao Lin: mcstas lau files seem to have fm^2 for F2. should convert to barn
+          T[j].xsect *= 1e-2;
           coh_xsect += T[j].xsect;
+#ifdef DEBUG
+          debug << journal::at(__HERE__)
+                << "iT=" << j
+                << journal::newline << "Li.hkl=" << L[i].h << ", " << L[i].k << ", " << L[i].l
+                << journal::newline << "m1=" << L[i].m1 << "m2=" << L[i].m2
+                << journal::newline << "ki, rho, tau length"
+                << ki << ", " << T[j].rho << ", " << L[i].tau
+                << journal::newline << "ki vector=" << kix << ", " << kiy << ", " << kiz
+                << journal::newline << "rho vector=" << rho_x << ", " << rho_y << ", " << rho_z
+                << journal::newline << "Li tau="
+                << L[i].tau_x << ", " << L[i].tau_y << ", " << L[i].tau_z
+                << journal::newline << "Li.u1="
+                << L[i].u1x << ", " << L[i].u1y << ", " << L[i].u1z
+                << journal::newline << "Li.u2="
+                << L[i].u2x << ", " << L[i].u2y << ", " << L[i].u2z
+                << journal::newline << "Li.u3="
+                << L[i].u3x << ", " << L[i].u3y << ", " << L[i].u3z
+                << journal::newline << "Tj.ki="
+                << T[j].kix << ", " << T[j].kiy << ", " << T[j].kiz
+                << journal::newline << "Tj.rho="
+                << T[j].rho_x << ", " << T[j].rho_y << ", " << T[j].rho_z
+                << journal::newline << "n=" << T[j].nx << ", " << T[j].ny << ", " << T[j].nz
+                << journal::newline << "o=" <<  ox << ", " << oy << ", " << oz
+                << journal::newline << "n11, n12, n22=" << n11 << ", " << n12 << ", " << n22
+                << journal::newline << "y0x, y0y" << y0x << ", " << y0y
+                << journal::newline << "xs_factor, det_L, alpha, sig123"
+                << xsect_factor << ", " << det_L << ", " << alpha << ", " << L[i].sig123
+                << journal::newline << "refl, xsect=" << T[j].refl << ", " << T[j].xsect
+                << journal::endl;
+#endif
           j++;
         }
       } /* end for */
@@ -894,6 +948,19 @@ TRACE
         vx = K2V*(L[i].u1x*kfx + L[i].u2x*kfy + L[i].u3x*kfz);
         vy = K2V*(L[i].u1y*kfx + L[i].u2y*kfy + L[i].u3y*kfz);
         vz = K2V*(L[i].u1z*kfx + L[i].u2z*kfy + L[i].u3z*kfz);
+#ifdef DEBUG
+        debug << journal::at(__HERE__)
+              << "Li.hkl=" << L[i].h << ", " << L[i].k << ", " << L[i].l
+              << journal::newline << "Li.u1=" << L[i].u1x << ", " << L[i].u1y << ", " << L[i].u1z
+              << journal::newline << "Li.u2=" << L[i].u2x << ", " << L[i].u2y << ", " << L[i].u2z
+              << journal::newline << "Li.u3=" << L[i].u3x << ", " << L[i].u3y << ", " << L[i].u3z
+              << journal::newline << "Tj.rho=" << T[j].rho_x << ", " << T[j].rho_y << ", " << T[j].rho_z
+              << journal::newline << "kf=" << kfx << ", " << kfy << ", " << kfz
+              << journal::newline << "total_xs, total_refl=" << coh_xsect << ", " << coh_refl
+              << journal::newline << "Tj.refl, Tj.xsec=" << T[j].refl << ", " << T[j].xsect
+              << journal::newline << "probability factor=" << T[j].xsect*coh_refl/(coh_xsect*T[j].refl)
+              << journal::endl;
+#endif
       }
       SCATTER;
       /* exit if multiple scattering order has been reached */
