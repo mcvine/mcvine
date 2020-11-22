@@ -17,7 +17,7 @@ namespace mccomponents {
     namespace SingleCrystalDiffractionData {
 
       // data independent of neutron
-      struct HKL{
+      struct HKLData{
         mccomponents::kernels::HKL hkl;
         K_t tau;
         float_t tau_length;
@@ -30,7 +30,7 @@ namespace mccomponents {
       };
 
       // depends on neutron ki
-      struct Tau{
+      struct TauData{
         int index;                   /* Index into hkl table */ // change to ptr ????
         float_t refl;                /* unit: 1 */
         float_t xs;                  /* unit: barn */
