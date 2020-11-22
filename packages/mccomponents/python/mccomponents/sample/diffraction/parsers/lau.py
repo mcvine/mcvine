@@ -71,7 +71,9 @@ def getHKLs(text, comments, lat):
         k       = int(row[col_idx['column_k']])
         l       = int(row[col_idx['column_l']])
         F2 = float(row[col_idx['column_F2']])
-        hkl    = HKL(hkl=(h,k,l), F2=F2)
+        # print(row)
+        # print(h,k,l,F2)
+        hkl    = HKL(hkl=(h,k,l), F_squared=F2)
         hkls.append(hkl)
         continue
     return hkls
