@@ -28,7 +28,7 @@ class TestCase(unittest.TestCase):
         if os.path.exists(nsfile): os.remove(nsfile)
         # simulate
         if batch:
-            N0 = 10000# 00
+            N0 = 300000
         else:
             N0 = 30
         neutrons = mcni.neutron_buffer(N0)
@@ -63,11 +63,15 @@ class TestCase(unittest.TestCase):
             Ns[t_hkl] = mask.sum()
         self.assertEqual(len(probs), 5)
         expected = [(0,0,8), (0, 4, 4), (0, -4, 4), (4, 0, 4), (-4, 0, 4)]
+        # print(probs)
+        # print(Ns)
         self.assertTrue(sorted(expected)==sorted(list(probs.keys())))
         for hkl in expected:
             if hkl == (0,0,8): continue
-            self.assertTrue(np.isclose(probs[hkl], 3.9e-41, atol=0.2e-41))
-            self.assertTrue(np.isclose(Ns[hkl], N//4, atol=np.sqrt(N)*2))
+            self.assertTrue(np.isclose(probs[hkl], 3.76e-41, atol=0.1e-41))
+            # the following are good when constants in units_conversion.h were not calculated from formulas
+            # self.assertTrue(np.isclose(probs[hkl], 3.9e-41, atol=0.1e-41))
+            # self.assertTrue(np.isclose(Ns[hkl], N//4, atol=np.sqrt(N)*2))
             continue
         return
 
