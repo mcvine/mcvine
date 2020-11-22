@@ -3,7 +3,7 @@
 <!DOCTYPE scatterer>
 
 <!-- weights: absorption, scattering, transmission -->
-<homogeneous_scatterer mcweights="1, 1, 1">
+<homogeneous_scatterer mcweights="0, 1, 0">
   
   <SingleCrystalDiffractionKernel Dd_over_d="1.e-4" lau-path="Al.lau" mosaic="5./60*deg">
   </SingleCrystalDiffractionKernel>

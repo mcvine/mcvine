@@ -9,7 +9,7 @@
  >
  <PowderSample name="Al-singlecrystal" type="sample">
    <Shape>
-      <block width="6*cm" height="10*cm" thickness="1*cm" />
+      <block width="1*cm" height="1*cm" thickness="1*cm" />
    </Shape>
    <Phase type="crystal">
      <ChemicalFormula>Al</ChemicalFormula>
