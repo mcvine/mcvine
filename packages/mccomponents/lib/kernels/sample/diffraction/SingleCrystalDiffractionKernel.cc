@@ -19,6 +19,9 @@
 #include "mccomponents/math/random.h"
 #include "mccomponents/math/random/gaussian.h"
 
+// uncomment to debug tau_info_list creation
+// #define DEBUG_SETUP_TAU_INFO_LIST
+
 #ifdef DEBUG
 #include "journal/debug.h"
 #endif
@@ -135,7 +138,16 @@ mccomponents::kernels::SingleCrystalDiffractionKernel::Details::Details
     hklinfo.hkl = (*(kernel->m_hkllist))[i];
     const mccomponents::kernels::HKL &hkl = hklinfo.hkl;
     hklinfo.tau = lattice.ra*hkl.h + lattice.rb*hkl.k + lattice.rc*hkl.l;
-    hklinfo.tau_length = hklinfo.tau.length();
+#ifdef DEEPDEBUG
+    debug
+      << journal::at(__HERE__)
+      << "reciprocal lattice vectors:"
+      << journal::newline << lattice.ra
+      << journal::newline << lattice.rb
+      << journal::newline << lattice.rc
+      << journal::endl;
+#endif
+     hklinfo.tau_length = hklinfo.tau.length();
     // calc u1,u2,u3. local coordinate system
     // assume isotropic mosaic
     hklinfo.u1 = hklinfo.tau*(1./hklinfo.tau_length);
@@ -144,6 +156,10 @@ mccomponents::kernels::SingleCrystalDiffractionKernel::Details::Details
       (&(hklinfo.u2.x), &(hklinfo.u2.y), &(hklinfo.u2.z),
        hklinfo.u1.x, hklinfo.u1.y, hklinfo.u1.z);
     hklinfo.u3 = hklinfo.u1*hklinfo.u2;
+    // u^-1 is u.T. keep it with u for easier transformation back and forth
+    hklinfo.uT1 = K_t(hklinfo.u1.x, hklinfo.u2.x, hklinfo.u3.x);
+    hklinfo.uT2 = K_t(hklinfo.u1.y, hklinfo.u2.y, hklinfo.u3.y);
+    hklinfo.uT3 = K_t(hklinfo.u1.z, hklinfo.u2.z, hklinfo.u3.z);
     hklinfo.sig.y = hklinfo.sig.z = FWHM2RMS * hklinfo.tau_length * mosaic;
     hklinfo.sig123 = hklinfo.sig.x * hklinfo.sig.y * hklinfo.sig.z;
     hklinfo.m1 = 1./(2*hklinfo.sig.x*hklinfo.sig.x);
@@ -161,12 +177,12 @@ void
 mccomponents::kernels::SingleCrystalDiffractionKernel::Details::setup_tau_info_list
 (const mcni::Neutron::Event &ev)
 {
-  if (neutron_ptr!=NULL && &ev==neutron_ptr && ev==neutron) return;
+  // only when velocity changes we need recalculation
+  if (neutron_ptr!=NULL && ev.state.velocity==neutron.state.velocity) return;
   using mcni::PI;
   using std::pow; using std::abs;
   using namespace mcni::neutron_units_conversion;
-  const mcni::Neutron::State &state = ev.state;
-  V_t v(state.velocity);
+  V_t v(ev.state.velocity);
   K_t ki = v*v2k;
   float_t ki_length = ki.length();
   /* Max possible tau with 5*sigma delta-d/d cutoff. */
@@ -176,12 +192,21 @@ mccomponents::kernels::SingleCrystalDiffractionKernel::Details::setup_tau_info_l
   const Lattice &lattice = *(kernel->m_lattice);
   total_xs = total_refl  = 0.;
   float_t xs_factor = pow(2*PI, 5.0/2.0)/(lattice.V0*ki_length*ki_length); // 1/AA???
+#ifdef DEBUG_SETUP_TAU_INFO_LIST
+  debug << journal::at(__HERE__)
+        << "v=" << v
+        << ", ki=" << ki
+        << ", xs_factor=" << xs_factor
+        << ", V0=" << lattice.V0
+        << ", ki_length=" << ki_length
+        << journal::endl;
+#endif
   //
   size_t itau = 0;
   for (size_t i=0; i<hkllist.size(); i++){
     /* Assuming reflections are sorted, stop search when max tau exceeded. */
     const hkl_t hkl = hkllist[i];
-#ifdef DEBUG
+#ifdef DEBUG_SETUP_TAU_INFO_LIST
     debug << journal::at(__HERE__)
           << "hkl=" << hkl.hkl.h << ", " << hkl.hkl.k << ", " << hkl.hkl.l
           << "tau=" << hkl.tau << ", "
@@ -190,7 +215,7 @@ mccomponents::kernels::SingleCrystalDiffractionKernel::Details::setup_tau_info_l
 #endif
     if (hkl.tau_length>tau_max) break;
     K_t rho = ki - hkl.tau;
-#ifdef DEBUG
+#ifdef DEBUG_SETUP_TAU_INFO_LIST
     debug << journal::at(__HERE__)
           << "ki=" << ki << ", rho=" << rho
           << journal::endl;
@@ -199,7 +224,7 @@ mccomponents::kernels::SingleCrystalDiffractionKernel::Details::setup_tau_info_l
     float_t diff = abs(rho_length-ki_length);
     // Check if scattering is possible (cutoff of Gaussian tails).
     if (diff > hkl.cutoff) continue;
-#ifdef DEBUG
+#ifdef DEBUG_SETUP_TAU_INFO_LIST
     debug << journal::at(__HERE__)
           << "Found a reflection"
           << journal::endl;
@@ -208,7 +233,8 @@ mccomponents::kernels::SingleCrystalDiffractionKernel::Details::setup_tau_info_l
     /* Store reflection. */
     tau.index = i;
     /* Get ki vector in local coordinates. */
-    tau.ki = hkl.u1*ki.x + hkl.u2*ki.y + hkl.u3*ki.z;
+    // careful with u or u^-1
+    tau.ki = hkl.uT1*ki.x + hkl.uT2*ki.y + hkl.uT3*ki.z;
     tau.rho = tau.ki - K_t(hkl.tau_length, 0., 0.);
     tau.rho_length = rho_length;
     /* Compute the tangent plane of the Ewald sphere. */
@@ -244,11 +270,54 @@ mccomponents::kernels::SingleCrystalDiffractionKernel::Details::setup_tau_info_l
       - (y0x*y0x*n11 + y0y*y0y*n22 + 2*y0x*y0y*n12);
     tau.refl = xs_factor*det_L*exp(-alpha)/hkl.sig123;  /* intensity of that Bragg */
     total_refl += tau.refl;                             /* total scatterable intensity */
+    // 1e-2 is necessary when F2 is in unit of fm^2 to convert to barn
+    // because in this class we assume cross sections are in barn.
+    // See later scattering_xs method.
+    // The original 1999 Single_crystal mcstas component has a bug about this,
+    // which was fixed in a later version.
+    // In the Single_crystal component shipped with mcstas 2.6.1,
+    // there is a parameter "barns" to indicate whether the lau file
+    // provides F2 in barns or fm^2
     tau.xs = tau.refl*hkl.hkl.F2*1e-2;                  // convert to barn
     total_xs += tau.xs;
     itau++;
+#ifdef DEBUG_SETUP_TAU_INFO_LIST
+    tau.o = tau.n*(ki_length-rho_length);
+    debug << journal::at(__HERE__)
+          << "itau=" << itau
+          << journal::newline << "hkl=" << hkl.hkl.h << ", " << hkl.hkl.k << ", " << hkl.hkl.l
+          << journal::newline << "m1=" << hkl.m1 << ", m2=" << hkl.m2
+          << journal::newline << "ki, rho, tau length" << ki_length << ", "
+          << rho_length << ", " << hkl.tau_length
+          << journal::newline << "ki vector=" << ki
+          << journal::newline << "rho=" << rho
+          << journal::newline << "Li tau=" << hkl.tau << ", "
+          << journal::newline << "u1=" << hkl.u1.x << ", " << hkl.u1.y << ", " << hkl.u1.z
+          << journal::newline << "u2=" << hkl.u2.x << ", " << hkl.u2.y << ", " << hkl.u2.z
+          << journal::newline << "u3=" << hkl.u3.x << ", " << hkl.u3.y << ", " << hkl.u3.z
+          << journal::newline << "Tj.ki=" << tau.ki
+          << journal::newline << "Tj.rho=" << tau.rho
+          << journal::newline << "n=" << tau.n.x << ", " << tau.n.y << ", " << tau.n.z
+          << journal::newline << "o=" << o.x << ", " << o.y << ", " << o.z
+          << journal::newline << "n11=" << n11 << ", n12=" << n12 << ", n22=" << n22
+          << journal::newline << "y0x=" << y0x << ", y0y=" << y0y
+          << journal::newline << "det_L=" << det_L
+          << journal::newline << "alpha=" << alpha
+          << journal::newline << "sig123=" << hkl.sig123
+          << journal::newline << "refl, xs=" << tau.refl << ", " << tau.xs
+          << journal::newline << "tau_max=" << tau_max
+          << journal::newline << "F2=" << hkl.hkl.F2
+          << journal::endl;
+#endif
   }
   n_reflections = itau;
+#ifdef DEBUG_SETUP_TAU_INFO_LIST
+  debug << journal::at(__HERE__)
+        << "total_xs=" << total_xs
+        << ", total_refl=" << total_refl
+        << ", n_reflections=" << n_reflections
+        << journal::endl;
+#endif
   // save
   neutron_ptr = &ev;
   neutron = ev;
@@ -330,15 +399,11 @@ mccomponents::kernels::SingleCrystalDiffractionKernel::scatter
               << "(r = " << r << ", sum = " << sum << ").\n";
     j = m_details->n_reflections - 1;
   }
-#ifdef DEBUG
-  m_details->debug << journal::at(__HERE__)
-        << "Reflection " << j << " was selected"
-        << journal::endl;
-#endif
   typedef SingleCrystalDiffractionData::Tau tau_t;
   const tau_t &tau = m_details->taulist[j];
-
   size_t i = tau.index;
+  typedef SingleCrystalDiffractionData::HKL hkl_t; // special hkl data type used by diffraction
+  const hkl_t & hkl = m_details->hkllist[i];
   /* Pick scattered wavevector kf from 2D Gauss distribution. */
   float_t z1 = math::normal_distrib_rand();
   float_t z2 = math::normal_distrib_rand();
@@ -347,6 +412,7 @@ mccomponents::kernels::SingleCrystalDiffractionKernel::scatter
   float_t kfx = tau.rho.x + tau.o.x + tau.b1.x*y1 + tau.b2.x*y2;
   float_t kfy = tau.rho.y + tau.o.y + tau.b1.y*y1 + tau.b2.y*y2;
   float_t kfz = tau.rho.z + tau.o.z + tau.b1.z*y1 + tau.b2.z*y2;
+
   /* Normalize kf to length of ki, to account for planer
      approximation of the Ewald sphere. */
   float_t ki_length = ev.state.velocity.length()*v2k;
@@ -354,11 +420,37 @@ mccomponents::kernels::SingleCrystalDiffractionKernel::scatter
   kfx *= adjust;
   kfy *= adjust;
   kfz *= adjust;
+#ifdef DEBUG
+  m_details->debug
+    << journal::at(__HERE__)
+    << "vi_length=" << ev.state.velocity.length()
+    << ", ki_length=" << ki_length
+    << ", prob=" << ev.probability
+    << journal::endl;
+#endif
   /* Adjust neutron weight */
   ev.probability *= tau.xs*m_details->total_refl/(m_details->total_xs*tau.refl);
+  // see difference between "scatter" method and "S" method in kernels/KernelBase.h
+  ev.probability *= scattering_coefficient(ev);
+#ifdef DEBUG
+  m_details->debug
+    << journal::at(__HERE__)
+    << "Reflection " << j << " was selected"
+    << journal::newline << "hkl=" << hkl.hkl.h << ", " << hkl.hkl.k << ", " << hkl.hkl.l
+    << journal::newline << "u1=" << hkl.u1.x << ", " << hkl.u1.y << ", " << hkl.u1.z
+    << journal::newline << "u2=" << hkl.u2.x << ", " << hkl.u2.y << ", " << hkl.u2.z
+    << journal::newline << "u3=" << hkl.u3.x << ", " << hkl.u3.y << ", " << hkl.u3.z
+    << journal::newline << "rho=" << tau.rho.x << ", " << tau.rho.y << ", " << tau.rho.z
+    << journal::newline << "kf=" << kfx << ", " << kfy << ", " << kfz
+    << journal::newline << "total_xs=" << m_details->total_xs
+    << journal::newline << "total_refl=" << m_details->total_refl
+    << journal::newline << "tau.xs=" << tau.xs
+    << journal::newline << "tau.refl=" << tau.refl
+    << journal::newline << "prob_factor=" << tau.xs*m_details->total_refl/(m_details->total_xs*tau.refl)
+    << journal::newline << "prob=" << ev.probability
+    << journal::endl;
+#endif
   //
-  typedef SingleCrystalDiffractionData::HKL hkl_t; // special hkl data type used by diffraction
-  const hkl_t & hkl = m_details->hkllist[i];
   float_t vx = k2v*(hkl.u1.x*kfx + hkl.u2.x*kfy + hkl.u3.x*kfz);
   float_t vy = k2v*(hkl.u1.y*kfx + hkl.u2.y*kfy + hkl.u3.y*kfz);
   float_t vz = k2v*(hkl.u1.z*kfx + hkl.u2.z*kfy + hkl.u3.z*kfz);

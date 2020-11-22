@@ -22,6 +22,7 @@ namespace mccomponents {
         K_t tau;
         float_t tau_length;
         K_t u1, u2, u3; // unit vectors of local coordinate system for a particular tau
+        K_t uT1, uT2, uT3; // transposed u
         K_t sig; // gaussian broadening along three local axes. unit: 1/AA
         float_t sig123; // product of sig 1,2,3. unit: 1/AA^3
         float_t m1, m2, m3; // ??? Diagonal matrix representation of Gauss ??? unit: AA^2
