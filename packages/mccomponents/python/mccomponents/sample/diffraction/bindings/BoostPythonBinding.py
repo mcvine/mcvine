@@ -52,10 +52,12 @@ class New:
         tosort = []
         for h,k,l,F2 in hkllist:
             q = h*ra + k*rb + l*rc
-            tosort.append((np.linalg.norm(q), (h,k,l,F2)))
+            if F2>0:
+                tosort.append((np.linalg.norm(q), (h,k,l,F2)))
             continue
         tosort = sorted(tosort)
         hkllist2 = b.vector_HKL(0)
+        assert len(tosort), "hkl list should not be empty"
         for _, (h,k,l,F2) in tosort:
             hkl = b.HKL(h,k,l, F2)
             hkllist2.append(hkl)
