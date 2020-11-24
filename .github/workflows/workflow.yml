@@ -43,9 +43,10 @@ jobs:
           conda config --add channels conda-forge
           conda config --add channels diffpy
           conda config --add channels mcvine
-      - name: conda install conda-build
+      - name: conda install conda-build and anaconda-client
         shell: pwsh
-        run: conda install -n root conda-build
+        run: |
+          conda install -n root conda-build anaconda-client
       
       # build and test
       - name: set python version
