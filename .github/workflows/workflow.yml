@@ -30,9 +30,18 @@ jobs:
         with:
           auto-update-conda: true
           python-version: ${{ matrix.conda-python-version }}
+          activate-environment: ""
       - name: Conda info
         shell: bash -l {0}
         run: conda info
       - name: Conda env list
         shell: pwsh
         run: conda env list
+
+      - name: conda install conda-build
+        shell: pwsh
+        run: conda install -n root conda-build
+      
+      - name: build and test
+        shell: pwsh
+        run: PYTHONVERSION=${{ matrix.python-version }} ./builders/aws-codebuild/build_and_test.sh
