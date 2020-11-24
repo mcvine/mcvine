@@ -44,6 +44,8 @@ jobs:
         run: conda install -n root conda-build
       
       - name: set python version
-        run: echo "PYTHON_PATH=${{ matrix.python-version }}" >> $GITHUB_ENV
+        run: echo "PYTHON_VERSION=${{ matrix.python-version }}" >> $GITHUB_ENV
       - name: build and test
-        run: ./builders/aws-codebuild/build_and_test.sh
+        run: |
+          echo $PYTHON_VERSION
+          ./builders/aws-codebuild/build_and_test.sh
