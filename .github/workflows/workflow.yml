@@ -38,6 +38,11 @@ jobs:
       - name: Conda env list
         shell: pwsh
         run: conda env list
+      - name: conda add channels
+        run: |
+          conda config --add channels conda-forge
+          conda config --add channels diffpy
+          conda config --add channels mcvine
 
       - name: conda install conda-build
         shell: pwsh
