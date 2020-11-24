@@ -1,4 +1,4 @@
-name: main-worklfow
+name: CI
 
 env: {}
 
@@ -17,8 +17,7 @@ jobs:
       fail-fast: true
       matrix:
         os: ["ubuntu-latest"]
-        conda-python-version: ["3.8"]
-        python-version: ["3.6"]   
+        python-version: ["3.6", "2.7"]   
     steps:
       - name: install glut
         run: sudo apt-get update && sudo apt-get install -y procps freeglut3-dev libglu1-mesa unzip
@@ -28,6 +27,7 @@ jobs:
         with:
           fetch-depth: 0
 
+      # setup conda
       - uses: conda-incubator/setup-miniconda@v2
         with:
           auto-update-conda: true
@@ -43,11 +43,11 @@ jobs:
           conda config --add channels conda-forge
           conda config --add channels diffpy
           conda config --add channels mcvine
-
       - name: conda install conda-build
         shell: pwsh
         run: conda install -n root conda-build
       
+      # build and test
       - name: set python version
         run: echo "PYTHON_VERSION=${{ matrix.python-version }}" >> $GITHUB_ENV
       - name: build and test
