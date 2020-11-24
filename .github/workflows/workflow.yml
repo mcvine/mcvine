@@ -55,11 +55,11 @@ jobs:
           ls
 
       # build and test
-      - name: set python version
-        run: echo "PYTHON_VERSION=${{ matrix.python-version }}" >> $GITHUB_ENV
       - name: build / test / upload
         run: |
           echo $PYTHON_VERSION
+          conda activate test
           ./builders/aws-codebuild/build_and_test.sh
         env:
           ANACONDA_UPLOAD_TOKEN: ${{ secrets.ANACONDA_TOKEN }}
+          PYTHON_VERSION: ${{ matrix.python-version }}
