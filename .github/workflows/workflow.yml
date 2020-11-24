@@ -31,7 +31,6 @@ jobs:
       - uses: conda-incubator/setup-miniconda@v2
         with:
           auto-update-conda: true
-          activate-environment: ""
       - name: Conda info
         shell: bash -l {0}
         run: conda info
@@ -43,15 +42,15 @@ jobs:
           conda config --add channels conda-forge
           conda config --add channels diffpy
           conda config --add channels mcvine
-      - name: conda install conda-build and anaconda-client
+      - name: conda install conda-build
         shell: pwsh
         run: |
-          conda install -n root conda-build anaconda-client
+          conda install -n root conda-build
       
       # build and test
       - name: set python version
         run: echo "PYTHON_VERSION=${{ matrix.python-version }}" >> $GITHUB_ENV
-      - name: build and test
+      - name: build / test / upload
         run: |
           echo $PYTHON_VERSION
           ./builders/aws-codebuild/build_and_test.sh
