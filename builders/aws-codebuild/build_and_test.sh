@@ -4,6 +4,7 @@ set -x
 
 #
 export PATH=$HOME/mc/bin:$PATH
+#
 export GIT_FULL_HASH=`git rev-parse HEAD`
 export GIT_VER=`git describe --tags`
 export VERSION=`git describe --tags | cut -d '-' -f1 | cut -c2-`
@@ -24,8 +25,12 @@ cat conda_build_config.yaml
 conda build --python $PYTHON_VERSION .
 
 # upload
+conda env list
 conda install anaconda-client
+conda list
+which anaconda
 conda config --set anaconda_upload no
-echo $CONDA_PREFIX_1
+CONDA_ROOT_PREFIX=$(realpath $(dirname `which conda`)/..)
+echo $CONDA_ROOT_PREFIX
 anaconda -t $ANACONDA_UPLOAD_TOKEN upload --force --label unstable \
-         $CONDA_PREFIX_1/conda-bld/linux-64/mcvine-core-$MCVINE_CONDA_PKG_VER-*.tar.bz2
+         $CONDA_ROOT_PREFIX/conda-bld/linux-64/mcvine-core-$MCVINE_CONDA_PKG_VER-*.tar.bz2
