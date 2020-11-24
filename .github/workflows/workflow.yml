@@ -54,3 +54,5 @@ jobs:
         run: |
           echo $PYTHON_VERSION
           ./builders/aws-codebuild/build_and_test.sh
+        env:
+          ANACONDA_UPLOAD_TOKEN: ${{ secrets.ANACONDA_TOKEN }}

@@ -1,7 +1,9 @@
 version: 0.2
 env:
   variables:
-      DEBUG_MCVINE_BUILD: 0
+    DEBUG_MCVINE_BUILD: 0
+  secrets-manager:
+    ANACONDA_UPLOAD_TOKEN: "anaconda/mcvine:api-token"
 batch:
   fast-fail: false
   build-list:
