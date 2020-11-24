@@ -31,6 +31,7 @@ jobs:
       - uses: conda-incubator/setup-miniconda@v2
         with:
           auto-update-conda: true
+          python-version: 3.8
       - name: Conda info
         shell: bash -l {0}
         run: conda info
@@ -47,6 +48,12 @@ jobs:
         run: |
           conda install -n root conda-build
       
+      - name: checks
+        run: |
+          conda env list
+          pwd
+          ls
+
       # build and test
       - name: set python version
         run: echo "PYTHON_VERSION=${{ matrix.python-version }}" >> $GITHUB_ENV
