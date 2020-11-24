@@ -49,6 +49,7 @@ jobs:
           conda install -n root conda-build
       
       - name: checks
+        shell: pwsh
         run: |
           conda env list
           pwd
@@ -56,6 +57,7 @@ jobs:
 
       # build and test
       - name: build / test / upload
+        shell: pwsh
         run: |
           echo $PYTHON_VERSION
           conda activate test
