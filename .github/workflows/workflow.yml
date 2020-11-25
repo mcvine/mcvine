@@ -55,7 +55,7 @@ jobs:
           pwd
           ls
 
-      # build and test
+      # build and test (have to use pwsh!)
       - name: build / test / upload
         shell: pwsh
         run: |
