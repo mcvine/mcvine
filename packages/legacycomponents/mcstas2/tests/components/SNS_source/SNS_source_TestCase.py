@@ -15,7 +15,7 @@ class SNS_source_TestCase(unittest.TestCase):
         shutil.copyfile(mod_data, fn)
         import mcvine.run_script
         mcvine.run_script.run_mpi(
-            './myinstrument.py', "out", 3e6,
+            './myinstrument.py', "out", 1e7,
             nodes=1,
             overwrite_datafiles=True,
         )
