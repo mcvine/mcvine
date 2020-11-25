@@ -14,7 +14,7 @@ jobs:
   build-and-test:
     runs-on: ${{ matrix.os }}
     strategy:
-      fail-fast: true
+      fail-fast: false
       matrix:
         os: ["ubuntu-latest"]
         python-version: ["3.6", "2.7"]   
@@ -31,7 +31,7 @@ jobs:
       - uses: conda-incubator/setup-miniconda@v2
         with:
           auto-update-conda: true
-          activate-environment: ""
+          python-version: 3.8
       - name: Conda info
         shell: bash -l {0}
         run: conda info
@@ -45,12 +45,22 @@ jobs:
           conda config --add channels mcvine
       - name: conda install conda-build
         shell: pwsh
-        run: conda install -n root conda-build
+        run: |
+          conda install -n root conda-build
       
-      # build and test
-      - name: set python version
-        run: echo "PYTHON_VERSION=${{ matrix.python-version }}" >> $GITHUB_ENV
-      - name: build and test
+      - name: checks
+        shell: pwsh
+        run: |
+          conda env list
+          pwd
+          ls
+
+      # build and test (have to use pwsh!)
+      - name: build / test / upload
+        shell: pwsh
         run: |
           echo $PYTHON_VERSION
           ./builders/aws-codebuild/build_and_test.sh
+        env:
+          ANACONDA_UPLOAD_TOKEN: ${{ secrets.ANACONDA_TOKEN }}
+          PYTHON_VERSION: ${{ matrix.python-version }}
