@@ -47,14 +47,13 @@ mcvine_cmake0 () {
     mkdir -p $__BUILD_DIR
     cd $__BUILD_DIR
     cmake $__SRC_DIR \
-          -DCMAKE_BUILD_TYPE=Debug \
-          -DCMAKE_CXX_FLAGS="-D DEBUG" \
 	        -DCMAKE_INSTALL_PREFIX=$MCVINE_EXPORT_ROOT \
 	        -DDEPLOYMENT_PREFIX=$CONDA_PREFIX \
 	        -DCMAKE_SYSTEM_LIBRARY_PATH=$CONDA_PREFIX/lib \
 	        -DPYTHON_LIBRARY=$PY_SHAREDLIB \
 	        -DPYTHON_INCLUDE_DIR=$PY_INCLUDE_DIR \
-	        -DBOOST_ROOT=$CONDA_PREFIX
+	        -DBOOST_ROOT=$CONDA_PREFIX \
+#         -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_FLAGS="-D DEBUG"
     cd -
 }
 mcvine_build_subpkg () {
