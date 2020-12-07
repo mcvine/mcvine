@@ -3,24 +3,36 @@
 import numpy as np
 import periodictable as pt
 from .powder import Peak
+# import tqdm
 
-def iter_peaks(structure, T, max_index=5):
+def iter_peaks(structure, T, max_index=5, type='powder'):
     "iterate over unique diffraction peaks"
-    # when adding a peak, also add all its equivalent peaks to the "skip"
-    # list, so that those peaks can be skipped over
-    skip = set()
-    for h in range(max_index+1):
-        for k in range(max_index+1):
-            for l in range(max_index+1):
-                if h+k+l==0: continue
+    if type == 'powder':
+        # when adding a peak, also add all its equivalent peaks to the "skip"
+        # list, so that those peaks can be skipped over
+        skip = set()
+        hmin = kmin = lmin = 0
+    elif type == 'singlecrystal':
+        hmin = kmin = lmin = -max_index
+    else:
+        raise ValueError("type has to be powder or singlecrystal. got {}".format(type))
+    hmax = kmax = lmax = max_index+1
+
+    # for h in tqdm.tqdm(range(hmin, hmax)):
+    for h in range(hmin, hmax):
+        for k in range(kmin, kmax):
+            for l in range(lmin, lmax):
+                if h==0 and k==0 and l==0: continue
                 hkl1 = h,k,l
-                # print hkl1
-                if hkl1 in skip: continue
-                eq_hkls = equivalent_hkls(hkl1, structure.sg)
-                eq_hkls = [tuple(map(int, _)) for _ in eq_hkls]
-                for _ in eq_hkls:
-                    skip.add(_)
-                # print skip
+                # print(hkl1)
+                # for powder we don't want equivalent hkls
+                if type == 'powder':
+                    if hkl1 in skip: continue
+                    eq_hkls = equivalent_hkls(hkl1, structure.sg)
+                    eq_hkls = [tuple(map(int, _)) for _ in eq_hkls]
+                    for _ in eq_hkls:
+                        skip.add(_)
+                    # print skip
                 F1 = F(structure, hkl1, T)
                 F_squared = np.abs(F1)**2 / 100 # from fm^2 to barn
                 d1 = d(structure.lattice, hkl1)
