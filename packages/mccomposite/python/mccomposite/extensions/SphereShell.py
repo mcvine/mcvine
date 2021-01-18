@@ -25,7 +25,7 @@ def onSphereShell(self, sphereShell):
     if r1 >= r2:
         msg = 'inner radius (%s) should be smaller than outer radius (%s)' %(
             r1, r2)
-        raise RuntimeError, msg
+        raise RuntimeError(msg)
 
     if r1 == 0*r1:
         shape = sphere(r2)

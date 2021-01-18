@@ -54,7 +54,7 @@ class TestCase(unittest.TestCase):
 
         for i in range(N):
             neutron = neutrons[i]
-            print neutron
+            print(neutron)
             continue
 
         return

@@ -305,7 +305,7 @@ class McStasInstrumentParser(object):
                 return float(v)
             except:
                 return v
-        (x, y, z)   = map(_cast, mm[:3])
+        (x, y, z)   = list(map(_cast, mm[:3]))
 
         relation    = mm[3].upper()
         if not relation in RELATION:

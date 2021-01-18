@@ -31,11 +31,11 @@ class TestCase(unittest.TestCase):
         for attr in attrs: assert hasattr(component, attr)
 
         self.assertEqual(component.name, 'E_monitor')
-        self.assert_(component.copyright.startswith('Kristian Nielsen and Kim Lefmann'))
+        self.assertTrue(component.copyright.startswith('Kristian Nielsen and Kim Lefmann'))
         self.assertEqual(
             component.simple_description,
             'Energy-sensitive monitor.')
-        self.assert_(
+        self.assertTrue(
             component.full_description.strip().startswith(
                 'A square single monitor'
                 )
@@ -136,8 +136,8 @@ free(E_N); free(E_p); free(E_p2);''')
         left = left.splitlines()
         right = right.splitlines()
         if len(left) != len(right):
-            raise AssertionError, "# of lines differ: %s vs %s" % (
-                len(left), len(right))
+            raise AssertionError("# of lines differ: %s vs %s" % (
+                len(left), len(right)))
         for l, r in zip(left, right):
             self.assertEqual(l, r)
             continue

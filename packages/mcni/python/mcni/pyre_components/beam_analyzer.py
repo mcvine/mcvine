@@ -14,7 +14,7 @@
 
 category = 'monitors'
 
-from MultiMonitors import MultiMonitors as base
+from .MultiMonitors import MultiMonitors as base
 
 
 def beam_analyzer(name, monitors):
@@ -43,7 +43,7 @@ def beam_analyzer(name, monitors):
                 cname = componentname(m)
                 c = _component(m, cname)
                 code = '%s = facility("%s" , default=c)' % (cname, cname)
-                exec code
+                exec(code)
                 continue
             
         def _configure(self):
@@ -66,7 +66,7 @@ componentname = lambda m: 'm' + '_'.join([q for q in m])
 
 
 def _Component(quantities, name):
-    from ndmonitor import ndmonitor
+    from ._ndmonitor import ndmonitor
     base = ndmonitor(*quantities)
     class Component(base):
 

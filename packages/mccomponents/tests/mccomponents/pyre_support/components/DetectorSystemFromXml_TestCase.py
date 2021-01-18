@@ -27,15 +27,15 @@ class TestCase(unittest.TestCase):
         cmd = 'MCVINE_MPI_LAUNCHER=serial ./sd'
         import os
         if os.system(cmd):
-            raise RuntimeError, "%s failed" % cmd
+            raise RuntimeError("%s failed" % cmd)
         eventdata = 'out/events.dat'
         from mccomponents.detector.event_utils import readEvents
         events = readEvents(eventdata)
         # print events
         # print events['p'].sum()
         p = events['p'].sum()
-        print p
-        self.assert_(p>0.9 and p<1)
+        print(p)
+        self.assertTrue(p>0.9 and p<1)
         return
 
 
@@ -44,15 +44,15 @@ class TestCase(unittest.TestCase):
         cmd = './sd --%s.nodes=2  --output-dir=out1a' % launcher
         import os
         if os.system(cmd):
-            raise RuntimeError, "%s failed" % cmd
+            raise RuntimeError("%s failed" % cmd)
         eventdata = 'out1a/events.dat'
         from mccomponents.detector.event_utils import readEvents
         events = readEvents(eventdata)
         # print events
         # print events['p'].sum()
         p = events['p'].sum()
-        print p
-        self.assert_(p>0.9 and p<1)
+        print(p)
+        self.assertTrue(p>0.9 and p<1)
         return
 
 
@@ -62,11 +62,11 @@ class TestCase(unittest.TestCase):
         cmd = 'MCVINE_MPI_LAUNCHER=serial ./sd --source.position=-0.00875,0.00462,0.005  --source.velocity=5713.19,-765.203,9068.39 --ncount=1 --output-dir=out2'
         import os
         if os.system(cmd):
-            raise RuntimeError, "%s failed" % cmd
+            raise RuntimeError("%s failed" % cmd)
         eventdata = 'out2/events.dat'
         from mccomponents.detector.event_utils import readEvents
         events = readEvents(eventdata)
-        print events
+        print(events)
         # self.assertEqual(len(events), 0)
         return
 

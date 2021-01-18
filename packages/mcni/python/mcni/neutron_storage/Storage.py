@@ -57,15 +57,15 @@ class Storage:
         if mode in ['w'] and os.path.exists( path ):
             msg = 'path %r already exists. if you want to append neutron event files to '\
                   'that directory, please use mode "a" to append' % path
-            raise RuntimeError, msg
+            raise RuntimeError(msg)
         
         #if not os.path.exists( path ) and mode in ['w']: os.makedirs( path )
 
         if not os.path.exists( path ) and mode in ['r', 'a']:
-            raise RuntimeError, "Neutron storage at %r has not been established" % path
+            raise RuntimeError("Neutron storage at %r has not been established" % path)
 
         if os.path.isdir( path ):
-            raise IOError , "path %r is a directory" % path
+            raise IOError("path %r is a directory" % path)
 
         
         # init
@@ -73,7 +73,7 @@ class Storage:
         self._readonly = mode in ['r']
 
         # file stream
-        self.stream = open(path, mode)
+        self.stream = open(path, mode+'b')
         self._closed = False
 
         #
@@ -103,7 +103,7 @@ class Storage:
         path = self.path
         
         if self._readonly:
-            raise RuntimeError, "Neutron storage at %r was opened read" % path
+            raise RuntimeError("Neutron storage at %r was opened read" % path)
         
         # now write the neutrons
         self._dump( neutrons )
@@ -112,7 +112,7 @@ class Storage:
 
     def seek(self, offset, whence, wrap=True):
         if not self._readonly:
-            raise RuntimeError, "seek only works for read operation"
+            raise RuntimeError("seek only works for read operation")
 
         ntotal = self._ntotal
         
@@ -126,14 +126,14 @@ class Storage:
             self._position = self._ntotal + offset
             debug.log('seek from end: position is now %s' % self._position)
         else:
-            raise ValueError, "whence=%s: not supported" % whence
+            raise ValueError("whence=%s: not supported" % whence)
 
         if wrap:
             self._position %= ntotal
             debug.log('wrap position: position is now %s' % self._position)
         else:
             if self._position >= ntotal or self._position < 0:
-                raise RuntimeError, "new position %s out of bound" % self._position
+                raise RuntimeError("new position %s out of bound" % self._position)
         return
 
 
@@ -150,7 +150,7 @@ class Storage:
         """
         path = self.path
         if not self._readonly:
-            raise RuntimeError, "Neutron storage %r was opened for write" % path
+            raise RuntimeError("Neutron storage %r was opened for write" % path)
 
         position = self._position
         debug.log('my current position: %s' % position)
@@ -196,7 +196,7 @@ class Storage:
                 # n2 may be still larger than ntotal 
                 # we may need to read the whole file several times
                 if n2 >= ntotal:
-                    ntimes = n2/ntotal
+                    ntimes = n2//ntotal
                     allneutrons = idfio.read(stream=self.stream)
                     for i in range(ntimes):
                         npyarr = numpy.concatenate((npyarr, allneutrons))
@@ -291,8 +291,8 @@ class Storage:
     pass # end of Source
 
 
-from idfneutron import filesize
-import idf_usenumpy as idfio
+from .idfneutron import filesize
+from . import idf_usenumpy as idfio
 from mcni.neutron_storage import neutrons_as_npyarr
 import mcni
 

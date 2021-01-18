@@ -12,9 +12,9 @@
 #
 
 
-from AbstractPhononKernel import AbstractPhononKernel as base
+from .AbstractPhononKernel import AbstractPhononKernel as base
 
-import units
+from . import units
 meV = units.energy.meV
 angstrom = units.length.angstrom
 

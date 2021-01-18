@@ -38,7 +38,7 @@ class Phonon_CoherentInelastic_PolyXtal_Kernel(base):
     pass # end of Phonon_CoherentInelastic_PolyXtal_Kernel
 
 
-from HomogeneousScatterer import HomogeneousScatterer
+from .HomogeneousScatterer import HomogeneousScatterer
 HomogeneousScatterer.onPhonon_CoherentInelastic_PolyXtal_Kernel = HomogeneousScatterer.onKernel
 
 

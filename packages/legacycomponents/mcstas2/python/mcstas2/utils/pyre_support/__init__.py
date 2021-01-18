@@ -13,7 +13,7 @@
 
 
 def elementaryComponentClassGenerator( **kwds ):
-    from ElementaryComponentGenerator import Generator
+    from .ElementaryComponentGenerator import Generator
     return Generator( **kwds )
 
 

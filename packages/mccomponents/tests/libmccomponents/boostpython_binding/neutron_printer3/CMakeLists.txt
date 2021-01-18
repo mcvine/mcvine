@@ -1,7 +1,7 @@
 #
 set (PACKAGE_NAME "neutron_printer3")
 set (PYPKG_NAME "${PACKAGE_NAME}")
-set (PYBINDING_NAME "${PACKAGE_NAME}bpmodule")
+set (PYBINDING_NAME "${PACKAGE_NAME}bp")
 set (MOD_NAME ${PYBINDING_NAME} )
 set ( SRC_FILES 
   ${PYBINDING_NAME}.cc

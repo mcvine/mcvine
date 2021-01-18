@@ -5,6 +5,7 @@
 #
 
 from . import mcvine, click
+from functools import reduce
 
 @mcvine.group(help='Commands to manipulate neutron storage')
 def neutronstorage():
@@ -14,7 +15,7 @@ def neutronstorage():
 @click.argument("path")
 def count(path):
     from mcni.neutron_storage.idf_usenumpy import count
-    print count(path)
+    print(count(path))
     return
 
 
@@ -25,7 +26,7 @@ def totalintensity(path):
     neutrons = read(path)
     probs = neutrons[:, 9]
     totalIntensity = probs.sum()
-    print totalIntensity
+    print(totalIntensity)
     return
 
 
@@ -36,8 +37,8 @@ def totalintensity(path):
 @click.option("--end", default=None, type=int, help='stop index')
 def extract(inputpath, outputpath, start, end):
     if start >= end:
-        raise ValueError, "Not a valid range: %s, %s" % (
-            start, end)
+        raise ValueError("Not a valid range: %s, %s" % (
+            start, end))
 
     n = end - start
 
@@ -59,10 +60,10 @@ def merge(files, out):
 
     for f in ifiles:
         if not os.path.exists(f):
-            raise RuntimeError, '%s does not exist' % f
+            raise RuntimeError('%s does not exist' % f)
 
     if os.path.exists(out):
-        raise RuntimeError, '%s already exists' % out
+        raise RuntimeError('%s already exists' % out)
 
     from mcni.neutron_storage import merge
     merge(ifiles, out)
@@ -82,15 +83,15 @@ def _print(path, start, end, n):
     if n is None:
         n = end - start
     if n<=0:
-        raise ValueError, "Not a valid range: start=%s, end=%s, n=%s" % (
-            start, end, n)
+        raise ValueError("Not a valid range: start=%s, end=%s, n=%s" % (
+            start, end, n))
     #
     from mcni.neutron_storage.Storage import Storage
     storage = Storage(path)
     storage.seek(start, 'start')
     neutrons = storage.read(n)
     for e in neutrons:
-        print e
+        print(e)
     return
 
 

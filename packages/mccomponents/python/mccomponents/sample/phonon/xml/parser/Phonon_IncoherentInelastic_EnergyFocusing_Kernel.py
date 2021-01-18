@@ -38,7 +38,7 @@ class Phonon_IncoherentInelastic_EnergyFocusing_Kernel(base):
     pass # end of Phonon_IncoherentInelastic_EnergyFocusing_Kernel
 
 
-from HomogeneousScatterer import HomogeneousScatterer
+from .HomogeneousScatterer import HomogeneousScatterer
 HomogeneousScatterer.onPhonon_IncoherentInelastic_EnergyFocusing_Kernel = HomogeneousScatterer.onKernel
 
 

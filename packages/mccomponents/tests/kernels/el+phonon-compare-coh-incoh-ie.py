@@ -16,8 +16,8 @@ def main():
     coh_inel = getinel(iqe1) / sigma_coh
     incoh_el = getel(iqe2) / sigma_inc
     incoh_inel = getinel(iqe2) / sigma_inc
-    print "coherent", coh_el, coh_inel
-    print "incoherent", incoh_el, incoh_inel
+    print("coherent", coh_el, coh_inel)
+    print("incoherent", incoh_el, incoh_inel)
     # pl.plot(ie1.energy, ie1.I/sigma_coh, 'r')
     # pl.plot(ie2.energy, ie2.I/sigma_inc, 'g')
     # pl.show()

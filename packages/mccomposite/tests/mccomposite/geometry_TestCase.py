@@ -51,7 +51,7 @@ class geometry_TestCase(unittest.TestCase):
 
         united2 = operations.unite( difference, pyramid, cone)
         
-        print geometry.shapeEngine( united2 )
+        print(geometry.shapeEngine( united2 ))
 
         return
 

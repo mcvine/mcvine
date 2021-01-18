@@ -68,6 +68,6 @@ class TestCase(unittest.TestCase):
 
 
 
-if __name__ == "__main__": unittest.main(); print 1
+if __name__ == "__main__": unittest.main(); print(1)
     
 # End of file 

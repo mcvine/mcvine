@@ -1,5 +1,5 @@
 
-from mcstasRotations import toMatrix
+from .mcstasRotations import toMatrix
 from numpy import array, dot, mat
 
 def relativePositionOrientation(

@@ -69,11 +69,12 @@ def create_sources_for_a_component(category, type, path):
     if not os.path.exists(root_cmakefile) \
        or not open(root_cmakefile).read().strip():
         _init_components_cmakefile(root_cmakefile)
-    root_cmake_stream = open(root_cmakefile, 'a+')
-    content = root_cmake_stream.read().split('\n')
+    with open(root_cmakefile, 'r') as stream:
+        current_content = stream.read()
     line = "add_subdirectory(%s)" % directory
-    if line not in content:
-        root_cmake_stream.write(line+'\n')
+    if line not in current_content:
+        with open(root_cmakefile, 'a+') as stream:
+            stream.write(line+'\n')
     return
 
 

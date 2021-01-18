@@ -3,7 +3,7 @@
 # Jiao Lin <jiao.lin@gmail.com>
 #
 
-import click, os, json, subprocess as sp
+import click, os, sys, json, subprocess as sp
 import logging
 logger = logging.getLogger("mcvine.cli")
 
@@ -90,7 +90,7 @@ def copy_withhardlinks(src, dest):
 
 def arg_str(params, args):
     "create unique arg str from given params and args"
-    plist = sorted([ '%s=%s' % (k,v) for k, v in params.iteritems() ])
+    plist = sorted([ '%s=%s' % (k,v) for k, v in params.items() ])
     pstr = ' '.join(params)
     args = sorted(args)
     astr = ' '.join(args)
@@ -100,6 +100,8 @@ def arg_str(params, args):
 def unique_identifier(params, args):
     "create a unique string identifier of the given parameters and arguments"
     s = arg_str(params, args)
+    if sys.version_info >= (3,0):
+        s = s.encode()
     import hashlib
     return hashlib.md5(s).hexdigest()
 

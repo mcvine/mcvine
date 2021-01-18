@@ -17,6 +17,7 @@
 
 
 #include <complex>
+#include <vector>
 #include "mcni/geometry/Vector3.h"
 #include "histogram/NdArraySlice.h"
 #include "LinearlyInterpolatedGridData_3D.h"
@@ -37,6 +38,7 @@ namespace DANSE {
     public:
       // types
       typedef double float_t;
+      typedef std::vector<float_t> vec_float_t;
       typedef AbstractDispersion_3D::n_t n_t;
       typedef Array_7D epsilonarray_t;
       typedef Array_4D Earray_t;
@@ -48,13 +50,17 @@ namespace DANSE {
       // meta methods
       LinearlyInterpolatedDispersionOnGrid_3D
       ( n_t nAtoms,
-	const axis_t & QX, const axis_t & QY, const axis_t &QZ, 
-	epsilonarray_t & epsilon_data, Earray_t & E_data );
+        const axis_t & QX, const axis_t & QY, const axis_t &QZ, 
+        epsilonarray_t & epsilon_data, Earray_t & E_data,
+        const vec_float_t &min_energies, const vec_float_t &max_energies
+        );
       ~LinearlyInterpolatedDispersionOnGrid_3D();
-      
+
       // methods
       virtual float_t energy(n_t branch_id, const K_t &k) const;
       virtual epsilon_t polarization(n_t branch_id, n_t atom_id, const K_t &k) const;
+      virtual float_t min_energy(n_t branch_id) const {return m_min_energies[branch_id];};
+      virtual float_t max_energy(n_t branch_id) const {return m_max_energies[branch_id];};
 
     private:
       // data
@@ -87,6 +93,7 @@ namespace DANSE {
       };
 
       std::vector<interp_polarray_t1 *> m_polvsbranchatom;
+      vec_float_t m_min_energies, m_max_energies;
     };
 
   } // phonon::

@@ -19,8 +19,9 @@ choices = [
 
 def computationEngineRenderAdpator( coordinate_system = "McStas" ):
     klassname = "%sCSAdaptor_for_ShapeComputationEngineRenderer" % coordinate_system
-    exec 'from %s import %s as klass' % (klassname, klassname)
-    return klass
+    import importlib
+    m = importlib.import_module('.'+klassname, __name__)
+    return getattr(m, klassname)
 
 
 # version

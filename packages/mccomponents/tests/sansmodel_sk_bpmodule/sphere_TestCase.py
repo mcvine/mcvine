@@ -27,7 +27,7 @@ class TestCase(unittest.TestCase):
     def test1(self):
         spheremodel = sansmodel_sk_bp.SANSModel_Sphere( 1.e-6, 60, 1., 0 )
         spheresq = sansmodel_sk_bp.SANSModel_Sphere_SQAdaptor( spheremodel )
-        for q in range(10): print spheresq( q )
+        for q in range(10): print(spheresq( q ))
         return
 
     pass  # end of TestCase

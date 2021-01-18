@@ -14,7 +14,7 @@
 import numpy as np
 from .. import units
 
-from AbstractVisitor import AbstractVisitor
+from .AbstractVisitor import AbstractVisitor
 class KernelComputationEngineRenderer( AbstractVisitor ):
 
 
@@ -50,7 +50,7 @@ class KernelComputationEngineRenderer( AbstractVisitor ):
                             )
                     )
             cweights[index] = w or 1.
-            print "weight: ", cweights[index]
+            print("weight: ", cweights[index])
             # rotation matrix
             rm = getattr(element, 'rotmat', None)
             if rm is None:
@@ -105,9 +105,9 @@ def register( kernel_type, renderer_handler_method, override = False ):
     methodname = 'on%s' % name
     if hasattr(KernelComputationEngineRenderer, methodname):
         if not override:
-            raise ValueError , "Cannot register handler for type %s"\
+            raise ValueError("Cannot register handler for type %s"\
                   "%s already registered as handler for type %s" % (
-                kernel_type, methodname, _registry[name] )
+                kernel_type, methodname, _registry[name] ))
         pass
     
     setattr( KernelComputationEngineRenderer, methodname, renderer_handler_method )
@@ -118,9 +118,9 @@ def register( kernel_type, renderer_handler_method, override = False ):
 
 _registry = {}
 def _init_registry():
-    from CompositeKernel import CompositeKernel
+    from .CompositeKernel import CompositeKernel
     _registry['CompositeKernel'] = CompositeKernel
-    from HomogeneousScatterer import HomogeneousScatterer
+    from .HomogeneousScatterer import HomogeneousScatterer
     _registry['HomogeneousScatterer'] = HomogeneousScatterer
     return
 

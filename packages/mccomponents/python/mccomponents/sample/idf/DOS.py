@@ -19,19 +19,20 @@ def write(E,DOS,filename='DOS',comment='', E_unit='TeraHz'):
         E = E/hertz2mev/1e12/2/pi
     else:
         raise NotImplementedError("energy unit: %s" % E_unit)
-    f=open(filename,'w')
-    f.write(pack('<64s','DOS'))
-    f.write(pack('<i',version))
-    f.write(pack('<1024s',comment))
-    f.write(pack('<i',DOS.shape[0]))
-    f.write(pack('<d',E[1]-E[0]))
-    DOS = tuple( DOS )
-    f.write(pack('<%id' % len(DOS),*DOS))
+    with open(filename,'wb') as f:
+        f.write(pack('<64s',b'DOS'))
+        f.write(pack('<i',version))
+        f.write(pack('<1024s',comment.encode('ascii')))
+        f.write(pack('<i',DOS.shape[0]))
+        f.write(pack('<d',E[1]-E[0]))
+        DOS = tuple( DOS )
+        f.write(pack('<%id' % len(DOS),*DOS))
     return
 
 def read(filename='DOS'):
     """Takes filename, returns a tuple with information and DOS as a numpy."""
-    f=open(filename,'r').read()
+    with open(filename,'rb') as stream:
+        f = stream.read()
     i = 0
     filetype, = unpack('<64s',f[i:i+64*strSize])          ; i += 64*strSize
     version,  = unpack('<i',f[i:i+intSize])               ; i += intSize
@@ -41,5 +42,5 @@ def read(filename='DOS'):
     DOS       = unpack('<%id' % (N_Bins),f[i:])
     DOS = numpy.array(DOS)
     E = numpy.arange(0,(N_Bins-0.1)*dE,dE)
-    return (filetype.strip('\x00'),version,comment.strip('\x00')),E,DOS
+    return (filetype.strip(b'\x00').decode(),version,comment.strip(b'\x00').decode()),E,DOS
 

@@ -4,7 +4,7 @@
 #
 
 
-from base import Component as base
+from .base import Component as base
 
 class Component(base):
 
@@ -20,8 +20,8 @@ def get_histogram( monitor ):
     n = nx * ny
     shape = nx, ny
 
-    xmin = core.x_min; xmax = core.x_max
-    ymin = core.y_min; ymax = core.y_max
+    xmin = core.xmin; xmax = core.xmax
+    ymin = core.ymin; ymax = core.ymax
 
     dx = (xmax - xmin)/nx
     dy = (ymax - ymin)/ny

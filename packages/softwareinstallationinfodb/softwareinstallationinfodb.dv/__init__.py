@@ -12,7 +12,9 @@
 #
 
 def info( name ):
-    exec 'import %s as m' % name.replace('-', '_')
+    import importlib
+    name = name.replace('-', '_')
+    m = importlib.import_module('.'+name, __name__)
     return m.info
 
 

@@ -38,7 +38,7 @@ class mccompositebpmodule_TestCase(unittest.TestCase):
         cyl = binding.Cylinder(1, 5)
         pyramid = binding.Pyramid(1, 1.5, 5)
         cone = binding.Cone(2, 5)
-        print block, sphere, cyl, pyramid, cone
+        print(block, sphere, cyl, pyramid, cone)
         return
     
 

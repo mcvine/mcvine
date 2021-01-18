@@ -20,7 +20,7 @@ outdir = 'out'
 import os, glob, shutil
 def cleanup():
     pmls = glob.glob('test.pml*')
-    map(os.remove, pmls)
+    for _ in pmls: os.remove(_)
     # clean up
     if os.path.exists(outdir):
         shutil.rmtree('out')
@@ -28,7 +28,7 @@ def cleanup():
 
 def execute(cmd):
     if os.system(cmd):
-        raise RuntimeError, "%r failed" %cmd
+        raise RuntimeError("%r failed" %cmd)
 
 
 import unittest

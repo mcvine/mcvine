@@ -40,7 +40,7 @@ from mcni.AbstractComponent import AbstractComponent
 class Component( AbstractComponent ):
 
     def process(self, neutrons):
-        raise RuntimeError, "this method should not be called"
+        raise RuntimeError("this method should not be called")
 
 
     def processM(self, neutrons):

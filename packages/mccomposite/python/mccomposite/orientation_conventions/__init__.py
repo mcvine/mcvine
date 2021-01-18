@@ -18,7 +18,7 @@ def get( name ):
 
 def classes():
     '''return all convention classes'''
-    import McStasConvention
+    from . import McStasConvention
     return {'McStasConvention': McStasConvention.McStasConvention}
 
 

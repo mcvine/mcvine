@@ -126,8 +126,8 @@ class TestCase(unittest.TestCase):
             E1 = eval(E_Q)
             self.assertAlmostEqual(E, E1)
             continue
-        print "\n* percentage of no scattering (Q happen to be at a singular point):",\
-            N_noscatt*100./N, "%"
+        print("\n* percentage of no scattering (Q happen to be at a singular point):",\
+            N_noscatt*100./N, "%")
         return
     
 

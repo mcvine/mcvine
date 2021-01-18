@@ -24,6 +24,7 @@ set ( SRC_FILES
   kernels/sample/ConstantvQEKernel.cc
   kernels/sample/DGSSXResKernel.cc
   kernels/sample/diffraction/SimplePowderDiffractionKernel.cc
+  kernels/sample/diffraction/SingleCrystalDiffractionKernel.cc
   kernels/sample/SQkernel.cc
   kernels/sample/SQEkernel.cc
   kernels/sample/SQ/GridSQ.cc

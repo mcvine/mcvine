@@ -50,14 +50,14 @@ class Binding:
 
     def cevents_from_npyarr( self, npyarr ):
         '''convert a numpy array to a boost-python instance of Neutron::cEvent pointer'''
-        from _patch_neutronevents_bp_interface import cevents_from_npyarr
+        from ._patch_neutronevents_bp_interface import cevents_from_npyarr
         return cevents_from_npyarr(npyarr)
 
 
     def vector3(self, *args):
         if len(args) == 1 and len(args[0]) == 3: v = args[0]
         elif len(args) == 3: v = args
-        else: raise ValueError, "Need 3 elements: %r" % (args, )
+        else: raise ValueError("Need 3 elements: %r" % (args, ))
         return b.Vector3_double( *v )
 
 
@@ -70,7 +70,7 @@ class Binding:
         try:
             m.shape = 3,3
         except:
-            raise RuntimeError, 'Cannot convert input %s to a 3X3 matrix' % (args,)
+            raise RuntimeError('Cannot convert input %s to a 3X3 matrix' % (args,))
 
         #m.shape = -1,
         m = tuple(m[0])+tuple(m[1])+tuple(m[2])
@@ -83,8 +83,8 @@ class Binding:
 
 def _import():
     import mcni.mcnibp
-    import _patch_neutronevents_bp_interface
-    import mcni.mcni
+    from . import _patch_neutronevents_bp_interface
+    import mcni._mcni
     try:
         from danse.ins import bpext
     except ImportError:

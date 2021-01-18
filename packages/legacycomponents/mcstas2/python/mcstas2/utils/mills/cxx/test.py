@@ -13,14 +13,14 @@
 
 
 def test():
-    from Class import example
-    from CCMill import CCMill
+    from .Class import example
+    from .CCMill import CCMill
     
     klass = example()
 
-    from installationInfo import tmp
+    from .installationInfo import tmp
 
-    from factory import createHHandCC
+    from .factory import createHHandCC
 
     hhfn, ccfn = createHHandCC( klass, tmp )
 

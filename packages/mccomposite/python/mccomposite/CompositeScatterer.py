@@ -22,7 +22,7 @@ class CompositeScatterer:
         max_multiplescattering_loops_interactM_path1 = None,
         min_neutron_probability = None,
         ):
-        from Geometer import Geometer
+        from .Geometer import Geometer
         self.geometer = Geometer()
         self._elements = []
         self._shape = shape
@@ -62,7 +62,7 @@ class CompositeScatterer:
 
     def shape(self):
         if self._shape is None:
-            from geometry.operations import unite
+            from .geometry.operations import unite
             self._shape = unite( *[self._getElementShape(e)
                                    for e in self.elements() ] )
             pass
@@ -74,7 +74,7 @@ class CompositeScatterer:
         g = self.geometer
         position = g.position(e)
         orientation = g.orientation(e)
-        import geometry
+        from . import geometry
         r = geometry.operations.rotate(s, euler_angles=orientation)
         t = geometry.operations.translate(r, vector=position)
         return t

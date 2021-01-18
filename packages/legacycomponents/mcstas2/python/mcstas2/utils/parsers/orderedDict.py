@@ -10,10 +10,10 @@ class OrderedDict(DictMixin):
         self._data = {}
         if data is not None:
             if hasattr(data, 'items'):
-                items = data.items()
+                items = list(data.items())
             else:
                 items = list(data)
-            for i in xrange(len(items)):
+            for i in range(len(items)):
                 length = len(items[i])
                 if length != 2:
                     raise ValueError('dictionary update sequence element '
@@ -21,7 +21,7 @@ class OrderedDict(DictMixin):
                 self._keys.append(items[i][0])
                 self._data[items[i][0]] = items[i][1]
         if kwdata:
-            self._merge_keys(kwdata.iterkeys())
+            self._merge_keys(iter(kwdata.keys()))
             self.update(kwdata)
         
         
@@ -71,7 +71,7 @@ class OrderedDict(DictMixin):
     def update(self, data):
         if data is not None: 
             if hasattr(data, 'iterkeys'):
-                self._merge_keys(data.iterkeys())
+                self._merge_keys(iter(data.keys()))
             else:
-                self._merge_keys(data.keys())
+                self._merge_keys(list(data.keys()))
             self._data.update(data)

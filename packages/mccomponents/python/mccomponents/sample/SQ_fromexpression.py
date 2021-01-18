@@ -3,7 +3,7 @@
 #
 
 
-from AbstractSQ import AbstractSQ as base
+from .AbstractSQ import AbstractSQ as base
 class SQ_fromexpression(base):
 
     def __init__(self, expression):

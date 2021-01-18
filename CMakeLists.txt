@@ -25,7 +25,7 @@
 # $ anaconda upload /home/lj7/anaconda2/conda-bld/linux-64/mcvine-1.0.1-py27_0.tar.bz2
 
 set(PROJECT_NAME "mcvine")
-set(VERSION "1.3.4")
+set(VERSION "1.4.0")
 set(AUTHOR "Jiao Lin")
 set(AUTHOR_EMAILE "jiao.lin@gmail.com")
 set(VENDOR "DANSE")
@@ -35,7 +35,7 @@ set(RPM_APP_GROUP "Development/Tools")
 set(GITHUB_URL "https://github.com/mcvine/mcvine")
 # can change this to a branch or a tag, for example
 # set(GIT_RELEASE_TAG ${VERSION})
-set(GIT_RELEASE_TAG "v1.3.4")
+set(GIT_RELEASE_TAG "v1.4.0")
 set (HOMEPAGE ${GITHUB_URL})
 
 # Is this still needed?
@@ -76,6 +76,9 @@ ELSE(EXISTS "cmake_utils/")
 ENDIF(EXISTS "cmake_utils/")
 set(CMAKE_MODULE_PATH ${PROJECT_BINARY_DIR}/cmake_utils)
 
+# ABI
+add_definitions(-D_GLIBCXX_USE_CXX11_ABI=0)
+
 # use utils
 include(System) # system info
 include(Dirs)   # directory structure
@@ -90,9 +93,16 @@ find_package ( PythonInterp REQUIRED )
 # python installation path
 set(INSTALL_PY_PATH "${INSTALL_LIB_DIR}/python${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}/site-packages")
 # needs boost python
-find_package ( Boost REQUIRED )
+set(PYVER_MAJORMINOR ${PYTHON_VERSION_MAJOR}${PYTHON_VERSION_MINOR})
+find_package ( Boost COMPONENTS python${PYVER_MAJORMINOR} )
+IF (NOT Boost_FOUND)
+   find_package ( Boost COMPONENTS python${PYTHON_VERSION_MAJOR} )
+ENDIF (NOT Boost_FOUND)
+IF (NOT Boost_FOUND)
+   find_package ( Boost COMPONENTS python REQUIRED )
+ENDIF (NOT Boost_FOUND)
 message(" - Boost lib and header dirs: ${Boost_LIBRARY_DIRS} ${Boost_INCLUDE_DIRS}")
-find_package ( BoostPython REQUIRED )
+# obsolete: find_package ( BoostPython REQUIRED )
 #
 enable_testing()
 

@@ -14,11 +14,13 @@
 #Generate <component_name>.py, which contains a "factory" method
 #to create instance of the boost python binding of mcstas component 
 
+from mcni._2to3 import isstr
+
 template = '''
 def factory( %(ctor_kwds)s ):
     from mcstas2.bindings import boostpython
     from mcstas2.mcstas2bp import McStasComponentAsMcniComponent as component
-    from %(bindingmodulename)s import %(component)s as _factory_mcvine
+    from .%(bindingmodulename)s import %(component)s as _factory_mcvine
     return component( _factory_mcvine( %(ctor_args)s ) )
 
 from mcstas2.utils.parsers.ComponentInfo import ComponentInfo, Parameter
@@ -50,7 +52,7 @@ def generate( compinfo, bindingmodulename, path ):
 class struct :
     def __str__(self):
         attrs = dir(self)
-        attrs = filter( lambda a: not a.startswith('_'), attrs )
+        attrs = [a for a in attrs if not a.startswith('_')]
         return '(%s)' % (
             ', '.join( [ '%s=%r' % (attr, getattr(self, attr)) for attr in attrs] ), )
 
@@ -74,7 +76,7 @@ a.name = 'a'
     ret = []
     if isinstance(inst, int) or isinstance(inst, float):
         ret.append( '%s = %r' % (name, inst) )
-    elif isinstance(inst, basestring ):
+    elif isstr(inst):
         ret.append( '%s = """%s"""' % (name, inst) )
     elif isinstance(inst, list) or isinstance(inst, tuple):
         for index, item in enumerate(inst):
@@ -119,7 +121,7 @@ def test_inst2str( ):
     d = struct()
     d.d = struct()
     a.d = [ d ]
-    print inst2str( 'a', a )
+    print(inst2str( 'a', a ))
     return
 
 

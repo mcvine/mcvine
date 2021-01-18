@@ -25,7 +25,7 @@ class NeutronTracerFacility( Facility ):
         return super(NeutronTracerFacility, self)._import(name)
 
 
-from ConsoleNeutronTracer import ConsoleNeutronTracer
+from .ConsoleNeutronTracer import ConsoleNeutronTracer
 defaults = {
     'console': ConsoleNeutronTracer(),
     }

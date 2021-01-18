@@ -29,7 +29,7 @@ def registered( category, type ):
 
 def categoriesInRegistry( ):
     global _registry
-    return _registry.types.keys()
+    return list(_registry.types.keys())
 
 
 def registeredComponentsInCategory( category ):
@@ -53,7 +53,7 @@ def registercomponent( category, type, factory ):
     return
 
 
-from Registry import Registry
+from .Registry import Registry
 _registry = Registry()
 del Registry
 

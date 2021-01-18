@@ -12,7 +12,7 @@
 #
 
 
-from AbstractDOS import AbstractDOS as base
+from .AbstractDOS import AbstractDOS as base
 class LinearlyInterpolatedDOS(base):
 
     def __init__(self, doshist):

@@ -11,7 +11,7 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
 
-
+from __future__ import print_function
 
 standalone = True
 
@@ -49,8 +49,8 @@ class TestCase(unittest.TestCase):
         os.chdir(save)
 
         kernel = scatterer.kernel()
-        print kernel
-        self.assert_( isKernel( kernel ) )
+        print(kernel)
+        self.assertTrue( isKernel( kernel ) )
         
         return
 
@@ -77,13 +77,13 @@ class TestCase(unittest.TestCase):
         for i in range(10):
             ev = mcni.neutron( r = (0,0,-5), v = (0,0,3000) )
             engine.scatter( ev )
-            print ev
+            print(ev)
             continue
 
         return
 
 
-    def test2(self):
+    def _test2(self):
         'instrument: monochromatic source, sample, S(Q,E) detector'
         from SSD import App
         app = App("test-phonon_coherentinelastic_polyxtal_kernel")
@@ -97,7 +97,7 @@ class TestCase(unittest.TestCase):
         scatterer = parse_file( scattererxml )
         
         renderedxml = "%s.rendered" % scattererxml
-        print >>open(renderedxml,'w'), '\n'.join(render(scatterer))
+        print('\n'.join(render(scatterer)), file=open(renderedxml,'w'))
 
         scatterer1 = parse_file( renderedxml )
         return

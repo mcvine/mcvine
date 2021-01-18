@@ -12,7 +12,7 @@
 #
 
 
-from mcvine_deps import info
+from .mcvine_deps import info
 
 
 # version

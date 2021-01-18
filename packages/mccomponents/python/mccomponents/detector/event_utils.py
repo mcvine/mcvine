@@ -43,7 +43,7 @@ def normalizeEventFile(file, n):
 def mergeEventFiles(files, out):
     "merge event data files into one output file"
     import sys, os
-    if sys.platform != 'linux2':
+    if not sys.platform.startswith('linux'):
         raise NotImplementedError
     outdir = os.path.dirname(out)
     # tempfile to hold the list of files
@@ -52,7 +52,7 @@ def mergeEventFiles(files, out):
         for f in files: ostream.write("%s\n" % f)
     cmd = 'cat %s | xargs -0 -d "\n" cat > "%s"' % (filelist, out)
     if os.system(cmd):
-        raise RuntimeError, "%s failed" % cmd
+        raise RuntimeError("%s failed" % cmd)
     return
 
 

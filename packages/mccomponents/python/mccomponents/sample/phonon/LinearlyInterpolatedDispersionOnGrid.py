@@ -12,7 +12,7 @@
 #
 
 
-from AbstractDispersion import AbstractDispersion as base
+from .AbstractDispersion import AbstractDispersion as base
 
 class LinearlyInterpolatedDispersionOnGrid(base):
 

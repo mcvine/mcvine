@@ -16,7 +16,7 @@
 from mccomponents.homogeneous_scatterer.bindings import default, get
 
 def _import():
-    import BoostPythonBinding
+    from . import BoostPythonBinding
     return
 
 _import()

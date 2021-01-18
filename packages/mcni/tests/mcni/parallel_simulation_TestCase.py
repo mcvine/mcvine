@@ -103,7 +103,7 @@ class Printer( AbstractComponent ):
         rank = mpi.world().rank
         
         s = [ '%s'% n for n in neutrons ]
-        print 'node %d: %s' % (rank, ', '.join(s) )
+        print('node %d: %s' % (rank, ', '.join(s) ))
         return neutrons
 
     pass # end of Verifier

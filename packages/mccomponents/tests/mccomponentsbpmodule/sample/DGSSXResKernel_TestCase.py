@@ -50,8 +50,8 @@ class TestCase(unittest.TestCase):
             ef = conversion.v2e(nl.norm(vf))
             E = ei - ef
             # print Q,E
-            self.assert_(np.isclose(Q, 6.74, rtol=1e-2))
-            self.assert_(np.isclose(E, 0, atol=.5))
+            self.assertTrue(np.isclose(Q, 6.74, rtol=1e-2))
+            self.assertTrue(np.isclose(E, 0, atol=.5))
             continue
 
         return

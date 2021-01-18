@@ -20,7 +20,7 @@ from mcni.AbstractComponent import AbstractComponent
 class NeutronPrinter( AbstractComponent ):
 
     def process(self, neutrons):
-        for n in neutrons: print n
+        for n in neutrons: print(n)
         return
 
     pass # end of MonochromaticSource

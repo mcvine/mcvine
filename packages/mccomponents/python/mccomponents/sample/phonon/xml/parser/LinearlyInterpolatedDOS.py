@@ -12,7 +12,7 @@
 #
 
 
-from AbstractNode import AbstractNode, debug
+from .AbstractNode import AbstractNode, debug
 
 
 class LinearlyInterpolatedDOS(AbstractNode):
@@ -36,8 +36,8 @@ class LinearlyInterpolatedDOS(AbstractNode):
             from mccomponents.sample.phonon import dos_fromascii
             return dos_fromascii(asciipath)
         else:
-            raise ValueError, "LinearlyInterpolatedDOS needs path to "\
-                "idf or histogram data file"            
+            raise ValueError("LinearlyInterpolatedDOS needs path to "\
+                "idf or histogram data file")            
         
     pass # end of LinearlyInterpolatedDOS
 

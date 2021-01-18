@@ -84,13 +84,15 @@ def hist_mcs_sum(outdir, histogramfilename):
         h1.I += h.I
         h1.E2 += h.E2
         return
-    map(_addhistfile, histfiles[1:])
-    
-    # load number_of_mc_samples
-    loadmcs = lambda f: float(open(f).read())
-    mcs = map(loadmcs, mcsamplesfiles)
+    for hf in histfiles[1:]: _addhistfile(hf)
+    mcs = map(_loadmcs, mcsamplesfiles)
     return h1, sum(mcs)
 
+# load number_of_mc_samples
+def _loadmcs(f):
+    with open(f) as stream:
+        mcs = float(stream.read())
+    return mcs
 
 def hist_mcs_sum_parallel(outdir, histogramfilename):
     """compute the summed histogram and summed number of mc samples"""
@@ -133,8 +135,7 @@ def hist_mcs_sum_parallel(outdir, histogramfilename):
             h1.E2 += h.E2
             continue
         # load number_of_mc_samples
-        loadmcs = lambda f: float(open(f).read())
-        mcs = map(loadmcs, mcsamplesfiles[sl])
+        mcs = map(_loadmcs, mcsamplesfiles[sl])
         mcs = sum(mcs)
     else:
         # no data
@@ -169,17 +170,17 @@ def hist_mcs_sum_parallel(outdir, histogramfilename):
         return h1, mcs
 
 
-from outputs import mcs_sum
+from .outputs import mcs_sum
     
 
-from MonitorMixin import MonitorMixin
+from .MonitorMixin import MonitorMixin
 class HistogramBasedMonitorMixin(MonitorMixin):
 
     def create_pps(self):
         context = self.simulation_context
         if context is None:
-            raise RuntimeError, "context not defined: type - %s, name - %s" % (
-                self.__class__.__name__, self.name)
+            raise RuntimeError("context not defined: type - %s, name - %s" % (
+                self.__class__.__name__, self.name))
         if context.mpiRank:
             return
         # create post processing script
@@ -188,7 +189,8 @@ class HistogramBasedMonitorMixin(MonitorMixin):
         content = """from mcni.components.HistogramBasedMonitorMixin import merge_and_normalize
 merge_and_normalize(%(fn)r, %(outdir)r)
 """ % dict(outdir=os.path.abspath(context.outputdir), fn=self._getHistogramFilename())
-        open(path, 'wt').write(content)
+        with open(path, 'wt') as stream:
+            stream.write(content)
         return
 
     def _getFinalResult(self):

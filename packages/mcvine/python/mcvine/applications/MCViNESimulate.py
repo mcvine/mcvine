@@ -11,7 +11,7 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
 
-from SuperAppBase import SuperAppBase
+from .SuperAppBase import SuperAppBase
 
 
 class Application(SuperAppBase):
@@ -25,13 +25,13 @@ class Application(SuperAppBase):
         
         
     def runApp(self, components=None, **kwds):
-        from InstrumentBuilder import build
+        from .InstrumentBuilder import build
         components = self.component_list
         if not components:
             self.help()
-            print
-            print "** Error: component list is empty"
-            print
+            print()
+            print("** Error: component list is empty")
+            print()
             return
         base = build(components)
         class Instrument(base):
@@ -47,42 +47,42 @@ class Application(SuperAppBase):
 
 
     def help(self):
-        print
-        print 70*'='
-        print 'mcvine-simulate - run a mcvine simulation'
-        print 70*'-'
-        print '* Synopsis'
-        print ' $ mcvine-simulate --components=<list-of-components> --- \\'
-        print '                 <configrations of components>'
-        print 70*'-'
-        print '* Example 1:'
-        print ' $ mcvine-simulate --components=source,monitor --- \\'
-        print '                 --geometer.source=[0,0,0],[0,0,0] \\'
-        print '                 --source=MonochromaticSource --source.Ei=... \\'
-        print '                 --monitor=E_monitor --monitor.Emin=... \\'
-        print
-        print ' * The first option "--components=..." must be followed with'
-        print '   the option splitter "---"'
-        print ' * The option "--components" specify the names of neutron '
-        print '   components in the instrument'
-        print ' * The options after the option splitter "---" provides details'
-        print '   of neutron components'
-        print '   * Geometer'
-        print '       --geometer.<compoenntname>=<position>,<orientation>'
-        print '     eg.'
-        print '       --geometer.source=[0,0,0],[0,0,0]'
-        print '   * Component type'
-        print '       --<componentname>=<componentspecifier>'
-        print '     eg.'
-        print '       --source=MonochromaticSource'
-        print '     * See also:'
-        print '       mcvine-list-components, mcvine-component-info'
-        print '   * Component details'
-        print '       --<componentname>.<property>=<value>'
-        print '     eg.'
-        print '       --source.Ei=60'
-        print 70*'='
-        print
+        print()
+        print(70*'=')
+        print('mcvine-simulate - run a mcvine simulation')
+        print(70*'-')
+        print('* Synopsis')
+        print(' $ mcvine-simulate --components=<list-of-components> --- \\')
+        print('                 <configrations of components>')
+        print(70*'-')
+        print('* Example 1:')
+        print(' $ mcvine-simulate --components=source,monitor --- \\')
+        print('                 --geometer.source=[0,0,0],[0,0,0] \\')
+        print('                 --source=MonochromaticSource --source.Ei=... \\')
+        print('                 --monitor=E_monitor --monitor.Emin=... \\')
+        print()
+        print(' * The first option "--components=..." must be followed with')
+        print('   the option splitter "---"')
+        print(' * The option "--components" specify the names of neutron ')
+        print('   components in the instrument')
+        print(' * The options after the option splitter "---" provides details')
+        print('   of neutron components')
+        print('   * Geometer')
+        print('       --geometer.<compoenntname>=<position>,<orientation>')
+        print('     eg.')
+        print('       --geometer.source=[0,0,0],[0,0,0]')
+        print('   * Component type')
+        print('       --<componentname>=<componentspecifier>')
+        print('     eg.')
+        print('       --source=MonochromaticSource')
+        print('     * See also:')
+        print('       mcvine-list-components, mcvine-component-info')
+        print('   * Component details')
+        print('       --<componentname>.<property>=<value>')
+        print('     eg.')
+        print('       --source.Ei=60')
+        print(70*'=')
+        print()
         return
 
     

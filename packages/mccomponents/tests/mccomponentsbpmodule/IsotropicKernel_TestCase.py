@@ -32,7 +32,7 @@ class IsotropicKernel_TestCase(unittest.TestCase):
         for i in range(10):
             event = mcni.neutron( r = (0,0,0), v = (0,0,3000), prob = 1, time = 0 )
             kernel.scatter( event );
-            print event
+            print(event)
             continue
 
         return

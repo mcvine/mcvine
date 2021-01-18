@@ -12,7 +12,7 @@
 #
 
 
-import units
+from . import units
 meV = units.energy.meV
 angstrom = units.length.angstrom
 
@@ -20,41 +20,41 @@ angstrom = units.length.angstrom
 def multiphonon_kernel(
     **kwds
     ):
-    from MultiPhonon_Kernel import MultiPhonon_Kernel as f
+    from .MultiPhonon_Kernel import MultiPhonon_Kernel as f
     return f(**kwds)
 
 
 def incoherentelastic_kernel(
     dw_core, **kwds
     ):
-    from IncoherentElastic_Kernel import IncoherentElastic_Kernel as f
+    from .IncoherentElastic_Kernel import IncoherentElastic_Kernel as f
     return f( dw_core, **kwds )
 
 
 def incoherentinelastic_kernel(
     dos, **kwds
     ):
-    from IncoherentInelastic_Kernel import IncoherentInelastic_Kernel as f
+    from .IncoherentInelastic_Kernel import IncoherentInelastic_Kernel as f
     return f(dos, **kwds)
 
 
 def incoherentinelastic_energyfocusing_kernel(
     dos, **kwds
     ):
-    from IncoherentInelastic_EnergyFocusing_Kernel import IncoherentInelastic_EnergyFocusing_Kernel as f
+    from .IncoherentInelastic_EnergyFocusing_Kernel import IncoherentInelastic_EnergyFocusing_Kernel as f
     return f(dos, **kwds)
 
 
 def coherentinelastic_polyxtal_kernel(
     dispersion, **kwds):
-    from CoherentInelastic_PolyXtal_Kernel import CoherentInelastic_PolyXtal_Kernel as f
+    from .CoherentInelastic_PolyXtal_Kernel import CoherentInelastic_PolyXtal_Kernel as f
     return f( dispersion, **kwds)
 
 
 def coherentinelastic_singlextal_kernel(
     dispersion
     ):
-    from CoherentInelastic_SingleXtal_Kernel import CoherentInelastic_SingleXtal_Kernel as f
+    from .CoherentInelastic_SingleXtal_Kernel import CoherentInelastic_SingleXtal_Kernel as f
     return f( dispersion )
 
 
@@ -63,7 +63,7 @@ def linearlyinterpolateddispersion(
     Qaxes, eps_npyarr, E_npyarr,
     **kwds
     ):
-    from LinearlyInterpolatedDispersionOnGrid \
+    from .LinearlyInterpolatedDispersionOnGrid \
          import LinearlyInterpolatedDispersionOnGrid
     return LinearlyInterpolatedDispersionOnGrid(
         nAtoms, dimension,
@@ -72,7 +72,7 @@ def linearlyinterpolateddispersion(
 
 
 def periodicdispersion( dispersion, reciprocalcell ):
-    from PeriodicDispersion import PeriodicDispersion
+    from .PeriodicDispersion import PeriodicDispersion
     return PeriodicDispersion( dispersion, reciprocalcell )
 
 
@@ -100,11 +100,11 @@ def periodicdispersion_fromidf( datapath ):
 from .read_dos import *
 
 
-import ComputationEngineRendererExtension
+from . import ComputationEngineRendererExtension
 
 #make bindings available
 def _import_bindings():
-    import bindings
+    from . import bindings
     return
 
 _import_bindings()

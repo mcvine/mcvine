@@ -56,7 +56,8 @@ class AbstractInstrumentSimulator:
             return
         import os
         p = os.path.join(outdir, 'number_of_mc_samples')
-        open(p, 'w').write(str(n))
+        with open(p, 'w') as stream:
+            stream.write(str(n))
         return
 
 
@@ -68,7 +69,7 @@ class AbstractInstrumentSimulator:
 
         neutron_coordinates_transformer = self.neutron_coordinates_transformer
         
-        from SimulationChain import SimulationChain
+        from .SimulationChain import SimulationChain
         chain = SimulationChain( 
             components, geometer, neutron_coordinates_transformer, 
             context = context,

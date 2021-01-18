@@ -136,10 +136,10 @@ def makeDispersion():
     qx = H.axis('qx', H.arange(0, 1+1e-10, 1./(nQx-1)))
     qy = H.axis('qy', H.arange(0, 1+1e-10, 1./(nQy-1)))
     qz = H.axis('qz', H.arange(0, 1+1e-10, 1./(nQz-1)))
-    br = H.axis('branchId', range(nBranches))
-    atoms = H.axis('atomId', range(nAtoms))
-    pols = H.axis('polId', range(3))
-    realimags = H.axis('realimagId', range(2))
+    br = H.axis('branchId', list(range(nBranches)))
+    atoms = H.axis('atomId', list(range(nAtoms)))
+    pols = H.axis('polId', list(range(3)))
+    realimags = H.axis('realimagId', list(range(2)))
 
     eps = H.histogram('eps', [qx,qy,qz,br,atoms,pols,realimags])
     eps.I[:] = 1

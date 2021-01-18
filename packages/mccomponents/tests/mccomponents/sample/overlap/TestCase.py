@@ -17,7 +17,7 @@ class TestCase(unittest.TestCase):
         try:
             out = sp.check_output(args, stderr=sp.STDOUT)
         except sp.CalledProcessError as e:
-            lastlines = '\n'.join(e.output.splitlines()[-5:])
+            lastlines = '\n'.join(e.output.decode().splitlines()[-5:])
             assert 'Overlapping' in lastlines
             return
         raise RuntimeError("Expecting exiting with overlapping alert")

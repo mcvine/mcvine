@@ -34,7 +34,7 @@ class AtomicScattering:
 
     def theta(self, T):
         element = self.element
-        from DebyeTemp import getT
+        from .DebyeTemp import getT
         return 1.*T/getT(element)
 
 
@@ -42,7 +42,7 @@ class AtomicScattering:
         element = self.element
         atom = self.atom
         mass = getattr(ptbl,atom.element).mass
-        from DebyeTemp import getT
+        from .DebyeTemp import getT
         T_D = getT(element)
         theta1 = self.theta(T)
         rt = 3*h*h*phi1(theta1)/(mass*amu*kB*T_D)

@@ -38,7 +38,7 @@ class TestCase(unittest.TestCase):
         cmd = './neutron_storage_normalization_TestCase-app --%s.nodes=2 --overwrite-datafiles --output-dir=%s' % (launcher, outdir)
         import os
         if os.system(cmd):
-            raise RuntimeError, "%r failed" % cmd
+            raise RuntimeError("%r failed" % cmd)
         
         # make sure the final result is normalized
         # the probability should be 1 since it is first normalized by mc count
@@ -53,7 +53,7 @@ class TestCase(unittest.TestCase):
                     0.,
                     1]
         for n in neutrons:
-            self.assert_((n==expected).all())
+            self.assertTrue((n==expected).all())
             continue
         return
 
@@ -65,7 +65,7 @@ class TestCase(unittest.TestCase):
         cmd = './neutron_storage_normalization_TestCase-app --%s.nodes=2 --overwrite-datafiles=off  --output-dir=%s' % (launcher, outdir)
         import os
         if os.system(cmd):
-            raise RuntimeError, "%r failed" % cmd
+            raise RuntimeError("%r failed" % cmd)
         
         # make sure the final result is normalized
         from mcni.neutron_storage import readneutrons_asnpyarr
@@ -77,7 +77,7 @@ class TestCase(unittest.TestCase):
                     0.,
                     1]
         for n in neutrons:
-            self.assert_((n==expected).all())
+            self.assertTrue((n==expected).all())
             continue
         return
 

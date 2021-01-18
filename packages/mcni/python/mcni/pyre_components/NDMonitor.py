@@ -14,7 +14,7 @@
 category = 'monitors'
 
 def NDMonitor(*args, **kwds):
-    from ndmonitor import ndmonitor
+    from ._ndmonitor import ndmonitor
     return ndmonitor(*args, **kwds)
 NDMonitor.factoryfactory = True
 

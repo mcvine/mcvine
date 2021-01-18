@@ -32,14 +32,14 @@ class TestCase(unittest.TestCase):
         from mccomponents.sample.idf import readDispersion
         nAtoms, dimension, Qaxes, polarizations, energies, dos \
                 = readDispersion( datapath )
-        print nAtoms, dimension, Qaxes
-        print energies
+        print(nAtoms, dimension, Qaxes)
+        print(energies)
         
         if interactive:
             import pylab
             pylab.plot( dos[0], dos[1] )
             pylab.show()
-            raw_input('Press ENTER to continue...')
+            input('Press ENTER to continue...')
         return
 
     pass  # end of TestCase

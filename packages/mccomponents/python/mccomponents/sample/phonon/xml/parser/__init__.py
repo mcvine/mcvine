@@ -11,8 +11,8 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
 
-import KernelNode
-import Document
+from . import KernelNode
+from . import Document
 
 # version
 __id__ = "$Id$"

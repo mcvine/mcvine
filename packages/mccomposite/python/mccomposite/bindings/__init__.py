@@ -25,18 +25,18 @@ def get( type ):
 
 def classes():
     '''return all binding classes'''
-    import BoostPythonBinding
+    from . import BoostPythonBinding
     return {'BoostPythonBinding': BoostPythonBinding.BoostPythonBinding}
 
 
 def registries():
-    import BoostPythonBinding 
+    from . import BoostPythonBinding 
     return { 'BoostPythonBinding': BoostPythonBinding.register }
 
 
 def register( methodname, handlers, override = False ):
     regs = registries()
-    for bindingname, handler in handlers.iteritems():
+    for bindingname, handler in handlers.items():
         regs[ bindingname ]( methodname, handler, override = override )
         continue
     return

@@ -30,7 +30,7 @@ def get( type ):
 
 def classes():
     '''return all binding classes'''
-    import boostpython
+    from . import boostpython
     return {'BoostPython': boostpython.Binding}
 
 

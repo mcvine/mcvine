@@ -88,7 +88,7 @@ class SuperAppBase(Script):
             # this means the arguments are either all for the super
             # app or the app.
             opts = self._getOptions()
-            names = opts.keys()
+            names = list(opts.keys())
             if _argName(argv[1]) in names:
                 for arg in argv[2:]:
                     assert _argName(arg) in names, err

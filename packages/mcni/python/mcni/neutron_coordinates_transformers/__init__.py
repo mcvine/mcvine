@@ -16,7 +16,7 @@ def copyright():
     return "mcni.neutron_coordinates_transformers module: Copyright (c) 2007 Jiao Lin";
 
 
-from _transformers import default
+from ._transformers import default
 
 
 # version

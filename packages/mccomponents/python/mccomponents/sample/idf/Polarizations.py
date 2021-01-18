@@ -12,26 +12,27 @@ strSize = calcsize('<s')
 def write(Pols,filename='Polarizations',comment=''):
     """Takes numpy Polarizations with shape (N_q,N_b*D,N_b,D) and writes \n
     to binary file."""
-    f=open(filename,'w')
-    f.write(pack('<64s','Polarizations'))
-    f.write(pack('<i',version))
-    f.write(pack('<1024s',comment))
-    res = numpy.zeros( Pols.shape + (2,) )
-    res[:,:,:,:,0] = numpy.real(Pols)
-    res[:,:,:,:,1] = numpy.imag(Pols)
-    f.write(pack('<i',res.shape[3]))
-    f.write(pack('<i',res.shape[2]))
-    f.write(pack('<i',res.shape[0]))
-    #  print res.shape
-    res = tuple( res.reshape( (-1) ) )
-    f.write( pack('<%id' % len(res),*res) )
-    #  print 'len',len(res)
+    with open(filename,'wb') as f:
+        f.write(pack('<64s',b'Polarizations'))
+        f.write(pack('<i',version))
+        f.write(pack('<1024s',comment.encode('ascii')))
+        res = numpy.zeros( Pols.shape + (2,) )
+        res[:,:,:,:,0] = numpy.real(Pols)
+        res[:,:,:,:,1] = numpy.imag(Pols)
+        f.write(pack('<i',res.shape[3]))
+        f.write(pack('<i',res.shape[2]))
+        f.write(pack('<i',res.shape[0]))
+        #  print res.shape
+        res = tuple( res.reshape( (-1) ) )
+        f.write( pack('<%id' % len(res),*res) )
+        #  print 'len',len(res)
     return
 
 def read(filename='Polarizations'):
     """Takes filename, returns a tuple with information and Polarizations \n
     as a numpy."""
-    f=open(filename,'r').read()
+    with open(filename,'rb') as stream:
+        f = stream.read()
     i = 0
     filetype, = unpack('<64s',f[i:i+64*strSize])          ; i += 64*strSize
     version,  = unpack('<i',f[i:i+intSize])               ; i += intSize
@@ -41,5 +42,5 @@ def read(filename='Polarizations'):
     res       = unpack('<%id' % (N_q*N_b*D*N_b*D*2),f[i:])
     res = numpy.array(res)
     res.shape = (N_q,N_b*D,N_b,D,2)
-    return (filetype.strip('\x00'),version,comment.strip('\x00')),res
+    return (filetype.strip(b'\x00').decode(),version,comment.strip(b'\x00').decode()),res
 

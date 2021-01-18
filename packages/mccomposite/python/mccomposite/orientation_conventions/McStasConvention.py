@@ -12,7 +12,7 @@
 #
 
 
-from AbstractOrientationConvention import AbstractOrientationConvention as base
+from .AbstractOrientationConvention import AbstractOrientationConvention as base
 class McStasConvention(base):
 
     """convert rotation angles to rotation matrix using mcstas convention

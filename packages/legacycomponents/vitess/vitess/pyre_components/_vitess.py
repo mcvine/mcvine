@@ -1,16 +1,7 @@
 #!/usr/bin/env python
 #
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Jiao Lin <jiao.lin@gmail.com>
 #
-#                                   Jiao Lin
-#                      California Institute of Technology
-#                      (C) 2007-2011  All Rights Reserved
-#
-# {LicenseText}
-#
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#
-
 
 
 # inherit from this class in addition to the Actor class will make the actor
@@ -26,7 +17,6 @@ class AcceptArbitraryInputMixin:
                 setattr(self.inventory, k, v)        
         return []
 
-    
     def _listing(self, registry):
         if not registry: return []
         listing = [
@@ -45,15 +35,14 @@ class AcceptArbitraryInputMixin:
 
 from mcni.pyre_support.AbstractComponent import AbstractComponent
 class VitessBase(AcceptArbitraryInputMixin, AbstractComponent):
-    
+
     supplier = 'vitess'
     category = 'optics'
     type = 'Vitess'
 
     class Inventory(AbstractComponent.Inventory):
-        
+
         import pyre.inventory
-        
 
 
 def vitess(modulename=None):
@@ -93,7 +82,6 @@ def vitess(modulename=None):
                 self._createEngine()
             return
 
-        
         def _createEngineArgs(self):
             name = self.inventory.name
             args = [name, modulename]
@@ -113,11 +101,9 @@ def vitess(modulename=None):
             return
 
         pass
-    
+
     return Vitess
 
 
-# version
-__id__ = "$Id$"
-
 # End of file 
+

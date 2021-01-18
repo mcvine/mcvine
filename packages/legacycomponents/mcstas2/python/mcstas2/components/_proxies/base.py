@@ -30,12 +30,15 @@ class Component(AbstractComponent, ParallelComponent):
             # self.__cpp_instance is an instance created
             # by factory methods auto-generated from mcstas components
             # see template code in mcstas2.wrappers.pymodule.factorymethod_py
-            self.__cpp_instance = self._cpp_instance_factory(**self._factory_kwds)
+            kwds = self._factory_kwds
+            key = 'restore_neutron'
+            if key in kwds: del kwds[key]
+            self.__cpp_instance = self._cpp_instance_factory(**kwds)
         return self.__cpp_instance
 
     # allow change attributes after construction, but before self._cpp_instance is accessed
     def __setattr__(self, name, value):
-        if hasattr(self, "_factory_kwds") and name in self._factory_kwds:
+        if "_factory_kwds" in self.__dict__ and name in self._factory_kwds:
             self._factory_kwds[name] = value
             return value
         return object.__setattr__(self, name, value)

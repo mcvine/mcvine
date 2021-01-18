@@ -12,7 +12,7 @@
 #
 
 
-from AbstractSQE import AbstractSQE as base
+from .AbstractSQE import AbstractSQE as base
 class SQE_fromexpression(base):
 
     def __init__(self, expression):

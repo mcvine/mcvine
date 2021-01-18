@@ -57,7 +57,7 @@ class SimulationChain(Composite):
         neutron_coords_transformer, 
         context = None,
         ):
-        from SimulationNode import SimulationNode
+        from .SimulationNode import SimulationNode
 
         nodes = {}
         connections = []

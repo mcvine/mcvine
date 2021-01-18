@@ -41,13 +41,13 @@ class Class:
     def constructors(self):
         ctorname = self.name
         methods = self.public_methods
-        return filter( lambda x: x.name == ctorname, methods )
+        return [x for x in methods if x.name == ctorname]
     
 
     def destructors(self):
         dtorname = '~%s' % self.name
         methods = self.public_methods
-        return filter( lambda x: x.name == dtorname, methods )
+        return [x for x in methods if x.name == dtorname]
     
 
     def identify(self, visitor): return visitor.onClass(self)
@@ -55,9 +55,9 @@ class Class:
     pass # end of Class
 
 
-from Method import Method
-from Member import Member
-from Argument import Argument
+from .Method import Method
+from .Member import Member
+from .Argument import Argument
 
 
 def argument2Member( arg ):

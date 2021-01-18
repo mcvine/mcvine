@@ -78,7 +78,7 @@ merge_and_normalize(%r, %r, %r)
             path = os.path.join(outdir, path)
         
         if not append and os.path.exists( path ):
-            raise RuntimeError, "Neutron storage %r already exists. To append neutrons to this storage, please use keyword 'append=1'" % path
+            raise RuntimeError("Neutron storage %r already exists. To append neutrons to this storage, please use keyword 'append=1'" % path)
         
         if append: mode='a'
         else: mode = 'w'

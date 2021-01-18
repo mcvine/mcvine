@@ -31,7 +31,7 @@ class SimplePowderDiffractionKernel(base):
         if peakspath:
             env = {}
             s = open(peakspath).read()
-            exec s in env
+            exec(s, env)
             peaks = env['peaks']
             unitcell_volume = env['unitcell_volume']
             xs = env['cross_sections']
@@ -42,8 +42,8 @@ class SimplePowderDiffractionKernel(base):
             unitcell_volume = laz.lattice.volume
             xs = laz.cross_sections
         else:
-            raise ValueError, "SimplePowderDiffractionKernel needs path to "\
-                  "the peaks datafile (laz or peaks.py)"
+            raise ValueError("SimplePowderDiffractionKernel needs path to "\
+                  "the peaks datafile (laz or peaks.py)")
         
         from mccomponents.sample.diffraction import simplepowderdiffractionkernel as f
         return f(Dd_over_d, DebyeWaller_factor, peaks, 
@@ -53,7 +53,7 @@ class SimplePowderDiffractionKernel(base):
     pass # end of SimplePowderDiffractionKernel
 
 
-from HomogeneousScatterer import HomogeneousScatterer
+from .HomogeneousScatterer import HomogeneousScatterer
 HomogeneousScatterer.onSimplePowderDiffractionKernel = HomogeneousScatterer.onKernel
 
 

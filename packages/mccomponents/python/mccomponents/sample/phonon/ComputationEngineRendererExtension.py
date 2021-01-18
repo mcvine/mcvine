@@ -29,7 +29,7 @@ class ComputationEngineRendererExtension:
         # get unit cell
         scatterer = kernel.scatterer_origin
         try: unitcell = scatterer.phase.unitcell
-        except AttributeError, err:
+        except AttributeError as err:
             raise "Cannot obtain unitcell from scatterer %s, %s" % (
                 scatterer.__class__.__name__, scatterer.name )
 
@@ -57,7 +57,7 @@ class ComputationEngineRendererExtension:
         # get unit cell
         scatterer = kernel.scatterer_origin
         try: unitcell = scatterer.phase.unitcell
-        except AttributeError, err:
+        except AttributeError as err:
             raise "Cannot obtain unitcell from scatterer %s, %s" % (
                 scatterer.__class__.__name__, scatterer.name )
 
@@ -77,7 +77,7 @@ class ComputationEngineRendererExtension:
         try:
             dos = kernel.dos
         except AttributeError:
-            raise NotImplementedError, "Should implement a way to extract dos"
+            raise NotImplementedError("Should implement a way to extract dos")
         # c object of dos
         cdos = dos.identify(self)
         # c object of DW calculator
@@ -104,7 +104,7 @@ class ComputationEngineRendererExtension:
         # get unit cell
         scatterer = kernel.scatterer_origin
         try: unitcell = scatterer.phase.unitcell
-        except AttributeError, err:
+        except AttributeError as err:
             raise "Cannot obtain unitcell from scatterer %s, %s" % (
                 scatterer.__class__.__name__, scatterer.name )
 
@@ -124,7 +124,7 @@ class ComputationEngineRendererExtension:
         try:
             dos = kernel.dos
         except AttributeError:
-            raise NotImplementedError, "Should implement a way to extract dos"
+            raise NotImplementedError("Should implement a way to extract dos")
         # c object of dos
         cdos = dos.identify(self)
         # c object of DW calculator
@@ -159,7 +159,7 @@ class ComputationEngineRendererExtension:
         
         # get unit cell
         try: unitcell = scatterer.phase.unitcell
-        except AttributeError, err:
+        except AttributeError as err:
             raise "Cannot obtain unitcell from scatterer %s, %s" % (
                 scatterer.__class__.__name__, scatterer.name )
 
@@ -170,7 +170,7 @@ class ComputationEngineRendererExtension:
         try:
             dos = kernel.dispersion.dos
         except AttributeError:
-            raise NotImplementedError, "Should implement a way to extract dos from dispersion"
+            raise NotImplementedError("Should implement a way to extract dos from dispersion")
         # c object of dos
         cdos = self.factory.dos_fromhistogram( dos )
         # c object of DW calculator
@@ -207,7 +207,7 @@ class ComputationEngineRendererExtension:
         # get unit cell
         scatterer = kernel.scatterer_origin
         try: unitcell = scatterer.phase.unitcell
-        except AttributeError, err:
+        except AttributeError as err:
             raise "Cannot obtain unitcell from scatterer %s, %s" % (
                 scatterer.__class__.__name__, scatterer.name )
 
@@ -221,7 +221,7 @@ class ComputationEngineRendererExtension:
         try:
             dos = kernel.dispersion.dos
         except AttributeError:
-            raise NotImplementedError, "Should implement a way to extract dos from dispersion"
+            raise NotImplementedError("Should implement a way to extract dos from dispersion")
         # c object of dos
         cdos = self.factory.dos_fromhistogram( dos )
         # c object of DW calculator
@@ -260,7 +260,7 @@ class ComputationEngineRendererExtension:
         try:
             dos = kernel.dos
         except AttributeError:
-            raise NotImplementedError, "Should implement a way to extract dos"
+            raise NotImplementedError("Should implement a way to extract dos")
 
         dos = dos.doshist
         assert dos.__class__.__name__ == 'Histogram', \
@@ -268,7 +268,7 @@ class ComputationEngineRendererExtension:
         
         # get unit cell
         try: unitcell = scatterer.phase.unitcell
-        except AttributeError, err:
+        except AttributeError as err:
             raise "Cannot obtain unitcell from scatterer %s, %s" % (
                 scatterer.__class__.__name__, scatterer.name )
 
@@ -406,9 +406,9 @@ def register( type, renderer_handler_method, override = False ):
     methodname = 'on%s' % name
     if hasattr(Renderer, methodname):
         if not override:
-            raise ValueError , "Cannot register handler for type %s"\
+            raise ValueError("Cannot register handler for type %s"\
                   "%s already registered as handler for type %s" % (
-                type, methodname, _registry[name] )
+                type, methodname, _registry[name] ))
         pass
     
     setattr( Renderer, methodname, renderer_handler_method )

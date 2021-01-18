@@ -24,7 +24,7 @@
 // #define DEBUG2  // for debugging distribution of random x (position along path)
 
 #ifdef DEBUG
-#include "portinfo"
+// #include "portinfo"
 #include "journal/debug.h"
 #endif
 
@@ -223,23 +223,31 @@ mccomponents::HomogeneousNeutronScatterer::interact_path1(mcni::Neutron::Event &
     double prob = distance * atten;
     prob *= sum_of_weights/m_weights.scattering;
 #ifdef DEBUG
-    std::cout << "sigma, distance, attenuation: "
-	      << sigma << ", " << distance << ", " << atten
-	      << "prob factor: " << prob 
-	      << std::endl;
+    debug
+      << journal::at(__HERE__)
+      << "sigma, distance, attenuation: "
+      << sigma << ", " << distance << ", " << atten
+      << "prob factor: " << prob 
+      << journal::endl;
 #endif
 #ifdef DEBUG2
     typedef mcni::Vector3<double> V3d;
-    std::cout 
+    debug
+      << journal::at(__HERE__)
       << "p0=" << ev.probability << ", "
       << "distance=" << distance << ", "
       << "x=" << x << ", "
       << "atten=" << atten << ", "
+      << journal::newline
       ;
 #endif
     ev.probability *= prob;
 #ifdef DEBUG2
-    std::cout << "p1=" << ev.probability << ",";
+    debug
+      << journal::at(__HERE__)
+      << "p1=" << ev.probability << ","
+      << journal::newline
+      ;
     V3d vi = ev.state.velocity;
 #endif
     propagate( ev, x/velocity );
@@ -249,9 +257,11 @@ mccomponents::HomogeneousNeutronScatterer::interact_path1(mcni::Neutron::Event &
     V3d vf = ev.state.velocity;
     V3d vQ = vi - vf;
     double Q = mcni::neutron_units_conversion::v2k * vQ.length();
-    std::cout
+    debug
+      << journal::at(__HERE__)
       << "p2=" << ev.probability << ","
       << "Q=" << Q << ","
+      << journal::newline
       ;
 #endif
     mcni::Neutron::Event save = ev;
@@ -261,10 +271,11 @@ mccomponents::HomogeneousNeutronScatterer::interact_path1(mcni::Neutron::Event &
     double atten2 = calculate_attenuation( save, ev.state.position );
     ev.probability *= atten2;
 #ifdef DEBUG2
-    std::cout 
+    debug
+      << journal::at(__HERE__)
       << "atten2=" << atten2 << ","
       << "p3=" << ev.probability << "," 
-      << std::endl;
+      << journal::endl;
 #endif
     return base_t::scattering;
   }

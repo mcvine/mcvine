@@ -65,13 +65,22 @@ void test()
 	}
       }
 
-  w_t disp( (w_t::n_t)5, QX,QY,QZ, eps_array, E_array );
-  
+  std::vector<double> Emin(15), Emax(15);
+  for (int i=0; i<15; i++) {
+    Emin[i] = i*10000;
+    Emax[i] = i*10000 + 10.+10.+10.;
+  }
+
+  w_t disp( (w_t::n_t)5, QX,QY,QZ, eps_array, E_array, Emin, Emax );
+
   double x = 0.34, y=0.29, z = 0.87;
   w_t::n_t branch = 7, atom = 2;
 
   w_t::epsilon_t eps = disp.polarization( branch, atom, w_t::K_t(x, y, z) );
   std::cout << eps << std::endl;
+
+  std::cout << "Min energy for branch 1:" << disp.min_energy(1) << std::endl;
+  std::cout << "Max energy for branch 1:" << disp.max_energy(1) << std::endl;
 
   double t = x+y+z + branch* 10000 + atom*100;
   assert ( std::abs( eps.x.real() - t ) < 0.001 ) ;

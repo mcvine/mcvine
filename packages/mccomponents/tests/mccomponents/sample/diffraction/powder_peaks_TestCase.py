@@ -22,7 +22,7 @@ def test_d():
 
 def test_peaks():
     for pk in calcpeaks.iter_peaks(fccNi, 300):
-        print pk
+        print(pk)
     return
 
 

@@ -13,12 +13,12 @@
 
 
 def facility(*args, **kwds):
-    from NeutronComponentFacility import NeutronComponentFacility
+    from .NeutronComponentFacility import NeutronComponentFacility
     return NeutronComponentFacility( *args, **kwds )
 
 
 def componentfactory( category, type, supplier = 'mcni'):
-    from component_suppliers import all as getsuppliers
+    from .component_suppliers import all as getsuppliers
     suppliers = getsuppliers()
     suppliername = supplier
     supplier = suppliers[ suppliername ]
@@ -34,8 +34,8 @@ def findcomponentfactory(type, category=None, supplier=None):
     from mcni._find_component import find
     found = find(type, category=category, supplier=supplier)
     if not found: 
-        raise RuntimeError, "cannot find component (type=%s, category=%s, supplier=%s)" % (
-            type, category, supplier)
+        raise RuntimeError("cannot find component (type=%s, category=%s, supplier=%s)" % (
+            type, category, supplier))
     type, category, supplier = found
     return componentfactory(category, type, supplier)
         

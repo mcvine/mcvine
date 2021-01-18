@@ -30,7 +30,7 @@ tmin = mod2sample/vi
 sample2det = instrument.getDetectorSystem().shape().in_radius
 tmax = tmin + sample2det/e2v( 5 )
 tofparams = tmin, tmax, (tmax-tmin)/1000
-print tofparams
+print(tofparams)
 
 Idpt_filename = 'Idpt.h5' 
 

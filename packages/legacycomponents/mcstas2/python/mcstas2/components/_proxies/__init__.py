@@ -9,7 +9,7 @@ def createFactory(category, type, module):
     Proxy = getProxy(category, type)
     name = "%s_%s" % (category.capitalize(), type.capitalize())
     code = "class %s(Proxy): pass" % (name,)
-    d = dict(locals()); exec code in d; kls = d[name]
+    d = dict(locals()); exec(code, d); kls = d[name]
     factory = module.factory
     def new_factory(*args, **kwds):
         return kls(factory, *args, **kwds)

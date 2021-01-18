@@ -44,7 +44,7 @@ class TestCase(unittest.TestCase):
 
         # run command
         if os.system(cmd):
-            raise RuntimeError, "%s failed" % cmd
+            raise RuntimeError("%s failed" % cmd)
         # run post-processing
         from mcni.pyre_support.Instrument import _run_ppsd
         ppsd = os.path.join(outputdir, 'post-processing-scripts') 
@@ -55,7 +55,7 @@ class TestCase(unittest.TestCase):
         ctime = time.time()
 
         #check output directory exists
-        self.assert_( os.path.exists( outputdir ) )
+        self.assertTrue( os.path.exists( outputdir ) )
         # make sure that the final histogram is identical to the 
         # sum of all the final histograms in different nodes
         from mcni.components.HistogramBasedMonitorMixin import hist_mcs_sum
@@ -68,8 +68,8 @@ class TestCase(unittest.TestCase):
         p = os.path.join(outputdir, 'IE.h5')
         ha = load(p, getOnlyEntry(p))
         
-        self.assert_((h.I == ha.I).all())
-        self.assert_((h.E2 == ha.E2).all())
+        self.assertTrue((h.I == ha.I).all())
+        self.assertTrue((h.E2 == ha.E2).all())
         
         return
     

@@ -33,7 +33,7 @@ class TestCase(unittest.TestCase):
         i.append(mcvine.components.monitors.E_monitor('monitor', filename='IE.dat'), position=(0,0,1))
         #
         neutrons = i.simulate(5,outputdir="out-mcvine", overwrite_datafiles=True, iteration_no=0)
-        print neutrons
+        print(neutrons)
         return
 
     

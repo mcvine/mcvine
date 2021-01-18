@@ -12,7 +12,7 @@
 #
 
 
-from Info import Info
+from .Info import Info
 info = Info( lib = '/lib', include = '/include' ) # for mm, this is OK
 
 

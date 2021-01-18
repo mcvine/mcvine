@@ -12,7 +12,7 @@
 #
 
 
-from AbstractComponent import AbstractComponent
+from .AbstractComponent import AbstractComponent
 
 class DummyComponent(AbstractComponent):
 

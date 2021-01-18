@@ -12,8 +12,8 @@
 #
 
 
-from HHMill import HHMill
-from CCMill import CCMill
+from .HHMill import HHMill
+from .CCMill import CCMill
 
 def createContentsOfHHandCC( klass ):
     "create .h and .cc files for a c++ class"
@@ -49,8 +49,8 @@ def createHHandCC( klass, pathToSave ):
     from os.path import join
     from os import makedirs
     try: makedirs( pathToSave )
-    except OSError, msg:
-        if "File exists" in msg: pass
+    except OSError as msg:
+        if "File exists" in str(msg): pass
         else: raise
         pass
 

@@ -26,7 +26,7 @@ class TestCase(unittest.TestCase):
 
     interactive = False
 
-    def test(self):
+    def _test(self):
         "fcc Ni scatterer constructed from an xml file"
         
         from mcstas2 import componentfactory

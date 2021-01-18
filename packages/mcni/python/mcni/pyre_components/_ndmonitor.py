@@ -29,7 +29,7 @@ class Quantity:
     unit = ''
 
     def __init__(self, **kwds):
-        for k,v in kwds.iteritems():
+        for k,v in kwds.items():
             setattr(self, k, v)
 
 
@@ -151,17 +151,17 @@ def ndmonitor(*quantities, **kwds):
 
                 name = q
                 code = '%smin = pyre.inventory.float("%smin", default=0)' % (name, name)
-                exec code
+                exec(code)
                 code = '%smin.meta["tip"] = "minimum of %s"' % (name, name)
-                exec code
+                exec(code)
                 code = '%smax = pyre.inventory.float("%smax", default=1)' % (name, name)
-                exec code
+                exec(code)
                 code = '%smax.meta["tip"] = "maximum of %s"' % (name, name)
-                exec code
+                exec(code)
                 code = 'n%s = pyre.inventory.int("n%s", default=10)' % (name, name)
-                exec code
+                exec(code)
                 code = 'n%s.meta["tip"] = "number of bins for %s"' % (name, name)
-                exec code
+                exec(code)
                 
                 continue
             
@@ -213,7 +213,7 @@ def ndmonitor(*quantities, **kwds):
             if kwds:
                 quantity2expression = q2e.copy()
                 quantity2unit = q2u.copy()
-                for k, v in kwds.iteritems():
+                for k, v in kwds.items():
                     if k.endswith('_unit'):
                         quantity2unit[k[:-5]] = v
                     else:

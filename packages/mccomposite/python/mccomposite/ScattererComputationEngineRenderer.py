@@ -17,12 +17,12 @@ import journal
 debug = journal.debug( "mccomposite.ScattererComputationEngineRenderer" )
 
 
-import units
+from . import units
 
 
 
-from AbstractVisitor import AbstractVisitor
-from geometry.ShapeComputationEngineRenderer import ShapeComputationEngineRenderer
+from .AbstractVisitor import AbstractVisitor
+from .geometry.ShapeComputationEngineRenderer import ShapeComputationEngineRenderer
 
 
 class ScattererComputationEngineRenderer( AbstractVisitor, ShapeComputationEngineRenderer ):
@@ -115,9 +115,9 @@ def register( scatterer_type, renderer_handler, override = False ):
     methodname = 'on%s' % name
     if hasattr(ScattererComputationEngineRenderer, methodname):
         if not override:
-            raise ValueError , "Cannot register handler for type %s"\
+            raise ValueError("Cannot register handler for type %s"\
                   "%s already registered as handler for type %s" % (
-                scatterer_type, methodname, _registry[name] )
+                scatterer_type, methodname, _registry[name] ))
         pass
     
     setattr( ScattererComputationEngineRenderer, methodname, renderer_handler )
@@ -128,7 +128,7 @@ def register( scatterer_type, renderer_handler, override = False ):
 
 _registry = {}
 def _init_registry():
-    from CompositeScatterer import CompositeScatterer
+    from .CompositeScatterer import CompositeScatterer
     _registry['CompositeScatterer'] = CompositeScatterer
     return
 

@@ -12,17 +12,22 @@
 #
 
 
-import units
+from . import units
 meV = units.energy.meV
 angstrom = units.length.angstrom
 
 
+def singlecrystaldiffractionkernel(
+        basis_vectors, hkllist, mosaic, Dd_over_d, abs_xs
+    ):
+    from .SingleCrystalDiffractionKernel import SingleCrystalDiffractionKernel as f
+    return f(basis_vectors, hkllist, mosaic, Dd_over_d, abs_xs)
+
 def simplepowderdiffractionkernel(
     Dd_over_d, DebyeWaller_factor, peaks, **kwds
     ):
-    from SimplePowderDiffractionKernel import SimplePowderDiffractionKernel as f
+    from .SimplePowderDiffractionKernel import SimplePowderDiffractionKernel as f
     return f(Dd_over_d, DebyeWaller_factor, peaks, **kwds)
-
 
 def create_peaks_py(path, structure, T, max_index=5):
     from . import calcpeaks
@@ -53,11 +58,11 @@ class cross_sections:
     return
     
 
-import ComputationEngineRendererExtension
+from . import ComputationEngineRendererExtension
 
 #make bindings available
 def _import_bindings():
-    import bindings
+    from . import bindings
     return
 
 _import_bindings()

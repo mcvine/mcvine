@@ -21,7 +21,7 @@ import mccomposite.mccompositebp as b1
 import mcni.mcnibp as b2
 
 
-import numpy
+import numpy as np
 try:
     from danse.ins import numpyext
 except ImportError:
@@ -42,14 +42,13 @@ class New:
     def ndarray( self, npyarr ):
         '''create boost python instance of NdArray object
     arguments:
-        npyarr: numpy array. it must be a contiguous array.
+        npyarr: np array. it must be a contiguous array.
         '''
-        assert npyarr.dtype == numpy.double, "only work for double array for this time"
-        
+        assert npyarr.dtype == np.double, "only work for double array for this time"
+        # wrap pointer
         ptr = numpyext.getdataptr( npyarr )
-        
         wp = bpext.wrap_native_ptr( ptr )
-        
+        # shape
         shape = b.vector_uint( 0 )
         for i in npyarr.shape: shape.append( i )
 
@@ -70,7 +69,6 @@ class New:
         incoherent_cross_section,
         absorption_cross_section,
         ):
-        
         '''create a boost python object of AtomicScatterer
 
     position: position of atom (unit: angstrom)
@@ -88,7 +86,6 @@ class New:
         ascatterer.incoherent_cross_section = incoherent_cross_section
         ascatterer.absorption_cross_section = absorption_cross_section
         return ascatterer
-    
 
     def atomicscatterer_fromSite(self, site):
         '''create a boost python object of AtomicScatterer
@@ -97,7 +94,7 @@ class New:
     '''
         # position = site.getPosition()
         position = site.xyz_cartn
-        print "cartesian coordinates of atom:", position
+        print("cartesian coordinates of atom:", position)
         # atom = site.getAtom()
         atom = site
         import periodictable
@@ -201,9 +198,9 @@ class New:
     Qaxes: a 3-tuple of Q axes. Each item is a 3-tuple of (min, step, n)
         Example: [ (-10., 1., 20), (-10., 1., 20), (-10., 1., 20) ]
         n is number of points on axis.
-    eps_npyarr: numpy array of poloarization. shape  must be
+    eps_npyarr: np array of poloarization. shape  must be
         nQx, nQy, nQz, nBranches, nAtoms, 3, 2 
-    E_npyarr: numpy array of phonon energy. shape  must be
+    E_npyarr: np array of phonon energy. shape  must be
         nQx, nQy, nQz, nBranches 
     '''
         #c++ engine require three values for each Qaxis:
@@ -216,13 +213,18 @@ class New:
         
         eps_arr = self.ndarray( eps_npyarr )
         E_arr = self.ndarray( E_npyarr )
-        
+        # obtain min and max and store in vector_double
+        E_view = E_npyarr.view(); E_view.shape = -1, E_npyarr.shape[-1]
+        Emin = np.min(E_view, axis=0); Emax = np.max(E_view, axis=0)
+        v_Emin = self.vector_double(0); v_Emax = self.vector_double(0)
+        v_Emin.extend(Emin); v_Emax.extend(Emax)
+ 
         disp = b.LinearlyInterpolatedDispersionOnGrid_3D_dblarrays(
-            natoms, cQaxes[0], cQaxes[1], cQaxes[2], eps_arr, E_arr )
+            natoms, cQaxes[0], cQaxes[1], cQaxes[2], eps_arr, E_arr, v_Emin, v_Emax)
 
         # need linear transformation
         import numpy.linalg as nl; 
-        m = nl.inv( numpy.array([Qvector for Qvector, n in Qaxes]).T )
+        m = nl.inv( np.array([Qvector for Qvector, n in Qaxes]).T )
         disp = self.changecoordssystemfordispersion(disp, m)
         return disp
 

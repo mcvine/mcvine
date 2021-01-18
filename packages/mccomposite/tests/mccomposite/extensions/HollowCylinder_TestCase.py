@@ -28,12 +28,12 @@ class TestCase(unittest.TestCase):
 
     def test(self):
         '''HollowCylinder'''
-        print "This test creates a hollow cylinder."\
+        print("This test creates a hollow cylinder."\
               "It does not interact with neutrons. It prints the info "\
               "about the neutrons passing thru them, however. "\
               "This test then send one neutron through this hollow cylinder, "\
               "and we should see two printings of neutron info, "\
-              "differing only on time-of-flight."
+              "differing only on time-of-flight.")
         # create a shape
         shape = HollowCylinder.HollowCylinder( 1, 1.2, 1 )
         import UseNeutronPrinter2

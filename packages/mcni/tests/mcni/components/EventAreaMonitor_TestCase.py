@@ -37,7 +37,7 @@ class TestCase(unittest.TestCase):
         m.process(b)
 
         self.assertEqual(len(m.events), N)
-        self.assert_((m.events == m.events[0]).all())
+        self.assertTrue((m.events == m.events[0]).all())
         e = m.events[0]
         self.assertEqual(e['pixelID'], 5050)
         self.assertEqual(e['tofChannelNo'], 0)

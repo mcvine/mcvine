@@ -3,6 +3,8 @@ set ( LIB_NAME mcstas2_share )
 set ( SRC_FILES 
   read_table-lib.cc
   monitor_nd-lib.cc
+  ref-lib.cc
+  sns_source-lib.cc
   )
 # ----------------------------------------
 

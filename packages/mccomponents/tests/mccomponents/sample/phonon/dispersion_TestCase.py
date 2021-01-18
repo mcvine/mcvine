@@ -45,7 +45,7 @@ class TestCase(unittest.TestCase):
         from mccomponents.sample.phonon.bindings import default
         binding = default()
         es = [ disp.energy(0, binding.Q(q)) for q in qs ]
-        print qs, es
+        print(qs, es)
         return
 
 
@@ -82,13 +82,13 @@ class TestCase(unittest.TestCase):
         Qarr = np.array(qs)
         Es2 = np.zeros((len(qs), disp.nBranches()))
         disp.energy_arr(binding.ndarray(Qarr), binding.ndarray(Es2))
-        self.assert_(np.allclose( np.array(Es1), Es2 ))
+        self.assertTrue(np.allclose( np.array(Es1), Es2 ))
 
         real_pols2 = np.zeros( (len(qs), disp.nBranches(), disp.nAtoms(), 3) )
         imag_pols2 = np.zeros( (len(qs), disp.nBranches(), disp.nAtoms(), 3) )
         disp.polarization_arr(binding.ndarray(Qarr), binding.ndarray(real_pols2), binding.ndarray(imag_pols2))
         pols2 = real_pols2 + 1j*imag_pols2
-        self.assert_(np.allclose( np.array(pols1), pols2 ))
+        self.assertTrue(np.allclose( np.array(pols1), pols2 ))
 
         Nq = 1000000
         Qbigarr = np.zeros((Nq, 3))

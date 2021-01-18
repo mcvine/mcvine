@@ -37,7 +37,7 @@ class IsotropicKernel_TestCase(unittest.TestCase):
         ev = mcni.neutron( r = (-5,0,0), v = (3000,0,0) )
         
         ckernel.scatter(ev)
-        print ev
+        print(ev)
         return
 
     pass  # end of IsotropicKernel_TestCase

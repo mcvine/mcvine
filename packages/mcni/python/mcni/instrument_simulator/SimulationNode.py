@@ -54,8 +54,8 @@ class SimulationNode(Connectable):
             self.processor(neutrons)
         except NotImplementedError:
             import traceback as tb
-            raise NotImplementedError, "component %s at %s rotated %s has not implemented method 'process'\nOriginal exception: %s" % (
-                self.component.name, position, orientation, tb.format_exc())
+            raise NotImplementedError("component %s at %s rotated %s has not implemented method 'process'\nOriginal exception: %s" % (
+                self.component.name, position, orientation, tb.format_exc()))
         
         self._outputs['neutrons'] = neutrons
         self._outputs['position'] = self.position

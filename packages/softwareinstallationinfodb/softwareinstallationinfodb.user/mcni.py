@@ -12,7 +12,7 @@
 #
 
 
-from mcvine import info
+from .mcvine import info
 
 
 # version

@@ -85,7 +85,7 @@ class homogeneous_scatterer_TestCase(unittest.TestCase):
         for i in range(10):
             ev = mcni.neutron( r = (0,0,-5), v = (0,0,1) )
             cscatterer.scatter(ev)
-            print ev
+            print(ev)
             continue
         return
     

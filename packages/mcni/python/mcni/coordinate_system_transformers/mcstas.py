@@ -34,18 +34,18 @@ def transformCoordinateSystem(obj1abspos, obj1absori, obj2relpos, obj2relori):
 
 def test_template(obj1abspos, obj1absori, obj2abspos, obj2absori):
     from mcni.neutron_coordinates_transformers import mcstas
-    print 'obj1 absolute pos, ori:',  obj1abspos, obj1absori
-    print 'obj2 absolute pos, ori:',  obj2abspos, obj2absori
+    print('obj1 absolute pos, ori:',  obj1abspos, obj1absori)
+    print('obj2 absolute pos, ori:',  obj2abspos, obj2absori)
 
     obj2relpos, obj2relori = mcstas.relativePositionOrientation( 
         obj1abspos, obj1absori, obj2abspos, obj2absori,
         )
-    print 'relative pos, ori:', obj2relpos, obj2relori
+    print('relative pos, ori:', obj2relpos, obj2relori)
     
     obj2abspos_, obj2absori_ = transformCoordinateSystem(
         obj1abspos, obj1absori, obj2relpos, obj2relori)
     
-    print 'computed absolute pos, ori:', obj2abspos_, obj2absori_
+    print('computed absolute pos, ori:', obj2abspos_, obj2absori_)
     
     import numpy.testing as nt
     nt.assert_array_almost_equal(obj2abspos, obj2abspos_)

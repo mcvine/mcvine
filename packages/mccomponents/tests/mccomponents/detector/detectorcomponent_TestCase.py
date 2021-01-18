@@ -64,20 +64,20 @@ class TestCase(unittest.TestCase):
         t = struct.unpack( fmt * (len(s) / struct.calcsize( fmt )) , s )
         #print t
         n = len(t)/len(fmt)
-        print "number of cases where absorption happen: ", n
+        print("number of cases where absorption happen: ", n)
         self.assertLessThan(abs(n-(nevents*absorption_weight)), 3*N.sqrt(n))
 
         t = N.array(t)
         t.shape = n, 3
         p = t[:, 2].sum()
-        print "absorbed neutrons: ", p
-        self.assert_( p>nevents*0.9 and p<nevents )
+        print("absorbed neutrons: ", p)
+        self.assertTrue( p>nevents*0.9 and p<nevents )
         return
 
     
     def assertLessThan(self, left, right):
         if left >= right:
-            raise AssertionError, "%s is not smaller than %s" % (left, right)
+            raise AssertionError("%s is not smaller than %s" % (left, right))
 
     pass  # end of TestCase
 

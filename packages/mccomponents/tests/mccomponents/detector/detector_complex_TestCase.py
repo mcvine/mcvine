@@ -111,7 +111,7 @@ class detector_TestCase(unittest.TestCase):
         cds = mh.scattererEngine( ds, coordinate_system = "InstrumentScientist" )
 
         for i in range(nevents):
-            if i%1000 == 0: print i
+            if i%1000 == 0: print(i)
             ev = mcni.neutron( r = (-L1,0,0), v = (vi,0,0) )
             cds.scatter(ev)
             continue
@@ -123,20 +123,20 @@ class detector_TestCase(unittest.TestCase):
         from mccomponents.detector.reduction_utils import readevents
         events = readevents( outfilename )
         n = len(events)
-        print "number of cases where absorption happen: ", n
-        self.assert_( abs(n-(nevents*absorption_weight)) < 3*N.sqrt(n) )
+        print("number of cases where absorption happen: ", n)
+        self.assertTrue( abs(n-(nevents*absorption_weight)) < 3*N.sqrt(n) )
 
         p = sum([ e[2] for e in events ] )
-        print "absorbed neutrons: ", p
-        self.assert_( abs( p-(nevents*0.91) ) < 3*N.sqrt(p) )
+        print("absorbed neutrons: ", p)
+        self.assertTrue( abs( p-(nevents*0.91) ) < 3*N.sqrt(p) )
 
         t = L/vi
         tchannel = int( (t-tmin)/tstep )
         for e in events:
             # should hit center of tube
-            self.assert_( abs(e[0] - (npixelsperdet*((packindexat0+0.5)*ndetsperpack)) ) <= 1 )
+            self.assertTrue( abs(e[0] - (npixelsperdet*((packindexat0+0.5)*ndetsperpack)) ) <= 1 )
             # tof channel
-            self.assert_( abs(e[1] - tchannel) <= 1 )
+            self.assertTrue( abs(e[1] - tchannel) <= 1 )
             continue
         return
 

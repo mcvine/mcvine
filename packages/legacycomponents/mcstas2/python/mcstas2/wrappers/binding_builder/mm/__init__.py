@@ -18,7 +18,7 @@ def build( binding, site_package_path = None ):
         warning = journal.warning( 'binding_builder.mm' )
         warning.log( 'mm can only export python modules to predefined $EXPORT_ROOT/modules' )
         pass
-    from builder import build
+    from .builder import build
     build( binding )
     return
 

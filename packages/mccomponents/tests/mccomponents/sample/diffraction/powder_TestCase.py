@@ -54,7 +54,7 @@ class TestCase(unittest.TestCase):
         
         # compute
         for Ei in [10, 100, 1000, 10000]:
-            print Ei, total_scattering_cross_section(Ei, dp)
+            print(Ei, total_scattering_cross_section(Ei, dp))
         return
     
     

@@ -4,7 +4,7 @@
 #
 
 
-from AbstractNode import AbstractNode
+from .AbstractNode import AbstractNode
 
 
 class InverseVelocityAbsorption(AbstractNode):
@@ -16,7 +16,7 @@ class InverseVelocityAbsorption(AbstractNode):
         AbstractNode.__init__(self, document )
         # convert to dictionary
         attrs = {}
-        for k,v in attributes.items(): attrs[str(k)] = self._parse(v)
+        for k,v in list(attributes.items()): attrs[str(k)] = self._parse(v)
 
         # new element
         self.element = self.elementFactory(**attrs)

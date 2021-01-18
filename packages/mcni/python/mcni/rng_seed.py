@@ -24,7 +24,7 @@ nbits_seedt = 16
 
 
 def usetimer_p():
-    from utils.mpi import rank as mpirank
+    from .utils.mpi import rank as mpirank
     return usetimer() + mpirank
 
 
@@ -35,7 +35,7 @@ def use( strategy ):
     global seed
     seed = _methods.get( strategy )
     if seed is None:
-        raise ValueError, "Invalid strategy: %r" % strategy
+        raise ValueError("Invalid strategy: %r" % strategy)
     return
 
 _methods = {

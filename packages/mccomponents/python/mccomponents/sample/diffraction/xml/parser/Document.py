@@ -21,6 +21,7 @@ class Document(base):
 
     tags = [
         'SimplePowderDiffractionKernel',
+        'SingleCrystalDiffractionKernel',
         ]
 
 

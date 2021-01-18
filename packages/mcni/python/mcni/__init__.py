@@ -41,14 +41,14 @@ def simulate(
     context: the context of the simulation
     '''
     if context is None:
-        from SimulationContext import SimulationContext
+        from .SimulationContext import SimulationContext
         context = SimulationContext()
-        for k, v in kwds.iteritems():
+        for k, v in kwds.items():
             setattr(context, k, v)
             continue
         
     if simulator is None:
-        from instrument_simulator import default_simulator
+        from .instrument_simulator import default_simulator
         simulator = default_simulator
         pass
     return simulator.run( 
@@ -85,13 +85,13 @@ def run_ppsd_in_parallel(path, nodes):
 
 def geometer( *args, **kwds ):
     'factory constructs a geometer'
-    from Geometer import Geometer
+    from .Geometer import Geometer
     return Geometer( *args, **kwds )
 
 
 def instrument( *args, **kwds ):
     'create an instrument that is a container of neutron components'
-    from Instrument import Instrument
+    from .Instrument import Instrument
     return Instrument( *args, **kwds )
 
 
@@ -103,7 +103,7 @@ def findcomponentfactory(*args, **kwds):
     findcomponentfactory(type="MonochromaticSource", supplier="mcni")
     findcomponentfactory(type="MonochromaticSource", category="sources", supplier="mcni")
     '''
-    from _find_component import find
+    from ._find_component import find
     type, category, supplier = find(*args, **kwds)
     return componentfactory(type=type, category=category, supplier=supplier)
 
@@ -119,7 +119,7 @@ __all__ = [
     ]
 
 
-from bindings import current as binding
+from .bindings import current as binding
 cpp_instance_factories = [
     'neutron_buffer',
     'position',
@@ -130,18 +130,18 @@ cpp_instance_factories = [
     'vector3',
     ]
 for method in cpp_instance_factories:
-    exec '%s = binding.%s' % (method, method)
+    exec('%s = binding.%s' % (method, method))
     continue
 __all__ += cpp_instance_factories
 
 
-from _component_factories import *
-from _component_factories import __all__ as t
+from ._component_factories import *
+from ._component_factories import __all__ as t
 __all__ += t; del t
 
 
-from _component_listing import *
-from _component_listing import __all__ as t
+from ._component_listing import *
+from ._component_listing import __all__ as t
 __all__ += t; del t
 
 

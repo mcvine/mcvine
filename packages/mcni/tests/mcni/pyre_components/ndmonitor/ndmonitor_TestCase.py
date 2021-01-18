@@ -37,7 +37,7 @@ class TestCase(unittest.TestCase):
         cmd = 'mcvine-simulate -components=source,monitor --- -source=Source_simple -monitor="NDMonitor(tof)" -geometer.monitor="(0,0,10),(0,0,0)" -source.E0=100 -source.dE=10 -source.width=0.05 -source.height=0.05 -source.radius=0 -source.dist=9.5 -source.xw=0.05 -source.yh=0.05 -monitor.tofmin=0 -monitor.tofmax=0.005 -monitor.ntof=100 -monitor.filename=itof.h5 --output-dir=out-test1'
         import os
         if os.system(cmd):
-            raise RuntimeError, "%r failed" % cmd
+            raise RuntimeError("%r failed" % cmd)
         return
 
 
@@ -46,7 +46,7 @@ class TestCase(unittest.TestCase):
         cmd = 'mcvine-simulate -components=source,monitor --- -source=Source_simple -monitor="NDMonitor(x,divx)" -geometer.monitor="(0,0,10),(0,0,0)" -source.E0=100 -source.dE=10 -source.width=0.05 -source.height=0.05 -source.radius=0 -source.dist=9.5 -source.xw=0.05 -source.yh=0.05 -monitor.xmin=-0.1 -monitor.xmax=0.1 -monitor.nx=100  -monitor.divxmin=-0.01 -monitor.divxmax=0.01 -monitor.ndivx=100 -monitor.filename=ixdivx.h5 --output-dir=out-test2'
         import os
         if os.system(cmd):
-            raise RuntimeError, "%r failed" % cmd
+            raise RuntimeError("%r failed" % cmd)
         return
 
 
@@ -55,7 +55,7 @@ class TestCase(unittest.TestCase):
         cmd = 'mcvine-simulate -components=source,monitor --- -ncount=1e4 -buffer_size=1000 -source=MonochromaticSource -monitor="NDMonitor(energy)" -geometer.monitor="(0,0,1),(0,0,0)" -source.energy=60 -monitor.energymin=0 -monitor.energymax=100 -monitor.nenergy=100 -monitor.filename=ienergy.h5 --output-dir=out-test3'
         import os
         if os.system(cmd):
-            raise RuntimeError, "%r failed" % cmd
+            raise RuntimeError("%r failed" % cmd)
 
         from histogram.hdf import load
         from histogram.hdf.utils import getOnlyEntry
@@ -99,7 +99,7 @@ class TestCase(unittest.TestCase):
         cmd = cmd_fmt % (xw, yh, position, outdir)
         import os
         if os.system(cmd):
-            raise RuntimeError, "%r failed" % cmd
+            raise RuntimeError("%r failed" % cmd)
 
         from histogram.hdf import load
         from histogram.hdf.utils import getOnlyEntry
@@ -114,11 +114,11 @@ class TestCase(unittest.TestCase):
         histfile = '%s/iw2.h5' % outdir
         cmd = cmd_fmt % (xw, yh, position, outdir)
         if os.system(cmd):
-            raise RuntimeError, "%r failed" % cmd
+            raise RuntimeError("%r failed" % cmd)
 
         f = histfile
         h = load(f, getOnlyEntry(f))
-        self.assert_( h.I.sum() > 0)
+        self.assertTrue( h.I.sum() > 0)
 
     
 

@@ -16,7 +16,7 @@ from mccomponents.homogeneous_scatterer.bindings import default, get
 
 def _import():
     try:
-        import BoostPythonBinding
+        from . import BoostPythonBinding
     except:
         import warnings, journal, traceback
         warnings.warn('binding not imported')

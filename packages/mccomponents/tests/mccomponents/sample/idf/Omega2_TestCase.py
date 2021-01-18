@@ -31,11 +31,11 @@ class TestCase(unittest.TestCase):
     def test0(self):
         from mccomponents.sample.idf.Omega2 import read
         (filetype, version, comment), Omega2 = read( path )
-        print filetype, version, comment
+        print(filetype, version, comment)
         self.assertEqual( filetype, 'Omega2' )
         import numpy
         self.assertEqual( type(Omega2), numpy.ndarray )
-        print len(Omega2)
+        print(len(Omega2))
         return
 
     pass  # end of TestCase

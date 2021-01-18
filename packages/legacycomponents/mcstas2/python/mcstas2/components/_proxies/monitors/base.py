@@ -46,7 +46,7 @@ def saveHistogram(histogram, filename, overwrite=False):
         if overwrite:
             os.remove( filename )
         else:
-            raise IOError, "%s already exists" % filename
+            raise IOError("%s already exists" % filename)
     #
     from histogram.hdf import dump
     dump( histogram, filename, '/', 'c')

@@ -52,8 +52,8 @@ def onLinearlyInterpolatedDOS(self, linearlyinterpolateddos):
 
     eaxis = doshist.axisFromName('energy')
     if eaxis.size() < 3 :
-        raise RuntimeError , "energy axis has too few bins: %s" % (
-            eaxis, )
+        raise RuntimeError("energy axis has too few bins: %s" % (
+            eaxis, ))
     
     energies = eaxis.binCenters()
     e0 = energies[0]

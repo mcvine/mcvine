@@ -48,8 +48,8 @@
 *******************************************************************************/
 
 DEFINE COMPONENT DivPos_monitor
-DEFINITION PARAMETERS (npos=20, ndiv=20, string filename)
-SETTING PARAMETERS (xmin=0, xmax=0, ymin=0, ymax=0, xwidth=0, yheight=0, maxdiv=2)
+DEFINITION PARAMETERS ()
+SETTING PARAMETERS (npos=20, ndiv=20, string filename, xmin=0, xmax=0, ymin=0, ymax=0, xwidth=0, yheight=0, maxdiv=2)
 OUTPUT PARAMETERS (Div_N_00, Div_p_00, Div_p2_00)
 STATE PARAMETERS (x,y,z,vx,vy,vz,t,s1,s2,p)
 

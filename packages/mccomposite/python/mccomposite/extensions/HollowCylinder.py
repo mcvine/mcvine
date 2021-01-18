@@ -34,7 +34,7 @@ def onHollowCylinder(self, hollowCylinder):
     if r1 >= r2:
         msg = 'inner radius (%s) should be smaller than outer radius (%s)' %(
             r1, r2)
-        raise RuntimeError, msg
+        raise RuntimeError(msg)
 
     h = hollowCylinder.height
     if r1 == 0*r1:

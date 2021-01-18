@@ -12,7 +12,7 @@
 #
 
 
-from AbstractSANSKernel import AbstractSANSKernel as base
+from .AbstractSANSKernel import AbstractSANSKernel as base
 
 class SANSSphereModelKernel(base):
 

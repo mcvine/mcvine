@@ -41,6 +41,10 @@ def NEB_appendNeutrons(self, neutrons, startindex=None, endindex=None):
         startindex = 0
     if endindex is None:
         endindex =  len(neutrons)
+    if not isinstance(endindex, int):
+        _ = endindex
+        endindex = int(_)
+        assert _==endindex
     self.append(neutrons, startindex, endindex)
     return
 NeutronEventBuffer.appendNeutrons = NEB_appendNeutrons
@@ -104,7 +108,7 @@ def cevents_from_npyarr(npyarr):
         import bpext
         import warnings
         warnings.warn("Using old bpext. Should use danse.ins.bpext")
-    import mcni.mcni
+    import mcni._mcni
     cevents = bpext.wrap_ptr( ptr, 'cNeutronEvent' )
     cevents.origin = npyarr
     return cevents

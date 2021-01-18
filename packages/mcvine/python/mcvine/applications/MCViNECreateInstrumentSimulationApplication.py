@@ -32,18 +32,18 @@ class Application(base):
         
         
     def help(self):
-        print
-        print 70*'='
-        print "%s - Create a mcvine instrument simulation application" % self.name
-        print 70*'-'
-        print '* Synopsis:'
-        print " $ %s --name=<application name> --components=<list of components>" % self.name
-        print " $ %s --name=<application name> --components=<list of components> --filename=<application filename>" % self.name
-        print 
-        print "* Examples:"
-        print " $ %s --name='test' --components=source,monitor" % self.name
-        print 70*'='
-        print
+        print()
+        print(70*'=')
+        print("%s - Create a mcvine instrument simulation application" % self.name)
+        print(70*'-')
+        print('* Synopsis:')
+        print(" $ %s --name=<application name> --components=<list of components>" % self.name)
+        print(" $ %s --name=<application name> --components=<list of components> --filename=<application filename>" % self.name)
+        print() 
+        print("* Examples:")
+        print(" $ %s --name='test' --components=source,monitor" % self.name)
+        print(70*'=')
+        print()
         return
 
 
@@ -53,13 +53,13 @@ class Application(base):
 
         if not name:
             self.help()
-            print '** Error: application name is not specified'
-            print
+            print('** Error: application name is not specified')
+            print()
             return
         if not component_list:
             self.help()
-            print '** Error: component list is not specified'
-            print
+            print('** Error: component list is not specified')
+            print()
             return
 
         d = {'name': name,
@@ -78,7 +78,7 @@ class Application(base):
         import os, stat
         path = os.path.abspath(filename)
         os.chmod(path, stat.S_IRWXU)
-        print 'application %r created at %r' % (name, path)
+        print('application %r created at %r' % (name, path))
         return
 
 
