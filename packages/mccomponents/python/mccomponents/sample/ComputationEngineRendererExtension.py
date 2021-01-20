@@ -6,32 +6,28 @@
 
 class ComputationEngineRendererExtension:
 
-    
     def onGridSQE(self, gridsqe):
         sqehist = gridsqe.sqehist
-        
+        # Q boundaries
         qbb = sqehist.axisFromName('Q').binBoundaries().asNumarray()
         qbegin, qend, qstep = qbb[0], qbb[-1], qbb[1]-qbb[0]
-        
         try:
             ebb = sqehist.axisFromName('E').binBoundaries().asNumarray()
         except KeyError:
             ebb = sqehist.axisFromName('energy').binBoundaries().asNumarray()
-            
+        # E boundaries
         ebegin, eend, estep = ebb[0], ebb[-1], ebb[1]-ebb[0]
-        
+        # S
         s = sqehist.data().storage().asNumarray()
-        
+        # +0.5*step makes sure it is larger than qbegin+N*qstep
         return self.factory.gridsqe(
-            qbegin, qend+0.01*qstep, qstep,
-            ebegin, eend+0.01*estep, estep,
+            qbegin, qend+.5*qstep, qstep,
+            ebegin, eend+.5*estep, estep,
             s )
-
 
     def onSQE_fromexpression(self, sqe_fromexpression):
         expr = sqe_fromexpression.expression
         return self.factory.sqeFromExpression(expr)
-
 
     def onSQEkernel(self, sqekernel):
         
