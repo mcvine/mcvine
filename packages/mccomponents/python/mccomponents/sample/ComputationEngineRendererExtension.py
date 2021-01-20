@@ -19,6 +19,7 @@ class ComputationEngineRendererExtension:
         ebegin, eend, estep = ebb[0], ebb[-1], ebb[1]-ebb[0]
         # S
         s = sqehist.data().storage().asNumarray()
+        # +0.5*step makes sure it is larger than qbegin+N*qstep
         return self.factory.gridsqe(
             qbegin, qend+.5*qstep, qstep,
             ebegin, eend+.5*estep, estep,
