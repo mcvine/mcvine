@@ -22,7 +22,7 @@ Example::
      Emax="30*meV"
      />
 
-The expression uses the `function parser for C++ <http://warp.povusers.org/FunctionParser/fparser.html>` format. It is quite flexible and can be quite complex.
+The expression uses the `function parser for C++ <http://warp.povusers.org/FunctionParser/fparser.html>`_ format. It is quite flexible and can be quite complex.
 It can even support
 discontinous dispersion surface. 
 Here is an example::
