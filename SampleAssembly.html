@@ -1,22 +1,20 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sample Assembly &#8212; mcvine 1.0 documentation</title>
-    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
     
-    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="_static/language_data.js"></script>
-    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" /> 
@@ -47,7 +45,8 @@
         <li><a href="http://mcvine.org">MCViNE</a> &raquo; &nbsp;</li>
         <li><a href="index.html">Documentation</a> &raquo; &nbsp;</li>
         <li><a href="search.html">search</a> &raquo;</li>
- 
+
+        <li class="nav-item nav-item-this"><a href="">Sample Assembly</a></li> 
       </ul>
     </div>
 
@@ -75,17 +74,15 @@
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
 
@@ -97,16 +94,16 @@
   <div class="section" id="sample-assembly">
 <span id="sampleassembly"></span><h1>Sample Assembly<a class="headerlink" href="#sample-assembly" title="Permalink to this headline">¶</a></h1>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last"><a class="reference external" href="http://dev.danse.us/packages/mcvine-examples.tgz">The examples tar ball</a>
+<p class="admonition-title">Note</p>
+<p><a class="reference external" href="http://dev.danse.us/packages/mcvine-examples.tgz">The examples tar ball</a>
 contains several examples introduced here.</p>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
+<p class="admonition-title">Note</p>
 <p>Tutorials:</p>
-<ul class="last simple">
-<li><a class="reference internal" href="Tutorials-SampleAssembly.html#tutorials-sampleassembly"><span class="std std-ref">Start from here</span></a></li>
-<li><a class="reference internal" href="Tutorials-PowderKernel.html#tutorials-powder-kernel"><span class="std std-ref">Sample with powder diffraction kernel</span></a></li>
+<ul class="simple">
+<li><p><a class="reference internal" href="Tutorials-SampleAssembly.html#tutorials-sampleassembly"><span class="std std-ref">Start from here</span></a></p></li>
+<li><p><a class="reference internal" href="Tutorials-PowderKernel.html#tutorials-powder-kernel"><span class="std std-ref">Sample with powder diffraction kernel</span></a></p></li>
 </ul>
 </div>
 <div class="section" id="use-sample-assembly-in-your-simulation-application">
@@ -124,10 +121,10 @@ contains several examples introduced here.</p>
 <h2>Files<a class="headerlink" href="#files" title="Permalink to this headline">¶</a></h2>
 <p>A sample assembly consists of several files.</p>
 <ul class="simple">
-<li><a class="reference internal" href="#sampleassembly-main-xml"><span class="std std-ref">The main xml file</span></a>.
+<li><p><a class="reference internal" href="#sampleassembly-main-xml"><span class="std std-ref">The main xml file</span></a>.
 That is the file referred to by the “xml” parameter
-of the SampleAssemblyFromXml component.</li>
-<li>One xml file for each neutron scatterer in the sample assembly.</li>
+of the SampleAssemblyFromXml component.</p></li>
+<li><p>One xml file for each neutron scatterer in the sample assembly.</p></li>
 </ul>
 <div class="section" id="the-main-sample-assembly-xml-file">
 <span id="sampleassembly-main-xml"></span><h3>The main sample assembly xml file<a class="headerlink" href="#the-main-sample-assembly-xml-file" title="Permalink to this headline">¶</a></h3>
@@ -159,23 +156,23 @@ of the SampleAssemblyFromXml component.</li>
 </pre></div>
 </div>
 <ul class="simple">
-<li>The outmost tag is always “SampleAssembly”.</li>
+<li><p>The outmost tag is always “SampleAssembly”.</p></li>
 </ul>
 <blockquote>
 <div><ul class="simple">
-<li>The next level consists of one or more neutron scatterers and one geometer.</li>
-<li>PowderSample is a neutron scatterer. Its name is important (see <a class="reference internal" href="#scatterer-xml"><span class="std std-ref">Scatterer xml</span></a>).</li>
+<li><p>The next level consists of one or more neutron scatterers and one geometer.</p></li>
+<li><p>PowderSample is a neutron scatterer. Its name is important (see <a class="reference internal" href="#scatterer-xml"><span class="std std-ref">Scatterer xml</span></a>).</p></li>
 </ul>
 <blockquote>
 <div><ul class="simple">
-<li>Inside a neutron scatterer we need to specify its shape and material</li>
-<li>Shape – can be represented using constructive solid geometery</li>
-<li>Phase</li>
+<li><p>Inside a neutron scatterer we need to specify its shape and material</p></li>
+<li><p>Shape – can be represented using constructive solid geometery</p></li>
+<li><p>Phase</p></li>
 </ul>
 </div></blockquote>
 <ul class="simple">
-<li>LocalGeometer is geometer. It contains geometrical information of neutron scatterers</li>
-<li>Environment: sample environment.</li>
+<li><p>LocalGeometer is geometer. It contains geometrical information of neutron scatterers</p></li>
+<li><p>Environment: sample environment.</p></li>
 </ul>
 </div></blockquote>
 </div>
@@ -201,12 +198,12 @@ an Al-scatterer.xml file</p>
 </pre></div>
 </div>
 <ul class="simple">
-<li>A neutron scatterer xml file starts with a tag for the type of the scatterer.
-Currently the only type is “homogeneous_scatterer”</li>
+<li><p>A neutron scatterer xml file starts with a tag for the type of the scatterer.
+Currently the only type is “homogeneous_scatterer”</p></li>
 </ul>
 <blockquote>
 <div><ul class="simple">
-<li>Inside a scatterer tag, there is one kernel tag. See <a class="reference internal" href="kernels/kernels.html#kernels"><span class="std std-ref">kernel documentation</span></a>.</li>
+<li><p>Inside a scatterer tag, there is one kernel tag. See <a class="reference internal" href="kernels/kernels.html#kernels"><span class="std std-ref">kernel documentation</span></a>.</p></li>
 </ul>
 </div></blockquote>
 </div>
@@ -216,43 +213,48 @@ Currently the only type is “homogeneous_scatterer”</li>
 <p>Sample shapes can be created using constructive solid geometry.</p>
 <p>The coordinate system is described as three orthogonal directions:</p>
 <ul class="simple">
-<li>beam: follow neutron towards downstream. horizontal</li>
-<li>vertical: vertical. pointing up</li>
-<li>transversal: horizontal but perpendicular to beam</li>
+<li><p>beam: follow neutron towards downstream. horizontal</p></li>
+<li><p>vertical: vertical. pointing up</p></li>
+<li><p>transversal: horizontal but perpendicular to beam</p></li>
 </ul>
 <p>beam, transversal, and vertical forms a right-hand coordinate system.</p>
 <p>Primitives:</p>
 <ul class="simple">
-<li>Sphere: centered at origin. Example: <code class="docutils literal notranslate"><span class="pre">&lt;sphere</span> <span class="pre">radius=&quot;3*mm&quot;/&gt;</span></code><ul>
-<li>radius: radius of sphere</li>
+<li><p>Sphere: centered at origin. Example: <code class="docutils literal notranslate"><span class="pre">&lt;sphere</span> <span class="pre">radius=&quot;3*mm&quot;/&gt;</span></code></p>
+<ul>
+<li><p>radius: radius of sphere</p></li>
 </ul>
 </li>
-<li>Cylinder: centered at origin. vertical. Example: <code class="docutils literal notranslate"><span class="pre">&lt;cylinder</span> <span class="pre">radius=&quot;3*mm&quot;</span> <span class="pre">height=&quot;1*cm&quot;/&gt;</span></code><ul>
-<li>radius: radius of cylinder</li>
-<li>height: height of cylinder</li>
+<li><p>Cylinder: centered at origin. vertical. Example: <code class="docutils literal notranslate"><span class="pre">&lt;cylinder</span> <span class="pre">radius=&quot;3*mm&quot;</span> <span class="pre">height=&quot;1*cm&quot;/&gt;</span></code></p>
+<ul>
+<li><p>radius: radius of cylinder</p></li>
+<li><p>height: height of cylinder</p></li>
 </ul>
 </li>
-<li>Block: centered at origin. Example: <code class="docutils literal notranslate"><span class="pre">&lt;block</span> <span class="pre">width=&quot;5*cm&quot;</span> <span class="pre">height=&quot;8*cm&quot;</span> <span class="pre">thickness=&quot;1*mm&quot;/&gt;</span></code><ul>
-<li>thickness: dimension along beam direction</li>
-<li>width: dimension along transversal direction</li>
-<li>height: dimension along vertical direction</li>
+<li><p>Block: centered at origin. Example: <code class="docutils literal notranslate"><span class="pre">&lt;block</span> <span class="pre">width=&quot;5*cm&quot;</span> <span class="pre">height=&quot;8*cm&quot;</span> <span class="pre">thickness=&quot;1*mm&quot;/&gt;</span></code></p>
+<ul>
+<li><p>thickness: dimension along beam direction</p></li>
+<li><p>width: dimension along transversal direction</p></li>
+<li><p>height: dimension along vertical direction</p></li>
 </ul>
 </li>
-<li>Pyramid: tip is at origin. the whole body is negative vertically. Example: <code class="docutils literal notranslate"><span class="pre">&lt;pyramid</span> <span class="pre">width=&quot;5*cm&quot;</span> <span class="pre">thickness=&quot;5*cm&quot;</span> <span class="pre">height=&quot;8*cm&quot;</span> <span class="pre">/&gt;</span></code><ul>
-<li>thickness: dimension of the base along beam direction</li>
-<li>width: dimension of the base along transversal direction</li>
-<li>height: dimension along vertical direction</li>
+<li><p>Pyramid: tip is at origin. the whole body is negative vertically. Example: <code class="docutils literal notranslate"><span class="pre">&lt;pyramid</span> <span class="pre">width=&quot;5*cm&quot;</span> <span class="pre">thickness=&quot;5*cm&quot;</span> <span class="pre">height=&quot;8*cm&quot;</span> <span class="pre">/&gt;</span></code></p>
+<ul>
+<li><p>thickness: dimension of the base along beam direction</p></li>
+<li><p>width: dimension of the base along transversal direction</p></li>
+<li><p>height: dimension along vertical direction</p></li>
 </ul>
 </li>
-<li>Cone: tip is at origin. The tip is pointng up vertically. Example: <code class="docutils literal notranslate"><span class="pre">&lt;cone</span> <span class="pre">radius=&quot;3*cm&quot;</span> <span class="pre">height=&quot;10*cm&quot;</span> <span class="pre">/&gt;</span></code><ul>
-<li>radius: radius of the base</li>
-<li>height: height of the cone</li>
+<li><p>Cone: tip is at origin. The tip is pointng up vertically. Example: <code class="docutils literal notranslate"><span class="pre">&lt;cone</span> <span class="pre">radius=&quot;3*cm&quot;</span> <span class="pre">height=&quot;10*cm&quot;</span> <span class="pre">/&gt;</span></code></p>
+<ul>
+<li><p>radius: radius of the base</p></li>
+<li><p>height: height of the cone</p></li>
 </ul>
 </li>
 </ul>
 <p>Operations:</p>
 <ul>
-<li><p class="first">Union: union of two or more shapes. Example:</p>
+<li><p>Union: union of two or more shapes. Example:</p>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;union&gt;</span>
   <span class="nt">&lt;sphere</span> <span class="na">radius=</span><span class="s">&quot;2*cm&quot;</span><span class="nt">/&gt;</span>
   <span class="nt">&lt;cylinder</span> <span class="na">radius=</span><span class="s">&quot;3*mm&quot;</span> <span class="na">height=</span><span class="s">&quot;1*cm&quot;</span><span class="nt">/&gt;</span>
@@ -260,7 +262,7 @@ Currently the only type is “homogeneous_scatterer”</li>
 </pre></div>
 </div>
 </li>
-<li><p class="first">Intersection: intersection of two or more shapes. Example:</p>
+<li><p>Intersection: intersection of two or more shapes. Example:</p>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;intersection&gt;</span>
   <span class="nt">&lt;sphere</span> <span class="na">radius=</span><span class="s">&quot;2*cm&quot;</span><span class="nt">/&gt;</span>
   <span class="nt">&lt;cylinder</span> <span class="na">radius=</span><span class="s">&quot;3*mm&quot;</span> <span class="na">height=</span><span class="s">&quot;1*cm&quot;</span><span class="nt">/&gt;</span>
@@ -268,7 +270,7 @@ Currently the only type is “homogeneous_scatterer”</li>
 </pre></div>
 </div>
 </li>
-<li><p class="first">Difference: difference of two shapes</p>
+<li><p>Difference: difference of two shapes</p>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;difference&gt;</span>
   <span class="nt">&lt;sphere</span> <span class="na">radius=</span><span class="s">&quot;2*cm&quot;</span><span class="nt">/&gt;</span>
   <span class="nt">&lt;cylinder</span> <span class="na">radius=</span><span class="s">&quot;3*mm&quot;</span> <span class="na">height=</span><span class="s">&quot;1*cm&quot;</span><span class="nt">/&gt;</span>
@@ -276,7 +278,7 @@ Currently the only type is “homogeneous_scatterer”</li>
 </pre></div>
 </div>
 </li>
-<li><p class="first">Translation: translation of a body by an offset</p>
+<li><p>Translation: translation of a body by an offset</p>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;translation&gt;</span>
   <span class="nt">&lt;vector</span> <span class="na">vertical=</span><span class="s">&quot;.1*m&quot;</span> <span class="na">beam=</span><span class="s">&quot;0*m&quot;</span> <span class="na">translation=</span><span class="s">&quot;0*m&quot;</span> <span class="nt">/&gt;</span>
   <span class="nt">&lt;block</span> <span class="na">width=</span><span class="s">&quot;6*cm&quot;</span> <span class="na">height=</span><span class="s">&quot;10*cm&quot;</span> <span class="na">thickness=</span><span class="s">&quot;1*cm&quot;</span> <span class="nt">/&gt;</span>
@@ -284,7 +286,7 @@ Currently the only type is “homogeneous_scatterer”</li>
 </pre></div>
 </div>
 </li>
-<li><p class="first">Rotation: rotation of a body about an axis</p>
+<li><p>Rotation: rotation of a body about an axis</p>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;rotation&gt;</span>
    <span class="nt">&lt;axis</span> <span class="na">transversal=</span><span class="s">&quot;1&quot;</span> <span class="na">beam=</span><span class="s">&quot;0&quot;</span> <span class="na">vertical=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
    <span class="nt">&lt;angle&gt;</span>90*deg<span class="nt">&lt;/angle&gt;</span>
@@ -298,6 +300,7 @@ Currently the only type is “homogeneous_scatterer”</li>
 </div>
 
 
+            <div class="clearer"></div>
           </div>
         </div>
       </div>
@@ -312,12 +315,13 @@ Currently the only type is “homogeneous_scatterer”</li>
         <li><a href="http://mcvine.org">MCViNE</a> &raquo; &nbsp;</li>
         <li><a href="index.html">Documentation</a> &raquo; &nbsp;</li>
         <li><a href="search.html">search</a> &raquo;</li>
- 
+
+        <li class="nav-item nav-item-this"><a href="">Sample Assembly</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2006-2016, Jiao Lin, Michael Aivazis, and Brent Fultz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.4.3.
     </div>
   </body>
 </html>

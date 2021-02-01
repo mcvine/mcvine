@@ -1,22 +1,20 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Concepts &#8212; mcvine 1.0 documentation</title>
-    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
     
-    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="_static/language_data.js"></script>
-    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" /> 
@@ -47,7 +45,8 @@
         <li><a href="http://mcvine.org">MCViNE</a> &raquo; &nbsp;</li>
         <li><a href="index.html">Documentation</a> &raquo; &nbsp;</li>
         <li><a href="search.html">search</a> &raquo;</li>
- 
+
+        <li class="nav-item nav-item-this"><a href="">Concepts</a></li> 
       </ul>
     </div>
 
@@ -78,17 +77,15 @@
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
 
@@ -102,8 +99,8 @@
 <p>Here we present the engineering philosophy employed in mcvine.</p>
 <p>We can divide legacy MC neutron scattering code to two categories:</p>
 <ul class="simple">
-<li>mcstas, IDEAS, vitess, etc., in which an instrument is simulated as a linear chain of components.</li>
-<li>MCNP and NISP, in which simulations are done by dividing space to regions.</li>
+<li><p>mcstas, IDEAS, vitess, etc., in which an instrument is simulated as a linear chain of components.</p></li>
+<li><p>MCNP and NISP, in which simulations are done by dividing space to regions.</p></li>
 </ul>
 <p>The latter approach is much more generic and more powerful.
 In pinciple, it can simulate arbitrary complex neutron scattering
@@ -117,35 +114,35 @@ are not interested in MC simulations of neutron experiments mainly
 due to complexity of setting up such simulations.</p>
 <p>MCViNE is engineered with the following goals in mind:</p>
 <ul class="simple">
-<li>Ease of use:  The software need to be usable by not only instrument
-scientists, but also experimentalists who are not really into computing</li>
-<li>Generality and extensibility: It need to be able to handle neutron
+<li><p>Ease of use:  The software need to be usable by not only instrument
+scientists, but also experimentalists who are not really into computing</p></li>
+<li><p>Generality and extensibility: It need to be able to handle neutron
 scattering in a generic way and extensible to handle more and more
-complex cases</li>
-<li>Compatibility: It should be able to make use of a large amount of
-existing MC neutron scattering software packages.</li>
+complex cases</p></li>
+<li><p>Compatibility: It should be able to make use of a large amount of
+existing MC neutron scattering software packages.</p></li>
 </ul>
 <p>To reach these goals, we employed a few design principles.
 In spirit, these design principles can be sumarized as one guiding
 principle:</p>
 <ul class="simple">
-<li>Prefer declarative programming paradigm whenever practical, over
-imperative programming.</li>
+<li><p>Prefer declarative programming paradigm whenever practical, over
+imperative programming.</p></li>
 </ul>
 <p>It means that we try to start by define what a program should accomplish,
 instead of how it should accomplish it.
 It means that we follow the following principles:</p>
 <ul class="simple">
-<li>Object oriented design to achieve data abastraction, encapsulation, modularity, and polymorphism</li>
-<li>Program to an interface, instead of an implementation</li>
-<li>Provide an easy way for users to configure simulations using simple, natural descriptions
+<li><p>Object oriented design to achieve data abastraction, encapsulation, modularity, and polymorphism</p></li>
+<li><p>Program to an interface, instead of an implementation</p></li>
+<li><p>Provide an easy way for users to configure simulations using simple, natural descriptions
 of the system, currently mainly by xml files. This configuration machinery can
 go fairly deep into the hierarchy that represents the simulation, including,
-for example, scattering kernel characteristics.</li>
+for example, scattering kernel characteristics.</p></li>
 </ul>
 <p>We also makes use of</p>
 <ul class="simple">
-<li>Generic algorithms</li>
+<li><p>Generic algorithms</p></li>
 </ul>
 <p>to simply some implementations.</p>
 <p>In the design, some well-established design patterns such as
@@ -305,12 +302,12 @@ such as view-rendering, user-interface-generation, and computation-engine-creati
 creates computation engine from user specification of the sample assembly.
 This is done by</p>
 <ul class="simple">
-<li>parsing xml representation of the sample assembly to a hierarchy of nodes
+<li><p>parsing xml representation of the sample assembly to a hierarchy of nodes
 representing things such as neutron scatterers, materials, shapes, geoemters,
-and scattering kernels</li>
-<li>walking through this representation tree
+and scattering kernels</p></li>
+<li><p>walking through this representation tree
 and constructing the c++ computation engine of each of these nodes by calling
-the corresponding c++-python binding, and assembling them all together in c++</li>
+the corresponding c++-python binding, and assembling them all together in c++</p></li>
 </ul>
 <p>The design patterns we have chosen allows a flexible schema that
 is easily extensible to include future improvments on implementations,
@@ -320,6 +317,7 @@ additions on scattering kernel types, shape types, etc.</p>
 </div>
 
 
+            <div class="clearer"></div>
           </div>
         </div>
       </div>
@@ -334,12 +332,13 @@ additions on scattering kernel types, shape types, etc.</p>
         <li><a href="http://mcvine.org">MCViNE</a> &raquo; &nbsp;</li>
         <li><a href="index.html">Documentation</a> &raquo; &nbsp;</li>
         <li><a href="search.html">search</a> &raquo;</li>
- 
+
+        <li class="nav-item nav-item-this"><a href="">Concepts</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2006-2016, Jiao Lin, Michael Aivazis, and Brent Fultz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.4.3.
     </div>
   </body>
 </html>

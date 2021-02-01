@@ -1,22 +1,20 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Frequently Asked Questions &#8212; mcvine 1.0 documentation</title>
-    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
     
-    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="_static/language_data.js"></script>
-    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" /> 
@@ -47,7 +45,8 @@
         <li><a href="http://mcvine.org">MCViNE</a> &raquo; &nbsp;</li>
         <li><a href="index.html">Documentation</a> &raquo; &nbsp;</li>
         <li><a href="search.html">search</a> &raquo;</li>
- 
+
+        <li class="nav-item nav-item-this"><a href="">Frequently Asked Questions</a></li> 
       </ul>
     </div>
 
@@ -71,17 +70,15 @@
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
 
@@ -94,45 +91,41 @@
 <span id="faq"></span><h1>Frequently Asked Questions<a class="headerlink" href="#frequently-asked-questions" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="how-do-i">
 <h2>How do I …<a class="headerlink" href="#how-do-i" title="Permalink to this headline">¶</a></h2>
-<dl class="docutils">
-<dt>… Use a mcstas component that I wrote myself?</dt>
-<dd>An automatic tools is available to wrap a mcstas component to a mcvine component.
-Please take a look at <a class="reference internal" href="Components.html#user-defined-mcstas-components"><span class="std std-ref">User-defined mcstas components</span></a>.</dd>
-<dt>… Check whether parallel mcvine simulation is available for my system?</dt>
-<dd><p class="first">Run the following command:</p>
+<dl>
+<dt>… Use a mcstas component that I wrote myself?</dt><dd><p>An automatic tools is available to wrap a mcstas component to a mcvine component.
+Please take a look at <a class="reference internal" href="Components.html#user-defined-mcstas-components"><span class="std std-ref">User-defined mcstas components</span></a>.</p>
+</dd>
+<dt>… Check whether parallel mcvine simulation is available for my system?</dt><dd><p>Run the following command:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ mpirun -np 2 python -c &quot;import mpi; print mpi.world().rank&quot;
 </pre></div>
 </div>
-<p class="last">If you see two number “0” and “1” (random sequence), parallel mcvine is available.</p>
+<p>If you see two number “0” and “1” (random sequence), parallel mcvine is available.</p>
 </dd>
-<dt>… Get help on the instrument simulation application I have created?</dt>
-<dd><p class="first">Say if your application is mysimapp.py, you can do:</p>
+<dt>… Get help on the instrument simulation application I have created?</dt><dd><p>Say if your application is mysimapp.py, you can do:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ mysimapp.py -h
 </pre></div>
 </div>
-<p class="last">to see what this app is about, and the available options.
+<p>to see what this app is about, and the available options.
 For help on common simulation application options, please refer
 to <a class="reference internal" href="Fundamentals.html#fundamentals-instrument"><span class="std std-ref">Instrument</span></a>; for a tutorial, see
 <a class="reference internal" href="Tutorials-basics.html#create-sim-app"><span class="std std-ref">Create and run your instrument simulation application</span></a>.</p>
 </dd>
-<dt>… Rescue my instrument simulations?</dt>
-<dd><p class="first">Sometimes SEQ beam simulation may fail or stall, especially if the number of MC count is large.
+<dt>… Rescue my instrument simulations?</dt><dd><p>Sometimes SEQ beam simulation may fail or stall, especially if the number of MC count is large.
 In that case, you can rescue the simulation results by</p>
-<ol class="last arabic">
-<li><p class="first">Killing the process if necessary</p>
-</li>
-<li><p class="first">Merge simulated neutrons:</p>
+<ol class="arabic">
+<li><p>Killing the process if necessary</p></li>
+<li><p>Merge simulated neutrons:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cd /path/to/sim/_m2sout
 $ python -c &quot;from mcni.neutron_storage import merge_and_normalize as man; man(&#39;neutrons&#39;, &#39;.&#39;)&quot;
 </pre></div>
 </div>
 </li>
-<li><p class="first">Merge monitor outputs:</p>
+<li><p>Merge monitor outputs:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python -c &quot;from mcni.components.HistogramBasedMonitorMixin import merge_and_normalize as man; man(&#39;IE.h5&#39;, &#39;.&#39;); man(&#39;mon1-tof.h5&#39;, &#39;.&#39;); man(&#39;mon2-tof.h5&#39;, &#39;.&#39;) &quot;
 </pre></div>
 </div>
 </li>
-<li><p class="first">Run post-processing script (assume Ei=100. please change accordingly):</p>
+<li><p>Run post-processing script (assume Ei=100. please change accordingly):</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cd /path/to/sim/
 $ python -c &quot;from mcvine.instruments.SEQUOIA import beam_postprocessing as bpp; bpp.run(&#39;./_m2sout&#39;, &#39;./out&#39;, 100.)&quot;
 </pre></div>
@@ -144,20 +137,18 @@ $ python -c &quot;from mcvine.instruments.SEQUOIA import beam_postprocessing as 
 </div>
 <div class="section" id="why-do-i">
 <h2>Why do I…<a class="headerlink" href="#why-do-i" title="Permalink to this headline">¶</a></h2>
-<dl class="docutils">
-<dt>… get nothing from my simulation?</dt>
-<dd><p class="first">You may want to check if your configuration is done correctly.
+<dl>
+<dt>… get nothing from my simulation?</dt><dd><p>You may want to check if your configuration is done correctly.
 A good thing to check is if the components are assign correctly:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ mysimapp.py --help-persistence
 </pre></div>
 </div>
-<p class="last">It prints out looking-up of all components (not only neutron components, but also
+<p>It prints out looking-up of all components (not only neutron components, but also
 other components that help make the simulation application possible,
 such as geometer).
 You may see hints of why some components are not really loaded successfully.</p>
 </dd>
-<dt>… get MemoryError?</dt>
-<dd><p class="first">You may need to reduce buffer_size. It determines how many neutrons are
+<dt>… get MemoryError?</dt><dd><p>You may need to reduce buffer_size. It determines how many neutrons are
 kept in the memory. To set buffer_size to, say, one million neutrons, do:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">--</span><span class="n">buffer_size</span><span class="o">=</span><span class="mi">1000000</span>
 </pre></div>
@@ -176,7 +167,7 @@ you got by another factor of 10.
 If you are running a MCViNE workflow, sometimes it could be more convenient to
 use environment variable to set the maximum neutron buffer size like
 this:</p>
-<div class="last highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">MCVINE_MAX_NEUTRON_BUFFER_SIZE</span><span class="o">=</span><span class="mi">100000</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">MCVINE_MAX_NEUTRON_BUFFER_SIZE</span><span class="o">=</span><span class="mi">100000</span>
 </pre></div>
 </div>
 </dd>
@@ -184,14 +175,15 @@ this:</p>
 </div>
 <div class="section" id="other-faqs">
 <h2>Other FAQs<a class="headerlink" href="#other-faqs" title="Permalink to this headline">¶</a></h2>
-<dl class="docutils">
-<dt>… What does the intensities at monitors mean?</dt>
-<dd>Please refer to <a class="reference internal" href="Fundamentals.html#fundamentals-simulated-intensities"><span class="std std-ref">Simulated intensities</span></a></dd>
+<dl class="simple">
+<dt>… What does the intensities at monitors mean?</dt><dd><p>Please refer to <a class="reference internal" href="Fundamentals.html#fundamentals-simulated-intensities"><span class="std std-ref">Simulated intensities</span></a></p>
+</dd>
 </dl>
 </div>
 </div>
 
 
+            <div class="clearer"></div>
           </div>
         </div>
       </div>
@@ -206,12 +198,13 @@ this:</p>
         <li><a href="http://mcvine.org">MCViNE</a> &raquo; &nbsp;</li>
         <li><a href="index.html">Documentation</a> &raquo; &nbsp;</li>
         <li><a href="search.html">search</a> &raquo;</li>
- 
+
+        <li class="nav-item nav-item-this"><a href="">Frequently Asked Questions</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2006-2016, Jiao Lin, Michael Aivazis, and Brent Fultz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.4.3.
     </div>
   </body>
 </html>

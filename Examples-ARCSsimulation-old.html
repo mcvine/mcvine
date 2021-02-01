@@ -1,22 +1,20 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Simulation of ARCS experiments &#8212; mcvine 1.0 documentation</title>
-    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
     
-    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="_static/language_data.js"></script>
-    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" /> 
@@ -47,7 +45,8 @@
         <li><a href="http://mcvine.org">MCViNE</a> &raquo; &nbsp;</li>
         <li><a href="index.html">Documentation</a> &raquo; &nbsp;</li>
         <li><a href="search.html">search</a> &raquo;</li>
- 
+
+        <li class="nav-item nav-item-this"><a href="">Simulation of ARCS experiments</a></li> 
       </ul>
     </div>
 
@@ -88,17 +87,15 @@
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
 
@@ -115,10 +112,10 @@
 using a polycrystalline vanadium sample.</p>
 <p>The basic procedure is</p>
 <ul class="simple">
-<li>simulate the neutrons at the sample position</li>
-<li>“replay” neutrons at the sample position to send them to the sample to be scattered, and save the scattered neutrons</li>
-<li>send the scattered neutrons to ARCS detector system, which generates “event-mode” data</li>
-<li>reduce “event-mode” data to I(Q,E)</li>
+<li><p>simulate the neutrons at the sample position</p></li>
+<li><p>“replay” neutrons at the sample position to send them to the sample to be scattered, and save the scattered neutrons</p></li>
+<li><p>send the scattered neutrons to ARCS detector system, which generates “event-mode” data</p></li>
+<li><p>reduce “event-mode” data to I(Q,E)</p></li>
 </ul>
 <p>Create a working directory:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ mkdir -p arcs-polyV
@@ -233,9 +230,9 @@ $ cd V
 <p>So we are now inside directory $workdir/scattering/V.
 We need to create three files in this directory:</p>
 <ol class="arabic simple">
-<li>sampleassembly.xml – the main file describes the whole sample assembly. It only contains one scatterer, V powder sample, in this case</li>
-<li>V.xyz – xyz file describing the crystal structure of V, the material</li>
-<li>V-scatterer.xml  – The file describing the kernels of the scatterer, the V sample.</li>
+<li><p>sampleassembly.xml – the main file describes the whole sample assembly. It only contains one scatterer, V powder sample, in this case</p></li>
+<li><p>V.xyz – xyz file describing the crystal structure of V, the material</p></li>
+<li><p>V-scatterer.xml  – The file describing the kernels of the scatterer, the V sample.</p></li>
 </ol>
 <p>Here are the contents of these files:</p>
 <p>sampleassembly.xml:</p>
@@ -298,8 +295,8 @@ See how many neutrons are there:</p>
 <div class="section" id="tutorial-2-compute-resolution-function-in-q-e-space">
 <h2>Tutorial 2: Compute resolution function in Q,E space<a class="headerlink" href="#tutorial-2-compute-resolution-function-in-q-e-space" title="Permalink to this headline">¶</a></h2>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">This should still work, but a quicker way is to first run arcs_beam
+<p class="admonition-title">Note</p>
+<p>This should still work, but a quicker way is to first run arcs_beam
 simulation, and then run arcs-compute-IQE-resolution simulation.</p>
 </div>
 <div class="section" id="quick-overview">
@@ -330,7 +327,7 @@ and run it:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ PlotHist.py out-analyzer/ienergy.h5
 </pre></div>
 </div>
-<div class="figure">
+<div class="figure align-default">
 <a class="reference internal image-reference" href="_images/I_E.png"><img alt="_images/I_E.png" src="_images/I_E.png" style="width: 50%;" /></a>
 </div>
 <p>Next, go to the “QE” directory:</p>
@@ -344,7 +341,7 @@ at the “run” script and modify it to your needs, and run it:</p>
 </pre></div>
 </div>
 <p>You should see a I(Q,E) plot after the simulation is done.</p>
-<div class="figure">
+<div class="figure align-default">
 <a class="reference internal image-reference" href="_images/qeres-q10-e100.png"><img alt="_images/qeres-q10-e100.png" src="_images/qeres-q10-e100.png" style="width: 50%;" /></a>
 </div>
 </div>
@@ -371,10 +368,10 @@ sample position.</p>
 </div>
 <p>where</p>
 <ul class="simple">
-<li>Ei: nominal incident neutron energy</li>
-<li>ncount: # of Monte Carlo samples</li>
-<li>nodes: # of nodes</li>
-<li>fermichopper: choice of Fermi chopper</li>
+<li><p>Ei: nominal incident neutron energy</p></li>
+<li><p>ncount: # of Monte Carlo samples</p></li>
+<li><p>nodes: # of nodes</p></li>
+<li><p>fermichopper: choice of Fermi chopper</p></li>
 </ul>
 </div>
 <div class="section" id="qe">
@@ -400,14 +397,14 @@ The data file is then reduced to I(Q,E).</p>
 </div>
 <p>where</p>
 <ul class="simple">
-<li>ncount: # of Monte Carlo samples</li>
-<li>nodes: # of nodes</li>
-<li>Ei: nominal incident energy</li>
-<li>Q, E: desired momentum and energy transfer</li>
-<li>dQ, dE: the momentum and energy ranges in which the
-reduced I(Q,E) will be</li>
-<li>mod2sample: the path to the directory where mod2sample simulation
-were run</li>
+<li><p>ncount: # of Monte Carlo samples</p></li>
+<li><p>nodes: # of nodes</p></li>
+<li><p>Ei: nominal incident energy</p></li>
+<li><p>Q, E: desired momentum and energy transfer</p></li>
+<li><p>dQ, dE: the momentum and energy ranges in which the
+reduced I(Q,E) will be</p></li>
+<li><p>mod2sample: the path to the directory where mod2sample simulation
+were run</p></li>
 </ul>
 </div>
 </div>
@@ -438,12 +435,12 @@ the <a class="reference internal" href="#arcs-beam"><span class="std std-ref">ar
 </pre></div>
 </div>
 <ul class="simple">
-<li>ncount: Monte Carlo counts</li>
-<li>nodes: number of nodes</li>
-<li>Ei: nominal incident energy (meV)</li>
-<li>Q, E: momentum and energy transfer at which the resolution is calculated</li>
-<li>dQ, dE: range of momentum and energy transfer in which the resolution function is computed</li>
-<li>mod2sample: the path in which the moderator-to-sample simulation was performed.</li>
+<li><p>ncount: Monte Carlo counts</p></li>
+<li><p>nodes: number of nodes</p></li>
+<li><p>Ei: nominal incident energy (meV)</p></li>
+<li><p>Q, E: momentum and energy transfer at which the resolution is calculated</p></li>
+<li><p>dQ, dE: range of momentum and energy transfer in which the resolution function is computed</p></li>
+<li><p>mod2sample: the path in which the moderator-to-sample simulation was performed.</p></li>
 </ul>
 </div>
 <div class="section" id="arcs-neutrons2nxs">
@@ -453,16 +450,17 @@ the <a class="reference internal" href="#arcs-beam"><span class="std std-ref">ar
 </pre></div>
 </div>
 <ul class="simple">
-<li>neutrons: input neutron file. This file must be generated from a mcvine simulation of
-sample-scattered neutrons</li>
-<li>nxs: output nexus data file. default: arcs-sim.nxs</li>
-<li>workdir: temporary working dir. default: work</li>
+<li><p>neutrons: input neutron file. This file must be generated from a mcvine simulation of
+sample-scattered neutrons</p></li>
+<li><p>nxs: output nexus data file. default: arcs-sim.nxs</p></li>
+<li><p>workdir: temporary working dir. default: work</p></li>
 </ul>
 </div>
 </div>
 </div>
 
 
+            <div class="clearer"></div>
           </div>
         </div>
       </div>
@@ -477,12 +475,13 @@ sample-scattered neutrons</li>
         <li><a href="http://mcvine.org">MCViNE</a> &raquo; &nbsp;</li>
         <li><a href="index.html">Documentation</a> &raquo; &nbsp;</li>
         <li><a href="search.html">search</a> &raquo;</li>
- 
+
+        <li class="nav-item nav-item-this"><a href="">Simulation of ARCS experiments</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2006-2016, Jiao Lin, Michael Aivazis, and Brent Fultz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.4.3.
     </div>
   </body>
 </html>

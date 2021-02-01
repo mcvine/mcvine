@@ -1,22 +1,20 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Development notes &#8212; mcvine 1.0 documentation</title>
-    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
     
-    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="_static/language_data.js"></script>
-    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" /> 
@@ -47,7 +45,8 @@
         <li><a href="http://mcvine.org">MCViNE</a> &raquo; &nbsp;</li>
         <li><a href="index.html">Documentation</a> &raquo; &nbsp;</li>
         <li><a href="search.html">search</a> &raquo;</li>
- 
+
+        <li class="nav-item nav-item-this"><a href="">Development notes</a></li> 
       </ul>
     </div>
 
@@ -93,17 +92,15 @@
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
 
@@ -117,12 +114,12 @@
 <div class="section" id="workflow">
 <h2>Workflow<a class="headerlink" href="#workflow" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li>Code: <a class="reference external" href="http://github.com/mcvine/workflow">http://github.com/mcvine/workflow</a></li>
-<li>CLI: $ mcvine workflow</li>
-<li>CLI impl.: <a class="reference external" href="https://github.com/mcvine/workflow/tree/master/mcvine_workflow/cli">https://github.com/mcvine/workflow/tree/master/mcvine_workflow/cli</a></li>
-<li>Workflow examples:
+<li><p>Code: <a class="reference external" href="http://github.com/mcvine/workflow">http://github.com/mcvine/workflow</a></p></li>
+<li><p>CLI: $ mcvine workflow</p></li>
+<li><p>CLI impl.: <a class="reference external" href="https://github.com/mcvine/workflow/tree/master/mcvine_workflow/cli">https://github.com/mcvine/workflow/tree/master/mcvine_workflow/cli</a></p></li>
+<li><p>Workflow examples:
 - <a class="reference external" href="https://github.com/mcvine/workflow/tree/master/notebook-examples">https://github.com/mcvine/workflow/tree/master/notebook-examples</a>
-- <a class="reference external" href="https://github.com/mcvine/training/">https://github.com/mcvine/training/</a>: subdirs such as ARCS</li>
+- <a class="reference external" href="https://github.com/mcvine/training/">https://github.com/mcvine/training/</a>: subdirs such as ARCS</p></li>
 </ul>
 </div>
 <div class="section" id="instrument-simulation-app">
@@ -130,8 +127,8 @@
 <p>An instrument simulation app is a pyre application.
 Its inventory contains</p>
 <ul class="simple">
-<li>neutron_components: a list of component names</li>
-<li>each neutron component as a pyre component</li>
+<li><p>neutron_components: a list of component names</p></li>
+<li><p>each neutron component as a pyre component</p></li>
 </ul>
 <p>The run method of the app first prepare the simulation context,
 then run a loop that send neutrons through the simulation compoonent
@@ -173,32 +170,36 @@ HYSPEC and others: mcvine-sns-neutrons2nxs (instruments/SNS/bin)</p>
 <h3>Add an instrument<a class="headerlink" href="#add-an-instrument" title="Permalink to this headline">¶</a></h3>
 <p>This is a quick guide. not very well organized.</p>
 <ul class="simple">
-<li>convert mcstas instrument to python scripts<ul>
-<li>modify mcstas instrument file<ul>
-<li>convert to unix format (“rn”-&gt;”n”) using dos2unix</li>
-<li>make sure that in the “DEFINE INSTRUMENT” line all parameters have default values</li>
-<li>if c code snippets exist in the “DECLARE” or “INITIALIZE”, move all of them
+<li><p>convert mcstas instrument to python scripts</p>
+<ul>
+<li><p>modify mcstas instrument file</p>
+<ul>
+<li><p>convert to unix format (“rn”-&gt;”n”) using dos2unix</p></li>
+<li><p>make sure that in the “DEFINE INSTRUMENT” line all parameters have default values</p></li>
+<li><p>if c code snippets exist in the “DECLARE” or “INITIALIZE”, move all of them
 to “INITIALIZE” section (python vars don’t need declaration),
-and make sure the to convert them into python syntax</li>
-<li>clean up the component definitions so that the “AT …” clause
+and make sure the to convert them into python syntax</p></li>
+<li><p>clean up the component definitions so that the “AT …” clause
 and “ROTATED …” clause are in two different lines.
-Also add a space between “AT/ROTATED” and “(…)” if there is none.</li>
+Also add a space between “AT/ROTATED” and “(…)” if there is none.</p></li>
 </ul>
 </li>
-<li>$ mcvine mcstas convertinstrument &lt;instrument-file&gt;
-This cmd generates<ul>
-<li>“config-SIM” script: use this to generate configuration of the instrument simulation</li>
-<li>“SIM” script: run this script to simulate</li>
+<li><p>$ mcvine mcstas convertinstrument &lt;instrument-file&gt;
+This cmd generates</p>
+<ul>
+<li><p>“config-SIM” script: use this to generate configuration of the instrument simulation</p></li>
+<li><p>“SIM” script: run this script to simulate</p></li>
 </ul>
 </li>
 </ul>
 </li>
-<li>add a high-level script &lt;instrument&gt;-beam that runs the beam and do beam analysis</li>
-<li>convert mantid instrument xml file for the instrument to a mcvine instrument.<ul>
-<li>This was done by add an instrument factory to the instrument package</li>
-<li>It can be now done by using mantid2mcvine. An example can be found with SEQ.
+<li><p>add a high-level script &lt;instrument&gt;-beam that runs the beam and do beam analysis</p></li>
+<li><p>convert mantid instrument xml file for the instrument to a mcvine instrument.</p>
+<ul>
+<li><p>This was done by add an instrument factory to the instrument package</p></li>
+<li><p>It can be now done by using mantid2mcvine. An example can be found with SEQ.
 See <a class="reference external" href="https://github.com/mcvine/mcvine/issues/261">https://github.com/mcvine/mcvine/issues/261</a>, <a class="reference external" href="https://github.com/mcvine/instruments/pull/1">https://github.com/mcvine/instruments/pull/1</a>,
-and <a class="reference external" href="https://github.com/mcvine/instruments/tree/a2840b0cf067a04c5cbf7fd0a77103e17a8e69ec/SEQUOIA/mantid2mcvine">https://github.com/mcvine/instruments/tree/a2840b0cf067a04c5cbf7fd0a77103e17a8e69ec/SEQUOIA/mantid2mcvine</a></li>
+and <a class="reference external" href="https://github.com/mcvine/instruments/tree/a2840b0cf067a04c5cbf7fd0a77103e17a8e69ec/SEQUOIA/mantid2mcvine">https://github.com/mcvine/instruments/tree/a2840b0cf067a04c5cbf7fd0a77103e17a8e69ec/SEQUOIA/mantid2mcvine</a></p></li>
 </ul>
 </li>
 </ul>
@@ -206,13 +207,14 @@ and <a class="reference external" href="https://github.com/mcvine/instruments/tr
 <div class="section" id="requirements-of-instrument-specific-cli-by-dgs-workflow">
 <h3>Requirements of instrument-specific CLI by DGS workflow<a class="headerlink" href="#requirements-of-instrument-specific-cli-by-dgs-workflow" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li>neutrons2nxs: convert scattered neutron to nxs file.<ul>
-<li>Usually this is done with a cmd like this: mcvine instruments ${INSTRUMENT} neutrons2nxs –neutrons=out/scattered-neutrons –nxs=sim.nxs –populate-metadata –beam=beam –nodes=10</li>
-<li>In case of HYSPEC, this is done by a special “create-nxs” script in its workflow template: <a class="reference external" href="https://github.com/mcvine/workflow/blob/a8e3d462e01bd10241b575f4940243dcac23d4ac/DGS/hyspec/single-crystal/scattering/template/create-nxs">https://github.com/mcvine/workflow/blob/a8e3d462e01bd10241b575f4940243dcac23d4ac/DGS/hyspec/single-crystal/scattering/template/create-nxs</a></li>
+<li><p>neutrons2nxs: convert scattered neutron to nxs file.</p>
+<ul>
+<li><p>Usually this is done with a cmd like this: mcvine instruments ${INSTRUMENT} neutrons2nxs –neutrons=out/scattered-neutrons –nxs=sim.nxs –populate-metadata –beam=beam –nodes=10</p></li>
+<li><p>In case of HYSPEC, this is done by a special “create-nxs” script in its workflow template: <a class="reference external" href="https://github.com/mcvine/workflow/blob/a8e3d462e01bd10241b575f4940243dcac23d4ac/DGS/hyspec/single-crystal/scattering/template/create-nxs">https://github.com/mcvine/workflow/blob/a8e3d462e01bd10241b575f4940243dcac23d4ac/DGS/hyspec/single-crystal/scattering/template/create-nxs</a></p></li>
 </ul>
 </li>
-<li>nxs reduce: reduce nxs file to iqe.nxs
-- cmd: mcvine instruments ${INSTRUMENT} nxs reduce EVENTMODE.NXS –qaxis=0 15 0.1 –tof2E</li>
+<li><p>nxs reduce: reduce nxs file to iqe.nxs
+- cmd: mcvine instruments ${INSTRUMENT} nxs reduce EVENTMODE.NXS –qaxis=0 15 0.1 –tof2E</p></li>
 </ul>
 </div>
 </div>
@@ -248,21 +250,24 @@ parameters to set.</p>
 <h3>Resources<a class="headerlink" href="#resources" title="Permalink to this headline">¶</a></h3>
 <p>Organization:</p>
 <ul class="simple">
-<li>instruments:<ul>
-<li>each directory corresponds to one instrument</li>
-<li>subdirs of an instrument<ul>
-<li>moderator</li>
-<li>detsys</li>
-<li>nxs</li>
-<li>simulations</li>
+<li><p>instruments:</p>
+<ul>
+<li><p>each directory corresponds to one instrument</p></li>
+<li><p>subdirs of an instrument</p>
+<ul>
+<li><p>moderator</p></li>
+<li><p>detsys</p></li>
+<li><p>nxs</p></li>
+<li><p>simulations</p></li>
 </ul>
 </li>
 </ul>
 </li>
-<li>samples:<ul>
-<li>any directory with sampleassembly.xml is a sample assembly folder</li>
-<li>other directories could provide various kinds of data</li>
-<li>hierarchy: matter/temperature/shape/…  For example: V/300K/plate</li>
+<li><p>samples:</p>
+<ul>
+<li><p>any directory with sampleassembly.xml is a sample assembly folder</p></li>
+<li><p>other directories could provide various kinds of data</p></li>
+<li><p>hierarchy: matter/temperature/shape/…  For example: V/300K/plate</p></li>
 </ul>
 </li>
 </ul>
@@ -271,10 +276,11 @@ parameters to set.</p>
 <div class="section" id="logging">
 <h3>Logging<a class="headerlink" href="#logging" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li>Use both pyre journal and python logging</li>
-<li>pyre journal configured by pml files</li>
-<li>logging configured by “mcvine.conf” (see mcvine toplevel __init__.py)<ul>
-<li>example: tests/logger/mcvine.conf</li>
+<li><p>Use both pyre journal and python logging</p></li>
+<li><p>pyre journal configured by pml files</p></li>
+<li><p>logging configured by “mcvine.conf” (see mcvine toplevel __init__.py)</p>
+<ul>
+<li><p>example: tests/logger/mcvine.conf</p></li>
 </ul>
 </li>
 </ul>
@@ -282,12 +288,12 @@ parameters to set.</p>
 <div class="section" id="documentation">
 <h3>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li>github:mcvine/mcvine.org
-mcvine.org site</li>
-<li>github:mcvine/mcvine.github.io:master
-Documentation for all releases</li>
-<li>github:mcvine/mcvine:gh-pages
-Documentation for the development version</li>
+<li><p>github:mcvine/mcvine.org
+mcvine.org site</p></li>
+<li><p>github:mcvine/mcvine.github.io:master
+Documentation for all releases</p></li>
+<li><p>github:mcvine/mcvine:gh-pages
+Documentation for the development version</p></li>
 </ul>
 </div>
 </div>
@@ -307,9 +313,9 @@ calls:</p>
 <span id="id1"></span><h3>Rotations<a class="headerlink" href="#rotations" title="Permalink to this headline">¶</a></h3>
 <p>A rotation can be specified in three ways (see instrument.geometry.operations).</p>
 <ul class="simple">
-<li>Rotation(body, vector, angle): rotate about a vector</li>
-<li>Rotation(body, beam=, transversal=, vertical=, angle=): similar to Rotation(body, vector, angle); the vector is specified by (beam, transversal, vertical)</li>
-<li>Rotation(body, euler_angles): see below on Euler angles</li>
+<li><p>Rotation(body, vector, angle): rotate about a vector</p></li>
+<li><p>Rotation(body, beam=, transversal=, vertical=, angle=): similar to Rotation(body, vector, angle); the vector is specified by (beam, transversal, vertical)</p></li>
+<li><p>Rotation(body, euler_angles): see below on Euler angles</p></li>
 </ul>
 </div>
 <div class="section" id="euler-angles">
@@ -327,24 +333,25 @@ three extrinsic rotations. For our case, it would be equivalent to zyx rotations
 <h3>xml parsing<a class="headerlink" href="#xml-parsing" title="Permalink to this headline">¶</a></h3>
 <p>is done in several layers.</p>
 <ul class="simple">
-<li>sampleassembly: sampleassembly.saxml package</li>
-<li>instrument.geometry.pml</li>
-<li>pyre.geometry.pml</li>
+<li><p>sampleassembly: sampleassembly.saxml package</p></li>
+<li><p>instrument.geometry.pml</p></li>
+<li><p>pyre.geometry.pml</p></li>
 </ul>
 <p>The translation of a neutron scatterer in the sampleassembly.xml is facilitated with many methoda and classes.
 For example:</p>
 <ul class="simple">
-<li>mccomponents.sample.samplecomponent</li>
-<li>mccomponents.sample.sampleassembly_support</li>
-<li>mccomponents.homogeneous_scatterer.scattererEngine</li>
-<li>mccomposite.ScattererComputationEngineRenderer</li>
-<li>mccomposite.coordinate_systems.McStasCSAdaptor_for_ShapeComputationEngineRenderer</li>
+<li><p>mccomponents.sample.samplecomponent</p></li>
+<li><p>mccomponents.sample.sampleassembly_support</p></li>
+<li><p>mccomponents.homogeneous_scatterer.scattererEngine</p></li>
+<li><p>mccomposite.ScattererComputationEngineRenderer</p></li>
+<li><p>mccomposite.coordinate_systems.McStasCSAdaptor_for_ShapeComputationEngineRenderer</p></li>
 </ul>
 </div>
 </div>
 </div>
 
 
+            <div class="clearer"></div>
           </div>
         </div>
       </div>
@@ -359,12 +366,13 @@ For example:</p>
         <li><a href="http://mcvine.org">MCViNE</a> &raquo; &nbsp;</li>
         <li><a href="index.html">Documentation</a> &raquo; &nbsp;</li>
         <li><a href="search.html">search</a> &raquo;</li>
- 
+
+        <li class="nav-item nav-item-this"><a href="">Development notes</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2006-2016, Jiao Lin, Michael Aivazis, and Brent Fultz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.4.3.
     </div>
   </body>
 </html>

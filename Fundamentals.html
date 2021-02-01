@@ -1,22 +1,20 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Fundamentals &#8212; mcvine 1.0 documentation</title>
-    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
     
-    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="_static/language_data.js"></script>
-    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" /> 
@@ -47,7 +45,8 @@
         <li><a href="http://mcvine.org">MCViNE</a> &raquo; &nbsp;</li>
         <li><a href="index.html">Documentation</a> &raquo; &nbsp;</li>
         <li><a href="search.html">search</a> &raquo;</li>
- 
+
+        <li class="nav-item nav-item-this"><a href="">Fundamentals</a></li> 
       </ul>
     </div>
 
@@ -92,17 +91,15 @@
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
 
@@ -118,13 +115,13 @@
 <div class="section" id="creat-instrument-simulation-applicatioin">
 <h3>Creat instrument simulation applicatioin<a class="headerlink" href="#creat-instrument-simulation-applicatioin" title="Permalink to this headline">¶</a></h3>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">You may want to follow
+<p class="admonition-title">Note</p>
+<p>You may want to follow
 <a class="reference internal" href="Tutorials-basics.html#create-sim-app"><span class="std std-ref">this tutorial</span></a>.</p>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Experimental: you could also create your simulation application online at
+<p class="admonition-title">Note</p>
+<p>Experimental: you could also create your simulation application online at
 <a class="reference external" href="http://vnf-dev.caltech.edu/mcvine">http://vnf-dev.caltech.edu/mcvine</a></p>
 </div>
 <p>Create an instrument simulation application:</p>
@@ -146,20 +143,20 @@
 The second tuple (0,0,0) menas the orientation of the sample is the same
 as the absolute coordinate system.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
+<p class="admonition-title">Note</p>
 <p>Coordinate system convention:</p>
 <p>mcvine uses the same convention as mcstas.</p>
-<ul class="last simple">
-<li>z – beam downstream</li>
-<li>y – vertical up.</li>
+<ul class="simple">
+<li><p>z – beam downstream</p></li>
+<li><p>y – vertical up.</p></li>
 </ul>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
+<p class="admonition-title">Note</p>
 <p>Units:</p>
-<ul class="last simple">
-<li>position: meters</li>
-<li>orientation: degrees</li>
+<ul class="simple">
+<li><p>position: meters</p></li>
+<li><p>orientation: degrees</p></li>
 </ul>
 </div>
 <div class="section" id="relative-coordinates">
@@ -182,44 +179,45 @@ component is the one just before this component in the pipeline.</p>
 <div class="section" id="scattering">
 <h4>Scattering<a class="headerlink" href="#scattering" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
-<li>–multiple-scattering: indicates whether multiple scattering is on. This option
-is only useful for the components that support this feature.</li>
+<li><p>–multiple-scattering: indicates whether multiple scattering is on. This option
+is only useful for the components that support this feature.</p></li>
 </ul>
 </div>
 <div class="section" id="monte-carlo">
 <h4>Monte Carlo<a class="headerlink" href="#monte-carlo" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
-<li>–ncount=&lt;n&gt;: number of simulation runs</li>
-<li>–buffer_size=&lt;n&gt;: (optional) number of neutrons buffered in memory. By default a value will be picked for you depending on ncount and memory size.</li>
+<li><p>–ncount=&lt;n&gt;: number of simulation runs</p></li>
+<li><p>–buffer_size=&lt;n&gt;: (optional) number of neutrons buffered in memory. By default a value will be picked for you depending on ncount and memory size.</p></li>
 </ul>
 </div>
 <div class="section" id="outputs">
 <h4>Outputs<a class="headerlink" href="#outputs" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
-<li>–overwrite-datafiles:
-If on, existing outputs will be overwritten.</li>
-<li>–output-dir=&lt;dir&gt;:
-The output directory.</li>
+<li><p>–overwrite-datafiles:
+If on, existing outputs will be overwritten.</p></li>
+<li><p>–output-dir=&lt;dir&gt;:
+The output directory.</p></li>
 </ul>
 </div>
 <div class="section" id="miscellanesous">
 <h4>Miscellanesous<a class="headerlink" href="#miscellanesous" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
-<li>–journal.info.instrument: as simulation progress, print out information
-regarding simulation loops and component processing loops.</li>
-<li>–dump-pml:
+<li><p>–journal.info.instrument: as simulation progress, print out information
+regarding simulation loops and component processing loops.</p></li>
+<li><p>–dump-pml:
 Writes out pml file for the simulation. A pml file is a configuration file
 that contains all configuration details of the simulation application.
-When this option is on, no real simulation will be done.</li>
-<li>–tracer:
-facility to trace neutrons. By default, no tracer will be used. Choices:<ul>
-<li>–tracer=console: print out neutrons to console. Be sure to turn down ncount.</li>
+When this option is on, no real simulation will be done.</p></li>
+<li><p>–tracer:
+facility to trace neutrons. By default, no tracer will be used. Choices:</p>
+<ul>
+<li><p>–tracer=console: print out neutrons to console. Be sure to turn down ncount.</p></li>
 </ul>
 </li>
-<li>–mpirun.nodes=&lt;n&gt;:
+<li><p>–mpirun.nodes=&lt;n&gt;:
 Select the number of nodes to parallely run the simulation.
 &lt;n&gt; is an integer.
-This option is only valid if mpi binding of mcvine is available.</li>
+This option is only valid if mpi binding of mcvine is available.</p></li>
 </ul>
 </div>
 </div>
@@ -358,6 +356,7 @@ and the error discussed above in <a class="reference internal" href="#fundamenta
 </div>
 
 
+            <div class="clearer"></div>
           </div>
         </div>
       </div>
@@ -372,12 +371,13 @@ and the error discussed above in <a class="reference internal" href="#fundamenta
         <li><a href="http://mcvine.org">MCViNE</a> &raquo; &nbsp;</li>
         <li><a href="index.html">Documentation</a> &raquo; &nbsp;</li>
         <li><a href="search.html">search</a> &raquo;</li>
- 
+
+        <li class="nav-item nav-item-this"><a href="">Fundamentals</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2006-2016, Jiao Lin, Michael Aivazis, and Brent Fultz.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.4.3.
     </div>
   </body>
 </html>
