@@ -3,8 +3,31 @@
 News
 ====
 
+2020
+----
+
+* **October 2020**:
+
+  - Release 1.4.0 (https://github.com/mcvine/mcvine/issues/392) was out: mcvine was migrated to python 3.
+
+* Papers published using MCViNE to study resolution effects:
+
+  - `Temperature-dependent phonon lifetimes and thermal conductivity of silicon by inelastic neutron scattering and ab initio calculations <https://doi.org/10.1103/PhysRevB.102.174311>`_
+  - `Vacancy-driven variations in the phonon density of states of fast neutron irradiated nuclear graphite <https://doi.org/10.1016/j.carbon.2020.05.027>`_
+  - `Controlling phonon lifetimes via sublattice disordering in AgBiSe2 <https://doi.org/10.1103/PhysRevMaterials.4.105402>`_
+  - `Extended anharmonic collapse of phonon dispersions in SnS and SnSe <https://doi.org/10.1038/s41467-020-18121-4>`_
+  - `Antichiral spin order, its soft modes, and their hybridization with phonons in the topological semimetal Mn3Ge <https://doi.org/10.1103/PhysRevB.102.054403>`_
+
+* **October 2020**:
+
+  - Fahima's paper `Computational optimization of a 3D printed collimator <https://doi.org/10.3233/JNR-190139>`_ was published. MCViNE was used in simulating the performance of a 3D-printed collimator for SNAP, a high-pressure diffractometer
+
 2019
 ----
+* **October 2019**:
+
+  - Release 1.3.5 (https://github.com/mcvine/mcvine/issues/385) was out
+  - `Super-resolution energy spectra from neutron direct-geometry spectrometers <https://doi.org/10.1063/1.5116147>`_ was published. Super resolution imagery techniques were applied to DGS powder data. MCViNE simulations of inelastic spectra was instrumental in obtaining resolution finer than nominal values of the ARCS instruments.
 
 * **August 2019**:
   
