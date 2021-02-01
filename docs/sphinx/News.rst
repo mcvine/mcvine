@@ -8,9 +8,9 @@ News
 
 * **October 2020**:
 
-  - Release 1.4.0 (https://github.com/mcvine/mcvine/issues/392) was out: mcvine was migrated to python 3.
+  - Release 1.4.0 (https://github.com/mcvine/mcvine/issues/392) : mcvine was migrated to python 3.
 
-* Papers published using MCViNE to study resolution effects:
+* **Papers using MCViNE to study resolution effects**:
 
   - `Temperature-dependent phonon lifetimes and thermal conductivity of silicon by inelastic neutron scattering and ab initio calculations <https://doi.org/10.1103/PhysRevB.102.174311>`_
   - `Vacancy-driven variations in the phonon density of states of fast neutron irradiated nuclear graphite <https://doi.org/10.1016/j.carbon.2020.05.027>`_
@@ -18,7 +18,7 @@ News
   - `Extended anharmonic collapse of phonon dispersions in SnS and SnSe <https://doi.org/10.1038/s41467-020-18121-4>`_
   - `Antichiral spin order, its soft modes, and their hybridization with phonons in the topological semimetal Mn3Ge <https://doi.org/10.1103/PhysRevB.102.054403>`_
 
-* **October 2020**:
+* **Paper using MCViNE for sample environment studies**:
 
   - Fahima's paper `Computational optimization of a 3D printed collimator <https://doi.org/10.3233/JNR-190139>`_ was published. MCViNE was used in simulating the performance of a 3D-printed collimator for SNAP, a high-pressure diffractometer
 
