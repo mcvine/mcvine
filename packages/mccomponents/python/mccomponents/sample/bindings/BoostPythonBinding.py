@@ -49,14 +49,31 @@ class New:
             svector)
         return b.GridSQE( fxy )
 
-    
     def sqeFromExpression(self, expr):
         '''sqeFromExpression: S(Q,E) from analystic expreession
         '''
         expr = str(expr)
         return b.SQE_fromexpression(expr)
 
-    
+    def sqe_energyfocusing_kernel(
+            self, absorption_cross_section, scattering_cross_section,
+            unitcell_vol,
+            sqe, Qrange, Erange, Ef, dEf):
+        '''sqekernel: a kernel takes S(Q,E) a functor and has a final energy focusing
+
+        absorption_cross_section: absorption cross section
+        scattering_cross_section: scattering cross section
+        sqe: S(Q,E) functor
+        Qrange, Erange: range of Q and E
+        Ef, dEf: final energy focusing
+        '''
+        Emin, Emax = Erange
+        Qmin, Qmax = Qrange
+        return b.SQE_EnergyFocusing_Kernel(
+            absorption_cross_section, scattering_cross_section,
+            unitcell_vol,
+            sqe, Qmin, Qmax, Emin, Emax, Ef, dEf )
+
     def sqekernel(self, absorption_cross_section, scattering_cross_section,
                   unitcell_vol,
                   sqe, Qrange, Erange):

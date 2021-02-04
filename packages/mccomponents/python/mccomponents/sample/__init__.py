@@ -61,6 +61,10 @@ def sqekernel(*args, **kwds):
     from .SQEkernel import SQEkernel
     return SQEkernel( *args, **kwds )
 
+def sqe_energyfocusing_kernel(*args, **kwds):
+    from .SQE_EnergyFocusing_Kernel import SQE_EnergyFocusing_Kernel as ctor
+    return ctor( *args, **kwds )
+
 
 def gridsq(*args, **kwds):
     from .GridSQ import GridSQ
