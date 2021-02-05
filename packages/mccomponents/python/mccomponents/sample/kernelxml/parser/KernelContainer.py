@@ -35,6 +35,7 @@ class KernelContainer(base):
         = onConstantEnergyTransferKernel \
         = onE_Q_Kernel = onBroadened_E_Q_Kernel = onE_vQ_Kernel \
         = onSQEkernel = onSQkernel \
+        = onSQE_EnergyFocusing_Kernel \
         = onDGSSXResKernel \
         = onKernelContainer = base.onElement
 
