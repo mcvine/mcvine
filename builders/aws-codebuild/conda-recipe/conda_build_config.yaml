@@ -17,11 +17,6 @@ drchops:
 pyre:
   - 0.8
 
-zip_keys:
-  - python
-  - boost
-  - numpy
-
 pin_run_as_build:
   boost:
     max_pin: x.x
