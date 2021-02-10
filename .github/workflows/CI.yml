@@ -10,7 +10,7 @@ on:
     branches:
       - master
   schedule:
-    - cron: "57 14 * * *"
+    - cron: "50 14 * * *"
 jobs:
   build-and-test:
     runs-on: ${{ matrix.os }}
