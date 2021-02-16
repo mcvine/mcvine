@@ -19,7 +19,6 @@ def count(path):
     print(count(path))
     return
 
-
 @neutronstorage.command()
 @click.argument("path")
 def totalintensity(path):
@@ -29,7 +28,6 @@ def totalintensity(path):
     totalIntensity = probs.sum()
     print(totalIntensity)
     return
-
 
 @neutronstorage.command()
 @click.argument("path")
@@ -41,7 +39,6 @@ def averageintensity(path):
     print(totalIntensity/probs.size)
     return
 
-
 @neutronstorage.command()
 @click.argument("inputpath")
 @click.argument("outputpath")
@@ -51,16 +48,13 @@ def extract(inputpath, outputpath, start, end):
     if start >= end:
         raise ValueError("Not a valid range: %s, %s" % (
             start, end))
-
     n = end - start
-
     from mcni.neutron_storage.idf_usenumpy import read, write
     # read neutrons
     neutrons = read(inputpath, start=start, n = n)
     # write them
     write(neutrons, filename=outputpath)
     return
-
 
 @neutronstorage.command()
 @click.option("--files", type=str, help='comma-separated list of files')
@@ -80,7 +74,6 @@ def merge(files, out):
     from mcni.neutron_storage import merge
     merge(ifiles, out)
     return
-
 
 @neutronstorage.command("print")
 @click.argument("path")
@@ -105,7 +98,6 @@ def _print(path, start, end, n):
     for e in neutrons:
         print(e)
     return
-
 
 @neutronstorage.command()
 @click.argument("path")
