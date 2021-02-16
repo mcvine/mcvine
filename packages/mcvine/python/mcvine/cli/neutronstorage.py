@@ -4,6 +4,7 @@
 # Jiao Lin <jiao.lin@gmail.com>
 #
 
+import os, numpy as np
 from . import mcvine, click
 from functools import reduce
 
@@ -27,6 +28,17 @@ def totalintensity(path):
     probs = neutrons[:, 9]
     totalIntensity = probs.sum()
     print(totalIntensity)
+    return
+
+
+@neutronstorage.command()
+@click.argument("path")
+def averageintensity(path):
+    from mcni.neutron_storage.idf_usenumpy import read
+    neutrons = read(path)
+    probs = neutrons[:, 9]
+    totalIntensity = probs.sum()
+    print(totalIntensity/probs.size)
     return
 
 
@@ -95,4 +107,42 @@ def _print(path, start, end, n):
     return
 
 
-# End of file 
+@neutronstorage.command()
+@click.argument("path")
+@click.option("--out", help='output path')
+@click.option("--scale-by-number-of-packets/--no-scale-by-number-of-packets", default=True)
+def from_mcpl(path, out, scale_by_number_of_packets):
+    try:
+        import mcpl
+    except ImportError:
+        raise RuntimeError("Failed to import mcpl. Please install mcpl python package.")
+    from mcni.utils import conversion
+    from mcni.neutron_storage.idf_usenumpy import write
+    # main loop
+    myfile = mcpl.MCPLFile(path)
+    base, ext = os.path.splitext(out)
+    arrays = []
+    for i,pb in enumerate(myfile.particle_blocks):
+        x,y,z = pb.x/100., pb.y/100., pb.z/100.
+        N1 = x.size
+        t = pb.time/1e3
+        p = pb.weight
+        E = pb.ekin*1e9
+        v = conversion.e2v(E)
+        vv = v[:, np.newaxis] * pb.direction
+        vx,vy,vz = vv.T
+        s1 = s2 = np.zeros(N1)
+        arr = np.array([x,y,z,vx,vy,vz,s1,s2,t,p]).T.copy()
+        arrays.append(arr)
+        # fn = '{}-{}{}'.format(base, i, ext)
+        continue
+    arr = np.concatenate(arrays); del arrays
+    print(arr.shape)
+    assert len(arr.shape)==2 and arr.shape[-1]==10
+    if scale_by_number_of_packets:
+        N = arr.shape[0]
+        arr[:, -1] *= N
+    write(arr, out)
+    return
+
+# End of file
