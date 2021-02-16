@@ -15,6 +15,7 @@
 
 template = '''
 #include <boost/python.hpp>
+#include <boost/python/numpy.hpp>
 
 
 void %(wrapmethodname)s();

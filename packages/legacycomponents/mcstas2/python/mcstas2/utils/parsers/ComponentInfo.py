@@ -67,13 +67,19 @@ def _str( s ):
     # so we just use an empty string.
     if s == '0': return ''
     return str(s)
+import numpy as np
+def _np_arr(a):
+    if a == 'NULL': return np.empty(0)
+    if isinstance(a, np.ndarray): return a
+    raise ValueError("{} is not an numpy array".format(a))
+
 value_converters = {
     'float': float,
     'double': float,
     'int': int,
     'char *': _str,
+    'boost::python::numpy::ndarray':_np_arr,
     }
-
 
 
 
@@ -87,6 +93,7 @@ class Parameter:
         if type == 'string': type = 'char *'
         #default type is double
         if type == '': type = 'double'
+        if type == 'double *': type = 'boost::python::numpy::ndarray'
         
         self.type = type
 

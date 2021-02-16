@@ -115,7 +115,7 @@ with_custodian_and_ward<1, 5,
 ....
 > > ()
 '''
-    types = ['int', 'float', 'double', 'char *', 'const char *']
+    types = ['int', 'float', 'double', 'char *', 'const char *', 'boost::python::numpy::ndarray']
     pointertypes = [ 'char *', 'const char *']
     
     indexes_of_args_need_wards = []

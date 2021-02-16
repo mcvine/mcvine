@@ -102,11 +102,16 @@ def _build_args_str( args ):
     return ",".join( [ _arg_str( arg ) for arg in args] )
 
 
+import numpy as np
 def _arg_str( arg ):
     if arg.default is None:
         return "%s %s" % (arg.type, arg.name)
     elif isinstance( arg.default, str ):
         return "%s %s=\"%s\"" % (arg.type, arg.name, arg.default)
+    elif isinstance( arg.default, np.ndarray):
+        #!!! empty array !!!
+        v = "boost::python::numpy::zeros(boost::python::make_tuple(0), boost::python::numpy::dtype::get_builtin<float>())"
+        return "%s %s=%s" % (arg.type, arg.name, v)
     else:
         return "%s %s=%s" % (arg.type, arg.name, arg.default)
     pass

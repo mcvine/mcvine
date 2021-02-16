@@ -73,7 +73,7 @@ def componentInfo2cppClass( compInfo ):
     ##     print compInfo.save
     namespace = "mcstas2"
     baseclass = Class( 'Component' )
-    headers_dependent_on = ['mcstas2/mcstas2.h']
+    headers_dependent_on = ['mcstas2/mcstas2.h', 'boost/python/numpy.hpp']
     return createCppClass( class_name,
                            namespace, baseclass,
                            ctor_args, ctor_body,

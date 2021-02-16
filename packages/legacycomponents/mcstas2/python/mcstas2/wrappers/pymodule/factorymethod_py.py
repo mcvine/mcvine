@@ -15,6 +15,7 @@
 #to create instance of the boost python binding of mcstas component 
 
 from mcni._2to3 import isstr
+import numpy as np
 
 template = '''
 def factory( %(ctor_kwds)s ):
@@ -74,7 +75,7 @@ a.name = 'a'
 '''
 """
     ret = []
-    if isinstance(inst, int) or isinstance(inst, float):
+    if isinstance(inst, int) or isinstance(inst, float) or isinstance(inst, np.ndarray):
         ret.append( '%s = %r' % (name, inst) )
     elif isstr(inst):
         ret.append( '%s = """%s"""' % (name, inst) )
@@ -82,7 +83,7 @@ a.name = 'a'
         for index, item in enumerate(inst):
             ret.append( inst2str( 'item%s'%index, item ) )
             continue
-        ret.append( '%s = [ %s ]' % ( name, 
+        ret.append( '%s = [ %s ]' % ( name,
             ', '.join( ['item%s' % i for i in range(len(inst))] ) ) )
     else:
         ret = ['%s = %s()' % (name, inst.__class__.__name__) ]
@@ -90,7 +91,7 @@ a.name = 'a'
 
         for attr in attrs:
             if attr.startswith('_'): continue
-        
+
             value = getattr(inst, attr)
             tempname = '%s_%s' % (name, attr)
             ret.append( inst2str( tempname, value ) )
