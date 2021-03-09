@@ -50,12 +50,38 @@ An example script:
     if kwds:
         cmd += ' --additional-kargs=%s' % kwds_file
     cmd = "mpirun -np {} ".format(nodes) + cmd
-    if os.system(cmd):
-        raise RuntimeError("%s failed" % cmd)
+    # if os.system(cmd):
+    #     raise RuntimeError("%s failed" % cmd)
+    _exec(cmd)
     ppsd = os.path.join(workdir, 'post-processing-scripts')
     run_ppsd_in_parallel(ppsd, nodes)
     return
 
+def _exec(cmd):
+    import subprocess as sp, shlex
+    import psutil
+    args = shlex.split(cmd)
+    with psutil.Popen(args, stdout=sp.PIPE) as process:
+        for line in iter(process.stdout.readline, b''):
+            sys.stdout.write(line.decode())
+        process.wait()
+        errcode = process.returncode
+        # process.kill()
+    if errcode:
+        raise RuntimeError("%s failed" % cmd)
+    return
+
+def _exec0(cmd):
+    from subprocess import Popen, PIPE
+    p = Popen(cmd, stdout=PIPE, stderr=PIPE, shell=True)
+    stdout, stderr = p.communicate()
+    rt = p.wait()
+    if rt:
+        msg = '{} failed\nOut:{}\nError:{}\n'.format(
+            cmd, stdout.decode(), stderr.decode()
+        )
+        raise RuntimeError(msg)
+    return
 
 def run1_mpi(script, workdir, ncount, **kwds):
     "run a script on one MPI node. this is called 'worker' mode"

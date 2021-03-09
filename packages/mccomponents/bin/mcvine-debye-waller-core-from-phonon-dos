@@ -42,6 +42,7 @@ The input phonon DOS is in 2-col ascii format.
 
 """
 
+from __future__ import print_function
 import numpy as np
 import histogram
 
@@ -176,11 +177,9 @@ class App(AppBase):
         dos = pyre.inventory.str('dos', default='V-dos.dat')
         dos_xaxis = pyre.inventory.str('dos-x', default='TeraHz')
 
-        
     def help(self):
-        print help_msg
-        
-        
+        print(help_msg)
+
     def main(self):
         mass = self.inventory.mass
         temperature = self.inventory.temperature
@@ -197,20 +196,19 @@ class App(AppBase):
             g)
         # save DOS as a "histogram"
         dos_out = 'dos-hist.h5'
-        print "saving dos to a histogram h5 file: %s" % dos_out
+        print("saving dos to a histogram h5 file: %s" % dos_out)
         import histogram.hdf as hh
         hh.dump(dos, dos_out)
         #
         core = compute(dos, mass, temperature, nsampling)
         core2 = compute2(dos, mass, temperature)
         core2a = compute2a(dos, mass, temperature, nsampling)
-        print "Debye-Waller factor core (unit: angstrom**2):"
+        print("Debye-Waller factor core (unit: angstrom**2):")
         assert abs(core2-core)/core2 < 0.02
         assert abs(core2a-core)/core2 < 0.02
         core = (core+core2+core2a)/3
-        print core
+        print(core)
         return
-    
 
 
 def main():
@@ -221,4 +219,3 @@ def main():
 
 if __name__ == '__main__': main()
 
-    

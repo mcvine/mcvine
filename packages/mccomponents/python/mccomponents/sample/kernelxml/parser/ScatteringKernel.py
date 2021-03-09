@@ -38,15 +38,15 @@ class ScatteringKernel(Node):
         self._kernel = sth
         return
 
-    onKernelContainer = onSQEkernel = onSQkernel = onIsotropicKernel \
+    onKernelContainer \
+        = onSQE_EnergyFocusing_Kernel = onSQEkernel = onSQkernel = onIsotropicKernel \
         = onE_Q_Kernel = onE_vQ_Kernel = onBroadened_E_Q_Kernel \
         = onConstantEnergyTransferKernel \
         = onConstantQEKernel = onConstantvQEKernel \
         = onDGSSXResKernel \
         = on_
-    
+
     pass # end of ScatteringKernel
-    
 
 
 # version

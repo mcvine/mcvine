@@ -15,9 +15,19 @@ References
 Publications made use of MCViNE
 -------------------------------
 
+2020
+~~~~
+#. Dennis S Kim, O Hellman, N Shulumba, Claire N Saunders, Jiao YY Lin, Hillary L Smith, JE Herriman, Jennifer L Niedziela, Douglas L Abernathy, Chen W Li, B Fultz, Temperature-dependent phonon lifetimes and thermal conductivity of silicon by inelastic neutron scattering and ab initio calculations, https://doi.org/10.1103/PhysRevB.102.174311
+#. Iyad I Al-Qasir, Anne A Campbell, Gabriele Sala, Jiao YY Lin, Yongqiang Cheng, Fahima F Islam, Douglas L Abernathy, Matthew B Stone, Vacancy-driven variations in the phonon density of states of fast neutron irradiated nuclear graphite, https://doi.org/10.1016/j.carbon.2020.05.027
+#. Jennifer L Niedziela, Dipanshu Bansal, Jingxuan Ding, Tyson Lanigan-Atkins, Chen Li, Andrew F May, Hsin Wang, Jiao YY Lin, Douglas L Abernathy, Georg Ehlers, Ashfia Huq, D Parshall, JW Lynn, Olivier Delaire, Controlling phonon lifetimes via sublattice disordering in AgBiSe2, https://doi.org/10.1103/PhysRevMaterials.4.105402
+#. Tyson Lanigan-Atkins, S Yang, Jennifer L Niedziela, Dipanshu Bansal, Andrew F May, Alexander A Puretzky, JYY Lin, Daniel M Pajerowski, Tao Hong, Songxue Chi, Georg Ehlers, Olivier Delaire, Extended anharmonic collapse of phonon dispersions in SnS and SnSe, https://doi.org/10.1038/s41467-020-18121-4
+#. Youzhe Chen, J. Gaudet, S. Dasgupta, G. G. Marcus, J. Lin, T. Chen, T. Tomita, M. Ikhlas, Y. Zhao, W. C. Chen, M. B. Stone, O. Tchernyshyov, S. Nakatsuji, and C. Broholm, Antichiral spin order, its soft modes, and their hybridization with phonons in the topological semimetal Mn3Ge https://doi.org/10.1103/PhysRevB.102.054403
+#. Fahima Islam, Jiao Lin, Thomas Huegle, Ian Lumsden, David Anderson, Amy Elliott, Bianca Haberl, and Garrett Granroth, Computational optimization of a 3D printed collimator, https://doi.org/10.3233/JNR-190139
+
 2019
 ~~~~
 
+#. Fahima Islam, Jiao Y. Y. Lin, Richard Archibald, Douglas L. Abernathy, Iyad Al-Qasir, Anne A. Campbell, Matthew B. Stone, and Granroth Garrett E., Super-resolution energy spectra from neutron direct-geometry spectrometers, https://doi.org/10.1063/1.5116147
 #. Jiao YY Lin, Fahima Islam, Gabriele Sala, Ian Lumsden, Hillary Smith, Mathieu Doucet, Matthew B Stone, Douglas L Abernathy, Georg Ehlers, John F Ankner, and Garrett E Granroth, Recent developments of MCViNE and its applications at SNS, https://doi.org/10.1088/2399-6528/ab3622
 #. Jiao Y.Y. Lin, Arnab Banerjee, Fahima Islam, Manh D. Le, Douglas L. Abernathy, Energy dependence of the flux and elastic resolution for the ARCS neutron spectrometer, Physica B: Condensed Matter, 562, 2019, https://doi.org/10.1016/j.physb.2018.11.027
 #. M.B. Stone, G. Sala, J.Y.Y. Lin, Design of a radial collimator for the SEQUOIA direct geometry chopper spectrometer, Physica B: Condensed Matter, 2019, https://doi.org/10.1016/j.physb.2018.11.042

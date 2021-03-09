@@ -27,39 +27,53 @@ class New:
                 s ):
         '''gridsqe: S(Q,E) on grid
 
-        qbegin, qend, qstep: Q axis
-        ebegin, eend, estep: E axis
+        qbegin, qend, qstep: Q axis boundaries. qend must be larger than qbegin+qstep*Nqbins
+        ebegin, eend, estep: E axis boundaries. eend must be larger than ebegin+estep*NEbins
         s: numpy array of S
         '''
         shape = s.shape
         assert len(shape) == 2
-        assert shape[0] == int( (qend-qbegin)/qstep +0.5 ), (
+        assert shape[0] == int( (qend-qbegin)/qstep ), (
             'qend: %s, qbegin: %s, qstep: %s, shape0: %s' % (
             qend, qbegin, qstep, shape[0]) )
-        assert shape[1] == int( (eend-ebegin)/estep +0.5 )
+        assert shape[1] == int( (eend-ebegin)/estep )
         size = shape[0] * shape[1]
-        
         svector = b.vector_double( size )
         saveshape = s.shape
         s.shape = -1,
         svector[:] = s
         s.shape = saveshape
-        
         fxy = b.new_fxy(
             qbegin, qend, qstep,
             ebegin, eend, estep,
             svector)
-        
         return b.GridSQE( fxy )
 
-    
     def sqeFromExpression(self, expr):
         '''sqeFromExpression: S(Q,E) from analystic expreession
         '''
         expr = str(expr)
         return b.SQE_fromexpression(expr)
 
-    
+    def sqe_energyfocusing_kernel(
+            self, absorption_cross_section, scattering_cross_section,
+            unitcell_vol,
+            sqe, Qrange, Erange, Ef, dEf):
+        '''sqekernel: a kernel takes S(Q,E) a functor and has a final energy focusing
+
+        absorption_cross_section: absorption cross section
+        scattering_cross_section: scattering cross section
+        sqe: S(Q,E) functor
+        Qrange, Erange: range of Q and E
+        Ef, dEf: final energy focusing
+        '''
+        Emin, Emax = Erange
+        Qmin, Qmax = Qrange
+        return b.SQE_EnergyFocusing_Kernel(
+            absorption_cross_section, scattering_cross_section,
+            unitcell_vol,
+            sqe, Qmin, Qmax, Emin, Emax, Ef, dEf )
+
     def sqekernel(self, absorption_cross_section, scattering_cross_section,
                   unitcell_vol,
                   sqe, Qrange, Erange):
