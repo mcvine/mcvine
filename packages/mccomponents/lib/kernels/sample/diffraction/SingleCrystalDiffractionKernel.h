@@ -47,6 +47,7 @@ namespace mccomponents {
       // virtual bool total_scattering() const {return 1;} // this kernel is special
       virtual void scatter( mcni::Neutron::Event & ev );
       virtual void absorb( mcni::Neutron::Event & ev );
+      void check_reflections(const mcni::Neutron::Event &ev);
     private:
       const lattice_t *m_lattice;
       const hkllist_t *m_hkllist;

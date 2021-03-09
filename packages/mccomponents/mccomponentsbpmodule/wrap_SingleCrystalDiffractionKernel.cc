@@ -46,7 +46,9 @@ namespace wrap_mccomponents {
        init<const Lattice &, const w_t::hkllist_t &, w_t::float_t, w_t::float_t, w_t::float_t>()
        [with_custodian_and_ward<1,2,
         with_custodian_and_ward<1,3> >()]
-       );
+       )
+      .def("check_reflections", &w_t::check_reflections)
+      ;
   }
 }
 
