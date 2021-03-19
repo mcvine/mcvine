@@ -5,9 +5,10 @@ from . import matter
 import periodictable as ptbl
 from .vogel import phi1
 
+"Implementation follows section 3.2.1 of Vogel's thesis"
 
 class AtomicScattering:
-    
+
     """This class gather methods related to calculation of scattering
     property of an element. So the name "AtomicScattering" is not 
     really accurate.
@@ -21,22 +22,19 @@ class AtomicScattering:
         self.occupancy = occupancy
         return
 
-
     def sigma_abs(self):
         "absorption cross section"
         return self.ns.absorption
 
-    
     def b(self):
         "bound scattering length"
         return self.ns.b_c
 
-
     def theta(self, T):
         element = self.element
         from .DebyeTemp import getT
-        return 1.*T/getT(element)
-
+        TD = getT(element)
+        return 1.*T/TD
 
     def B(self, T):
         element = self.element
@@ -49,7 +47,6 @@ class AtomicScattering:
         # convert to AA
         return rt/AA/AA
 
-
 h = 6.62607004e-34
 kB = 1.38064852e-23
 AA = 1e-10
@@ -57,7 +54,6 @@ amu = 1.660539040e-27
 
 def test():
     assert np.isclose(AtomicScattering('Ni').B(300), 0.307, rtol=1e-2)
-
 
 if __name__ == '__main__': test()
 
