@@ -61,11 +61,13 @@ def F(structure, hkl, T):
 def F_i(i, structure, hkl, T):
     from ..atomic_scattering import AtomicScattering
     atom = structure[i]
-    B = AtomicScattering(atom.element).B(T)
+    element = atom.element
+    element = ''.join([c for c in element if c.isalpha()])
+    B = AtomicScattering(element).B(T)
     d1 = d(structure.lattice, hkl)
     position = atom.xyz
     o = atom.occupancy
-    b = getattr(pt, atom.element).neutron.b_c # unit: fm
+    b = getattr(pt, element).neutron.b_c # unit: fm
     return o*b*np.exp(2*np.pi*1j*np.dot(hkl, position) - B/4/d1/d1)
 
 
