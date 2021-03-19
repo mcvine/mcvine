@@ -2,7 +2,7 @@
 # Jiao Lin <jiao.lin@gmail.com>
 #
 
-import os, sys, yaml
+import os, sys, yaml, warnings
 from mcni import run_ppsd, run_ppsd_in_parallel
 
 def run_mpi(script, workdir, ncount, nodes, buffer_size=int(1e6), overwrite_datafiles=False, **kwds):
@@ -162,6 +162,9 @@ def _getRelevantKwds(method, kwds):
     import inspect
     argspec = inspect.getargspec(method)
     d = dict()
+    for a in kwds:
+        if a not in argspec.args:
+            warnings.warn("Unrecognized kwd: {!r}".format(a))
     for a in argspec.args:
         if a in kwds:
             d[a] = kwds[a]
