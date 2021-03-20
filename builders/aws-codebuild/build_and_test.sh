@@ -10,8 +10,9 @@ export GIT_FULL_HASH=`git rev-parse HEAD`
 export GIT_VER=`git describe --tags`
 export VERSION=`git describe --tags | cut -d '-' -f1 | cut -c2-`
 export VERSION_NEXT=`echo ${VERSION}| awk -F. -v OFS=. 'NF==1{print ++$NF}; NF>1{if(length($NF+1)>length($NF))$(NF-1)++; $NF=sprintf("%0*d", length($NF), ($NF+1)%(10^length($NF))); print}'`
+TIMESTAMP=`date "+%Y%m%d%H%M%S"`
 echo $VERSION $VERSION_NEXT
-export MCVINE_CONDA_PKG_VER=${VERSION_NEXT}.dev
+export MCVINE_CONDA_PKG_VER=${VERSION_NEXT}.dev${TIMESTAMP}
 echo $MCVINE_CONDA_PKG_VER
 cd builders/aws-codebuild/conda-recipe
 
