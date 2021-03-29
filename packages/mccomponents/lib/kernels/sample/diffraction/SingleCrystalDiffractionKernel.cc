@@ -21,7 +21,6 @@
 
 // uncomment to debug tau_info_list creation
 // #define DEBUG_SETUP_TAU_INFO_LIST
-
 #ifdef DEBUG_SETUP_TAU_INFO_LIST
 #define DEBUG
 #endif
