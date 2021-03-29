@@ -11,6 +11,7 @@
 #include "mccomponents/math/random.h"
 #include "mccomponents/physics/constants.h"
 
+// #define DEBUG
 #ifdef DEBUG
 #include "journal/debug.h"
 #endif
@@ -104,6 +105,7 @@ mccomponents::kernels::SQE_EnergyFocusing_Kernel::S
 #ifdef DEBUG
   m_details->debug
     << journal::at(__HERE__)
+    << "Original probability" << ev.probability << journal::newline
     << "generate E between " << m_Emin << " and " << std::min(Ei, m_Emax)
     << ", E=" << E
     << journal::endl;
@@ -128,15 +130,17 @@ mccomponents::kernels::SQE_EnergyFocusing_Kernel::S
 #endif
 
   // adjust probability of neutron event
-  ev.probability *= m_sqe(Q,E) * Q * (Qmax-Qmin) * (Emax-Emin) / (2*ki*ki);
+  double prob_mul = m_sqe(Q,E) * Q * (Qmax-Qmin) * (Emax-Emin) / (2*ki*ki);
+  ev.probability *= prob_mul;
 #ifdef DEBUG
   m_details->debug
     << journal::at(__HERE__)
-    << Q << ", " << E << ", "
-    << Qmin << ", " << Qmax << ", "
-    << Emin << ", " << Emax << ", "
-    << ki << ", "
-    << m_sqe(Q,E)
+    << "Q, E="<< Q << ", " << E << ", " << journal::endl
+    << "Qmin, Qmax=" << Qmin << ", " << Qmax << ", " << journal::endl
+    << "Emin, Emax=" << Emin << ", " << Emax << ", " << journal::endl
+    << "ki=" << ki << ", " << journal::endl
+    << "S=" << m_sqe(Q,E) << journal::endl
+    << "prob mul=" << prob_mul << journal::endl
     << journal::endl;
 #endif
   // figure out the direction of the out-going neutron
@@ -170,6 +174,7 @@ mccomponents::kernels::SQE_EnergyFocusing_Kernel::S
     << "e2 = " << e2 << journal::newline
     << "e3 = " << e3 << journal::newline
     << "ekf = " << ekf << journal::newline
+    << "prob = " << ev.probability << journal::newline
     << journal::endl;
 #endif
   ev.state.velocity = ekf * (kf*conversion::k2v);
