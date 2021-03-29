@@ -124,7 +124,10 @@ def from_mcpl(path, out, scale_by_number_of_packets):
         vv = v[:, np.newaxis] * pb.direction
         vx,vy,vz = vv.T
         s1 = s2 = np.zeros(N1)
-        arr = np.array([x,y,z,vx,vy,vz,s1,s2,t,p]).T.copy()
+        cond = p>0
+        arr = np.array([
+            x[cond],y[cond],z[cond],vx[cond],vy[cond],vz[cond],
+            s1[cond],s2[cond],t[cond],p[cond]]).T.copy()
         arrays.append(arr)
         # fn = '{}-{}{}'.format(base, i, ext)
         continue
@@ -135,6 +138,14 @@ def from_mcpl(path, out, scale_by_number_of_packets):
         N = arr.shape[0]
         arr[:, -1] *= N
     write(arr, out)
+    return
+
+@neutronstorage.command()
+@click.argument("path")
+@click.option("--out", help='output path')
+@click.option("--renormalize/--no-renormalize", help='rescale the probability to ensure each neutron represents one unit time (for example one pulse from moderator)')
+def clean(path, out, renormalize):
+    raise NotImplemented
     return
 
 # End of file
