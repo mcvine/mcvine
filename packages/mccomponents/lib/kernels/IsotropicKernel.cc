@@ -50,9 +50,10 @@ mccomponents::kernels::IsotropicKernel::IsotropicKernel
 double
 mccomponents::kernels::IsotropicKernel::absorption_coefficient(const mcni::Neutron::Event & ev )
 {
-  // !!!!!!!!!!!!!!!!
-  // we need better implementation here
-  return m_absorption_cross_section;
+  float_t v = ev.state.velocity.length();
+  float_t rt = m_absorption_cross_section * (2200/v);
+  // std::cout << "absorption: " << rt << std::endl;
+  return rt;
 }
 
 
@@ -61,6 +62,7 @@ mccomponents::kernels::IsotropicKernel::scattering_coefficient(const mcni::Neutr
 {
   // !!!!!!!!!!!!!!!!
   // we need better implementation here
+  // std::cout << "scattering: " << m_scattering_cross_section << std::endl;
   return m_scattering_cross_section;
 }
 
