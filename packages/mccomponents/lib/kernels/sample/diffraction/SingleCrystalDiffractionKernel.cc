@@ -21,6 +21,9 @@
 
 // uncomment to debug tau_info_list creation
 // #define DEBUG_SETUP_TAU_INFO_LIST
+#ifdef DEBUG_SETUP_TAU_INFO_LIST
+#define DEBUG
+#endif
 
 #ifdef DEBUG
 #include "journal/debug.h"
@@ -108,7 +111,7 @@ struct mccomponents::kernels::SingleCrystalDiffractionKernel::Details {
   // methods
   // xs: barn
   double scattering_xs(const mcni::Neutron::Event & ev );
-  void setup_tau_info_list(const mcni::Neutron::Event &ev);
+  void setup_tau_info_list(const mcni::Neutron::Event &ev, bool verbose=false);
 };
 
 
@@ -175,7 +178,7 @@ mccomponents::kernels::SingleCrystalDiffractionKernel::Details::~Details()
 
 void
 mccomponents::kernels::SingleCrystalDiffractionKernel::Details::setup_tau_info_list
-(const mcni::Neutron::Event &ev)
+(const mcni::Neutron::Event &ev, bool verbose)
 {
   // only when velocity changes we need recalculation
   if (neutron_ptr!=NULL && ev.state.velocity==neutron.state.velocity) return;
@@ -192,15 +195,15 @@ mccomponents::kernels::SingleCrystalDiffractionKernel::Details::setup_tau_info_l
   const Lattice &lattice = *(kernel->m_lattice);
   total_xs = total_refl  = 0.;
   float_t xs_factor = pow(2*PI, 5.0/2.0)/(lattice.V0*ki_length*ki_length); // 1/AA???
-#ifdef DEBUG_SETUP_TAU_INFO_LIST
-  debug << journal::at(__HERE__)
+  if (verbose) {
+    std::cout
         << "v=" << v
         << ", ki=" << ki
         << ", xs_factor=" << xs_factor
         << ", V0=" << lattice.V0
         << ", ki_length=" << ki_length
-        << journal::endl;
-#endif
+        << std::endl;
+  }
   //
   size_t itau = 0;
   for (size_t i=0; i<hkllist.size(); i++){
@@ -223,7 +226,17 @@ mccomponents::kernels::SingleCrystalDiffractionKernel::Details::setup_tau_info_l
     float_t rho_length = rho.length();
     float_t diff = abs(rho_length-ki_length);
     // Check if scattering is possible (cutoff of Gaussian tails).
-    if (diff > hkldata.cutoff) continue;
+    if (diff > hkldata.cutoff) {
+      if (verbose) {
+        std::cout
+          << "hkl=" << hkldata.hkl.h << ", " << hkldata.hkl.k << ", " << hkldata.hkl.l
+          << "tau=" << hkldata.tau << ", "
+          << "tau_max=" << tau_max
+          << "diff, cutoff:" << diff << ", " << hkldata.cutoff
+          << std::endl;
+      }
+      continue;
+    }
 #ifdef DEBUG_SETUP_TAU_INFO_LIST
     debug << journal::at(__HERE__)
           << "Found a reflection"
@@ -281,43 +294,43 @@ mccomponents::kernels::SingleCrystalDiffractionKernel::Details::setup_tau_info_l
     taudata.xs = taudata.refl*hkldata.hkl.F2*1e-2;                  // convert to barn
     total_xs += taudata.xs;
     itau++;
-#ifdef DEBUG_SETUP_TAU_INFO_LIST
-    taudata.o = taudata.n*(ki_length-rho_length);
-    debug << journal::at(__HERE__)
+    if (verbose) {
+      // taudata.o = taudata.n*(ki_length-rho_length);
+      std::cout 
           << "itau=" << itau
-          << journal::newline << "hkl=" << hkldata.hkl.h << ", " << hkldata.hkl.k << ", " << hkldata.hkl.l
-          << journal::newline << "m1=" << hkldata.m1 << ", m2=" << hkldata.m2
-          << journal::newline << "ki, rho, tau length" << ki_length << ", "
+          << std::endl << "hkl=" << hkldata.hkl.h << ", " << hkldata.hkl.k << ", " << hkldata.hkl.l
+          << std::endl << "m1=" << hkldata.m1 << ", m2=" << hkldata.m2
+          << std::endl << "ki, rho, tau length" << ki_length << ", "
           << rho_length << ", " << hkldata.tau_length
-          << journal::newline << "ki vector=" << ki
-          << journal::newline << "rho=" << rho
-          << journal::newline << "Li tau=" << hkldata.tau << ", "
-          << journal::newline << "u1=" << hkldata.u1.x << ", " << hkldata.u1.y << ", " << hkldata.u1.z
-          << journal::newline << "u2=" << hkldata.u2.x << ", " << hkldata.u2.y << ", " << hkldata.u2.z
-          << journal::newline << "u3=" << hkldata.u3.x << ", " << hkldata.u3.y << ", " << hkldata.u3.z
-          << journal::newline << "Tj.ki=" << taudata.ki
-          << journal::newline << "Tj.rho=" << taudata.rho
-          << journal::newline << "n=" << taudata.n.x << ", " << taudata.n.y << ", " << taudata.n.z
-          << journal::newline << "o=" << o.x << ", " << o.y << ", " << o.z
-          << journal::newline << "n11=" << n11 << ", n12=" << n12 << ", n22=" << n22
-          << journal::newline << "y0x=" << y0x << ", y0y=" << y0y
-          << journal::newline << "det_L=" << det_L
-          << journal::newline << "alpha=" << alpha
-          << journal::newline << "sig123=" << hkldata.sig123
-          << journal::newline << "refl, xs=" << taudata.refl << ", " << taudata.xs
-          << journal::newline << "tau_max=" << tau_max
-          << journal::newline << "F2=" << hkldata.hkl.F2
-          << journal::endl;
-#endif
-  }
+          << std::endl << "ki vector=" << ki
+          << std::endl << "rho=" << rho
+          << std::endl << "Li tau=" << hkldata.tau << ", "
+          << std::endl << "u1=" << hkldata.u1.x << ", " << hkldata.u1.y << ", " << hkldata.u1.z
+          << std::endl << "u2=" << hkldata.u2.x << ", " << hkldata.u2.y << ", " << hkldata.u2.z
+          << std::endl << "u3=" << hkldata.u3.x << ", " << hkldata.u3.y << ", " << hkldata.u3.z
+          << std::endl << "Tj.ki=" << taudata.ki
+          << std::endl << "Tj.rho=" << taudata.rho
+          << std::endl << "n=" << taudata.n.x << ", " << taudata.n.y << ", " << taudata.n.z
+          << std::endl << "o=" << o.x << ", " << o.y << ", " << o.z
+          << std::endl << "n11=" << n11 << ", n12=" << n12 << ", n22=" << n22
+          << std::endl << "y0x=" << y0x << ", y0y=" << y0y
+          << std::endl << "det_L=" << det_L
+          << std::endl << "alpha=" << alpha
+          << std::endl << "sig123=" << hkldata.sig123
+          << std::endl << "refl, xs=" << taudata.refl << ", " << taudata.xs
+          << std::endl << "tau_max=" << tau_max
+          << std::endl << "F2=" << hkldata.hkl.F2
+          << std::endl;
+    } //if verbose
+  } //for
   n_reflections = itau;
-#ifdef DEBUG_SETUP_TAU_INFO_LIST
-  debug << journal::at(__HERE__)
-        << "total_xs=" << total_xs
-        << ", total_refl=" << total_refl
-        << ", n_reflections=" << n_reflections
-        << journal::endl;
-#endif
+  if (verbose) {
+    std::cout 
+      << "total_xs=" << total_xs
+      << ", total_refl=" << total_refl
+      << ", n_reflections=" << n_reflections
+      << std::endl;
+  }
   // save
   neutron_ptr = &ev;
   neutron = ev;
@@ -375,6 +388,13 @@ mccomponents::kernels::SingleCrystalDiffractionKernel::absorb
 {
 }
 
+
+void
+mccomponents::kernels::SingleCrystalDiffractionKernel::check_reflections
+( const mcni::Neutron::Event & ev )
+{
+  m_details->setup_tau_info_list(ev, true);
+}
 
 void
 mccomponents::kernels::SingleCrystalDiffractionKernel::scatter
