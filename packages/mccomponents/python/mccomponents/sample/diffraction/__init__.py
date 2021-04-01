@@ -47,7 +47,8 @@ def create_lau(path, structure, T, max_index=5):
     for pk in pks:
         h,k,l = pk.hkl
         line = '{h} {k} {l} {mul} {d} {F2}'.format(
-            h=h,k=k,l=l, mul=pk.multiplicity, d=pk.d, F2=pk.F_squared
+            h=h,k=k,l=l, mul=pk.multiplicity, d=pk.d,
+            F2=pk.F_squared*100, # pk.F_squared is in barns. convert to fm^2
         )
         content.append(line)
     content = [header] + content

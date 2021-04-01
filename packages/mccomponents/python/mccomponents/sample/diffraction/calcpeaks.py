@@ -48,13 +48,13 @@ def iter_peaks(structure, T, max_index=5, type='powder'):
 def q(lattice, hkl):
     "Returns q from (h, k, l) parameters"
     h,k,l   = hkl
-    rb      = lattice.recbase
+    rb      = lattice.recbase.T
     q       = 2*np.pi*(h*rb[0] + k*rb[1] + l*rb[2])
     return np.sqrt(np.dot(q,q))
 
 def F(structure, hkl, T):
     "structure factor. unit: fm"
-    fs = [F_i(i, structure, hkl, T) 
+    fs = [F_i(i, structure, hkl, T)
           for i in range(len(structure))]
     return sum(fs)
 
