@@ -5,7 +5,7 @@ import periodictable as pt
 from .powder import Peak
 # import tqdm
 
-def iter_peaks(structure, T, max_index=5, type='powder'):
+def iter_peaks(structure, T, max_index=5, min_dspacing=None, type='powder'):
     "iterate over unique diffraction peaks"
     if type == 'powder':
         # when adding a peak, also add all its equivalent peaks to the "skip"
@@ -20,10 +20,19 @@ def iter_peaks(structure, T, max_index=5, type='powder'):
 
     # for h in tqdm.tqdm(range(hmin, hmax)):
     for h in range(hmin, hmax):
+        if min_dspacing is not None:
+            d1 = d(structure.lattice, (h,0,0))
+            if d1<min_dspacing: continue
         for k in range(kmin, kmax):
+            if min_dspacing is not None:
+                d1 = d(structure.lattice, (0,k,0))
+                if d1<min_dspacing: continue
             for l in range(lmin, lmax):
                 if h==0 and k==0 and l==0: continue
                 hkl1 = h,k,l
+                d1 = d(structure.lattice, hkl1)
+                if min_dspacing is not None and d1<min_dspacing:
+                    continue
                 # print(hkl1)
                 # for powder we don't want equivalent hkls
                 if type == 'powder':
@@ -35,7 +44,6 @@ def iter_peaks(structure, T, max_index=5, type='powder'):
                     # print skip
                 F1 = F(structure, hkl1, T)
                 F_squared = np.abs(F1)**2 / 100 # from fm^2 to barn
-                d1 = d(structure.lattice, hkl1)
                 q1 = q(structure.lattice, hkl1)
                 assert np.isclose(d1*q1, 2*np.pi)
                 mult1 = multiplicity(hkl1, structure.sg)

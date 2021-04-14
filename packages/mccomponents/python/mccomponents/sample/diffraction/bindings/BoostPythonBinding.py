@@ -79,8 +79,14 @@ class New:
             ]
         for prop in props:
             val = getattr(data, prop)
-            print(val)
-            setattr(bdata, prop, val)
+            try:
+                setattr(bdata, prop, val)
+            except:
+                import traceback as tb, textwrap
+                e = textwrap.indent(tb.format_exc(), '... ')
+                raise ValueError(
+                    "Failed to setattr {} to {!r}\nOriginal Exception{}".format(
+                        prop, val, e))
             continue
 
         for peak in data.peaks:
@@ -100,7 +106,14 @@ class New:
             ]
         for prop in props:
             val = getattr(peak, prop)
-            setattr(bpeak, prop, val)
+            try:
+                setattr(bpeak, prop, val)
+            except:
+                import traceback as tb, textwrap
+                e = textwrap.indent(tb.format_exc(), '... ')
+                raise ValueError(
+                    "Failed to setattr {} to {!r}\nOriginal Exception{}".format(
+                        prop, val, e))
             continue
         return bpeak
 

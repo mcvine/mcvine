@@ -82,6 +82,8 @@ class Peak:
     
     def __init__(self, **kwds):
         for k, v in kwds.items():
+            if k not in self.__class__.__dict__:
+                raise RuntimeError("powder.Peak: unrecognized attr {}".format(k))
             setattr(self, k, v)
             continue
         return

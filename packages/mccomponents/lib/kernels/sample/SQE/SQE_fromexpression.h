@@ -35,6 +35,7 @@ namespace mccomponents {
 
       // meta methods
       SQE_fromexpression ( const std::string & expr);
+      SQE_fromexpression ( const char * expr) : SQE_fromexpression(std::string(expr)) {}
       
       // methods
       virtual inline double operator () ( double Q, double E ) {

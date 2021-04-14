@@ -51,6 +51,7 @@ mccomponents::kernels::SQE_EnergyFocusing_Kernel::SQE_EnergyFocusing_Kernel
     m_sqe(sqe),
     m_details( new Details )
 {
+  // std::cout << "E range" << m_Emin << ", " << m_Emax << std::endl;
 }
 
 
