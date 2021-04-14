@@ -29,9 +29,10 @@ def simplepowderdiffractionkernel(
     from .SimplePowderDiffractionKernel import SimplePowderDiffractionKernel as f
     return f(Dd_over_d, DebyeWaller_factor, peaks, **kwds)
 
-def create_lau(path, structure, T, max_index=5):
+def create_lau(path, structure, T, max_index=5, min_dspacing=None):
     from . import calcpeaks
-    pks = list(calcpeaks.iter_peaks(structure, T, max_index, type='singlecrystal'))
+    pks = list(calcpeaks.iter_peaks(
+        structure, T, max_index, min_dspacing=min_dspacing, type='singlecrystal'))
     content = []
     lattice = structure.lattice
     header = '''# CELL {a} {b} {c} {alpha} {beta} {gamma}
