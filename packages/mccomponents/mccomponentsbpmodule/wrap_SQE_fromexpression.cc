@@ -30,13 +30,12 @@ namespace wrap_mccomponents {
 
     class_<w_t, bases<mccomponents::sample::AbstractSQE>, boost::noncopyable >
       ("SQE_fromexpression",
-       init<const std::string &>()
+       init<const char *>()
        )
-      ;    
+      ;
   }
 
 }
-
 
 // version
 // $Id$
