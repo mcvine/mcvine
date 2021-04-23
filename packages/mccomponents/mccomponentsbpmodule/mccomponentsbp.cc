@@ -43,9 +43,11 @@ namespace wrap_mccomponents{
   void wrap_SQEkernel();
   void wrap_SQE_EnergyFocusing_Kernel();
   void wrap_SQkernel();
+  void wrap_SvQkernel();
   void wrap_GridSQE();
   void wrap_SQE_fromexpression();
   void wrap_GridSQ();
+  void wrap_GridSvQ();
   void wrap_SQ_fromexpression();
 
   void wrap_NdArray();
@@ -104,10 +106,12 @@ BOOST_PYTHON_MODULE(mccomponentsbp)
   wrap_SQEkernel();
   wrap_SQE_EnergyFocusing_Kernel();
   wrap_SQkernel();
+  wrap_SvQkernel();
 
   wrap_GridSQE();
   wrap_SQE_fromexpression();
   wrap_GridSQ();
+  wrap_GridSvQ();
   wrap_SQ_fromexpression();
 
   wrap_NdArray();

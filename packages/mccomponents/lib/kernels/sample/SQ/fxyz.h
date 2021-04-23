@@ -15,7 +15,8 @@ namespace mccomponents {
   namespace sample {
 
     typedef DANSE::Histogram::EvenlySpacedGridData_3D
-    <double, double, double, double, std::vector<double>::iterator > fxyz;
+    <double, double, double, double,
+     std::vector<double>::iterator > fxyz;
 
   } // sample::
 
