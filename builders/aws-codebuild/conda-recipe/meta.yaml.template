@@ -11,23 +11,23 @@ requirements:
     - {{ compiler('cxx') }} 7 # [linux]
     - cmake
   host:
-    - python
+    - python                   {{ python }}
     - pyyaml
-    - numpy                 {{ numpy }}
+    - numpy                    {{ numpy }}
     - psutil
     - h5py
     - openmpi
     - mpi4py
-    - gsl                   {{ gsl }}
-    - boost                 {{ boost }}
-    - pyre
+    - gsl                      {{ gsl }}
+    - boost                    {{ boost }}
+    - pyre                     {{ pyre }}
     - danse.ins.dsm
-    - danse.ins.numpyext
-    - danse.ins.bpext
-    - histogram
+    - danse.ins.numpyext       {{ numpyext }}
+    - danse.ins.bpext          {{ bpext }}
+    - histogram                {{ histogram }}
     - diffpy.Structure
     - periodictable
-    - drchops
+    - drchops                  {{ drchops }}
     - mcvine-resources
 
   run:
@@ -38,7 +38,6 @@ requirements:
     - numpy
     - psutil
     - h5py
-    - openmpi
     - mpi4py
     - gsl
     - boost
@@ -52,6 +51,8 @@ requirements:
     - drchops
     - mcvine-resources
     - phonopy
+    - scipy
+    - matplotlib
 
 build:
   script_env:

@@ -19,6 +19,7 @@ set ( SRC_FILES
   wrap_Broadened_E_Q_Kernel.cc
   wrap_DGSSXResKernel.cc
   wrap_SQEkernel.cc
+  wrap_SQE_EnergyFocusing_Kernel.cc
   wrap_SQkernel.cc
   wrap_GridSQE.cc
   wrap_SQE_fromexpression.cc

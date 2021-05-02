@@ -21,14 +21,19 @@ class IsotropicKernel(base):
     tag = "IsotropicKernel"
 
     def createKernel( self, **kwds ):
+        absorption_coefficient = kwds.get('absorption_coefficient')
+        if absorption_coefficient:
+            absorption_coefficient = self._parse(absorption_coefficient)
+        scattering_coefficient = kwds.get('scattering_coefficient')
+        if scattering_coefficient:
+            scattering_coefficient = self._parse(scattering_coefficient)
         from mccomponents.sample import isotropickernel
-        return isotropickernel()
-
+        return isotropickernel(
+            absorption_coefficient = absorption_coefficient,
+            scattering_coefficient = scattering_coefficient,
+        )
 
     pass # end of IsotropicKernel
 
-
-# version
-__id__ = "$Id$"
 
 # End of file 

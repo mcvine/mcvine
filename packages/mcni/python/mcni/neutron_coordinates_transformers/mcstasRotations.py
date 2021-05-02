@@ -45,30 +45,30 @@ handle rotation matrices
       m * (r - r_comp)
 
     where r_comp is the position of the component in the instrument coords system.
-    
-    - RELATED: 
+
+    - RELATED:
 
     - TODOs:
 """
 
 
-from numpy import array,zeros,cos,sin, dot, transpose              
-import numpy                                                                  
+from numpy import array,zeros,cos,sin, dot, transpose
+import numpy
 
 
 def toMatrix( *args, **kwds ):
     '''convert rotation angles to a rotation matrix.
 the rotation matrix is related to
 rotation angles phx, phy, phz as
-    
+
   1. rotate around x axis by angle phx
   2. rotate around y axis by angle phy
   3. rotate around z axis by angle phz
-    
+
 this is actually a piece of c-code in mcstas.
 
 Please note that after rotation 1 (rotate around x axis)
-the y axis already rotated. So the second rotation is around 
+the y axis already rotated. So the second rotation is around
 the new y axis.
 
 Please be very careful and read the following texts to
@@ -91,6 +91,12 @@ in CS1. The relationship between v and v1 is
 
 So this rotation matrix is for rotating a coordinate system.
 
+To get the matrix of successive rotations not in the order of x,y',z",
+calculate
+
+  np.dot(..., toMatrix(rx3, ry3, rz3), toMatrix(rx2, ry2, rz2), toMatrix(rx1, ry1, rz1))
+
+Please note it goes backward.
     '''
     usage = """toMatrix( 5, 6, 7, unit="deg")
     toMatrix( 5, 6, 7)
