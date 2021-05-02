@@ -125,13 +125,13 @@ _painting_action_translator = _PaintingActionTranslation()
 class Painter:
 
     def multiline(self, x):
-        print "Lines: " + '->'.join(str(v) for v in x)
+        print("Lines: " + '->'.join(str(v) for v in x))
 
     def circle(self, plane, c, r):
-        print "Circle: In plane %r, center at %r, radius %r" % (plane, c, r)
+        print("Circle: In plane %r, center at %r, radius %r" % (plane, c, r))
 
     def magnify(self, plane):
-        print "Magnify: plane %r" % plane
+        print("Magnify: plane %r" % plane)
 
 import click
 @click.command()
