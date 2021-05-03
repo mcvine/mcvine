@@ -65,7 +65,7 @@ mcvine_build_subpkg () {
 
 # For development
 # clean up everything and build everything
-alias clear_intermediate_mcstas_components_dir="cd $MCVINE_SRC_MCSTAS_COMPONENTS_INTERMEDIATE_DIR && rm -rf * && git checkout ."
+alias clear_intermediate_mcstas_components_dir='cd $MCVINE_SRC_MCSTAS_COMPONENTS_INTERMEDIATE_DIR && rm -rf !("README")'
 alias build0="clear_intermediate_mcstas_components_dir && rm -rf $BUILD_ROOT && mkdir $BUILD_ROOT && cd $BUILD_ROOT && mm0 && mmfull"
 # run cmake for the first time
 alias mm0="mcvine_cmake0 $MCVINE_SRC $BUILD_ROOT"
