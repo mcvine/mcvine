@@ -86,11 +86,12 @@ class Component(AbstractComponent, ParallelComponent):
         tmpdir = tempfile.mkdtemp()
         path = os.path.join(tmpdir, 'ctor.pkl')
         import pickle
-        pickle.dump((self._cpp_instance_factory, self._factory_kwds), open(path, 'w'))
+        pickle.dump((self._cpp_instance_factory, self._factory_kwds), open(path, 'wb'))
         # 2. run python cmd in subprocess that calls mcstas display function
         cmd = 'python -m "mcstas2.components._proxies.base" display --path="%s"' % path
         import subprocess as sp, shlex
         out = sp.check_output(shlex.split(cmd))
+        out = out.decode()
         # 3. parse output
         prefix = 'MCDISPLAY: '
         return [l.lstrip(prefix) for l in out.splitlines() if l.startswith(prefix)]
@@ -122,7 +123,43 @@ class _PaintingActionTranslation:
 _painting_action_translator = _PaintingActionTranslation()
 
 
-class Painter:
+class AbstractPainter:
+
+    def multiline(self, x):
+        """draw lines between successive points
+
+        Parameters
+        ----------
+        x : array
+          numpy array of points. shape (N,3)
+        """
+        raise NotImplementedError("multiline")
+
+    def circle(self, plane, c, r):
+        """draw a circle
+
+        Parameters
+        ----------
+        plane : string
+          xy/yz/xz
+        c : vector
+          center. 3D vector.
+        r : float
+          radius
+        """
+        raise NotADirectoryError("circle")
+
+    def magnify(self, plane):
+        """magnify
+
+        Parameters
+        ----------
+        plane : string
+          xy/yz/xz
+        """
+        raise NotADirectoryError("magnify")
+
+class Painter(AbstractPainter):
 
     def multiline(self, x):
         print("Lines: " + '->'.join(str(v) for v in x))
@@ -141,7 +178,7 @@ def main(action, path):
     assert action == 'display'
     # load constructor info for the component
     import pickle
-    f, kwds = pickle.load(open(path))
+    f, kwds = pickle.load(open(path, 'rb'))
     # create component instance
     instance = f(**kwds)
     # call display method
