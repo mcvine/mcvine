@@ -73,7 +73,8 @@ class Component(AbstractComponent, ParallelComponent):
             func = getattr(painter, f)
             args = ast.literal_eval(args)
             if not isinstance(args, tuple): args = args,
-            func(getattr(_painting_action_translator, f)(*args))
+            tr_args = getattr(_painting_action_translator, f)(*args)
+            func(*tr_args)
         return
 
     def get_display_instructions(self):
@@ -86,7 +87,8 @@ class Component(AbstractComponent, ParallelComponent):
         tmpdir = tempfile.mkdtemp()
         path = os.path.join(tmpdir, 'ctor.pkl')
         import pickle
-        pickle.dump((self._cpp_instance_factory, self._factory_kwds), open(path, 'wb'))
+        with open(path, 'wb') as ostream:
+            pickle.dump((self._cpp_instance_factory, self._factory_kwds), ostream)
         # 2. run python cmd in subprocess that calls mcstas display function
         cmd = 'python -m "mcstas2.components._proxies.base" display --path="%s"' % path
         import subprocess as sp, shlex
@@ -94,7 +96,11 @@ class Component(AbstractComponent, ParallelComponent):
         out = out.decode()
         # 3. parse output
         prefix = 'MCDISPLAY: '
-        return [l.lstrip(prefix) for l in out.splitlines() if l.startswith(prefix)]
+        rt = [l.lstrip(prefix) for l in out.splitlines() if l.startswith(prefix)]
+        # 4. clean up
+        import shutil
+        shutil.rmtree(tmpdir)
+        return rt
 
     def _call_mcstas_display(self):
         "call the mcstas C code for display. this will prints to stdout"
@@ -112,14 +118,14 @@ class _PaintingActionTranslation:
         x = np.array(x[1:])
         x.shape = -1, 3
         assert x.shape[0] == N
-        return x
+        return x,
 
     def circle(self, plane, cx, cy, cz, r):
         c = cx,cy,cz
         return plane, c, r
 
     def magnify(self, plane):
-        return plane
+        return plane,
 _painting_action_translator = _PaintingActionTranslation()
 
 
