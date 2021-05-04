@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>S(Q,E) &#8212; mcvine 1.0 documentation</title>
+    <title>Incoherent Elastic scattering for polycrystal &#8212; mcvine 1.0 documentation</title>
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
@@ -46,16 +46,24 @@
         <li><a href="../index.html">Documentation</a> &raquo; &nbsp;</li>
         <li><a href="../search.html">search</a> &raquo;</li>
 
-        <li class="nav-item nav-item-this"><a href="">S(Q,E)</a></li> 
+        <li class="nav-item nav-item-this"><a href="">Incoherent Elastic scattering for polycrystal</a></li> 
       </ul>
     </div>
 
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Incoherent Elastic scattering for polycrystal</a><ul>
+<li><a class="reference internal" href="#explanation-of-dw-core">Explanation of <cite>dw_core</cite></a></li>
+</ul>
+</li>
+</ul>
+
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="../_sources/kernels/SQE.rst.txt"
+      <li><a href="../_sources/kernels/IncoherentElasticPhonon_PolyXtal.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
@@ -77,33 +85,43 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="s-q-e">
-<span id="kernel-sqe"></span><h1>S(Q,E)<a class="headerlink" href="#s-q-e" title="Permalink to this headline">¶</a></h1>
-<p>This kernel scatters neutrons according to a <span class="math notranslate nohighlight">\(S(|\vec{Q}|,E)\)</span> input.</p>
+  <div class="section" id="incoherent-elastic-scattering-for-polycrystal">
+<span id="kernel-incoh-el-phonon-polyxtal"></span><h1>Incoherent Elastic scattering for polycrystal<a class="headerlink" href="#incoherent-elastic-scattering-for-polycrystal" title="Permalink to this headline">¶</a></h1>
+<p>This kernel is for Incoherent Elastic scattering for a polycrystalline sample.</p>
 <p>Parameters:</p>
 <ul class="simple">
-<li><p>Q-range: The momentum transfer range</p></li>
-<li><p>energy-transfer: The energy transfer range</p></li>
-</ul>
-<p>Elements:</p>
-<ul class="simple">
-<li><p>GridSQE</p></li>
+<li><p><cite>dw_core</cite>: average displacement squared projected to <span class="math notranslate nohighlight">\(Q\)</span> (<span class="math notranslate nohighlight">\(&lt;u^2_Q&gt;\)</span>)</p></li>
+<li><p><cite>scattering_xs</cite>: total scattering cross section of a unit cell</p></li>
+<li><p><cite>absorption_xs</cite>: total absorption cross section of a unit cell</p></li>
 </ul>
 <p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">SQEkernel</span> <span class="n">Q</span><span class="o">-</span><span class="nb">range</span><span class="o">=</span><span class="s1">&#39;0*angstrom**-1,12.*angstrom**-1&#39;</span> <span class="n">energy</span><span class="o">-</span><span class="nb">range</span><span class="o">=</span><span class="s1">&#39;-48*meV,48*meV&#39;</span><span class="o">&gt;</span>
-  <span class="o">&lt;</span><span class="n">GridSQE</span> <span class="n">histogram</span><span class="o">-</span><span class="n">hdf</span><span class="o">-</span><span class="n">path</span><span class="o">=</span><span class="s2">&quot;sqehist.h5/S(Q,E)&quot;</span> <span class="n">auto</span><span class="o">-</span><span class="n">normalization</span><span class="o">=</span><span class="s2">&quot;1&quot;</span> <span class="o">/&gt;</span>
-<span class="o">&lt;/</span><span class="n">SQEkernel</span><span class="o">&gt;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">Phonon_IncoherentElastic_Kernel</span>
+       <span class="n">dw_core</span><span class="o">=</span><span class="s2">&quot;0.0073*angstrom**2&quot;</span>
+       <span class="n">scattering_xs</span><span class="o">=</span><span class="s2">&quot;3.71*barn&quot;</span>
+       <span class="n">absorption_xs</span><span class="o">=</span><span class="s2">&quot;0.063*barn&quot;</span>
+       <span class="o">&gt;</span>
+      <span class="o">&lt;/</span><span class="n">Phonon_IncoherentElastic_Kernel</span><span class="o">&gt;</span>
 </pre></div>
 </div>
-<p>You can find a full example in directory “kernels/sqe” in
-<a class="reference external" href="http://dev.danse.us/packages/mcvine-examples.tgz">the examples tar ball</a></p>
-<p>Running it will generate the following plot:</p>
-<div class="figure align-default">
-<a class="reference internal image-reference" href="../_images/iqekernel-iqemonitor.png"><img alt="../_images/iqekernel-iqemonitor.png" src="../_images/iqekernel-iqemonitor.png" style="width: 50%;" /></a>
+<div class="section" id="explanation-of-dw-core">
+<h2>Explanation of <cite>dw_core</cite><a class="headerlink" href="#explanation-of-dw-core" title="Permalink to this headline">¶</a></h2>
+<p>Debye Waller factor is written as <span class="math notranslate nohighlight">\(exp(-2W)\)</span>,
+where <span class="math notranslate nohighlight">\(2W = &lt;u_Q^2&gt; Q^2\)</span>.
+The <cite>dw_core</cite> quantity is <span class="math notranslate nohighlight">\(&lt;u_Q^2&gt;\)</span>,
+and in case of cubic crystal,
+equal to <span class="math notranslate nohighlight">\(\frac{1}{3} &lt;u^2&gt;\)</span>,
+which can be computed from phonon DOS.</p>
+<p>You can use command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ mcvine-debye-waller-core-from-phonon-dos
+</pre></div>
 </div>
-<p>The input for this simulation is an artifical I(Q,E):</p>
-<div class="figure align-default">
-<a class="reference internal image-reference" href="../_images/iqekernel-iqeinput.png"><img alt="../_images/iqekernel-iqeinput.png" src="../_images/iqekernel-iqeinput.png" style="width: 50%;" /></a>
+<p>to calculate <cite>dw_core</cite>.
+Run</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ mcvine-debye-waller-core-from-phonon-dos -h
+$ mcvine-debye-waller-core-from-phonon-dos --help-properties
+</pre></div>
+</div>
+<p>to get help regarding that command</p>
 </div>
 </div>
 
@@ -124,7 +142,7 @@
         <li><a href="../index.html">Documentation</a> &raquo; &nbsp;</li>
         <li><a href="../search.html">search</a> &raquo;</li>
 
-        <li class="nav-item nav-item-this"><a href="">S(Q,E)</a></li> 
+        <li class="nav-item nav-item-this"><a href="">Incoherent Elastic scattering for polycrystal</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

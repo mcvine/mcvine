@@ -24,12 +24,12 @@ You can find a full example in directory "kernels/sqe" in
 
 Running it will generate the following plot:
 
-.. figure:: images/kernels/iqekernel-iqemonitor.png
+.. figure:: ../images/kernels/iqekernel-iqemonitor.png
    :width: 50%
 
 The input for this simulation is an artifical I(Q,E):
 
-.. figure:: images/kernels/iqekernel-iqeinput.png
+.. figure:: ../images/kernels/iqekernel-iqeinput.png
    :width: 50%
 
 

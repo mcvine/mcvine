@@ -16,6 +16,7 @@ Kernels
   ConstantQE
   E_Q
   E_vQ
+  IncoherentElasticPhonon_PolyXtal
   IncoherentInelasticPhonon_PolyXtal
   Isotropic
   SQE
