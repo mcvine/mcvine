@@ -301,9 +301,11 @@ mccomposite::geometry::ArrowIntersector::visit
 	<< "box: " << box << ", "
 	<< "arrow: " << m_arrow
       ;
-    throw Exception(oss.str());
+    // throw Exception(oss.str());
+    std::cerr << oss.str() << std::endl;
+    return;
   }
-  
+
   if (ts[0] < ts[1]) {
     m_distances.push_back(ts[0]);
     m_distances.push_back(ts[1]);
@@ -311,9 +313,9 @@ mccomposite::geometry::ArrowIntersector::visit
     m_distances.push_back(ts[1]);
     m_distances.push_back(ts[0]);
   }
-  
+
 #ifdef DEBUG
-  debug << journal::at(__HERE__) 
+  debug << journal::at(__HERE__)
 	<< m_distances << journal::endl
     ;
 #endif
@@ -418,9 +420,11 @@ mccomposite::geometry::ArrowIntersector::visit
 	<< m_arrow << std::endl
       ;
     oss << std::scientific << ts[2] - ts[0] << std::endl;
-    throw Exception(oss.str());
+    // throw Exception(oss.str());
+    std::cerr << oss.str() << std::endl;
+    return;
   }
-  
+
   if (ts[0] < ts[1]) {
     m_distances.push_back(ts[0]/length);
     m_distances.push_back(ts[1]/length);
@@ -428,7 +432,7 @@ mccomposite::geometry::ArrowIntersector::visit
     m_distances.push_back(ts[1]/length);
     m_distances.push_back(ts[0]/length);
   }
-  
+
 #ifdef DEBUG
   debug << journal::at(__HERE__) 
 	<< m_distances << journal::endl
@@ -578,7 +582,9 @@ mccomposite::geometry::ArrowIntersector::visit
 	ts[1] = ts[2];
       }
     } else {
-      throw Exception("Something went wrong. Max number of intersections between a line and a cone is 3");
+      // throw Exception("Something went wrong. Max number of intersections between a line and a cone is 3");
+      std::cerr << "Something went wrong. Max number of intersections between a line and a cone is 3" << std::endl;
+      return;
     }
   }
   
@@ -655,13 +661,35 @@ mccomposite::geometry::ArrowIntersector::visit
   if (ts.size()==0) return;
   
   if (ts.size()!=2) {
-    if (ts.size()==1)
-      throw Exception("number of intersections between a line and a cylinder should be 0 or 2");
+    if (ts.size()==1) {
+      // throw Exception("number of intersections between a line and a cylinder should be 0 or 2");
+      std::cerr
+        << "Number of intersection between the ray"
+        << " starting from " << start
+        << " pointing to " << direction
+        << " with cylinder" << cylinder
+        << " was 1: t=" << ts[0]
+        << std::endl;
+      return;
+    }
     // there might be duplicates
     std::vector<double>::iterator new_end = std::unique
       (ts.begin(), ts.end(), eq_withinepsilon);
-    if (new_end-ts.begin()!=2) 
-      throw Exception("number of intersections between a line and a cylinder should be 0 or 2");
+    if (new_end-ts.begin()!=2) {
+      // throw Exception("number of intersections between a line and a cylinder should be 0 or 2");
+      std::cerr
+        << "Number of intersection between the ray"
+        << " starting from " << start
+        << " pointing to " << direction
+        << " with cylinder" << cylinder
+        << " was " << new_end-ts.begin()
+        << ", they are" << std::endl;
+      for (std::vector<double>::iterator it=ts.begin(); it!=new_end; it++) {
+        std::cerr << *it << ", ";
+      }
+      std::cerr << std::endl;
+      return;
+    }
   }
 
   if (ts[0]<ts[1]) {

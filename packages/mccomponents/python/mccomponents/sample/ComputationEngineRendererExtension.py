@@ -84,7 +84,8 @@ class ComputationEngineRendererExtension:
         csqe = t.SQE.identify(self)
         abs = t.absorption_cross_section
         sctt = t.scattering_cross_section
-        if abs is None or sctt is None:
+        print('onSQE_EnergyFocusing_Kernel', abs, sctt)
+        if abs is None and sctt is None:
             #need to get cross section from sample assembly representation
             # svn://danse.us/inelastic/sample/.../sampleassembly
             #origin is a node in the sample assembly representation
@@ -96,7 +97,8 @@ class ComputationEngineRendererExtension:
             from sampleassembly import cross_sections
             abs, inc, coh = cross_sections( origin, include_density=False)
             sctt = inc + coh
-            pass
+        elif abs is None or sctt is None:
+            raise RuntimeError("Please specify both absorption and scattering cross sections")
 
         abs, sctt = self._unitsRemover.remove_unit( (abs, sctt), units.length.meter**2)
         unitcell_vol = t.unitcell_vol
@@ -106,6 +108,7 @@ class ComputationEngineRendererExtension:
             unitcell_vol = structure.lattice.volume
             # convert to meter^3
             unitcell_vol *= 1.e-30
+        print('onSQE_EnergyFocusing_Kernel', unitcell_vol)
         return self.factory.sqe_energyfocusing_kernel(
             abs, sctt, unitcell_vol,
             csqe, Qrange, Erange, Ef, dEf)
@@ -161,8 +164,8 @@ class ComputationEngineRendererExtension:
     def onIsotropicKernel(self, kernel):
         t = kernel
 
-        abs = t.absorption_cross_section
-        sctt = t.scattering_cross_section
+        abs = t.absorption_coefficient
+        sctt = t.scattering_coefficient
 
         if abs is None or sctt is None:
             #need to get cross section from sample assembly representation
@@ -179,7 +182,6 @@ class ComputationEngineRendererExtension:
             pass
         
         abs, sctt = self._unitsRemover.remove_unit( (abs, sctt), 1./units.length.meter )
-        
         return self.factory.isotropickernel(abs, sctt)
 
 

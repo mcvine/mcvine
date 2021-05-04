@@ -21,7 +21,7 @@ class SQE_fromexpression(AbstractNode):
     tag = "SQE_fromexpression"
 
     def elementFactory( self, **kwds ):
-        expression = kwds.get('expression')
+        expression = str(kwds.get('expression'))
         from mccomponents.sample import sqeFromExpression
         return sqeFromExpression(expression) 
 

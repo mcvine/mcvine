@@ -29,6 +29,34 @@ def simplepowderdiffractionkernel(
     from .SimplePowderDiffractionKernel import SimplePowderDiffractionKernel as f
     return f(Dd_over_d, DebyeWaller_factor, peaks, **kwds)
 
+def create_lau(path, structure, T, max_index=5, min_dspacing=None):
+    from . import calcpeaks
+    pks = list(calcpeaks.iter_peaks(
+        structure, T, max_index, min_dspacing=min_dspacing, type='singlecrystal'))
+    content = []
+    lattice = structure.lattice
+    header = '''# CELL {a} {b} {c} {alpha} {beta} {gamma}
+# column_j  4 multiplicity 'j'
+# column_d  5 d-spacing 'd' in [Angs]
+# column_F2 6 norm of scattering factor |F|^2 in [fm^2]
+# column_h  1
+# column_k  2
+# column_l  3
+# h   k   l Mult. d-space  F-squared
+'''.format(a=lattice.a, b=lattice.b, c=lattice.c,
+           alpha=lattice.alpha, beta=lattice.beta, gamma=lattice.gamma)
+    for pk in pks:
+        h,k,l = pk.hkl
+        line = '{h} {k} {l} {mul} {d} {F2}'.format(
+            h=h,k=k,l=l, mul=pk.multiplicity, d=pk.d,
+            F2=pk.F_squared*100, # pk.F_squared is in barns. convert to fm^2
+        )
+        content.append(line)
+    content = [header] + content
+    with open(path, 'wt') as stream:
+        stream.write('\n'.join(content))
+    return
+
 def create_peaks_py(path, structure, T, max_index=5):
     from . import calcpeaks
     pks = list(calcpeaks.iter_peaks(structure, T, max_index))

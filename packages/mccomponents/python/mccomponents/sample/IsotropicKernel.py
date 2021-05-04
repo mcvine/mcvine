@@ -19,15 +19,15 @@ class IsotropicKernel(Kernel):
     '''
 
     def __init__(self,
-                 absorption_cross_section = None,
-                 scattering_cross_section = None,
+                 absorption_coefficient = None,
+                 scattering_coefficient = None,
                  ):
         '''new IsotropicKernel
   Inputs:
-    absorption_cross_section, scattering_cross_section: cross sections
+    absorption_coefficient scattering_coefficient
     '''
-        self.absorption_cross_section = absorption_cross_section
-        self.scattering_cross_section = scattering_cross_section
+        self.absorption_coefficient = absorption_coefficient
+        self.scattering_coefficient = scattering_coefficient
         return
         
     def identify(self, visitor): return visitor.onIsotropicKernel(self)
