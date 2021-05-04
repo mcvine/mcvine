@@ -18,7 +18,7 @@ class AtomicScattering:
         self.element = element
         self.atom = matter.Atom(element)
         import periodictable as pt
-        self.ns = getattr(pt, element).neutron # neutron scattering lengths, cross sections etc
+        self.ns = getattr(pt, keepletters(element)).neutron # neutron scattering lengths, cross sections etc
         self.occupancy = occupancy
         return
 
@@ -32,20 +32,31 @@ class AtomicScattering:
 
     def theta(self, T):
         element = self.element
-        from .DebyeTemp import getT
-        TD = getT(element)
+        TD = getDebyeTemp(element)
         return 1.*T/TD
 
     def B(self, T):
         element = self.element
         atom = self.atom
-        mass = getattr(ptbl,atom.element).mass
-        from .DebyeTemp import getT
-        T_D = getT(element)
+        mass = getattr(ptbl, keepletters(atom.element)).mass
+        T_D = getDebyeTemp(element)
         theta1 = self.theta(T)
         rt = 3*h*h*phi1(theta1)/(mass*amu*kB*T_D)
         # convert to AA
         return rt/AA/AA
+
+def getDebyeTemp(element):
+    default = 1000.
+    from .DebyeTemp import getT
+    T = getT(element, None)
+    if T is None:
+        import warnings
+        warnings.warn("Debye temperature for {} is set to {}".format(element, default))
+        T = default
+    return T
+
+def keepletters(s):
+    return ''.join(x for x in s if x.isalpha())
 
 h = 6.62607004e-34
 kB = 1.38064852e-23
