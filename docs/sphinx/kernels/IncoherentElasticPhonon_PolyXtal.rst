@@ -2,7 +2,7 @@
 
 Incoherent Elastic scattering for polycrystal
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-This kernel is for Incoherent Elastic scattering for  a polycrystalline sample.
+This kernel is for Incoherent Elastic scattering for a polycrystalline sample.
 
 Parameters: 
 
