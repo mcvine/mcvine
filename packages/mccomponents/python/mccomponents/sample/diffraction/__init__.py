@@ -57,9 +57,9 @@ def create_lau(path, structure, T, max_index=5, min_dspacing=None):
         stream.write('\n'.join(content))
     return
 
-def create_peaks_py(path, structure, T, max_index=5):
+def create_peaks_py(path, structure, T, max_index=5, min_dspacing=None):
     from . import calcpeaks
-    pks = list(calcpeaks.iter_peaks(structure, T, max_index))
+    pks = list(calcpeaks.iter_peaks(structure, T, max_index, min_dspacing=min_dspacing))
     lines_for_peaks = [str(pk) for pk in pks]
     qs = [pk.q for pk in pks]
     lines_for_peaks = [l for (q, l) in sorted(zip(qs, lines_for_peaks))]
