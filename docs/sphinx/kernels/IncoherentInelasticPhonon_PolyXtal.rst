@@ -29,3 +29,5 @@ Example::
     <LinearlyInterpolatedDOS idf-data-path="phonon-dispersion/DOS"/> 
   </Phonon_IncoherentInelastic_Kernel>
 
+Learn how to create a powder diffraction kernel using
+`the example notebook <https://github.com/mcvine/training/tree/master/sample/Al_powder-IncoherentPhonon.ipynb>`_

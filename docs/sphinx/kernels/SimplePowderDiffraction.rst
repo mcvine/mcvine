@@ -6,19 +6,14 @@ This kernel is for powder diffraction.
 
 Parameters: 
 
-- Dd_over_d
-- DebyeWaller_factor
-- peaks-py-path
+- `Dd_over_d`: :math:`\frac{\Delta d}{d}`
+- `laz-path`: laz file for diffraction peaks
+- `peaks-py-path`: python file for diffraction peaks
+- `DebyeWaller_factor`: obsolete. Debye-waller factor
 
 Example::
 
-  <SimplePowderDiffractionKernel Dd_over_d="1e-5" DebyeWaller_factor="1." peaks-py-path="peaks.py"/>
+  <SimplePowderDiffractionKernel Dd_over_d="1e-5" peaks-py-path="peaks.py"/>
 
-You can find a full example in directory "kernels/simple-powder-diffraction" in
-`the examples tar ball <http://dev.danse.us/packages/mcvine-examples.tgz>`_
-
-Running it will generate the following plot:
-
-.. figure:: images/kernels/simplepowderdiffraction-kernel-psd4pi.png
-   :width: 50%
-
+Learn how to create a powder diffraction kernel using
+`the example notebook <https://github.com/mcvine/training/tree/master/sample/Al_powder-diffraction.ipynb>`_
