@@ -26,6 +26,12 @@ If you want to build mcvine from source,
 please refer to
 `the mcvine conda recipes <https://github.com/mcvine/conda-recipes>`_.
 
+Optional dependencies
+---------------------
+
+If we want to use MCPL data files from mcstas simulations, `mcpl` python
+package need to be installed ($ pip install mcpl).
+
 
 Install the latest unstable build
 ---------------------------------
