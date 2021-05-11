@@ -157,7 +157,7 @@ class ComputationEngineRendererExtension:
         sctt = t.scattering_coefficient
 
         if abs is None or sctt is None:
-            abs, sctt, inc, coh = self._getXS(sqekernel)
+            abs, sctt, inc, coh = self._getXS(sqkernel)
             pass
         abs, sctt = self._unitsRemover.remove_unit( (abs, sctt), 1./units.length.meter )
         return self.factory.sqkernel(abs, sctt, csq, Qrange)
@@ -169,7 +169,7 @@ class ComputationEngineRendererExtension:
         abs = t.absorption_coefficient
         sctt = t.scattering_coefficient
         if abs is None or sctt is None:
-            abs, sctt, inc, coh = self._getXS(sqekernel)
+            abs, sctt, inc, coh = self._getXS(svqkernel)
             pass
         abs, sctt = self._unitsRemover.remove_unit( (abs, sctt), 1./units.length.meter )
         return self.factory.svqkernel(abs, sctt, csvq)
@@ -240,7 +240,7 @@ class ComputationEngineRendererExtension:
         sctt = t.scattering_coefficient
 
         if abs is None or sctt is None:
-            abs, sctt, inc, coh = self._getXS(sqekernel)
+            abs, sctt, inc, coh = self._getXS(kernel)
             pass
         abs, sctt = self._unitsRemover.remove_unit( (abs, sctt), 1./units.length.meter )
         E = self._unitsRemover.remove_unit(kernel.E, units.energy.meV)
@@ -254,7 +254,7 @@ class ComputationEngineRendererExtension:
         sctt = t.scattering_coefficient
 
         if abs is None or sctt is None:
-            abs, sctt, inc, coh = self._getXS(sqekernel)
+            abs, sctt, inc, coh = self._getXS(kernel)
             pass
         abs, sctt = self._unitsRemover.remove_unit( (abs, sctt), 1./units.length.meter )
         Q = self._unitsRemover.remove_unit(kernel.Q, 1./units.length.angstrom)
@@ -269,7 +269,7 @@ class ComputationEngineRendererExtension:
         sctt = t.scattering_coefficient
 
         if abs is None or sctt is None:
-            abs, sctt, inc, coh = self._getXS(sqekernel)
+            abs, sctt, inc, coh = self._getXS(kernel)
             pass
         abs, sctt = self._unitsRemover.remove_unit( (abs, sctt), 1./units.length.meter )
         Q = kernel.Q
