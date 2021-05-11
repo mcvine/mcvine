@@ -21,7 +21,7 @@ namespace wrap_mccomponents {
     kernel_wrapper<w_t>::wrap
       ("SvQkernel",
        init<double, double, AbstractSvQ & > ()
-       [with_custodian_and_ward<1,4> () ]
+       [with_custodian_and_ward<1, 4> () ]
        )
       ;
 
@@ -33,4 +33,4 @@ namespace wrap_mccomponents {
 
 }
 
-// End of file 
+// End of file

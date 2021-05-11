@@ -66,6 +66,11 @@ def sqe_energyfocusing_kernel(*args, **kwds):
     return ctor( *args, **kwds )
 
 
+def gridsvq(*args, **kwds):
+    from .GridSvQ import GridSvQ
+    return GridSvQ( *args, **kwds )
+
+
 def gridsq(*args, **kwds):
     from .GridSQ import GridSQ
     return GridSQ( *args, **kwds )
@@ -74,6 +79,11 @@ def gridsq(*args, **kwds):
 def sqFromExpression(*args, **kwds):
     from .SQ_fromexpression import SQ_fromexpression
     return SQ_fromexpression( *args, **kwds )
+
+
+def svqkernel(*args, **kwds):
+    from .SvQkernel import SvQkernel
+    return SvQkernel( *args, **kwds )
 
 
 def sqkernel(*args, **kwds):

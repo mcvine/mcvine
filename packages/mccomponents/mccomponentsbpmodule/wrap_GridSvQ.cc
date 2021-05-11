@@ -13,7 +13,7 @@ namespace wrap_mccomponents {
 
   using namespace mccomponents::sample;
 
-  double fxyz_get( const fxyz & fxyz, double x, double y, double z)
+  double fxyz_get( const fxyz & fxyz, const double &x, const double &y, const double &z)
   {
     return fxyz(x, y, z);
   }
@@ -35,7 +35,7 @@ namespace wrap_mccomponents {
     class_<w_t, bases<mccomponents::sample::AbstractSvQ>, boost::noncopyable >
       ("GridSvQ",
        init<const fxyz &>()
-       [with_custodian_and_ward<1,2> () ]
+       [with_custodian_and_ward<1, 2> () ]
        )
       ;
 
