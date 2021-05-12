@@ -18,7 +18,7 @@ class HomogeneousScatterer( base ):
     onConstantQEKernel = onConstantvQEKernel = base.onKernel
     onConstantEnergyTransferKernel = base.onKernel
     onBroadened_E_Q_Kernel = onE_Q_Kernel = onE_vQ_Kernel = base.onKernel
-    onSQEkernel = onSQkernel = base.onKernel
+    onSQEkernel = onSQkernel = onSvQkernel = base.onKernel
     onSQE_EnergyFocusing_Kernel = base.onKernel
     onIsotropicKernel = base.onKernel
     onDGSSXResKernel = base.onKernel

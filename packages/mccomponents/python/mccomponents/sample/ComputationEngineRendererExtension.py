@@ -124,9 +124,9 @@ class ComputationEngineRendererExtension:
         qzbegin, qzend, qzstep = qzbb[0], qzbb[-1], qzbb[1]-qzbb[0]
         s = svqhist.data().storage().asNumarray()
         return self.factory.gridsvq(
-            qxbegin, qxend+0.01*qxstep, qxstep,
-            qybegin, qyend+0.01*qystep, qystep,
-            qzbegin, qzend+0.01*qzstep, qzstep,
+            qxbegin, qxend, qxstep,
+            qybegin, qyend, qystep,
+            qzbegin, qzend, qzstep,
             s )
 
 
