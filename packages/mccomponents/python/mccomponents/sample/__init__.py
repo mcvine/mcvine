@@ -20,14 +20,14 @@ def samplecomponent( name, sampleassembly_xml ):
 
     name: name of the sample
     xml: xml file describing the sample assembly
-    '''    
+    '''
     from mccomposite.extensions import HollowCylinder, SphereShell
     import os
     filename = os.path.realpath( sampleassembly_xml )
     dir, filename = os.path.split( os.path.abspath( filename ) )
     save = os.path.abspath( os.curdir )
     os.chdir( dir )
-    
+
     from sampleassembly.saxml import parse_file
     sa = parse_file( filename )
 

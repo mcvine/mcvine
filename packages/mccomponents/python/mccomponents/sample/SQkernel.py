@@ -22,10 +22,10 @@ class SQkernel(Kernel):
         self.SQ = SQ
         self.Qrange = Qrange
         return
-        
+
     def identify(self, visitor): return visitor.onSQkernel(self)
-    
+
     pass
 
 
-# End of file 
+# End of file
