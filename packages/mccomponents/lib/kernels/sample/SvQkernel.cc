@@ -87,6 +87,11 @@ mccomponents::kernels::SvQkernel::S
   velocity_t vf(vi*sintheta*cosphi, vi*sintheta*sinphi, vi*costheta);
   V3d kf = vf * conversion::v2k;
   V3d Q = ki-kf;
+  /*
+  std::cout << "theta: " << costheta << ", " << sintheta << std::endl
+            << "phi: " << cosphi << ", " << sinphi << std::endl
+            << "ki, kf, Q: " << ki << ", " << kf << ", " << Q << std::endl;
+  */
   ev.probability *= m_sq(Q);
   ev.state.velocity = vf;
 }
