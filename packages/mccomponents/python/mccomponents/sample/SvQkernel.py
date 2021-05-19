@@ -4,28 +4,26 @@
 
 
 from mccomponents.homogeneous_scatterer.Kernel import Kernel
-class SQkernel(Kernel):
+class SvQkernel(Kernel):
 
     def __init__(self,
                  absorption_coefficient = None,
                  scattering_coefficient = None,
-                 SQ = None, Qrange = None,
+                 SvQ = None
                  ):
-        '''new S(Q) kernel
+        '''new S(vQ) kernel
   Inputs:
     absorption_coefficient, scattering_coefficient
-    SQ: S(Q) functor
-    Qrange: Q range (min, max)
+    SvQ: S(Q vector) functor
     '''
         self.absorption_coefficient = absorption_coefficient
         self.scattering_coefficient = scattering_coefficient
-        self.SQ = SQ
-        self.Qrange = Qrange
+        self.SvQ = SvQ
         return
 
-    def identify(self, visitor): return visitor.onSQkernel(self)
+    def identify(self, visitor): return visitor.onSvQkernel(self)
 
     pass
 
 
-# End of file
+# End of file 

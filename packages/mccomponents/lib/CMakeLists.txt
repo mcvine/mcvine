@@ -26,9 +26,11 @@ set ( SRC_FILES
   kernels/sample/diffraction/SimplePowderDiffractionKernel.cc
   kernels/sample/diffraction/SingleCrystalDiffractionKernel.cc
   kernels/sample/SQkernel.cc
+  kernels/sample/SvQkernel.cc
   kernels/sample/SQEkernel.cc
   kernels/sample/SQE_EnergyFocusing_Kernel.cc
   kernels/sample/SQ/GridSQ.cc
+  kernels/sample/SQ/GridSvQ.cc
   kernels/sample/SQ/SQ_fromexpression.cc
   kernels/sample/SQE/GridSQE.cc
   kernels/sample/SQE/SQE_fromexpression.cc

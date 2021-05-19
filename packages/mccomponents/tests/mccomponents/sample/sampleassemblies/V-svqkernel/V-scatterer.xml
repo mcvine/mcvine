@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE scatterer>
+
+<!-- weights: absorption, scattering, transmission -->
+<homogeneous_scatterer mcweights="0, 1, 0">
+
+  <SvQkernel>
+      <GridSvQ histogram-hdf-path="svq.h5/I(Qx,Qy,Qz)" />
+  </SvQkernel>
+
+</homogeneous_scatterer>
+

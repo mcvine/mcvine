@@ -114,6 +114,22 @@ class ComputationEngineRendererExtension:
             csqe, Qrange, Erange, Ef, dEf)
 
 
+    def onGridSvQ(self, gridsvq):
+        svqhist = gridsvq.svqhist
+        qxbb = svqhist.axisFromName('Qx').binBoundaries().asNumarray()
+        qybb = svqhist.axisFromName('Qy').binBoundaries().asNumarray()
+        qzbb = svqhist.axisFromName('Qz').binBoundaries().asNumarray()
+        qxbegin, qxend, qxstep = qxbb[0], qxbb[-1], qxbb[1]-qxbb[0]
+        qybegin, qyend, qystep = qybb[0], qybb[-1], qybb[1]-qybb[0]
+        qzbegin, qzend, qzstep = qzbb[0], qzbb[-1], qzbb[1]-qzbb[0]
+        s = svqhist.data().storage().asNumarray()
+        return self.factory.gridsvq(
+            qxbegin, qxend+qxstep/10, qxstep,
+            qybegin, qyend+qystep/10, qystep,
+            qzbegin, qzend+qzstep/10, qzstep,
+            s )
+
+
     def onGridSQ(self, gridsq):
         sqhist = gridsq.sqhist
         
@@ -133,33 +149,30 @@ class ComputationEngineRendererExtension:
 
 
     def onSQkernel(self, sqkernel):
-        
         t = sqkernel
-        
         Qrange = t.Qrange
         Qrange = self._unitsRemover.remove_unit( Qrange, 1./units.length.angstrom )
-        
         csq = t.SQ.identify(self)
-        
         abs = t.absorption_coefficient
         sctt = t.scattering_coefficient
 
         if abs is None or sctt is None:
-            #need to get cross section from sample assembly representation
-            # svn://danse.us/inelastic/sample/.../sampleassembly
-            #origin is a node in the sample assembly representation
-            #
-            #scatterer_origin is assigned to kernel when a kernel is
-            #constructed from kernel xml.
-            #see sampleassembly_support.SampleAssembly2CompositeScatterer for details.
-            origin = t.scatterer_origin
-            from sampleassembly import compute_absorption_and_scattering_coeffs
-            abs, inc, coh = compute_absorption_and_scattering_coeffs( origin )
-            sctt = inc + coh
+            abs, sctt, inc, coh = self._getXS(sqkernel)
             pass
         abs, sctt = self._unitsRemover.remove_unit( (abs, sctt), 1./units.length.meter )
         return self.factory.sqkernel(abs, sctt, csq, Qrange)
 
+
+    def onSvQkernel(self, svqkernel):
+        t = svqkernel
+        csvq = t.SvQ.identify(self)
+        abs = t.absorption_coefficient
+        sctt = t.scattering_coefficient
+        if abs is None or sctt is None:
+            abs, sctt, inc, coh = self._getXS(svqkernel)
+            pass
+        abs, sctt = self._unitsRemover.remove_unit( (abs, sctt), 1./units.length.meter )
+        return self.factory.svqkernel(abs, sctt, csvq)
 
     def onIsotropicKernel(self, kernel):
         t = kernel
@@ -223,24 +236,12 @@ class ComputationEngineRendererExtension:
 
     def onConstantEnergyTransferKernel(self, kernel):
         t = kernel
-        
         abs = t.absorption_coefficient
         sctt = t.scattering_coefficient
 
         if abs is None or sctt is None:
-            #need to get cross section from sample assembly representation
-            # svn://danse.us/inelastic/sample/.../sampleassembly
-            #origin is a node in the sample assembly representation
-            #
-            #scatterer_origin is assigned to kernel when a kernel is
-            #constructed from kernel xml.
-            #see sampleassembly_support.SampleAssembly2CompositeScatterer for details.
-            origin = t.scatterer_origin
-            from sampleassembly import compute_absorption_and_scattering_coeffs
-            abs, inc, coh = compute_absorption_and_scattering_coeffs( origin )
-            sctt = inc + coh
+            abs, sctt, inc, coh = self._getXS(kernel)
             pass
-        
         abs, sctt = self._unitsRemover.remove_unit( (abs, sctt), 1./units.length.meter )
         E = self._unitsRemover.remove_unit(kernel.E, units.energy.meV)
         return self.factory.constantEnergyTransferKernel(E, abs, sctt)
@@ -253,25 +254,14 @@ class ComputationEngineRendererExtension:
         sctt = t.scattering_coefficient
 
         if abs is None or sctt is None:
-            #need to get cross section from sample assembly representation
-            # svn://danse.us/inelastic/sample/.../sampleassembly
-            #origin is a node in the sample assembly representation
-            #
-            #scatterer_origin is assigned to kernel when a kernel is
-            #constructed from kernel xml.
-            #see sampleassembly_support.SampleAssembly2CompositeScatterer for details.
-            origin = t.scatterer_origin
-            from sampleassembly import compute_absorption_and_scattering_coeffs
-            abs, inc, coh = compute_absorption_and_scattering_coeffs( origin )
-            sctt = inc + coh
+            abs, sctt, inc, coh = self._getXS(kernel)
             pass
-        
         abs, sctt = self._unitsRemover.remove_unit( (abs, sctt), 1./units.length.meter )
         Q = self._unitsRemover.remove_unit(kernel.Q, 1./units.length.angstrom)
         E = self._unitsRemover.remove_unit(kernel.E, units.energy.meV)
         return self.factory.constantQEKernel(Q, E, abs, sctt)
 
-    
+
     def onConstantvQEKernel(self, kernel):
         t = kernel
 
@@ -279,19 +269,8 @@ class ComputationEngineRendererExtension:
         sctt = t.scattering_coefficient
 
         if abs is None or sctt is None:
-            #need to get cross section from sample assembly representation
-            # svn://danse.us/inelastic/sample/.../sampleassembly
-            #origin is a node in the sample assembly representation
-            #
-            #scatterer_origin is assigned to kernel when a kernel is
-            #constructed from kernel xml.
-            #see sampleassembly_support.SampleAssembly2CompositeScatterer for details.
-            origin = t.scatterer_origin
-            from sampleassembly import compute_absorption_and_scattering_coeffs
-            abs, inc, coh = compute_absorption_and_scattering_coeffs( origin )
-            sctt = inc + coh
+            abs, sctt, inc, coh = self._getXS(kernel)
             pass
-        
         abs, sctt = self._unitsRemover.remove_unit( (abs, sctt), 1./units.length.meter )
         Q = kernel.Q
         E = self._unitsRemover.remove_unit(kernel.E, units.energy.meV)
@@ -417,8 +396,22 @@ class ComputationEngineRendererExtension:
         return self.onCompositeKernel( kernelcontainer )
     
     
-    pass # end of ComputationEngineRendererExtension
+    def _getXS(self, kernel, include_density=False):
+        t = kernel
+        #need to get cross section from sample assembly representation
+        # svn://danse.us/inelastic/sample/.../sampleassembly
+        #origin is a node in the sample assembly representation
+        #
+        #scatterer_origin is assigned to kernel when a kernel is
+        #constructed from kernel xml.
+        #see sampleassembly_support.SampleAssembly2CompositeScatterer for details.
+        origin = t.scatterer_origin
+        from sampleassembly import compute_absorption_and_scattering_coeffs
+        abs, inc, coh = compute_absorption_and_scattering_coeffs( origin )
+        sctt = inc + coh
+        return abs, sctt, inc, coh
 
+    pass # end of ComputationEngineRendererExtension
 
 
 def register( type, renderer_handler_method, override = False ):

@@ -11,3 +11,4 @@ log.*
 /packages/click
 *.cmake
 CMakeFiles
+Makefile

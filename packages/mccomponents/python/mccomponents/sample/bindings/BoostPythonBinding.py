@@ -92,6 +92,44 @@ class New:
             sqe, Qmin, Qmax, Emin, Emax )
     
 
+    def gridsvq(
+            self,
+            qxbegin, qxend, qxstep,
+            qybegin, qyend, qystep,
+            qzbegin, qzend, qzstep,
+            s ):
+        '''gridsvq: S(vector Q) on grid
+
+        qxbegin, qxend, qxstep: Qx axis. same for y and z
+        s: numpy array of S
+        '''
+        shape = s.shape
+        assert len(shape) == 3
+        assert (
+            shape[0] == int( (qxend-qxbegin)/qxstep +0.5 )
+            and shape[1] == int( (qyend-qybegin)/qystep +0.5 )
+            and shape[2] == int( (qzend-qzbegin)/qzstep +0.5 )
+        ), ('''qxend: %s, qxbegin: %s, qxstep: %s, shape0: %s
+qyend: %s, qybegin: %s, qystep: %s, shape1: %s
+qzend: %s, qzbegin: %s, qzstep: %s, shape2: %s
+        ''' % (
+            qxend, qxbegin, qxstep, shape[0],
+            qyend, qybegin, qystep, shape[1],
+            qzend, qzbegin, qzstep, shape[2],
+        ) )
+        size = s.size
+        svector = b.vector_double( size )
+        saveshape = s.shape
+        s.shape = -1,
+        svector[:] = s
+        s.shape = saveshape
+        fxyz = b.new_fxyz(
+            qxbegin, qxend, qxstep,
+            qybegin, qyend, qystep,
+            qzbegin, qzend, qzstep,
+            svector)
+        return b.GridSvQ( fxyz )
+
     def gridsq(self, qbegin, qend, qstep, s ):
         '''gridsq: S(Q) on grid
 
@@ -138,7 +176,20 @@ class New:
         return b.SQkernel(
             absorption_coefficient, scattering_coefficient,
             sq, Qmin, Qmax)
-    
+
+    def svqkernel(
+            self,
+            absorption_coefficient, scattering_coefficient,
+            sq):
+        '''svqkernel: a kernel takes S(Q vector) a functor
+
+        absorption_coefficient: 1/absorption_length
+        scattering_coefficient: 1/scattering_length
+        svq: S(Q vector) functor
+        '''
+        return b.SvQkernel(
+            absorption_coefficient, scattering_coefficient,
+            sq)
 
     def isotropickernel(self, absorption_cross_section, scattering_cross_section):
         '''isotropickernel: a kernel scatters isotropically and elastically

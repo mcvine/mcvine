@@ -36,18 +36,17 @@ namespace wrap_mccomponents {
        [with_custodian_and_ward<1,2> () ]
        )
       ;
-    
+
     class_<fx>
       ("fx", no_init)
       .def( "__call__", fx_get)
       ;
-    
-    def( "new_fx", new_fx, 
-	 with_custodian_and_ward_postcall<0,4,
-	 return_value_policy< manage_new_object > > () )
+
+    def( "new_fx", new_fx,
+         with_custodian_and_ward_postcall<0,4,
+         return_value_policy< manage_new_object > > () )
       ;
 
-    
   }
 
 }

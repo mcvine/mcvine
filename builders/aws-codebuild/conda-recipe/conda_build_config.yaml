@@ -11,7 +11,7 @@ numpyext:
 bpext:
   - 0.1.4
 histogram:
-  - 0.3.7
+  - 0.3.8
 drchops:
   - 2.0.3
 pyre:

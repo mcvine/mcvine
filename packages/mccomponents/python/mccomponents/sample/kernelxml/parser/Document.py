@@ -15,6 +15,7 @@ class Document(base):
         'SQEkernel', 'GridSQE', 'SQE_fromexpression',
         'SQE_EnergyFocusing_Kernel',
         'SQkernel', 'GridSQ', 'SQ_fromexpression',
+        'SvQkernel', 'GridSvQ', # 'SvQ_fromexpression',
         'ConstantEnergyTransferKernel',
         'ConstantQEKernel', 'ConstantvQEKernel',
         'E_Q_Kernel',
