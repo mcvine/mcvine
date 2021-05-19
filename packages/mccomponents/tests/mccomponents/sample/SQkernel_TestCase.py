@@ -37,6 +37,7 @@ class SQkernel_TestCase(unittest.TestCase):
         ev = mcni.neutron( r = (-5,0,0), v = (3000,0,0) )
         self.assertAlmostEqual( csqkernel.scattering_coefficient(ev), 1 )
         self.assertAlmostEqual( csqkernel.absorption_coefficient(ev), 2200./3000. )
+        csqkernel.scatter(ev)
         return
 
     pass  # end of SQkernel_TestCase
