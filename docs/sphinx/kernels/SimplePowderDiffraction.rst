@@ -16,4 +16,4 @@ Example::
   <SimplePowderDiffractionKernel Dd_over_d="1e-5" peaks-py-path="peaks.py"/>
 
 Learn how to create a powder diffraction kernel using
-`the example notebook <https://github.com/mcvine/training/tree/master/sample/Al_powder-diffraction.ipynb>`_
+`the example notebook <https://nbviewer.jupyter.org/github/mcvine/training/blob/master/sample/Al_powder-diffraction.ipynb>`_

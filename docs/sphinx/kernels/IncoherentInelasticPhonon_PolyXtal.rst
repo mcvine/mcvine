@@ -30,4 +30,4 @@ Example::
   </Phonon_IncoherentInelastic_Kernel>
 
 Learn how to create a powder diffraction kernel using
-`the example notebook <https://github.com/mcvine/training/tree/master/sample/Al_powder-IncoherentPhonon.ipynb>`_
+`the example notebook <https://nbviewer.jupyter.org/github/mcvine/training/blob/master/sample/Al_powder-IncoherentPhonon.ipynb>`_

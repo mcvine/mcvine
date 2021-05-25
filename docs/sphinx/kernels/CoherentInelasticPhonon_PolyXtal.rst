@@ -20,15 +20,18 @@ Example::
     <LinearlyInterpolatedDispersion idf-data-path="phonon-dispersion"/>
   </Phonon_CoherentInelastic_PolyXtal_Kernel>
 
-You can find a full example in directory "kernels/phonon-coherent-inelastic-polyxtal" in
-`the examples tar ball <http://dev.danse.us/packages/mcvine-examples.tgz>`_
+Learn how to create a powder coherent phonon kernel using
+`the example notebook <https://nbviewer.jupyter.org/github/mcvine/training/blob/master/sample/Al_powder-CoherentPhonon.ipynb>`_
 
-Running it will generate the following plot:
+.. You can find a full example in directory "kernels/phonon-coherent-inelastic-polyxtal" in
+.. `the examples tar ball <http://dev.danse.us/packages/mcvine-examples.tgz>`_
 
-.. figure:: images/kernels/coh-inel-phonon-polyxtal-kernel-iqe.png
-   :width: 50%
+.. Running it will generate the following plot:
 
-You could compute phonon dispersion from a bvk model
-using the VNF service: https://vnf.caltech.edu
+..    .. figure:: images/kernels/coh-inel-phonon-polyxtal-kernel-iqe.png
+..    :width: 50%
+
+.. You could compute phonon dispersion from a bvk model
+.. using the VNF service: https://vnf.caltech.edu
 
 
