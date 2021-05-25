@@ -71,6 +71,7 @@ from . import component, neutronstorage
 from . import instrument
 from mcstas2 import cli
 from . import sampleassembly #, kernel
+from . import detectorsystem
 try:
     from mcvine.instruments import cli
 except ImportError:
