@@ -82,28 +82,32 @@
 <p>This kernel is for incoherent inelastic phonon scattering for polycrystalline sample.</p>
 <p>Parameters:</p>
 <ul class="simple">
-<li><p>average_mass: average mass of atoms in unit cell</p></li>
-<li><p>scattering_xs: total scattering cross section of a unit cell</p></li>
-<li><p>absorption_xs: total absorption cross section of a unit cell</p></li>
+<li><p><cite>average_mass</cite>: (optional) average mass of atoms in unit cell. Example: <cite>51*u</cite></p></li>
+<li><p><cite>scattering_xs</cite>: (optional) total scattering cross section of a unit cell. Example: <cite>10*barn</cite></p></li>
+<li><p><cite>absorption_xs</cite>: (optional) total absorption cross section of a unit cell. Example: <cite>5*barn</cite></p></li>
 </ul>
 <p>Elements:</p>
 <ul class="simple">
-<li><p>LinearlyInterpolatedDOS</p></li>
+<li><p><cite>LinearlyInterpolatedDOS</cite></p>
+<ul>
+<li><p><cite>idf-data-path</cite>: path to DOS file in IDF format</p></li>
+<li><p><cite>histogram-path</cite>: path to DOS file in histogram HDF5 format</p></li>
+<li><p><cite>ascii-path</cite>: path to DOS file in ascii format.
+At least two columns. First column should be energy(meV) or frequency (teraHz).
+Specify unit of first column in a comment line: meV or teraHz</p></li>
 </ul>
+</li>
+</ul>
+<p><cite>LinearlyInterpolatedDOS</cite> requires a DOS data file.
+Choose one of the option above to specify its path.</p>
 <p>Example:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">Phonon_IncoherentInelastic_Kernel</span><span class="o">&gt;</span>
   <span class="o">&lt;</span><span class="n">LinearlyInterpolatedDOS</span> <span class="n">idf</span><span class="o">-</span><span class="n">data</span><span class="o">-</span><span class="n">path</span><span class="o">=</span><span class="s2">&quot;phonon-dispersion/DOS&quot;</span><span class="o">/&gt;</span>
 <span class="o">&lt;/</span><span class="n">Phonon_IncoherentInelastic_Kernel</span><span class="o">&gt;</span>
 </pre></div>
 </div>
-<p>DOS data can be in different formats:</p>
-<ul class="simple">
-<li><p>idf-data-path</p></li>
-<li><p>ascii-path</p></li>
-<li><p>histogram-path</p></li>
-</ul>
-<p>You could compute phonon DOS from a bvk model
-using the VNF service: <a class="reference external" href="https://vnf.caltech.edu">https://vnf.caltech.edu</a></p>
+<p>Learn how to create a powder diffraction kernel using
+<a class="reference external" href="https://nbviewer.jupyter.org/github/mcvine/training/blob/master/sample/Al_powder-IncoherentPhonon.ipynb">the example notebook</a></p>
 </div>
 
 

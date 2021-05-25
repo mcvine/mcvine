@@ -82,28 +82,31 @@
 <p>This kernel scatters neutrons according to a <span class="math notranslate nohighlight">\(S(|\vec{Q}|,E)\)</span> input.</p>
 <p>Parameters:</p>
 <ul class="simple">
-<li><p>Q-range: The momentum transfer range</p></li>
-<li><p>energy-transfer: The energy transfer range</p></li>
+<li><p><cite>Q-range</cite>: The momentum transfer range</p></li>
+<li><p><cite>energy-range</cite>: The energy transfer range</p></li>
 </ul>
 <p>Elements:</p>
 <ul class="simple">
-<li><p>GridSQE</p></li>
+<li><p><cite>GridSQE</cite></p>
+<ul>
+<li><p><cite>histogram-hdf-path</cite>: {path to the HDF5 file for SQE data}/{histogram name}</p></li>
+</ul>
+</li>
 </ul>
 <p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">SQEkernel</span> <span class="n">Q</span><span class="o">-</span><span class="nb">range</span><span class="o">=</span><span class="s1">&#39;0*angstrom**-1,12.*angstrom**-1&#39;</span> <span class="n">energy</span><span class="o">-</span><span class="nb">range</span><span class="o">=</span><span class="s1">&#39;-48*meV,48*meV&#39;</span><span class="o">&gt;</span>
-  <span class="o">&lt;</span><span class="n">GridSQE</span> <span class="n">histogram</span><span class="o">-</span><span class="n">hdf</span><span class="o">-</span><span class="n">path</span><span class="o">=</span><span class="s2">&quot;sqehist.h5/S(Q,E)&quot;</span> <span class="n">auto</span><span class="o">-</span><span class="n">normalization</span><span class="o">=</span><span class="s2">&quot;1&quot;</span> <span class="o">/&gt;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">SQEkernel</span>
+  <span class="n">Q</span><span class="o">-</span><span class="nb">range</span><span class="o">=</span><span class="s1">&#39;0*angstrom**-1, 4.*angstrom**-1&#39;</span>
+  <span class="n">energy</span><span class="o">-</span><span class="nb">range</span><span class="o">=</span><span class="s1">&#39;-6*meV, 6*meV&#39;</span>
+<span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="n">GridSQE</span> <span class="n">histogram</span><span class="o">-</span><span class="n">hdf</span><span class="o">-</span><span class="n">path</span><span class="o">=</span><span class="s2">&quot;sqehist.h5/S(Q,E)&quot;</span><span class="o">/&gt;</span>
 <span class="o">&lt;/</span><span class="n">SQEkernel</span><span class="o">&gt;</span>
 </pre></div>
 </div>
-<p>You can find a full example in directory “kernels/sqe” in
-<a class="reference external" href="http://dev.danse.us/packages/mcvine-examples.tgz">the examples tar ball</a></p>
-<p>Running it will generate the following plot:</p>
+<p>The <cite>S(Q,E)</cite> input is specified by using a HDF5 file (<cite>sqehist.h5</cite> in the example above)
+with <cite>S</cite> values on a grid of <cite>Q</cite>, <cite>E</cite>.
+An example input provided by Georg Ehlers for D2O coherent scattering looks like this:</p>
 <div class="figure align-default">
-<a class="reference internal image-reference" href="../_images/iqekernel-iqemonitor.png"><img alt="../_images/iqekernel-iqemonitor.png" src="../_images/iqekernel-iqemonitor.png" style="width: 50%;" /></a>
-</div>
-<p>The input for this simulation is an artifical I(Q,E):</p>
-<div class="figure align-default">
-<a class="reference internal image-reference" href="../_images/iqekernel-iqeinput.png"><img alt="../_images/iqekernel-iqeinput.png" src="../_images/iqekernel-iqeinput.png" style="width: 50%;" /></a>
+<a class="reference internal image-reference" href="../_images/D2O-coh-SQE.png"><img alt="../_images/D2O-coh-SQE.png" src="../_images/D2O-coh-SQE.png" style="width: 50%;" /></a>
 </div>
 </div>
 

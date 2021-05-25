@@ -82,20 +82,17 @@
 <p>This kernel is for powder diffraction.</p>
 <p>Parameters:</p>
 <ul class="simple">
-<li><p>Dd_over_d</p></li>
-<li><p>DebyeWaller_factor</p></li>
-<li><p>peaks-py-path</p></li>
+<li><p><cite>Dd_over_d</cite>: <span class="math notranslate nohighlight">\(\frac{\Delta d}{d}\)</span></p></li>
+<li><p><cite>laz-path</cite>: laz file for diffraction peaks</p></li>
+<li><p><cite>peaks-py-path</cite>: python file for diffraction peaks</p></li>
+<li><p><cite>DebyeWaller_factor</cite>: obsolete. Debye-waller factor</p></li>
 </ul>
 <p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">SimplePowderDiffractionKernel</span> <span class="n">Dd_over_d</span><span class="o">=</span><span class="s2">&quot;1e-5&quot;</span> <span class="n">DebyeWaller_factor</span><span class="o">=</span><span class="s2">&quot;1.&quot;</span> <span class="n">peaks</span><span class="o">-</span><span class="n">py</span><span class="o">-</span><span class="n">path</span><span class="o">=</span><span class="s2">&quot;peaks.py&quot;</span><span class="o">/&gt;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">SimplePowderDiffractionKernel</span> <span class="n">Dd_over_d</span><span class="o">=</span><span class="s2">&quot;1e-5&quot;</span> <span class="n">peaks</span><span class="o">-</span><span class="n">py</span><span class="o">-</span><span class="n">path</span><span class="o">=</span><span class="s2">&quot;peaks.py&quot;</span><span class="o">/&gt;</span>
 </pre></div>
 </div>
-<p>You can find a full example in directory “kernels/simple-powder-diffraction” in
-<a class="reference external" href="http://dev.danse.us/packages/mcvine-examples.tgz">the examples tar ball</a></p>
-<p>Running it will generate the following plot:</p>
-<div class="figure align-default">
-<a class="reference internal image-reference" href="kernels/images/kernels/simplepowderdiffraction-kernel-psd4pi.png"><img alt="kernels/images/kernels/simplepowderdiffraction-kernel-psd4pi.png" src="kernels/images/kernels/simplepowderdiffraction-kernel-psd4pi.png" style="width: 50%;" /></a>
-</div>
+<p>Learn how to create a powder diffraction kernel using
+<a class="reference external" href="https://nbviewer.jupyter.org/github/mcvine/training/blob/master/sample/Al_powder-diffraction.ipynb">the example notebook</a></p>
 </div>
 
 
