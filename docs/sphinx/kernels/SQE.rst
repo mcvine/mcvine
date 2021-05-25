@@ -6,36 +6,28 @@ This kernel scatters neutrons according to a :math:`S(|\vec{Q}|,E)` input.
 
 Parameters: 
 
-- Q-range: The momentum transfer range
-- energy-transfer: The energy transfer range
+- `Q-range`: The momentum transfer range
+- `energy-range`: The energy transfer range
 
 Elements:
 
-- GridSQE
+- `GridSQE`
+
+  * `histogram-hdf-path`: {path to the HDF5 file for SQE data}/{histogram name}
 
 Example::
 
-  <SQEkernel Q-range='0*angstrom**-1,12.*angstrom**-1' energy-range='-48*meV,48*meV'>
-    <GridSQE histogram-hdf-path="sqehist.h5/S(Q,E)" auto-normalization="1" />
+  <SQEkernel
+    Q-range='0*angstrom**-1, 4.*angstrom**-1'
+    energy-range='-6*meV, 6*meV'
+  >
+    <GridSQE histogram-hdf-path="sqehist.h5/S(Q,E)"/>
   </SQEkernel>
 
-You can find a full example in directory "kernels/sqe" in
-`the examples tar ball <http://dev.danse.us/packages/mcvine-examples.tgz>`_
+The `S(Q,E)` input is specified by using a HDF5 file (`sqehist.h5` in the example above)
+with `S` values on a grid of `Q`, `E`.
+An example input provided by Georg Ehlers for D2O coherent scattering looks like this:
 
-Running it will generate the following plot:
-
-.. figure:: images/kernels/iqekernel-iqemonitor.png
+.. figure:: ../images/kernels/D2O-coh-SQE.png
    :width: 50%
-
-The input for this simulation is an artifical I(Q,E):
-
-.. figure:: images/kernels/iqekernel-iqeinput.png
-   :width: 50%
-
-
-.. .. _kernel_sq:
-
-.. S(Q)
-.. ^^^^
-
 

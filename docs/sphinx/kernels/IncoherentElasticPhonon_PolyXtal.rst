@@ -41,3 +41,8 @@ Run ::
  $ mcvine-debye-waller-core-from-phonon-dos --help-properties
 
 to get help regarding that command
+
+Tutorial
+++++++++
+Learn how to create a powder diffraction kernel using
+`the example notebook <https://nbviewer.jupyter.org/github/mcvine/training/blob/master/sample/Al_powder-Incoherent-Elastic.ipynb>`_
