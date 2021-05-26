@@ -16,7 +16,7 @@
 
 namespace mccomposite {
   namespace geometry {
-    const double tolerance = 1.e-7; // tolerance for distance in meters
+    const double tolerance = 1.e-12; // tolerance for distance in meters
   }
 }
 
