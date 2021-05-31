@@ -21,7 +21,6 @@ grep version meta.yaml
 grep git_rev meta.yaml
 
 # configure openmpi to allow run as root
-echo ${CI_NAME}
 if [ ${CI_NAME} == "aws-codebuild" ]; then
     export OMPI_ALLOW_RUN_AS_ROOT=1
     export OMPI_ALLOW_RUN_AS_ROOT_CONFIRM=1
