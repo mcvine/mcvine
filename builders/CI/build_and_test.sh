@@ -13,7 +13,7 @@ export VERSION_NEXT=`echo ${VERSION}| awk -F. -v OFS=. 'NF==1{print ++$NF}; NF>1
 echo $VERSION $VERSION_NEXT
 export MCVINE_CONDA_PKG_VER=${VERSION_NEXT}.dev
 echo $MCVINE_CONDA_PKG_VER
-cd builders/aws-codebuild/conda-recipe
+cd builders/CI/conda-recipe
 
 # create meta.yaml
 ./create_meta_yaml $MCVINE_CONDA_PKG_VER $GIT_FULL_HASH
