@@ -1,6 +1,7 @@
 version: 0.2
 env:
   variables:
+    CI_NAME: aws-codebuild
     DEBUG_MCVINE_BUILD: 0
   secrets-manager:
     ANACONDA_UPLOAD_TOKEN: "anaconda/mcvine:api-token"
