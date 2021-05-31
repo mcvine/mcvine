@@ -20,6 +20,11 @@ cd builders/aws-codebuild/conda-recipe
 grep version meta.yaml
 grep git_rev meta.yaml
 
+# configure openmpi to allow run as root
+export OMPI_ALLOW_RUN_AS_ROOT=1
+export OMPI_ALLOW_RUN_AS_ROOT_CONFIRM=1
+echo "localhost slots=8" > $(dirname $(dirname $(which python)))/etc/openmpi-default-hostfile
+
 # build
 cat meta.yaml
 cat conda_build_config.yaml
