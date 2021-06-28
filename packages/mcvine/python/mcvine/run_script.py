@@ -57,11 +57,11 @@ An example script:
     run_ppsd_in_parallel(ppsd, nodes)
     return
 
-def _exec(cmd):
+def _exec(cmd, cwd=None):
     import subprocess as sp, shlex
     import psutil
     args = shlex.split(cmd)
-    with psutil.Popen(args, stdout=sp.PIPE) as process:
+    with psutil.Popen(args, stdout=sp.PIPE, cwd=cwd) as process:
         for line in iter(process.stdout.readline, b''):
             sys.stdout.write(line.decode())
         process.wait()
