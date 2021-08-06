@@ -49,7 +49,14 @@ An example script:
     cmd += ' --mpi-mode=worker'
     if kwds:
         cmd += ' --additional-kargs=%s' % kwds_file
-    cmd = "mpirun -np {} ".format(nodes) + cmd
+    from mcni.utils.mpi import mpi_launcher_choice
+    if mpi_launcher_choice == 'mpirun':
+        launcher_cmd = "mpirun -np"
+    elif mpi_launcher_choice == 'slurm':
+        launcher_cmd = "srun -n"
+    else:
+        raise NotImplementedError("launcher {}".format(mpi_launcher_choice))
+    cmd = "{} {} ".format(launcher_cmd, nodes) + cmd
     # if os.system(cmd):
     #     raise RuntimeError("%s failed" % cmd)
     _exec(cmd)

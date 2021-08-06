@@ -76,8 +76,15 @@ def run_ppsd_in_parallel(path, nodes):
     "run postprocessing scripts in the given path in parallel using MPI"
     import glob, sys, os
     scripts = glob.glob(os.path.join(path, '*.py'))
+    from .utils.mpi import mpi_launcher_choice
+    if mpi_launcher_choice == 'mpirun':
+        launcher_cmd = "mpirun -np"
+    elif mpi_launcher_choice == 'slurm':
+        launcher_cmd = "srun -n"
+    else:
+        raise NotImplementedError("launcher {}".format(mpi_launcher_choice))
     for script in scripts:
-        cmd = 'mpirun -np %s %s %s' % (nodes, sys.executable, script)
+        cmd = '{} {} {} {}'.format(launcher_cmd, nodes, sys.executable, script)
         _exec(cmd)
         continue
     return    
