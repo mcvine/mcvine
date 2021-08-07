@@ -1,12 +1,4 @@
 <?xml version="1.0"?>
-<!--
-! ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!
-!
-! {LicenseText}
-!
-! ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
--->
 
 <!DOCTYPE inventory>
 
@@ -47,7 +39,7 @@
             <property name="dry">False</property>
             <property name="nodelist">[]</property>
             <property name="extra"></property>
-            <property name="python-mpi">`which python`</property>
+            <!-- <property name="python-mpi">`which python`</property> -->
             <property name="command">mpirun</property>
             <property name="debug">False</property>
             <property name="nodes-opt">-np</property>
@@ -67,12 +59,4 @@
 
 <!-- version-->
 <!-- $Id$-->
-
-<!-- Generated automatically by Renderer on Thu Jun 23 09:38:37 2016-->
-
 <!-- End of file -->
-<!-- 
- automatically created by the following command:
- $ s -mode=worker -dump-pml -source=SNS_source_tf
--->
-
