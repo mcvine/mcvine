@@ -1,15 +1,4 @@
 <?xml version="1.0"?>
-<!--
-! ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!
-!                                   Jiao Lin
-!                      California Institute of Technology
-!                      (C) 2006-2011  All Rights Reserved
-!
-! {LicenseText}
-!
-! ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
--->
 
 <!DOCTYPE inventory>
 
@@ -36,7 +25,7 @@
             <property name="dry">False</property>
             <property name="nodelist">[]</property>
             <property name="extra"></property>
-            <property name="python-mpi">`which python`</property>
+            <!-- <property name="python-mpi">`which python`</property> -->
             <property name="command">mpirun</property>
             <property name="debug">False</property>
             <property name="nodes">0</property>

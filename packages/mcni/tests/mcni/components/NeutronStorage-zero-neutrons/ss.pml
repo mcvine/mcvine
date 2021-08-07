@@ -48,7 +48,7 @@
             <property name="dry">False</property>
             <property name="nodelist">[]</property>
             <property name="extra"></property>
-            <property name="python-mpi">`which python`</property>
+            <!-- <property name="python-mpi">`which python`</property> -->
             <property name="command">mpirun</property>
             <property name="debug">False</property>
             <property name="nodes-opt">-np</property>
@@ -70,11 +70,4 @@
 <!-- version-->
 <!-- $Id$-->
 
-<!-- Generated automatically by Renderer on Tue Jul 18 14:20:30 2017-->
-
 <!-- End of file -->
-<!-- 
- automatically created by the following command:
- $ simapp.py -source=MonochromaticSource -storage=NeutronToStorage -h -dump-pml -post-processing-scripts-dir=/tmp/tmp9XMChx/post-processing-scripts
--->
-

@@ -19,12 +19,7 @@ class launchers:
     from .LauncherSlurm import LauncherSlurm as slurm
     from .LauncherSerial import LauncherSerial as serial
 
-ENVVAR_MPI_LAUNCHER = "MCVINE_MPI_LAUNCHER"
-import os
-mpi_launcher_choice = os.environ.get(ENVVAR_MPI_LAUNCHER, 'mpirun')
-if mpi_launcher_choice == 'serial':
-    # if running in serial mode, no point to find a mpi binding
-    os.environ['MCVINE_MPI_BINDING'] = 'NONE'
+from .._mpi_settings import mpi_launcher_choice
 
 ## base class of mpi application. derived from pyre mpi application.
 ## The customization done here are:

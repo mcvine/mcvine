@@ -76,8 +76,9 @@ def run_ppsd_in_parallel(path, nodes):
     "run postprocessing scripts in the given path in parallel using MPI"
     import glob, sys, os
     scripts = glob.glob(os.path.join(path, '*.py'))
+    from ._mpi_settings import build_launch_cmd
     for script in scripts:
-        cmd = 'mpirun -np %s %s %s' % (nodes, sys.executable, script)
+        cmd = build_launch_cmd(nodes, '{} {}'.format(sys.executable, script))
         _exec(cmd)
         continue
     return    

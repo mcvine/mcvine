@@ -1,23 +1,14 @@
 #!/usr/bin/env python
 #
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#
-#                                   Jiao Lin
-#                      California Institute of Technology
-#                      (C) 2007-2013  All Rights Reserved
-#
-# {LicenseText}
-#
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Jiao Lin <jiao.lin@gmail.com>
 #
 
 import logging
 logger = logging.getLogger("mcni.utils.mpi")
 
-# 
+#
 import os
-ENVVAR_BINDING_NAME = 'MCVINE_MPI_BINDING'
-mpi_binding_choice = os.environ.get(ENVVAR_BINDING_NAME)
+from ..._mpi_settings import mpi_binding_choice, mpi_launcher_choice
 
 # methods
 def _find_mpi_binding():

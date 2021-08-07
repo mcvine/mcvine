@@ -12,6 +12,7 @@
 #
 
 
+import os, sys
 from .LauncherBase import Launcher
 
 
@@ -27,14 +28,14 @@ class MPILauncherBase(Launcher):
         command = pyre.inventory.str("command", default="mpirun")
         nodesopt = pyre.inventory.str("nodes-opt", default="-np")
         extra = pyre.inventory.str("extra", default="")
-        python_mpi = pyre.inventory.str("python-mpi", default="`which python`")
+        python_mpi = pyre.inventory.str("python-mpi", default=os.path.abspath(sys.executable))
 
 
     def launch(self):
         args = self._buildArgumentList()
         if not args:
             return False
-        
+
         command = " ".join(args)
         self._info.log("executing: {%s}" % command)
 
@@ -47,10 +48,10 @@ class MPILauncherBase(Launcher):
 
         return False
 
-            
+
     def _buildArgumentList(self):
         import sys
-        
+
         nodes = self.nodes
         self._debug.log(
             'nodes = %d, self.inventory.nodes = %d' % (
