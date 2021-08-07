@@ -49,14 +49,8 @@ An example script:
     cmd += ' --mpi-mode=worker'
     if kwds:
         cmd += ' --additional-kargs=%s' % kwds_file
-    from mcni.utils.mpi import mpi_launcher_choice
-    if mpi_launcher_choice == 'mpirun':
-        launcher_cmd = "mpirun -np"
-    elif mpi_launcher_choice == 'slurm':
-        launcher_cmd = "srun -n"
-    else:
-        raise NotImplementedError("launcher {}".format(mpi_launcher_choice))
-    cmd = "{} {} ".format(launcher_cmd, nodes) + cmd
+    from mcni._mpi_settings import build_launch_cmd
+    cmd = build_launch_cmd(nodes, cmd)
     # if os.system(cmd):
     #     raise RuntimeError("%s failed" % cmd)
     _exec(cmd)
@@ -71,11 +65,12 @@ def _exec(cmd, cwd=None):
     with psutil.Popen(args, stdout=sp.PIPE, cwd=cwd) as process:
         for line in iter(process.stdout.readline, b''):
             sys.stdout.write(line.decode())
+            sys.stdout.flush()
         process.wait()
         errcode = process.returncode
         # process.kill()
     if errcode:
-        raise RuntimeError("%s failed" % cmd)
+        raise RuntimeError("%s failed with errorcode %s" % (cmd, errcode))
     return
 
 def _exec0(cmd):

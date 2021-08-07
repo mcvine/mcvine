@@ -8,17 +8,9 @@ logger = logging.getLogger("mcni.utils.mpi")
 
 #
 import os
+from ..._mpi_settings import mpi_binding_choice, mpi_launcher_choice
 
-ENVVAR_MPI_LAUNCHER = "MCVINE_MPI_LAUNCHER"
-mpi_launcher_choice = os.environ.get(ENVVAR_MPI_LAUNCHER, 'mpirun')
-
-ENVVAR_BINDING_NAME = 'MCVINE_MPI_BINDING'
-if mpi_launcher_choice == 'serial':
-    # if running in serial mode, no point to find a mpi binding
-    os.environ[ENVVAR_BINDING_NAME] = 'NONE'
-mpi_binding_choice = os.environ.get(ENVVAR_BINDING_NAME)
-
-i# methods
+# methods
 def _find_mpi_binding():
     choices = ['mpi4py', 'pyre']
     for c in choices:

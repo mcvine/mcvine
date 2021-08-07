@@ -19,7 +19,7 @@ class launchers:
     from .LauncherSlurm import LauncherSlurm as slurm
     from .LauncherSerial import LauncherSerial as serial
 
-from ..utils.mpi import mpi_launcher_choice
+from .._mpi_settings import mpi_launcher_choice
 
 ## base class of mpi application. derived from pyre mpi application.
 ## The customization done here are:
