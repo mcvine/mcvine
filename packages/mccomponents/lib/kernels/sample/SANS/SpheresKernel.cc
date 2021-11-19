@@ -32,11 +32,11 @@ const char mccomponents::kernels::SANSSpheresKernel::Details::jrnltag[] = "SANSS
 
 
 mccomponents::kernels::SANSSpheresKernel::SANSSpheresKernel
-( double absorption_coefficient,
-  double R, // AA
-  double phi,
-  double delta_rho, // fm/AA^3
-  double max_angle // deg
+( float_t absorption_coefficient,
+  float_t R, // AA
+  float_t phi,
+  float_t delta_rho, // fm/AA^3
+  float_t max_angle // deg
   )
   : m_absorption_coefficient( absorption_coefficient ),
     m_R(R), m_phi(phi), m_delta_rho(delta_rho),
@@ -75,7 +75,6 @@ mccomponents::kernels::SANSSpheresKernel::S
 {
   typedef mcni::Neutron::State::position_t position_t;
   typedef mcni::Neutron::State::velocity_t velocity_t;
-  typedef mcni::Vector3<double> V3d;
 
   namespace conversion = mcni::neutron_units_conversion;
 
