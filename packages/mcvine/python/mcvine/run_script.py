@@ -200,7 +200,7 @@ def main(
         additional_kargs = None,
 ):
     if additional_kargs:
-        kwds = yaml.load(open(additional_kargs))
+        kwds = yaml.safe_load(open(additional_kargs))
     else:
         kwds = dict()
     if mpi_mode == 'worker':
