@@ -49,6 +49,7 @@ set ( SRC_FILES
   kernels/sample/phonon/PeriodicDispersion_3D.cc
   kernels/sample/phonon/Omega_minus_deltaE.cc
   kernels/sample/phonon/TargetCone.cc
+  kernels/sample/SANS/SpheresKernel.cc
   )
 # ----------------------------------------
 
