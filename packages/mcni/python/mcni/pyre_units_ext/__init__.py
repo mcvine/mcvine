@@ -16,6 +16,8 @@
 from pyre.units.mass import kg
 u = 1.660538921e-27 * kg
 
+from pyre.units.length import meter
+fm = femtometer = 1e-15*meter
 
 # version
 __id__ = "$Id$"
