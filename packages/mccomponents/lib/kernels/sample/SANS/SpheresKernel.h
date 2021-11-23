@@ -38,7 +38,8 @@ namespace mccomponents {
       float_t m_absorption_coefficient;
       float_t m_R, m_phi, m_delta_rho;
       float_t m_max_angle; // radian
-      float_t m_target_radius;
+      float_t m_max_angle_tan;
+      float_t m_solidangle;
       // impl details
       struct Details;
       std::auto_ptr<Details> m_details;

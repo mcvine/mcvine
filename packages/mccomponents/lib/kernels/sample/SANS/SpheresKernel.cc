@@ -41,9 +41,12 @@ mccomponents::kernels::SANSSpheresKernel::SANSSpheresKernel
   : m_absorption_coefficient( absorption_coefficient ),
     m_R(R), m_phi(phi), m_delta_rho(delta_rho),
     m_max_angle(max_angle/180.*mcni::PI),
-    m_target_radius(std::tan(m_max_angle)),
+    m_max_angle_tan(std::tan(m_max_angle)),
+    m_solidangle(2*mcni::PI*(1.-std::cos(m_max_angle))), // area of sphere cap
     m_details( new Details )
-{}
+{
+  // std::cout << "solid angle: " << m_solidangle << std::endl;
+}
 
 
 double
@@ -60,6 +63,10 @@ mccomponents::kernels::SANSSpheresKernel::scattering_coefficient(const mcni::Neu
   namespace conversion = mcni::neutron_units_conversion;
   float_t v = ev.state.velocity.length();
   float_t wl = 2*mcni::PI/(conversion::v2k*v);
+  /*
+  std::cout << "wl=" << wl << std::endl;
+  std::cout << "sc_coeff" << 3./2*m_phi*m_delta_rho*m_delta_rho*wl*wl*m_R << std::endl;
+  */
   return 3./2*m_phi*m_delta_rho*m_delta_rho*wl*wl*m_R;
 }
 
@@ -83,17 +90,23 @@ mccomponents::kernels::SANSSpheresKernel::S
   // incident neutron velocity, energy
   double vi = state.velocity.length();
   double Ei = conversion::v2E( vi ), ki = conversion::v2k * vi;
-  K_t vec_ki = ki * conversion::v2k;
+  K_t vec_ki = state.velocity * conversion::v2k;
 
   // choose direction
   K_t vec_kf;
-  math::choose_direction(vec_kf, vec_ki, m_target_radius*ki);
+  math::choose_direction(vec_kf, vec_ki, m_max_angle_tan*ki);
+  double prob_factor = m_solidangle/4/mcni::PI;
   K_t Q = vec_ki - vec_kf;
   double q = Q.length();
   ev.state.velocity = vec_kf * conversion::k2v;
   double qR = q*m_R;
   double f = 3*(std::sin(qR) - qR*std::cos(qR))/qR/qR/qR;
-  ev.probability *= 2./9/mcni::PI*m_R*m_R*ki*ki*f*f;
+  prob_factor *= 2./9/mcni::PI*m_R*m_R*ki*ki*f*f;
+  /*
+  std::cout << "q=" << q << ", qR=" << qR << std::endl;
+  std::cout << "f=" << f << ", ki=" << ki << ", R=" << m_R << std::endl;
+  */
+  ev.probability *= prob_factor;
 }
 
 // End of file
