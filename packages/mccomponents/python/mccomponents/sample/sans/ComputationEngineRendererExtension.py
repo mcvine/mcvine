@@ -23,12 +23,11 @@ class ComputationEngineRendererExtension:
             from sampleassembly import compute_absorption_and_scattering_coeffs
             origin = kernel.scatterer_origin
             abs_coeff, inc, coh = compute_absorption_and_scattering_coeffs(origin)
-        else:
-            abs_coeff = self._unitsRemover.remove_unit( abs_coeff, 1./ul.m )
-        R = self._unitsRemover.remove_unit( R, ul.angstrom )
+        abs_coeff = self._unitsRemover.remove_unit( abs_coeff, 1./ul.m )
+        R = self._unitsRemover.remove_unit( kernel.R, ul.angstrom )
         phi = kernel.phi
-        delta_rho = self._unitsRemover.remove_unit( delta_rho, ul.fm/ul.angstrom**3 )
-        max_angle = self._unitsRemover.remove_unit( max_angle, units.angle.deg )
+        delta_rho = self._unitsRemover.remove_unit( kernel.delta_rho, 1e-15*ul.m/ul.angstrom**3 )
+        max_angle = self._unitsRemover.remove_unit( kernel.max_angle, units.angle.deg )
         return self.factory.sans_spheres_kernel(abs_coeff, R, phi, delta_rho, max_angle)
 
     pass # end of ComputationEngineRendererExtension
@@ -57,6 +56,6 @@ _registry = {}
 from mccomponents.homogeneous_scatterer import registerRendererExtension
 registerRendererExtension( ComputationEngineRendererExtension )
 
-from mcvine import units
+from mcni import units
 
 # End of file 

@@ -35,7 +35,7 @@ class TestCase(unittest.TestCase):
         self.assertTrue( isKernel( kernel ) )
         return
 
-    def _test1a(self):
+    def test1a(self):
         from sampleassembly.saxml import parse_file
         import os
         dir, filename = os.path.split(sampleassembly_xml)
