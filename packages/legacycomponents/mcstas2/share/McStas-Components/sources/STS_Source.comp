@@ -1,0 +1,527 @@
+/*******************************************************************************
+*
+* McStas, the neutron ray-tracing package
+*         Maintained by Kristian Nielsen and Kim Lefmann,
+*         Copyright 1997-2000 Risoe National Laboratory, Roskilde, Denmark
+*
+*Component: STS_Source
+*
+* %I
+* Written by: G. Granroth
+* Date: July 2004
+* Origin: SNS Project Oak Ridge National Laboratory
+* Date: February 2021
+* Modified by F. Gallmeier to serve the STS cylindrical and tube moderators
+*
+* A source that produces a time and energy distribution from the STS moderator files
+*
+* %D
+* Produces a time-of-flight spectrum from SNS moderator files
+* moderator files can be obtained from the <A href="http://www.sns.gov/users/instrument_systems/components/moderator/">SNS website </A>.
+* <strong>IMPORTANT: The output units of this component are N/pulse</strong>
+* <strong>IMPORTANT: The component needs a FULL PATH to the source input file</strong>
+* Notes:
+* (1) the raw moderator files are per Sr.  The focusing parameters provide the solid
+* angle accepted by the guide to remove the Sr dependence from the output. Therefore
+* the best practice is to set focus_xw and focus_yh to the width and height of the next beam
+* component, respectively. The dist parameter should then be set as the distance
+* from the moderator to the first component.
+* (2) This component works purely by interpolation. Therefore be sure that Emin and
+* Emax are within the limits of the moderator file
+* (3) The emission port area (Area0), the facility proton beam power (PPower0), and the repetition rate (Frequency0)
+* are read from the provided data file. The user can scale the moderator output by user provided Area (scales by Area/Area0),
+* PPower (scales by PPower/PPower0), and Frequency (scales by\ Frequency0/Frequency) at his discretion.
+* (4) For the cylinder moderator, the source neutrons are distributed on the cylindrical outer hydrogen boundary of the moderator, which is given by
+* Pheight, and MRadius. The emission surface is tilted figuring in the off-normal flight direction given by MOffangle0 of requested beams,
+* which is measured with regard to the radial direction of the moderator port locations. The code identifies a cylinder moderator by zero TRadius0.
+* If dmode=1 the neutrons ae distributed on the cylinder area such that the distribution is flat on an area of xwidth*yheight
+* perpendicular to the nominal beam direction.
+* If dmode=0, the neutrons are equidistributed on the moderator cylinder surface, which projects to a flat area of xwidth*yheight normal
+* to the nominal beam direction.
+* (5) For tube moderators, a zon-zero tube radius TRadius0 is read from the data file. The parameter MOffangle0 gives the off-normal angle of the emission port.
+* The source neutrons are started on the emission port, which is tilted by MOffangle and equi-distributed in an elliptical disk area,
+* which projects to a cirular disk on an area perpendicylar to the tube axis.
+*
+*
+* %P
+* Input parameters:
+* filename: []    Filename of source data
+* radius [m]      optinonal radius for disk shaped moderator port
+* xwidth: [m]     width of moderator port
+* yheight: [m]    height of moderator port
+* dist: [m]       Distance from source to the focusing rectangle
+* xw: [m]         Width of focusing rectangle
+* focus_yh: [m]   Height of focusing rectangle
+* Emin: [meV]     minimum energy of neutron to generate
+* Emax: [meV]     maximum energy of neutron to generate
+* PPower: [kW]	  facility proton beam power
+* Frequency [Hz]  repetition rate
+* MOffangle [deg] flight angle with regard to emission port location
+* dmode [-]       0=flat-area distribution; 1=flat-projection distribution
+*                 (relevant only for cylindrical moderator)
+* %E
+****************************************************************************y***/
+
+DEFINE COMPONENT STS_Source
+DEFINITION PARAMETERS ()
+SETTING PARAMETERS (char * filename, radius=0.0, xwidth=0.0, yheight=0.0, dist=1.0,
+                    focus_xw=0.03, focus_yh=0.03, Emin=10, Emax=20,
+                    PPower=0.0, Frequency=0.0, MRadius=0.0, MOffangle=-1000.0, int dmode=1)
+OUTPUT PARAMETERS ()
+STATE PARAMETERS (x,y,z,vx,vy,vz,t,s1,s2,p)
+
+SHARE %{
+  // ----------- added by Jiao Lin --------
+  // ----------  header for SHARE ----------
+  // ----------- added by Jiao Lin --------
+  %include "sns_source-lib"
+
+  #define Maxlength 200
+  #define MAXCOLS 500
+
+  /* ----------------------------------------------------------------
+      routine to load E, I and t I data from SNS source files
+  -----------------------------------------------------------------*/
+    void sns_source_load2
+    (char fname[], double *xvec, double *yvec, int xcol, int ycol,
+     int *veclenptr, double *tcol, double *Ecol, double **Imat, int *ntvals, int *nEvals,
+     double *PPower0, double *Frequency0, double *MRadius0, double *MOffangle0, double *PHeight, double *PWidth, double *TRadius );
+
+    // ----------- added by Jiao Lin --------
+    // ----------  implementation for SHARE ----------
+    // ----------- added by Jiao Lin --------
+  void sns_source_load2(char fname[], double *xvec, double *yvec, int xcol, int ycol,
+    int *veclenptr, double *tcol, double *Ecol, double **Imat, int *ntvals, int *nEvals,
+    double *PPower0, double *Frequency0, double *MRadius0, double *MOffangle0, double *PHeight, double *PWidth, double *TRadius )
+  {
+    FILE *fp;
+    int idx1,idx2,idx3; /* counter for number of x, y values */
+    int jk,idx3max;
+    int numtvals;
+    int totalvals;
+    int intcheck;
+    float indat[6];
+    double *Icoltmp, *tcoltmp, *Ecoltmp;
+    char *line;
+    char *ret;
+    Icoltmp=(double *)malloc(100000*sizeof(double));
+    tcoltmp=(double *)malloc(100000*sizeof(double));
+    Ecoltmp=(double *)malloc(100000*sizeof(double));
+    line=(char *)malloc(200*sizeof(char));
+    /* open file */
+    printf("%s\n",fname);
+    fp=fopen(fname,"r");
+    if (fp==NULL){
+      exit(printf("Error opening file: %s. Check existence/permission. Aborting.\n", fname));
+      }
+    /* skip header lines any line that begin with # */
+    while((fgets(line,Maxlength,fp)!=NULL)&&(strchr(line,'#')!=NULL)){
+    }
+    sscanf(line, "%f", &indat[0]);
+    *PPower0=indat[0];
+    while((fgets(line,Maxlength,fp)!=NULL)&&(strchr(line,'#')!=NULL)){
+    }
+    sscanf(line, "%f", &indat[0]);
+    *Frequency0=indat[0];
+    while((fgets(line,Maxlength,fp)!=NULL)&&(strchr(line,'#')!=NULL)){
+    }
+    sscanf(line, "%f", &indat[0]);
+    *MRadius0=indat[0];
+    while((fgets(line,Maxlength,fp)!=NULL)&&(strchr(line,'#')!=NULL)){
+    }
+    sscanf(line, "%f", &indat[0]);
+    *MOffangle0=indat[0];
+    while((fgets(line,Maxlength,fp)!=NULL)&&(strchr(line,'#')!=NULL)){
+    }
+    sscanf(line, "%f", &indat[0]);
+    *PHeight=indat[0];
+    while((fgets(line,Maxlength,fp)!=NULL)&&(strchr(line,'#')!=NULL)){
+    }
+    sscanf(line, "%f", &indat[0]);
+    *PWidth=indat[0];
+    while((fgets(line,Maxlength,fp)!=NULL)&&(strchr(line,'#')!=NULL)){
+    }
+    sscanf(line, "%f", &indat[0]);
+    *TRadius=indat[0];
+    while((fgets(line,Maxlength,fp)!=NULL)&&(strchr(line,'#')!=NULL)){
+    }
+    sscanf(line, "%f", &indat[0]);
+    intcheck = indat[0]+0.5;
+    if( intcheck != 12345678){
+       printf("  check-string      %i   \n", intcheck);
+       printf("ERROR: Inconsistent data set. Expected check string 12345678. Termiante execution!\n");
+       exit(0);
+    }
+    while((fgets(line,Maxlength,fp)!=NULL)&&(strchr(line,'#')!=NULL)){
+    }
+
+    printf("  PPower0      %g kW  \n", *PPower0);
+    printf("  Frequency0  %g Hz  \n", *Frequency0);
+    printf("  MRadius0    %g m   \n", *MRadius0);
+    printf("  MOffangle0  %g deg \n", *MOffangle0);
+    printf("  PHeight     %g m   \n", *PHeight);
+    printf("  PWidth      %g m   \n", *PWidth);
+    printf("  TRadius     %g m   \n", *TRadius);
+    
+    while((fgets(line,Maxlength,fp)!=NULL)&&(strchr(line,'#')!=NULL)){
+    }
+    idx1=0;
+    /* read all lines that fit the format for the time integrated data*/
+    while(sscanf(line," %f %f %f %f %f %f",&indat[0], &indat[1], &indat[2], &indat[3],&indat[4],&indat[5])>0){
+        xvec[idx1]=indat[xcol];
+        yvec[idx1]=indat[ycol];
+        //printf("idx1 %i xvec %g yvec %g\n",idx1,xvec[idx1],yvec[idx1]);
+        idx1++;
+        ret=fgets(line,Maxlength,fp);
+    }
+    idx1--;   // correct index since it counts one line past useful data
+   // printf("idx1 %i\n",idx1);
+    idx2=floor(idx1/2);
+    while((idx2<idx1)&&(yvec[idx2]>0)){
+      idx2++;
+    }
+    if(idx2<idx1){
+      *veclenptr=idx2;
+    }
+    else{
+      *veclenptr=idx1-2;
+    }
+  /* find t data header */
+    ret=fgets(line,Maxlength,fp);
+    while(strrchr(line,'#')==NULL){
+      ret=fgets(line,Maxlength,fp);
+    }
+  /*find end of t data header */
+    while((fgets(line,Maxlength,fp)!=NULL)&&(strchr(line,'#')!=NULL)){
+    }
+  /* read in t data */
+ /*printf("t data read start\n");*/
+    idx2=0;
+   // while(fgets(line,Maxlength,fp)!=NULL){
+   do {
+        jk=sscanf(line," %f %f %f %f",&indat[0], &indat[1], &indat[2], &indat[3]);
+          if ((line!=NULL)&&(jk>3)){
+            tcoltmp[idx2]=indat[0];
+            Ecoltmp[idx2]=indat[1];
+            Icoltmp[idx2]=indat[2];
+           // printf("%d %d %g %g %g %g\n",idx2,jk,tcoltmp[idx2],Ecoltmp[idx2],Icoltmp[idx2],indat[3]);
+            idx2++;
+          }
+    }
+    while(fgets(line,Maxlength,fp)!=NULL);
+    fclose(fp);
+    totalvals=idx2+1;
+    printf("total vals: %d\n",totalvals);
+    /* reformat data into an Ecol, a tcol, and an I matrix*/
+    idx1=0;idx2=0;idx3=0;
+    Ecol[idx2]=Ecoltmp[idx1];
+    tcol[idx3]=tcoltmp[idx1];
+    Imat[idx3][idx2]=Icoltmp[idx1];
+    idx1++;idx3++;
+    while(idx1<totalvals){
+      jk=idx1-1;
+      if(Ecoltmp[idx1]==Ecoltmp[jk]){
+        tcol[idx3]=tcoltmp[idx1];
+         Imat[idx3][idx2]=Icoltmp[idx1];
+         idx1++;idx3++;
+      }
+      else{
+        idx3max=idx3;
+        idx2++;idx3=0;
+        Ecol[idx2]=Ecoltmp[idx1];
+        tcol[idx3]=tcoltmp[idx1];
+        Imat[idx3][idx2]=Icoltmp[idx1];
+        idx1++;
+      }
+    }
+   *ntvals=idx3max+1;*nEvals=idx2;
+   printf("ntvals: %i idx: %i\n",*ntvals, idx3);
+   free(Icoltmp);free(tcoltmp);free(Ecoltmp);free(line);
+  } /* sns_source_load */
+/*-------------------------------------------------------------
+        End load file routines
+--------------------------------------------------------------*/
+%}
+
+DECLARE
+%{
+  double hdiv;
+  double vdiv;
+  double p_in;
+  double *inxvec;
+  double *inyvec;
+  double *Pvec;
+  int xylength;
+  double *tcol;
+  double *Ecol;
+  double *txval;
+  double *tyval;
+  double *tPvec;
+  double **Ptmat;
+  double EPmax;
+  double EPmin;
+  double INorm;
+  double INorm2;
+  int ntvals;
+  int idxstart;
+  int idxstop;
+  int tidxstart;
+  int tidxstop;
+  int nEvals;
+  double pmul;
+  double PPower0;
+  double Frequency0;
+  double MRadius0;
+  double MOffangle0;
+  double PHeight;
+  double PWidth;
+  double TRadius;
+  double cylz;
+  double cylx;
+  double cylphi1;
+  double cylphi2;
+  double tanMOa;
+%}
+
+INITIALIZE
+%{
+  using namespace mcstas2::SNSsource;
+
+  FILE *fp;
+  double llim, hlim,ltlim,htlim,junk;
+  double Anorm, srcArea, arg;
+  double tycol[200];
+  double **Imat;
+  int idx1,idx2;
+  Pvec=(double *)malloc(500*sizeof(double));
+  inxvec=(double *)malloc(500*sizeof(double));
+  inyvec=(double *)malloc(500*sizeof(double));
+  tcol=(double *)malloc(200*sizeof(double));
+  Ecol=(double *)malloc(200*sizeof(double));
+  tyval=(double *)malloc(500*sizeof(double));
+  txval=(double *)malloc(500*sizeof(double));
+  tPvec=(double *)malloc(500*sizeof(double));
+  Ptmat=(double **)malloc(200*sizeof(double *));
+  for(idx1=0;idx1<200;idx1++){
+    Ptmat[idx1]=(double *)malloc(200*sizeof(double));
+  }
+  Imat=(double **)malloc(200*sizeof(double*));
+  for(idx1=0;idx1<200;idx1++){
+    Imat[idx1]=(double *)malloc(500*sizeof(double));
+  }
+  ltlim=0.1;
+  htlim=1.8e3;
+ /* read file */
+// fcg
+  PHeight=0.0;
+  PWidth=0.0;
+  TRadius=0.0;
+  cylz=0.0;
+  cylx=0.0;
+  cylphi2=0.0;
+  tanMOa=0.0;
+
+  printf("%s%s\n","Loading moderator file ",filename);
+  sns_source_load2
+    (filename,inxvec,inyvec,0,2,&xylength,tcol,Ecol,Imat,&ntvals,&nEvals,
+     &PPower0,&Frequency0,&MRadius0,&MOffangle0,&PHeight,&PWidth,&TRadius);
+
+  /* calculate probabilty distribution function points for use in interpolation routine */
+ llim=inxvec[1];hlim=inxvec[xylength];
+ printf("Start calculating probability distribution\n");
+ /* calculate total number of neutrons in specified energy window */
+ Xonly xonly( xylength, inxvec, inyvec );
+ Txonly txonly( ntvals, txval, tyval );
+
+ INorm2=integ1(xonly,Emin/1000.0,Emax/1000.0,0.001);
+ Pcalc(xonly,llim,hlim,inxvec,Pvec,xylength,&idxstart,&idxstop);
+  /*calculate probability distribution as a function of t for each energy value */
+  tyval[0]=Imat[0][0];
+  //printf("outntvals %i\n",ntvals);
+  //printf("%g \n",tyval[0]);
+  for(idx1=0;idx1<nEvals;idx1++){
+      for(idx2=0;idx2<ntvals;idx2++){
+        //printf("idx2 %d idx1 %d tyval: %g\n",idx2,idx1,Imat[idx2][idx1]);
+        tyval[idx2]=Imat[idx2][idx1];
+        txval[idx2]=tcol[idx2];
+      }
+      tPcalc(txonly,ltlim,htlim,tcol,tPvec,ntvals,&tidxstart,&tidxstop);
+      for(idx2=0;idx2<ntvals;idx2++){
+        Ptmat[idx2][idx1]=tPvec[idx2];
+      }
+   }
+  /* Generate min and max Prob values corresponding to specified energy window*/
+    /* use quadratic interpolation  */
+   EPmax=quadfuncint(Emax/1000.0,xylength,inxvec,Pvec);
+   EPmin=quadfuncint(Emin/1000.0,xylength,inxvec,Pvec);
+  /* Calculate solid Angle */
+  p_in = focus_xw*focus_yh/(dist*dist);
+
+// fcg
+  if(TRadius) {
+    Anorm = PI*TRadius*TRadius;
+    if(radius>TRadius || radius<= 0.0) {
+       radius = TRadius;
+       printf("WARNING: radius not set or requested larget than TRadius: set radius=TRadius.\n");
+    }
+    srcArea = PI*radius*radius;
+    printf( "  Anorm %g\n", Anorm);
+    printf( "  srcArea %g\n", srcArea);
+    if(MOffangle != MOffangle0 && MOffangle > -1000.0) {
+       MOffangle0 = MOffangle;
+       printf("WARNING:  Requested MOffangle different from value in source file. \n");
+    }
+    tanMOa = tan(PI/180*MOffangle0);
+    if(xwidth >0.0 || yheight>0.0) {
+       printf("WARNING:  Requested square source for cylindrical moderator: set disk source shape! \n");
+    }
+  }
+  else {
+    Anorm = PWidth*PHeight;
+    if(xwidth > PWidth || xwidth <= 0.0) {
+       xwidth = PWidth;
+       printf("WARNING: xwidth not set or requested larget than PWidth: set xwidth=PWidth.\n");
+    }
+    if(yheight > PHeight || yheight <= 0.0) {
+       yheight = PHeight;
+       printf("WARNING: yheight not set or requested larget than PHeight: set yheight=PHeight.\n");
+    }
+    if(MOffangle != MOffangle0 && MOffangle > -1000.0) {
+       MOffangle0 = MOffangle;
+       printf("WARNING:  Requested MOffangle different from value in source file. \n");
+    }
+    if(radius >0.0) {
+       printf("WARNING:  Requested disk source for cylindrical moderator: set square source shape! \n");
+    }
+    srcArea = xwidth * yheight;
+    cylz = -MRadius0*cos(PI/180*MOffangle0);
+    cylx = -MRadius0*sin(PI/180*MOffangle0);
+    arg = sqrt(MRadius0*MRadius0-pow(xwidth/2.0-cylx,2)) + cylz;
+    cylphi1 = 2.0*asin( sqrt(arg*arg +xwidth*xwidth/4.0)/2.0/MRadius0 );
+    arg = sqrt(MRadius0*MRadius0-pow(-xwidth/2.0-cylx,2)) + cylz;
+    cylphi2 = 2.0*asin( sqrt(arg*arg +xwidth*xwidth/4.0)/2.0/MRadius0 );
+    printf( "  Anorm %g\n", Anorm);
+    printf( "  srcArea %g\n", srcArea);
+    printf( "  cylz %g\n", cylz);
+    printf( "  cylx %g\n", cylx);
+    printf( "  cylphi1 %g\n", cylphi1);
+    printf( "  cylphi2 %g\n", cylphi2);
+  }
+  p_in *= srcArea/Anorm;
+  if(PPower) {
+    p_in *= PPower/PPower0;
+  }
+  if(Frequency) {
+    p_in *= Frequency0/Frequency;
+  }
+//fcg
+
+  for(idx1=0;idx1<200;idx1++){
+    free(Imat[idx1]);
+  }
+  free(Imat);
+
+printf("Finished calculating probability distribution\n");
+  #if defined (USE_MPI)
+  pmul=1.0/mpi_node_count;
+  #else
+  pmul=1;
+  #endif
+%}
+TRACE
+%{
+  using namespace mcstas2::SNSsource;
+  Pfunc pfunc( xylength, inxvec, Pvec );
+  TPfunc tpfunc( ntvals, txval, tyval );
+
+  double theta,phi,v,tauv,E,Eval,tval,randp,ang;
+  double hdivmin,hdivmax,vdivmin,vdivmax;
+  double r, chi;
+  int idx1,idx3,Eidxl,Eidxh;
+  p=p_in;
+  z=0;
+
+  if(TRadius){
+    chi=2*PI*rand01();              /* Choose point on disk source */
+    r=sqrt(rand01())*radius;        /* with uniform distribution. */
+    x=r*cos(chi);
+    y=r*sin(chi);
+    z = tanMOa *x;
+  }
+  else {
+    y = (rand01()-0.5)*yheight;
+    if(dmode) {                     /* constant projection areal density */
+      x = (rand01()-0.5)*xwidth;
+      z = sqrt(MRadius0*MRadius0-pow(x-cylx,2)) + cylz;
+    }
+    else {                          /* constant areal density on port face */
+      ang=-cylphi1 +rand01()*(cylphi1+cylphi2) +PI/180*MOffangle0;
+      z = cylz +MRadius0*cos(ang);
+      x = cylx +MRadius0*sin(ang);
+    }
+  }
+  // printf("%g   %g   %g\n", x, y, z);
+
+ hdivmax=atan((focus_xw/2.0-x)/dist);
+ hdivmin=atan(-(focus_xw/2.0+x)/dist);
+ vdivmax=atan((focus_yh/2.0-y)/dist);
+ vdivmin=atan(-(focus_yh/2.0+y)/dist);
+
+  theta = hdivmin + (hdivmax-hdivmin)*rand01(); /* Small angle approx. */
+  phi = vdivmin + (vdivmax-vdivmin)*rand01();
+  hdiv=theta;
+  vdiv=phi;
+  /* generate random numbers*/
+
+   /*First generate E random value */
+    randp=EPmin+rand01()*(EPmax-EPmin);
+    /* find E value corresponding to random probability */
+    Eval=zero_find(pfunc,randp,inxvec[idxstart],inxvec[idxstop],1e-5);
+   /* from a known E value generate an emission time value */
+   /* find the index of the E values that bracket the random E value */
+   idx1=0;
+   while((idx1<nEvals)&&(Ecol[idx1]<Eval)){
+     idx1++;     
+   }
+   Eidxh=idx1;
+   Eidxl=idx1-1;
+   /*calculate the interpolated t, P curve to determine t value from uniform random value*/
+   for (idx3=0;idx3<ntvals;idx3++){
+     tyval[idx3]=linint(Eval,Ecol[Eidxl],Ecol[Eidxh],Ptmat[idx3][Eidxl],Ptmat[idx3][Eidxh]);
+     txval[idx3]=tcol[idx3];
+   }
+   randp=tyval[tidxstart]+rand01()*(tyval[tidxstop-1]-tyval[tidxstart]);
+   if (randp>0.0){
+     tval=zero_find(tpfunc,randp,txval[tidxstart],txval[tidxstop-1],1e-5); }
+    else{
+       tval=0;}
+  E = Eval*1000.0;  /* Convert Energy from Ev to meV */
+  t = tval*1e-6;      /* Convert time from mus to S */
+  v = SE2V*sqrt(E);
+  /* Calculate components of velocity vector such that the neutron is within the focusing rectangle */
+  vz = v*cos(phi)*cos(theta);   /* Small angle approx. */
+  vy = v*sin(phi);
+  vx = v*cos(phi)*sin(theta);
+
+  p*=INorm2*pmul/mcget_ncount();
+
+%}
+FINALLY
+%{
+  int idxf;
+  free(txval);free(tyval);free(tPvec);
+  free(inxvec);free(inyvec);free(Pvec);free(tcol);free(Ecol);
+  for(idxf=0;idxf<200;idxf++){
+    free(Ptmat[idxf]);
+  }
+  free(Ptmat);
+%}
+
+MCDISPLAY
+%{
+  double x1,y1,x2,y2;
+  x1=-xwidth/2.0;y1=-yheight/2.0;x2=xwidth/2.0;y2=yheight/2.0;
+  multiline(4,(double)x1,(double)y1,0.0,(double)x1,(double)y2,0.0,(double)x2,(double)y2,0.0,(double)x2,(double)y1,0.0,(double)x1,(double)y1,0.0);
+%}
+
+END
