@@ -140,7 +140,7 @@ namespace mcstas2 { namespace SNSsource {
       idx++;
     }
     if (idx>xylen){
-      printf("error exceeded vector length");
+      printf("SNS_source: linfuncint: error exceeded vector length");
     }
     if (vecx[idx]==xdes){
       return vecy[idx];
@@ -173,7 +173,7 @@ namespace mcstas2 { namespace SNSsource {
       idx++;
     }
     if (idx>xylen){
-      printf("error exceeded vector length");
+      printf("SNS_source: quadfuncint: error exceeded vector length");
     }
 
     if (vecx[idx]==xdes){
