@@ -6,7 +6,7 @@
 
   <PowderSample name='sans_spheres' type='sample'>
     <Shape>
-      <block width="6*cm" height="10*cm" thickness="0.1*cm" />
+      <block width="1*cm" height="1*cm" thickness="0.1*cm" />
     </Shape>
     <Phase type="crystal">
       <ChemicalFormula>H</ChemicalFormula>

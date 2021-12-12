@@ -4,5 +4,10 @@
 
 <!-- weights: absorption, scattering, transmission -->
 <homogeneous_scatterer mcweights="0, 1, 0">
-  <SANSSpheresKernel R="100.*angstrom" phi="1e-3" delta_rho="0.6*fm/angstrom**3" max_angle="2*deg"/>
+    <SANSSpheresKernel
+        R="500.*angstrom"
+        phi="0.1"
+        delta_rho="0.6*fm/angstrom**3"
+        max_angle="0.05*radian"
+    />
 </homogeneous_scatterer>
