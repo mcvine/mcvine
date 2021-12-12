@@ -25,8 +25,8 @@ class SNS_source_TestCase(unittest.TestCase):
         result = hh.load('./out/I_tof.h5')
         print(result.I)
         rdiff = np.abs(result.I[17:-15] - expected.I[17:-15])/expected.I[17:-15]
-        print((rdiff<0.05).sum(), rdiff.size)
-        self.assert_((rdiff<0.05).sum() >= rdiff.size*.75)
+        print((rdiff<0.08).sum(), rdiff.size)
+        self.assert_((rdiff<0.08).sum() >= rdiff.size*.9)
         # I(lambda)
         expected = hh.load('./expected/I_lambda.h5')
         result = hh.load('./out/I_lambda.h5')
