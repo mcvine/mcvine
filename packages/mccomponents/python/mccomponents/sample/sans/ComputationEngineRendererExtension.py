@@ -28,6 +28,7 @@ class ComputationEngineRendererExtension:
         phi = kernel.phi
         delta_rho = self._unitsRemover.remove_unit( kernel.delta_rho, 1e-15*ul.m/ul.angstrom**3 )
         max_angle = self._unitsRemover.remove_unit( kernel.max_angle, units.angle.deg )
+        # print("max_angle=", max_angle)
         return self.factory.sans_spheres_kernel(abs_coeff, R, phi, delta_rho, max_angle)
 
     pass # end of ComputationEngineRendererExtension
