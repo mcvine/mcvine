@@ -4,7 +4,7 @@
 #
 #                                   Jiao Lin
 #                      California Institute of Technology
-#                      (C) 2007-2010 All Rights Reserved  
+#                      (C) 2007-2010 All Rights Reserved
 #
 # {LicenseText}
 #
@@ -23,7 +23,6 @@ class TestCase(unittest.TestCase):
 
     def test1(self):
         'NDMonitor'
-        
         from mcni.components.NDMonitor import NDMonitor, Axis
         xaxis = Axis(
             name = 'x', expression='x',
@@ -31,7 +30,6 @@ class TestCase(unittest.TestCase):
             unit = 'meter',
             )
         m = NDMonitor('abc', [xaxis])
-        
         N = 100
         from mcni import neutron_buffer, neutron
         b = neutron_buffer(N)
@@ -50,7 +48,6 @@ class TestCase(unittest.TestCase):
             from histogram.plotter import defaultPlotter as plotter
             plotter.plot(m.histogram)
         return
-        
 
     pass # end of TestCase
 
@@ -74,8 +71,4 @@ if __name__ == "__main__":
     interactive = True
     main()
 
-    
-# version
-__id__ = "$Id$"
-
-# End of file 
+# End of file

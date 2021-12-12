@@ -256,9 +256,9 @@ def ndmonitor(*quantities, **kwds):
 
         
         def _createEngine(self):
-            from ..components.NDMonitor import NDMonitor
+            from ..components.NDMonitor import NDMonitorEngine
             args = self._engine_args
-            self.engine = NDMonitor(*args)
+            self.engine = NDMonitorEngine(*args)
             return
 
         pass
