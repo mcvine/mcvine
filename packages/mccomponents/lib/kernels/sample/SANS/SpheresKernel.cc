@@ -46,6 +46,7 @@ mccomponents::kernels::SANSSpheresKernel::SANSSpheresKernel
     m_details( new Details )
 {
   // std::cout << "solid angle: " << m_solidangle << std::endl;
+  // std::cout << "max angle: " << m_max_angle << ", max angle tan" << m_max_angle_tan << std::endl;
 }
 
 
