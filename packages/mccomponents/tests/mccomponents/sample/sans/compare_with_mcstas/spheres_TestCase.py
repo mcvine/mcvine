@@ -15,7 +15,8 @@ wl = 2*np.pi/conversion.e2k(10.) # 10meV. same as that of Ei in ./spheres_instr.
 mu = 3./2*phi*delta_rho**2*wl**2*R
 thickness = 0.001
 attenuation = np.exp(-mu*thickness)
-print(attenuation)
+import psutil
+nodes = max(psutil.cpu_count()//2, 1)
 
 class TestCase(unittest.TestCase):
 
@@ -23,7 +24,7 @@ class TestCase(unittest.TestCase):
         outdir = 'out.mcvine_spheres'
         if os.path.exists(outdir): shutil.rmtree(outdir)
         run_script.run_mpi(
-            instr, outdir, ncount=1e8, nodes=20, overwrite_datafiles=True,
+            instr, outdir, ncount=1e8, nodes=nodes, overwrite_datafiles=True,
             sample_vendor='mcvine',
         )
         I_q = hh.load(os.path.join(outdir, 'I_q.h5'))
@@ -40,7 +41,7 @@ class TestCase(unittest.TestCase):
         outdir = 'out.mcstas_spheres'
         if os.path.exists(outdir): shutil.rmtree(outdir)
         run_script.run_mpi(
-            instr, outdir, ncount=1e8, nodes=10, overwrite_datafiles=True,
+            instr, outdir, ncount=1e8, nodes=nodes, overwrite_datafiles=True,
             sample_vendor='mcstas',
         )
         I_q = hh.load(os.path.join(outdir, 'I_q.h5'))
