@@ -12,3 +12,4 @@ log.*
 *.cmake
 CMakeFiles
 Makefile
+.ipynb_checkpoints/
