@@ -50,6 +50,7 @@ set ( SRC_FILES
   wrap_RandomNumberGenerator.cc
   wrap_SimplePowderDiffractionKernel.cc
   wrap_SingleCrystalDiffractionKernel.cc
+  wrap_SANS_kernels.cc
   )
 # ----------------------------------------
 

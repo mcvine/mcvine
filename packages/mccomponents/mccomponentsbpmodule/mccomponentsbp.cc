@@ -1,19 +1,8 @@
 // -*- C++ -*-
 //
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //
-//                                   Jiao Lin
-//                      California Institute of Technology
-//                      (C) 2005-2013 All Rights Reserved
-//
-// {LicenseText}
-//
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
-
 
 #include <boost/python.hpp>
-
 
 #include "wrap_E_Q_Kernel.h"
 #include "wrap_E_vQ_Kernel.h"
@@ -21,7 +10,7 @@
 
 
 namespace wrap_mccomponents{
-  
+
   void wrap_basic_containers();
 
   void wrap_HomogeneousNeutronScatterer();
@@ -29,7 +18,7 @@ namespace wrap_mccomponents{
   void wrap_absorptioncoefficientcalculators();
   void wrap_CompositeScatteringKernel();
   void wrap_kernelcontainer();
-  
+
   void wrap_DGSSXResPixel();
 
   void wrap_IsotropicKernel();
@@ -72,6 +61,8 @@ namespace wrap_mccomponents{
   void wrap_RandomNumberGenerator();
   void wrap_SimplePowderDiffractionKernel();
   void wrap_SingleCrystalDiffractionKernel();
+
+  void wrap_SANS_kernels();
 
   struct Wrap_E_Q_Kernel;
   struct Wrap_Broadened_E_Q_Kernel;
@@ -142,13 +133,11 @@ BOOST_PYTHON_MODULE(mccomponentsbp)
   wrap_SimplePowderDiffractionKernel();
   wrap_SingleCrystalDiffractionKernel();
 
+  wrap_SANS_kernels();
+
   Wrap_E_Q_Kernel wrap_e_q_kernel;
   Wrap_Broadened_E_Q_Kernel wrap_broadened_e_q_kernel;
   Wrap_E_vQ_Kernel wrap_e_vq_kernel;
 }
 
-
-// version
-// $Id$
-
-// End of file 
+// End of file

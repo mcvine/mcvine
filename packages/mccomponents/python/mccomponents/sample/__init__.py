@@ -153,9 +153,10 @@ def _import_kernels():
     try:
         from .phonon import xml
         from .diffraction import xml
+        from .sans import xml
     except ImportError as e:
         import warnings, traceback
-        s = "kernels not available: phonon, diffraction:\n%s: %s.\n%s" % (
+        s = "kernels not available: phonon, diffraction, sans:\n%s: %s.\n%s" % (
             type(e), e, traceback.format_exc())
         warnings.warn(s)
     return

@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE scatterer>
+
+<!-- weights: absorption, scattering, transmission -->
+<homogeneous_scatterer mcweights="0, 1, 0">
+    <SANSSpheresKernel
+        R="500.*angstrom"
+        phi="0.1"
+        delta_rho="0.6*fm/angstrom**3"
+        max_angle="0.05*radian"
+    />
+</homogeneous_scatterer>
