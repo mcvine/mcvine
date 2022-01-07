@@ -12,6 +12,7 @@ requirements:
     - cmake
   host:
     - python                   {{ python }}
+    - setuptools               49
     - pyyaml
     - numpy                    {{ numpy }}
     - psutil
