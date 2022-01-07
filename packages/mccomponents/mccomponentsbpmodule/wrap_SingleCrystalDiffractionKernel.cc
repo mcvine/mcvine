@@ -31,7 +31,7 @@ namespace wrap_mccomponents {
 
     class_<HKL>
       ("HKL",
-       init<int, int, int, w_t::float_t>()
+       init<w_t::float_t, w_t::float_t, w_t::float_t, w_t::float_t>()
        )
       .def_readonly("h", &HKL::h)
       .def_readonly("k", &HKL::k)
