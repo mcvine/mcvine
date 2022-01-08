@@ -67,9 +67,9 @@ def getHKLs(text, comments, lat):
         row = lin.split()
         peak = {}
         # this assumes integer hkl is there a case for non integer?
-        h       = int(row[col_idx['column_h']])
-        k       = int(row[col_idx['column_k']])
-        l       = int(row[col_idx['column_l']])
+        h       = float(row[col_idx['column_h']])
+        k       = float(row[col_idx['column_k']])
+        l       = float(row[col_idx['column_l']])
         F2 = float(row[col_idx['column_F2']])
         # print(row)
         # print(h,k,l,F2)

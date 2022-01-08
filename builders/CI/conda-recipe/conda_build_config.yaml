@@ -18,6 +18,8 @@ pyre:
   - 0.8
 
 pin_run_as_build:
+  setuptools:
+    max_pin: x.x
   boost:
     max_pin: x.x
   gsl:

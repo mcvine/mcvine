@@ -48,7 +48,11 @@ class TestCase(unittest.TestCase):
         componentname = 'E_monitor'
         componentfile = '%s.comp' % componentname
         category = 'monitors'
-        mcstas2.wrapcomponent( componentfile, category )
+        # wrap
+        cmd = f"import mcstas2; mcstas2.wrapcomponent( {componentfile!r}, {category!r} )"
+        cmd = f'python -c "{cmd}"'
+        if os.system(cmd): raise RuntimeError(f"Failed: {cmd}")
+        # check
         from mcstas2.components import componentfactory
         emonfac = componentfactory( category, componentname )
         emon = emonfac(

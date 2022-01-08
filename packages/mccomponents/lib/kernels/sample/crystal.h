@@ -41,9 +41,9 @@ namespace mccomponents {
     };
 
     struct HKL{
-      int h,k,l;
+      float_t h,k,l;
       float_t F2;                    /* unit: barn */
-      HKL(int _h, int _k, int _l, float_t _F2)
+      HKL(float_t _h, float_t _k, float_t _l, float_t _F2)
         :h(_h),
          k(_k),
          l(_l),
