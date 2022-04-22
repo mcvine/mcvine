@@ -56,6 +56,7 @@ class TestCase(unittest.TestCase):
 
     def test_from_mcpl(self):
         "mcvine neutronstorage from_mcpl"
+        # test data "test.mcpl.gz" is created using script "run_make_mcpl_file.sh"
         cmd = "mcvine neutronstorage from_mcpl --out test.mcv test.mcpl.gz"
         if os.system(cmd):
             raise RuntimeError("%s failed" % cmd)
