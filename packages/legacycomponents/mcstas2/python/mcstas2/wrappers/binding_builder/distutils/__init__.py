@@ -73,11 +73,18 @@ def build( binding, site_package_path = None ):
     debug.log('name=%s, packages=%s, package_dir=%s, ext_modules=%s' % (
         name, packages, package_dir, ext_modules, )
               )
+    record_path = os.path.expanduser("~/.mcstas2/install_record.txt")
+    sys.argv.append( '--single-version-externally-managed')
+    sys.argv.append( '--record' )
+    sys.argv.append( record_path )
     setup(
         name = name,
         packages = packages,
         package_dir = package_dir,
-        ext_modules = ext_modules )
+        ext_modules = ext_modules,
+    )
+    import importlib
+    importlib.invalidate_caches()
     sys.argv = save
     return
 

@@ -1,0 +1,27 @@
+DEFINE INSTRUMENT test() 
+DECLARE
+%{ 
+%}
+INITIALIZE
+%{
+%}   
+
+TRACE
+
+COMPONENT mod=Source_simple(xwidth=0.1, yheight=0.12, dist=2.5, focus_xw=0.1, focus_yh=0.12, E0=100.0, dE=1.0)
+AT (0,0,0) ABSOLUTE
+
+COMPONENT set_pol=Set_pol(px=1, py=0, pz=0)
+AT (0,0,0) RELATIVE mod
+
+COMPONENT save_mcpl=MCPL_output(filename="test.mcpl", polarisationuse=1)
+AT (0,0,2.5) RELATIVE mod
+
+COMPONENT virtual_out=Virtual_output(filename="test.vout")
+AT (0,0,2.5) RELATIVE mod
+
+FINALLY
+%{                       	      
+%}
+END
+

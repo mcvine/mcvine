@@ -6,7 +6,7 @@ from mcni.neutron_storage.idf_usenumpy import count
 
 
 class TestCase(unittest.TestCase):
-    
+
     def test_count(self):
         "mcvine neutronstorage count"
         cmd = "mcvine neutronstorage count neutrons"
@@ -53,6 +53,5 @@ class TestCase(unittest.TestCase):
             raise RuntimeError("%s failed" % cmd)
         assert count('merged_neutrons.2')==count('neutrons')+10
         return
-
 
 if __name__ == '__main__': unittest.main()

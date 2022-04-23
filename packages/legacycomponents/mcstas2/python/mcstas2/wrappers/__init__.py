@@ -49,11 +49,11 @@ def wrap(
     
     # register the new factory
     from mcstas2.components import registercomponent
-    m = __import__( '%s.%s' % (
-        bindingobj.python_package,
-        classname), {}, {}, [''] )
+    import importlib
+    mod = '%s.%s' % (bindingobj.python_package, classname)
+    m = importlib.import_module(mod)
     registercomponent( componentcategory, componentname, m )
-    return 
+    return
 
 
 def createBindingObject( 

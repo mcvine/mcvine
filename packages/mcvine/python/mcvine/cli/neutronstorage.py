@@ -123,13 +123,20 @@ def from_mcpl(path, out, scale_by_number_of_packets):
         v = conversion.e2v(E)
         vv = v[:, np.newaxis] * pb.direction
         vx,vy,vz = vv.T
-        s1 = s2 = np.zeros(N1)
+        # use spherical coordinates for spin: s1=theta, s2=phi
+        sx,sy,sz = pb.polx, pb.poly, pb.polz
+        ss = sx*sx + sy*sy + sz*sz
+        s1 = np.arccos(sy/np.sqrt(ss))
+        s2 = np.arctan2(sx,sz) # in radiant (phi)
+        mask = ss<=0
+        s1[mask] = 0
+        s2[mask] = 0
         arr = np.array([x,y,z,vx,vy,vz,s1,s2,t,p]).T.copy()
         arrays.append(arr)
         # fn = '{}-{}{}'.format(base, i, ext)
         continue
     arr = np.concatenate(arrays); del arrays
-    print(arr.shape)
+    print("Read neutron data from ", path, " shape: ", arr.shape)
     assert len(arr.shape)==2 and arr.shape[-1]==10
     if scale_by_number_of_packets:
         N = arr.shape[0]
