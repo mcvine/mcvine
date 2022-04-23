@@ -16,8 +16,8 @@ requirements:
     - numpy                    {{ numpy }}
     - psutil
     - h5py
-    - openmpi
     - mpi4py
+    - openmpi                  {{ openmpi }}
     - gsl                      {{ gsl }}
     - boost                    {{ boost }}
     - pyre                     {{ pyre }}
@@ -39,6 +39,7 @@ requirements:
     - psutil
     - h5py
     - mpi4py
+    - openmpi
     - gsl
     - boost
     - pyre

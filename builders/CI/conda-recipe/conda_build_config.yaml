@@ -4,6 +4,8 @@ gsl:
   - 2.6
 boost:
   - 1.71
+openmpi:
+  - 4.1.0
 numpy:
   - 1.20.0
 numpyext:
@@ -11,7 +13,7 @@ numpyext:
 bpext:
   - 0.1.4
 histogram:
-  - 0.3.8
+  - 0.3.9
 drchops:
   - 2.0.3
 pyre:
@@ -20,6 +22,8 @@ pyre:
 pin_run_as_build:
   boost:
     max_pin: x.x
+  openmpi:
+    max_pin: x.x.x
   gsl:
     max_pin: x.x
   numpy:
