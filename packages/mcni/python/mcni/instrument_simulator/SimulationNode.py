@@ -66,7 +66,7 @@ class SimulationNode(Connectable):
     def _createProcessor(self, name, process, tracer):
         from mcni import journal
         logger = journal.logger(
-            'info', 'instrument', header='', footer='', format=' | %s')
+            'info', 'instrument', header='', footer='', format=' | {}')
         def _(neutrons):
             if tracer:
                 tracer(neutrons,  context=before(self))
