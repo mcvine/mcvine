@@ -58,6 +58,7 @@ def componentInfo2cppClass( compInfo ):
     trace_method_body = compInfo.trace
     save_method_body = compInfo.save
     finalize_method_body = compInfo.finalize
+    display_method_body = compInfo.display
 
     helpers_h, helpers_cc = compInfo.share
     helpers_h = helpers_h.split( '\n' )
@@ -84,6 +85,7 @@ def componentInfo2cppClass( compInfo ):
                            trace_method_body,
                            save_method_body,
                            finalize_method_body,
+                           display_method_body,
                            headers_dependent_on,
                            helpers_h, helpers_cc,
                            )
@@ -101,6 +103,7 @@ def createCppClass( name,
                     trace_method_body,
                     save_method_body,
                     finalize_body,
+                    display_body,
                     headers_dependent_on,
                     helpers_h, helpers_cc):
 
@@ -141,6 +144,9 @@ def createCppClass( name,
     #   finalize
     finalize = Method( 'finalize', [], finalize_body.split("\n"), type = 'void' )
 
+    #   display
+    display = Method( 'display', [], display_body.split("\n"), type = 'void' )
+
     # methods
     trace_body = trace_method_body.split('\n')
     trace_arguments = [ Argument( "double &", arg ) for arg in trace_method_args ]
@@ -150,7 +156,7 @@ def createCppClass( name,
     save_body = [ 'mcuse_format("McStas");' ] + save_body # need to call mcuse_format before calling detector output methods
     save = Method( 'save', [], save_body, type = 'void' )
     
-    methods = [ctor, dtor, trace, save, finalize, ]
+    methods = [ctor, dtor, trace, save, finalize, display]
 
     # data
     #private = additional_member_declaration.split("\n")

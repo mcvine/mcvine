@@ -63,9 +63,134 @@ class Component(AbstractComponent, ParallelComponent):
             neutrons.swap(saved)
         return ret
 
+    def draw(self, painter):
+        "draw this component using the painter"
+        instructions = self.get_display_instructions()
+        import ast
+        for ins in instructions:
+            f, args = ins.rstrip(')').split('(')
+            assert not f.startswith('_')
+            func = getattr(painter, f)
+            args = ast.literal_eval(args)
+            if not isinstance(args, tuple): args = args,
+            tr_args = getattr(_painting_action_translator, f)(*args)
+            func(*tr_args)
+        return
+
+    def get_display_instructions(self):
+        "obtain a list of display instructions"
+        # this is done by running the mcstas display function in a subprocess.
+        # and obtain the output. mcstas display function always prints to stdout.
+        # after getting the output, parse it and only retain the display instructions
+        # 1. temp file to save the constructor information for the C++ component
+        import os, tempfile
+        tmpdir = tempfile.mkdtemp()
+        path = os.path.join(tmpdir, 'ctor.pkl')
+        import pickle
+        with open(path, 'wb') as ostream:
+            pickle.dump((self._cpp_instance_factory, self._factory_kwds), ostream)
+        # 2. run python cmd in subprocess that calls mcstas display function
+        cmd = 'python -m "mcstas2.components._proxies.base" display --path="%s"' % path
+        import subprocess as sp, shlex
+        out = sp.check_output(shlex.split(cmd))
+        out = out.decode()
+        # 3. parse output
+        prefix = 'MCDISPLAY: '
+        rt = [l.lstrip(prefix) for l in out.splitlines() if l.startswith(prefix)]
+        # 4. clean up
+        import shutil
+        shutil.rmtree(tmpdir)
+        return rt
+
+    def _call_mcstas_display(self):
+        "call the mcstas C code for display. this will prints to stdout"
+        self._cpp_instance.core().display()
+        return
 
     def _dumpData(self):
         return
 
+class _PaintingActionTranslation:
+
+    def multiline(self, *x):
+        import numpy as np
+        N = x[0]
+        x = np.array(x[1:])
+        x.shape = -1, 3
+        assert x.shape[0] == N
+        return x,
+
+    def circle(self, plane, cx, cy, cz, r):
+        c = cx,cy,cz
+        return plane, c, r
+
+    def magnify(self, plane):
+        return plane,
+_painting_action_translator = _PaintingActionTranslation()
+
+
+class AbstractPainter:
+
+    def multiline(self, x):
+        """draw lines between successive points
+
+        Parameters
+        ----------
+        x : array
+          numpy array of points. shape (N,3)
+        """
+        raise NotImplementedError("multiline")
+
+    def circle(self, plane, c, r):
+        """draw a circle
+
+        Parameters
+        ----------
+        plane : string
+          xy/yz/xz
+        c : vector
+          center. 3D vector.
+        r : float
+          radius
+        """
+        raise NotADirectoryError("circle")
+
+    def magnify(self, plane):
+        """magnify
+
+        Parameters
+        ----------
+        plane : string
+          xy/yz/xz
+        """
+        raise NotADirectoryError("magnify")
+
+class Painter(AbstractPainter):
+
+    def multiline(self, x):
+        print("Lines: " + '->'.join(str(v) for v in x))
+
+    def circle(self, plane, c, r):
+        print("Circle: In plane %r, center at %r, radius %r" % (plane, c, r))
+
+    def magnify(self, plane):
+        print("Magnify: plane %r" % plane)
+
+import click
+@click.command()
+@click.argument("action")
+@click.option("--path", help="path to display")
+def main(action, path):
+    assert action == 'display'
+    # load constructor info for the component
+    import pickle
+    f, kwds = pickle.load(open(path, 'rb'))
+    # create component instance
+    instance = f(**kwds)
+    # call display method
+    instance.core().display()
+    return
+
+if __name__ == '__main__': main()
 
 # End of file 

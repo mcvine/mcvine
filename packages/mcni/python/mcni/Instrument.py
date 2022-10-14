@@ -38,6 +38,17 @@ class Instrument(Instrument0):
         self.geometer = geometer or self._createGeometer()
         return
 
+    def draw(self, painter):
+        for component in self.components:
+            if not hasattr(component, 'draw'):
+                import warnings
+                msg = 'Method "draw" has not been implemented for component {} of type {}'\
+                    .format(component.name, component.__class__.__name__)
+                warnings.warn(msg)
+                continue
+            component.draw(painter)
+        return
+
     def simulate(self, N, **kwds):
         """simulate N neutrons. **kwds are used to update simulation context
 

@@ -1,19 +1,10 @@
 #!/usr/bin/env python
 #
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Jiao Lin <jiao.lin@gmail.com>
 #
-#                                   Jiao Lin
-#                      California Institute of Technology
-#                        (C) 2007 All Rights Reserved  
-#
-# {LicenseText}
-#
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#
-
 
 standalone = True
-skip = True
+skip = False
 
 
 import unittestX as unittest
@@ -38,6 +29,14 @@ class wrap_TestCase(unittest.TestCase):
             xmin=-0.2, xmax=0.2,
             ymin=-0.2, ymax=0.2,
             Emin=50, Emax=60)
+        emon._call_mcstas_display()
+        expected = [
+            "magnify('xy')",
+            'multiline(5,-0.1,-0.1,0,0.1,-0.1,0,0.1,0.1,0,-0.1,0.1,0,-0.1,-0.1,0)'
+        ]
+        self.assertEqual(emon.get_display_instructions(), expected)
+        from mcstas2.components._proxies import base
+        emon.draw(base.Painter())
         return
 
     pass  # end of wrap_TestCase
@@ -57,12 +56,7 @@ def main():
     res = unittest.TextTestRunner(verbosity=2).run(alltests)
     import sys; sys.exit(not res.wasSuccessful())
 
-    
-    
 if __name__ == "__main__":
     main()
-    
-# version
-__id__ = "$Id$"
 
 # End of file 

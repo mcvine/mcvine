@@ -26,7 +26,7 @@ class TestCase(unittest.TestCase):
         # print dir(component)
         attrs = [
             'name', 'full_description', 'simple_description',
-            'initialize', 'trace', 'finalize', 
+            'initialize', 'trace', 'finalize', 'display'
             ]
         for attr in attrs: assert hasattr(component, attr)
 
@@ -120,6 +120,15 @@ class TestCase(unittest.TestCase):
 printf("free: E_N = %p, E_p = %p, E_p2 = %p\\n", E_N, E_p, E_p2);
 #endif
 free(E_N); free(E_p); free(E_p2);''')
+        self.assertLinesEqual(
+            component.display.strip(),
+'''magnify("xy");
+  multiline(5, (double)xmin, (double)ymin, 0.0,
+               (double)xmax, (double)ymin, 0.0,
+               (double)xmax, (double)ymax, 0.0,
+               (double)xmin, (double)ymax, 0.0,
+               (double)xmin, (double)ymin, 0.0);
+''')
         return
 
 

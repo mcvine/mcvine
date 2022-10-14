@@ -42,6 +42,7 @@ void %(wrapmethodname)s()
     %(expose_datamembers)s
     // expose pointer methods
     %(expose_ptrmethods)s
+    .def("display", &w_t::display)
     ;
 }
 '''
