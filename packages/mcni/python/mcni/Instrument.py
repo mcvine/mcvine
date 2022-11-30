@@ -38,6 +38,20 @@ class Instrument(Instrument0):
         self.geometer = geometer or self._createGeometer()
         return
 
+    def __str__(self):
+        g = self.geometer
+        def s(c):
+            if hasattr(c, '_factory_kwds'):
+                kwds = c._factory_kwds
+                return ', '.join(f'{k}={v!r}' for k, v in kwds.items())
+            return str(c)
+        return "Instrument:\n  " + '\n  '.join([
+            f"{c.name}:{c.__class__.__name__}"
+            f" at {g.position(c)} rotated {g.orientation(c)}"
+            f"\n  * {s(c)}"
+            for c in self.components
+        ])
+
     def simulate(self, N, **kwds):
         """simulate N neutrons. **kwds are used to update simulation context
 
