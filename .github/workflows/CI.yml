@@ -63,7 +63,6 @@ jobs:
         shell: pwsh
         run: |
           echo $PYTHON_VERSION
-          conda install setuptools wheel
           ./builders/CI/build_and_test.sh
         env:
           ANACONDA_UPLOAD_TOKEN: ${{ secrets.ANACONDA_TOKEN }}
