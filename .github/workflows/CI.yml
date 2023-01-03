@@ -22,7 +22,7 @@ jobs:
     steps:
       - name: install glut
         run: sudo apt-get update && sudo apt-get install -y procps freeglut3-dev libglu1-mesa unzip
-        
+
       - name: Check out source code
         uses: actions/checkout@v2
         with:
@@ -50,7 +50,7 @@ jobs:
         shell: pwsh
         run: |
           conda install -n root conda-build
-      
+
       - name: checks
         shell: pwsh
         run: |
@@ -63,6 +63,7 @@ jobs:
         shell: pwsh
         run: |
           echo $PYTHON_VERSION
+          conda install setuptools wheel
           ./builders/CI/build_and_test.sh
         env:
           ANACONDA_UPLOAD_TOKEN: ${{ secrets.ANACONDA_TOKEN }}
