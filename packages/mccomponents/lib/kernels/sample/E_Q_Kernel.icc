@@ -27,7 +27,7 @@
 
 
 template< typename E_Q_functor_t, typename S_Q_functor_t>
-struct 
+struct
 mccomponents::kernels::E_Q_Kernel<E_Q_functor_t, S_Q_functor_t>\
 :: Details {
 
@@ -43,7 +43,7 @@ mccomponents::kernels::E_Q_Kernel<E_Q_functor_t, S_Q_functor_t>\
 
 #ifdef DEBUG
 template< typename E_Q_functor_t, typename S_Q_functor_t>
-const char 
+const char
 mccomponents::kernels::E_Q_Kernel<E_Q_functor_t, S_Q_functor_t>\
 ::Details::jrnltag[] = "E_Q_Kernel";
 #endif
@@ -132,18 +132,16 @@ mccomponents::kernels::E_Q_Kernel<E_Q_functor_t, S_Q_functor_t>\
   // incident neutron energy
   double Ei = conversion::v2E( vi );
   double Q, E, Ef, vf, ki, kf, cost, cost2;
-  
-  while (1) {
+  int counter=0;
+  while (counter++ < 100) {
     // randomly pick momentum transfer
     Q = math::random(m_Qmin, m_Qmax);
-  
     // compute E from Q
     E = m_E(Q);
 
 #ifdef DEBUG
     std::cout << "E,Q=" << E << ", " << Q << std::endl;
 #endif
-  
     // final energy
     Ef = Ei-E;
 
@@ -159,7 +157,6 @@ mccomponents::kernels::E_Q_Kernel<E_Q_functor_t, S_Q_functor_t>\
 
     // final velocity magnitude
     vf = conversion::E2v( Ef );
-  
     // theta, phi
     ki = conversion::v2k* vi;
     kf = conversion::v2k* vf;
@@ -177,10 +174,13 @@ mccomponents::kernels::E_Q_Kernel<E_Q_functor_t, S_Q_functor_t>\
     }
     break;
   }
+  if (counter > 100) {
+    ev.probability = 0;
+    return;
+  }
   double sint = std::sqrt(1-cost2);
-  // 
+  //
   double phi = math::random(0., mcni::PI*2);
-  
   // scattered neutron velocity vector
   // == coordinate system ==
   typedef mcni::Vector3<double> V3d;
@@ -190,30 +190,28 @@ mccomponents::kernels::E_Q_Kernel<E_Q_functor_t, S_Q_functor_t>\
   // if e1 is right on the z-direction, that means e1 = (0,0,1)
   // and we set e2 = (1,0,0) or whatever
   V3d e2;
-  if (std::abs(e1.x)>m_details->m_epsilon || std::abs(e1.y)>m_details->m_epsilon) { 
+  if (std::abs(e1.x)>m_details->m_epsilon || std::abs(e1.y)>m_details->m_epsilon) {
     e2 = V3d(0,0,1) * e1; e2.normalize();
   } else {
     e2 = V3d(1,0,0);
   }
   V3d e3 = e1 * e2;
   // == v_f ==
-  V3d v_f = sint*cos(phi) * e2 
+  V3d v_f = sint*cos(phi) * e2
     + sint*sin(phi) * e3
     + cost * e1;
   v_f = v_f * vf;
- 
+
 #ifdef DEBUG
   std::cout << "S,vf/vi=" << m_S(Q) << ", " << vf/vi << std::endl;
 #endif
   // adjust probability of neutron event
   ev.probability *= m_S(Q) * (vf/vi);
-  ev.probability *=  Q*(m_Qmax-m_Qmin) / (kf*ki) / 2; // * jacobian;
+  ev.probability *=  Q*(m_Qmax-m_Qmin) /counter / (kf*ki) / 2; // * jacobian;
   //
   state.velocity = v_f;
 }
 
 
 // version
-// $Id: E_Q_Kernel.cc 601 2010-10-03 19:55:29Z linjiao $
-
-// End of file 
+// End of file
