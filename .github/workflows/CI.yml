@@ -11,6 +11,7 @@ on:
       - master
   schedule:
     - cron: "50 14 * * *"
+
 jobs:
   build-and-test:
     runs-on: ${{ matrix.os }}
@@ -50,7 +51,6 @@ jobs:
         shell: pwsh
         run: |
           conda install -n root conda-build
-
       - name: checks
         shell: pwsh
         run: |
