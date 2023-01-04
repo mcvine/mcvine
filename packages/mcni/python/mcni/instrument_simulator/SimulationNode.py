@@ -56,7 +56,6 @@ class SimulationNode(Connectable):
             import traceback as tb
             raise NotImplementedError("component %s at %s rotated %s has not implemented method 'process'\nOriginal exception: %s" % (
                 self.component.name, position, orientation, tb.format_exc()))
-        
         self._outputs['neutrons'] = neutrons
         self._outputs['position'] = self.position
         self._outputs['orientation'] = self.orientation
@@ -66,7 +65,7 @@ class SimulationNode(Connectable):
     def _createProcessor(self, name, process, tracer):
         from mcni import journal
         logger = journal.logger(
-            'info', 'instrument', header='', footer='', format=' | %s')
+            'info', 'instrument', header='', footer='', format=' | {!s}')
         def _(neutrons):
             if tracer:
                 tracer(neutrons,  context=before(self))
@@ -81,9 +80,7 @@ class SimulationNode(Connectable):
             return neutrons
         return _
 
-
     pass # end of SimulationNode
-        
 
 
 class context(object):
@@ -92,14 +89,14 @@ class context(object):
         self.obj = obj
 
 
-class before(context): 
+class before(context):
     def identify(self, visitor): return visitor.onBefore(self)
 
-class processed(context): 
+class processed(context):
     def identify(self, visitor): return visitor.onProcessed(self)
 
 
 # version
 __id__ = "$Id$"
 
-# End of file 
+# End of file

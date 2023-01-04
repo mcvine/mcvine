@@ -12,7 +12,7 @@ requirements:
     - cmake
   host:
     - python                   {{ python }}
-    - setuptools               49
+    - setuptools
     - pyyaml
     - numpy                    {{ numpy }}
     - psutil
@@ -35,7 +35,7 @@ requirements:
     - {{ compiler('cxx') }} 7 # [linux]
     - cmake
     - python
-    - setuptools               49
+    - setuptools
     - pyyaml
     - numpy
     - psutil

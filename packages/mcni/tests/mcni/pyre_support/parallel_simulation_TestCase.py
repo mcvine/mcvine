@@ -19,7 +19,11 @@ class TestCase(unittest.TestCase):
     def test(self):
         'mcni.pyre_support: parallel simulation'
         from mcni.pyre_support.MpiApplication import mpi_launcher_choice as launcher
-        cmd = "python parallel_simulation_demoapp.py --%s.nodes=2" % launcher
+        cmd = ' '.join([
+            "python parallel_simulation_demoapp.py",
+            "--journal.debug.parallel_simulation_TestCase",
+            "--journal.info.parallel_simulation_TestCase",
+            "--%s.nodes=2" % launcher])
         import os
         if os.system(cmd):
             raise RuntimeError("%s failed" % cmd)
