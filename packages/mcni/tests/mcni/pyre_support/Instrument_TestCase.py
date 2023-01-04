@@ -229,6 +229,7 @@ def main():
 
 
 if __name__ == "__main__":
+    journal.info('instrument').activate()
     unittest.main()
     main()
     

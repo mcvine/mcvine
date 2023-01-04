@@ -139,7 +139,7 @@ class Instrument( AppInitMixin, CompositeNeutronComponentMixin, base, ParallelCo
         
         from mcni import journal
         logger = journal.logger(
-            'info', 'instrument', header='', footer='', format='-> %s')
+            'info', 'instrument', header='', footer='', format='-> {!s}')
         for i in range(n):
             logger("mpi node %s at loop %s" % (self.mpi.rank, i))
             neutrons = mcni.neutron_buffer( self.buffer_size )

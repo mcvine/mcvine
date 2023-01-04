@@ -47,6 +47,7 @@ class Instrument(base):
 
     def main(self):
         base.main(self)
+        self._info.log("running 'main'...")
 
         neutrons = {}
         

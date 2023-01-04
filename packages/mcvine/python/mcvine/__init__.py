@@ -40,7 +40,7 @@ import yaml, os
 conf_path = "mcvine.conf"
 config = dict()
 if os.path.exists(conf_path):
-    config = yaml.load(open(conf_path))
+    config = yaml.safe_load(open(conf_path))
 
 import logging.config
 logging_conf = config.get("logging")
