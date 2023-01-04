@@ -37,6 +37,9 @@ class TestCase(unittest.TestCase):
 
 
 
-if __name__ == "__main__": unittest.main()
+if __name__ == "__main__":
+    import journal
+    journal.info("instrument").activate()
+    unittest.main()
 
 # End of file
