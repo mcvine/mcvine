@@ -5,7 +5,10 @@
 import os, sys, yaml, warnings
 from mcni import run_ppsd, run_ppsd_in_parallel
 
-def run_mpi(script, workdir, ncount, nodes, buffer_size=int(1e6), overwrite_datafiles=False, **kwds):
+def run_mpi(
+        script, workdir, ncount, nodes,
+        buffer_size=int(1e6), overwrite_datafiles=False, log=None,
+        **kwds):
     """run a mcvine simulation script on one node. The script must define the instrument.
 Parameters:
 
@@ -53,19 +56,25 @@ An example script:
     cmd = build_launch_cmd(nodes, cmd)
     # if os.system(cmd):
     #     raise RuntimeError("%s failed" % cmd)
-    _exec(cmd)
+    if log:
+        log = open(log, 'wt')
+    _exec(cmd, log=log)
     ppsd = os.path.join(workdir, 'post-processing-scripts')
     run_ppsd_in_parallel(ppsd, nodes)
+    if log:
+        log.close()
     return
 
-def _exec(cmd, cwd=None):
+def _exec(cmd, cwd=None, log=None):
     import subprocess as sp, shlex
     import psutil
+    if log is None:
+        log = sys.stdout
     args = shlex.split(cmd)
-    with psutil.Popen(args, stdout=sp.PIPE, cwd=cwd) as process:
+    with psutil.Popen(args, stdout=sp.PIPE, stderr=sp.STDOUT, cwd=cwd) as process:
         for line in iter(process.stdout.readline, b''):
-            sys.stdout.write(line.decode())
-            sys.stdout.flush()
+            log.write(line.decode())
+            log.flush()
         process.wait()
         errcode = process.returncode
         # process.kill()
