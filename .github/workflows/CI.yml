@@ -11,6 +11,7 @@ on:
       - master
   schedule:
     - cron: "50 14 * * *"
+
 jobs:
   build-and-test:
     runs-on: ${{ matrix.os }}
@@ -22,7 +23,7 @@ jobs:
     steps:
       - name: install glut
         run: sudo apt-get update && sudo apt-get install -y procps freeglut3-dev libglu1-mesa unzip
-        
+
       - name: Check out source code
         uses: actions/checkout@v2
         with:
@@ -50,7 +51,6 @@ jobs:
         shell: pwsh
         run: |
           conda install -n root conda-build
-      
       - name: checks
         shell: pwsh
         run: |
