@@ -46,24 +46,22 @@ class TestCase(unittest.TestCase):
         component2 = detectorcomponent(
             'detectorsystem', instrumentxml, coordinate_system, tofparams, outfilename )
         instrument = mcni.instrument( [component1, component2] )
-        
+        # geometer
         geometer = mcni.geometer()
         geometer.register( component1, (0,0,0), (0,0,0) )
         geometer.register( component2, (0,0,0), (0,0,0) )
-
+        # neutrons
         neutrons = mcni.neutron_buffer( nevents )
-
         mcni.simulate( instrument, geometer, neutrons )
         return
 
-
     def test1a(self):
-        s = open(outfilename).read()
+        s = open(outfilename, 'rb').read()
         import struct
         fmt = 'IId'
-        t = struct.unpack( fmt * (len(s) / struct.calcsize( fmt )) , s )
+        t = struct.unpack( fmt * (len(s) // struct.calcsize( fmt )) , s )
         #print t
-        n = len(t)/len(fmt)
+        n = len(t)//len(fmt)
         print("number of cases where absorption happen: ", n)
         self.assertLessThan(abs(n-(nevents*absorption_weight)), 3*N.sqrt(n))
 
@@ -74,7 +72,6 @@ class TestCase(unittest.TestCase):
         self.assertTrue( p>nevents*0.9 and p<nevents )
         return
 
-    
     def assertLessThan(self, left, right):
         if left >= right:
             raise AssertionError("%s is not smaller than %s" % (left, right))
