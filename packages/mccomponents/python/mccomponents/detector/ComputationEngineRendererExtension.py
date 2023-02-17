@@ -125,8 +125,12 @@ class ComputationEngineRendererExtension:
             tubeLength, npixels, axisDirection, pixel0position)
         
         try:
-            mcweights = he3tube.mcweights
-        except AttributeError:
+            mcweights = he3tube.mcweights()
+            if isinstance(mcweights, str):
+                mcweights = [float(_) for _ in mcweights.split(',')]
+        except AttributeError as e:
+            import warnings
+            warngins.warn(f"Failed to obtain mcweights: {e}")
             from mccomponents.detector import default_mc_weights_for_detector_scatterer
             mcweights = default_mc_weights_for_detector_scatterer
             
@@ -137,7 +141,6 @@ class ComputationEngineRendererExtension:
             mcweights = mcweights )
         ret = scatterer.identify(self)
         return ret
-
     
     def onHe3TubeCopy(self, copy):
         he3tube = copy.reference()
