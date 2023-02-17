@@ -25,12 +25,14 @@ class He3Tube(base):
         base.__init__(self, shape)
         self._id = id
         self._pressure = pressure
-        self.mcweights = mcweights
+        self._mcweights = mcweights
         return
     
     def id(self): return self._id
     
     def pressure(self): return self._pressure
+
+    def mcweights(self): return self._mcweights
     
     def identify(self, visitor): return visitor.onHe3Tube(self)
     
