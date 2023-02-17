@@ -146,12 +146,14 @@ mccomponents::kernels::E_Q_Kernel<E_Q_functor_t, S_Q_functor_t>\
     Ef = Ei-E;
 
     if (Ef<0) {
+#ifdef DEBUG
       std::cerr << "E,Q,Ei,Ef="
-		<< E  << ", "
-		<< Q  << ", "
-		<< Ei << ", "
-		<< Ef << ", "
-		<< std::endl;
+                << E  << ", "
+                << Q  << ", "
+                << Ei << ", "
+                << Ef << ", "
+                << std::endl;
+#endif
       continue;
     }
 
@@ -164,12 +166,14 @@ mccomponents::kernels::E_Q_Kernel<E_Q_functor_t, S_Q_functor_t>\
     cost2 = cost*cost;
     if (cost2>1) {
       // Ei is too small and we have a problem
+#ifdef DEBUG
       std::cerr << "ki, kf, Q, cos(theta)="
-		<< ki  << ", "
-		<< kf  << ", "
-		<< Q  << ", "
-		<< cost << ", "
-		<< std::endl;
+                << ki  << ", "
+                << kf  << ", "
+                << Q  << ", "
+                << cost << ", "
+                << std::endl;
+#endif
       continue;
     }
     break;
