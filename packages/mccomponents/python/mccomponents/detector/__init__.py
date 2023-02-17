@@ -81,12 +81,10 @@ def he3tube_withpixels(
         shape = cylinder
     else:
         raise ValueError("direction must be x, y, or z: %s" % direction)
-    
     ret = he3tube(
         cylinder, id = id,
         pressure = pressure,
-        mcweights \
-        = mcweights
+        mcweights = mcweights
         )
 
     import numpy as N

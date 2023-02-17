@@ -132,14 +132,8 @@ def main():
     res = unittest.TextTestRunner(verbosity=2).run(alltests)
     import sys; sys.exit(not res.wasSuccessful())
 
-    
-    
 if __name__ == "__main__":
-    global interactive
     interactive = True
     main()
-    
-# version
-__id__ = "$Id$"
 
-# End of file 
+# End of file
