@@ -11,6 +11,7 @@ set ( SRC_FILES
   neutron/coords_transform.cc
   neutron/event_cevent_conversion.cc
   neutron/units_conversion.cc
+  neutron/to_mcpl.cc
   mcni/AbstractNeutronScatterer.cc
   )
 # ----------------------------------------
