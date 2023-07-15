@@ -13,10 +13,11 @@
 #include "mcni/neutron/State.h"
 #include "mcni/neutron/Spin.h"
 #include "mcni/neutron/units_conversion.h"
+#include "mcni/neutron/to_mcpl.h"
 
 
 void
-write_mcpl(const mcni::Neutron::EventBuffer &buffer, const char * filename)
+mcni::write_mcpl(const mcni::Neutron::EventBuffer &buffer, const char * filename)
 {
   mcpl_outfile_t f = mcpl_create_outfile(filename);
   mcpl_hdr_set_srcname(f, "mcvine");
