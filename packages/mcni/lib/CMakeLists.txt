@@ -32,6 +32,7 @@ include_directories(${EXPORT_HEADERS})
 include_directories(${DEPLOYMENT_PREFIX}/include)
 # compile shared lib
 add_library ( ${LIB_NAME} SHARED ${SRC_FILES} )
+target_link_libraries(${LIB_NAME} "mcpl")
 set_target_properties(${LIB_NAME} PROPERTIES LIBRARY_OUTPUT_DIRECTORY "${EXPORT_LIB}") # install to python directory
 
 # install shared lib
