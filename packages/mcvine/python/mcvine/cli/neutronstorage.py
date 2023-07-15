@@ -108,4 +108,12 @@ def from_mcpl(path, out, scale_by_number_of_packets):
     mcpl2mcv(path, out, scale_by_number_of_packets)
     return
 
+@neutronstorage.command()
+@click.argument("path")
+@click.option("--out", help='output path')
+def to_mcpl(path, out):
+    from mcni.neutron_storage.mcpl import mcv2mcpl
+    mcv2mcpl(path, out)
+    return
+
 # End of file
