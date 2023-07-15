@@ -1,3 +1,8 @@
+# -*- python -*-
+#
+# Jiao Lin <jiao.lin@gmail.com>
+#
+
 try:
     import mcpl
 except ImportError:
