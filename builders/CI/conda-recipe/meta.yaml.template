@@ -21,6 +21,7 @@ requirements:
     - openmpi                  {{ openmpi }}
     - gsl                      {{ gsl }}
     - boost                    {{ boost }}
+    - mcpl
     - pyre                     {{ pyre }}
     - danse.ins.dsm
     - danse.ins.numpyext       {{ numpyext }}
@@ -44,6 +45,7 @@ requirements:
     - openmpi
     - gsl
     - boost
+    - mcpl
     - pyre
     - danse.ins.dsm
     - danse.ins.numpyext

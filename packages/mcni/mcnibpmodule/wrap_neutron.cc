@@ -1,17 +1,6 @@
 // -*- C++ -*-
+// Jiao Lin <jiao.lin@gmail.com>
 //
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
-//                                   Jiao Lin
-//                      California Institute of Technology
-//                         (C) 2005 All Rights Reserved
-//
-// {LicenseText}
-//
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
-
-
 
 #include <sstream>
 #include <boost/python.hpp>
@@ -131,12 +120,7 @@ void wrap_neutron()
 
   def("abs2rel_batch", abs2rel_batch);
   def("rel2abs_batch", rel2abs_batch);
+  def("neutrons2mcpl", write_mcpl);
 }
 
-
-// version
-// $Id$
-
-// Generated automatically by CxxMill on Mon Apr 11 17:40:33 2005
-
-// End of file 
+// End of file

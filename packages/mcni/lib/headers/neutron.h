@@ -1,14 +1,5 @@
 // -*- C++ -*-
-//
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
-//                                   Jiao Lin
-//                      California Institute of Technology
-//                         (C) 2007 All Rights Reserved  
-//
-// {LicenseText}
-//
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// Jiao Lin <jiao.lin@gmail.com>
 //
 
 
@@ -19,11 +10,8 @@
 #include "neutron/Ceventbuffer.h"
 #include "neutron/coords_transform.h"
 #include "neutron/event_cevent_conversion.h"
+#include "neutron/to_mcpl.h"
 
 
-
-// version
-// $Id$
-
-// End of file 
+// End of file
 
