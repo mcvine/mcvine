@@ -24,12 +24,11 @@ mcni::write_mcpl(const mcni::Neutron::EventBuffer &buffer, const char * filename
 
   // By default, floating point numbers will be stored in single precision and
   // neither polarisation nor user-flags will be stored in the file. These
-  // defaults can be modified by one or more of the following calls (perhaps
-  // they could be options to your McStas component):
+  // defaults can be modified by one or more of the following calls
   //
   //    mcpl_enable_userflags(f);
   mcpl_enable_polarisation(f);
-  //    mcpl_enable_doubleprec(f);
+  mcpl_enable_doubleprec(f);
 
   // If all particles will be of the same type, optimise the file a bit by:
   //
@@ -76,7 +75,7 @@ mcni::write_mcpl(const mcni::Neutron::EventBuffer &buffer, const char * filename
     double cp = std::cos(spin.s2), sp = std::sin(spin.s2);
     particle->polarisation[0] = st*sp;
     particle->polarisation[1] = ct;
-    particle->polarisation[0] = st*cp;
+    particle->polarisation[2] = st*cp;
     //time in milliseconds:
     particle->time = event.time*1e3;
     //weight in unspecified units:
