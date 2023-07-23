@@ -1,7 +1,7 @@
 # To improve
 # * dependency items are declared at different places
-#   - This file 
-#     - DOCKER_PKGING_DEPS_DEB: deb pkgs needed in building and installation 
+#   - This file
+#     - DOCKER_PKGING_DEPS_DEB: deb pkgs needed in building and installation
 #     - DOCKER_PKGING_DEPS_RPM: rpm pkgs needed in building and installation. should be the same as DOCKER_PKGING_DEPS_DEB except the name might be somewhat different. for example, numpy is called python-numpy in ubuntu, but just numpy in fedora
 #     - CPACK_DEBIAN_PACKAGE_DEPENDS: deb pkgs needed during installation only
 #   - File rpm.spec.in:
@@ -25,7 +25,7 @@
 # $ anaconda upload /home/lj7/anaconda2/conda-bld/linux-64/mcvine-1.0.1-py27_0.tar.bz2
 
 set(PROJECT_NAME "mcvine")
-set(VERSION "1.4.7")
+set(VERSION "1.4.8")
 set(AUTHOR "Jiao Lin")
 set(AUTHOR_EMAILE "jiao.lin@gmail.com")
 set(VENDOR "DANSE")
@@ -35,7 +35,7 @@ set(RPM_APP_GROUP "Development/Tools")
 set(GITHUB_URL "https://github.com/mcvine/mcvine")
 # can change this to a branch or a tag, for example
 # set(GIT_RELEASE_TAG ${VERSION})
-set(GIT_RELEASE_TAG "v1.4.7")
+set(GIT_RELEASE_TAG "v1.4.8")
 set (HOMEPAGE ${GITHUB_URL})
 
 # Is this still needed?
