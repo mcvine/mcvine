@@ -4,17 +4,17 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Simulation of ARCS experiments &#8212; mcvine 1.0 documentation</title>
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/classic.css" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
     
-    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" /> 
@@ -85,7 +85,7 @@
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="Go" />
     </form>
     </div>
@@ -99,7 +99,7 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="simulation-of-arcs-experiments">
+  <section id="simulation-of-arcs-experiments">
 <span id="tutorials-arcs"></span><h1>Simulation of ARCS experiments<a class="headerlink" href="#simulation-of-arcs-experiments" title="Permalink to this headline">¶</a></h1>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -113,7 +113,7 @@ if you need to customize the simulations in the following tutorials.</p>
 <p>Some more examples of ARCS simulations are available at
 <a class="reference external" href="https://github.com/mcvine/resources/tree/master/instruments/ARCS/simulations">mcvine resources/ARCS simulations</a>.</p>
 </div>
-<div class="section" id="tutorial-full-simulation-of-an-experiment-of-a-polycrystalline-vanadium-sample">
+<section id="tutorial-full-simulation-of-an-experiment-of-a-polycrystalline-vanadium-sample">
 <h2>Tutorial: full simulation of an experiment of a polycrystalline Vanadium sample<a class="headerlink" href="#tutorial-full-simulation-of-an-experiment-of-a-polycrystalline-vanadium-sample" title="Permalink to this headline">¶</a></h2>
 <p>This is a tutorial of a full simulation of an ARCS experiment
 with a polycrystalline vanadium sample.</p>
@@ -132,7 +132,7 @@ All you need to do is</p>
 <li><p><a class="reference internal" href="#tutorial-arcs-powderv-beam"><span class="std std-ref">Run the beam simulation</span></a></p></li>
 <li><p><a class="reference internal" href="#tutorial-arcs-powderv-sample"><span class="std std-ref">Run the sample scattering, neutron detection, and reduction using one make command</span></a></p></li>
 </ol>
-<div class="section" id="create-workflow">
+<section id="create-workflow">
 <span id="tutorial-arcs-powderv-create-workflow"></span><h3>1. Create workflow<a class="headerlink" href="#create-workflow" title="Permalink to this headline">¶</a></h3>
 <p>Run</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ mcvine workflow powder --instrument=ARCS --sample=V --workdir=mysim
@@ -142,8 +142,8 @@ All you need to do is</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cd mysim
 </pre></div>
 </div>
-</div>
-<div class="section" id="incident-beam-at-sample">
+</section>
+<section id="incident-beam-at-sample">
 <span id="tutorial-arcs-powderv-beam"></span><h3>2. Incident beam at sample<a class="headerlink" href="#incident-beam-at-sample" title="Permalink to this headline">¶</a></h3>
 <p>In this step we simulate the ARCS instrument from moderator
 down to the sample position:</p>
@@ -181,8 +181,8 @@ and then move back to the workflow directory:</p>
 <li><p>Output: out/mon2-itof-focused.h5 – focused monitor 2 histogram</p></li>
 </ul>
 </div>
-</div>
-<div class="section" id="sample-scattering-neutron-detection-and-reduction">
+</section>
+<section id="sample-scattering-neutron-detection-and-reduction">
 <span id="tutorial-arcs-powderv-sample"></span><h3>3. Sample scattering, neutron detection, and reduction<a class="headerlink" href="#sample-scattering-neutron-detection-and-reduction" title="Permalink to this headline">¶</a></h3>
 <p>These three steps are combined together by the Makefile in this workflow
 directory. All you need to do is to execute:</p>
@@ -194,7 +194,7 @@ Each step will generate a log file. For example, the scattering step
 will generate a log file “log.scatter”.
 They may be useful in debugging the simulation.
 If any of the steps failed, the workflow will stop.</p>
-<div class="section" id="inputs">
+<section id="inputs">
 <h4>Inputs<a class="headerlink" href="#inputs" title="Permalink to this headline">¶</a></h4>
 <p>The main input for the sample scattering step is the “sampleassembly”
 directory, which is explained <a class="reference internal" href="../SampleAssembly.html#sampleassembly"><span class="std std-ref">here</span></a>.</p>
@@ -215,18 +215,18 @@ the script “reduce2iqe”:</p>
 <ul class="simple">
 <li><p>–qaxis: Q axis specification (min, max, step)</p></li>
 </ul>
-</div>
-<div class="section" id="outputs">
+</section>
+<section id="outputs">
 <h4>Outputs<a class="headerlink" href="#outputs" title="Permalink to this headline">¶</a></h4>
 <p>The main output of this simulation is the I(Q,E) histogram, iqe.h5.
 To plot the result:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ make plot-iqe
 </pre></div>
 </div>
-</div>
-</div>
-</div>
-<div class="section" id="tutorial-simulation-of-arcs-beam">
+</section>
+</section>
+</section>
+<section id="tutorial-simulation-of-arcs-beam">
 <span id="tut-arcs-beam"></span><h2>Tutorial: Simulation of ARCS beam<a class="headerlink" href="#tutorial-simulation-of-arcs-beam" title="Permalink to this headline">¶</a></h2>
 <p>Here we simulate the ARCS instrument from moderator
 down to the sample position.</p>
@@ -250,16 +250,16 @@ $ cd mod2sample
 <p>Output: out/neutrons</p>
 <p>Output: out/mon1-itof-focused.h5</p>
 <p>Output: out/mon2-itof-focused.h5</p>
-<div class="section" id="advanced-topic-customize-arcs-simulation">
+<section id="advanced-topic-customize-arcs-simulation">
 <h3>Advanced topic - customize ARCS simulation<a class="headerlink" href="#advanced-topic-customize-arcs-simulation" title="Permalink to this headline">¶</a></h3>
 <p>You may need to choose different simulation components
 to achieve a better match with the experimental data.</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://github.com/mcvine/resources/tree/master/instruments/ARCS/simulations/beam/686.62meV-FC_700-0.5-ASTAnalyticSNSMod-McStasFermiChopper">Super-fine Fermi chopper example</a></p></li>
 </ul>
-</div>
-</div>
-<div class="section" id="command-line-interface-for-arcs">
+</section>
+</section>
+<section id="command-line-interface-for-arcs">
 <span id="arcscmds"></span><h2>Command line interface for ARCS<a class="headerlink" href="#command-line-interface-for-arcs" title="Permalink to this headline">¶</a></h2>
 <p>To find out available simulation applications for the ARCS spectrometer:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ mcvine instruments arcs
@@ -269,8 +269,8 @@ to achieve a better match with the experimental data.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ eval `mcvine bash aliases arcs`
 </pre></div>
 </div>
-</div>
-</div>
+</section>
+</section>
 
 
             <div class="clearer"></div>
@@ -294,7 +294,7 @@ to achieve a better match with the experimental data.</p>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2006-2016, Jiao Lin, Michael Aivazis, and Brent Fultz.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.4.3.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.2.
     </div>
   </body>
 </html>

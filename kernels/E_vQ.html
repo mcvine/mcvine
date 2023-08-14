@@ -4,17 +4,18 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Analytical \(E(\vec{Q})\) &#8212; mcvine 1.0 documentation</title>
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/classic.css" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
     
-    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" /> 
@@ -63,7 +64,7 @@
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="Go" />
     </form>
     </div>
@@ -77,7 +78,7 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="analytical-e-vec-q">
+  <section id="analytical-e-vec-q">
 <span id="kernel-e-vq"></span><h1>Analytical <span class="math notranslate nohighlight">\(E(\vec{Q})\)</span><a class="headerlink" href="#analytical-e-vec-q" title="Permalink to this headline">¶</a></h1>
 <p>This kernel scatters neutrons according to a
 <span class="math notranslate nohighlight">\(S(\vec{Q},E)=S(\vec{Q}) \delta(E-E(\vec{Q}))\)</span> input.
@@ -104,7 +105,7 @@ Here is an example:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">E_Q</span><span class="o">=</span><span class="s2">&quot;pi:=3.1415926535897932; twopi:=2*pi; a:=7; b:=5; c:=5.5; beta:=96/180.*pi;  h:=a*Qz/twopi; k:=b*Qx/twopi; l:=c*(cos(beta)*Qz+sin(beta)*Qy)/twopi; lmod2:=l%2; lmod2p:=if(lmod2 &lt; 0, lmod2+2, lmod2); cospih2:=cos(h/2*pi)^2; cospil2:=cos(l/2*pi)^2; cospik2:=cos(k*pi)^2; dkmod1:=abs(k-int(k)); (40^2*(1-cospih2*cospik2) + 60^2*(1-cospil2*cospik2))^(1./2)*exp(-dkmod1*0.15) + if(lmod2p&gt;0.5 &amp; lmod2p&lt;1.5, 13.5, 0)&quot;</span>
 </pre></div>
 </div>
-</div>
+</section>
 
 
             <div class="clearer"></div>
@@ -128,7 +129,7 @@ Here is an example:</p>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2006-2016, Jiao Lin, Michael Aivazis, and Brent Fultz.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.4.3.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.2.
     </div>
   </body>
 </html>

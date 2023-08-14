@@ -4,17 +4,18 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Fundamentals &#8212; mcvine 1.0 documentation</title>
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/classic.css" />
     <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
     
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" /> 
@@ -94,7 +95,7 @@
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="Go" />
     </form>
     </div>
@@ -108,11 +109,11 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="fundamentals">
+  <section id="fundamentals">
 <span id="id1"></span><h1>Fundamentals<a class="headerlink" href="#fundamentals" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="instrument">
+<section id="instrument">
 <span id="fundamentals-instrument"></span><h2>Instrument<a class="headerlink" href="#instrument" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="creat-instrument-simulation-applicatioin">
+<section id="creat-instrument-simulation-applicatioin">
 <h3>Creat instrument simulation applicatioin<a class="headerlink" href="#creat-instrument-simulation-applicatioin" title="Permalink to this headline">¶</a></h3>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -128,8 +129,8 @@
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ mcvine-create-instrument-simulation-application  --name=&lt;name&gt; --components=&lt;list of components&gt;
 </pre></div>
 </div>
-</div>
-<div class="section" id="positioning-of-components">
+</section>
+<section id="positioning-of-components">
 <span id="fundamentals-instrument-positioning-of-components"></span><h3>Positioning of Components<a class="headerlink" href="#positioning-of-components" title="Permalink to this headline">¶</a></h3>
 <p>Positioning of components is done through the “geometer”:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">--</span><span class="n">geometer</span><span class="o">.&lt;</span><span class="n">component</span><span class="o">&gt;=&lt;</span><span class="n">position</span><span class="o">&gt;</span><span class="p">,</span><span class="o">&lt;</span><span class="n">orientation</span><span class="o">&gt;</span>
@@ -159,7 +160,7 @@ as the absolute coordinate system.</p>
 <li><p>orientation: degrees</p></li>
 </ul>
 </div>
-<div class="section" id="relative-coordinates">
+<section id="relative-coordinates">
 <h4>Relative coordinates<a class="headerlink" href="#relative-coordinates" title="Permalink to this headline">¶</a></h4>
 <p>A coomponent’s position and orientation can be specified as relative to another
 component. For example</p>
@@ -172,25 +173,25 @@ system attached to the “source” component.</p>
 <p>The reference component is specified by its name.</p>
 <p>You can also use the keyword “previous” to mean the reference
 component is the one just before this component in the pipeline.</p>
-</div>
-</div>
-<div class="section" id="options-of-instrument-simulation-app">
+</section>
+</section>
+<section id="options-of-instrument-simulation-app">
 <h3>Options of instrument simulation app<a class="headerlink" href="#options-of-instrument-simulation-app" title="Permalink to this headline">¶</a></h3>
-<div class="section" id="scattering">
+<section id="scattering">
 <h4>Scattering<a class="headerlink" href="#scattering" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li><p>–multiple-scattering: indicates whether multiple scattering is on. This option
 is only useful for the components that support this feature.</p></li>
 </ul>
-</div>
-<div class="section" id="monte-carlo">
+</section>
+<section id="monte-carlo">
 <h4>Monte Carlo<a class="headerlink" href="#monte-carlo" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li><p>–ncount=&lt;n&gt;: number of simulation runs</p></li>
 <li><p>–buffer_size=&lt;n&gt;: (optional) number of neutrons buffered in memory. By default a value will be picked for you depending on ncount and memory size.</p></li>
 </ul>
-</div>
-<div class="section" id="outputs">
+</section>
+<section id="outputs">
 <h4>Outputs<a class="headerlink" href="#outputs" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li><p>–overwrite-datafiles:
@@ -198,8 +199,8 @@ If on, existing outputs will be overwritten.</p></li>
 <li><p>–output-dir=&lt;dir&gt;:
 The output directory.</p></li>
 </ul>
-</div>
-<div class="section" id="miscellanesous">
+</section>
+<section id="miscellanesous">
 <h4>Miscellanesous<a class="headerlink" href="#miscellanesous" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li><p>–journal.info.instrument: as simulation progress, print out information
@@ -219,10 +220,10 @@ Select the number of nodes to parallely run the simulation.
 &lt;n&gt; is an integer.
 This option is only valid if mpi binding of mcvine is available.</p></li>
 </ul>
-</div>
-</div>
-</div>
-<div class="section" id="using-tracer-to-debug">
+</section>
+</section>
+</section>
+<section id="using-tracer-to-debug">
 <span id="fundamentals-tracer"></span><h2>Using tracer to debug<a class="headerlink" href="#using-tracer-to-debug" title="Permalink to this headline">¶</a></h2>
 <p>To see how neutrons move through the components,
 use the “tracer” facility.</p>
@@ -233,13 +234,13 @@ try the following:</p>
 </div>
 <p>The simulation will print out the neutrons before they enter each
 component and after they exit each component.</p>
-</div>
-<div class="section" id="simulated-intensities">
+</section>
+<section id="simulated-intensities">
 <span id="fundamentals-simulated-intensities"></span><h2>Simulated intensities<a class="headerlink" href="#simulated-intensities" title="Permalink to this headline">¶</a></h2>
 <p>The simulated intensities at monitors are normalized by “ncount”,
 the number of Monte Carlo runs.</p>
-</div>
-<div class="section" id="list-of-available-neutron-components">
+</section>
+<section id="list-of-available-neutron-components">
 <span id="fundamentals-list-of-components"></span><h2>List of available neutron components<a class="headerlink" href="#list-of-available-neutron-components" title="Permalink to this headline">¶</a></h2>
 <p>To list all components:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ mcvine component list
@@ -249,8 +250,8 @@ the number of Monte Carlo runs.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ mcvine component list --category=monitors
 </pre></div>
 </div>
-</div>
-<div class="section" id="show-component-information">
+</section>
+<section id="show-component-information">
 <span id="fundamentals-component-info"></span><h2>Show component information<a class="headerlink" href="#show-component-information" title="Permalink to this headline">¶</a></h2>
 <p>To find out more information about a component, run</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ mcvine component info &lt;component-type&gt;
@@ -260,10 +261,10 @@ the number of Monte Carlo runs.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ mcvine component info E_monitor
 </pre></div>
 </div>
-</div>
-<div class="section" id="error-bar-of-simulated-intensities">
+</section>
+<section id="error-bar-of-simulated-intensities">
 <h2>Error bar of simulated intensities<a class="headerlink" href="#error-bar-of-simulated-intensities" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="basic-treatment">
+<section id="basic-treatment">
 <span id="fundamentals-errorbar-basic"></span><h3>Basic treatment<a class="headerlink" href="#basic-treatment" title="Permalink to this headline">¶</a></h3>
 <p>Here we examine the variance, or <span class="math notranslate nohighlight">\(\sigma^2\)</span> of the simulated
 intensities at virtual monitors.</p>
@@ -329,8 +330,8 @@ in which most of <span class="math notranslate nohighlight">\(p_i\)</span> have 
 <p>or</p>
 <div class="math notranslate nohighlight">
 \[Err^2(I) = \sum{p_i^2}\]</div>
-</div>
-<div class="section" id="error-propagation">
+</section>
+<section id="error-propagation">
 <span id="fundamentals-errorbar-errorprop"></span><h3>Error propagation<a class="headerlink" href="#error-propagation" title="Permalink to this headline">¶</a></h3>
 <p>In the above discussion we assumed that the probablities
 <span class="math notranslate nohighlight">\({p_i}\)</span> are computed precisely and have no errors
@@ -351,9 +352,9 @@ and the error discussed above in <a class="reference internal" href="#fundamenta
 <p>or</p>
 <div class="math notranslate nohighlight">
 \[Err^2(I) = \Delta_{intrinsic}^2 \times I^2  + \sum{p_i^2}\]</div>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
 
             <div class="clearer"></div>
@@ -377,7 +378,7 @@ and the error discussed above in <a class="reference internal" href="#fundamenta
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2006-2016, Jiao Lin, Michael Aivazis, and Brent Fultz.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.4.3.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.2.
     </div>
   </body>
 </html>

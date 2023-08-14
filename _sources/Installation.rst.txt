@@ -32,6 +32,12 @@ Optional dependencies
 If we want to use MCPL data files from mcstas simulations, `mcpl` python
 package need to be installed ($ pip install mcpl).
 
+Other packages that may be useful
+
+* lmfit
+* tqdm
+* awscli
+
 
 Install the latest unstable build
 ---------------------------------

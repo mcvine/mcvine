@@ -4,17 +4,18 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Kernel implementation &#8212; mcvine 1.0 documentation</title>
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/classic.css" />
     <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
     
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" /> 
@@ -77,7 +78,7 @@
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="Go" />
     </form>
     </div>
@@ -91,9 +92,9 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="kernel-implementation">
+  <section id="kernel-implementation">
 <span id="id1"></span><h1>Kernel implementation<a class="headerlink" href="#kernel-implementation" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="basics">
+<section id="basics">
 <h2>Basics<a class="headerlink" href="#basics" title="Permalink to this headline">¶</a></h2>
 <p>Kernel represents a kind of scattering mechanism for a homogeneous
 neutron scatterer.</p>
@@ -124,8 +125,8 @@ It involves Monte Carlo selection and the random variables
 are usually not simply <span class="math notranslate nohighlight">\(\textbf Q\)</span> and <span class="math notranslate nohighlight">\(E\)</span>.</p>
 <p>In the following, typical implementations for some
 kernels are documented.</p>
-</div>
-<div class="section" id="isotropic-kernel">
+</section>
+<section id="isotropic-kernel">
 <h2>Isotropic kernel<a class="headerlink" href="#isotropic-kernel" title="Permalink to this headline">¶</a></h2>
 <p>Isotropic kernel can be useful for testing purpose.
 And it could be a good approximation for incoherent
@@ -133,8 +134,8 @@ scattering at low temperature.</p>
 <p>The implementation is easy: just generate
 randomly and uniformly neutrons in all <span class="math notranslate nohighlight">\(4\pi\)</span>
 solid angle.</p>
-</div>
-<div class="section" id="s-q-e-kernel">
+</section>
+<section id="s-q-e-kernel">
 <h2>S(Q,E) kernel<a class="headerlink" href="#s-q-e-kernel" title="Permalink to this headline">¶</a></h2>
 <p>This kernel works with scalar Q instead of <span class="math notranslate nohighlight">\(\textbf Q\)</span>
 vector, meaning it is most useful for powder studies.</p>
@@ -173,8 +174,8 @@ S(Q,E) \;
 = N \sigma \;
 S(Q,E) \;
 \frac{Q}{2 k^2_i}\]</div>
-</div>
-<div class="section" id="coherent-inelastic-phonon-kernel-for-powder-sample">
+</section>
+<section id="coherent-inelastic-phonon-kernel-for-powder-sample">
 <h2>Coherent inelastic phonon kernel for powder sample<a class="headerlink" href="#coherent-inelastic-phonon-kernel-for-powder-sample" title="Permalink to this headline">¶</a></h2>
 <p>From Squire, the double differential cross section
 for coherent inelastic phonon scattering that excites
@@ -268,8 +269,8 @@ e^{-2W}
 \frac{\hbar^2 ({\textbf Q}\cdot {\textbf e})^2}{2M \hbar\omega}
 \langle n + 1 \rangle
 \frac{V_{r,accessible}}{2 k_i k_f Q}\]</div>
-</div>
-<div class="section" id="one-phonon-coherent-inelastic-scattering-single-crystal">
+</section>
+<section id="one-phonon-coherent-inelastic-scattering-single-crystal">
 <h2>One-phonon coherent inelastic scattering, single crystal<a class="headerlink" href="#one-phonon-coherent-inelastic-scattering-single-crystal" title="Permalink to this headline">¶</a></h2>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -357,8 +358,8 @@ The incoherent scattering cross section is <span class="math notranslate nohighl
 <div class="math notranslate nohighlight">
 \[\sigma_a(v) = \sigma_a(2200m/s)\frac{2200}{v}\]</div>
 <p>is the absorption cross section.</p>
-</div>
-<div class="section" id="scattering-from-single-crystal-analytical-dispersion-function">
+</section>
+<section id="scattering-from-single-crystal-analytical-dispersion-function">
 <h2>Scattering from single crystal analytical dispersion function<a class="headerlink" href="#scattering-from-single-crystal-analytical-dispersion-function" title="Permalink to this headline">¶</a></h2>
 <div class="math notranslate nohighlight">
 \[\frac{d^2 \sigma}{d\Omega dE_f} =
@@ -386,8 +387,8 @@ We seek to transform the integration of delta function:</p>
 <p>or</p>
 <div class="math notranslate nohighlight">
 \[\int \delta(E-E({\textbf Q})) dE_f = \left| \frac{d f}{dk_f} \right|^{-1} \; \frac{dE_f}{dk_f}\]</div>
-</div>
-<div class="section" id="advanced-topics">
+</section>
+<section id="advanced-topics">
 <h2>Advanced topics<a class="headerlink" href="#advanced-topics" title="Permalink to this headline">¶</a></h2>
 <p>Method:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">bool</span> <span class="n">total_scattering</span><span class="p">();</span>
@@ -398,8 +399,8 @@ Override this method in a kernel to return true
 if the kernel has a strongly energy-dependent
 total scattering cross section, such as, in the
 case of powder diffraction.</p>
-</div>
-</div>
+</section>
+</section>
 
 
             <div class="clearer"></div>
@@ -423,7 +424,7 @@ case of powder diffraction.</p>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2006-2016, Jiao Lin, Michael Aivazis, and Brent Fultz.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.4.3.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.2.
     </div>
   </body>
 </html>

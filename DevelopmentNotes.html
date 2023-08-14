@@ -4,17 +4,17 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Development notes &#8212; mcvine 1.0 documentation</title>
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/classic.css" />
     <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
     
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" /> 
@@ -95,7 +95,7 @@
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="Go" />
     </form>
     </div>
@@ -109,9 +109,9 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="development-notes">
+  <section id="development-notes">
 <span id="devnotes"></span><h1>Development notes<a class="headerlink" href="#development-notes" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="workflow">
+<section id="workflow">
 <h2>Workflow<a class="headerlink" href="#workflow" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>Code: <a class="reference external" href="http://github.com/mcvine/workflow">http://github.com/mcvine/workflow</a></p></li>
@@ -121,8 +121,8 @@
 - <a class="reference external" href="https://github.com/mcvine/workflow/tree/master/notebook-examples">https://github.com/mcvine/workflow/tree/master/notebook-examples</a>
 - <a class="reference external" href="https://github.com/mcvine/training/">https://github.com/mcvine/training/</a>: subdirs such as ARCS</p></li>
 </ul>
-</div>
-<div class="section" id="instrument-simulation-app">
+</section>
+<section id="instrument-simulation-app">
 <h2>Instrument Simulation App<a class="headerlink" href="#instrument-simulation-app" title="Permalink to this headline">¶</a></h2>
 <p>An instrument simulation app is a pyre application.
 Its inventory contains</p>
@@ -140,8 +140,8 @@ components (<a class="reference external" href="https://github.com/mcvine/mcvine
 process than the process that executes the “run” method.
 This is achieved in <a class="reference external" href="https://github.com/mcvine/mcvine/blob/7cd386bbf545c7bbe8d0259340ac8fa247bfa88d/packages/mcvine/python/mcvine/applications/InstrumentBuilder.py#L27">InstrumentBuilder</a>.
 Note: use environment variable DEBUG_INSTRUMENT_APP_PROXY to debug this mechanism.</p>
-</div>
-<div class="section" id="sns-instruments">
+</section>
+<section id="sns-instruments">
 <h2>SNS instruments<a class="headerlink" href="#sns-instruments" title="Permalink to this headline">¶</a></h2>
 <p>They are in <a class="reference external" href="https://github.com/mcvine/instruments/">https://github.com/mcvine/instruments/</a>.</p>
 <p>There are now ARCS, SEQUOIA, and HYSPEC.</p>
@@ -158,15 +158,15 @@ ARCS and SEQUOIA has its own script for that, but they are really
 not different form each other.</p>
 <p>Generic beam analyzer script: mcvine_analyze_beam
 Make sure to set position of source and monitor correctly.</p>
-<div class="section" id="nexus">
+<section id="nexus">
 <h3>Nexus<a class="headerlink" href="#nexus" title="Permalink to this headline">¶</a></h3>
 <p>Simulation nexus outputs are created using templates derived from experimental
 nexus files.</p>
 <p>ARCS: arcs-neutrons2nxs
 SEQUOIA: sequoia-neutrons2nxs
 HYSPEC and others: mcvine-sns-neutrons2nxs (instruments/SNS/bin)</p>
-</div>
-<div class="section" id="add-an-instrument">
+</section>
+<section id="add-an-instrument">
 <h3>Add an instrument<a class="headerlink" href="#add-an-instrument" title="Permalink to this headline">¶</a></h3>
 <p>This is a quick guide. not very well organized.</p>
 <ul class="simple">
@@ -174,7 +174,7 @@ HYSPEC and others: mcvine-sns-neutrons2nxs (instruments/SNS/bin)</p>
 <ul>
 <li><p>modify mcstas instrument file</p>
 <ul>
-<li><p>convert to unix format (“rn”-&gt;”n”) using dos2unix</p></li>
+<li><p>convert to unix format (”rn”-&gt;”n”) using dos2unix</p></li>
 <li><p>make sure that in the “DEFINE INSTRUMENT” line all parameters have default values</p></li>
 <li><p>if c code snippets exist in the “DECLARE” or “INITIALIZE”, move all of them
 to “INITIALIZE” section (python vars don’t need declaration),
@@ -203,8 +203,8 @@ and <a class="reference external" href="https://github.com/mcvine/instruments/tr
 </ul>
 </li>
 </ul>
-</div>
-<div class="section" id="requirements-of-instrument-specific-cli-by-dgs-workflow">
+</section>
+<section id="requirements-of-instrument-specific-cli-by-dgs-workflow">
 <h3>Requirements of instrument-specific CLI by DGS workflow<a class="headerlink" href="#requirements-of-instrument-specific-cli-by-dgs-workflow" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>neutrons2nxs: convert scattered neutron to nxs file.</p>
@@ -216,9 +216,9 @@ and <a class="reference external" href="https://github.com/mcvine/instruments/tr
 <li><p>nxs reduce: reduce nxs file to iqe.nxs
 - cmd: mcvine instruments ${INSTRUMENT} nxs reduce EVENTMODE.NXS –qaxis=0 15 0.1 –tof2E</p></li>
 </ul>
-</div>
-</div>
-<div class="section" id="command-line-interface">
+</section>
+</section>
+<section id="command-line-interface">
 <h2>Command line interface<a class="headerlink" href="#command-line-interface" title="Permalink to this headline">¶</a></h2>
 <p>The main command:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ mcvine
@@ -228,12 +228,12 @@ and <a class="reference external" href="https://github.com/mcvine/instruments/tr
 The main command is at /packages/mcvine/python/mcvine/cli.
 sub-cmds are imported from various sub-packages such as mcstas2
 and mcvine.instruments.</p>
-<div class="section" id="provenance">
+<section id="provenance">
 <h3>Provenance<a class="headerlink" href="#provenance" title="Permalink to this headline">¶</a></h3>
 <p>is achieved using “save_metadata” decorator.
 See mcvine.cli._provenance for implementation details.</p>
-</div>
-<div class="section" id="pyre-commands">
+</section>
+<section id="pyre-commands">
 <h3>pyre commands<a class="headerlink" href="#pyre-commands" title="Permalink to this headline">¶</a></h3>
 <p>Pyre applications are built using pyre machineries and they
 have configurable components.</p>
@@ -242,11 +242,11 @@ The design of pyre-super-app is not optimal but it serves
 the purpose of simplification of command line interface
 for some applications with a lot of components and
 parameters to set.</p>
-</div>
-</div>
-<div class="section" id="infrastructure">
+</section>
+</section>
+<section id="infrastructure">
 <h2>Infrastructure<a class="headerlink" href="#infrastructure" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="resources">
+<section id="resources">
 <h3>Resources<a class="headerlink" href="#resources" title="Permalink to this headline">¶</a></h3>
 <p>Organization:</p>
 <ul class="simple">
@@ -272,8 +272,8 @@ parameters to set.</p>
 </li>
 </ul>
 <p>McStas component library: its path is set by env var $MCSTAS_COMPONENT_LIBDIR.</p>
-</div>
-<div class="section" id="logging">
+</section>
+<section id="logging">
 <h3>Logging<a class="headerlink" href="#logging" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>Use both pyre journal and python logging</p></li>
@@ -284,8 +284,8 @@ parameters to set.</p>
 </ul>
 </li>
 </ul>
-</div>
-<div class="section" id="documentation">
+</section>
+<section id="documentation">
 <h3>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>github:mcvine/mcvine.org
@@ -295,9 +295,9 @@ Documentation for all releases</p></li>
 <li><p>github:mcvine/mcvine:gh-pages
 Documentation for the development version</p></li>
 </ul>
-</div>
-</div>
-<div class="section" id="geometry">
+</section>
+</section>
+<section id="geometry">
 <h2>Geometry<a class="headerlink" href="#geometry" title="Permalink to this headline">¶</a></h2>
 <p>In sampleassembly.xml, geometry information is registered into a registry.
 Later when needed, positional and orientational
@@ -309,7 +309,7 @@ calls:</p>
 </pre></div>
 </div>
 <p>request the position and orientation of the scatterer.</p>
-<div class="section" id="rotations">
+<section id="rotations">
 <span id="id1"></span><h3>Rotations<a class="headerlink" href="#rotations" title="Permalink to this headline">¶</a></h3>
 <p>A rotation can be specified in three ways (see instrument.geometry.operations).</p>
 <ul class="simple">
@@ -317,8 +317,8 @@ calls:</p>
 <li><p>Rotation(body, beam=, transversal=, vertical=, angle=): similar to Rotation(body, vector, angle); the vector is specified by (beam, transversal, vertical)</p></li>
 <li><p>Rotation(body, euler_angles): see below on Euler angles</p></li>
 </ul>
-</div>
-<div class="section" id="euler-angles">
+</section>
+<section id="euler-angles">
 <h3>Euler angles<a class="headerlink" href="#euler-angles" title="Permalink to this headline">¶</a></h3>
 <p>The rotation or orientation is actually represented as Tait-Bryan angles (xy’z”)
 at the python layer, before being transformed to rotation matrix to be passed
@@ -328,8 +328,8 @@ around x, y’, and z” axes.
 See <a class="reference external" href="https://github.com/mcvine/mcvine/blob/48c288e9269a05304411cc62e4a6f53875df9204/packages/mcni/python/mcni/neutron_coordinates_transformers/mcstasRotations.py">its implementation</a> for details.
 One thing to note is that three intrinsic rotations is equivalent to reversed
 three extrinsic rotations. For our case, it would be equivalent to zyx rotations.</p>
-</div>
-<div class="section" id="xml-parsing">
+</section>
+<section id="xml-parsing">
 <h3>xml parsing<a class="headerlink" href="#xml-parsing" title="Permalink to this headline">¶</a></h3>
 <p>is done in several layers.</p>
 <ul class="simple">
@@ -346,9 +346,9 @@ For example:</p>
 <li><p>mccomposite.ScattererComputationEngineRenderer</p></li>
 <li><p>mccomposite.coordinate_systems.McStasCSAdaptor_for_ShapeComputationEngineRenderer</p></li>
 </ul>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
 
             <div class="clearer"></div>
@@ -372,7 +372,7 @@ For example:</p>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2006-2016, Jiao Lin, Michael Aivazis, and Brent Fultz.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.4.3.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.2.
     </div>
   </body>
 </html>

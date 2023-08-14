@@ -4,17 +4,17 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Command line interface &#8212; mcvine 1.0 documentation</title>
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/classic.css" />
     <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
     
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" /> 
@@ -81,7 +81,7 @@
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="Go" />
     </form>
     </div>
@@ -95,9 +95,9 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="command-line-interface">
+  <section id="command-line-interface">
 <span id="cli"></span><h1>Command line interface<a class="headerlink" href="#command-line-interface" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="mcvine">
+<section id="mcvine">
 <h2>mcvine<a class="headerlink" href="#mcvine" title="Permalink to this headline">¶</a></h2>
 <p>The main command line interface (CLI) of the MCViNE package is the command “mcvine”.
 Execute:</p>
@@ -110,8 +110,8 @@ Execute:</p>
 </pre></div>
 </div>
 <p>prints out the version of mcvine being used.</p>
-</div>
-<div class="section" id="bash">
+</section>
+<section id="bash">
 <span id="cli-bash"></span><h2>bash<a class="headerlink" href="#bash" title="Permalink to this headline">¶</a></h2>
 <p>If you are using bash, you can use the following command to add bash auto-complete
 support:</p>
@@ -125,15 +125,15 @@ support:</p>
 <p>will create aliases for commands related to the ARCS spectrometer, which
 include a series of aliases starting with prefix “arcs”. For example,
 “arcs_beam” is an alias of “mcvine instruments arcs beam”.</p>
-</div>
-<div class="section" id="instruments">
+</section>
+<section id="instruments">
 <h2>instruments<a class="headerlink" href="#instruments" title="Permalink to this headline">¶</a></h2>
 <p>Subcommands for neutron instruments. For example:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ mcvine instruments arcs
 </pre></div>
 </div>
 <p>provide commands for the ARCS spectrometer at SNS</p>
-<div class="section" id="simulation-cache">
+<section id="simulation-cache">
 <h3>Simulation Cache<a class="headerlink" href="#simulation-cache" title="Permalink to this headline">¶</a></h3>
 <p>Simulation results could be cached.</p>
 <p>For example:</p>
@@ -145,25 +145,25 @@ include a series of aliases starting with prefix “arcs”. For example,
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ mcvine instruments arcs beam --E=100 --ncount=1e8 --use-cache
 </pre></div>
 </div>
-</div>
-</div>
-<div class="section" id="components">
+</section>
+</section>
+<section id="components">
 <h2>Components<a class="headerlink" href="#components" title="Permalink to this headline">¶</a></h2>
 <p>Command</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ mcvine component
 </pre></div>
 </div>
 <p>Subcommands related to simulation components.</p>
-</div>
-<div class="section" id="neutron-storage">
+</section>
+<section id="neutron-storage">
 <h2>Neutron storage<a class="headerlink" href="#neutron-storage" title="Permalink to this headline">¶</a></h2>
 <p>Command</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ mcvine neutronstorage
 </pre></div>
 </div>
 <p>Subcmds manipulate neutron storage files.</p>
-</div>
-<div class="section" id="phonon">
+</section>
+<section id="phonon">
 <h2>phonon<a class="headerlink" href="#phonon" title="Permalink to this headline">¶</a></h2>
 <p>Command:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ mcvine phonon
@@ -175,8 +175,8 @@ include a series of aliases starting with prefix “arcs”. For example,
 <li><p>extract band structure</p></li>
 <li><p>compute neutron scattering data slice</p></li>
 </ul>
-</div>
-<div class="section" id="sample-assembly">
+</section>
+<section id="sample-assembly">
 <h2>sample assembly<a class="headerlink" href="#sample-assembly" title="Permalink to this headline">¶</a></h2>
 <p>Command:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ mcvine sampleassembly
@@ -187,16 +187,16 @@ include a series of aliases starting with prefix “arcs”. For example,
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ mcvine sampleassembly check /path/to/sampleassembly.xml
 </pre></div>
 </div>
-</div>
-<div class="section" id="mcstas-support">
+</section>
+<section id="mcstas-support">
 <h2>mcstas support<a class="headerlink" href="#mcstas-support" title="Permalink to this headline">¶</a></h2>
 <p>Command:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ mcvine mcstas compilecomponent --filename=&lt;path-to-component&gt; --category=&lt;component-category&gt;
 </pre></div>
 </div>
 <p>Compile a mcstas component.</p>
-</div>
-</div>
+</section>
+</section>
 
 
             <div class="clearer"></div>
@@ -220,7 +220,7 @@ include a series of aliases starting with prefix “arcs”. For example,
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2006-2016, Jiao Lin, Michael Aivazis, and Brent Fultz.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.4.3.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.2.
     </div>
   </body>
 </html>

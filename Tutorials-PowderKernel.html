@@ -4,17 +4,18 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Tutorials – Powder Diffraction Kernel &#8212; mcvine 1.0 documentation</title>
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/classic.css" />
     <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
     
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" /> 
@@ -78,7 +79,7 @@
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="Go" />
     </form>
     </div>
@@ -92,9 +93,9 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="tutorials-powder-diffraction-kernel">
+  <section id="tutorials-powder-diffraction-kernel">
 <span id="tutorials-powder-kernel"></span><h1>Tutorials – Powder Diffraction Kernel<a class="headerlink" href="#tutorials-powder-diffraction-kernel" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="simulation-with-powder-diffraction-kernel">
+<section id="simulation-with-powder-diffraction-kernel">
 <h2>Simulation with Powder Diffraction Kernel<a class="headerlink" href="#simulation-with-powder-diffraction-kernel" title="Permalink to this headline">¶</a></h2>
 <p>In this tutorial we will do experiment with a simple instrument consisting of three
 components:</p>
@@ -197,7 +198,7 @@ the instrument and parameters for each component. Let’s take a look at the ssd
 <code class="docutils literal notranslate"><span class="pre">NDMonitor(x,y,t)</span></code>. It describes parameters for source and detector components
 whereas parameters for sample component are defined in a separate file:
 <em>Al/sampleassembly.xml</em>. Let’s take a closer look at the components.</p>
-<div class="section" id="source-simple">
+<section id="source-simple">
 <h3>Source_simple<a class="headerlink" href="#source-simple" title="Permalink to this headline">¶</a></h3>
 <p>Source_simple component is a standard component available in McStas simulation package.
 It generates flux of neutrons uniformly distributed in the energy range <code class="docutils literal notranslate"><span class="pre">[E0-dE,</span> <span class="pre">E0+dE]</span></code> in meV.
@@ -205,8 +206,8 @@ In our configuration the energy range is <code class="docutils literal notransla
 <code class="docutils literal notranslate"><span class="pre">dist</span></code> define width, height and distance to the sample correspondingly. The benefit
 of using this simple source is to quickly get an estimate of what happens to the neutrons
 in this energy range as they propagates through the instrument.</p>
-</div>
-<div class="section" id="sampleassemblyfromxml">
+</section>
+<section id="sampleassemblyfromxml">
 <h3>SampleAssemblyFromXml<a class="headerlink" href="#sampleassemblyfromxml" title="Permalink to this headline">¶</a></h3>
 <p>The SampleAssemblyFromXml component allows to create a sample from detailed pieces
 of information about the material including configuration of unit cell, physical
@@ -411,8 +412,8 @@ can be even further simplified to:</p>
 <p>Parameter  <code class="docutils literal notranslate"><span class="pre">multiplicity</span></code> corresponds to column <code class="docutils literal notranslate"><span class="pre">MULT</span></code> in <em>Al.laz</em> file. Other
 parameters <code class="docutils literal notranslate"><span class="pre">intrinsic_line_width</span></code> and <code class="docutils literal notranslate"><span class="pre">DebyeWaller_factor</span></code> should be obtained
 from other experimental data.</p>
-</div>
-<div class="section" id="ndmonitor-x-y-t">
+</section>
+<section id="ndmonitor-x-y-t">
 <h3>NDMonitor(x,y,t)<a class="headerlink" href="#ndmonitor-x-y-t" title="Permalink to this headline">¶</a></h3>
 <p>The final component in our simple instrument is <strong>NDMonitor</strong>. It is a generic monitor
 that can plot various dependencies of physical values: <code class="docutils literal notranslate"><span class="pre">x</span></code>, <code class="docutils literal notranslate"><span class="pre">y</span></code>, <code class="docutils literal notranslate"><span class="pre">z</span></code>, <code class="docutils literal notranslate"><span class="pre">vx</span></code>,
@@ -465,13 +466,15 @@ the plot for the monitor we use the script:</p>
 </div>
 <p>This produces the diffraction image where every ring corresponds to separate
 diffraction plane, or separate combination of Miller indices (h,k,l)</p>
-<div class="figure align-default" id="id1">
+<figure class="align-default" id="id1">
 <a class="reference internal image-reference" href="_images/powder-kernel.png"><img alt="_images/powder-kernel.png" src="_images/powder-kernel.png" style="width: 600px;" /></a>
-<p class="caption"><span class="caption-text"><em>Fig. 1 Diffraction with SimplePowderDiffractionKernel</em></span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
-</div>
-</div>
-</div>
-<div class="section" id="simulation-with-powdern">
+<figcaption>
+<p><span class="caption-text"><em>Fig. 1 Diffraction with SimplePowderDiffractionKernel</em></span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+</section>
+</section>
+<section id="simulation-with-powdern">
 <h2>Simulation with PowderN<a class="headerlink" href="#simulation-with-powdern" title="Permalink to this headline">¶</a></h2>
 <p>In the previous section we used <code class="docutils literal notranslate"><span class="pre">SimplePowderDiffractionKernel</span></code> and assembled
 our sample using different pieces of information about material structure and
@@ -594,12 +597,14 @@ scattered <code class="docutils literal notranslate"><span class="pre">frac</spa
 <p>As you can see we get a very similar picture to what we obtained in the first section
 using  <code class="docutils literal notranslate"><span class="pre">SimplePowderDiffractionKernel</span></code>. Results for <code class="docutils literal notranslate"><span class="pre">SimplePowderDiffractionKernel</span></code>
 and <code class="docutils literal notranslate"><span class="pre">PowderN</span></code> component look consistent.</p>
-<div class="figure align-default" id="id2">
+<figure class="align-default" id="id2">
 <a class="reference internal image-reference" href="_images/powderN.png"><img alt="_images/powderN.png" src="_images/powderN.png" style="width: 600px;" /></a>
-<p class="caption"><span class="caption-text"><em>Fig. 2 Diffraction with PowderN component</em></span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
-</div>
-</div>
-<div class="section" id="wave-vector-sensitive-monitor">
+<figcaption>
+<p><span class="caption-text"><em>Fig. 2 Diffraction with PowderN component</em></span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+</section>
+<section id="wave-vector-sensitive-monitor">
 <h2>Wave Vector Sensitive Monitor<a class="headerlink" href="#wave-vector-sensitive-monitor" title="Permalink to this headline">¶</a></h2>
 <p>Let’s now change our initial instrument configuration by replacing <code class="docutils literal notranslate"><span class="pre">NDMonitor(x,y,t)</span></code>
 by <code class="docutils literal notranslate"><span class="pre">NDMonitor(q)</span></code> as shown below:</p>
@@ -699,12 +704,14 @@ $ PlotHist.py out/iq.h5
 </div>
 <p>we get the plot I(q), where wave vector (q) has units 1/AA and intensity (I)
 has arbitrary units:</p>
-<div class="figure align-default" id="id3">
+<figure class="align-default" id="id3">
 <a class="reference internal image-reference" href="_images/ndmonitor-q.png"><img alt="_images/ndmonitor-q.png" src="_images/ndmonitor-q.png" style="width: 600px;" /></a>
-<p class="caption"><span class="caption-text"><em>Fig. 3 Diffraction with SimplePowderDiffractionKernel and NDMonitor(q)</em></span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
-</div>
-</div>
-</div>
+<figcaption>
+<p><span class="caption-text"><em>Fig. 3 Diffraction with SimplePowderDiffractionKernel and NDMonitor(q)</em></span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+</section>
+</section>
 
 
             <div class="clearer"></div>
@@ -728,7 +735,7 @@ has arbitrary units:</p>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2006-2016, Jiao Lin, Michael Aivazis, and Brent Fultz.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.4.3.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.2.
     </div>
   </body>
 </html>

@@ -4,17 +4,17 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Simulation of ARCS experiments &#8212; mcvine 1.0 documentation</title>
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/classic.css" />
     <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
     
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" /> 
@@ -90,7 +90,7 @@
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="Go" />
     </form>
     </div>
@@ -104,9 +104,9 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="simulation-of-arcs-experiments">
+  <section id="simulation-of-arcs-experiments">
 <span id="tutorials-arcs-old"></span><h1>Simulation of ARCS experiments<a class="headerlink" href="#simulation-of-arcs-experiments" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="tutorial-1-full-simulation-of-an-experiment-of-a-polycrystalline-vanadium-sample">
+<section id="tutorial-1-full-simulation-of-an-experiment-of-a-polycrystalline-vanadium-sample">
 <h2>Tutorial 1: full simulation of an experiment of a polycrystalline Vanadium sample<a class="headerlink" href="#tutorial-1-full-simulation-of-an-experiment-of-a-polycrystalline-vanadium-sample" title="Permalink to this headline">¶</a></h2>
 <p>Here is an example of a full simulation of an ARCS experiment
 using a polycrystalline vanadium sample.</p>
@@ -124,7 +124,7 @@ $ cd arcs-polyV
 </div>
 <p>Let us suppose that the environment variable “workdir” is set to this new
 directory.</p>
-<div class="section" id="incident-beam">
+<section id="incident-beam">
 <h3>Incident beam<a class="headerlink" href="#incident-beam" title="Permalink to this headline">¶</a></h3>
 <p>In this step we simulate the ARCS instrument from moderator
 down to the sample position.</p>
@@ -162,8 +162,8 @@ See how many neutrons are there:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ mcvine-neutron-storage-count-neutrons out/neutrons
 </pre></div>
 </div>
-</div>
-<div class="section" id="scattering-of-incident-neutrons-by-sample">
+</section>
+<section id="scattering-of-incident-neutrons-by-sample">
 <h3>Scattering of incident neutrons by sample<a class="headerlink" href="#scattering-of-incident-neutrons-by-sample" title="Permalink to this headline">¶</a></h3>
 <p>Create a directory for this:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ mkdir -p $workdir/scattering
@@ -290,16 +290,16 @@ See how many neutrons are there:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ checksqe -source.path=out/neutrons -monitor.Ei=100 -monitor.Emin=-95 -monitor.Emax=95 -monitor.nE=190 -monitor.Qmin=0 -monitor.Qmax=13 -monitor.nQ=130
 </pre></div>
 </div>
-</div>
-</div>
-<div class="section" id="tutorial-2-compute-resolution-function-in-q-e-space">
+</section>
+</section>
+<section id="tutorial-2-compute-resolution-function-in-q-e-space">
 <h2>Tutorial 2: Compute resolution function in Q,E space<a class="headerlink" href="#tutorial-2-compute-resolution-function-in-q-e-space" title="Permalink to this headline">¶</a></h2>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>This should still work, but a quicker way is to first run arcs_beam
 simulation, and then run arcs-compute-IQE-resolution simulation.</p>
 </div>
-<div class="section" id="quick-overview">
+<section id="quick-overview">
 <h3>Quick Overview<a class="headerlink" href="#quick-overview" title="Permalink to this headline">¶</a></h3>
 <p>This example can be found in</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$MCVINE_DIR/share/mcvine/instruments/ARCS/simulations/resolution-calculator
@@ -327,9 +327,9 @@ and run it:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ PlotHist.py out-analyzer/ienergy.h5
 </pre></div>
 </div>
-<div class="figure align-default">
+<figure class="align-default">
 <a class="reference internal image-reference" href="_images/I_E.png"><img alt="_images/I_E.png" src="_images/I_E.png" style="width: 50%;" /></a>
-</div>
+</figure>
 <p>Next, go to the “QE” directory:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cd ../QE
 </pre></div>
@@ -341,13 +341,13 @@ at the “run” script and modify it to your needs, and run it:</p>
 </pre></div>
 </div>
 <p>You should see a I(Q,E) plot after the simulation is done.</p>
-<div class="figure align-default">
+<figure class="align-default">
 <a class="reference internal image-reference" href="_images/qeres-q10-e100.png"><img alt="_images/qeres-q10-e100.png" src="_images/qeres-q10-e100.png" style="width: 50%;" /></a>
-</div>
-</div>
-<div class="section" id="more-details">
+</figure>
+</section>
+<section id="more-details">
 <h3>More details<a class="headerlink" href="#more-details" title="Permalink to this headline">¶</a></h3>
-<div class="section" id="mod2sample">
+<section id="mod2sample">
 <h4>mod2sample<a class="headerlink" href="#mod2sample" title="Permalink to this headline">¶</a></h4>
 <p>This directory runs the simulation of neutrons
 emitting from the moderator, going down the stream through
@@ -373,8 +373,8 @@ sample position.</p>
 <li><p>nodes: # of nodes</p></li>
 <li><p>fermichopper: choice of Fermi chopper</p></li>
 </ul>
-</div>
-<div class="section" id="qe">
+</section>
+<section id="qe">
 <h4>QE<a class="headerlink" href="#qe" title="Permalink to this headline">¶</a></h4>
 <p>In this directory, the neutrons simulated at sample position
 in mod2sample are sent to a sample with delta function like
@@ -406,12 +406,12 @@ reduced I(Q,E) will be</p></li>
 <li><p>mod2sample: the path to the directory where mod2sample simulation
 were run</p></li>
 </ul>
-</div>
-</div>
-</div>
-<div class="section" id="commands">
+</section>
+</section>
+</section>
+<section id="commands">
 <h2>Commands<a class="headerlink" href="#commands" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="arcs-beam">
+<section id="arcs-beam">
 <span id="id1"></span><h3>arcs_beam<a class="headerlink" href="#arcs-beam" title="Permalink to this headline">¶</a></h3>
 <p>Compute neutrons at the sample position of ARCS beam.
 The neutrons computed will be saved in a file, which
@@ -423,8 +423,8 @@ and usually you don’t want to delete them.</p>
 </pre></div>
 </div>
 <p>to find help</p>
-</div>
-<div class="section" id="arcs-compute-iqe-resolution">
+</section>
+<section id="arcs-compute-iqe-resolution">
 <span id="arcs-iqeres"></span><h3>arcs-compute-IQE-resolution<a class="headerlink" href="#arcs-compute-iqe-resolution" title="Permalink to this headline">¶</a></h3>
 <p>Compute I(Q,E) resolution function.</p>
 <p>To run this simulation, you will need to compute neutrons at
@@ -442,8 +442,8 @@ the <a class="reference internal" href="#arcs-beam"><span class="std std-ref">ar
 <li><p>dQ, dE: range of momentum and energy transfer in which the resolution function is computed</p></li>
 <li><p>mod2sample: the path in which the moderator-to-sample simulation was performed.</p></li>
 </ul>
-</div>
-<div class="section" id="arcs-neutrons2nxs">
+</section>
+<section id="arcs-neutrons2nxs">
 <h3>arcs-neutrons2nxs<a class="headerlink" href="#arcs-neutrons2nxs" title="Permalink to this headline">¶</a></h3>
 <p>Convert scattered neutrons into nexus data file.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ arcs-neutrons2nxs --neutrons=&lt;neutron-file&gt; --nxs=&lt;nexus-output-file&gt; --workdir=&lt;temporary-working-dir&gt;
@@ -455,9 +455,9 @@ sample-scattered neutrons</p></li>
 <li><p>nxs: output nexus data file. default: arcs-sim.nxs</p></li>
 <li><p>workdir: temporary working dir. default: work</p></li>
 </ul>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
 
             <div class="clearer"></div>
@@ -481,7 +481,7 @@ sample-scattered neutrons</p></li>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2006-2016, Jiao Lin, Michael Aivazis, and Brent Fultz.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.4.3.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.2.
     </div>
   </body>
 </html>

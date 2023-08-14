@@ -4,17 +4,17 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Concepts &#8212; mcvine 1.0 documentation</title>
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/classic.css" />
     <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
     
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" /> 
@@ -80,7 +80,7 @@
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="Go" />
     </form>
     </div>
@@ -94,7 +94,7 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="concepts">
+  <section id="concepts">
 <span id="philosophy"></span><h1>Concepts<a class="headerlink" href="#concepts" title="Permalink to this headline">¶</a></h1>
 <p>Here we present the engineering philosophy employed in mcvine.</p>
 <p>We can divide legacy MC neutron scattering code to two categories:</p>
@@ -149,9 +149,9 @@ for example, scattering kernel characteristics.</p></li>
 visitor pattern and composite pattern are employed.</p>
 <p>In the following, we will explain the architecture and design of mcvine
 in more details.</p>
-<div class="section" id="high-level-architecture-from-user-s-point-of-view">
+<section id="high-level-architecture-from-user-s-point-of-view">
 <span id="high-level-arch-users"></span><h2>High level architecture from User’s point of view<a class="headerlink" href="#high-level-architecture-from-user-s-point-of-view" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="instrument-a-component-chain">
+<section id="instrument-a-component-chain">
 <h3>Instrument: a component chain<a class="headerlink" href="#instrument-a-component-chain" title="Permalink to this headline">¶</a></h3>
 <p>To users, the high level structure of mcvine is somewhat similar to
 that of mcstas, IDEAS, vitess: a simulation consists of building
@@ -169,8 +169,8 @@ method “process”.</p>
 <p>As depicted in the figure, the output of the previous component
 becomes the input for the next component, and the neutrons
 never go backward in the component chain.</p>
-</div>
-<div class="section" id="sample-assembly-an-arbitrary-complex-hierarchy-of-neutron-scatterer">
+</section>
+<section id="sample-assembly-an-arbitrary-complex-hierarchy-of-neutron-scatterer">
 <h3>Sample Assembly: an arbitrary complex hierarchy of neutron scatterer<a class="headerlink" href="#sample-assembly-an-arbitrary-complex-hierarchy-of-neutron-scatterer" title="Permalink to this headline">¶</a></h3>
 <p>The design that distinguishes MCViNE from other linear-chain MC neutron
 code is its capability of describing sample in a fairly sophisticated
@@ -210,9 +210,9 @@ but you will see the design of mcvine is actually even
 more flexible than what have been discussed up to this point.
 Please continue to read on to find out more details of
 mcvine design if you are a developer.</p>
-</div>
-</div>
-<div class="section" id="key-design-details-for-developers">
+</section>
+</section>
+<section id="key-design-details-for-developers">
 <h2>Key design details for developers<a class="headerlink" href="#key-design-details-for-developers" title="Permalink to this headline">¶</a></h2>
 <p>The general structure of mcvine is depicted in the following figure:</p>
 <a class="reference internal image-reference" href="_images/layers.png"><img alt="_images/layers.png" src="_images/layers.png" style="width: 25%;" /></a>
@@ -220,7 +220,7 @@ mcvine design if you are a developer.</p>
 python through c++/python bindings (implemented by using boost python).
 XML parsing (and rendering) are implemented in the python layer to allow
 users to use mcvine from command line with xml input files.</p>
-<div class="section" id="c">
+<section id="c">
 <h3>c++<a class="headerlink" href="#c" title="Permalink to this headline">¶</a></h3>
 <p>In the c++ layer, several different abstractions gradually decompose the
 neutron scattering problem into pieces so that in several layers mcvine
@@ -271,8 +271,8 @@ opeorations such as union, difference, and dilation, to allow users
 to create sophisticated shapes out of simple ones using constructive
 solid geometery. Developers can extend mcvine to support more custom
 shape types.</p>
-</div>
-<div class="section" id="python-and-xml">
+</section>
+<section id="python-and-xml">
 <h3>python and xml<a class="headerlink" href="#python-and-xml" title="Permalink to this headline">¶</a></h3>
 <p>In the python and xml layer we are trying to expose the hierarchical
 representation of the neutron scatterers in c++, and make it natural and easy to use.
@@ -312,9 +312,9 @@ the corresponding c++-python binding, and assembling them all together in c++</p
 <p>The design patterns we have chosen allows a flexible schema that
 is easily extensible to include future improvments on implementations,
 additions on scattering kernel types, shape types, etc.</p>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
 
             <div class="clearer"></div>
@@ -338,7 +338,7 @@ additions on scattering kernel types, shape types, etc.</p>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2006-2016, Jiao Lin, Michael Aivazis, and Brent Fultz.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.4.3.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.2.
     </div>
   </body>
 </html>

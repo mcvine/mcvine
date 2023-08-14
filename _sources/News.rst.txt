@@ -3,6 +3,40 @@
 News
 ====
 
+2023
+----
+* Releases
+
+  - Release 1.4.6 (https://github.com/mcvine/mcvine/issues/457): bugfix of powder E(Q) kernel
+  - Release 1.4.7 (https://github.com/mcvine/mcvine/issues/457): allow setting mcweights of detectors
+  - Release 1.4.8 (https://github.com/mcvine/mcvine/issues/457): support converting neutron storage to mcpl format
+* Publications:
+
+  - `A realistic guide misalignment model for the Second Target Station instruments at the Spallation Neutron Source <https://doi.org/10.1016/j.nima.2022.167881>`_ was published
+  - Publications that cited MCViNE: https://scholar.google.com/scholar?oi=bibs&hl=en&cites=5575605553207361019&as_sdt=5&as_ylo=2023&as_yhi=2023
+
+2022
+----
+* Releases
+
+  - Release 1.4.5 (https://github.com/mcvine/mcvine/issues/451): SANS sphere kernel / STS source component
+* Publications:
+
+  - MCViNE assisted the initial design of STS instruments. See publications on BEWAVES, CENTAUR, CHESS, CUPI2D (published in 2023), EWALD, EXPANSE, MENUS, PIONEER, QIKR (published in 2023), VERDI
+  - `A super-resolution technique to analyze single-crystal inelastic neutron scattering measurements using direct-geometry chopper spectrometers <https://doi.org/10.1063/5.0079031>`_ was published. Super resolution imagery techniques were applied to DGS single crystal data. MCViNE simulations of inelastic spectra was instrumental in obtaining resolution finer than nominal values of the SEQUOIA instrument.
+  - Publications that cited MCViNE: https://scholar.google.com/scholar?oi=bibs&hl=en&cites=5575605553207361019&as_sdt=5&as_ylo=2022&as_yhi=2022
+
+
+2021
+----
+* Releases
+
+  - Release 1.4.4 (https://github.com/mcvine/mcvine/issues/443): smaller tolerance to allow simulation of thin film
+  - Release 1.4.3 (https://github.com/mcvine/mcvine/issues/435): added S(Q vector) kernel
+  - Release 1.4.2 (https://github.com/mcvine/mcvine/issues/418): added support to convert a mcpl file to a mcvine data file
+  - Release 1.4.1 (https://github.com/mcvine/mcvine/issues/413): added single-crystal diffraction kernel, SQE kernel for indirect geometry spectrometer
+* Publications that cited MCViNE: https://scholar.google.com/scholar?oi=bibs&hl=en&cites=5575605553207361019&as_sdt=5&as_ylo=2021&as_yhi=2021
+
 2020
 ----
 
@@ -27,7 +61,7 @@ News
 * **October 2019**:
 
   - Release 1.3.5 (https://github.com/mcvine/mcvine/issues/385) was out
-  - `Super-resolution energy spectra from neutron direct-geometry spectrometers <https://doi.org/10.1063/1.5116147>`_ was published. Super resolution imagery techniques were applied to DGS powder data. MCViNE simulations of inelastic spectra was instrumental in obtaining resolution finer than nominal values of the ARCS instruments.
+  - `Super-resolution energy spectra from neutron direct-geometry spectrometers <https://doi.org/10.1063/1.5116147>`_ was published. Super resolution imagery techniques were applied to DGS powder data. MCViNE simulations of inelastic spectra was instrumental in obtaining resolution finer than nominal values of the ARCS instrument.
 
 * **August 2019**:
   
