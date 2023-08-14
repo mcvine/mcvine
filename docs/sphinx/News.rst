@@ -7,9 +7,9 @@ News
 ----
 * Releases
 
-  - Release 1.4.6 (https://github.com/mcvine/mcvine/issues/457): bugfix of powder E(Q) kernel
-  - Release 1.4.7 (https://github.com/mcvine/mcvine/issues/457): allow setting mcweights of detectors
   - Release 1.4.8 (https://github.com/mcvine/mcvine/issues/457): support converting neutron storage to mcpl format
+  - Release 1.4.7 (https://github.com/mcvine/mcvine/issues/457): allow setting mcweights of detectors
+  - Release 1.4.6 (https://github.com/mcvine/mcvine/issues/457): bugfix of powder E(Q) kernel
 * Publications:
 
   - `A realistic guide misalignment model for the Second Target Station instruments at the Spallation Neutron Source <https://doi.org/10.1016/j.nima.2022.167881>`_ was published
