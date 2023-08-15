@@ -15,6 +15,39 @@ References
 Publications made use of MCViNE
 -------------------------------
 
+2023
+~~~~
+#. Brügger A, Bilheux HZ, Lin JY, Nelson GJ, Kiss AM, Morris J, Connolly MJ, Long AM, Tremsin AS, Strzelec A, Anderson MH. The Complex, Unique, and Powerful Imaging Instrument for Dynamics (CUPI2D) at the Spallation Neutron Source. https://doi.org/10.1063/5.0131778
+#. Ankner JF, Ashkar R, Browning JF, Charlton TR, Doucet M, Halbert CE, Islam F, Karim A, Kharlampieva E, Kilbey SM, Lin JY. Cinematic reflectometry using QIKR, the quite intense kinetics reflectometer. https://doi.org/10.1063/5.0122279
+#. Bernal-Choban CM, Smith HL, Saunders CN, Kim DS, Mauger L, Abernathy DL, Fultz B. Nonharmonic contributions to the high-temperature phonon thermodynamics of Cr. https://doi.org/10.1103/PhysRevB.107.054312
+#. Lin JY, Huegle T, Coates L, Stoica AD. A realistic guide misalignment model for the Second Target Station instruments at the Spallation Neutron Source. https://doi.org/10.1016/j.nima.2022.167881
+
+2022
+~~~~
+#. Lin JY, Sala G, Stone MB. A super-resolution technique to analyze single-crystal inelastic neutron scattering measurements using direct-geometry chopper spectrometers. https://doi.org/10.1063/5.0079031
+#. Mamontov E, Boone C, Frost MJ, Herwig KW, Huegle T, Lin JY, McCormick B, McHargue W, Stoica AD, Torres P, Turner W. A concept of a broadband inverted geometry spectrometer for the Second Target Station at the Spallation Neutron Source https://doi.org/10.1063/5.0086451
+#. Do SH, Paddison JA, Sala G, Williams TJ, Kaneko K, Kuwahara K, May AF, Yan J, McGuire MA, Stone MB, Lumsden MD. Gaps in topological magnon spectra: Intrinsic versus extrinsic effects. https://doi.org/10.1103/PhysRevB.106.L060408
+#. Do SH, Kaneko K, Kajimoto R, Kamazawa K, Stone MB, Lin JY, Itoh S, Masuda T, Samolyuk GD, Dagotto E, Meier WR. Damped Dirac magnon in the metallic kagome antiferromagnet FeSn. https://doi.org/10.1103/PhysRevB.105.L180403
+#. Sala G, Lin JY, Samarakoon AM, Parker DS, May AF, Stone MB. Ferrimagnetic spin waves in honeycomb and triangular layers of Mn 3 Si 2 Te 6. https://doi.org/10.1103/PhysRevB.105.214405
+#. Qian S, Heller W, Chen WR, Christianson A, Do C, Wang Y, Lin JY, Huegle T, Jiang C, Boone C, Hart C. CENTAUR—The small-and wide-angle neutron scattering diffractometer/spectrometer for the Second Target Station of the Spallation Neutron Source. https://doi.org/10.1063/5.0090527
+#. Liu Y, Cao H, Rosenkranz S, Frost M, Huegle T, Lin JY, Torres P, Stoica A, Chakoumakos BC. PIONEER, a high-resolution single-crystal polarized neutron diffractometer. https://doi.org/10.1063/5.0089524
+#. Do C, Ashkar R, Boone C, Chen WR, Ehlers G, Falus P, Faraone A, Gardner JS, Graves V, Huegle T, Katsumata R. EXPANSE: A time-of-flight expanded angle neutron spin echo spectrometer at the Second Target Station of the Spallation Neutron Source. https://doi.org/10.1063/5.0089349
+#. Sala G, Mourigal M, Boone C, Butch NP, Christianson AD, Delaire O, DeSantis AJ, Hart CL, Hermann RP, Huegle T, Kent DN. CHESS: The future direct geometry spectrometer at the second target station. https://doi.org/10.1063/5.0089740
+#. Winn BL, Broholm C, Bird MD, Haberl B, Granroth GE, Katsaras J. A flexible neutron spectrometer concept with a new ultra-high field steady-state vertical-bore magnet. https://doi.org/10.1063/5.0122934
+#. Garlea VO, Calder S, Huegle T, Lin JY, Islam F, Stoica A, Graves VB, Frandsen B, Wilson SD. VERDI: VERsatile DIffractometer with wide-angle polarization analysis for magnetic structure studies in powders and single crystals. https://doi.org/10.1063/5.0090919
+#. An K, Stoica AD, Huegle T, Lin JY, Graves V. MENUS—Materials engineering by neutron scattering. https://doi.org/10.1063/5.0089783
+#. Borgstahl GE, O’Dell WB, Egli M, Kern JF, Kovalevsky A, Lin JY, Myles D, Wilson MA, Zhang W, Zwart P, Coates L. EWALD: A macromolecular diffractometer for the second target station. https://doi.org/10.1063/5.0090810
+#. Mamontov E, Bordallo HN, Delaire O, Nickels J, Peters J, Schneider GJ, Smith JC, Sokolov AP. Broadband Wide-Angle VElocity Selector (BWAVES) neutron spectrometer designed for the SNS Second Target Station. https://doi.org/10.1051/epjconf/202227202003
+#. Ding, Jingxuan. Phonon anharmonicity and ionic diffusion in emergent energy materials. PhD Thesis
+
+2021
+~~~~
+#. Scheie A, Sherman NE, Dupont M, Nagler SE, Stone MB, Granroth GE, Moore JE, Tennant DA. Detection of Kardar–Parisi–Zhang hydrodynamics in a quantum Heisenberg spin-1/2 chain. https://doi.org/10.1038/s41567-021-01191-6
+#. Chapman CW, Ramić K, Hu X, Brown JM, Arbanas G, Kolesnikov AI, Abernathy DL, Daemen L, Ramirez-Cuesta AT, Cheng Y, Stone MB. Thermal neutron scattering measurements and modeling of yttrium-hydrides for high temperature moderator applications. https://doi.org/10.1016/j.anucene.2021.108224
+#. Al-Qasir II, Cheng Y, Lin JY, Campbell AA, Sala G, Ramic K, Islam FF, Qteish A, Marsden B, Abernathy DL, Stone MB. Neutron thermalization in nuclear graphite: A modern story of a classic moderator. https://doi.org/10.1016/j.anucene.2021.108437
+#. Islam FF, Haberl B, Lin JY, Anderson DC, Molaison JJ, Granroth GE. Novel data analysis method for obtaining better performance from a complex 3D-printed collimator https://doi.org/10.1016/j.nima.2021.165646
+#. LeBlanc MD, Aczel AA, Granroth GE, Southern BW, Yan JQ, Nagler SE, Whitehead JP, Plumer ML. Impact of further-range exchange and cubic anisotropy on magnetic excitations in the fcc kagome antiferromagnet IrMn3 https://doi.org/10.1103/PhysRevB.104.014427
+
 2020
 ~~~~
 #. Dennis S Kim, O Hellman, N Shulumba, Claire N Saunders, Jiao YY Lin, Hillary L Smith, JE Herriman, Jennifer L Niedziela, Douglas L Abernathy, Chen W Li, B Fultz, Temperature-dependent phonon lifetimes and thermal conductivity of silicon by inelastic neutron scattering and ab initio calculations, https://doi.org/10.1103/PhysRevB.102.174311
