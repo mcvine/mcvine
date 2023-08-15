@@ -13,7 +13,7 @@ News
 * Publications:
 
   - `A realistic guide misalignment model for the Second Target Station instruments at the Spallation Neutron Source <https://doi.org/10.1016/j.nima.2022.167881>`_ was published
-  - Publications that cited MCViNE: https://scholar.google.com/scholar?oi=bibs&hl=en&cites=5575605553207361019&as_sdt=5&as_ylo=2023&as_yhi=2023
+  - `Publications that cited MCViNE <https://scholar.google.com/scholar?oi=bibs&hl=en&cites=18399776974196367632,5575605553207361019,&as_sdt=5&as_ylo=2023&as_yhi=2023>`_
 
 2022
 ----
@@ -24,7 +24,7 @@ News
 
   - MCViNE assisted the initial design of STS instruments. See publications on BEWAVES, CENTAUR, CHESS, CUPI2D (published in 2023), EWALD, EXPANSE, MENUS, PIONEER, QIKR (published in 2023), VERDI
   - `A super-resolution technique to analyze single-crystal inelastic neutron scattering measurements using direct-geometry chopper spectrometers <https://doi.org/10.1063/5.0079031>`_ was published. Super resolution imagery techniques were applied to DGS single crystal data. MCViNE simulations of inelastic spectra was instrumental in obtaining resolution finer than nominal values of the SEQUOIA instrument.
-  - Publications that cited MCViNE: https://scholar.google.com/scholar?oi=bibs&hl=en&cites=5575605553207361019&as_sdt=5&as_ylo=2022&as_yhi=2022
+  - `Publications that cited MCViNE <https://scholar.google.com/scholar?oi=bibs&hl=en&cites=18399776974196367632,5575605553207361019&as_sdt=5&as_ylo=2022&as_yhi=2022>`_
 
 
 2021
@@ -35,7 +35,7 @@ News
   - Release 1.4.3 (https://github.com/mcvine/mcvine/issues/435): added S(Q vector) kernel
   - Release 1.4.2 (https://github.com/mcvine/mcvine/issues/418): added support to convert a mcpl file to a mcvine data file
   - Release 1.4.1 (https://github.com/mcvine/mcvine/issues/413): added single-crystal diffraction kernel, SQE kernel for indirect geometry spectrometer
-* Publications that cited MCViNE: https://scholar.google.com/scholar?oi=bibs&hl=en&cites=5575605553207361019&as_sdt=5&as_ylo=2021&as_yhi=2021
+* `Publications that cited MCViNE <https://scholar.google.com/scholar?oi=bibs&hl=en&cites=18399776974196367632,5575605553207361019&as_sdt=5&as_ylo=2021&as_yhi=2021>`_
 
 2020
 ----
