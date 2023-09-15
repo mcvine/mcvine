@@ -145,7 +145,7 @@ def hist_mcs_sum_parallel(outdir, histogramfilename):
     import numpy as np
     if world.rank==0:
         h = h1
-        buffer = np.empty(h1.shape(), dtype=np.float)
+        buffer = np.empty(h1.shape(), dtype=np.float64)
         for rank in range(1, world.size):
             hasdata = world.recv(source=rank, tag=120)
             if hasdata:
@@ -161,8 +161,8 @@ def hist_mcs_sum_parallel(outdir, histogramfilename):
             world.send(False, 0, tag=120)
         else:
             world.send(True, 0, tag=120)
-            world.Send(h1.I.astype(np.float), 0, tag=121)
-            world.Send(h1.E2.astype(np.float), 0, tag=122)
+            world.Send(h1.I.astype(np.float64), 0, tag=121)
+            world.Send(h1.E2.astype(np.float64), 0, tag=122)
             world.send(mcs, 0, tag=123)
     # wait for everybody to synchronize _here_
     world.Barrier()
