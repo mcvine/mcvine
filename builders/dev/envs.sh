@@ -12,9 +12,13 @@
 #
 # * Then source this script
 #   $ . envs.sh
+#
+# * Build
+#   - first time or restart from fresh: build0
+#   - later builds: mm
 
 # build parameter
-CORES=7
+CORES=12
 
 PREFIX=$CONDA_PREFIX
 PYVER_MAJOR=`python -c "from __future__ import print_function; import sys; print(sys.version_info[0])"`
@@ -86,5 +90,5 @@ alias mm_workflow="mcvine_build_subpkg $HOME/dv/mcvine/workflow $HOME/dv/mcvine/
 export MCVINE_DIR=$MCVINE_EXPORT_ROOT
 export EXPORT_ROOT=$MCVINE_EXPORT_ROOT # pyre etc
 export PATH=$MCVINE_DIR/bin:$PATH
-export PYTHONPATH=$MCVINE_DIR/lib/python$PYVER/site-packages:$PYTHONPATH
-export LD_LIBRARY_PATH=$MCVINE_DIR/lib:$LD_LIBRARY_PATH
+export PYTHONPATH=$MCVINE_DIR/lib64/python$PYVER/site-packages:$PYTHONPATH
+export LD_LIBRARY_PATH=$MCVINE_DIR/lib64:$LD_LIBRARY_PATH
