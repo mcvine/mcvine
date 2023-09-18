@@ -13,12 +13,12 @@ import journal
 debug = journal.debug( "mcni.components.test" )
 warning = journal.warning( "mcni.components.test" )
 
+from mcni import neutron_buffer, neutron
+from mcni.components.RadialCollimator import RadialCollimator
 
 def test():
     DEG2RAD = np.pi/180
-    from mcni import neutron_buffer, neutron
     neutrons = neutron_buffer(1)
-    from mcni.components.RadialCollimator import RadialCollimator
     coll = RadialCollimator(
         name="collimator",
         radius1=0.308, height1=0.6, radius2=0.462, height2=0.6,
@@ -58,9 +58,7 @@ def test():
 
 def test_theta_list():
     DEG2RAD = np.pi/180
-    from mcni import neutron_buffer, neutron
     neutrons = neutron_buffer(1)
-    from mcni.components.RadialCollimator import RadialCollimator
     theta_list = np.arange(-30*DEG2RAD, 150.1*DEG2RAD, 1.6*DEG2RAD)
     coll = RadialCollimator(
         name="collimator",
