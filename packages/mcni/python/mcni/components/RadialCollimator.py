@@ -37,7 +37,7 @@ class RadialCollimator( AbstractComponent ):
         if self.dtheta is not None:
             good *= (theta1-self.theta_min)//self.dtheta == (theta2-self.theta_min)//self.dtheta
         else:
-            good *= np.digitize(theta1, self.theta_list) == np.digitize(theta1, self.theta_list)
+            good *= np.digitize(theta1, self.theta_list) == np.digitize(theta2, self.theta_list)
         good = arr[good, :]
         neutrons.resize(good.shape[0], neutrons[0])
         neutrons.from_npyarr(good)
@@ -46,7 +46,8 @@ class RadialCollimator( AbstractComponent ):
     def __init__(
             self, name,
             radius1, height1, radius2, height2,
-            theta1=0, theta2=np.pi, dtheta=np.radians(10),
+            # theta1=0, theta2=np.pi, dtheta=np.radians(10),
+            theta1=None, theta2=None, dtheta=None,
             theta_list = None,
             oscillation=0
     ):
