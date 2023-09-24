@@ -51,6 +51,13 @@ class RadialCollimator( AbstractComponent ):
             theta_list = None,
             oscillation=0
     ):
+        """Radial collimator
+        radius1, height1: radius and height of inner cylinder
+        radius2, height2: radius and height of outer cylinder
+        theta1, theta2, dtheta: use these for evenly spaced blade locations
+        theta_list: use this for arbitrarily spaced blade locations. must be increasing
+        all angles are in radians
+        """
         self.name = name
         self.radius1 = radius1
         self.radius2 = radius2
