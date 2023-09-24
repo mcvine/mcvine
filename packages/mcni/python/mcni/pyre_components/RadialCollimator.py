@@ -1,21 +1,10 @@
 #!/usr/bin/env python
 #
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Jiao Lin <jiao.lin@gmail.com>
 #
-#                                   Jiao Lin
-#                      California Institute of Technology
-#                      (C) 2007-2014  All Rights Reserved
-#
-# {LicenseText}
-#
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#
-
 
 from mcni.components.RadialCollimator import RadialCollimator as enginefactory, category
-
 from mcni.pyre_support.AbstractComponent import AbstractComponent
-
 
 class RadialCollimator( AbstractComponent ):
 
@@ -27,41 +16,37 @@ class RadialCollimator( AbstractComponent ):
         radius2 = pinv.float("radius2", default=0.5)
         height1 = pinv.float("height1", default=0.5)
         height2 = pinv.float("height2", default=0.5)
-        theta1 = pinv.float("theta1", default=0)
-        theta2 = pinv.float("theta2", default=180)
-        dtheta = pinv.float("dtheta", default=1)
+        theta1 = pinv.float("theta1", default=None)
+        theta2 = pinv.float("theta2", default=None)
+        dtheta = pinv.float("dtheta", default=None)
+        theta_list = pinv.array("theta_list", default=None)
         oscillation = pinv.float("oscillation", default=1)
         pass
-    
 
     def process(self, neutrons):
         return self.engine.process( neutrons )
-
 
     def _configure(self):
         AbstractComponent._configure(self)
         return
 
-
     def _init(self):
         AbstractComponent._init(self)
         from math import pi
+        import numpy as np
         si = self.inventory
         self.engine = enginefactory(
             self.name,
             si.radius1, si.height1,
             si.radius2, si.height2,
-            si.theta1/180*pi, si.theta2/180*pi,
-            si.dtheta/180*pi, 
+            si.theta1/180*pi if si.theta1 is not None else None,
+            si.theta2/180*pi if si.theta2 is not None else None,
+            si.dtheta/180*pi if si.dtheta is not None else None,
+            np.array(si.theta_list)*(pi/180) if si.theta_list is not None else None,
             si.oscillation/180*pi,
             )
         return
 
     pass # end of Source
 
-
-
-# version
-__id__ = "$Id$"
-
-# End of file 
+# End of file
