@@ -2,7 +2,6 @@
 #
 #
 
-
 standalone = True
 
 import os, numpy as np
@@ -10,13 +9,11 @@ os.environ['MCVINE_MPI_BINDING'] = 'NONE'
 
 import unittestX as unittest
 
-
 class TestCase(unittest.TestCase):
 
-
     def test1(self):
-        'mccomponents.sample.samplecomponent: SQkernel'
-        # The kernel spec is in sampleassemblies/V-sqkernel/V-scatterer.xml
+        'mccomponents.sample.samplecomponent: SQkernel using GridSQ'
+        # The kernel spec is in sampleassemblies/V-gridsqkernel/V-scatterer.xml
         # It is a flat kernel S(Q)=1.
         # So the simulation result should have a flat S(Q) too.
         # The following code run a simulation with
@@ -36,7 +33,7 @@ class TestCase(unittest.TestCase):
         component1 = MonochromaticSource('source', neutron)
         # 2. sample
         from mccomponents.sample import samplecomponent
-        component2 = samplecomponent( 'sample', 'sampleassemblies/V-sqkernel/sampleassembly.xml' )
+        component2 = samplecomponent( 'sample', 'sampleassemblies/V-gridsqkernel/sampleassembly.xml' )
         # 3. monitor
         import mcstas2
         component3 = mcstas2.componentfactory('monitors', 'IQE_monitor')(
@@ -48,7 +45,7 @@ class TestCase(unittest.TestCase):
         geometer.register( component2, (0,0,1), (0,0,0) )
         geometer.register( component3, (0,0,1), (0,0,0) )
         # neutron buffer
-        N0 = 100000
+        N0 = 1000000
         neutrons = mcni.neutron_buffer(N0)
         #
         # simulate
@@ -65,27 +62,15 @@ class TestCase(unittest.TestCase):
         v = narr[:, 3:6]; p = narr[:, 9]
         delta_v_vec = -v + vi; delta_v = np.linalg.norm(delta_v_vec, axis=-1)
         Q = conversion.V2K * delta_v
-        I, qbb = np.histogram(Q, 20, weights=p)
+        I, qbb = np.histogram(Q, 100, weights=p)
         qbc = (qbb[1:] + qbb[:-1])/2
-        I=I/qbc; I/=np.mean(I)
-        self.assertTrue(1.0*np.isclose(I, 1., atol=0.1).sum()/I.size>0.9)
-        #
-        # check 2: use data in IQE monitor
-        import histogram.hdf as hh
-        iqe = hh.load(os.path.join(workdir, 'stepNone', 'iqe_monitor.h5'))
-        iq = iqe.sum('energy')
-        Q = iq.Q; I = iq.I
-        I0 = np.mean(I); I/=I0
-        # check that most of the intensity is similar to I0
-        self.assertTrue(1.0*np.isclose(I, 1., atol=0.1).sum()/I.size>0.9)
+        I=I/qbc; I/=I[0]
+        # the formula here must match the one in ./sampleassemblies/V-gridsqkernel/make-sq.py
+        self.assertTrue(1.0*np.isclose(I, 1.+qbc/10, atol=0.1).sum()/I.size>0.95)
         return
-    
 
     pass  # end of TestCase
 
-
-    
 if __name__ == "__main__": unittest.main()
 
-    
-# End of file 
+# End of file
