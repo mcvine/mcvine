@@ -14,13 +14,11 @@ class TestCase(unittest.TestCase):
     def test1(self):
         'mccomponents.sample.samplecomponent: SQkernel using GridSQ'
         # The kernel spec is in sampleassemblies/V-gridsqkernel/V-scatterer.xml
-        # It is a flat kernel S(Q)=1.
-        # So the simulation result should have a flat S(Q) too.
+        # fake S(Q)=1.+Q/10 stored in a histogram file
         # The following code run a simulation with
         # (1) monochromatic source (2) sample (3) IQE_monitor
         # After the simulation, it test the S(Q) by
-        # (1) do a manual "reduction" using the simulated scattered neutrons, and
-        # (2) examine the monitor data
+        # performing a manual "reduction" using the simulated scattered neutrons
         import mcni
         from mcni.utils import conversion
         # instrument
@@ -56,7 +54,7 @@ class TestCase(unittest.TestCase):
         sim_context = mcni.SimulationContext.SimulationContext(outputdir=workdir)
         mcni.simulate( instrument, geometer, neutrons, context=sim_context )
         #
-        # check 1: directly calculate I(Q) from neutron buffer
+        # check: directly calculate I(Q) from neutron buffer
         from mcni.neutron_storage import neutrons_as_npyarr
         narr = neutrons_as_npyarr(neutrons); narr.shape = N0, 10
         v = narr[:, 3:6]; p = narr[:, 9]
