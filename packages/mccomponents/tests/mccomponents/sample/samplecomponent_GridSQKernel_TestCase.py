@@ -6,6 +6,7 @@ standalone = True
 
 import os, numpy as np
 os.environ['MCVINE_MPI_BINDING'] = 'NONE'
+thisdir = os.path.abspath(os.path.dirname(__file__))
 
 import unittestX as unittest
 
@@ -15,6 +16,7 @@ class TestCase(unittest.TestCase):
         'mccomponents.sample.samplecomponent: SQkernel using GridSQ'
         # The kernel spec is in sampleassemblies/V-gridsqkernel/V-scatterer.xml
         # fake S(Q)=1.+Q/10 stored in a histogram file
+        create_histogram_file()
         # The following code run a simulation with
         # (1) monochromatic source (2) sample (3) IQE_monitor
         # After the simulation, it test the S(Q) by
@@ -68,6 +70,12 @@ class TestCase(unittest.TestCase):
         return
 
     pass  # end of TestCase
+
+def create_histogram_file():
+    import subprocess as sp
+    cmd = "python make-sq.py"
+    sp.check_output(cmd, shell=True, cwd=os.path.join(thisdir, "./sampleassemblies/V-gridsqkernel"))
+    return
 
 if __name__ == "__main__": unittest.main()
 
