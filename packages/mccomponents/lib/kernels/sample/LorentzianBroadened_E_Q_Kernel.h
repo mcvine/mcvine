@@ -23,15 +23,14 @@ namespace mccomponents {
 
   namespace kernels {
 
-    template< typename E_Q_functor_t, 
+    template< typename E_Q_functor_t,
 	      typename S_Q_functor_t,
 	      typename Gamma_Q_functor_t>
     class LorentzianBroadened_E_Q_Kernel : public KernelBase {
     public:
-      
       // meta methods
       //! ctor
-      //  E_Q: E(Q) function. 
+      //  E_Q: E(Q) function.
       //  S_Q: S(Q) function. In many cases, identity function should
       //       be good -- see IdentitySQ
       //       The S values should be non-negative, and average to one
@@ -47,15 +46,15 @@ namespace mccomponents {
        double Qmin, double Qmax,
        double absorption_coefficient,
        double scattering_coefficient);
-      
+
       // methods
       virtual double absorption_coefficient( const mcni::Neutron::Event & ev );
       virtual double scattering_coefficient( const mcni::Neutron::Event & ev );
       virtual void S( mcni::Neutron::Event & ev );
       virtual void absorb( mcni::Neutron::Event & ev );
-      
+
     private:
-      
+
       // data
       E_Q_functor_t m_E;
       S_Q_functor_t m_S;
@@ -68,7 +67,7 @@ namespace mccomponents {
       std::auto_ptr<Details> m_details;
 
     }; // class LorentzianBroadened_E_Q_Kernel
-    
+
   } // kernels::
 } // mccomponents::
 
