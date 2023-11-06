@@ -126,6 +126,11 @@ def broadened_E_Q_Kernel(*args, **kwds):
     return Broadened_E_Q_Kernel(*args, **kwds)
 
 
+def lorentzianbroadened_E_Q_Kernel(*args, **kwds):
+    from .LorentzianBroadened_E_Q_Kernel import LorentzianBroadened_E_Q_Kernel
+    return LorentzianBroadened_E_Q_Kernel(*args, **kwds)
+
+
 def make_E_vQ_Kernel(*args, **kwds):
     from .E_vQ_Kernel import E_vQ_Kernel as factory
     return factory(*args, **kwds)

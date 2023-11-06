@@ -19,7 +19,7 @@ class Document(base):
         'ConstantEnergyTransferKernel',
         'ConstantQEKernel', 'ConstantvQEKernel',
         'E_Q_Kernel',
-        'Broadened_E_Q_Kernel',
+        'Broadened_E_Q_Kernel', 'LorentzianBroadened_E_Q_Kernel',
         'E_vQ_Kernel',
 
         'IsotropicKernel',
