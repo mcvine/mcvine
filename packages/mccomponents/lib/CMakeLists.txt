@@ -10,6 +10,7 @@ set ( SRC_FILES
   math/misc.cc
   math/random/geometry.cc
   math/random/gaussian.cc
+  math/random/lorentzian.cc
   homogeneous_scatterer/CompositeScatteringKernel.cc
   homogeneous_scatterer/ConsultScatteringKernel.cc
   homogeneous_scatterer/InverseVelocityAbsorption.cc
