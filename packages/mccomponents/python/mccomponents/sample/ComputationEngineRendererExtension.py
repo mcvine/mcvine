@@ -354,6 +354,37 @@ class ComputationEngineRendererExtension:
             E_Q, S_Q, sigma_Q, Qmin, Qmax, abs, sctt)
 
 
+    def onLorentzianBroadened_E_Q_Kernel(self, kernel):
+        t = kernel
+
+        # cross section related
+        abs = t.absorption_coefficient
+        sctt = t.scattering_coefficient
+        if abs is None or sctt is None:
+            #scatterer_origin is assigned to kernel when a kernel is
+            #constructed from kernel xml.
+            #see sampleassembly_support.SampleAssembly2CompositeScatterer for details.
+            origin = t.scatterer_origin
+            from sampleassembly import cross_sections
+            abs, inc, coh = cross_sections(origin, include_density=True)
+            sctt = inc + coh
+            pass
+        abs, sctt = self._unitsRemover.remove_unit(
+            (abs, sctt), 1./units.length.meter )
+        # functors for S(Q,E)
+        E_Q = kernel.E_Q
+        S_Q = kernel.S_Q
+        gamma_Q = kernel.gamma_Q
+
+        # Q range
+        Qmin = self._unitsRemover.remove_unit(
+            kernel.Qmin, 1./units.length.angstrom)
+        Qmax = self._unitsRemover.remove_unit(
+            kernel.Qmax, 1./units.length.angstrom)
+        return self.factory.LorentzianBroadened_E_Q_Kernel(
+            E_Q, S_Q, gamma_Q, Qmin, Qmax, abs, sctt)
+
+
     def onE_vQ_Kernel(self, kernel):
         t = kernel
 

@@ -33,7 +33,7 @@ class KernelContainer(base):
     onIsotropicKernel \
         = onConstantQEKernel = onConstantvQEKernel \
         = onConstantEnergyTransferKernel \
-        = onE_Q_Kernel = onBroadened_E_Q_Kernel = onE_vQ_Kernel \
+        = onE_Q_Kernel = onLorentianBroadened_E_Q_Kernel = onBroadened_E_Q_Kernel = onE_vQ_Kernel \
         = onSQEkernel = onSQkernel = onSvQkernel \
         = onSQE_EnergyFocusing_Kernel \
         = onDGSSXResKernel \

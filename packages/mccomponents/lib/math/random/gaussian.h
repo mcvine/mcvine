@@ -35,7 +35,4 @@ namespace mccomponents{
 #endif //MCCOMPONENTS_RANDOM_GAUSSIAN_H
 
 
-// version
-// $Id: geometry.h 601 2010-10-03 19:55:29Z linjiao $
-
-// End of file 
+// End of file

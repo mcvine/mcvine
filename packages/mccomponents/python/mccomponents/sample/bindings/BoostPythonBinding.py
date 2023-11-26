@@ -266,6 +266,28 @@ qzend: %s, qzbegin: %s, qzstep: %s, shape2: %s
             absorption_coefficient, scattering_coefficient)
 
 
+    def LorentzianBroadened_E_Q_Kernel(
+        self,
+        E_Q, S_Q='1', gamma_Q="0.5*Q",
+        Qmin = 0., Qmax = 10.,
+        absorption_coefficient=1., scattering_coefficient=1.
+        ):
+        '''
+        S(Q,E) = S(E) * delta(E-E(Q))
+
+        E_Q: E(Q). str. ex: Q*Q/3.5
+        S_Q: S(Q). str. ex: 1.
+        gamma_Q: gamma(Q). str. ex: Q/2
+        Qmin, Qmax: range of Q. AA**-1
+        absorption_coefficient: absorption coefficient (m**-1)
+        scattering_coefficient: scattering coefficient (m**-1)
+        '''
+        return b.create_LorentzianBroadened_E_Q_Kernel(
+            E_Q, S_Q, gamma_Q,
+            Qmin, Qmax,
+            absorption_coefficient, scattering_coefficient)
+
+
     def E_vQ_Kernel(
         self,
         E_Q, S_Q='1', 

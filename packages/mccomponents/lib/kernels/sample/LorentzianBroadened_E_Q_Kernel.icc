@@ -1,0 +1,243 @@
+// -*- C++ -*-
+//
+// Jiao Lin <jiao.lin@gmail.com>
+//
+
+#ifndef MCCOMPONENTS_KERNELS_LORENTZIANBROADENED_E_Q_KERNEL_H
+#error LorentzianBroadened_E_Q_Kernel.icc not meaningful outside LorentzianBroadened_E_Q_Kernel.h
+#endif
+
+#include <cmath>
+#include <algorithm>
+#include "mccomponents/exception.h"
+#include "mcni/math/number.h"
+#include "mccomponents/math/random.h"
+#include "mccomponents/math/random/lorentzian.h"
+#include "mccomponents/math/random/geometry.h"
+
+
+#define DEBUG
+#ifdef DEBUG
+#include "journal/debug.h"
+#endif
+
+
+#define checkNAN(name, x)   if ((x)!=(x)) std::cerr << name << " is nan" << std::endl;
+
+
+template< typename E_Q_functor_t, typename S_Q_functor_t, typename Gamma_Q_functor_t>
+struct
+mccomponents::kernels::LorentzianBroadened_E_Q_Kernel<E_Q_functor_t, S_Q_functor_t, Gamma_Q_functor_t>\
+:: Details {
+
+#ifdef DEBUG
+  const static char jrnltag[];
+  journal::debug_t debug;
+#endif
+  Details()
+#ifdef DEBUG
+    : debug( jrnltag )
+#endif
+  {}
+
+  // data
+  const static double m_epsilon;
+};
+
+
+#ifdef DEBUG
+template< typename E_Q_functor_t, typename S_Q_functor_t, typename Gamma_Q_functor_t>
+const char
+mccomponents::kernels::LorentzianBroadened_E_Q_Kernel<E_Q_functor_t, S_Q_functor_t, Gamma_Q_functor_t>\
+::Details::jrnltag[] = "LorentzianBroadened_E_Q_Kernel";
+#endif
+
+template< typename E_Q_functor_t, typename S_Q_functor_t, typename Gamma_Q_functor_t>
+const double mccomponents::kernels::LorentzianBroadened_E_Q_Kernel<E_Q_functor_t, S_Q_functor_t, Gamma_Q_functor_t> \
+::Details::m_epsilon = 1e-1;
+
+
+template< typename E_Q_functor_t, typename S_Q_functor_t, typename Gamma_Q_functor_t>
+mccomponents::kernels::LorentzianBroadened_E_Q_Kernel<E_Q_functor_t, S_Q_functor_t, Gamma_Q_functor_t>\
+::LorentzianBroadened_E_Q_Kernel
+(const E_Q_functor_t & E_Q,
+ const S_Q_functor_t & S_Q,
+ const Gamma_Q_functor_t & gamma_Q,
+ double Qmin, double Qmax,
+ double absorption_coefficient,
+ double scattering_coefficient)
+  : m_E(E_Q),
+    m_S(S_Q),
+    m_gamma(gamma_Q),
+    m_Qmin(Qmin),
+    m_Qmax(Qmax),
+    m_absorption_coefficient( absorption_coefficient ),
+    m_scattering_coefficient( scattering_coefficient ),
+    m_details( new Details )
+{
+  if (m_Qmin<0) {
+    std::cerr << "Qmin must be not negative. Got " << m_Qmin << std::endl;
+    throw;
+  }
+  if (m_Qmin >= m_Qmax) {
+    std::cerr << "Qmin (" << m_Qmin
+	      << ") must be smaller than Qmax ("
+	      << m_Qmax << ")." << std::endl;
+    throw;
+  }
+  // compute Emin and Emax
+  // this assumes that the E(Q) curve is smooth and does not have spikes
+  const size_t N = 100; // # of data points
+  double Emin[N], Emax[N], dQ = (Qmax-Qmin)/N;
+  for (size_t i=0; i<N; i++) {
+    double Q = m_Qmin + dQ * i;
+    Emin[i] = m_E(Q) - m_gamma(Q)*3;
+    Emax[i] = m_E(Q) + m_gamma(Q)*3;
+  }
+  std::sort(Emin, Emin+N); std::sort(Emax, Emax+N);
+  m_Emin = Emin[0]; m_Emax = Emax[N-1];
+}
+
+
+template< typename E_Q_functor_t, typename S_Q_functor_t, typename Gamma_Q_functor_t>
+double
+mccomponents::kernels::LorentzianBroadened_E_Q_Kernel<E_Q_functor_t, S_Q_functor_t, Gamma_Q_functor_t>\
+::absorption_coefficient(const mcni::Neutron::Event & ev )
+{
+  float_t v = ev.state.velocity.length();
+  return m_absorption_coefficient * (2200/v);
+}
+
+
+template< typename E_Q_functor_t, typename S_Q_functor_t, typename Gamma_Q_functor_t>
+double
+mccomponents::kernels::LorentzianBroadened_E_Q_Kernel<E_Q_functor_t, S_Q_functor_t, Gamma_Q_functor_t>\
+::scattering_coefficient(const mcni::Neutron::Event & ev )
+{
+
+  // this is a simplified model
+  return m_scattering_coefficient;
+}
+
+
+template< typename E_Q_functor_t, typename S_Q_functor_t, typename Gamma_Q_functor_t>
+void
+mccomponents::kernels::LorentzianBroadened_E_Q_Kernel<E_Q_functor_t, S_Q_functor_t, Gamma_Q_functor_t>\
+::absorb
+( mcni::Neutron::Event & ev )
+{
+}
+
+
+template< typename E_Q_functor_t, typename S_Q_functor_t, typename Gamma_Q_functor_t>
+void
+mccomponents::kernels::LorentzianBroadened_E_Q_Kernel<E_Q_functor_t, S_Q_functor_t, Gamma_Q_functor_t>\
+::S
+( mcni::Neutron::Event & ev )
+{
+  namespace conversion = mcni::neutron_units_conversion;
+
+  // input neutron state
+  mcni::Neutron::State & state = ev.state;
+  // incident neutron velocity
+  double vi = state.velocity.length();
+  // incident neutron energy
+  double Ei = conversion::v2E( vi );
+  // XXX: if Ei is too small no scattering
+  if (Ei<m_Emin) return;
+
+  // pick Q and E
+  size_t count = 0; double E = Ei+1, Q, Ef, vf, ki, kf, cost, cost2=0;
+  while (count++ < 100) {
+    // randomly pick momentum transfer
+    Q = math::random(m_Qmin, m_Qmax);
+
+    // randomly pick energy deviation following lorentzian distribution
+    double dE = mccomponents::math::lorentzian_distrib_rand() * m_gamma(Q);
+
+    // compute E from Q and deviation
+    E = m_E(Q) + dE;
+    Ef = Ei - E;
+    // bad E, continue
+    if (Ef <= 0) continue;
+
+    // final velocity magnitude
+    vf = conversion::E2v( Ef );
+    // theta
+    ki = conversion::v2k* vi;
+    kf = conversion::v2k* vf;
+    cost = (ki*ki+kf*kf-Q*Q)/(2*ki*kf);
+    cost2 = cost*cost;
+    // bad theta, continue
+    if (cost2>1) continue;
+
+    // good here
+    break;
+  }
+  if (count >= 100) {
+    std::cerr << "failed to find suitable Q and E: Ei=" << Ei << std::endl;
+    return;
+  }
+  if (Ef <= 0 || cost2>1) {
+    std::cerr << "should not reach here." << std::endl;
+    throw;
+  }
+
+#ifdef DEBUG
+    if (cost != cost) {
+      std::cerr
+	<< "cost is nan. "
+	<< "E=" << E << ", Ef=" << Ef
+	<< ", ki=" << ki << ", kf=" << kf
+	<< ", Q=" << Q;
+    }
+#endif
+
+  double sint = std::sqrt(1-cost2);
+#ifdef DEBUG
+  checkNAN("sint", sint);
+#endif
+  if (sint != sint) {
+    std::cerr << "cos(theta)**2=" << cost2 << std::endl;
+  }
+  //
+  double phi = math::random(0., mcni::PI*2);
+
+  // scattered neutron velocity vector
+  typedef mcni::Vector3<double> V3d;
+  V3d e1 = state.velocity; e1.normalize();
+  // if e1 is not in z-direction
+  // we set e2 to be the cross product of e1 and (0,0,1)
+  // if e1 is right on the z-direction, that means e1 = (0,0,1)
+  // and we set e2 = (1,0,0) or whatever
+  V3d e2;
+  if (std::abs(e1.x)>m_details->m_epsilon || std::abs(e1.y)>m_details->m_epsilon) {
+    e2 = V3d(0,0,1) * e1; e2.normalize();
+  } else {
+    e2 = V3d(1,0,0) * e1; e2.normalize();
+  }
+  V3d e3 = e1 * e2;
+  // == v_f ==
+  V3d v_f = sint*cos(phi) * e2
+    + sint*sin(phi) * e3
+    + cost * e1; // direction
+  v_f = v_f * vf; // with right magnitude
+
+  // adjust probability of neutron event
+  ev.probability *= m_S(Q) * (vf/vi);
+  // we need to divide by 4pi (we are calculating integrated sigma, which is \int (vf/vi)*S/(4pi)
+  ev.probability /= 4 * mcni::PI;
+  // additional factor from integration over Q instead of solid angle
+  // see above
+  // XXX: this is not entirely correct since we are not adjusting m_Qmax and m_Qmin
+  // XXX: according to Ei. 
+  ev.probability *=  Q*(m_Qmax-m_Qmin) / (kf*ki) * 2*mcni::PI;
+
+  checkNAN("probability", ev.probability);
+  checkNAN("vf", vf);
+  checkNAN("phi", phi);
+
+  state.velocity = v_f;
+}
+
+// End of file
