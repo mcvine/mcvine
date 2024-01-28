@@ -86,6 +86,8 @@ simulation context is an instance of SimulationContext
             position = abs(position)
             orientation = abs(orientation)
         self.geometer.register(component, position, orientation)
+        component.abs_position = self.geometer.position(component)
+        component.abs_orientation = self.geometer.orientation(component)
         return
 
     def _createGeometer(self):
