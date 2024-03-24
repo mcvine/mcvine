@@ -39,8 +39,14 @@ class TestCase(unittest.TestCase):
         component2 = samplecomponent( 'sample', 'sampleassemblies/V-sqkernel/sampleassembly.xml' )
         # 3. monitor
         import mcstas2
+        mon_out_name ="sqkernel_test_iqe_monitor.dat"
         component3 = mcstas2.componentfactory('monitors', 'IQE_monitor')(
-            name='monitor', Ei=ei, Qmin=0, Qmax=8., Emin=-10., Emax=10., nQ=20, nE=20)
+            name='monitor',
+            Ei=ei,
+            Qmin=0, Qmax=8., nQ=20,
+            Emin=-10., Emax=10., nE=20,
+            filename=f"{mon_out_name}.dat"
+            )
         # instrument and geometer
         instrument = mcni.instrument( [component1, component2, component3] )
         geometer = mcni.geometer()
@@ -48,7 +54,7 @@ class TestCase(unittest.TestCase):
         geometer.register( component2, (0,0,1), (0,0,0) )
         geometer.register( component3, (0,0,1), (0,0,0) )
         # neutron buffer
-        N0 = 100000
+        N0 = 300000
         neutrons = mcni.neutron_buffer(N0)
         #
         # simulate
@@ -72,7 +78,7 @@ class TestCase(unittest.TestCase):
         #
         # check 2: use data in IQE monitor
         import histogram.hdf as hh
-        iqe = hh.load(os.path.join(workdir, 'stepNone', 'iqe_monitor.h5'))
+        iqe = hh.load(os.path.join(workdir, 'stepNone', f'{mon_out_name}.h5'))
         iq = iqe.sum('energy')
         Q = iq.Q; I = iq.I
         I0 = np.mean(I); I/=I0
