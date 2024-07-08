@@ -20,7 +20,7 @@ class TestCase(unittest.TestCase):
         import subprocess as sp
         cmd = "./journal_test_app.py --journal.debug.journal_test_app"
         out = sp.check_output(cmd, stderr=sp.STDOUT, shell=True)
-        expected = """ >> ./journal_test_app.py:22:main
+        expected = """journal_test_app.py:22:main
  -- journal_test_app(debug)
  -- hello
 """
