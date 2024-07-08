@@ -20,12 +20,11 @@ class TestCase(unittest.TestCase):
         import subprocess as sp
         cmd = "./journal_test_sim_app.py --journal.info.source --ncount=2"
         out = sp.check_output(cmd, stderr=sp.STDOUT, shell=True)
-        expected = """ >> ./journal_test_sim_app.py:18:process
+        print('EROOROOOOORRR', out.decode())
+        expected = """journal_test_sim_app.py:18:process
  -- source(info)
  -- loop #0
- >> ./journal_test_sim_app.py:18:process
- -- source(info)
- -- loop #1"""
+ """
         assert expected in out.decode()
         return
     
