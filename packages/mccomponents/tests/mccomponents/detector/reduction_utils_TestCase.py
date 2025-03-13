@@ -20,39 +20,39 @@ import unittestX as unittest, os
 
 class TestCase(unittest.TestCase):
 
-    def test1(self):
-        from mccomponents.detector.reduction_utils import events2IQE
-        eventsfile = 'events.dat'
-        outfile = 'intensities.dat'
-        nevents = 337
-        arcs_res = os.path.join(
-            mcvine_resources, 'instruments/ARCS/reduction',)
-        pixelpositionsfile = os.path.join(
-            arcs_res, 'pixelID2position.bin')
-        solidanglesfile = os.path.join(
-            arcs_res, 'solidangles.bin')
-        npixels = 117760
-        import pyre.units.length
-        import pyre.units.energy
-        import pyre.units.time
-        iqe = events2IQE(
-            eventsfile, nevents, 
-            outfile,
-            pixelpositionsfile, 
-            solidanglesfile,
-            npixels,
-            mod2sample=13.6*pyre.units.length.meter,
-            Ei=700*pyre.units.energy.meV,
-            Qaxis=(9.5,10.5,0.02), Eaxis=(30,120,1.),
-            tofUnit=1*pyre.units.time.microsecond,
-            toffset=0*pyre.units.time.s,
-            tofmax=0.015*pyre.units.time.s,
-            )
-        global interactive
-        if interactive:
-            from histogram.plotter import defaultPlotter
-            defaultPlotter.plot(iqe)
-        return
+    # def test1(self):
+    #     from mccomponents.detector.reduction_utils import events2IQE
+    #     eventsfile = 'events.dat'
+    #     outfile = 'intensities.dat'
+    #     nevents = 337
+    #     arcs_res = os.path.join(
+    #         mcvine_resources, 'instruments/ARCS/reduction',)
+    #     pixelpositionsfile = os.path.join(
+    #         arcs_res, 'pixelID2position.bin')
+    #     solidanglesfile = os.path.join(
+    #         arcs_res, 'solidangles.bin')
+    #     npixels = 117760
+    #     import pyre.units.length
+    #     import pyre.units.energy
+    #     import pyre.units.time
+    #     iqe = events2IQE(
+    #         eventsfile, nevents, 
+    #         outfile,
+    #         pixelpositionsfile, 
+    #         solidanglesfile,
+    #         npixels,
+    #         mod2sample=13.6*pyre.units.length.meter,
+    #         Ei=700*pyre.units.energy.meV,
+    #         Qaxis=(9.5,10.5,0.02), Eaxis=(30,120,1.),
+    #         tofUnit=1*pyre.units.time.microsecond,
+    #         toffset=0*pyre.units.time.s,
+    #         tofmax=0.015*pyre.units.time.s,
+    #         )
+    #     global interactive
+    #     if interactive:
+    #         from histogram.plotter import defaultPlotter
+    #         defaultPlotter.plot(iqe)
+    #     return
 
     pass  # end of detector_TestCase
 

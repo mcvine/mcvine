@@ -13,19 +13,19 @@ export VERSION_NEXT=`echo ${VERSION}| awk -F. -v OFS=. 'NF==1{print ++$NF}; NF>1
 echo $VERSION $VERSION_NEXT
 export MCVINE_CONDA_PKG_VER=${VERSION_NEXT}.dev
 echo $MCVINE_CONDA_PKG_VER
-cd builders/CI/conda-recipe
+cd ./conda-recipe
 
 # create meta.yaml
 ./create_meta_yaml $MCVINE_CONDA_PKG_VER $GIT_FULL_HASH
 grep version meta.yaml
 grep git_rev meta.yaml
 
-# configure openmpi to allow run as root
-if [ ${CI_NAME} == "aws-codebuild" ]; then
-    export OMPI_ALLOW_RUN_AS_ROOT=1
-    export OMPI_ALLOW_RUN_AS_ROOT_CONFIRM=1
-    echo "localhost slots=8" > $(dirname $(dirname $(which python)))/etc/openmpi-default-hostfile
-fi
+# # configure openmpi to allow run as root
+# if [ ${CI_NAME} == "aws-codebuild" ]; then
+#     export OMPI_ALLOW_RUN_AS_ROOT=1
+#     export OMPI_ALLOW_RUN_AS_ROOT_CONFIRM=1
+#     echo "localhost slots=8" > $(dirname $(dirname $(which python)))/etc/openmpi-default-hostfile
+# fi
 
 # build
 cat meta.yaml
