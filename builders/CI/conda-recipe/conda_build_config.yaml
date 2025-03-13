@@ -13,9 +13,7 @@ numpyext:
 bpext:
   - 0.1.4
 histogram:
-  - 0.3.9
-drchops:
-  - 2.0.3
+  - 0.4
 pyre:
   - 0.8
 structure:
@@ -37,8 +35,6 @@ pin_run_as_build:
   bpext:
     max_pin: x.x
   histogram:
-    max_pin: x.x
-  drchops:
     max_pin: x.x
   pyre:
     max_pin: x.x

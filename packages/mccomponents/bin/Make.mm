@@ -50,12 +50,12 @@ EXPORT_PYTHON_MODULES = \
 
 
 
-events2iqe: events2iqe.cc
-	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ events2iqe.cc $(PROJ_LIBRARIES)
+//events2iqe: events2iqe.cc
+//	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ events2iqe.cc $(PROJ_LIBRARIES)
 
 
 PROJ_CPPEXE = \
-	events2iqe \
+	//events2iqe \
 
 
 EXPORT_PYAPPS = \
