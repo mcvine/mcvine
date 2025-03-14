@@ -90,7 +90,7 @@ $ mt
 ## Build/install subpackages from source code
 During the mcvine-core building process, \<build\> and \<export\> directories are created and various artifacts are included.
 
-Mcvine-core's python packages are included in the <export>/lib64/ directory (*<export>/lib64/python3.10/site-packages/*). All mcvine packages should be installed at the same location. In every mcvine subpackage, ensure that the if *INSTALL_LIB_DIR* is defined in the CMakeLists.txt file, it points to lib64 (instead of lib) directory:
+Mcvine-core's python packages are included in the \<export\>/lib64/ directory (*\<export\>/lib64/python3.10/site-packages/*). All mcvine packages should be installed at the same location. In every mcvine subpackage, ensure that the if *INSTALL_LIB_DIR* is defined in the CMakeLists.txt file, it points to lib64 (instead of lib) directory:
 
 set(INSTALL_LIB_DIR lib**64** CACHE PATH "Installation directory for libraries")
 
