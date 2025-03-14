@@ -32,8 +32,6 @@ cat meta.yaml
 cat conda_build_config.yaml
 conda build .
 
-<<<<<<< HEAD
-=======
 # upload
 conda env list
 conda install anaconda-client
