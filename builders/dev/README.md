@@ -49,7 +49,7 @@ $ source activate mcvine-developer
 
 ## Run envs var shell script
 
-In thhis directory's [envs.sh]](envs.sh) file update the *MCVINE_PKG_ROOT_DIR* variable to point to the project location, 
+In thhis directory's [envs.sh](envs.sh) file update the *MCVINE_PKG_ROOT_DIR* variable to point to the project location, 
 example: MCVINE_PKG_ROOT_DIR=$HOME/MCVine
 
 *You can either use the same envs.sh (and avoid commit/push any changes related to the directory path) or copy this one.
