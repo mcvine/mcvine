@@ -1,0 +1,51 @@
+name: mcvine-developer
+channels:
+  - neutrons/label/rc
+  - neutrons
+  - mantid
+  - mcvine
+  - conda-forge
+  - diffpy
+dependencies:
+  - python
+  - python_abi
+  - mantid =6.*
+  - pylatex
+  - jupyter
+  - numpy
+  - pillow
+  - scipy
+  - traitlets
+  - boost
+  - cmake
+  - danse.ins.dsm
+  - danse.ins.numpyext
+  - danse.ins.bpext
+  - diffpy.structure
+  - histogram
+  - pyre == 0.8.3
+  - gsl
+  - gcc_linux-64 =7.*
+  - gxx_linux-64
+  - h5py
+  - libgcc-ng
+  - libstdcxx-ng
+  - matplotlib
+  - mcpl
+  - mpi4py
+  - periodictable
+  - phonopy
+  - pip
+  - pip:
+    - ipywe == 0.1.3a1
+
+
+
+ # histogram version update here histogram [>=0.3.9,<0.4.0a0]: 
+ # 1. mcvine-core 
+ #    https://github.com/mcvine/conda-recipes/blob/master/mcvine-core/meta.yaml 
+ #    https://github.com/mcvine/conda-recipes/blob/master/mcvine-core/conda_build_config.yaml
+ # release tag https://github.com/mcvine/mcvine/blob/master/CMakeLists.txt
+ # 2. drchop 
+ #    https://github.com/mcvine/conda-recipes/blob/fbdcb0c22e692afc0477f11014b3dc522bdd9f85/danse/drchops/meta.yaml  
+ #    https://github.com/mcvine/conda-recipes/blob/fbdcb0c22e692afc0477f11014b3dc522bdd9f85/danse/drchops/conda_build_config.yaml
