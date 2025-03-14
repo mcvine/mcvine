@@ -41,8 +41,5 @@ conda config --set anaconda_upload no
 CONDA_ROOT_PREFIX=$(realpath $(dirname `which conda`)/..)
 echo $CONDA_ROOT_PREFIX
 anaconda -t $ANACONDA_UPLOAD_TOKEN upload --force --label unstable \
-<<<<<<< HEAD
          $CONDA_ROOT_PREFIX/conda-bld/linux-64/mcvine-core-$MCVINE_CONDA_PKG_VER-*.conda
-=======
-         $CONDA_ROOT_PREFIX/conda-bld/linux-64/mcvine-core-$MCVINE_CONDA_PKG_VER-*.tar.bz2
->>>>>>> 657c43a6 (building process documentation, uncomment ci)
+
