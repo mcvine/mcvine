@@ -10,7 +10,7 @@ dependencies:
   - python
   - python_abi
   - mantid =6.*
-  - pylatex
+  #- pylatex
   - jupyter
   - numpy
   - pillow
