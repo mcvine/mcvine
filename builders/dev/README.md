@@ -91,7 +91,7 @@ During the mcvine-core building process, <build> and <export> directories are cr
 
 Mcvine-core's python packages are included in the <export>/lib64/ directory (*<export>/lib64/python3.10/site-packages/*). All mcvine packages should be installed at the same location. In every mcvine subpackage, ensure that the if *INSTALL_LIB_DIR* is defined in the CMakeLists.txt file, it points to lib64 (instead of lib) directory:
 
-`set(INSTALL_LIB_DIR lib`**`64`**` CACHE PATH "Installation directory for libraries")`
+set(INSTALL_LIB_DIR lib`**`64`**` CACHE PATH "Installation directory for libraries")
 
 
 Regarding the mcvine subpackages listed above, update the CMakeLists.txt of: phonon, workflow and ui with the above change.
