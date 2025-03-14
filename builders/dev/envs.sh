@@ -38,10 +38,12 @@ echo $PY_SITE_PKG
 # . ~/.ssh/start-agent
 
 # paths
-export MCVINE_SRC=$HOME/dv/mcvine/mcvine
-export MCVINE_RESOURCES=$HOME/dv/mcvine/resources
-export BUILD_ROOT=$HOME/dv/mcvine/build-$PYVER
-export MCVINE_EXPORT_ROOT=$HOME/dv/mcvine/export-$PYVER
+# update the MCVINE_PKG_ROOT_DIR to point to the directory where mcvine, recources, and other subpackages are cloned at the same level (next to each other)
+MCVINE_PKG_ROOT_DIR=$HOME/Projects/MCVine
+export MCVINE_SRC=$MCVINE_PKG_ROOT_DIR/mcvine
+export MCVINE_RESOURCES=$MCVINE_PKG_ROOT_DIR/resources
+export BUILD_ROOT=$MCVINE_PKG_ROOT_DIR/build-$PYVER
+export MCVINE_EXPORT_ROOT=$MCVINE_PKG_ROOT_DIR/export-$PYVER
 MCVINE_SRC_MCSTAS_COMPONENTS_INTERMEDIATE_DIR=$MCVINE_SRC/packages/legacycomponents/mcstas2/components
 
 # helper functions
@@ -81,10 +83,24 @@ alias mm="cd $BUILD_ROOT; cmake ../mcvine && make -j $CORES && make -j $CORES in
 alias mi="cd $BUILD_ROOT; make install; cd -"
 # test
 alias mt='cd $BUILD_ROOT; env CTEST_OUTPUT_ON_FAILURE=1 make test ARGS="-j$CORES"; cd -'
-# build subpackages
-alias mm_phonon="mcvine_build_subpkg $HOME/dv/mcvine/phonon $HOME/dv/mcvine/phonon/build"
-alias mm_instruments="mcvine_build_subpkg $HOME/dv/mcvine/instruments $HOME/dv/mcvine/instruments/build"
-alias mm_workflow="mcvine_build_subpkg $HOME/dv/mcvine/workflow $HOME/dv/mcvine/workflow/build"
+
+# build subpackages in MCVINE_PKG_ROOT_DIR, including mantid2mcvine
+# currently python site-packages are installed in the <build> directory at lib64/
+# some of the following subpackages have lib64 and other lib as the python lib directory
+# all mcvine-packages should be installed at the same libdir; the process followed is for lib64/
+# the opposite subpackages will need to be updated for the lib/ case
+# build subpackages from source code
+# git clone them next to mcvine-core (https://github.com/mcvine/mcvine.git)
+# in phonon source code update the CMakeLists.txt INSTALL_LIB_DIR lib64
+alias mm_phonon="mcvine_build_subpkg $MCVINE_PKG_ROOT_DIR/phonon $MCVINE_PKG_ROOT_DIR/phonon/build"
+alias mm_instruments="mcvine_build_subpkg $MCVINE_PKG_ROOT_DIR/instruments $MCVINE_PKG_ROOT_DIR/instruments/build"
+#in workflow source code update the CMakeLists.txt INSTALL_LIB_DIR lib64
+alias mm_workflow="mcvine_build_subpkg $MCVINE_PKG_ROOT_DIR/workflow $MCVINE_PKG_ROOT_DIR/workflow/build"
+#in ui source code update the CMakeLists.txt INSTALL_LIB_DIR lib64
+alias mm_ui="mcvine_build_subpkg $MCVINE_PKG_ROOT_DIR/ui $MCVINE_PKG_ROOT_DIR/ui/build"
+#for mantd2mcvine installation from source code
+#cd mantid2mcvine
+#python setup.py install --prefix=$MCVINE_DIR/ --install-lib=$MCVINE_DIR/lib64/python$PYVER/site-packages/ --single-version-externally-managed --record record.txt
 
 # for usage
 export MCVINE_DIR=$MCVINE_EXPORT_ROOT
@@ -92,3 +108,11 @@ export EXPORT_ROOT=$MCVINE_EXPORT_ROOT # pyre etc
 export PATH=$MCVINE_DIR/bin:$PATH
 export PYTHONPATH=$MCVINE_DIR/lib64/python$PYVER/site-packages:$PYTHONPATH
 export LD_LIBRARY_PATH=$MCVINE_DIR/lib64:$LD_LIBRARY_PATH
+
+echo $LD_LIBRARY_PATH
+
+
+#notes
+# since this is a local build/installation
+# . envs.sh needs to be executed on the same terminal before running any other scripts that use the local build of mcvine
+# the environmental variables above are set to point to the build directory
