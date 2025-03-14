@@ -96,7 +96,8 @@ set(INSTALL_LIB_DIR lib**64** CACHE PATH "Installation directory for libraries")
 
 
 Regarding the mcvine subpackages listed above, update the CMakeLists.txt of: phonon, workflow and ui with the above change.
-In case a mcvine supackage is installed as a python package set the installation library flag to the lib64 directory, e.g. for mantid2mcvine: 
+In case a mcvine supackage is installed as a python package set the installation library flag to the lib64 directory, e.g. for mantid2mcvine,:
+
 --install-lib=$MCVINE_DIR/lib64/python$PYVER/site-packages/
 
 *If lib/ is the preferable path, the lib64 references in mcvine-core/packages should be updated, instead. (not tested)
@@ -109,7 +110,7 @@ $ mm_workflow
 $ mm_ui
 ```
 
-For mantid2mcvine enter the repository's source code
+For mantid2mcvine enter the repository's source code and install the python package
 ```
 $ cd mantid2mcvine
 $ python setup.py install --prefix=$MCVINE_DIR/ --install-lib=$MCVINE_DIR/lib64/python$PYVER/site-packages/ --single-version-externally-managed --record record.txt
