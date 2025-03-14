@@ -89,7 +89,6 @@ alias mt='cd $BUILD_ROOT; env CTEST_OUTPUT_ON_FAILURE=1 make test ARGS="-j$CORES
 # some of the following subpackages have lib64 and other lib as the python lib directory
 # all mcvine-packages should be installed at the same libdir; the process followed is for lib64/
 # the opposite subpackages will need to be updated for the lib/ case
-# build subpackages from source code
 # git clone them next to mcvine-core (https://github.com/mcvine/mcvine.git)
 # in phonon source code update the CMakeLists.txt INSTALL_LIB_DIR lib64
 alias mm_phonon="mcvine_build_subpkg $MCVINE_PKG_ROOT_DIR/phonon $MCVINE_PKG_ROOT_DIR/phonon/build"

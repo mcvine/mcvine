@@ -13,19 +13,19 @@ export VERSION_NEXT=`echo ${VERSION}| awk -F. -v OFS=. 'NF==1{print ++$NF}; NF>1
 echo $VERSION $VERSION_NEXT
 export MCVINE_CONDA_PKG_VER=${VERSION_NEXT}.dev
 echo $MCVINE_CONDA_PKG_VER
-cd ./conda-recipe
+cd builders/CI/conda-recipe
 
 # create meta.yaml
 ./create_meta_yaml $MCVINE_CONDA_PKG_VER $GIT_FULL_HASH
 grep version meta.yaml
 grep git_rev meta.yaml
 
-# # configure openmpi to allow run as root
-# if [ ${CI_NAME} == "aws-codebuild" ]; then
-#     export OMPI_ALLOW_RUN_AS_ROOT=1
-#     export OMPI_ALLOW_RUN_AS_ROOT_CONFIRM=1
-#     echo "localhost slots=8" > $(dirname $(dirname $(which python)))/etc/openmpi-default-hostfile
-# fi
+# configure openmpi to allow run as root
+if [ ${CI_NAME} == "aws-codebuild" ]; then
+    export OMPI_ALLOW_RUN_AS_ROOT=1
+    export OMPI_ALLOW_RUN_AS_ROOT_CONFIRM=1
+    echo "localhost slots=8" > $(dirname $(dirname $(which python)))/etc/openmpi-default-hostfile
+fi
 
 # build
 cat meta.yaml
@@ -41,4 +41,8 @@ conda config --set anaconda_upload no
 CONDA_ROOT_PREFIX=$(realpath $(dirname `which conda`)/..)
 echo $CONDA_ROOT_PREFIX
 anaconda -t $ANACONDA_UPLOAD_TOKEN upload --force --label unstable \
+<<<<<<< HEAD
          $CONDA_ROOT_PREFIX/conda-bld/linux-64/mcvine-core-$MCVINE_CONDA_PKG_VER-*.conda
+=======
+         $CONDA_ROOT_PREFIX/conda-bld/linux-64/mcvine-core-$MCVINE_CONDA_PKG_VER-*.tar.bz2
+>>>>>>> 657c43a6 (building process documentation, uncomment ci)
