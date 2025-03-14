@@ -62,9 +62,10 @@ $ . envs.sh
 Add it to .bashrc if needed.
 
 The envs var shell script sets environment variables and command aliases to build mcvine-core and the mcvine subpackages listed above targeting a local path build/installation.
-Provided no .bashrc configurations added, the above command should be executed in the envs.sh directory on the same terminal before using mcvine.
+Provided no .bashrc configurations added, the above command should be executed in the envs.sh directory on the same conda environment and terminal before using mcvine.
 
 ## Build and install mcvine-core for the first time
+
 ```
 $ build0
 ```
@@ -86,8 +87,8 @@ $ mt
 ```
 *Currently 7/299 tests are failing: [jclemons555-README](https://github.com/jclemons555/mcvine/blob/master/README.md)
 
-## Build subpackages from source code
-During the mcvine-core building process, <build> and <export> directories are created in which various artifacts are included.
+## Build/install subpackages from source code
+During the mcvine-core building process, <build> and <export> directories are created and various artifacts are included.
 
 Mcvine-core's python packages are included in the <export>/lib64/ directory (*<export>/lib64/python3.10/site-packages/*). All mcvine packages should be installed at the same location. In every mcvine subpackage, ensure that the if *INSTALL_LIB_DIR* is defined in the CMakeLists.txt file, it points to lib64 (instead of lib) directory:
 
@@ -100,7 +101,7 @@ In case a mcvine supackage is installed as a python package set the installation
 
 *If lib/ is the preferable path, the lib64 references in mcvine-core/packages should be updated, instead. (not tested)
 
-After the lib directories are set, run the following commands inside the <build> directory to build phonon, instruments, workflow and ui
+After the lib directories are set, run the following commands to build phonon, instruments, workflow and ui
 ```
 $ mm_phonon
 $ mm_instruments
@@ -108,7 +109,7 @@ $ mm_workflow
 $ mm_ui
 ```
 
-For mantid2mcvine
+For mantid2mcvine enter the repository's source code
 ```
 $ cd mantid2mcvine
 $ python setup.py install --prefix=$MCVINE_DIR/ --install-lib=$MCVINE_DIR/lib64/python$PYVER/site-packages/ --single-version-externally-managed --record record.txt
