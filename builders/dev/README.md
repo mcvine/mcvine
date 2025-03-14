@@ -17,8 +17,8 @@ $ git clone git@github.com:mcvine/ui.git
 $ git clone git@github.com:mcvine/mantid2mcvine.git
 ```
 
-If only mcvine-core is need, mcvine.git can only be cloned and the rest can be skipped.
-However, all the above are required for cases like here [MCViNE training with jupyter notebooks](https://github.com/mcvine/training)
+If only mcvine-core is need, mcvine.git should be cloned and the rest can be skipped.
+However, all the above are required for cases like here [MCViNE training with jupyter notebooks](https://github.com/mcvine/training).
 May need to clone other mcvine subpackages.
 
 ## Create a conda environment with the required dependencies
@@ -64,8 +64,6 @@ Add it to .bashrc if needed.
 The envs var shell script sets environment variables and command aliases to build mcvine-core and the mcvine subpackages listed above targeting a local path build/installation.
 Provided no .bashrc configurations added, the above command should be executed in the envs.sh directory on the same terminal before using mcvine.
 
-During the building process, build and export directories are created in which various artifacts are included.
-
 ## Build and install mcvine-core for the first time
 ```
 $ build0
@@ -89,7 +87,21 @@ $ mt
 *Currently 7/299 tests are failing: [jclemons555-README](https://github.com/jclemons555/mcvine/blob/master/README.md)
 
 ## Build subpackages from source code
-The following commands build phonon, instruments, workflow and ui in the same build directories as the mcvine-core
+During the mcvine-core building process, <build> and <export> directories are created in which various artifacts are included.
+
+Mcvine-core's python packages are included in the <export>/lib64/ directory (*<export>/lib64/python3.10/site-packages/*). All mcvine packages should be installed at the same location. In every mcvine subpackage, ensure that the if *INSTALL_LIB_DIR* is defined in the CMakeLists.txt file, it points to lib64 (instead of lib) directory:
+
+```
+set(INSTALL_LIB_DIR lib```**```64````**``` CACHE PATH "Installation directory for libraries")
+```
+
+Regarding the mcvine subpackages listed above, update the CMakeLists.txt of: phonon, workflow and ui with the above change.
+In case a mcvine supackage is installed as a python package set the installation library flag to the lib64 directory, e.g. for mantid2mcvine: 
+--install-lib=$MCVINE_DIR/lib64/python$PYVER/site-packages/
+
+*If lib/ is the preferable path, the lib64 references in mcvine-core/packages should be updated, instead. (not tested)
+
+After the lib directories are set, run the following commands inside the <build> directory to build phonon, instruments, workflow and ui
 ```
 $ mm_phonon
 $ mm_instruments
@@ -102,18 +114,4 @@ For mantid2mcvine
 $ cd mantid2mcvine
 $ python setup.py install --prefix=$MCVINE_DIR/ --install-lib=$MCVINE_DIR/lib64/python$PYVER/site-packages/ --single-version-externally-managed --record record.txt
 ```
-
-Mcvine-core's python packages are included in the <export>/lib64/ directory (*<export>/lib64/python3.10/site-packages/*). All mcvine packages should be installed at the same location.
-In every mcvine subpackage, ensure that the if *INSTALL_LIB_DIR* is defined in the CMakeLists.txt file, it points to lib64 (instead of lib) directory:
-
-```
-set(INSTALL_LIB_DIR lib`**`64`**` CACHE PATH "Installation directory for libraries")
-```
-
-Regarding the mcvine subpackages listed above, update the CMakeLists.txt of: phonon, workflow and ui with the above line
-In case a mcvine supackage is installed as a python package set the installation library flag to the lib64 directory, e.g. for mantid2mcvine: 
---install-lib=$MCVINE_DIR/lib64/python$PYVER/site-packages/
-
-If lib/ is the preferable path, the lib64 references in mcvine-core/packages should be updated, instead. (not tested)
-
 
