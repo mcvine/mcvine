@@ -1,5 +1,5 @@
 # Setup development environment
-In this section, we describe the process of installing mcvine-core and related mcvine subpackages optionally in the same conda environment and build directories.
+In this section, we describe the process of installing mcvine-core and related mcvine subpackages in the same conda environment and build directories.
 
 ## Checkout src in the local directory
 Create a directory and clone inside the mcvine-core and any other mcvine subpackages needed.
