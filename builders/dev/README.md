@@ -23,10 +23,9 @@ May need to clone other mcvine subpackages.
 
 ## Create a conda environment with the required dependencies
 
-In the mcvine.git repository navigate
+In the mcvine.git repository navigate in the root directory
 
 ```
-$ cd builders/
 $ conda env create -f mcvine-dev.yml
 $ conda activate mcvine-developer
 ```
