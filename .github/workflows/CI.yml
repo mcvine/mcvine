@@ -38,13 +38,13 @@ jobs:
           auto-update-conda: true
           environment-file: builders/mcvine-dev.yml
           condarc: |
-          channels:
-              - neutrons/label/rc
-              - neutrons
-              - mantid
-              - mcvine
-              - conda-forge
-              - diffpy
+            channels:
+                - neutrons/label/rc
+                - neutrons
+                - mantid
+                - mcvine
+                - conda-forge
+                - diffpy
       - name: Conda info
         shell: bash -l {0}
         run: conda info
