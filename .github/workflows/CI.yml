@@ -36,22 +36,21 @@ jobs:
       - uses: conda-incubator/setup-miniconda@v2
         with:
           auto-update-conda: true
-          python-version: 3.8
+          environment-file: builders/mcvine-dev.yml
+          condarc: |
+          channels:
+              - neutrons/label/rc
+              - neutrons
+              - mantid
+              - mcvine
+              - conda-forge
+              - diffpy
       - name: Conda info
         shell: bash -l {0}
         run: conda info
       - name: Conda env list
         shell: pwsh
         run: conda env list
-      - name: conda add channels
-        run: |
-          conda config --add channels conda-forge
-          conda config --add channels diffpy
-          conda config --add channels mcvine
-      - name: conda install conda-build
-        shell: pwsh
-        run: |
-          conda install -n root conda-build
       - name: checks
         shell: pwsh
         run: |
