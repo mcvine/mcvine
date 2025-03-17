@@ -26,7 +26,7 @@ May need to clone other mcvine subpackages.
 In the mcvine.git repository navigate
 
 ```
-$ cd builders/dev/
+$ cd builders/
 $ conda env create -f mcvine-dev.yml
 $ conda activate mcvine-developer
 ```
@@ -57,6 +57,7 @@ example: MCVINE_PKG_ROOT_DIR=$HOME/MCVine
 Run the script on the terminal
 
 ```
+$ cd builders/dev/
 $ . envs.sh
 ```
 Add it to .bashrc if needed.

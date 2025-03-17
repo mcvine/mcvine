@@ -17,8 +17,13 @@
 #   - first time or restart from fresh: build0
 #   - later builds: mm
 
+############### User Configurations ###############
 # build parameter
 CORES=12
+# update the MCVINE_PKG_ROOT_DIR to point to the directory where mcvine, recources, and other subpackages are cloned at the same level (next to each other)
+MCVINE_PKG_ROOT_DIR=$HOME/Projects/MCVine
+############### End User Configurations ###############
+
 
 PREFIX=$CONDA_PREFIX
 PYVER_MAJOR=`python -c "from __future__ import print_function; import sys; print(sys.version_info[0])"`
@@ -38,8 +43,6 @@ echo $PY_SITE_PKG
 # . ~/.ssh/start-agent
 
 # paths
-# update the MCVINE_PKG_ROOT_DIR to point to the directory where mcvine, recources, and other subpackages are cloned at the same level (next to each other)
-MCVINE_PKG_ROOT_DIR=$HOME/Projects/MCVine
 export MCVINE_SRC=$MCVINE_PKG_ROOT_DIR/mcvine
 export MCVINE_RESOURCES=$MCVINE_PKG_ROOT_DIR/resources
 export BUILD_ROOT=$MCVINE_PKG_ROOT_DIR/build-$PYVER
