@@ -27,6 +27,10 @@ if [ ${CI_NAME} == "aws-codebuild" ]; then
     echo "localhost slots=8" > $(dirname $(dirname $(which python)))/etc/openmpi-default-hostfile
 fi
 
+#create and activate conda environment
+conda env create -f mcvine-dev.yml
+conda activate mcvine-developer
+
 # build
 cat meta.yaml
 cat conda_build_config.yaml
