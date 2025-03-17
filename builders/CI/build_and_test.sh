@@ -34,11 +34,10 @@ conda build .
 
 # upload
 conda env list
-#conda install anaconda-client
 conda list
 which anaconda
-conda config --set anaconda_upload no
-CONDA_ROOT_PREFIX=$(realpath $(dirname `which conda`)/..)
-echo $CONDA_ROOT_PREFIX
-anaconda -t $ANACONDA_UPLOAD_TOKEN upload --force --label unstable \
-         $CONDA_ROOT_PREFIX/conda-bld/linux-64/mcvine-core-$MCVINE_CONDA_PKG_VER-*.conda
+#conda config --set anaconda_upload no
+#CONDA_ROOT_PREFIX=$(realpath $(dirname `which conda`)/..)
+#echo $CONDA_ROOT_PREFIX
+#anaconda -t $ANACONDA_UPLOAD_TOKEN upload --force --label unstable \
+#         $CONDA_ROOT_PREFIX/conda-bld/linux-64/mcvine-core-$MCVINE_CONDA_PKG_VER-*.conda
