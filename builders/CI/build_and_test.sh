@@ -34,7 +34,7 @@ conda build .
 
 # upload
 conda env list
-conda install anaconda-client
+#conda install anaconda-client
 conda list
 which anaconda
 conda config --set anaconda_upload no
