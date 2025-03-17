@@ -28,7 +28,7 @@ if [ ${CI_NAME} == "aws-codebuild" ]; then
 fi
 
 #create and activate conda environment
-conda env create -f mcvine-dev.yml
+conda env create -f ../mcvine-dev.yml
 conda activate mcvine-developer
 
 # build
