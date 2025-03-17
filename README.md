@@ -5,8 +5,8 @@
 
 # MCViNE: Monte Carlo VIrtual Neutron Experiment
 
-* Homepage: http://www.mcvine.org
-* Examples: http://www.mcvine.org/examples.html
-* Publications: http://www.mcvine.org/publications.html
+* Homepage: http://mcvine.github.io
+* Examples: http://mcvine.github.io/examples.html
+* Publications: http://mcvine.github.io/publications.html
 * Training: https://github.com/mcvine/training
 * Development: https://github.com/mcvine/devel
