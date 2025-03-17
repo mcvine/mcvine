@@ -36,15 +36,28 @@ jobs:
       - uses: conda-incubator/setup-miniconda@v3
         with:
           auto-update-conda: true
-          environment-file: environment.yml
+          environment-file: builders/mcvine-dev.yml
           condarc: |
             channels:
-                - mantid
-                - mcvine
-                - conda-forge
+              - neutrons/label/rc
+              - neutrons
+              - mantid
+              - mcvine
+              - conda-forge
+              - diffpy
       - name: Conda info
         shell: bash -l {0}
         run: conda info
+      - name: Conda env list
+        shell: pwsh
+        run: conda env list
+      - name: checks
+        shell: pwsh
+        run: |
+          conda env list
+          pwd
+          ls
+
       # build and test (have to use pwsh!)
       - name: build
         shell: pwsh

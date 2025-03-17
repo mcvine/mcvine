@@ -13,11 +13,6 @@ export VERSION_NEXT=`echo ${VERSION}| awk -F. -v OFS=. 'NF==1{print ++$NF}; NF>1
 echo $VERSION $VERSION_NEXT
 export MCVINE_CONDA_PKG_VER=${VERSION_NEXT}.dev
 echo $MCVINE_CONDA_PKG_VER
-
-#create and activate conda environment
-conda env create -f builders/mcvine-dev.yml
-conda activate mcvine-developer
-
 cd builders/CI/conda-recipe
 
 # create meta.yaml
