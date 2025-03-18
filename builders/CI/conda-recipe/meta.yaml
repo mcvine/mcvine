@@ -1,0 +1,73 @@
+package:
+  name: mcvine-core
+  version: 1.4.13.dev
+
+source:
+  git_rev: be6b2eaf3a29ce6dac8d184c13ac09c7b2980a27
+  git_url: https://github.com/mcvine/mcvine.git
+
+requirements:
+  build:
+    - {{ compiler('cxx') }} 7 # [linux]
+    - cmake
+  host:
+    - python                   {{ python }}
+    - setuptools
+    - pyyaml
+    - numpy                    {{ numpy }}
+    - psutil
+    - h5py
+    - mpi4py
+    - openmpi                  {{ openmpi }}
+    - gsl                      {{ gsl }}
+    - boost                    {{ boost }}
+    - mcpl
+    - pyre                     {{ pyre }}
+    - journal                  {{ journal }}
+    - danse.ins.dsm
+    - danse.ins.numpyext       {{ numpyext }}
+    - danse.ins.bpext          {{ bpext }}
+    - histogram                {{ histogram }}
+    - diffpy.Structure         {{ structure }}
+    - periodictable
+    - mcvine-resources
+
+  run:
+    - {{ compiler('cxx') }} 7 # [linux]
+    - cmake
+    - python                   {{ python }}
+    - setuptools
+    - pyyaml
+    - numpy                    {{ numpy }}
+    - psutil
+    - h5py
+    - mpi4py
+    - openmpi                  {{ openmpi }}
+    - gsl                      {{ gsl }}
+    - boost                    {{ boost }}
+    - mcpl
+    - pyre                     {{ pyre }}
+    - journal                  {{ journal }}
+    - danse.ins.dsm
+    - danse.ins.numpyext       {{ numpyext }}
+    - danse.ins.bpext          {{ bpext }}
+    - histogram                {{ histogram }}
+    - diffpy.Structure         {{ structure }}
+    - periodictable
+    - mcvine-resources
+    - phonopy
+    - scipy
+    - matplotlib
+
+build:
+  script_env:
+    - CORES
+
+test:
+  imports:
+    - mcvine
+  
+about:
+  home: http://mcvine.org
+  license:
+  license_file:
