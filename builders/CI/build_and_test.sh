@@ -30,7 +30,7 @@ fi
 # build
 cat meta.yaml
 cat conda_build_config.yaml
-conda build --python $PYTHON_VERSION .
+conda build .
 
 # upload
 conda env list
