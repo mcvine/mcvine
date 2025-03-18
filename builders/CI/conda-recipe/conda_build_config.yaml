@@ -13,7 +13,7 @@ numpyext:
 bpext:
   - 0.1.4
 histogram:
-  - 0.4
+  - 0.4.*
 pyre:
   - 0.8
 structure:
