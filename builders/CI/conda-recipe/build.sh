@@ -12,7 +12,7 @@ PYVER=${PYVER_MAJOR}.${PYVER_MINOR}
 echo "PYVER_MAJOR" $PYVER_MAJOR
 echo "PYVER_MINOR" $PYVER_MINOR
 echo "PYVER" $PYVER
-echo "PREFIX" $PREFIX
+echo "PREFIX" ${PREFIX}
 PY_INCLUDE_DIR=${PREFIX}/include/`ls ${PREFIX}/include/|grep python${PYVER}`
 PY_SHAREDLIB=${PREFIX}/lib/`ls ${PREFIX}/lib/|grep libpython${PYVER}[a-z]*.so$`
 echo $PY_INCLUDE_DIR
