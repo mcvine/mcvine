@@ -25,7 +25,7 @@ dependencies:
   - danse.ins.dsm
   - danse.ins.numpyext
   - danse.ins.bpext
-  - diffpy.structure
+  - diffpy.Structure
   - histogram
   - pyre == 0.8.3
   - gsl
