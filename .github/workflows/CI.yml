@@ -50,7 +50,7 @@ jobs:
       - name: Conda info
         shell: bash -l {0}
         run: conda info
-      - name: Check out source code
+      #- name: Check out source code
         #uses: actions/checkout@v4
         #with:
         #  fetch-depth: 0
