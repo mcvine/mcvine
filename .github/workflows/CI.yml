@@ -25,7 +25,8 @@ jobs:
       #- name: install glut
       #  run: sudo apt-get update && sudo apt-get install -y procps freeglut3-dev libglu1-mesa unzip
       # setup conda
-      - uses: conda-incubator/setup-miniconda@v2
+      - uses: actions/checkout@v4
+      - uses: mamba-org/setup-micromamba@v2
         with:
           auto-update-conda: true
           environment-file: mcvine-dev.yml
@@ -41,7 +42,7 @@ jobs:
         shell: bash -l {0}
         run: conda info
       - name: Check out source code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - name: Branch name
