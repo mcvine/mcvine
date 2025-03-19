@@ -55,6 +55,7 @@ jobs:
       - name: build / test / upload
         shell: pwsh
         run: |
+          echo $CONDA_PREFIX
           ./builders/CI/build_and_test.sh
         env:
           ANACONDA_UPLOAD_TOKEN: ${{ secrets.ANACONDA_TOKEN }}
