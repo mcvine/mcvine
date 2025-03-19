@@ -20,7 +20,6 @@ jobs:
       fail-fast: false
       matrix:
         os: ["ubuntu-latest"]
-        #python-version: ["3.10"]
     steps:
       - name: install glut
         run: sudo apt-get update && sudo apt-get install -y procps freeglut3-dev libglu1-mesa unzip
@@ -56,4 +55,3 @@ jobs:
           ./builders/CI/build_and_test.sh
         env:
           ANACONDA_UPLOAD_TOKEN: ${{ secrets.ANACONDA_TOKEN }}
-          #PYTHON_VERSION: ${{ matrix.python-version }}

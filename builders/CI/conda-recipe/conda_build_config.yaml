@@ -16,8 +16,6 @@ histogram:
   - 0.4.*
 pyre:
   - 0.8
-journal:
-  - 0.8.4  
 structure:
   - 3.0.1
 
@@ -39,8 +37,6 @@ pin_run_as_build:
   histogram:
     max_pin: x.x
   pyre:
-    max_pin: x.x
-  journal:
-    max_pin: x.x    
+    max_pin: x.x   
   structure:
     max_pin: x.x
