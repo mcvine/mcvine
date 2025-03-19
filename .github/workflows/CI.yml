@@ -45,13 +45,15 @@ jobs:
                 - mcvine
                 - conda-forge
                 - diffpy
+                with:
+          fetch-depth: 0        
       - name: Conda info
         shell: bash -l {0}
         run: conda info
       - name: Check out source code
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+        #uses: actions/checkout@v4
+        #with:
+        #  fetch-depth: 0
       - name: Branch name
         run: echo running on branch ${GITHUB_REF##*/}        
       # build and test (have to use pwsh!)
