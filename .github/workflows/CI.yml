@@ -56,11 +56,9 @@ jobs:
       - name: Branch name
         run: echo running on branch ${GITHUB_REF##*/}        
       # build and test (have to use pwsh!)
-      - name: build
-        shell: pwsh
+      - name: build / test / upload
+        #shell: pwsh
         run: |
-          conda init
-          conda activate mcvine-developer
           echo $CONDA_PREFIX
           ./builders/CI/build_and_test.sh
       - name: Deploy to Anaconda
