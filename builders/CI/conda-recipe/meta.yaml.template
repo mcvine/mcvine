@@ -23,7 +23,6 @@ requirements:
     - boost                    {{ boost }}
     - mcpl
     - pyre                     {{ pyre }}
-    - journal                  {{ journal }}
     - danse.ins.dsm
     - danse.ins.numpyext       {{ numpyext }}
     - danse.ins.bpext          {{ bpext }}
@@ -47,7 +46,6 @@ requirements:
     - boost                    {{ boost }}
     - mcpl
     - pyre                     {{ pyre }}
-    - journal                  {{ journal }}
     - danse.ins.dsm
     - danse.ins.numpyext       {{ numpyext }}
     - danse.ins.bpext          {{ bpext }}
