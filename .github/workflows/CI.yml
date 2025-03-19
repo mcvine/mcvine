@@ -59,6 +59,7 @@ jobs:
       - name: build
         shell: pwsh
         run: |
+          conda activate mcvine-developer
           echo $CONDA_PREFIX
           ./builders/CI/build_and_test.sh
       - name: Deploy to Anaconda
