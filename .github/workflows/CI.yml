@@ -45,7 +45,6 @@ jobs:
                 - mcvine
                 - conda-forge
                 - diffpy
-                with:
           fetch-depth: 0        
       - name: Conda info
         shell: bash -l {0}
