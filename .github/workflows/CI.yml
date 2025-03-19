@@ -19,6 +19,7 @@ jobs:
     strategy:
       fail-fast: false
     steps:
+<<<<<<< HEAD
       - name: system update
         run:
           sudo apt-get update && sudo apt-get upgrade -y
@@ -32,6 +33,10 @@ jobs:
       - name: Branch name
         run: echo running on branch ${GITHUB_REF##*/}
 
+=======
+      #- name: install glut
+      #  run: sudo apt-get update && sudo apt-get install -y procps freeglut3-dev libglu1-mesa unzip
+>>>>>>> a0eb0088 (github action step reordering, conda package creation first, glut related packages in the conda environment)
       # setup conda
       - uses: conda-incubator/setup-miniconda@v3
         with:
@@ -48,6 +53,12 @@ jobs:
       - name: Conda info
         shell: bash -l {0}
         run: conda info
+      - name: Check out source code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Branch name
+        run: echo running on branch ${GITHUB_REF##*/}        
       # build and test (have to use pwsh!)
       - name: build
         shell: pwsh
