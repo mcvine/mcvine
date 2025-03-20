@@ -64,4 +64,4 @@ jobs:
           CONDA_LABEL="dev"
           if [ "${IS_RC}" = "true" ]; then CONDA_LABEL="rc"; fi
           echo pushing ${{ github.ref }} with label $CONDA_LABEL
-          echo "DONEEEE"
+          anaconda upload --label $CONDA_LABEL $CONDA_ROOT_PREFIX/conda-bld/linux-64/mcvine-core-$MCVINE_CONDA_PKG_VER-*.conda
