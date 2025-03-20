@@ -41,6 +41,4 @@ dependencies:
   - phonopy
   - pip
   - pip:
-    - PyOpenGL
-    - PyOpenGL_accelerate
     - ipywe == 0.1.3a1
