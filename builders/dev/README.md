@@ -26,7 +26,7 @@ May need to clone other mcvine subpackages.
 In the mcvine.git repository navigate in the root directory
 
 ```
-$ conda env create -f mcvine-dev.yml
+$ conda env create -f environment.yml
 $ conda activate mcvine-developer
 ```
 
