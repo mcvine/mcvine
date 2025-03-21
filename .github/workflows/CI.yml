@@ -21,9 +21,9 @@ jobs:
     steps:
       - name: system update
         run:
-          sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get install ...
+          sudo apt-get update && sudo apt-get upgrade -y
       - name: install glut
-        run: sudo apt-get update && sudo apt-get install -y procps freeglut3-dev libglu1-mesa unzip
+        run: sudo apt-get install -y procps freeglut3-dev libglu1-mesa unzip
 
       - name: Check out source code
         uses: actions/checkout@v4
