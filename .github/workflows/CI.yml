@@ -15,27 +15,28 @@ on:
 
 jobs:
   build-and-test:
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     strategy:
       fail-fast: false
-      matrix:
-        os: ["ubuntu-latest"]
     steps:
+      - name: system update
+        run:
+          sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get install ...
       - name: install glut
         run: sudo apt-get update && sudo apt-get install -y procps freeglut3-dev libglu1-mesa unzip
 
       - name: Check out source code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - name: Branch name
         run: echo running on branch ${GITHUB_REF##*/}
 
       # setup conda
-      - uses: conda-incubator/setup-miniconda@v2
+      - uses: conda-incubator/setup-miniconda@v3
         with:
           auto-update-conda: true
-          environment-file: mcvine-dev.yml
+          environment-file: environment.yml
           condarc: |
             channels:
                 - neutrons/label/rc
@@ -64,4 +65,4 @@ jobs:
           CONDA_LABEL="dev"
           if [ "${IS_RC}" = "true" ]; then CONDA_LABEL="rc"; fi
           echo pushing ${{ github.ref }} with label $CONDA_LABEL
-          anaconda upload --label $CONDA_LABEL $CONDA_ROOT_PREFIX/conda-bld/linux-64/mcvine-core-$MCVINE_CONDA_PKG_VER-*.conda
+          anaconda upload --label $CONDA_LABEL --user mcvine $CONDA_ROOT_PREFIX/conda-bld/linux-64/mcvine-core-$MCVINE_CONDA_PKG_VER-*.conda
