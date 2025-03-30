@@ -60,7 +60,7 @@ set(CONDA_BUILD_MAKE_CMD "cmake -DCMAKE_INSTALL_PREFIX=$PREFIX -DDEPLOYMENT_PREF
 
 #
 project (${PROJECT_NAME})
-cmake_minimum_required (VERSION 2.8.11)
+cmake_minimum_required (VERSION 3.5)
 
 # get cmake_utils
 IF(EXISTS "cmake_utils/")
