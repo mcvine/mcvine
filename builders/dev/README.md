@@ -15,6 +15,8 @@ $ git clone git@github.com:mcvine/instruments.git
 $ git clone git@github.com:mcvine/workflow.git
 $ git clone git@github.com:mcvine/ui.git
 $ git clone git@github.com:mcvine/mantid2mcvine.git
+$ git clone git@github.com:mcvine/phonon.git
+
 ```
 
 If only mcvine-core is need, mcvine.git should be cloned and the rest can be skipped.
@@ -69,6 +71,7 @@ Provided no .bashrc configurations added, the above command should be executed i
 ```
 $ build0
 ```
+The following Build and Install steps can be skipped the first time
 
 ## Build
 ```
