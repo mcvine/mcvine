@@ -39,8 +39,6 @@ jobs:
           environment-file: environment.yml
           condarc: |
             channels:
-                - neutrons/label/rc
-                - neutrons
                 - mantid
                 - mcvine
                 - conda-forge

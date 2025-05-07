@@ -25,6 +25,7 @@ dependencies:
   - danse.ins.bpext
   - diffpy.Structure
   - histogram
+  - drchops
   - pyre == 0.8.3
   - gsl
   - gcc_linux-64 =7.*
