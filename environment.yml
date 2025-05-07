@@ -1,0 +1,42 @@
+name: mcvine-developer
+channels:
+  - neutrons
+  - mantid
+  - mcvine
+  - conda-forge
+dependencies:
+  - anaconda-client
+  - boa
+  - check-wheel-contents
+  - conda-build
+  - conda-verify
+  - python
+  - python_abi
+  - mantid =6.*
+  - jupyter
+  - numpy
+  - pillow
+  - scipy
+  - traitlets
+  - boost
+  - cmake
+  - danse.ins.dsm
+  - danse.ins.numpyext
+  - danse.ins.bpext
+  - diffpy.Structure
+  - histogram
+  - pyre == 0.8.3
+  - gsl
+  - gcc_linux-64 =7.*
+  - gxx_linux-64
+  - h5py
+  - libgcc-ng
+  - libstdcxx-ng
+  - matplotlib
+  - mcpl
+  - mpi4py
+  - periodictable
+  - phonopy
+  - pip
+  - pip:
+    - ipywe == 0.1.3a1
