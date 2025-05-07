@@ -33,6 +33,7 @@ dependencies:
   - h5py
   - libgcc-ng
   - libstdcxx-ng
+  - libxcrypt
   - matplotlib
   - mcpl
   - mpi4py
