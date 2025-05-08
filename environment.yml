@@ -1,0 +1,38 @@
+name: mcvine-developer
+channels:
+  - mantid
+  - mcvine
+  - conda-forge
+dependencies:
+  - conda-build
+  - python = 3.10
+  - python_abi
+  - mantid =6.*
+  - numpy
+  - pillow
+  - scipy
+  - traitlets
+  - boost
+  - cmake
+  - danse.ins.dsm
+  - danse.ins.numpyext
+  - danse.ins.bpext
+  - diffpy.Structure
+  - histogram
+  - drchops
+  - pyre == 0.8.3
+  - gsl
+  - gcc_linux-64 =7.*
+  - gxx_linux-64
+  - h5py
+  - libgcc-ng
+  - libstdcxx-ng
+  - libxcrypt
+  - matplotlib
+  - mcpl
+  - mpi4py
+  - periodictable
+  - phonopy
+  - pip
+  - pip:
+    - ipywe == 0.1.3a1

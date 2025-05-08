@@ -11,59 +11,57 @@ on:
       - master
   schedule:
     - cron: "50 14 * * *"
+  workflow_dispatch:
 
 jobs:
   build-and-test:
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     strategy:
       fail-fast: false
-      matrix:
-        os: ["ubuntu-latest"]
-        python-version: ["3.8"]
     steps:
+      - name: system update
+        run:
+          sudo apt-get update && sudo apt-get upgrade -y
       - name: install glut
-        run: sudo apt-get update && sudo apt-get install -y procps freeglut3-dev libglu1-mesa unzip
+        run: sudo apt-get install -y procps freeglut3-dev libglu1-mesa unzip
 
       - name: Check out source code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - name: Branch name
         run: echo running on branch ${GITHUB_REF##*/}
 
       # setup conda
-      - uses: conda-incubator/setup-miniconda@v2
+      - uses: conda-incubator/setup-miniconda@v3
         with:
           auto-update-conda: true
-          python-version: 3.8
+          environment-file: environment.yml
+          condarc: |
+            channels:
+                - mantid
+                - mcvine
+                - conda-forge
       - name: Conda info
         shell: bash -l {0}
         run: conda info
-      - name: Conda env list
-        shell: pwsh
-        run: conda env list
-      - name: conda add channels
-        run: |
-          conda config --add channels conda-forge
-          conda config --add channels diffpy
-          conda config --add channels mcvine
-      - name: conda install conda-build
-        shell: pwsh
-        run: |
-          conda install -n root conda-build
-      - name: checks
-        shell: pwsh
-        run: |
-          conda env list
-          pwd
-          ls
-
       # build and test (have to use pwsh!)
-      - name: build / test / upload
+      - name: build
         shell: pwsh
         run: |
           echo $PYTHON_VERSION
           ./builders/CI/build_and_test.sh
+      - name: Deploy to Anaconda
+        shell: bash -l {0}
+        if: startsWith(github.ref, 'refs/tags/v')
         env:
-          ANACONDA_UPLOAD_TOKEN: ${{ secrets.ANACONDA_TOKEN }}
-          PYTHON_VERSION: ${{ matrix.python-version }}
+          ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_TOKEN }}
+          IS_RC: ${{ contains(github.ref, 'rc') }}
+        run: |
+          # label is dev or rc depending on the tag-name
+          CONDA_LABEL="dev"
+          if [ "${IS_RC}" = "true" ]; then CONDA_LABEL="rc"; fi
+          echo pushing ${{ github.ref }} with label $CONDA_LABEL
+          CONDA_ROOT_PREFIX=$(realpath $(dirname `which conda`)/..)
+          echo $CONDA_ROOT_PREFIX
+          anaconda upload --label $CONDA_LABEL --user mcvine $CONDA_ROOT_PREFIX/conda-bld/linux-64/mcvine-core-$MCVINE_CONDA_PKG_VER-*.conda
