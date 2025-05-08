@@ -9,7 +9,6 @@ dependencies:
   - python = 3.10
   - python_abi
   - mantid =6.*
-  - jupyter
   - numpy
   - pillow
   - scipy
