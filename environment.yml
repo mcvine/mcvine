@@ -9,7 +9,7 @@ dependencies:
   - check-wheel-contents
   - conda-build
   - conda-verify
-  - python
+  - python = 3.7
   - python_abi
   - mantid =6.*
   - jupyter
