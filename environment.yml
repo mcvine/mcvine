@@ -1,7 +1,6 @@
-name: mcvine-developer
+name: mcvine-developer2
 channels:
   - mantid
-  - diffpy
   - mcvine
   - conda-forge
 dependencies:

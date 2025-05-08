@@ -27,33 +27,31 @@ requirements:
     - danse.ins.numpyext       {{ numpyext }}
     - danse.ins.bpext          {{ bpext }}
     - histogram                {{ histogram }}
-    - diffpy.Structure
+    - diffpy.Structure         {{ structure }}
     - periodictable
-    - drchops                  {{ drchops }}
     - mcvine-resources
 
   run:
     - {{ compiler('cxx') }} 7 # [linux]
     - cmake
-    - python
+    - python                   {{ python }}
     - setuptools
     - pyyaml
-    - numpy
+    - numpy                    {{ numpy }}
     - psutil
     - h5py
     - mpi4py
-    - openmpi
-    - gsl
-    - boost
+    - openmpi                  {{ openmpi }}
+    - gsl                      {{ gsl }}
+    - boost                    {{ boost }}
     - mcpl
-    - pyre
+    - pyre                     {{ pyre }}
     - danse.ins.dsm
-    - danse.ins.numpyext
-    - danse.ins.bpext
-    - histogram
-    - diffpy.Structure
+    - danse.ins.numpyext       {{ numpyext }}
+    - danse.ins.bpext          {{ bpext }}
+    - histogram                {{ histogram }}
+    - diffpy.Structure         {{ structure }}
     - periodictable
-    - drchops
     - mcvine-resources
     - phonopy
     - scipy

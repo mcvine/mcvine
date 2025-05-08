@@ -18,6 +18,8 @@ drchops:
   - 2.0.3
 pyre:
   - 0.8
+structure:
+  - 3.0.1
 
 pin_run_as_build:
   setuptools:
@@ -39,4 +41,6 @@ pin_run_as_build:
   drchops:
     max_pin: x.x
   pyre:
+    max_pin: x.x
+  structure:
     max_pin: x.x
