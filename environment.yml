@@ -1,13 +1,19 @@
 name: mcvine-developer
 channels:
+  - neutrons
   - mantid
   - mcvine
   - conda-forge
 dependencies:
+  - anaconda-client
+  - boa
+  - check-wheel-contents
   - conda-build
-  - python = 3.10
+  - conda-verify
+  - python
   - python_abi
   - mantid =6.*
+  - jupyter
   - numpy
   - pillow
   - scipy
@@ -19,7 +25,6 @@ dependencies:
   - danse.ins.bpext
   - diffpy.Structure
   - histogram
-  - drchops
   - pyre == 0.8.3
   - gsl
   - gcc_linux-64 =7.*

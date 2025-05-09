@@ -29,7 +29,6 @@ requirements:
     - histogram                {{ histogram }}
     - diffpy.Structure         {{ structure }}
     - periodictable
-    - drchops                  {{ drchops }}
     - mcvine-resources
 
   run:
@@ -53,7 +52,6 @@ requirements:
     - histogram                {{ histogram }}
     - diffpy.Structure         {{ structure }}
     - periodictable
-    - drchops                  {{ drchops }}
     - mcvine-resources
     - phonopy
     - scipy
