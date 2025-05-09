@@ -54,7 +54,7 @@ jobs:
         shell: bash -l {0}
         run: conda info
       # build and test (have to use pwsh!)
-      - name: build / test / upload
+      - name: build / test
         shell: pwsh
         run: |
           echo $PYTHON_VERSION
