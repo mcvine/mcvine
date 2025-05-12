@@ -35,13 +35,6 @@ jobs:
       # setup conda
       - uses: conda-incubator/setup-miniconda@v3
         with:
-          fetch-depth: 0
-      - name: Branch name
-        run: echo running on branch ${GITHUB_REF##*/}
-
-      # setup conda
-      - uses: conda-incubator/setup-miniconda@v3
-        with:
           auto-update-conda: true
           environment-file: environment.yml
           condarc: |
