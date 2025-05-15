@@ -16,7 +16,6 @@ BuildRequires:  boost-devel
 BuildRequires:  boost-python
 BuildRequires:  mcvine-resources
 BuildRequires:  journal
-BuildRequires:  drchops
 
 Requires: python
 Requires: python-devel
@@ -35,7 +34,6 @@ Requires: histogram
 Requires: journal
 Requires: diffpy.Structure
 Requires: periodictable
-Requires: drchops
 Requires: mcvine-resources
 
 %description

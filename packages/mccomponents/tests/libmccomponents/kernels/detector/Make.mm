@@ -23,7 +23,6 @@ PROJ_CPPTESTS = \
 	testHe3Tube \
 	testEventModeMCA \
 	testHe3 \
-	testevents2iqe \
 
 PROJ_TESTS = $(PROJ_PYTESTS) $(PROJ_CPPTESTS)
 
@@ -66,9 +65,6 @@ testHe3: testHe3.cc
 
 testEventModeMCA: testEventModeMCA.cc
 	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ testEventModeMCA.cc $(PROJ_LIBRARIES)
-
-testevents2iqe: testevents2iqe.cc
-	$(CXX) $(CXXFLAGS) $(LCXXFLAGS) -o $@ testevents2iqe.cc $(PROJ_LIBRARIES)
 
 
 # version

@@ -39,6 +39,7 @@ jobs:
           environment-file: environment.yml
           condarc: |
             channels:
+                - neutrons
                 - mantid
                 - mcvine
                 - conda-forge
@@ -46,7 +47,7 @@ jobs:
         shell: bash -l {0}
         run: conda info
       # build and test (have to use pwsh!)
-      - name: build
+      - name: build / test
         shell: pwsh
         run: |
           echo $PYTHON_VERSION

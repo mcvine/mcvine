@@ -10,3 +10,4 @@
 * Publications: http://mcvine.github.io/publications.html
 * Training: https://github.com/mcvine/training
 * Development: https://github.com/mcvine/devel
+* Build mcvine-core and subpackages from source: [build-dev](builders/dev/README.md)
