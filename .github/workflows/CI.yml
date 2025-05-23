@@ -52,17 +52,3 @@ jobs:
         run: |
           echo $PYTHON_VERSION
           ./builders/CI/build_and_test.sh
-      - name: Deploy to Anaconda
-        shell: bash -l {0}
-        if: startsWith(github.ref, 'refs/tags/v')
-        env:
-          ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_TOKEN }}
-          IS_RC: ${{ contains(github.ref, 'rc') }}
-        run: |
-          # label is dev or rc depending on the tag-name
-          CONDA_LABEL="dev"
-          if [ "${IS_RC}" = "true" ]; then CONDA_LABEL="rc"; fi
-          echo pushing ${{ github.ref }} with label $CONDA_LABEL
-          CONDA_ROOT_PREFIX=$(realpath $(dirname `which conda`)/..)
-          echo $CONDA_ROOT_PREFIX
-          anaconda upload --label $CONDA_LABEL --user mcvine $CONDA_ROOT_PREFIX/conda-bld/linux-64/mcvine-core-$MCVINE_CONDA_PKG_VER-*.conda
