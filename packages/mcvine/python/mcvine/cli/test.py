@@ -39,7 +39,7 @@ def test(workdir):
     py_lib = '%s/lib/libpython%s.so' % (prefix, pyver)
     py_include = '%s/include/python%s' % (prefix, pyver)
     cmd = [
-        'cmake -DPYTHON_LIBRARY=%s -DPYTHON_INCLUDE_DIR=%s %s' % (py_lib, py_include, testsrc),
+        'cmake -DCMAKE_POLICY_VERSION_MINIMUM=3.5 -DPYTHON_LIBRARY=%s -DPYTHON_INCLUDE_DIR=%s %s' % (py_lib, py_include, testsrc),
         'CTEST_OUTPUT_ON_FAILURE=1 make test ARGS="-j%s"' % (cores,)
         ]
     cmd = ' && '.join(cmd)
