@@ -2,6 +2,7 @@ name: mcvine-developer
 channels:
   - neutrons
   - mantid
+  - mcvine/label/rc
   - mcvine
   - conda-forge
 dependencies:
@@ -12,7 +13,7 @@ dependencies:
   - conda-verify
   - python
   - python_abi
-  - mantid =6.*
+  - mantid =6.11
   - jupyter
   - numpy
   - pillow
@@ -23,7 +24,7 @@ dependencies:
   - danse.ins.dsm
   - danse.ins.numpyext
   - danse.ins.bpext
-  - diffpy.Structure
+  - diffpy.Structure=3.0.1 
   - histogram
   - pyre == 0.8.3
   - gsl
