@@ -2,6 +2,7 @@ name: mcvine-developer
 channels:
   - neutrons
   - mantid
+  - mcvine/label/rc
   - mcvine
   - conda-forge
 dependencies:
