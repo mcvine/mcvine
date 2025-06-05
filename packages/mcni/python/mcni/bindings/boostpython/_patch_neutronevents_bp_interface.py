@@ -102,12 +102,7 @@ def cevents_from_npyarr(npyarr):
         warnings.warn("Using old numpyext. Should use danse.ins.numpyext")
     
     ptr = getdataptr( npyarr )
-    try:
-        from danse.ins import bpext
-    except ImportError:
-        import bpext
-        import warnings
-        warnings.warn("Using old bpext. Should use danse.ins.bpext")
+    from danse.ins import bpext
     import mcni._mcni
     cevents = bpext.wrap_ptr( ptr, 'cNeutronEvent' )
     cevents.origin = npyarr

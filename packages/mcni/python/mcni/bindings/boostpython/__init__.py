@@ -85,12 +85,7 @@ def _import():
     import mcni.mcnibp
     from . import _patch_neutronevents_bp_interface
     import mcni._mcni
-    try:
-        from danse.ins import bpext
-    except ImportError:
-        import bpext
-        import warnings
-        warnings.warn("Using old bpext. Should use danse.ins.bpext\n%s")
+    from danse.ins import bpext
     return
 
 try:
