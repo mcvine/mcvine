@@ -13,12 +13,7 @@
 
 
 
-try:
-    from danse.ins import bpext
-except ImportError:
-    import bpext
-    import warnings
-    warnings.warn("Using old bpext. Should use danse.ins.bpext")
+from danse.ins import bpext
 
 
 def pycptr2npyarr( vptr, typename, size ):
