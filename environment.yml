@@ -30,6 +30,7 @@ dependencies:
   - gsl
   - gcc_linux-64 =7.*
   - gxx_linux-64
+  - libgcc=15.1.0=h767d61c_2
   - h5py
   - libgcc-ng
   - libstdcxx-ng

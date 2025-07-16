@@ -10,6 +10,7 @@ requirements:
   build:
     - {{ compiler('cxx') }} 7 # [linux]
     - cmake
+    - libgcc=15.1.0=h767d61c_2
   host:
     - python                   {{ python }}
     - setuptools
@@ -18,6 +19,7 @@ requirements:
     - psutil
     - h5py
     - mpi4py
+    - libgcc=15.1.0=h767d61c_2
     - openmpi                  {{ openmpi }}
     - gsl                      {{ gsl }}
     - boost                    {{ boost }}
@@ -34,6 +36,7 @@ requirements:
   run:
     - {{ compiler('cxx') }} 7 # [linux]
     - cmake
+    - libgcc=15.1.0=h767d61c_2
     - python                   {{ python }}
     - setuptools
     - pyyaml
