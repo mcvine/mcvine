@@ -5,19 +5,15 @@ let CORES-=1
 if ((CORES < 1)); then
     CORES = 1;
 fi
-echo "HERE 1"
 PYVER_MAJOR=`python -c "from __future__ import print_function; import sys; print(sys.version_info[0])"`
 PYVER_MINOR=`python -c "from __future__ import print_function; import sys; print(sys.version_info[1])"`
 PYVER=${PYVER_MAJOR}.${PYVER_MINOR}
-echo "HERE 2"
 echo "PYVER" $PYVER
 echo "PREFIX" ${PREFIX}
-echo "HERE 3"
 PY_INCLUDE_DIR=${PREFIX}/include/`ls ${PREFIX}/include/|grep python${PYVER}`
 PY_SHAREDLIB=${PREFIX}/lib/`ls ${PREFIX}/lib/|grep libpython${PYVER}[a-z]*.so$`
 echo $PY_INCLUDE_DIR
 echo $PY_SHAREDLIB
-echo "HERE 4"
 
 mkdir build
 cd build
@@ -29,7 +25,6 @@ cmake -DCONDA_BUILD=TRUE \
       -DPYTHON_LIBRARY=${PY_SHAREDLIB} \
       -DCMAKE_PREFIX_PATH=$PREFIX \
       -DCMAKE_SYSTEM_LIBRARY_PATH=$PREFIX/lib \
-      -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
       .. \
     && make -j$CORES \
     && make -j$CORES reconfigure-to-include-mcstas-components \
