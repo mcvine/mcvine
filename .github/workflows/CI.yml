@@ -32,24 +32,22 @@ jobs:
       - name: Branch name
         run: echo running on branch ${GITHUB_REF##*/}
 
-      # setup conda
-      - uses: conda-incubator/setup-miniconda@v3
+      # setup micromamba
+      - name: Micromamba    
+        uses: mamba-org/setup-micromamba@v1
         with:
           # auto-update-conda: true
           environment-file: environment.yml
           condarc: |
             channels:
-                - neutrons
-                - mantid
-                - mcvine
-                - conda-forge
-      - name: Conda info
+            - neutrons
+            - mantid
+            - mcvine/label/rc
+            - mcvine
+            - conda-forge
+      - name: Micromamba info
         shell: bash -l {0}
-        run: conda info
-      - name: conda install conda-build
-        shell: pwsh
-        run: |
-          conda install -n root conda-build
+        run: micromamba info
       # build and test (have to use pwsh!)
       - name: build / test
         shell: pwsh
