@@ -32,4 +32,5 @@ cat meta.yaml
 cat conda_build_config.yaml
 echo "Conda environment packages"
 conda list
+export CONDA_NO_PLUGINS=true
 conda build .
