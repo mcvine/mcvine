@@ -32,5 +32,7 @@ cat meta.yaml
 cat conda_build_config.yaml
 echo "Conda environment packages"
 micromamba info
-conda list
+micromamba list
+cd ../
+pwd
 conda build .
