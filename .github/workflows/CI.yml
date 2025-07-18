@@ -52,5 +52,6 @@ jobs:
       - name: build / test
         shell: pwsh
         run: |
+          micromamba activate mcvine-developer
           echo $PYTHON_VERSION
           ./builders/CI/build_and_test.sh
