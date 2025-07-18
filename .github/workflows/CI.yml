@@ -50,7 +50,7 @@ jobs:
         run: micromamba info
       # build and test (have to use pwsh!)
       - name: build / test
-        shell: pwsh
+        shell: bash -l {0}
         run: |
           /home/runner/micromamba-bin/micromamba shell hook -s powershell | Out-String | Invoke-Expression
           /home/runner/micromamba-bin/micromamba activate mcvine-developer
