@@ -52,6 +52,7 @@ jobs:
       - name: build / test
         shell: pwsh
         run: |
+          micromamba.exe shell hook -s powershell | Out-String | Invoke-Expression
           micromamba activate mcvine-developer
           echo $PYTHON_VERSION
           ./builders/CI/build_and_test.sh
