@@ -2,7 +2,7 @@
 
 set -x
 set -e
-
+echo "Running build_and_test.sh"
 #
 export PATH=$HOME/mc/bin:$PATH
 #

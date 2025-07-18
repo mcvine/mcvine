@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-
+echo "Running builders/CI/conda-recipe/build.sh"
 let CORES=`grep -c ^processor /proc/cpuinfo`
 let CORES-=1
 if ((CORES < 1)); then
