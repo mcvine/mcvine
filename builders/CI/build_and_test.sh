@@ -32,5 +32,6 @@ cat meta.yaml
 cat conda_build_config.yaml
 echo "Conda environment packages"
 micromamba activate mcvine-developer
+micromamba info
 conda list
 conda build .
