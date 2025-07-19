@@ -36,16 +36,14 @@ jobs:
       - uses: conda-incubator/setup-miniconda@v3
         with:
           auto-update-conda: true
-          environment-file: environment.yml
-          condarc: |
-            channels:
-                - neutrons
-                - mantid
-                - mcvine
-                - conda-forge
+          channels: mcvine,conda-forge
       - name: Conda info
         shell: bash -l {0}
         run: conda info
+      - name: conda install conda-build
+        shell: pwsh
+        run: |
+          conda install -n root conda-build
       # build and test (have to use pwsh!)
       - name: build / test
         shell: pwsh
