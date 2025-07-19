@@ -35,15 +35,9 @@ jobs:
       # setup conda
       - uses: conda-incubator/setup-miniconda@v3
         with:
-          miniconda-version: "25.3.1"
           auto-update-conda: true
           environment-file: environment.yml
-          condarc: |
-            channels:
-                - neutrons
-                - mantid
-                - mcvine
-                - conda-forge
+          channels: neutrons,mantid,mcvine,conda-forge
       - name: Conda info
         shell: bash -l {0}
         run: conda info
