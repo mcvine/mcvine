@@ -26,7 +26,7 @@ find_package ( PythonLibs REQUIRED )
 find_package ( PythonInterp REQUIRED )
 
 # add python tests
-set(EXPORT_ENVVARS "PYTHONPATH=$ENV{PYTHONPATH};LD_LIBRARY_PATH=$ENV{LD_LIBRARY_PATH};MCVINE_DIR=${MCVINE_DIR};PATH=$ENV{PATH};CONDA_NO_PLUGINS=TRUE")
+set(EXPORT_ENVVARS "PYTHONPATH=$ENV{PYTHONPATH};LD_LIBRARY_PATH=$ENV{LD_LIBRARY_PATH};MCVINE_DIR=${MCVINE_DIR};PATH=$ENV{PATH}")
 # Used to include all tests
 # PYUNITTEST_ADD_TESTS_IN_DIR( ${CMAKE_SOURCE_DIR} "mcvine")
 # But turns out instrument tests are obsolete, so we have to add

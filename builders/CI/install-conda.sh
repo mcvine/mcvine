@@ -1,5 +1,4 @@
 #!/bin/bash
-echo "Installing conda"
 set -x
 cd $HOME
 # conda

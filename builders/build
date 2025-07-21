@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-echo "Running builders/build.sh"
 if [ $# -eq 0 ]
 then
     echo "Usage: ./builders/build <src-path> <build-path> <install-path> <resources-path> [cores]"
