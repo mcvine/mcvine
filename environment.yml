@@ -2,8 +2,8 @@ name: mcvine-developer
 channels:
   - neutrons
   - mantid
-  - mcvine/label/rc
   - mcvine
+  - mcvine/label/rc
   - conda-forge
 dependencies:
   - anaconda-client
