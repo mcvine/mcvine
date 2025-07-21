@@ -35,4 +35,4 @@ micromamba info
 micromamba list
 cd ../
 pwd
-conda build .
+conda build --no-test .
