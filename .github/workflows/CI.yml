@@ -52,7 +52,5 @@ jobs:
       - name: build / test
         shell: bash -l {0}
         run: |
-          /home/runner/micromamba-bin/micromamba shell hook -s powershell | Out-String | Invoke-Expression
-          /home/runner/micromamba-bin/micromamba activate mcvine-developer
           echo $PYTHON_VERSION
           ./builders/CI/build_and_test.sh
