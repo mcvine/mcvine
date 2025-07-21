@@ -36,3 +36,8 @@ micromamba list
 cd ../
 pwd
 conda build --no-test .
+#install conda package
+conda install ${CONDA_PREFIX}/conda-bld/linux-64/mcvine-core-*.tar.bz2
+#test package
+git clone https://github.com/mcvine/resources.git && mv resources ${CONDA_PREFIX}/share/mcvine
+mcvine test
