@@ -13,6 +13,5 @@ The tests will run at a separate work directory.
 
 import os
 cmd = 'CORES=2 mcvine test'
-print("THIS test is about to run")
 if os.system(cmd):
     raise RuntimeError("%s failed" % cmd)
