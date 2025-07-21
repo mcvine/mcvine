@@ -42,8 +42,8 @@ jobs:
             channels:
             - neutrons
             - mantid
-            - mcvine/label/rc
             - mcvine
+            - mcvine/label/rc
             - conda-forge
       - name: Micromamba info
         shell: bash -l {0}
