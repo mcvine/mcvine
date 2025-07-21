@@ -11,6 +11,7 @@ requirements:
     - {{ compiler('cxx') }} 7 # [linux]
     - cmake
     - libgcc=15.1.0=h767d61c_2
+    - python                   {{ python }}
   host:
     - python                   {{ python }}
     - setuptools
