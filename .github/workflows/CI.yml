@@ -32,9 +32,9 @@ jobs:
       - name: Branch name
         run: echo running on branch ${GITHUB_REF##*/}
 
-      # setup micromamba
-      - name: Micromamba    
-        uses: mamba-org/setup-micromamba@v1
+      # setup miniconda
+      - name: Miniconda    
+        uses: conda-incubator/setup-miniconda@v3
         with:
           # auto-update-conda: true
           environment-file: environment.yml
@@ -45,9 +45,9 @@ jobs:
             - mcvine
             - mcvine/label/rc
             - conda-forge
-      - name: Micromamba info
+      - name: Miniconda info
         shell: bash -l {0}
-        run: micromamba info
+        run: conda info
       # build and test (have to use pwsh!)
       - name: build / test
         shell: bash -l {0}
