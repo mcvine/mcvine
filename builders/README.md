@@ -3,7 +3,6 @@
 Sub dirs:
 
 * dev: setup dev environment
-* travis-conda: conda recipe used by travis build. see ../travis.yml
 * notes: misc notes
 * runtests
 * test-release
