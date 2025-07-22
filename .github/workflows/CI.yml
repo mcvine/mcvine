@@ -15,7 +15,7 @@ on:
 
 jobs:
   build-and-test:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     strategy:
       fail-fast: false
     steps:
@@ -32,11 +32,10 @@ jobs:
       - name: Branch name
         run: echo running on branch ${GITHUB_REF##*/}
 
-      # setup miniconda
-      - name: Miniconda    
-        uses: conda-incubator/setup-miniconda@v3
+      # setup micromamba
+      - name: Micromamba    
+        uses: mamba-org/setup-micromamba@v2
         with:
-          # auto-update-conda: true
           environment-file: environment.yml
           condarc: |
             channels:
@@ -45,9 +44,9 @@ jobs:
             - mcvine
             - mcvine/label/rc
             - conda-forge
-      - name: Miniconda info
+      - name: Micromamba info
         shell: bash -l {0}
-        run: conda info
+        run: micromamba info
       # build and test (have to use pwsh!)
       - name: build / test
         shell: bash -l {0}

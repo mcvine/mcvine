@@ -30,14 +30,12 @@ fi
 cat meta.yaml
 cat conda_build_config.yaml
 echo "Conda environment packages"
-conda info
-conda list
+micromamba list
 cd ../
 pwd
-conda build .
-#conda build --no-test .
+conda build --no-test .
 #install conda package
-#conda install ${CONDA_PREFIX}/conda-bld/linux-64/mcvine-core-*.tar.bz2
+conda install ${CONDA_PREFIX}/conda-bld/linux-64/mcvine-core-*.tar.bz2
 #test package
-#git clone https://github.com/mcvine/resources.git && mv resources ${CONDA_PREFIX}/share/mcvine
-#mcvine test
+git clone https://github.com/mcvine/resources.git && mv resources ${CONDA_PREFIX}/share/mcvine
+mcvine test
