@@ -14,11 +14,6 @@ export MCVINE_CONDA_PKG_VER=${VERSION_NEXT}.dev
 echo $MCVINE_CONDA_PKG_VER
 cd builders/CI/conda-recipe
 
-# create meta.yaml
-./create_meta_yaml $MCVINE_CONDA_PKG_VER $GIT_FULL_HASH
-grep version meta.yaml
-grep git_rev meta.yaml
-
 # build
 cat meta.yaml
 cat conda_build_config.yaml

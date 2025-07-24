@@ -1,4 +1,14 @@
 name: mcvine-developer
+{% set version = load_setup_py_data().get('VERSION', '0.0.0') %}
+{% set git_revision = load_setup_py_data().get('GIT_REV', '0.0.0') %}
+
+package:
+  name: mcvine-core
+  version: {{ version }}
+
+source:
+  git_rev: {{ git_revision }}
+  git_url: https://github.com/mcvine/mcvine.git
 channels:
   - neutrons
   - mantid
