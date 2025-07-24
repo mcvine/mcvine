@@ -1,6 +1,0 @@
-#!/usr/bin/env bash
-
-VERSION=$1 # dev
-GIT_REV=$2 # master
-
-sed -e "s|XXXVERSIONXXX|$VERSION|g" meta.yaml.template | sed -e "s|XXXGIT_REVXXX|$GIT_REV|g" > meta.yaml
