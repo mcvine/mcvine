@@ -2,9 +2,12 @@
 
 set -x
 set -e
-#
-#get current commit id
-export GIT_FULL_HASH=`git log -1 --format=%H`
+
+# 
+CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+echo "Current branch: $CURRENT_BRANCH"
+
+export GIT_FULL_HASH=`git rev-parse HEAD`
 export GIT_VER=`git describe --tags`
 export VERSION=`git describe --tags | cut -d '-' -f1 | cut -c2-`
 export VERSION_NEXT=`echo ${VERSION}| awk -F. -v OFS=. 'NF==1{print ++$NF}; NF>1{if(length($NF+1)>length($NF))$(NF-1)++; $NF=sprintf("%0*d", length($NF), ($NF+1)%(10^length($NF))); print}'`
