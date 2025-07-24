@@ -3,6 +3,7 @@
 set -x
 set -e
 #
+#get current commit id
 export GIT_FULL_HASH=`git log -1 --format=%H`
 export GIT_VER=`git describe --tags`
 export VERSION=`git describe --tags | cut -d '-' -f1 | cut -c2-`
