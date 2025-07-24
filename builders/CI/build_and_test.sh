@@ -28,7 +28,9 @@ cd ../
 pwd
 conda build --no-test .
 #install conda package
-conda install ${CONDA_PREFIX}/conda-bld/linux-64/mcvine-core-*.tar.bz2
+conda install -y -c conda-forge conda-build conda-index
+python -m conda_index ${CONDA_PREFIX}/conda-bld/
+conda install -y -c ${CONDA_PREFIX}/conda-bld/ mcvine-core
 #test package
 git clone https://github.com/mcvine/resources.git && mv resources ${CONDA_PREFIX}/share/mcvine
 mcvine test
