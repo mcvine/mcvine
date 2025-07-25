@@ -5,7 +5,7 @@ set(PROJECT_NAME "mcvine")
 set(VERSION "1.0")
 
 project (${PROJECT_NAME})
-cmake_minimum_required (VERSION 2.8.11)
+cmake_minimum_required (VERSION 3.5)
 
 # get cmake_utils
 execute_process(

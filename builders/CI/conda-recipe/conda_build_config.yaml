@@ -13,11 +13,13 @@ numpyext:
 bpext:
   - 0.1.5
 histogram:
-  - 0.3.*
+  - 0.4.*
 pyre:
   - 0.8
 structure:
   - 3.0.1
+libgcc:
+  - 15.1.0=h767d61c_2
 
 pin_run_as_build:
   setuptools:

@@ -1,15 +1,19 @@
+{% set version = environ.get('MCVINE_CONDA_PKG_VER', '0.0.0') %}
+{% set git_revision = environ.get('GIT_FULL_HASH', '0.0.0') %}
+
 package:
   name: mcvine-core
-  version: XXXVERSIONXXX
+  version: {{ version }}
 
 source:
-  git_rev: XXXGIT_REVXXX
+  git_rev: {{ git_revision }}
   git_url: https://github.com/mcvine/mcvine.git
 
 requirements:
   build:
     - {{ compiler('cxx') }} 7 # [linux]
     - cmake
+    - libgcc                   {{ libgcc }}
   host:
     - python                   {{ python }}
     - setuptools
@@ -18,6 +22,7 @@ requirements:
     - psutil
     - h5py
     - mpi4py
+    - libgcc                   {{ libgcc }}
     - openmpi                  {{ openmpi }}
     - gsl                      {{ gsl }}
     - boost                    {{ boost }}
@@ -34,6 +39,7 @@ requirements:
   run:
     - {{ compiler('cxx') }} 7 # [linux]
     - cmake
+    - libgcc                   {{ libgcc }}
     - python                   {{ python }}
     - setuptools
     - pyyaml

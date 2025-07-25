@@ -56,7 +56,7 @@ set (DOCKER_PKGING_TEST_DEB ${DOCKER_PKGING_TEST_SRPM})
 set (VERSION_FOR_CONDA_PKGING 1.1alpha)
 set (CONDA_PKGING_BUILD_DEPS "python pyyaml numpy psutil h5py mpi4py gsl boost pyre danse.ins.dsm danse.ins.numpyext danse.ins.bpext histogram danse.ins.matter mcvine-resources")
 set (CONDA_PKGING_RUN_DEPS "python pyyaml numpy psutil h5py mpi4py gsl boost pyre danse.ins.dsm danse.ins.numpyext danse.ins.bpext histogram danse.ins.matter mcvine-resources")
-set(CONDA_BUILD_MAKE_CMD "cmake -DCMAKE_INSTALL_PREFIX=$PREFIX -DDEPLOYMENT_PREFIX=$PREFIX .. && make -j $CORES && make -j$CORES reconfigure-to-include-mcstas-components && make -j$CORES wrap-mcstas-components-cmake && make -j$CORES && make install")
+set(CONDA_BUILD_MAKE_CMD "cmake -DCMAKE_INSTALL_PREFIX=$PREFIX -DCONDA_NO_PLUGINS=TRUE -DDEPLOYMENT_PREFIX=$PREFIX .. && make -j $CORES && make -j$CORES reconfigure-to-include-mcstas-components && make -j$CORES wrap-mcstas-components-cmake && make -j$CORES && make install")
 
 #
 project (${PROJECT_NAME})
