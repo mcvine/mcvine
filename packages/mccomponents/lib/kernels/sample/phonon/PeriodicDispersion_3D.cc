@@ -12,7 +12,6 @@
 
 
 #include <cmath>
-#include "journal/debug.h"
 #include "mccomponents/kernels/sample/phonon/PeriodicDispersion_3D.h"
 
 
@@ -34,16 +33,8 @@ Details{
   K_t reducedQ( const K_t & Q );
   const ReciprocalCell &rc;
   K_t a1, a2, a3;
-  
-#ifdef DEBUG
-  static const char *jrnltag;
-#endif
 };
 
-
-#ifdef DEBUG
-const char *DANSE::phonon::PeriodicDispersion_3D::Details::jrnltag = "periodicdispersion_3d";
-#endif
 
 // algorithm hint:
 // b1, b2, b3
@@ -61,13 +52,6 @@ Details( const w_t & target )
   mcni::get_inversions<float_t>
     ( rc.b1, rc.b2, rc.b3,
       a1, a2, a3 );
-#ifdef DEBUG 	
-  journal::debug_t debug(jrnltag);
-  debug << "b1,b2,b3=" << rc.b1 << ", " << rc.b2 << ", " << rc.b3 
-	<< journal::newline
-	<< "a1,a2,a3=" << a1 << ", " << a2 << ", " << a3 
-	<< journal::endl;
-#endif
 }
 
 DANSE::phonon::PeriodicDispersion_3D::
@@ -124,11 +108,6 @@ DANSE::phonon::PeriodicDispersion_3D::
 energy(n_t branch_id, const K_t &k) const
 {
   K_t q = m_details->reducedQ( k );
-#ifdef DEBUG
-  journal::debug_t debug(m_details->jrnltag);
-  debug << "k=" << k << journal::newline
-	<< "q=" << q << journal::endl;
-#endif
   return m_core.energy( branch_id, q );
 }
 

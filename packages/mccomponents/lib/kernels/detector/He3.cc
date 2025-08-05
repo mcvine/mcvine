@@ -12,7 +12,6 @@
 //
 
 
-#include "journal/warning.h"
 #include "mccomponents/kernels/detector/He3.h"
 #include "mccomponents/exception.h"
 
@@ -43,11 +42,6 @@ mccomponents::kernels::He3::scattering_coefficient( const mcni::Neutron::Event &
 void
 mccomponents::kernels::He3::scatter( mcni::Neutron::Event & ev )
 {
-  journal::warning_t warning("He3");
-  warning << journal::at(__HERE__)
-          << "He3 detector don't scatter neutrons"
-          << journal::endl;
-  return;
 }
 
     

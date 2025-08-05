@@ -16,9 +16,6 @@
 #else
 
 
-#include "journal/warning.h"
-#include "journal/debug.h"
-#include "journal/info.h"
 #include <iomanip>
 
 #include "mccomponents/physics/constants.h"
@@ -32,12 +29,6 @@ void DANSE::phonon::DWFromDOS<FloatType>::calc_DW_core
 
   using namespace mccomponents;
 
-
-#ifdef DEBUG
-  journal::info_t info_DW("debye-waller");
-  journal::debug_t debug_DW("debye-waller");
-  journal::warning_t warning_DW("debye-waller");
-#endif
   m_core = 0.;
   float_t norm_fac=0.;
 
@@ -66,15 +57,6 @@ void DANSE::phonon::DWFromDOS<FloatType>::calc_DW_core
       frac = 0.5;
     m_core += f[i] * frac;
     norm_fac += Z * frac;
-#ifdef DEBUG
-    debug_DW  << journal::at(__HERE__)
-	      << "w=" <<w << ","
-	      << "Z=" <<Z << ","
-	      << "BE="<<BoseEinsteinDistribution(w, T_in_Kelvin) << ","
-	      << "core=" <<m_core << ","
-	      << "norm_fac=" <<norm_fac << ","
-	      << journal::endl;
-#endif
     // std::cout << f[i] << std::endl;
   }
   // compute the contribution at w=0, by interpolating
@@ -98,24 +80,11 @@ void DANSE::phonon::DWFromDOS<FloatType>::calc_DW_core
   // m_core /= norm_fac; // now core = \int Z(w)*(2<n>+1)/(hbar*w) dw
   m_core *= dw;
   
-#ifdef DEBUG
-  debug_DW  << journal::at(__HERE__)
-	    << m_core << journal::endl;
-#endif
   using physics::hbar; using physics::atomic_mass;
   m_core *= hbar*hbar/2/atomic_mass/atom_mass;
   // now core = hbar^2/2M*integration
   
   m_core *= 1e20; // so that Q can be given in the unit A^-1
-  
-#ifdef DEBUG
-  debug_DW  << journal::at(__HERE__)
-	    << "hbar=" << hbar << ","
-	    << "atomic_mass=" <<atomic_mass << ","
-	    << "atom_mass="<<atom_mass << ","
-	    << "core=" <<m_core 
-	    << journal::endl;
-#endif
 }
 
 template <typename FloatType>

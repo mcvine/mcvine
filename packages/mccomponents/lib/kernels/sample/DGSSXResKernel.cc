@@ -11,9 +11,6 @@
 #include "DGSSXResKernel.h"
 
 
-#ifdef DEBUG
-#include "journal/debug.h"
-#endif
 
 
 namespace mccomponents{
@@ -27,21 +24,9 @@ mccomponents::kernels::DGSSXResKernel::Details {
 
   typedef mccomponents::kernels::DGSSXResKernel kernel_t;
 
-  /*
-#ifdef DEBUG
-  const static char jrnltag[];
-  journal::debug_t debug;
-#endif
-  */
-
   Details(kernel_t &i_kernel)
     :
     kernel(&i_kernel)
-    /*
-#ifdef DEBUG
-    ,debug( jrnltag )
-#endif
-    */
     {}
 
   kernel_t * kernel;

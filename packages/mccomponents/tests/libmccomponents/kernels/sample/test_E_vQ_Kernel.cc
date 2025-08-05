@@ -18,10 +18,6 @@
 // #define DEBUG // hack
 #include "mccomponents/kernels/sample/E_vQ_Kernel.h"
 
-#ifdef DEBUG
-#include "journal/debug.h"
-#endif
-
 
 struct Const_E_vQ {
   double operator() (double Qx, double Qy, double Qz) const
@@ -158,9 +154,6 @@ void test2()
 
 int main()
 {
-#ifdef DEBUG
-  journal::debug_t("E_vQ_Kernel").activate();
-#endif
   test1();
   test2();
   return 0;

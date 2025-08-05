@@ -26,10 +26,6 @@
 #include "mccomponents/math/rootfinding.h"
 
 
-#ifdef DEBUG
-#include "journal/debug.h"
-#endif
-
 
 namespace mccomponents{
   namespace kernels{
@@ -45,19 +41,12 @@ mccomponents::kernels::E_vQ_Kernel<E_vQ_functor_t, S_vQ_functor_t>\
   typedef mccomponents::kernels::E_vQ_Kernel<E_vQ_functor_t, S_vQ_functor_t> \
     kernel_t;
     
-#ifdef DEBUG
-  const static char jrnltag[];
-  journal::debug_t debug;
-#endif
   
   Details(kernel_t &i_kernel) 
     :
     kernel(&i_kernel)
     ,root_finder(1e-3)
     ,roots_finder(root_finder, 1000)
-#ifdef DEBUG
-    ,debug( jrnltag )
-#endif
     {}
 
   kernel_t * kernel;
@@ -104,14 +93,6 @@ struct E_vq_minus_deltaE: public mccomponents::math::Functor {
   v3_t vki, ukf;
   E_vQ_functor_t &E_vQ;  
 };
-
-
-#ifdef DEBUG
-template< typename E_vQ_functor_t, typename S_vQ_functor_t>
-const char 
-mccomponents::kernels::E_vQ_Kernel<E_vQ_functor_t, S_vQ_functor_t>\
-::Details::jrnltag[] = "E_vQ_Kernel";
-#endif
 
 
 template< typename E_vQ_functor_t, typename S_vQ_functor_t>

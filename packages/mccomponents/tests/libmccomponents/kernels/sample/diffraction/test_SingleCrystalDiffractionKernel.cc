@@ -9,10 +9,6 @@
 #include "mccomponents/math/random.h"
 #include "mccomponents/kernels/sample/diffraction/SingleCrystalDiffractionKernel.h"
 
-#ifdef DEBUG
-#include "journal/debug.h"
-#endif
-
 void test1()
 {
   using namespace mccomponents::kernels;
@@ -67,10 +63,6 @@ void test1()
 
 int main()
 {
-#ifdef DEBUG
-  //journal::debug_t("HomogeneousNeutronScatterer").activate();
-  journal::debug_t("SingleCrystalDiffractionKernel").activate();
-#endif
   test1();
   return 0;
 }

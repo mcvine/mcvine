@@ -17,10 +17,6 @@
 #include "mccomponents/physics/constants.h"
 
 
-#ifdef DEBUG
-#include "journal/debug.h"
-#endif
-
 class He3: public mccomponents::kernels::He3 {
 public:
   He3( double p ): mccomponents::kernels::He3(p) {}
@@ -48,9 +44,6 @@ void test1()
 
 int main()
 {
-#ifdef DEBUG
-  //journal::debug_t("HomogeneousNeutronScatterer").activate();
-#endif
   test1();
   return 0;
 }

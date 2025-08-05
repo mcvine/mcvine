@@ -3,7 +3,6 @@
 #include "mccomposite/geometry/locate.h"
 #include "mccomposite/geometry/intersect.h"
 #include "mccomposite/geometry/overlap.h"
-#include "journal/debug.h"
 #include "mccomposite/geometry/shape2ostream.h"
 
 

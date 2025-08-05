@@ -20,24 +20,13 @@
 #include "mccomponents/math/random.h"
 
 
-#ifdef DEBUG
-#include "journal/debug.h"
-#endif
 
 
 struct mccomponents::kernels::ConstantvQEKernel::Details {
 
-#ifdef DEBUG
-  const static char jrnltag[];
-  journal::debug_t debug;
-  Details() : debug( jrnltag ) {}
-#endif
 };
 
 
-#ifdef DEBUG
-const char mccomponents::kernels::ConstantvQEKernel::Details::jrnltag[] = "ConstantvQEKernel";
-#endif
 
 
 mccomponents::kernels::ConstantvQEKernel::ConstantvQEKernel

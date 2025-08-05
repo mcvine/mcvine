@@ -19,16 +19,9 @@
 
 void
 mcni::throw_fatal_path_error
-( const char *channel, const journal::loc3_t &where, const char *msg )
+(const char *msg )
 {
-  throw_( channel, where, msg);
-}
-
-void
-mcni::throw_fatal_path_error
-( const char *channel, const journal::loc2_t &where, const char *msg )
-{
-  throw_( channel, where, msg);
+  throw_(msg);
 }
 
 

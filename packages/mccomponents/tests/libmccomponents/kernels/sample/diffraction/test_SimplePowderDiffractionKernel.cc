@@ -10,10 +10,6 @@
 #include "mccomponents/kernels/sample/diffraction/SimplePowderDiffractionData.h"
 #include "mccomponents/kernels/sample/diffraction/SimplePowderDiffractionKernel.h"
 
-#ifdef DEBUG
-#include "journal/debug.h"
-#endif
-
 
 void test1()
 {
@@ -68,10 +64,6 @@ void test1()
 
 int main()
 {
-#ifdef DEBUG
-  //journal::debug_t("HomogeneousNeutronScatterer").activate();
-  //journal::debug_t("SimplePowderDiffractionKernel").activate();
-#endif
   test1();
   return 0;
 }

@@ -11,25 +11,7 @@
 #include "mccomponents/math/random.h"
 #include "mccomponents/physics/constants.h"
 
-// #define DEBUG
-#ifdef DEBUG
-#include "journal/debug.h"
-#endif
 
-
-struct mccomponents::kernels::SQE_EnergyFocusing_Kernel::Details {
-
-#ifdef DEBUG
-  const static char jrnltag[];
-  journal::debug_t debug;
-  Details() : debug( jrnltag ) {}
-#endif
-};
-
-
-#ifdef DEBUG
-const char mccomponents::kernels::SQE_EnergyFocusing_Kernel::Details::jrnltag[] = "SQE_EnergyFocusing_Kernel";
-#endif
 
 
 mccomponents::kernels::SQE_EnergyFocusing_Kernel::SQE_EnergyFocusing_Kernel
@@ -48,8 +30,7 @@ mccomponents::kernels::SQE_EnergyFocusing_Kernel::SQE_EnergyFocusing_Kernel
     m_Qmin(Qmin), m_Qmax(Qmax), m_DQ(Qmax-Qmin),
     m_Emin(Emin), m_Emax(Emax), m_DE(Emax-Emin),
     m_Ef(Ef), m_dEf(dEf),
-    m_sqe(sqe),
-    m_details( new Details )
+    m_sqe(sqe)
 {
   // std::cout << "E range" << m_Emin << ", " << m_Emax << std::endl;
 }
@@ -103,14 +84,6 @@ mccomponents::kernels::SQE_EnergyFocusing_Kernel::S
   if (m_Emin > Ei) return; // if Ei is too small, won't scatter. nothing happen
   double Emin = std::max(m_Emin, Emin1), Emax = std::min(Emax1, std::min(Ei, m_Emax));
   E = math::random( Emin, Emax );
-#ifdef DEBUG
-  m_details->debug
-    << journal::at(__HERE__)
-    << "Original probability" << ev.probability << journal::newline
-    << "generate E between " << m_Emin << " and " << std::min(Ei, m_Emax)
-    << ", E=" << E
-    << journal::endl;
-#endif
 
   // final energy, wave vector
   double Ef = Ei - E;
@@ -122,28 +95,10 @@ mccomponents::kernels::SQE_EnergyFocusing_Kernel::S
     Qmax = std::min(m_Qmax, ki+kf);
   if (Qmax<Qmin) return; // no scatter
   double Q = math::random(Qmin, Qmax);
-#ifdef DEBUG
-  m_details->debug
-    << journal::at(__HERE__)
-    << "generate Q between " << Qmin << " and " << Qmax
-    << ", Q=" << Q
-    << journal::endl;
-#endif
 
   // adjust probability of neutron event
   double prob_mul = m_sqe(Q,E) * Q * (Qmax-Qmin) * (Emax-Emin) / (2*ki*ki);
   ev.probability *= prob_mul;
-#ifdef DEBUG
-  m_details->debug
-    << journal::at(__HERE__)
-    << "Q, E="<< Q << ", " << E << ", " << journal::endl
-    << "Qmin, Qmax=" << Qmin << ", " << Qmax << ", " << journal::endl
-    << "Emin, Emax=" << Emin << ", " << Emax << ", " << journal::endl
-    << "ki=" << ki << ", " << journal::endl
-    << "S=" << m_sqe(Q,E) << journal::endl
-    << "prob mul=" << prob_mul << journal::endl
-    << journal::endl;
-#endif
   // figure out the direction of the out-going neutron
   double cost = (kf*kf + ki*ki - Q*Q)/2/kf/ki;
 
@@ -168,16 +123,6 @@ mccomponents::kernels::SQE_EnergyFocusing_Kernel::S
 
   V3d e3 = e1 * e2;
   V3d ekf = e1*cost + e2*sint*cosp + e3 *sint*sinp;
-#ifdef DEBUG
-  m_details->debug
-    << journal::at(__HERE__)
-    << "e1 = " << e1 << journal::newline
-    << "e2 = " << e2 << journal::newline
-    << "e3 = " << e3 << journal::newline
-    << "ekf = " << ekf << journal::newline
-    << "prob = " << ev.probability << journal::newline
-    << journal::endl;
-#endif
   ev.state.velocity = ekf * (kf*conversion::k2v);
 }
 

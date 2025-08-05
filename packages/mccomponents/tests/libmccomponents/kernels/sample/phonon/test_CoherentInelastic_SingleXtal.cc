@@ -1,7 +1,5 @@
 #include <cassert>
 
-#include "journal/debug.h"
-
 #include "CoherentInelastic_SingleXtal_Example.h"
 
 
@@ -41,12 +39,6 @@ void runTests(w_t &kernel)
 
 int main()
 {
-  journal::debug_t debug("CoherentInelastic_SingleXtal");
-  debug.activate();
-  // journal::debug_t debug2("Omega_minus_deltaE");
-  // debug2.activate();
-  journal::debug_t debug3("Omega_minus_deltaE ctor");
-  debug3.activate();
   // Create kernel
   w_t_Example example;
   w_t & kernel = example.kernel;

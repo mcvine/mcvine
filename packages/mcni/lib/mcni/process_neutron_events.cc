@@ -12,8 +12,6 @@
 //
 
 
-#include "journal/error.h"
-#include "journal/debug.h"
 
 #include "mcni/neutron.h"
 
@@ -32,9 +30,6 @@ namespace {
   void _process_T
   (NC *nc, mcni::Neutron::Events &evts)
   {
-#ifdef DEEPDEBUG
-    journal::debug_t debug("scatter");
-#endif
     using namespace mcni;
 
     static Neutron::Event swap_temp;
@@ -73,9 +68,6 @@ namespace {
   void _processM_T
   (NC *nc, mcni::Neutron::Events &evts)
   {
-#ifdef DEEPDEBUG
-    journal::debug_t debug("scatter");
-#endif
     using namespace mcni;
     using namespace std;
 

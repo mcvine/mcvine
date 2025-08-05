@@ -12,8 +12,6 @@
 //
 
 
-#include "journal/debug.h"
-
 #include "mccomponents/kernels/detector/He3Tube.h"
 
 
@@ -41,13 +39,6 @@ void
 mccomponents::kernels::He3Tube::absorb
 ( mcni::Neutron::Event & ev )
 {
-#ifdef DEBUG
-  journal::debug_t debug( He3Tube_impl::jrnltag );
-  debug << journal::at(__HERE__)
-	<< "event: " << ev
-	<< journal::endl;
-#endif
-  
   channels_t channels = m_tube_channels;
   channels.push_back( m_z2channel( ev.state.position ) );
   channels.push_back( m_tof2channel( ev.time ) );

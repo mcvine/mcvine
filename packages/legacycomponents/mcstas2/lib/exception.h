@@ -25,11 +25,6 @@
 #include <exception>
 #endif
 
-#ifndef JOURNAL_ERROR_H_INCLUDED
-#define JOURNAL_ERROR_H_INCLUDED
-#include "journal/error.h"
-#endif
-
 
 #include <sstream>
 namespace mcstas2{

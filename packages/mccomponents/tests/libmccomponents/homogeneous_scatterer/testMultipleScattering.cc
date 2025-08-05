@@ -17,10 +17,6 @@
 #include "mccomponents/homogeneous_scatterer/AbstractScatteringKernel.h"
 #include "mccomponents/homogeneous_scatterer/HomogeneousNeutronScatterer.h"
 
-#ifdef DEBUG
-#include "journal/debug.h"
-#endif
-
 
 
 class Absorber : public mccomponents::AbstractScatteringKernel {
@@ -103,10 +99,6 @@ void test6()
 
 int main()
 {
-#ifdef DEBUG
-  //journal::debug_t("HomogeneousNeutronScatterer").activate();
-  // journal::debug_t("CompositeNeutronScatterer_Impl").activate();
-#endif
   test6();
   return 0;
 }

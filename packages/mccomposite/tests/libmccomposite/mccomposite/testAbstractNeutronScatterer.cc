@@ -125,9 +125,6 @@ void test3()
 
 int main()
 {
-//   journal::debug_t("mccomposite.geometry.ArrowIntersector").activate();
-//   journal::debug_t("mccomposite.geometry.Locator").activate();
-//    journal::debug_t("CompositeNeutronScatterer_Impl").activate();
  test1();
  test2();
   test3();

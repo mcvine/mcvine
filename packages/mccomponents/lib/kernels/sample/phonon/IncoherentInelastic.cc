@@ -14,7 +14,6 @@
 
 //#include <portinfo>
 #include <cassert>
-#include "journal/warning.h"
 
 
 // #define DEEPDEBUG
@@ -28,9 +27,6 @@
 #define __DEBUG__PHNN__COHINEL_POLY__
 #endif
 
-#ifdef __DEBUG__PHNN__COHINEL_POLY__
-#include "journal/debug.h"
-#endif
 
 #include "mcni/math/func.h"
 #include "mccomponents/physics/constants.h"
@@ -120,14 +116,6 @@ Details::get_mass_and_xs
 (const atoms_t &atoms, float_t &mass, 
  float_t &scattering_xs, float_t &absorption_xs)
 {
-#ifdef DEBUG
-  journal::debug_t debug(jrnltag);
-  debug << "atoms=";
-  for (size_t i = 0; i< atoms.size(); i++)
-    debug  << atoms[i] << journal::newline;
-  debug << journal::endl;
-  
-#endif
   
   mass = 0;
   scattering_xs = 0;
@@ -207,9 +195,6 @@ mccomponents::kernels::phonon::IncoherentInelastic::S
 {
   namespace conversion = mcni::neutron_units_conversion;
 
-#ifdef DEEPDEBUG
-  journal::debug_t debug(m_details->jrnltag);
-#endif
 
   const mcni::Neutron::State  &ns  = ev.state;
   const V_t v_i   = ns.velocity;
@@ -225,11 +210,6 @@ mccomponents::kernels::phonon::IncoherentInelastic::S
   // = pick a scattering direction =
   V_t dir_f;
   math::choose_direction( dir_f ); dir_f.normalize();
-#ifdef DEEPDEBUG
-  debug << journal::at(__HERE__)
-	<< "picked scattering direction " << dir_f
-	<< journal::endl;
-#endif
 
 #ifdef DEEPDEBUG1
   //prob*=4pi;
@@ -240,11 +220,6 @@ mccomponents::kernels::phonon::IncoherentInelastic::S
   // = pick the final energy =
   float_t e_range;
   float_t E_f = m_details->pick_Ef( e_range, E_i, m_max_phonon_energy );
-#ifdef DEEPDEBUG
-  debug << journal::at(__HERE__)
-	<< "picked final energy " << E_f
-	<< journal::endl;
-#endif
 
   // +/- phonon energy
   float_t  omega = E_i - E_f; 
@@ -265,19 +240,6 @@ mccomponents::kernels::phonon::IncoherentInelastic::S
   // length of Q
   float_t Q_l = Q.length();
 
-#ifdef DEEPDEBUG
-  debug << journal::at(__HERE__)
-	<< "* E_i=" << E_i << ","
-	<< "E_f=" << E_f << ","
-	<< "v_f_l=" << v_f_l << ","
-	<< "v_i=" << v_i << ","
-	<< "v_f=" << v_f << ","
-	<< "v_Q=" << v_Q << ","
-	<< "omega =" << omega << ","
-	<< "Q =" << Q << ","
-	<< "T =" << m_Temperature << ","
-	<< journal::endl;
-#endif
 
   // change the velocity of neutron. other things stay put
   ev.state.velocity = v_f;
@@ -288,11 +250,6 @@ mccomponents::kernels::phonon::IncoherentInelastic::S
 
   // debye waller factor	  
   float_t DW = exp( -m_DW_calc->DW( Q_l ) );
-#ifdef DEEPDEBUG
-  debug << journal::at(__HERE__)
-	<< "debye waller factor " << DW
-	<< journal::endl;
-#endif
 
   prob *= e_range; // for picking Ef
 
@@ -332,19 +289,6 @@ mccomponents::kernels::phonon::IncoherentInelastic::S
       << std::endl;
     throw;
   }
-#ifdef DEEPDEBUG
-  debug << journal::at(__HERE__)
-	<< "* prob = " << prob << ","
-	<< "v_f_l/v_i_l=" << v_f_l/v_i_l << ","
-	<< "m_Mass=" << m_Mass << ","
-	<< "DW=" << DW << ","
-	<< "k2E(Q_l)/abs(omega)=" << conversion::k2E(Q_l)/std::abs(omega) << ","
-	<< "m_dos( abs(omega) )=" << (*m_dos)( std::abs(omega) ) << ","
-	<< "therm_factor=" << therm_factor << ","
-	<< "Q=" << Q_l << ", "
-	<< "omega=" << omega << ", "
-	<< journal::endl;
-#endif
 }
 
 

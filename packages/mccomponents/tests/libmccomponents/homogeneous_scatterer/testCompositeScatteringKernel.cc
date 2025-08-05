@@ -16,11 +16,6 @@
 #include "mccomposite/mccomposite.h"
 #include "mccomponents/homogeneous_scatterer/CompositeScatteringKernel.h"
 
-#ifdef DEBUG
-#include "journal/debug.h"
-#endif
-
-
 class Kernel1: public mccomponents::AbstractScatteringKernel {
 public:
   Kernel1( double mu, double sigma ) 
@@ -105,10 +100,6 @@ void test1()
 
 int main()
 {
-#ifdef DEBUG
-  //journal::debug_t("HomogeneousNeutronScatterer").activate();
-  // journal::debug_t("CompositeNeutronScatterer_Impl").activate();
-#endif
   test1();
   return 0;
 }

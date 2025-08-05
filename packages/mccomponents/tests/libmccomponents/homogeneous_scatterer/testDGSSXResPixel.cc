@@ -6,11 +6,6 @@
 #include "mccomponents/homogeneous_scatterer/AbstractScatteringKernel.h"
 #include "mccomponents/homogeneous_scatterer/DGSSXResPixel.h"
 
-#ifdef DEBUG
-#include "journal/debug.h"
-#endif
-
-
 
 // the absorber will absorb all neutrons
 void test1()
@@ -37,10 +32,6 @@ void test1()
 
 int main()
 {
-#ifdef DEBUG
-  //journal::debug_t("HomogeneousNeutronScatterer").activate();
-  // journal::debug_t("CompositeNeutronScatterer_Impl").activate();
-#endif
   test1();
   return 0;
 }

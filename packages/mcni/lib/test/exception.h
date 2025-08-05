@@ -15,7 +15,6 @@
 #define MCNI_TEST_EXCEPTION_H
 
 
-#include "journal/error.h"
 #include <string>
 
 
@@ -48,45 +47,29 @@ namespace mcni {
   
   
 
-  /// throw an exception and print out error message through journal
+  /// throw an exception
   /*!
-    @param channel:  journal channel name
-    @param where: usually journal::at(__HERE__)
     @param e: exception instance
   */
-  template <typename loc_t>
-  void throw_( const char *channel, const loc_t &where, const mcni::Exception &e)
+  inline void throw_(const mcni::Exception &e)
   {
-    journal::error_t err(channel);
-    err << where
-	<< e.what()
-	<< journal::endl;
     throw e;
   }
   
   
 
-  /// throw an exception and print out error message through journal
+  /// throw an exception
   /*!
     the type of exception to throw is given as template parameter
-    @param channel: journal channel name
-    @param where: usually journal::at(__HERE__)
   */
   template <typename exception_t, typename loc_t>
-  void throw_( const char *channel, const loc_t &where)
+  void throw_()
   {
-    journal::error_t err(channel);
     exception_t e;
-    err << where
-	<< e.what()
-	<< journal::endl;
     throw e;
   }
   
   
-  //   void throw_( const char *channel, const journal::loc3_t & whre, const Exception & e );
-  //   void throw_( const char *channel, const journal::loc2_t & whre, const Exception & e );
-
 } //mcni
 
 #endif //MCNI_TEST_EXCEPTION_H

@@ -22,15 +22,6 @@
 #include "mccomponents/math/random.h"
 
 
-#ifdef DEBUG
-#include "journal/debug.h"
-#endif
-
-#ifdef DEBUG
-// Example of debugging
-m_details->debug  << "theta: " << theta << journal::endl;
-#endif
-
 
 struct mccomponents::kernels::EPSCDiffractionKernel::Details {
   double absorption_cross_section;
@@ -185,10 +176,6 @@ void
 mccomponents::kernels::EPSCDiffractionKernel::S
 ( mcni::Neutron::Event & ev )
 {
-#ifdef DEBUG
-  m_details->debug << "in" << ev << journal::endl;
-#endif
-
   // input neutron state
   mcni::Neutron::State & state = ev.state;
   // incident neutron velocity
@@ -210,13 +197,6 @@ mccomponents::kernels::EPSCDiffractionKernel::S
   typedef mcni::Vector3<double> V3d;
   V3d vf(vx,vy,vz);
   state.velocity = vf;
-
-#ifdef DEBUG
-  m_details->debug
-    << "out" << ev
-    << journal::endl;
-#endif
-
 }
 
 

@@ -11,24 +11,11 @@
 #include "mccomponents/math/random/geometry.h"
 #include "mccomponents/kernels/sample/SANS/SpheresKernel.h"
 
-#ifdef DEBUG
-#include "journal/debug.h"
-#endif
-
 
 struct mccomponents::kernels::SANSSpheresKernel::Details {
 
-#ifdef DEBUG
-  const static char jrnltag[];
-  journal::debug_t debug;
-  Details() : debug( jrnltag ) {}
-#endif
 };
 
-
-#ifdef DEBUG
-const char mccomponents::kernels::SANSSpheresKernel::Details::jrnltag[] = "SANSSpheresKernel";
-#endif
 
 
 mccomponents::kernels::SANSSpheresKernel::SANSSpheresKernel
