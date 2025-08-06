@@ -15,7 +15,6 @@
 #include <cmath>
 #include <complex>
 //#include <portinfo>
-#include "journal/warning.h"
 
 #ifdef DEEPDEBUG
 #define DEBUG
@@ -165,9 +164,7 @@ const
     return true;
     /*
     mcni::throw_fatal_path_error
-      ( phonon_cohinel_sc_journal_channel,
-        journal::at(__HERE__),
-        "Unable to find solution for function omega(Q)-dE");
+      ("Unable to find solution for function omega(Q)-dE");
     */
   }
   // choose a root (length of vf)

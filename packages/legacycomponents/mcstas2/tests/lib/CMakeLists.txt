@@ -17,7 +17,6 @@ link_directories(${DEPLOYMENT_PREFIX}/${INSTALL_LIB_DIR})
 # add tests
 set(link_libs
   ${PYTHON_LIBRARY} ${Boost_LIBRARIES} ${GSL_LIBRARIES}
-  "journal"
   "-lmcni" "-l${LIB_NAME}"
   )
 set(deps ${LIB_NAME})

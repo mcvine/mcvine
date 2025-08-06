@@ -19,7 +19,7 @@ PROJ_CLEAN +=  $(PROJ_CPPTESTS)
 PROJ_PYTESTS =  alltests.py
 PROJ_CPPTESTS = 
 PROJ_TESTS = $(PROJ_PYTESTS) $(PROJ_CPPTESTS)
-PROJ_LIBRARIES = -L$(BLD_LIBDIR) -ljournal -lvitess
+PROJ_LIBRARIES = -L$(BLD_LIBDIR) -lvitess
 
 
 # directory structure

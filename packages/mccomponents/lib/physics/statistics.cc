@@ -17,8 +17,6 @@
 #include "mccomponents/physics/constants.h"
 #include "mccomponents/physics/statistics.h"
 
-#include "journal/warning.h"
-
 
 double mccomponents::physics::BoseEinsteinDistribution
 (double energy, double temperature)
@@ -26,11 +24,6 @@ double mccomponents::physics::BoseEinsteinDistribution
   const double &T2E = Kelvin2meV;
 
   if (energy <0 ) {
-    journal::warning_t warning("BoseEinsteinDistribution");
-
-    warning << journal::at(__HERE__)
-	    << "energy = " << energy << " is negative"
-	    << journal::endl;
     energy = std::abs( (double)energy );
   }
   

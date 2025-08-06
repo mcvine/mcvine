@@ -20,7 +20,7 @@ include local.def
 
 
 PROJ_CXX_SRCLIB = -lboost_python  -L$(BOOSTPYTHON_LIBDIR) \
-	-ljournal -lmcni -lmccomposite \
+	-lmcni -lmccomposite \
 	-L$(DANSE_DIR)/lib -L$(DANSE_DIR)/lib64
 
 

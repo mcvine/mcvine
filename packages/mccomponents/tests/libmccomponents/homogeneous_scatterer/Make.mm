@@ -30,7 +30,6 @@ PROJ_LIBRARIES = -L$(BLD_LIBDIR) \
 	-lmccomponents -lmccomposite -lmcni \
 	-lfparser \
 	-lgsl -lgslcblas -L$(GSL_LIBDIR) \
-	-ljournal \
 	-L$(DANSE_DIR)/lib -L$(DANSE_DIR)/lib64
 
 #--------------------------------------------------------------------------

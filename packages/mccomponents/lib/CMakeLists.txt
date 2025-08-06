@@ -85,7 +85,7 @@ add_library ( ${LIB_NAME} SHARED ${SRC_FILES} )
 target_link_libraries(
   ${LIB_NAME} 
   ${PYTHON_LIBRARY} ${Boost_LIBRARIES} ${GSL_LIBRARIES}
-  "journal" "mcni" "mccomposite" "fparser"
+  "mcni" "mccomposite" "fparser"
   )
 set_target_properties(${LIB_NAME} PROPERTIES LIBRARY_OUTPUT_DIRECTORY "${EXPORT_LIB}") # install to python directory
 add_dependencies(${LIB_NAME} "mccomposite")

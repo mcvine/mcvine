@@ -14,7 +14,6 @@
 
 //#include <portinfo>
 #include <cassert>
-#include "journal/warning.h"
 #include "mccomponents/math/random.h"
 
 
@@ -29,10 +28,6 @@
 #define __DEBUG__PHNN__INCOHELAST__
 #endif
 
-#ifdef __DEBUG__PHNN__INCOHELAST__
-#include "journal/debug.h"
-#endif
-
 #include "mccomponents/physics/constants.h"
 #include "mccomponents/kernels/sample/phonon/IncoherentElastic.h"
 #include "mccomponents/kernels/sample/phonon/utils.h"
@@ -44,8 +39,6 @@ struct mccomponents::kernels::phonon::IncoherentElastic::Details {
 
 #ifdef __DEBUG__PHNN__INCOHELAST__
   const static char jrnltag[];
-  journal::debug_t debug;
-  Details() : debug( jrnltag ) {}
 #endif
 
   const static double m_epsilon;
@@ -136,10 +129,6 @@ void
 mccomponents::kernels::phonon::IncoherentElastic::S
 ( neutron_t & ev ) 
 {
-#ifdef DEBUG
-  m_details->debug << "in" << ev << journal::endl;
-#endif
-
   // input neutron state
   mcni::Neutron::State & state = ev.state;
   // incident neutron velocity
@@ -154,16 +143,6 @@ mccomponents::kernels::phonon::IncoherentElastic::S
   double Q = conversion::v2k*vi * 2 * sin(theta/2.);
   // Debye Waller factor
   double dw = exp(-m_dw_core*Q*Q);
-
-#ifdef DEBUG
-  m_details->debug
-    << "theta: " << theta << ", "
-    << "phi: " << phi << ", "
-    << "Q: " << Q << ", "
-    << "dw core: " << m_dw_core << ", "
-    << "dw: " << dw << ", "
-    << journal::endl;
-#endif
 
   // scattered neutron velocity vector
   // == coordinate system ==
@@ -189,12 +168,6 @@ mccomponents::kernels::phonon::IncoherentElastic::S
   // adjust probability of neutron event
   // normalization factor is 2pi*pi/4pi = pi/2
   ev.probability *= sin(theta) * (mcni::PI/2) * dw;
-
-#ifdef DEBUG
-  m_details->debug
-    << "out" << ev
-    << journal::endl;
-#endif
 
 }
 
