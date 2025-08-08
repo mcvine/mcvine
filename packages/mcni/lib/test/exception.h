@@ -15,6 +15,7 @@
 #define MCNI_TEST_EXCEPTION_H
 
 
+#include <iostream>
 #include <string>
 
 
@@ -53,6 +54,7 @@ namespace mcni {
   */
   inline void throw_(const mcni::Exception &e)
   {
+    std::cerr << e.what() << std::endl;
     throw e;
   }
   
@@ -66,6 +68,7 @@ namespace mcni {
   void throw_()
   {
     exception_t e;
+    std::cerr << e.what() << std::endl;
     throw e;
   }
   

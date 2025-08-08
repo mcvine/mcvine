@@ -62,20 +62,26 @@ DANSE::phonon::LinearlyInterpolatedDOS<FloatType, Array_1D>::LinearlyInterpolate
     m_e0(e0), m_de(de), m_n(ne), m_e1( base_t::emax() )
 {
   if  ( ne != Z.size() ) {
+    std::cerr << "***energy axis and dos axis have differnet size of data" << std::endl;
+	  std::cerr << "ne = " << ne << std::endl;
+    std::cerr << "Z.size = " << Z.size() << std::endl;
     throw DOS_Init_Error();
   }
 
   if  ( ne < 2 ) {
+    std::cerr << "***dos curve must have at least two data points!" << std::endl;
     throw DOS_Init_Error();
   }
 
   // make sure e is ascending
   if (de<0) {
+     std::cerr << "***the e axis of dos curve must be ascending!" << std::endl;
     throw DOS_Init_Error();
   }
 
   // make sure e[0] >= 0.0
   if ( e0 < 0.0 ) {
+    std::cerr << "***the e axis of dos curve must be positive!" << std::endl;
     throw DOS_Init_Error();
   }
 

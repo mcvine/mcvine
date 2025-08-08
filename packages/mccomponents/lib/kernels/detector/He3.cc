@@ -42,6 +42,8 @@ mccomponents::kernels::He3::scattering_coefficient( const mcni::Neutron::Event &
 void
 mccomponents::kernels::He3::scatter( mcni::Neutron::Event & ev )
 {
+  std::cerr << "WARNING: He3 detector doesn't scatter neutrons" << std::endl;
+  return;
 }
 
     

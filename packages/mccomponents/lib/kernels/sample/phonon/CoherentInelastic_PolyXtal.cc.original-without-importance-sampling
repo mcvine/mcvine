@@ -204,6 +204,8 @@ Details::calc_relAccessibleReciVol_MC
  float_t Qcutoff, float_t E_i) const
 {
   if (numMCsteps<1000) {
+	    std::cerr << "WARNING *** Number of MC steps must be larger than 1000 to obtain reliable results!" 
+	    << std::endl;
     //throw;
   }
     
