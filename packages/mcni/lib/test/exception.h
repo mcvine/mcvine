@@ -60,7 +60,7 @@ namespace mcni {
   
   
 
-  /// throw an exception
+  /// throw an exception 
   /*!
     the type of exception to throw is given as template parameter
   */
