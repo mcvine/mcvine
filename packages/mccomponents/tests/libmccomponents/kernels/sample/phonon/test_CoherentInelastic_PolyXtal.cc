@@ -1,7 +1,5 @@
 #include <cassert>
 
-#include "journal/debug.h"
-
 #include "CoherentInelastic_PolyXtal_Example.h"
 
 
@@ -50,12 +48,6 @@ void runTests(w_t & kernel)
 
 int main()
 {
-
-#ifdef DEEPDEBUG
-  journal::debug_t debug( "phonon_coherent_inelastic_polyxtal_kernel" );
-  debug.activate();
-#endif
-
   w_t_Example example;
   
   w_t & kernel = example.kernel;

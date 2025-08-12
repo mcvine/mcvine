@@ -13,11 +13,11 @@
 
 
 #include <cassert>
+#include <sstream>
 
 #include "mccomponents/kernels/detector/EventModeMCA.h"
 #include "mccomposite/vector2ostream.h"
 #include "mccomponents/exception.h"
-#include "journal/debug.h"
 
 
 namespace mccomponents {
@@ -38,22 +38,10 @@ mccomponents::detector::EventModeMCA::EventModeMCA
   : m_out( outfilename, std::ofstream::binary ),
     m_dims( dims )
 {
-  // #ifdef DEBUG
-  journal::debug_t debug( EventModeMCA_impl::jrnltag );
-  debug << journal::at(__HERE__)
-	<< "Opening event mode mca" << journal::newline
-	<< "output file name: " << outfilename 
-	<< journal::endl;
-
-  // #endif
 }
 
 mccomponents::detector::EventModeMCA::~EventModeMCA()
 {
-  journal::debug_t debug( EventModeMCA_impl::jrnltag );
-  debug << journal::at(__HERE__)
-	<< "Closing event mode mca" 
-	<< journal::endl;
   m_out.flush();
   m_out.close();
 }
@@ -61,26 +49,12 @@ mccomponents::detector::EventModeMCA::~EventModeMCA()
 void mccomponents::detector::EventModeMCA::accept
 ( const channels_t & channels, double n )
 {
-  
-#ifdef DEBUG
-  journal::debug_t debug( EventModeMCA_impl::jrnltag );
-  debug << journal::at(__HERE__)
-	<< "channels: ";
-  for (size_t i=0; i<channels.size(); i++) debug << channels[i] << ", ";
-  debug << journal::newline;
-  debug << "n = " << n 
-	<< journal::endl;
-#endif
-
   if  (channels.size()!=m_dims.size()+1) {
     std::ostringstream oss;
     oss << "Value error. Test of channels.size()==m_dims.size()+1 failed. ";
     oss << "channels = " << channels << ", "
 	<< "dims = " << m_dims
 	<< ".";
-#ifdef DEBUG
-    debug << journal::at(__HERE__) << oss.str() << journal::endl;
-#endif
     throw Exception( oss.str().c_str() );
   }
   
@@ -94,9 +68,6 @@ void mccomponents::detector::EventModeMCA::accept
 	  << "channel number = " << channels[i] << ", "
 	  << "dimension = " << m_dims[i]
 	  << ".";
-#ifdef DEBUG
-      debug << journal::at(__HERE__) << oss.str() << journal::endl;
-#endif
       throw Exception( oss.str().c_str() );
     }
   }
@@ -111,16 +82,6 @@ void mccomponents::detector::EventModeMCA::accept
 
   m_buffer.tofChannelNo = channels[channels.size()-1];
   m_buffer.n = n;
-
-#ifdef DEBUG
-  debug << journal::at(__HERE__)
-	<< "about to write  "
-	<< "pixelID=" << m_buffer.pixelID << ", "
-	<< "tofChannelNo=" << m_buffer.tofChannelNo << ", "
-	<< "n=" << m_buffer.n << ", "
-	<< journal::endl
-    ;
-#endif
 
   m_out.write( (const char *)&m_buffer, sizeof(m_buffer) );
 }

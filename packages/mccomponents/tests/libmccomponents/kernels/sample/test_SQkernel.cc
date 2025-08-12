@@ -16,10 +16,6 @@
 #include "mccomponents/kernels/sample/SQkernel.h"
 #include "mccomponents/kernels/sample/AbstractSQ.h"
 
-#ifdef DEBUG
-#include "journal/debug.h"
-#endif
-
 
 void test1()
 {
@@ -56,9 +52,6 @@ void test1()
 
 int main()
 {
-#ifdef DEBUG
-  //journal::debug_t("HomogeneousNeutronScatterer").activate();
-#endif
   test1();
   return 0;
 }

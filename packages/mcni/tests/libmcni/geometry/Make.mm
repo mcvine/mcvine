@@ -21,7 +21,7 @@ PROJ_CPPTESTS = testVector3 testMatrix3 testcoords_transform testutils
 PROJ_TESTS = $(PROJ_PYTESTS) $(PROJ_CPPTESTS)
 
 PROJ_CXX_INCLUDES += $(DANSE_DIR)/include $(DANSE_DIR)/include/danse/ins
-PROJ_LIBRARIES = -L$(BLD_LIBDIR) -ljournal -lmcni \
+PROJ_LIBRARIES = -L$(BLD_LIBDIR) -lmcni \
 	-L$(DANSE_DIR)/lib -L$(DANSE_DIR)/lib64
 
 

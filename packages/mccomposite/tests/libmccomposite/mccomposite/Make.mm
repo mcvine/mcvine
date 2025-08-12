@@ -26,7 +26,7 @@ PROJ_CPPTESTS = \
 
 PROJ_TESTS = $(PROJ_PYTESTS) $(PROJ_CPPTESTS)
 PROJ_CXX_INCLUDES += $(DANSE_DIR)/include $(DANSE_DIR)/include/danse/ins
-PROJ_LIBRARIES = -L$(BLD_LIBDIR)  -lmccomposite -lmcni -ljournal \
+PROJ_LIBRARIES = -L$(BLD_LIBDIR)  -lmccomposite -lmcni \
 	-L$(DANSE_DIR)/lib -L$(DANSE_DIR)/lib64
 
 

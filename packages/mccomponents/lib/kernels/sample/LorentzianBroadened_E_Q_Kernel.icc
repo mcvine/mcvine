@@ -17,9 +17,6 @@
 
 
 #define DEBUG
-#ifdef DEBUG
-#include "journal/debug.h"
-#endif
 
 
 #define checkNAN(name, x)   if ((x)!=(x)) std::cerr << name << " is nan" << std::endl;
@@ -30,27 +27,13 @@ struct
 mccomponents::kernels::LorentzianBroadened_E_Q_Kernel<E_Q_functor_t, S_Q_functor_t, Gamma_Q_functor_t>\
 :: Details {
 
-#ifdef DEBUG
-  const static char jrnltag[];
-  journal::debug_t debug;
-#endif
   Details()
-#ifdef DEBUG
-    : debug( jrnltag )
-#endif
   {}
 
   // data
   const static double m_epsilon;
 };
 
-
-#ifdef DEBUG
-template< typename E_Q_functor_t, typename S_Q_functor_t, typename Gamma_Q_functor_t>
-const char
-mccomponents::kernels::LorentzianBroadened_E_Q_Kernel<E_Q_functor_t, S_Q_functor_t, Gamma_Q_functor_t>\
-::Details::jrnltag[] = "LorentzianBroadened_E_Q_Kernel";
-#endif
 
 template< typename E_Q_functor_t, typename S_Q_functor_t, typename Gamma_Q_functor_t>
 const double mccomponents::kernels::LorentzianBroadened_E_Q_Kernel<E_Q_functor_t, S_Q_functor_t, Gamma_Q_functor_t> \

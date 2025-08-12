@@ -8,11 +8,6 @@
 #define DEBUG // hack
 #include "mccomponents/kernels/sample/DGSSXResKernel.h"
 
-#ifdef DEBUG
-#include "journal/debug.h"
-#endif
-
-
 
 void test1()
 {
@@ -68,9 +63,6 @@ void test1()
 
 int main()
 {
-#ifdef DEBUG
-  journal::debug_t("DGSSXResKernel").activate();
-#endif
   test1();
   return 0;
 }

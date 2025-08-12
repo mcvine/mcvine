@@ -15,10 +15,6 @@
 #include "mccomponents/homogeneous_scatterer/AbstractScatteringKernel.h"
 #include "mccomponents/homogeneous_scatterer/HomogeneousNeutronScatterer.h"
 
-#ifdef DEBUG
-#include "journal/debug.h"
-#endif
-
 
 // only scattering
 class ToX : public mccomponents::AbstractScatteringKernel {

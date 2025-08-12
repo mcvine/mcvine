@@ -19,17 +19,11 @@
 #include "mccomponents/math/random.h"
 
 
-#ifdef DEBUG
-#include "journal/debug.h"
-#endif
-
 
 struct mccomponents::kernels::ConstantQEKernel::Details {
 
 #ifdef DEBUG
   const static char jrnltag[];
-  journal::debug_t debug;
-  Details() : debug( jrnltag ) {}
 #endif
   
   // data

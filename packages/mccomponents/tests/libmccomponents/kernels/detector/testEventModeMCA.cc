@@ -17,11 +17,6 @@
 #include "mccomponents/kernels/detector/EventModeMCA.h"
 
 
-#ifdef DEBUG
-#include "journal/debug.h"
-#endif
-
-
 void test1()
 {
   using namespace mccomponents;
@@ -104,9 +99,6 @@ void test2a()
 
 int main()
 {
-#ifdef DEBUG
-  //journal::debug_t("HomogeneousNeutronScatterer").activate();
-#endif
   test1();
   test1a();
   test2();

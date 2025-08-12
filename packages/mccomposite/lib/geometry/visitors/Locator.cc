@@ -2,7 +2,6 @@
 #include "mccomposite/geometry/shape2ostream.h"
 #include "mccomposite/exception.h"
 
-#include "journal/debug.h"
 
 
 namespace Locator_impl{

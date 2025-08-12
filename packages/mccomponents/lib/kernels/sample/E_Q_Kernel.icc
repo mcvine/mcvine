@@ -21,10 +21,6 @@
 // debug
 // #define DEBUG
 
-#ifdef DEBUG
-#include "journal/debug.h"
-#endif
-
 
 template< typename E_Q_functor_t, typename S_Q_functor_t>
 struct
@@ -33,8 +29,6 @@ mccomponents::kernels::E_Q_Kernel<E_Q_functor_t, S_Q_functor_t>\
 
 #ifdef DEBUG
   const static char jrnltag[];
-  journal::debug_t debug;
-  Details() : debug( jrnltag ) {}
 #endif
 
   const static double m_epsilon;

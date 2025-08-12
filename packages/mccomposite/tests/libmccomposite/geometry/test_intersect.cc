@@ -18,8 +18,6 @@
 #include "mccomposite/geometry/shapes.h"
 #include "mccomposite/geometry/intersect.h"
 
-#include "journal/debug.h"
-
 using namespace std;
 using namespace mccomposite::geometry;
 char * jrnltag ="test_intersect";
@@ -380,12 +378,6 @@ void test10()
 
 int main()
 {
-#ifdef DEBUG
-  //  journal::debug_t("mccomposite.geometry.ArrowIntersector").activate();
-//   journal::debug_t("mccomposite.geometry.Locator").activate();
-//   journal::debug_t("mccomposite.geometry.intersect").activate();
-//   journal::debug_t(jrnltag).activate();
-#endif
   test1();
   test2();
   test3();

@@ -29,8 +29,6 @@
 #include <numeric>
 #include <iostream>
 
-#include "journal/error.h"
-#include "journal/debug.h"
 
 
 #include "mccomponents/kernels/sample/phonon/LinearlyInterpolatedGridData_1D.h"
@@ -64,39 +62,26 @@ DANSE::phonon::LinearlyInterpolatedDOS<FloatType, Array_1D>::LinearlyInterpolate
     m_e0(e0), m_de(de), m_n(ne), m_e1( base_t::emax() )
 {
   if  ( ne != Z.size() ) {
-    
-    journal::error_t err("DOS");
-    err << journal::at(__HERE__)
-        << "***energy axis and dos axis have differnet size of data" << journal::newline
-	<< "ne = " << ne << journal::newline
-        << "Z.size = " << Z.size() << journal::newline
-	<< journal::endl;
-    
+    std::cerr << "***energy axis and dos axis have differnet size of data" << std::endl;
+	  std::cerr << "ne = " << ne << std::endl;
+    std::cerr << "Z.size = " << Z.size() << std::endl;
     throw DOS_Init_Error();
   }
 
   if  ( ne < 2 ) {
-    
-    journal::error_t err("DOS");
-    err << "***dos curve must have at least two data points!"
-	<< journal::endl;
-    
+    std::cerr << "***dos curve must have at least two data points!" << std::endl;
     throw DOS_Init_Error();
   }
 
   // make sure e is ascending
   if (de<0) {
-    journal::error_t err("DOS");
-    err << "***the e axis of dos curve must be ascending!" 
-	<< journal::endl;
+     std::cerr << "***the e axis of dos curve must be ascending!" << std::endl;
     throw DOS_Init_Error();
   }
 
   // make sure e[0] >= 0.0
   if ( e0 < 0.0 ) {
-    journal::error_t err("DOS");
-    err << "***the e axis of dos curve must be positive!" 
-	<< journal::endl;
+    std::cerr << "***the e axis of dos curve must be positive!" << std::endl;
     throw DOS_Init_Error();
   }
 
@@ -116,10 +101,6 @@ template <typename FloatType, typename Array_1D>
 DANSE::phonon::LinearlyInterpolatedDOS<FloatType, Array_1D>::~LinearlyInterpolatedDOS
 ()
 {
-#ifdef DEBUG
-  journal::debug_t debug("DOS");
-  debug << "DOS " << this << " destroyed" << journal::endl;
-#endif
 }
 
 

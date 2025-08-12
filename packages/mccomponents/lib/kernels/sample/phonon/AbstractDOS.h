@@ -14,9 +14,6 @@
 #define DANSE_PHONON_ABSTRACTDOS_H
 
 
-#include "journal/debug.h"
-#include "journal/warning.h"
-
 
 namespace DANSE{ namespace phonon {
 
@@ -56,12 +53,6 @@ namespace DANSE{ namespace phonon {
     // 
     FLT operator () ( const FLT & e ) const {
       if (e<m_emin or e> m_emax) {
-#ifdef DEBUG
-	journal::debug_t debug("phonon::DOS");
-	debug << journal::at(__HERE__)
-	      << FLT(e) << " is out of range: (" << m_emin
-	      << ", " << m_emax << ")" << journal::endl;
-#endif 
 	return 0.0;
       }
       return value( e );

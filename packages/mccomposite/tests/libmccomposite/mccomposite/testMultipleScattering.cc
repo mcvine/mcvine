@@ -221,11 +221,6 @@ void test7()
 
 int main()
 {
-#ifdef DEBUG
-//   journal::debug_t("mccomposite.geometry.ArrowIntersector").activate();
-//   journal::debug_t("mccomposite.geometry.Locator").activate();
-//   journal::debug_t("CompositeNeutronScatterer_Impl").activate();
-#endif
   test6();
   test7();
 }

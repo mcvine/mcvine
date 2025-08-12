@@ -19,24 +19,6 @@
 #include "mccomponents/math/random.h"
 #include "mccomponents/physics/constants.h"
 
-#ifdef DEBUG
-#include "journal/debug.h"
-#endif
-
-
-struct mccomponents::kernels::SQkernel::Details {
-
-#ifdef DEBUG
-  const static char jrnltag[];
-  journal::debug_t debug;
-  Details() : debug( jrnltag ) {}
-#endif
-};
-
-
-#ifdef DEBUG
-const char mccomponents::kernels::SQkernel::Details::jrnltag[] = "SQkernel";
-#endif
 
 
 mccomponents::kernels::SQkernel::SQkernel
@@ -48,8 +30,7 @@ mccomponents::kernels::SQkernel::SQkernel
     m_scattering_coefficient( scattering_coefficient ),
     m_epsilon(1.e-10),
     m_Qmin(Qmin), m_Qmax(Qmax), m_DQ(Qmax-Qmin),
-    m_sq(sq),
-    m_details( new Details )
+    m_sq(sq)
 {}
 
 
@@ -101,13 +82,6 @@ mccomponents::kernels::SQkernel::S
     Qmax = std::min(m_Qmax, ki+kf);
   if (Qmax<Qmin) return; // no scatter
   double Q = math::random(Qmin, Qmax);
-#ifdef DEBUG
-  m_details->debug 
-    << journal::at(__HERE__)
-    << "generate Q between " << Qmin << " and " << Qmax 
-    << ", Q=" << Q
-    << journal::endl;
-#endif
 
   // adjust probability of neutron event
   // !!!!!!!!!
@@ -140,15 +114,6 @@ mccomponents::kernels::SQkernel::S
 
   V3d ekf = e1*cost + e2*sint*cosp + e3 *sint*sinp;
   
-#ifdef DEBUG
-  m_details->debug 
-    << journal::at(__HERE__)
-    << "e1 = " << e1 << journal::newline
-    << "e2 = " << e2 << journal::newline
-    << "e3 = " << e3 << journal::newline
-    << "ekf = " << ekf << journal::newline
-    << journal::endl;
-#endif
   ev.state.velocity = ekf * (kf*conversion::k2v);
 }
 

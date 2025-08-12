@@ -11,7 +11,6 @@
 
 #include "mccomposite/geometry/exception.h"
 
-#include "journal/debug.h"
 
 namespace ArrowIntersector_impl{
 
@@ -222,9 +221,6 @@ void
 mccomposite::geometry::ArrowIntersector::visit
 ( const Box * boxptr )
 {
-#ifdef DEBUG
-  journal::debug_t debug( ArrowIntersector_impl::jrnltag );
-#endif
   m_distances.clear();
   
   const Box & box = *boxptr;
@@ -233,14 +229,6 @@ mccomposite::geometry::ArrowIntersector::visit
   const Direction & direction = m_arrow.direction;
   if (isInvaildDirection(direction)) return;
   
-#ifdef DEBUG
-  debug << journal::at(__HERE__) 
-	<< "box: "<< *boxptr << journal::newline
-	<< "start: " << start << journal::newline
-	<< "direction: " << direction
-	<< journal::endl
-    ;
-#endif
   
   double x = start.x; 
   double y = start.y;
@@ -256,42 +244,18 @@ mccomposite::geometry::ArrowIntersector::visit
     intersectRectangle(x,y,z-Z/2, vx,vy,vz, X, Y, ts);
     intersectRectangle(x,y,z+Z/2, vx,vy,vz, X, Y, ts);
   }
-#ifdef DEBUG
-  debug << journal::at(__HERE__) 
-	<< ts << journal::endl
-    ;
-#endif
   if (vx!=0) {
     intersectRectangle(y,z,x-X/2, vy,vz,vx, Y, Z, ts);
     intersectRectangle(y,z,x+X/2, vy,vz,vx, Y, Z, ts);
   }
-#ifdef DEBUG
-  debug << journal::at(__HERE__) 
-	<< ts << journal::endl
-    ;
-#endif
   if (vy!=0) {
     intersectRectangle(z,x,y-Y/2, vz,vx,vy, Z, X, ts);
     intersectRectangle(z,x,y+Y/2, vz,vx,vy, Z, X, ts);
   }
-#ifdef DEBUG
-  debug << journal::at(__HERE__) 
-	<< ts << journal::endl
-    ;
-#endif
   
   if (!ts.size()) return;
   if (ts.size() == 1) {
     // this is usually due to numerical errors
-#ifdef DEBUG
-    debug
-      << journal::at(__HERE__)
-      << "number of intersections between a line and a box should be 0 or 2, "
-      << "we got " << ts.size() << ". " << journal::newline
-      << "box: " << box << ", "
-      << "arrow: " << m_arrow
-      << journal::endl;
-#endif
     return;
   }
   if (ts.size()!=2) {
@@ -314,11 +278,6 @@ mccomposite::geometry::ArrowIntersector::visit
     m_distances.push_back(ts[0]);
   }
 
-#ifdef DEBUG
-  debug << journal::at(__HERE__)
-	<< m_distances << journal::endl
-    ;
-#endif
 
   return ;
 }
@@ -329,9 +288,6 @@ void
 mccomposite::geometry::ArrowIntersector::visit
 ( const Pyramid * pyramidptr )
 {
-#ifdef DEBUG
-  journal::debug_t debug( ArrowIntersector_impl::jrnltag );
-#endif
   m_distances.clear();
   
   const Pyramid & pyramid = *pyramidptr;
@@ -342,14 +298,6 @@ mccomposite::geometry::ArrowIntersector::visit
   double length = direction.length();
   direction= direction * (1./length); // normalize
   
-#ifdef DEBUG
-  debug << journal::at(__HERE__) 
-	<< "pyramid: "<< *pyramidptr << journal::newline
-	<< "start: " << start << journal::newline
-	<< "direction: " << direction
-	<< journal::endl
-    ;
-#endif
   
   double x = start.x; 
   double y = start.y;
@@ -381,11 +329,6 @@ mccomposite::geometry::ArrowIntersector::visit
 		    Position(0, 0, 0), Position(-X/2, Y/2, -H), Position(X/2, Y/2, -H),
 		    ts);
 
-#ifdef DEBUG
-  debug << journal::at(__HERE__) 
-	<< ts << journal::endl
-    ;
-#endif
 
   if (!ts.size()) return;
   // remove duplicates
@@ -396,18 +339,6 @@ mccomposite::geometry::ArrowIntersector::visit
   //
   if (N == 1) {
     // this is usually due to numerical errors
-#ifdef DEBUG
-    debug
-      << journal::at(__HERE__)
-      << "number of intersections between a line and a pyramid should be 0 or 2, "
-      << "we got " << N << ". " << journal::newline;
-    for (std::vector<double>::iterator it=ts.begin(); it!=new_end; it++)
-      debug << *it << ", ";
-    debug << journal::endl
-      << "pyramid: " << pyramid << ", "
-      << "arrow: " << m_arrow
-      << journal::endl;
-#endif
     return;
   }
   if (N!=2) {
@@ -433,11 +364,6 @@ mccomposite::geometry::ArrowIntersector::visit
     m_distances.push_back(ts[0]/length);
   }
 
-#ifdef DEBUG
-  debug << journal::at(__HERE__) 
-	<< m_distances << journal::endl
-    ;
-#endif
   return ;
 }
 
@@ -447,9 +373,6 @@ void
 mccomposite::geometry::ArrowIntersector::visit
 ( const Cone * coneptr )
 {
-#ifdef DEBUG
-  journal::debug_t debug( ArrowIntersector_impl::jrnltag );
-#endif
   m_distances.clear();
   
   const Cone & cone = *coneptr;
@@ -460,14 +383,6 @@ mccomposite::geometry::ArrowIntersector::visit
   double length = direction.length();
   direction = direction * (1./length); // normalize
   
-#ifdef DEBUG
-  debug << journal::at(__HERE__) 
-	<< "cone: "<< *coneptr << journal::newline
-	<< "start: " << start << journal::newline
-	<< "direction: " << direction
-	<< journal::endl
-    ;
-#endif
   
   double x = start.x; 
   double y = start.y;
@@ -497,13 +412,6 @@ mccomposite::geometry::ArrowIntersector::visit
   double b = 2 * (DdotV*COdotV - DdotCO * cos_theta_sq);
   double c = COdotV*COdotV - (CO|CO)  * cos_theta_sq;
   double t1[2]; int N=0;  // temp array to hold t values for the infinite cone
-#ifdef DEBUG
-  debug << journal::at(__HERE__)
-	<< "DdotV=" << DdotV << ", COdotV=" << COdotV << ", DdotCO=" << DdotCO << journal::newline
-	<< "a=" << a << ", b=" << b << ", c=" << c << journal::newline
-	<< journal::endl
-    ;
-#endif
   
   if (eq_withinepsilon(a, 0.)) {
     if (eq_withinepsilon(b, 0.)) {
@@ -521,12 +429,6 @@ mccomposite::geometry::ArrowIntersector::visit
       t1[1] = (-b+std::sqrt(delta))/2./a/vl;
     }
   }
-#ifdef DEBUG
-  debug << journal::at(__HERE__)
-	<< "t1=" << journal::newline;
-  for (int i=0; i<N; i++) debug << t1[i] << ", ";
-  debug << journal::endl;
-#endif
   // limit the cone to be between z=0 and z=-H
   for (int i=0; i<N; i++) {
     // compute z
@@ -539,12 +441,6 @@ mccomposite::geometry::ArrowIntersector::visit
   double x2 = x + vx*t2, y2 = y + vy*t2;
   if (x2*x2+y2*y2 < R*R) ts.push_back(t2);
   
-#ifdef DEBUG
-  debug << journal::at(__HERE__)
-	<< "ts=" << journal::newline;
-  for (int i=0; i<ts.size(); i++) debug << ts[i] << ", ";
-  debug << journal::endl;
-#endif
   
   if (!ts.size()) return;
   // remove duplicates
@@ -596,11 +492,6 @@ mccomposite::geometry::ArrowIntersector::visit
     m_distances.push_back(ts[0]/length);
   }
   
-#ifdef DEBUG
-  debug << journal::at(__HERE__) 
-	<< m_distances << journal::endl
-    ;
-#endif
   return ;
 }
 
@@ -609,9 +500,6 @@ void
 mccomposite::geometry::ArrowIntersector::visit
 ( const Cylinder * cylptr )
 {
-#ifdef DEBUG
-  journal::debug_t debug( ArrowIntersector_impl::jrnltag );
-#endif
 
   m_distances.clear();
   
@@ -621,14 +509,6 @@ mccomposite::geometry::ArrowIntersector::visit
   const Direction & direction = m_arrow.direction;
   if (isInvaildDirection(direction)) return;
   
-#ifdef DEBUG
-  debug << journal::at(__HERE__) 
-	<< "cylinder: "<< cylinder << journal::newline
-	<< "start: " << start << journal::newline
-	<< "direction: " << direction
-	<< journal::endl
-    ;
-#endif
   
   double x = start.x; 
   double y = start.y;
@@ -644,19 +524,9 @@ mccomposite::geometry::ArrowIntersector::visit
   std::vector<double> ts;
   // side
   intersectCylinderSide(x,y,z, vx,vy,vz, r, h, ts);
-#ifdef DEBUG
-  debug << journal::at(__HERE__) 
-	<< ts << journal::endl
-    ;
-#endif
 
   // top/bottom
   intersectCylinderTopBottom(x,y,z, vx,vy,vz, r, h, ts);
-#ifdef DEBUG
-  debug << journal::at(__HERE__) 
-	<< ts << journal::endl
-    ;
-#endif
   
   if (ts.size()==0) return;
   
@@ -782,19 +652,6 @@ namespace ArrowIntersector_impl{
     {
       bool ret = locate( m_arrow.start + distance * m_arrow.direction, m_shape ) != Locator::onborder;
 
-#ifdef DEBUG
-      journal::debug_t debug( ArrowIntersector_impl::jrnltag );
-      
-      debug << journal::at(__HERE__) 
-	    << "start = " << m_arrow.start << journal::newline
-	    << "direction = " << m_arrow.direction << journal::newline
-	    << "distance = " << distance << journal::newline
-	    << "point = " << m_arrow.start + distance * m_arrow.direction << journal::newline
-	    << "shape = " << m_shape << journal::newline
-	    << "isNotOnBorder = " << ret
-	    << journal::endl;
-      ;
-#endif
       return ret;
     }
     
@@ -850,17 +707,6 @@ mccomposite::geometry::ArrowIntersector::visit_composition
 //   copy( distances.begin(), newend, std::back_inserter(m_distances) );
   copy( distances.begin(), distances.end(), std::back_inserter(m_distances) );
 
-#ifdef DEBUG
-  journal::debug_t debug( ArrowIntersector_impl::jrnltag );
-
-  debug << journal::at(__HERE__) 
-	<< "intersections between " 
-	<< "arrow(" << m_arrow.start << "," << m_arrow.direction << ")"
-	<< " and shape (" << *composition << ")"
-	<< " are "
-	<< m_distances << journal::endl
-    ;
-#endif
 
   //
   //  if (m_distances.size()%2==1) throw Exception("odd number of intersections");
@@ -901,13 +747,6 @@ mccomposite::geometry::ArrowIntersector::visit
   
   body.identify( *this );
 
-#ifdef DEBUG
-  journal::debug_t debug( ArrowIntersector_impl::jrnltag );
-
-  debug << journal::at(__HERE__) 
-	<< m_distances << journal::endl
-    ;
-#endif
 
   m_arrow = save;
   //

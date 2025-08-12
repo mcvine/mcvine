@@ -21,7 +21,7 @@ link_directories(${DEPLOYMENT_PREFIX}/${INSTALL_LIB_DIR})
 
 # compile shared library
 add_library(${MOD_NAME} SHARED ${SRC_FILES})
-target_link_libraries(${MOD_NAME} ${PYTHON_LIBRARY} ${Boost_LIBRARIES} "journal" "mcni" ${LIB_NAME})
+target_link_libraries(${MOD_NAME} ${PYTHON_LIBRARY} ${Boost_LIBRARIES} "mcni" ${LIB_NAME})
 set_target_properties(${MOD_NAME} PROPERTIES PREFIX "") # dont need "lib" prefix
 set_target_properties(${MOD_NAME} PROPERTIES LIBRARY_OUTPUT_DIRECTORY "${EXPORT_PYTHON}/${PKG_NAME}") # export to python directory
 set_target_properties(${MOD_NAME} PROPERTIES SKIP_BUILD_RPATH "ON")

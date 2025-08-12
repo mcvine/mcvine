@@ -16,10 +16,6 @@
 #include "mccomponents/kernels/sample/SQkernel.h"
 #include "mccomponents/kernels/sample/SQAdaptor.h"
 
-#ifdef DEBUG
-#include "journal/debug.h"
-#endif
-
 
 class TSQ {
 public:
@@ -58,9 +54,6 @@ void test1()
 
 int main()
 {
-#ifdef DEBUG
-  //journal::debug_t("HomogeneousNeutronScatterer").activate();
-#endif
   test1();
   return 0;
 }

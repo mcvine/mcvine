@@ -17,11 +17,6 @@
 #include "mccomponents/kernels/sample/SQE/SQE_fromexpression.h"
 
 
-#ifdef DEBUG
-#include "journal/debug.h"
-#endif
-
-
 void test1()
 {
   using namespace mccomponents::sample;

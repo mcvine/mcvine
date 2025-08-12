@@ -16,10 +16,6 @@
 #include "mcni/test/assert.h"
 #include "mccomponents/kernels/sample/phonon/interpolate.h"
 
-#ifdef DEBUG
-#include "journal/debug.h"
-#endif
-
 
 struct functor {
   double a, b, c, d, e, f, g, h;
@@ -59,9 +55,6 @@ void test1()
 
 int main()
 {
-#ifdef DEBUG
-  //journal::debug_t("HomogeneousNeutronScatterer").activate();
-#endif
   test1();
   return 0;
 }

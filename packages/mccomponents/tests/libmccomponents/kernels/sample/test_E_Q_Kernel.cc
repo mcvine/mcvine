@@ -17,11 +17,6 @@
 
 // #define DEBUG
 
-#ifdef DEBUG
-#include "journal/debug.h"
-#endif
-
-
 struct E_Q {
   double operator() (double Q) const
   {
@@ -85,9 +80,6 @@ void test1()
 
 int main()
 {
-#ifdef DEBUG
-  journal::debug_t("E_Q_Kernel").activate();
-#endif
   test1();
   return 0;
 }

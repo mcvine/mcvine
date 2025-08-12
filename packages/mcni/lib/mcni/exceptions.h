@@ -17,7 +17,6 @@
 
 
 #include "mcni/test/exception.h"
-#include "journal/error.h"
 
 namespace mcni {
 
@@ -29,9 +28,7 @@ namespace mcni {
 
   // convenient methods
   inline void throw_fatal_path_error
-  ( const char *channel, const journal::loc3_t & where, const char *msg );
-  inline void throw_fatal_path_error
-  ( const char *channel, const journal::loc2_t & where, const char *msg );
+  ( const char *msg );
 }
 
 #include "exceptions.icc"

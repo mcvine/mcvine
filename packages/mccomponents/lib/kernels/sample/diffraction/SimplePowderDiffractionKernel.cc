@@ -16,9 +16,6 @@
 #include "mcni/neutron/units_conversion.h"
 #include "mccomponents/math/random.h"
 
-#ifdef DEBUG
-#include "journal/debug.h"
-#endif
 
 using namespace std;
 
@@ -27,12 +24,6 @@ struct mccomponents::kernels::SimplePowderDiffractionKernel::Details {
 
   // types
   typedef SimplePowderDiffractionKernel kernel_t;
-
-  // data
-#ifdef DEBUG
-  const static char jrnltag[];
-  journal::debug_t debug;
-#endif
 
   kernel_t *kernel;
   
@@ -60,16 +51,10 @@ struct mccomponents::kernels::SimplePowderDiffractionKernel::Details {
 };
 
 
-#ifdef DEBUG
-const char mccomponents::kernels::SimplePowderDiffractionKernel::Details::jrnltag[] = "SimplePowderDiffractionKernel";
-#endif
 
 mccomponents::kernels::SimplePowderDiffractionKernel::Details::Details
 (const SimplePowderDiffractionData & data, kernel_t * i_kernel)
   :
-#ifdef DEBUG
-  debug( jrnltag ),
-#endif
   kernel(i_kernel),
   pack(1.),
   // XsectionFactor = 1, if cross-section in fm^2, or XsectionFactor = 100, if cross-section in barns
@@ -86,9 +71,6 @@ mccomponents::kernels::SimplePowderDiffractionKernel::Details::Details
   my_s_v2 = new double[Npeaks];
   
   unitcell_volume = data.unitcell_volume;
-#ifdef DEBUG
-  debug << "unitcell_volume: " << unitcell_volume << journal::endl;
-#endif
   
   for(int i=0; i<Npeaks; i++)
     {
@@ -107,11 +89,6 @@ mccomponents::kernels::SimplePowderDiffractionKernel::Details::Details
 
       // make sure the list is sorted
       if (i>0) assert(q_v[i-1] <= q_v[i]);
-#ifdef DEBUG
-      debug << i << ": my_s_v2, q_v, w_v=" 
-	    << my_s_v2[i] << ", " << q_v[i] << ", " << w_v[i]
-	    << journal::endl;
-#endif
     }
   
   //coherent_cross_section = scattering_coefficient(const mcni::Neutron::Event& ev );
@@ -178,9 +155,6 @@ mccomponents::kernels::SimplePowderDiffractionKernel::absorption_coefficient(con
   const mcni::Neutron::State &state = ev.state;
   double v_l = state.velocity.length();
   double ret = m_details->absorption_coeff*2200/v_l;  //inversely proportional to velocity
-#ifdef DEBUG
-  m_details->debug << "absorption_coeff: " << ret << journal::endl;
-#endif
   return ret;
 }
 
@@ -191,12 +165,6 @@ mccomponents::kernels::SimplePowderDiffractionKernel::scattering_coefficient(con
   double xs = m_details->scattering_xs(ev),
     v0 = m_details->unitcell_volume,
     ret = xs/v0;
-#ifdef DEBUG
-  m_details->debug
-    << "xs=" << xs << "v0=" << v0 
-    << "scattering_coefficient:" << ret 
-    << journal::endl;
-#endif
   return ret;
 }
 

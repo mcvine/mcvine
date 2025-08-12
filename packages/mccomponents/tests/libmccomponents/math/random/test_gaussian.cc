@@ -17,7 +17,6 @@
 #include "mcni/test/assert.h"
 #include "mccomponents/math/random/gaussian.h"
 
-#include "journal/debug.h"
 
 void test1()
 {
@@ -48,10 +47,6 @@ void test1()
 
 int main()
 {
-#ifdef DEBUG
-  //  journal::debug_t("mccomposite.geometry.ArrowIntersector").activate();
-  //  journal::debug_t(jrnltag).activate();
-#endif
   test1();
 }
 

@@ -16,7 +16,7 @@ PACKAGE = bin
 
 PROJ_CXX_INCLUDES += $(DANSE_DIR)/include $(DANSE_DIR)/include/danse/ins
 PROJ_LIBRARIES = -L$(BLD_LIBDIR) \
-	-lhistogram -ljournal -lmcni -lmccomposite -lmccomponents -lfparser \
+	-lhistogram -lmcni -lmccomposite -lmccomponents -lfparser \
 	-L$(DANSE_DIR)/lib -L$(DANSE_DIR)/lib64
 PROJ_CXX_DEFINES += USE_DANSE_NAMESPACE
 

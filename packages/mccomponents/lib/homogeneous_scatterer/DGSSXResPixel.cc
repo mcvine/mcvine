@@ -13,10 +13,6 @@
 // #define DEBUG
 // #define DEBUG2  // for debugging distribution of random x (position along path)
 
-#ifdef DEBUG
-// #include "portinfo"
-#include "journal/debug.h"
-#endif
 
 #ifdef DEBUG2
 #include "mcni/neutron/units_conversion.h"
@@ -56,9 +52,6 @@ mccomponents::DGSSXResPixel::DGSSXResPixel
 mccomponents::DGSSXResPixel::InteractionType
 mccomponents::DGSSXResPixel::interact_path1(mcni::Neutron::Event &ev)
 {
-#ifdef DEBUG
-  journal::debug_t debug(DGSSXResPixel_Impl::jrnltag);
-#endif
 
   using namespace mccomposite;
 

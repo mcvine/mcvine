@@ -25,9 +25,6 @@
 #define DEBUG
 #endif
 
-#ifdef DEBUG
-#include "journal/debug.h"
-#endif
 
 
 double 

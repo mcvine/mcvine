@@ -17,10 +17,6 @@
 #include "mccomponents/physics/constants.h"
 
 
-#ifdef DEBUG
-#include "journal/debug.h"
-#endif
-
 class MCA: public mccomponents::detector::AbstractMultiChannelAnalyzer {
 public:
   void accept( const channels_t & channels, double n ) 
@@ -64,9 +60,6 @@ void test1()
 
 int main()
 {
-#ifdef DEBUG
-  //journal::debug_t("HomogeneousNeutronScatterer").activate();
-#endif
   test1();
   return 0;
 }

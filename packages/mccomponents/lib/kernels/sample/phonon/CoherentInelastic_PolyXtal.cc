@@ -13,7 +13,6 @@
 
 
 #include <cassert>
-#include "journal/warning.h"
 
 
 // XXX
@@ -26,10 +25,6 @@
 
 #ifdef DEBUG
 #define __DEBUG__PHNN__COHINEL_POLY__
-#endif
-
-#ifdef __DEBUG__PHNN__COHINEL_POLY__
-#include "journal/debug.h"
 #endif
 
 #include "mccomponents/physics/constants.h"
@@ -108,12 +103,6 @@ const
   namespace conversion = mcni::neutron_units_conversion;
 
   float_t v_i_l = v_i.length();
-#ifdef DEEPDEBUG
-  journal::debug_t debug(jrnltag);
-  debug << journal::at(__HERE__)
-	<< "vi length = " << v_i_l
-	<< journal::endl;
-#endif
 
   // == theta ==
   float_t cos_theta = (v_i_l*v_i_l+v_f_l*v_f_l - v_Q_l*v_Q_l)
@@ -194,17 +183,6 @@ Details::pick_a_valid_Q_vector
     v_f_l = conversion::E2v(E_f);
 
     // debug
-#ifdef DEEPDEBUG
-    journal::debug_t debug(jrnltag);
-    //    std::cout << "In file " << __FILE__ << " line " << __LINE__ << "; "
-    debug << journal::at(__HERE__)
-	  << "Q = " << Q << "; "
-	  << "v_Q_l = " << v_Q_l << "; "
-	  << "omega = " << omega << "; "
-	  << "E_f = " << E_f << "; "
-	  << "v_f_l = " << v_f_l << "; "
-	  << journal::endl; 
-#endif 
     //}
     // == make sure the Q is good ==
   } while ( v_Q_l<std::abs(v_i_l-v_f_l) || v_Q_l>v_i_l+v_f_l );
@@ -228,16 +206,6 @@ Details::pick_Ef
   } else {
     Ef = Ei + omega;
   }
-  // debug
-#ifdef DEEPDEBUG
-  journal::debug_t debug(jrnltag);
-  //    std::cout << "In file " << __FILE__ << " line " << __LINE__ << "; "
-  debug << journal::at(__HERE__)
-	<< "Ei = " << Ei << "; "
-	<< "Ef = " << Ef << "; "
-	<< journal::endl; 
-#endif 
-  
   return Ef;
 }
   
@@ -280,20 +248,6 @@ CoherentInelastic_PolyXtal
 {
   
   assert ( atoms.size() == disp.nAtoms() );
-#ifdef DEBUG
-  journal::debug_t debug(m_details->jrnltag);
-  debug << "m_disp=" << &m_disp << journal::newline;
-  
-  debug << "m_atoms=";
-  for (size_t i = 0; i< m_atoms.size(); i++)
-    debug  << m_atoms[i] << journal::newline;
-
-  debug << "m_DW_calc=" << m_DW_calc << journal::newline;
-  debug << "m_Temperature=" << m_Temperature << journal::newline
-	<< "m_uc_vol=" << m_uc_vol << journal::newline;
-  debug << journal::endl;
-  
-#endif
   
   // unit cell vol
   m_uc_vol = a|(b*c);
@@ -304,9 +258,6 @@ CoherentInelastic_PolyXtal
   for (size_t i=0; i<m_atoms.size(); i++) {
     m_total_scattering_xs += m_atoms[i].coherent_cross_section;
   }
-#ifdef DEBUG
-  debug << "m_total_scattering_xs:" << m_total_scattering_xs << journal::newline;
-#endif
   
   m_total_absorption_xs = 0;
   for (size_t i=0; i<m_atoms.size(); i++) {
@@ -349,10 +300,6 @@ mccomponents::kernels::phonon::CoherentInelastic_PolyXtal::S
 {
   namespace conversion = mcni::neutron_units_conversion;
 
-#ifdef __DEBUG__PHNN__COHINEL_POLY__
-  journal::debug_t debug(m_details->jrnltag);
-#endif
-
   const mcni::Neutron::State  &ns  = ev.state;
   const V_t &v_i   = ns.velocity;
   
@@ -363,12 +310,6 @@ mccomponents::kernels::phonon::CoherentInelastic_PolyXtal::S
   float_t v_i_l = v_i.length();
   // initial energy
   float_t E_i = conversion::v2E( v_i_l );
-
-#ifdef DEEPDEBUG
-  debug << journal::at(__HERE__)
-	<< "E_i =" << E_i << ","
-	<< journal::endl;
-#endif
 
   // pick branch
   unsigned int branch = pick_phonon_branch( m_disp.nBranches());
@@ -382,25 +323,12 @@ mccomponents::kernels::phonon::CoherentInelastic_PolyXtal::S
     ( Q, v_Q_l, E_f, v_f_l, E_i, v_i_l, branch);
   float_t  omega = E_i - E_f;
 
-#ifdef DEEPDEBUG
-  debug << journal::at(__HERE__)
-	<< "omega =" << omega << ","
-	<< "Q =" << Q << ","
-	<< journal::endl;
-#endif
-
 
   // = rotate the Q vector so that the energy relation is satistied =
   // = actually this is done by directly determine the direction of =
   // = final velocity of neutron =
   V_t v_f;
   m_details->pick_v_f( prob, v_f, v_i, v_f_l, v_Q_l);
-
-#ifdef DEEPDEBUG
-  debug << journal::at(__HERE__)
-	<< "vf =" << v_f
-	<< journal::endl;
-#endif
 
 
   // change the velocity of neutron. other things stay put
@@ -413,46 +341,18 @@ mccomponents::kernels::phonon::CoherentInelastic_PolyXtal::S
   float_t k_i_l = v2k * v_i_l;
   float_t k_f_l = v2k * v_f_l;
   float_t Q_l = v2k * v_Q_l;
-#ifdef DEEPDEBUG
-  debug << journal::at(__HERE__)
-	<< "ki length = " << k_i_l << ", "
-	<< "kf length = " << k_f_l << ", "
-	<< "Q length = " << Q_l
-	<< journal::endl;
-#endif
 
   // thermal factor
   float_t therm_factor = phonon_bose_factor( omega, m_Temperature );
-#ifdef DEEPDEBUG
-  debug << journal::at(__HERE__)
-	<< "omega = " << omega << ", "
-	<< "thermal factor = " << therm_factor << ", "
-	<< journal::endl;
-#endif
 
   // debye waller factor 
   float_t DW = m_DW_calc->DW( Q_l );
-#ifdef DEEPDEBUG
-  debug << journal::at(__HERE__)
-	<< "debye waller factor = " << DW
-	<< journal::endl;
-#endif
   DW = std::exp( -DW );
-#ifdef DEEPDEBUG
-  debug << journal::at(__HERE__)
-	<< "debye waller factor = " << DW
-	<< journal::endl;
-#endif
 
   if (E_i > omega) prob *= 2.0; // two choices of E_f: E_f>E_i or E_f<E_i
 
   // uc vol should be in scattering_coefficient, not here
   // prob /= m_uc_vol;
-#ifdef DEEPDEBUG
-  debug << journal::at(__HERE__)
-	<< "prob = " << prob 
-	<< journal::endl;
-#endif
   // prob *= m_sigma_coh/m_Mass; //should be \sum{sigma_inc/M}
   //
   // This term is the term of |\sum\frac{b_d}{M_d} exp(i\kappa\dot d) (\kappa \dot e) |^2 of page 46 of Squires.
@@ -476,58 +376,15 @@ mccomponents::kernels::phonon::CoherentInelastic_PolyXtal::S
   // will cancel with meV unit of phonon energy
   prob *= conversion::ksquare2E(norm_of_slsum);
 
-#ifdef DEEPDEBUG
-  debug << journal::at(__HERE__)
-	<< "prob = " << prob 
-	<< journal::endl;
-#endif
   prob /= std::abs(omega);
-#ifdef DEEPDEBUG
-  debug << journal::at(__HERE__)
-	<< "prob = " << prob 
-	<< journal::endl;
-#endif
   
   prob *= DW;
-#ifdef DEEPDEBUG
-  debug << journal::at(__HERE__)
-	<< "prob = " << prob 
-	<< journal::endl;
-#endif
   prob *= k_f_l/k_i_l;
-#ifdef DEEPDEBUG
-  debug << journal::at(__HERE__)
-	<< "prob = " << prob 
-	<< journal::endl;
-#endif
   prob *= therm_factor;
-#ifdef DEEPDEBUG
-  debug << journal::at(__HERE__)
-	<< "prob = " << prob 
-	<< journal::endl;
-#endif
   prob *= 1/(k_i_l)/(k_f_l)/(Q_l);
-#ifdef DEEPDEBUG
-  debug << journal::at(__HERE__)
-	<< "prob = " << prob 
-	<< journal::endl;
-#endif
   prob *= m_details->calc_AccessibleReciVol(E_i); // reciprocal volume
-#ifdef DEEPDEBUG
-  debug << journal::at(__HERE__)
-	<< "prob = " << prob 
-	<< journal::endl;
-#endif
-#ifdef DEEPDEBUG
-  debug << journal::at(__HERE__)
-	<< "prob = " << prob 
-	<< journal::endl;
-#endif
   prob /= 8*physics::pi;
   
-#ifdef DEEPDEBUG
-  debug << journal::endl;
-#endif
   //prob *= (epsdotq2*K2V*K2V*VS2E)/std::abs(omega)*therm_factor;
 }
 

@@ -16,7 +16,6 @@
 #else
 
 #include "locate.h"
-#include "journal/debug.h"
 #include "mccomposite/geometry/shape2ostream.h"
 #include "mccomposite/vector2ostream.h"
 
@@ -41,9 +40,6 @@ namespace mccomposite {
     ( const Position & start, const Direction & direction, 
       const std::vector<const AbstractShape *> & shapes )  
     {
-#ifdef DEBUG
-      journal::debug_t debug("mccomposite.geometry.intersect");
-#endif
       Arrow arrow(start, direction);
       Union all(shapes);
       index_t ret;
@@ -51,11 +47,6 @@ namespace mccomposite {
       // We need to determine intersections anyway
       ArrowIntersector::distances_t distances = 
 	forward_intersect( arrow, all );
-#ifdef DEBUG
-      debug << journal::at(__HERE__)
-	    << "forward intersections: " << distances
-	    << journal::endl;
-#endif
       // number of intersections
       size_t nIntersections = distances.size();
 
@@ -73,11 +64,6 @@ namespace mccomposite {
       // determine which one of the above two cases is true,
       // case1:
       if (nIntersections % 2 == 1) {
-#ifdef DEBUG
-      debug << journal::at(__HERE__)
-	    << "case1"
-	    << journal::newline;
-#endif
 	Position middle_of_start_and_intersection1 = 
 	  start + (distances[0]/2.)*direction;
 	ret = find_shape_containing_point<index_t>
@@ -85,11 +71,6 @@ namespace mccomposite {
       }
       // case2:
       else {
-#ifdef DEBUG
-      debug << journal::at(__HERE__)
-	    << "case2"
-	    << journal::newline;
-#endif
 	// no intersection
 	if (nIntersections==0) return -1;
 	// at least two
@@ -99,11 +80,6 @@ namespace mccomposite {
 	  (middle_of_intersection1_and_intersection2, shapes);
       }
 
-#ifdef DEBUG
-      debug << journal::at(__HERE__)
-	    << "preliminary result of shape index : " << ret
-	    << journal::endl;
-#endif
 
       // let us determine if the start is on border
       bool isonborder = 0;
@@ -113,12 +89,6 @@ namespace mccomposite {
 	  { isonborder = 1; break; }
       }
       
-#ifdef DEBUG
-      debug << journal::at(__HERE__)
-	    << "is the starting point " << start 
-	    << " on border of any shape? " << isonborder
-	    << journal::endl;
-#endif
 
       // If start is not on border of any shape, it would be easier.
       if (!isonborder) return ret;
@@ -132,14 +102,6 @@ namespace mccomposite {
 	now = distances[point_index];
 	Position middle_point = start + (previous + now)/2*direction;
 	ret = find_shape_containing_point<index_t>( middle_point, shapes );
-#ifdef DEBUG
-  debug << journal::at(__HERE__)
-        << "point_index " << point_index
-        << ", now " << now
-        << ", middle_point" << middle_point
-        << ", ret" << ret
-        << journal::endl;
-#endif
 	// if (ret>=0 && ret<nIntersections) return ret;
 	if (ret>=0) return ret;
 	previous = now;

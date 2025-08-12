@@ -18,24 +18,10 @@
 #include "mccomponents/math/random.h"
 
 
-#ifdef DEBUG
-#include "journal/debug.h"
-#endif
 
 
 struct mccomponents::kernels::IsotropicKernel::Details {
-
-#ifdef DEBUG
-  const static char jrnltag[];
-  journal::debug_t debug;
-  Details() : debug( jrnltag ) {}
-#endif
 };
-
-
-#ifdef DEBUG
-const char mccomponents::kernels::IsotropicKernel::Details::jrnltag[] = "IsotropicKernel";
-#endif
 
 
 mccomponents::kernels::IsotropicKernel::IsotropicKernel
@@ -78,10 +64,6 @@ void
 mccomponents::kernels::IsotropicKernel::S
 ( mcni::Neutron::Event & ev )
 {
-#ifdef DEBUG
-  m_details->debug << "in" << ev << journal::endl;
-#endif
-
   // input neutron state
   mcni::Neutron::State & state = ev.state;
   // incident neutron velocity
@@ -90,13 +72,6 @@ mccomponents::kernels::IsotropicKernel::S
   // theta, phi
   double theta = math::random(0., mcni::PI);
   double phi = math::random(0., mcni::PI*2);
-
-#ifdef DEBUG
-  m_details->debug
-    << "theta: " << theta << ", "
-    << "phi: " << phi << ", "
-    << journal::endl;
-#endif
 
   // scattered neutron velocity vector
   double vx = vi*sin(theta)*cos(phi);
@@ -111,12 +86,6 @@ mccomponents::kernels::IsotropicKernel::S
   V3d vf(vx,vy,vz);
   state.velocity = vf;
   
-#ifdef DEBUG
-  m_details->debug
-    << "out" << ev
-    << journal::endl;
-#endif
-
 }
 
 

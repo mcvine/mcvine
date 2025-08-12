@@ -20,7 +20,7 @@ PROJ_CLEAN += alltests.py $(PROJ_CPPTESTS)
 PROJ_PYTESTS =  alltests.py
 PROJ_CPPTESTS = 
 PROJ_TESTS = $(PROJ_PYTESTS) $(PROJ_CPPTESTS)
-PROJ_LIBRARIES = -L$(BLD_LIBDIR) -ljournal -lmcstas2
+PROJ_LIBRARIES = -L$(BLD_LIBDIR) -lmcstas2
 
 
 # directory structure

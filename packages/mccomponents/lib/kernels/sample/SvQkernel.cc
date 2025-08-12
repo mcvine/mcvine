@@ -11,24 +11,8 @@
 #include "mccomponents/math/random.h"
 #include "mccomponents/physics/constants.h"
 
-#ifdef DEBUG
-#include "journal/debug.h"
-#endif
 
 
-struct mccomponents::kernels::SvQkernel::Details {
-
-#ifdef DEBUG
-  const static char jrnltag[];
-  journal::debug_t debug;
-  Details() : debug( jrnltag ) {}
-#endif
-};
-
-
-#ifdef DEBUG
-const char mccomponents::kernels::SvQkernel::Details::jrnltag[] = "SvQkernel";
-#endif
 
 mccomponents::kernels::SvQkernel::SvQkernel
 ( double absorption_coefficient,
@@ -37,8 +21,7 @@ mccomponents::kernels::SvQkernel::SvQkernel
   : m_absorption_coefficient( absorption_coefficient ),
     m_scattering_coefficient( scattering_coefficient ),
     m_epsilon(1.e-10),
-    m_sq(sq),
-    m_details( new Details )
+    m_sq(sq)
 {}
 
 double

@@ -15,15 +15,11 @@
 #include <cmath>
 #include <complex>
 //#include <portinfo>
-#include "journal/warning.h"
 
 #ifdef DEEPDEBUG
 #define DEBUG
 #endif
 
-#ifdef DEBUG
-#include "journal/debug.h"
-#endif
 
 #include "mccomponents/kernels/sample/phonon/scattering_length.h"
 #include "mcni/exceptions.h"
@@ -119,14 +115,6 @@ mccomponents::kernels::phonon::CoherentInelastic_SingleXtal::CoherentInelastic_S
     m_target_region( &target_region),
     m_DV( deltaV_Jacobi )
 {
-#ifdef DEBUG
-  journal::debug_t debug(phonon_cohinel_sc_journal_channel);
-  debug << "m_disp=" << &m_disp << ","
-	<< "m_DW_calc=" << m_DW_calc << ","
-	<< "m_Temperature=" << m_Temperature << ","
-	<< "m_uc_vol=" << m_uc_vol << ","
-	<< journal::endl;
-#endif
   
   // calculate the total scattering cross section  
   m_tot_scattering_xs = 0;
@@ -158,37 +146,16 @@ const
   /// v_i..........neutron initial velocity
   /// v_i_l........magnitude of neutron initial velocity
 {
-#ifdef DEBUG
-  journal::debug_t debug(phonon_cohinel_sc_journal_channel);
-  debug << journal::at(__HERE__)
-	<< "entering pick_v_f" 
-	<< journal::endl;
-#endif
 
-#ifdef DEBUG
-  debug << journal::at(__HERE__)
-	<< "create function omega(q)-dE" 
-	<< journal::endl;
-#endif
   // function omega(Q)-dE
   Omega_q_minus_deltaE omq_m_dE(branch, v_f, v_i, v_i_l, m_disp);
 
-#ifdef DEBUG
-  debug << journal::at(__HERE__)
-	<< "find roots of function omega(Q)-dE" 
-	<< journal::endl;
-#endif
   // find roots of function omega(Q)-dE
   std::vector<float_t> vf_list;
   // number of roots
   vf_list = m_roots_finder.solve( 0, v_i_l*2, omq_m_dE );
   size_t nf = vf_list.size(); 
 
-#ifdef DEBUG
-  debug << journal::at(__HERE__)
-	<< "found " << nf << "roots." 
-	<< journal::endl;
-#endif
 
   if (nf<1) {
     std::cerr << "** Unable to find solution for function omega(Q)-dE";
@@ -197,46 +164,22 @@ const
     return true;
     /*
     mcni::throw_fatal_path_error
-      ( phonon_cohinel_sc_journal_channel,
-        journal::at(__HERE__),
-        "Unable to find solution for function omega(Q)-dE");
+      ("Unable to find solution for function omega(Q)-dE");
     */
   }
-#ifdef DEBUG
-  debug << journal::at(__HERE__)
-	<< "choose a root from the roots" 
-	<< journal::endl;
-#endif
   // choose a root (length of vf)
   size_t index=mccomponents::math::random(size_t(0), nf);
   float_t v_f_l = vf_list[index];
-#ifdef DEBUG
-  debug << journal::at(__HERE__)
-	<< "chose root #" << index
-	<< ": " << v_f_l
-	<< journal::endl;
-#endif
   // adjust v_f
   v_f.normalize(); v_f = v_f * v_f_l;
   // adjust prob
   prob_factors.push_back(nf);
 
   // calculate Jacobi factor
-#ifdef DEBUG
-  debug << journal::at(__HERE__)
-	<< "calculate Jacobi factor near " << v_f_l
-	<< journal::endl;
-#endif
   float_t f1, f2;
   float_t delta_v = m_DV*v_i_l; // m_DV is fractional change
   f1 = omq_m_dE.evaluate( v_f_l-delta_v );
   f2 = omq_m_dE.evaluate( v_f_l+delta_v );
-#ifdef DEBUG
-  debug << journal::at(__HERE__)
-	<< "f1=" << f1
-	<< ", f2=" << f2
-	<< journal::endl;
-#endif
   using namespace mcni::neutron_units_conversion;
   // adjust prob
   // float_t Jacobi = std::abs(f2-f1)/(2*delta_v*k2v);
@@ -245,11 +188,6 @@ const
   using mcni::neutron_units_conversion::vsq2e;
   prob_factors.push_back(2*vsq2e*v_f_l/Jacobi);
   
-#ifdef DEBUG
-  debug << journal::at(__HERE__)
-	<< "probability factors" << prob_factors
-	<< journal::endl;
-#endif
   return false;
 }
 
@@ -258,9 +196,6 @@ void
 mccomponents::kernels::phonon::CoherentInelastic_SingleXtal::pick_a_final_state
 ( neutron_t & ev ) const
 {
-#ifdef DEBUG
-  journal::debug_t debug(phonon_cohinel_sc_journal_channel);
-#endif
   
   // init an array of probability factors which could result from various random-selection processes. 
   std::vector<float_t> prob_factors;
@@ -272,20 +207,12 @@ mccomponents::kernels::phonon::CoherentInelastic_SingleXtal::pick_a_final_state
   const neutron_t::state_t    &ns  = ev.state;
   V_t   v_i = ns.velocity;
 
-#ifdef DEEPDEBUG
-  debug << journal::at(__HERE__) << "v_i = " << v_i << journal::endl;
-#endif
   
   /* initial velocity magnitude */
   float_t v_i_l = v_i.length();
   // initial energy
   float_t E_i = neutron_units_conversion::v2E( v_i_l );
 
-#ifdef DEEPDEBUG
-  debug << journal::at(__HERE__)
-	<< "E_i =" << E_i << ","
-	<< journal::endl;
-#endif
 
   // establish "good" branches (not too higher than Ei)
 #ifdef DEEPDEBUG
@@ -328,9 +255,6 @@ mccomponents::kernels::phonon::CoherentInelastic_SingleXtal::pick_a_final_state
   }
   prob_factors.push_back(solid_angle);
   prob_factors.push_back( good_branches.size() );
-#ifdef DEEPDEBUG
-    debug << journal::at(__HERE__) << "v_i = " << v_i << journal::endl;
-#endif
   
   float_t v_f_l = v_f.length();
   float_t E_f = neutron_units_conversion::v2E( v_f_l );  
@@ -338,12 +262,6 @@ mccomponents::kernels::phonon::CoherentInelastic_SingleXtal::pick_a_final_state
   // phonon energy
   float_t  omega = E_i - E_f;
   
-#ifdef DEEPDEBUG
-  debug << journal::at(__HERE__)
-	<< "omega =" << omega << ","
-	<< "E_f =" << E_f << ","
-	<< journal::endl;
-#endif
   // Q vector
   K_t Q = neutron_units_conversion::v2k*(v_i-v_f);
 
@@ -388,21 +306,6 @@ mccomponents::kernels::phonon::CoherentInelastic_SingleXtal::pick_a_final_state
   float_t prob_factor = mccomponents::math::product<float_t>( prob_factors );
   // we need to manipulate the neutron probability. get the reference here.
   float_t               &prob = ev.probability; 
-#ifdef DEEPDEBUG
-  if (prob_factor>100000) {
-    debug << journal::at(__HERE__)
-	  << "prob = " << prob << "\n"
-	  << "Q = " << Q << "\n"
-	  << "omega = " << omega << "\n"
-	  << "k_i = " << v_i* neutron_units_conversion::v2k << "\n"
-	  << "k_f = " << v_f* neutron_units_conversion::v2k << 
-      journal::endl;
-    for (int i=0; i<prob_factors.size(); i++) {
-      debug << " p[" << i << "] = " << prob_factors[i] << "\n";
-    }
-    debug << journal::endl;
-  }
-#endif
   prob *= prob_factor;
 }
 

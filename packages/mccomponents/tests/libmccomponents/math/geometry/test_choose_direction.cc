@@ -17,8 +17,6 @@
 #include "mcni/test/assert.h"
 #include "mccomponents/math/random/geometry.h"
 
-#include "journal/debug.h"
-
 using namespace std;
 using namespace mccomponents::math;
 char * jrnltag ="test_choose_direction";
@@ -201,10 +199,6 @@ void test3()
 
 int main()
 {
-#ifdef DEBUG
-  //  journal::debug_t("mccomposite.geometry.ArrowIntersector").activate();
-  //  journal::debug_t(jrnltag).activate();
-#endif
   test1();
   test2();
   test3();

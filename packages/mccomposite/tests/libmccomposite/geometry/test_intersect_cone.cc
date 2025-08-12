@@ -10,7 +10,6 @@
 #include "mccomposite/geometry/shapes.h"
 #include "mccomposite/geometry/intersect.h"
 
-#include "journal/debug.h"
 
 using namespace std;
 using namespace mccomposite::geometry;
@@ -69,11 +68,6 @@ void test2()
 
 int main()
 {
-#ifdef DEBUG
-//  journal::debug_t("mccomposite.geometry.ArrowIntersector").activate();
-//   journal::debug_t("mccomposite.geometry.Locator").activate();
-//   journal::debug_t("mccomposite.geometry.intersect").activate();
-#endif
   test1();
   test1a();
   test2();
