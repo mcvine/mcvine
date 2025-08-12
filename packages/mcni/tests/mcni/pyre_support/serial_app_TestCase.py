@@ -11,10 +11,6 @@ os.environ['MCVINE_MPI_LAUNCHER'] = 'serial'
 
 
 import unittestX as unittest
-import journal
-
-debug = journal.debug( "mcni.pyre_support.test" )
-warning = journal.warning( "mcni.pyre_support.test" )
 
 
 class TestCase(unittest.TestCase):

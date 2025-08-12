@@ -19,10 +19,6 @@ os.environ['MCVINE_MPI_BINDING'] = 'NONE'
 
 
 import unittestX as unittest
-import journal
-
-debug = journal.debug( "samplecomponent_TestCase" )
-warning = journal.warning( "samplecomponent_TestCase" )
 
 
 scattererxml = 'Ni-scatterer.xml'
@@ -64,10 +60,6 @@ class TestCase(unittest.TestCase):
 
 
 def main():
-    import journal
-    journal.debug('CompositeNeutronScatterer_Impl').activate()
-    journal.debug('HomogeneousNeutronScatterer').activate()
-    journal.debug('IsotropicKernel').activate()
     unittest.main()
     return
     

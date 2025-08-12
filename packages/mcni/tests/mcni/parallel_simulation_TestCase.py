@@ -31,10 +31,6 @@ skip = True
 
 
 import unittestX as unittest
-import journal
-
-debug = journal.debug( "parallel_simulation_TestCase" )
-warning = journal.warning( "parallel_simulation_TestCase" )
 
 
 
@@ -115,9 +111,6 @@ def pysuite():
     return unittest.TestSuite( (suite1,) )
 
 def main():
-    #debug.activate()
-    import journal
-    journal.info('mpirun').activate()
     pytests = pysuite()
     alltests = unittest.TestSuite( (pytests, ) )
     res = unittest.TextTestRunner(verbosity=2).run(alltests)

@@ -14,7 +14,6 @@
 
 
 import unittestX as unittest
-import journal
 import os
 
 

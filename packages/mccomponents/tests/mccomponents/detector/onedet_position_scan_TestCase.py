@@ -9,10 +9,6 @@ making sure all neutrons inside the radius are captured by the tube.
 '''
 
 import unittestX as unittest
-import journal
-
-debug = journal.debug( "detector_TestCase" )
-warning = journal.warning( "detector_TestCase" )
 
 
 import mcni, mccomposite, mccomponents.detector as md, \

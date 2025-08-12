@@ -4,10 +4,6 @@
 #
 
 import unittestX as unittest
-import journal
-
-debug = journal.debug( "SQE_EnergyFocusing_Kernel_TestCase" )
-warning = journal.warning( "SQE_EnergyFocusing_Kernel_TestCase" )
 
 
 sqe_f = lambda q,e: q*q+e*e

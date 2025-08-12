@@ -113,10 +113,6 @@ def createInstrument():
     return instrument, geometer
 
 def main():
-    import journal
-    if not batch:
-        journal.debug("SingleCrystalDiffractionKernel").activate()
-        journal.debug("HomogeneousNeutronScatterer").activate()
     unittest.main()
     return
 

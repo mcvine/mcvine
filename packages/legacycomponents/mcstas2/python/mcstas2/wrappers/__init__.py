@@ -12,10 +12,6 @@
 #
 
 
-import journal
-debug = journal.debug('mcstas2.wrappers' )
-
-
 import os
 
 
@@ -72,8 +68,6 @@ def createBindingObject(
   bindingtype: type of binding. Eg. boostpython (currently only this is supported)
     """
     
-    debug.log( 'pythonpackage=%s' % pythonpackage )
-
     if pythonpackage is None:
         pythonpackage = 'mcstas2.components.%s' % componentcategory
         pass
@@ -81,7 +75,6 @@ def createBindingObject(
     if not path:
         from . import temporaryfiles
         path = temporaryfiles.temporarydir()
-        debug.log('generateing wrapper in %s' % path)
         pass
 
     if not componentname:

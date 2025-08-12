@@ -14,7 +14,6 @@
 
 
 import unittestX as unittest
-import journal
 
 class component2cppClass_TestCase(unittest.TestCase):
 
@@ -35,10 +34,6 @@ def pysuite():
 
 
 def main():
-    #debug.activate()
-    #journal.debug("mccomposite.geometry.ArrowIntersector").activate()
-    #journal.debug("mccomposite.geometry.Locator").activate()
-    #journal.debug("CompositeNeutronScatterer_Impl").activate()
     pytests = pysuite()
     alltests = unittest.TestSuite( (pytests, ) )
     res = unittest.TextTestRunner(verbosity=2).run(alltests)

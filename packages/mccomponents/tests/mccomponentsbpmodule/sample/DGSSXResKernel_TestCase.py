@@ -6,10 +6,6 @@
 standalone = True
 
 import unittestX as unittest
-import journal
-
-debug = journal.debug( "DGSSXResKernel_TestCase" )
-warning = journal.warning( "DGSSXResKernel_TestCase" )
 
 
 import mcni

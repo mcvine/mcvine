@@ -14,10 +14,6 @@
 
 
 import unittestX as unittest
-import journal
-
-debug = journal.debug( "mcnibpmodule_TestCase" )
-warning = journal.warning( "mcnibpmodule_TestCase" )
 
 
 from mcni import mcnibp as binding
@@ -56,7 +52,6 @@ def pysuite():
     return unittest.TestSuite( (suite1,) )
 
 def main():
-    #debug.activate()
     pytests = pysuite()
     alltests = unittest.TestSuite( (pytests, ) )
     res = unittest.TextTestRunner(verbosity=2).run(alltests)

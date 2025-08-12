@@ -15,10 +15,6 @@
 ## Supports for parallel computing
 
 
-import journal
-info = journal.info( 'mpi' )
-
-
 class ParallelComponent(object):
 
     '''Base class for components that can be parallelized.
@@ -69,8 +65,6 @@ class MPI(object):
             size = 1
             parallel = False
             pass
-
-        info.log( "rank %d of %d" % (rank, size) )
 
         self.size = size
         self.rank = rank

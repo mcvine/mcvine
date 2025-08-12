@@ -14,10 +14,6 @@
 
 
 import unittestX as unittest
-import journal
-
-debug = journal.debug( "cDummyComponent_TestCase" )
-warning = journal.warning( "cDummyComponent_TestCase" )
 
 
 import mcni.mcnibp as c

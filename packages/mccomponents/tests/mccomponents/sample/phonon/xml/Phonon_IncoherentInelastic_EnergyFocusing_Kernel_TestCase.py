@@ -7,11 +7,6 @@ interactive = False
 
 
 import unittestX as unittest
-import journal
-
-#debug = journal.debug( "TestCase" )
-#warning = journal.warning( "TestCase" )
-
 
 #
 import mcvine
@@ -133,9 +128,6 @@ def pysuite():
 def main():
     global interactive
     interactive = True
-    #debug.activate()
-    journal.debug('phonon_incoherent_inelastic_kernel').activate()
-    #journal.debug('random').activate()
     pytests = pysuite()
     alltests = unittest.TestSuite( (pytests, ) )
     res = unittest.TextTestRunner(verbosity=2).run(alltests)

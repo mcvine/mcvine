@@ -14,9 +14,6 @@
 
 category = 'sources'
 
-import journal
-debug = journal.debug('NeutronStorage')
-
 
 from mcni.neutron_storage.idfneutron import ndblsperneutron, filesize
 
@@ -44,18 +41,11 @@ class NeutronFromStorage( ParallelComponent, AbstractComponent ):
 
         # read as numpy array
         npyarr = self._storage.read(n, asnpyarr=True)
-        if len(npyarr):
-            debug.log(npyarr[0])
-        else:
-            debug.log("no neutrons")
         
         # convert to neutron buffer 
         from mcni.neutron_storage import neutrons_from_npyarr
         neutrons = neutrons_from_npyarr( npyarr, neutrons )
 
-        if len(neutrons):
-            debug.log(neutrons[0])
-        
         return neutrons
 
 

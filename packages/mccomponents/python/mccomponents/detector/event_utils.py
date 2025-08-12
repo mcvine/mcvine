@@ -12,9 +12,6 @@
 #
 
 
-import journal
-debug = journal.debug('mcvine.detector.event_utils')
-
 import numpy as np
 
 # please refer to EventModeMCA in libmccomponents/detector/
@@ -29,7 +26,6 @@ datatype = np.dtype(
 
 def readEvents(file):
     events = np.fromfile(file, datatype)
-    debug.log( "read %s events" % len(events) )
     return events
 
 

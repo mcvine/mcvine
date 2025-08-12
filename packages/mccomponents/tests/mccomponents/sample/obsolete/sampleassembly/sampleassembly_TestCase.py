@@ -14,10 +14,6 @@
 
 
 import unittestX as unittest
-import journal
-
-debug = journal.debug( "sampleassembly_TestCase" )
-warning = journal.warning( "sampleassembly_TestCase" )
 
 
 sampleassembly_xml = 'Ni.xml'

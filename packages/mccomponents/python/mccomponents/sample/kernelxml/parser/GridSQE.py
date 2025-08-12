@@ -12,7 +12,7 @@
 #
 
 
-from .AbstractNode import AbstractNode, debug
+from .AbstractNode import AbstractNode
 
 
 class GridSQE(AbstractNode):

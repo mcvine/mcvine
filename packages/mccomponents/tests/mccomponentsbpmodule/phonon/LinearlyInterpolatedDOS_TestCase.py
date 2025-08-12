@@ -14,10 +14,6 @@
 
 
 import unittestX as unittest
-import journal
-
-debug = journal.debug( "LinearlyInterpolatedDOS_TestCase" )
-warning = journal.warning( "LinearlyInterpolatedDOS_TestCase" )
 
 
 import mcni

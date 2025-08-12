@@ -16,10 +16,6 @@ standalone = True
 
 
 import unittestX as unittest
-import journal
-
-debug = journal.debug( "E_Q_Kernel_TestCase" )
-warning = journal.warning( "E_Q_Kernel_TestCase" )
 
 
 import mcni

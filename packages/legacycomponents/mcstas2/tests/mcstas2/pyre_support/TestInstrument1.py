@@ -14,7 +14,6 @@
 
 
 import unittestX as unittest
-import journal
 
 
 from mcni.pyre_support.Instrument import Instrument as base
@@ -45,8 +44,6 @@ class Instrument(base):
 
 
 def main():
-    import journal
-    journal.warning('mcstas2.parsers.ComponentInfo').deactivate()
     Instrument('test1').run()
     return    
     

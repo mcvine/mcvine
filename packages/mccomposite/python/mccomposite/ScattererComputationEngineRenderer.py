@@ -13,9 +13,6 @@
 
 
 
-import journal
-debug = journal.debug( "mccomposite.ScattererComputationEngineRenderer" )
-
 
 from . import units
 
@@ -72,7 +69,6 @@ class ScattererComputationEngineRenderer( AbstractVisitor, ShapeComputationEngin
             orientation = self._remove_angle_unit( geometer.orientation(element) )
             corientation = factory.orientation( orientation )
 
-            debug.log( "position = %s, orientation = %s" % (position, orientation ) )
             cgeometer.register( cscatterer, cposition, corientation )
             continue
 

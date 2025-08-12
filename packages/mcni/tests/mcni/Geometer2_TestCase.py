@@ -15,7 +15,6 @@
 
 import mcvine
 import unittestX as unittest
-import journal
 
 import numpy.testing as nt
 from mcni.neutron_coordinates_transformers.mcstasRotations import toMatrix
@@ -67,7 +66,6 @@ def pysuite():
     return unittest.TestSuite( (suite1,) )
 
 def main():
-    #debug.activate()
     pytests = pysuite()
     alltests = unittest.TestSuite( (pytests, ) )
     res = unittest.TextTestRunner(verbosity=2).run(alltests)

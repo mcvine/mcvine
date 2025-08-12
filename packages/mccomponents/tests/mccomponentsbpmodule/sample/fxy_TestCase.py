@@ -4,8 +4,6 @@
 
 
 import unittest
-import journal
-
 
 class fxy_TestCase(unittest.TestCase):
 

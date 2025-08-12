@@ -17,8 +17,6 @@
 
 
 import unittestX as unittest
-import journal
-
 
 class TestCase(unittest.TestCase):
 
@@ -56,8 +54,6 @@ def pysuite():
 
 
 def main():
-    #debug.activate()
-    journal.debug('periodicdispersion_3d').activate()
     pytests = pysuite()
     alltests = unittest.TestSuite( (pytests, ) )
     res = unittest.TextTestRunner(verbosity=2).run(alltests)

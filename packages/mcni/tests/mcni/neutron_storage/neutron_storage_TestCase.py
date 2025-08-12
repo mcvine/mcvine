@@ -17,10 +17,6 @@ import unittestX as unittest
 import mcni.neutron_storage as mns, os
 
 
-import journal
-debug = journal.debug( "mcni.neutron_storage.test" )
-warning = journal.warning( "mcni.neutron_storage.test" )
-
 
 class TestCase(unittest.TestCase):
 
@@ -123,7 +119,6 @@ def pysuite():
 
 
 def main():
-    #debug.activate()
     pytests = pysuite()
     alltests = unittest.TestSuite( (pytests, ) )
     res = unittest.TextTestRunner(verbosity=2).run(alltests)

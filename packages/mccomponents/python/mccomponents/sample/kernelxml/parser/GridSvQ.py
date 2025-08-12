@@ -2,7 +2,7 @@
 #
 #
 
-from .AbstractNode import AbstractNode, debug
+from .AbstractNode import AbstractNode
 
 class GridSvQ(AbstractNode):
 

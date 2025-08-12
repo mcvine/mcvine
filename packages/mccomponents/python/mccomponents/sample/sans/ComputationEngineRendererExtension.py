@@ -3,7 +3,6 @@
 #
 
 
-import journal
 import periodictable
 
 

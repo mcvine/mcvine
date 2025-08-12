@@ -4,9 +4,6 @@
 #
 
 
-import journal
-info = journal.info( 'neutron_storage' )
-
 
 def merge(paths, newpath):
     '''merge neutron files to one neutron file
@@ -19,7 +16,6 @@ def merge(paths, newpath):
     out = storage(newpath, 'w')
 
     for path in paths:
-        info.log( ' * Working on %r' % path )
         s = storage(path, 'r')
         neutrons = s.read()
 

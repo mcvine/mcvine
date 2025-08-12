@@ -70,16 +70,18 @@ class NeutronComponentFacility( Facility ):
         try:
             factory = findcomponentfactory(type, category, supplier)
         except:
-            import journal, traceback
+            import logging, traceback
+            logger = logging.getLogger("MCVine")
             tb = traceback.format_exc()
-            journal.error('pyre.inventory').log('failed to find component factory %r. \n%s' % (
+            logger.error('failed to find component factory %r. \n%s' % (
                     component_specifier, tb))
             return None, None
         
         # error handling
         if not factory:
-            import journal
-            journal.error("mcvine.component").log(
+            import logging
+            logger = logging.getLogger("MCVine")
+            logger.error(
                 "could not bind facility '%s': component factory '%s' not found." % (
                 self.name, component_specifier)
                 )

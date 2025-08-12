@@ -3,10 +3,6 @@
 # Jiao Lin <jiao.lin@gmail.com>
 #
 
-import journal
-debug = journal.debug( "mcni.pyre_support.test" )
-warning = journal.warning( "mcni.pyre_support.test" )
-
 
 from mcni.pyre_support.MpiApplication import Application as base
 class App(base):

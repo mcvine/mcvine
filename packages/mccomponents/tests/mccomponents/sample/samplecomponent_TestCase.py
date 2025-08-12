@@ -17,10 +17,6 @@ os.environ['MCVINE_MPI_BINDING'] = 'NONE'
 
 
 import unittestX as unittest
-import journal
-
-debug = journal.debug( "samplecomponent_TestCase" )
-warning = journal.warning( "samplecomponent_TestCase" )
 
 
 scattererxml = 'Ni-scatterer.xml'
@@ -105,7 +101,6 @@ def pysuite():
 
 
 def main():
-    #debug.activate()
     pytests = pysuite()
     alltests = unittest.TestSuite( (pytests, ) )
     res = unittest.TextTestRunner(verbosity=2).run(alltests)

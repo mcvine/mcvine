@@ -12,7 +12,6 @@
 #
 
 
-import journal
 import periodictable
 
 
@@ -323,7 +322,6 @@ class ComputationEngineRendererExtension:
         if Emax:
             sqehist = sqehist[(), (None, Emax)].copy()
         hh.dump(sqehist, 'mp-sqe-%d.h5' % mpi.rank)
-        journal.debug("phonon").log("computed multiphonon sqe")
         
         from mccomponents import sample
         # grid sqe

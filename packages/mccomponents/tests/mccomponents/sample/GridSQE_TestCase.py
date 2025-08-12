@@ -15,10 +15,6 @@
 
 import unittestX as unittest
 import numpy as np, histogram as H, histogram.hdf as hh
-import journal
-
-debug = journal.debug( "GridSQE_TestCase" )
-warning = journal.warning( "GridSQE_TestCase" )
 
 
 sqe_f = lambda q,e: q*q+e*e 
@@ -83,7 +79,6 @@ def pysuite():
 
 
 def main():
-    #debug.activate()
     pytests = pysuite()
     alltests = unittest.TestSuite( (pytests, ) )
     res = unittest.TextTestRunner(verbosity=2).run(alltests)

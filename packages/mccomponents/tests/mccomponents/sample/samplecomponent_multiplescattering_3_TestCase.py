@@ -20,10 +20,6 @@ os.environ['MCVINE_MPI_BINDING'] = 'NONE'
 
 
 import unittestX as unittest
-import journal
-
-debug = journal.debug( "samplecomponent_TestCase" )
-warning = journal.warning( "samplecomponent_TestCase" )
 
 
 class TestCase(unittest.TestCase):
@@ -65,10 +61,6 @@ def pysuite():
 
 
 def main():
-    #debug.activate()
-    import journal
-    # journal.debug('CompositeNeutronScatterer_Impl').activate()
-    # journal.debug('HomogeneousNeutronScatterer').activate()
     pytests = pysuite()
     alltests = unittest.TestSuite( (pytests, ) )
     res = unittest.TextTestRunner(verbosity=2).run(alltests)

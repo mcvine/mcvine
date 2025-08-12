@@ -13,9 +13,6 @@
 
 import os, numpy as np
 
-import journal
-debug = journal.debug('mccomponents.sample.diffraction')
-
 nsampling = 100
 
 class ComputationEngineRendererExtension:
@@ -70,7 +67,6 @@ class ComputationEngineRendererExtension:
         #
         #data.unitcell_volume = unitcell.getVolume()
         data.unitcell_volume = kernel.unitcell_volume
-        debug.log('unitcell volume: %s' % data.unitcell_volume)
         # !!!!!
         # number_of_atoms is not really used in the kernel implementation
         # needs double check
@@ -99,7 +95,6 @@ class ComputationEngineRendererExtension:
         # provides these information
         xs = kernel.cross_sections
         abs, inc, coh = xs.abs, xs.inc, xs.coh
-        debug.log('cross sections: abs: %s, inc: %s, coh: %s' % (abs, inc, coh))
         data.absorption_cross_section = abs # /units.area.barn
         data.incoherent_cross_section = inc # /units.area.barn
         data.coherent_cross_section = coh # /units.area.barn

@@ -14,10 +14,6 @@
 
 
 import unittestX as unittest
-import journal
-
-debug = journal.debug( "mccompositebpmodule_TestCase" )
-warning = journal.warning( "mccompositebpmodule_TestCase" )
 
 
 import mcni
