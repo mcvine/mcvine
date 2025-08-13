@@ -31,12 +31,6 @@ Test whether mpi4py is available::
 If it prints out "0" and "1" (in any order), pyre mpi is good.
 
 
-Debug
------
-
-$ <simapp> --journal.info.mpirun --journal.debug.mpirun
-
-
 Use slurm
 ---------
 

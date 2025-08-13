@@ -4,12 +4,7 @@
     --ncount=10000 \
     --buffer_size=1000 \
     --output-dir=test1_out \
-    --overwrite-datafiles \
-    --journal.debug.CompositeNeutronScatterer_Impl \
-    --journal.debug.detector \
-    --journal.debug.EventModeMCA \
-    --journal.debug.He3Tube_kernel 
-    #--journal.info.dsm.Runner
+    --overwrite-datafiles 
 
 
 ./events2Idpt.py

@@ -20,11 +20,4 @@ Print out neutrons::
 
  --tracer=console
 
-Simulation application::
-
- --journal.info.<appname>
-
-Data stream::
-
- --journal.info.dsm.Runner
 
