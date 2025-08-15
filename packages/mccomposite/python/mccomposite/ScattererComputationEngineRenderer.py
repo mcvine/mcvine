@@ -12,7 +12,8 @@
 #
 
 
-
+import logging
+logger = logging.getLogger("MCVine")
 
 from . import units
 
@@ -68,7 +69,8 @@ class ScattererComputationEngineRenderer( AbstractVisitor, ShapeComputationEngin
             
             orientation = self._remove_angle_unit( geometer.orientation(element) )
             corientation = factory.orientation( orientation )
-
+            
+            logger.debug( "position = %s, orientation = %s" % (position, orientation ) )
             cgeometer.register( cscatterer, cposition, corientation )
             continue
 
