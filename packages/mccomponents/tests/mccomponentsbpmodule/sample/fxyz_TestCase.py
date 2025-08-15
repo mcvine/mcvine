@@ -4,8 +4,6 @@
 
 
 import os, numpy as np, unittest
-import journal
-
 
 class fxyz_TestCase(unittest.TestCase):
 

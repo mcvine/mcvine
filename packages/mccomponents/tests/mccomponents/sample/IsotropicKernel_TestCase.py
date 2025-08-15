@@ -18,10 +18,6 @@ os.environ['MCVINE_MPI_BINDING'] = 'NONE'
 
 
 import unittestX as unittest
-import journal
-
-debug = journal.debug( "IsotropicKernel_TestCase" )
-warning = journal.warning( "IsotropicKernel_TestCase" )
 
 
 import mcni, mccomposite, mccomponents.sample as ms, mccomponents.homogeneous_scatterer as mh

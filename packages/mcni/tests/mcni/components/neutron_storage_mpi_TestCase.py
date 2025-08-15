@@ -22,10 +22,6 @@ skip = 1
 
 
 import unittestX as unittest
-import journal
-
-debug = journal.debug( "mcni.components.test" )
-warning = journal.warning( "mcni.components.test" )
 
 
 
@@ -112,7 +108,6 @@ def pysuite():
 
 def main():
     _init()
-    #debug.activate()
     pytests = pysuite()
     alltests = unittest.TestSuite( (pytests, ) )
     res = unittest.TextTestRunner(verbosity=2).run(alltests)

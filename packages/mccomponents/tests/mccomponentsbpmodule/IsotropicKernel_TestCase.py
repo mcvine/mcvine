@@ -14,10 +14,6 @@
 
 
 import unittestX as unittest
-import journal
-
-debug = journal.debug( "IsotropicKernel_TestCase" )
-warning = journal.warning( "IsotropicKernel_TestCase" )
 
 
 import mcni

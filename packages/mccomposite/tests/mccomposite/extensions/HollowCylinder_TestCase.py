@@ -15,10 +15,6 @@
 standalone = True
 
 import unittestX as unittest
-import journal
-
-debug = journal.debug( "HollowCylinder_TestCase" )
-warning = journal.warning( "HollowCylinder_TestCase" )
 
 
 import mccomposite, mcni
@@ -56,12 +52,6 @@ def pysuite():
     return unittest.TestSuite( (suite1,) )
 
 def main():
-    #debug.activate()
-    #journal.debug("mccomposite.geometry.ArrowIntersector").activate()
-    #journal.debug("mccomposite.geometry.Locator").activate()
-    #journal.debug("CompositeNeutronScatterer_Impl").activate()
-    #journal.debug("mccomposite.ScattererComputationEngineRenderer").activate()
-    #journal.debug("mccomposite.Geometer").activate()
     pytests = pysuite()
     alltests = unittest.TestSuite( (pytests, ) )
     res = unittest.TextTestRunner(verbosity=2).run(alltests)

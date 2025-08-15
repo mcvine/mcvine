@@ -3,7 +3,7 @@
 # Jiao Lin <jiao.lin@gmail.com>
 #
 
-from .KernelNode import KernelNode as base, debug
+from .KernelNode import KernelNode as base
 
 
 class SQE_EnergyFocusing_Kernel(base):

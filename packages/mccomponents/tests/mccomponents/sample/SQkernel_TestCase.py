@@ -4,7 +4,6 @@
 
 
 import unittest
-import journal
 
 
 sq_f = lambda q: q*q

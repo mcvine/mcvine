@@ -15,11 +15,6 @@
 
 import unittestX as unittest
 import numpy as np
-import journal
-
-#debug = journal.debug( "TestCase" )
-#warning = journal.warning( "TestCase" )
-
 
 import mcni
 
@@ -109,9 +104,6 @@ def pysuite():
 
 
 def main():
-    #debug.activate()
-    #journal.debug('phonon_coherent_inelastic_polyxtal_kernel').activate()
-    #journal.debug('random').activate()
     pytests = pysuite()
     alltests = unittest.TestSuite( (pytests, ) )
     res = unittest.TextTestRunner(verbosity=2).run(alltests)

@@ -14,10 +14,6 @@
 
 
 import unittestX as unittest
-import journal
-
-debug = journal.debug( "AtomicScatterer_TestCase" )
-warning = journal.warning( "AtomicScatterer_TestCase" )
 
 
 import mcni

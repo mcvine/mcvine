@@ -12,7 +12,7 @@
 #
 
 
-from .KernelNode import KernelNode as base, debug
+from .KernelNode import KernelNode as base
 
 # KernelContainer is just an alias of CompositKernel
 # why not just reuse the CompositKernel parser node?

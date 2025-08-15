@@ -12,9 +12,6 @@
 #
 
 
-import journal
-debug = journal.debug("mcvine.detector.reduction_utils")
-
 
 def events2Ipixtof( events, ipixtof ):
     for pix,tof, n in events:

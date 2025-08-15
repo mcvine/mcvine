@@ -13,9 +13,8 @@
 
 
 import os
-
-import journal
-debug = journal.debug('binding_builder.distutils')
+import logging
+logger = logging.getLogger("MCVine")
 
 
 def build( binding, site_package_path = None ):
@@ -70,9 +69,9 @@ def build( binding, site_package_path = None ):
     name = python_package.split( '.' )[0]
     packages = [python_package]
     ext_modules = [ext]
-    debug.log('name=%s, packages=%s, package_dir=%s, ext_modules=%s' % (
+    logger.debug('name=%s, packages=%s, package_dir=%s, ext_modules=%s' % (
         name, packages, package_dir, ext_modules, )
-              )
+    )
     record_path = os.path.expanduser("~/.mcstas2/install_record.txt")
     sys.argv.append( '--single-version-externally-managed')
     sys.argv.append( '--record' )

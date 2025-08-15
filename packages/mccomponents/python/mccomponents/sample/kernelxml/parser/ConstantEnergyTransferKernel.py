@@ -12,7 +12,6 @@
 #
 
 
-from .AbstractNode import debug
 from .KernelNode import KernelNode as base
 
 

@@ -14,10 +14,6 @@
 
 
 import unittestX as unittest
-import journal
-
-debug = journal.debug( "NdArray_TestCase" )
-warning = journal.warning( "NdArray_TestCase" )
 
 
 import mcni

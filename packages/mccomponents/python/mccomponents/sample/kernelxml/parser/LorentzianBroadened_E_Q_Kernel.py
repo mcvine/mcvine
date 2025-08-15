@@ -4,7 +4,7 @@
 #
 
 
-from .KernelNode import KernelNode as base, debug
+from .KernelNode import KernelNode as base
 
 
 class LorentzianBroadened_E_Q_Kernel(base):

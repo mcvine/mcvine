@@ -14,7 +14,6 @@
 
 
 import unittestX as unittest
-import journal
 
 
 from mcni.pyre_support.Instrument import Instrument as base

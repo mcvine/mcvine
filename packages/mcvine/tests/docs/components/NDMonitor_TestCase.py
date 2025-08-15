@@ -81,7 +81,6 @@ def pysuite():
 def main():
     global interactive
     interactive = True
-    #debug.activate()
     pytests = pysuite()
     alltests = unittest.TestSuite( (pytests, ) )
     res = unittest.TextTestRunner(verbosity=2).run(alltests)

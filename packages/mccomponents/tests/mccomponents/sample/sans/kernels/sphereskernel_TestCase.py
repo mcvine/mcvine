@@ -7,8 +7,6 @@ skip = True
 need_user_interaction = True
 
 import unittest
-import journal
-
 
 class TestCase(unittest.TestCase):
 

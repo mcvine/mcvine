@@ -21,7 +21,6 @@ os.environ['MCVINE_MPI_LAUNCHER'] = 'serial'
 
 
 import unittestX as unittest
-import journal
 
 from TestInstrument1 import Instrument as base
 class Instrument(base):
@@ -83,8 +82,6 @@ def pysuite():
 
 
 def main():
-    #debug.activate()
-    #journal.debug("CompositeNeutronScatterer_Impl").activate()
     pytests = pysuite()
     alltests = unittest.TestSuite( (pytests, ) )
     res = unittest.TextTestRunner(verbosity=2).run(alltests)

@@ -14,10 +14,6 @@
 
 
 import unittestX as unittest
-import journal
-
-debug = journal.debug( "ChangeCoordinateSystem_forDispersion_3D_TestCase" )
-warning = journal.warning( "ChangeCoordinateSystem_forDispersion_3D_TestCase" )
 
 
 import mcni

@@ -14,10 +14,6 @@
 
 
 import unittestX as unittest
-import journal
-
-debug = journal.debug( "IncoherentElastic_kernel_TestCase" )
-warning = journal.warning( "IncoherentElastic_kernel_TestCase" )
 
 
 import mcni

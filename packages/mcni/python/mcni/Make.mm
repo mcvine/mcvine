@@ -58,7 +58,6 @@ EXPORT_PYTHON_MODULES = \
 	_component_listing.py \
 	_component_factories.py \
 	_find_component.py \
-	_journal.py \
 
 
 export:: export-python-modules 

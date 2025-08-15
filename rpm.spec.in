@@ -15,7 +15,6 @@ BuildRequires:  gsl-devel
 BuildRequires:  boost-devel
 BuildRequires:  boost-python
 BuildRequires:  mcvine-resources
-BuildRequires:  journal
 
 Requires: python
 Requires: python-devel
@@ -31,7 +30,6 @@ Requires: danse.ins.dsm
 Requires: danse.ins.numpyext
 Requires: danse.ins.bpext
 Requires: histogram
-Requires: journal
 Requires: diffpy.Structure
 Requires: periodictable
 Requires: mcvine-resources

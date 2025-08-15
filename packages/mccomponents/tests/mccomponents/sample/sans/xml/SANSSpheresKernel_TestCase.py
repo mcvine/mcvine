@@ -7,9 +7,6 @@ import os
 os.environ['MCVINE_MPI_BINDING'] = 'NONE'
 
 import unittest
-import journal
-#debug = journal.debug( "TestCase" )
-#warning = journal.warning( "TestCase" )
 
 import mcvine
 import mccomponents.sample.phonon.xml

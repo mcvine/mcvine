@@ -175,8 +175,7 @@ McStas component library: its path is set by env var $MCSTAS_COMPONENT_LIBDIR.
 Logging
 """""""
 
-* Use both pyre journal and python logging
-* pyre journal configured by pml files
+* Use python logging
 * logging configured by "mcvine.conf" (see mcvine toplevel __init__.py)
     
   - example: tests/logger/mcvine.conf

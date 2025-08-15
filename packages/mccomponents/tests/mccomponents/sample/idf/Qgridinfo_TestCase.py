@@ -14,10 +14,6 @@
 
 
 import unittestX as unittest
-import journal
-
-debug = journal.debug( "Qgridinfo_TestCase" )
-warning = journal.warning( "Qgridinfo_TestCase" )
 
 
 datapath = 'dispersion-example'

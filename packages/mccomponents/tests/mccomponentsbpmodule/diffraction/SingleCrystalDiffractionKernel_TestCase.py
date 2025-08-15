@@ -5,10 +5,6 @@
 
 import os, numpy as np
 import unittestX as unittest
-import journal
-
-debug = journal.debug( "SingleCrystalDiffractionKernel_TestCase" )
-warning = journal.warning( "SingleCrystalDiffractionKernel_TestCase" )
 
 
 import mcni

@@ -25,7 +25,7 @@ interactive = False
 
 
 import unittestX as unittest
-import os, journal
+import os
 
 
 componentname = 'IQE_monitor'
@@ -164,9 +164,6 @@ def pysuite():
 
 
 def main():
-    #debug.activate()
-    #journal.debug("CompositeNeutronScatterer_Impl").activate()
-    #journal.debug('phonon_coherent_inelastic_polyxtal_kernel').activate()
     pytests = pysuite()
     alltests = unittest.TestSuite( (pytests, ) )
     res = unittest.TextTestRunner(verbosity=2).run(alltests)

@@ -18,11 +18,7 @@ if not mcvine_resources:
 
 
 import unittestX as unittest
-import journal, os
-
-#debug = journal.debug( "TestCase" )
-#warning = journal.warning( "TestCase" )
-
+import os
 
 import mcni
 from mccomponents.sample.phonon import read_dos
@@ -61,9 +57,6 @@ def pysuite():
 
 
 def main():
-    #debug.activate()
-    #journal.debug('phonon_coherent_inelastic_polyxtal_kernel').activate()
-    #journal.debug('random').activate()
     pytests = pysuite()
     alltests = unittest.TestSuite( (pytests, ) )
     res = unittest.TextTestRunner(verbosity=2).run(alltests)

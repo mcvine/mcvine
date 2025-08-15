@@ -14,10 +14,6 @@
 
 
 import unittestX as unittest
-import journal
-
-debug = journal.debug( "SimplePowderDiffractionKernel_TestCase" )
-warning = journal.warning( "SimplePowderDiffractionKernel_TestCase" )
 
 
 import mcni

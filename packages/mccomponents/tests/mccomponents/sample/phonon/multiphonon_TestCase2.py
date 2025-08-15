@@ -14,11 +14,6 @@
 
 
 import unittestX as unittest
-import journal
-
-#debug = journal.debug( "TestCase" )
-#warning = journal.warning( "TestCase" )
-
 
 import numpy
 

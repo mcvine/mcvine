@@ -67,9 +67,6 @@ def pysuite():
 
 
 def main():
-    #debug.activate()
-    import journal
-    journal.debug("Event2QE").activate()
     pytests = pysuite()
     alltests = unittest.TestSuite( (pytests, ) )
     res = unittest.TextTestRunner(verbosity=2).run(alltests)

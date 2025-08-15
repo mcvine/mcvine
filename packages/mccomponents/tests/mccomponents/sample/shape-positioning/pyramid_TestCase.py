@@ -57,9 +57,6 @@ class TestCase(unittest.TestCase):
 
 
 def main():
-    import journal
-    debug = journal.debug("mccomposite.geometry.ArrowIntersector")
-    debug.activate()
     unittest.main()
 
 if __name__ == "__main__": main()

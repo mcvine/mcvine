@@ -14,10 +14,6 @@
 
 
 import unittestX as unittest
-import journal
-
-debug = journal.debug( "CoherentInelastic_PolyXtal_kernel_TestCase" )
-warning = journal.warning( "CoherentInelastic_PolyXtal_kernel_TestCase" )
 
 
 import mcni

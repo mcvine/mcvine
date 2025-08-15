@@ -6,10 +6,6 @@
 standalone = True
 
 import unittest, os
-import journal
-
-debug = journal.debug( "mcni.pyre_support.test" )
-warning = journal.warning( "mcni.pyre_support.test" )
 
 
 class TestCase(unittest.TestCase):

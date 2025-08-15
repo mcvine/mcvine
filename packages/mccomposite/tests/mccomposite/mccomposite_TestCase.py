@@ -17,10 +17,6 @@ skip = True
 
 
 import unittestX as unittest
-import journal
-
-debug = journal.debug( "mccomposite_TestCase" )
-warning = journal.warning( "mccomposite_TestCase" )
 
 
 import mccomposite, mcni
@@ -148,10 +144,6 @@ def pysuite():
 
 def main():
     register()
-    #debug.activate()
-    #journal.debug("mccomposite.geometry.ArrowIntersector").activate()
-    #journal.debug("mccomposite.geometry.Locator").activate()
-    #journal.debug("CompositeNeutronScatterer_Impl").activate()
     pytests = pysuite()
     alltests = unittest.TestSuite( (pytests, ) )
     res = unittest.TextTestRunner(verbosity=2).run(alltests)

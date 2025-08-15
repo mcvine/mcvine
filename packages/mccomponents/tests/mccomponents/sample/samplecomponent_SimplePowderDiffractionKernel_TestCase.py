@@ -75,8 +75,6 @@ class TestCase(unittest.TestCase):
 
 
 def main():
-    # import journal
-    # journal.debug("SimplePowderDiffractionKernel").activate()
     unittest.main()
     return
     

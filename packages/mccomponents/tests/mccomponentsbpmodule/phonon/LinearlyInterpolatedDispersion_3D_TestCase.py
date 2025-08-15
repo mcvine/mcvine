@@ -14,10 +14,6 @@
 
 
 import unittestX as unittest
-import journal
-
-debug = journal.debug( "LinearlyInterpolatedDispersion_3D_TestCase" )
-warning = journal.warning( "LinearlyInterpolatedDispersion_3D_TestCase" )
 
 
 import numpy as np

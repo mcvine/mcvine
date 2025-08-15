@@ -14,10 +14,6 @@
 
 
 import unittestX as unittest
-import journal
-
-debug = journal.debug( "He3Tube_TestCase" )
-warning = journal.warning( "He3Tube_TestCase" )
 
 
 import mcni

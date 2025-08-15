@@ -14,10 +14,6 @@
 
 
 import unittestX as unittest
-import journal
-
-debug = journal.debug( "mcni_component_factory_TestCase" )
-warning = journal.warning( "mcni_component_factory_TestCase" )
 
 
 from mcni import componentfactory, componentinfo
@@ -47,7 +43,6 @@ def pysuite():
     return unittest.TestSuite( (suite1,) )
 
 def main():
-    #debug.activate()
     pytests = pysuite()
     alltests = unittest.TestSuite( (pytests, ) )
     res = unittest.TextTestRunner(verbosity=2).run(alltests)

@@ -2,6 +2,6 @@
 #
 #
 
-from ....kernelxml.parser.KernelNode import KernelNode, debug
+from ....kernelxml.parser.KernelNode import KernelNode
 
 # End of file

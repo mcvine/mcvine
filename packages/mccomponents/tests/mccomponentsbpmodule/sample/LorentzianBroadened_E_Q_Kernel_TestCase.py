@@ -6,10 +6,6 @@
 standalone = True
 
 import unittestX as unittest
-import journal
-
-debug = journal.debug( "LorentzianBroadened_E_Q_Kernel_TestCase" )
-warning = journal.warning( "LorentzianBroadened_E_Q_Kernel_TestCase" )
 
 
 import mcni

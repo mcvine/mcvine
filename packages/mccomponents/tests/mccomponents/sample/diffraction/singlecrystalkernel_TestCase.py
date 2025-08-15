@@ -6,7 +6,6 @@ interactive = False
 
 import numpy as np
 import unittestX as unittest
-import journal
 import mcni
 
 

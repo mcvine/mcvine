@@ -14,10 +14,6 @@
 
 
 import unittestX as unittest
-import journal
-
-debug = journal.debug( "Omega2_TestCase" )
-warning = journal.warning( "Omega2_TestCase" )
 
 
 datapath = 'dispersion-example'
@@ -48,7 +44,6 @@ def pysuite():
 
 
 def main():
-    #debug.activate()
     pytests = pysuite()
     alltests = unittest.TestSuite( (pytests, ) )
     res = unittest.TextTestRunner(verbosity=2).run(alltests)

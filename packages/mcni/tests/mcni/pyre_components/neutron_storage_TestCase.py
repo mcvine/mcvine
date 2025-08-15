@@ -19,10 +19,6 @@ standalone = True
 
 
 import unittestX as unittest
-import journal
-
-debug = journal.debug( "mcni.pyre_components.test" )
-warning = journal.warning( "mcni.pyre_components.test" )
 
 
 #input parameter for output directory for neutrontostorage component
@@ -212,7 +208,6 @@ def pysuite():
     return unittest.TestSuite( (suite1,) )
 
 def main():
-    #debug.activate()
     pytests = pysuite()
     alltests = unittest.TestSuite( (pytests, ) )
     res = unittest.TextTestRunner(verbosity=2).run(alltests)

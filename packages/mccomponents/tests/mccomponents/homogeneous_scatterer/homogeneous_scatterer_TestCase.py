@@ -16,10 +16,6 @@
 standalone = True
 
 import unittestX as unittest
-import journal
-
-debug = journal.debug( "mccomponents_TestCase" )
-warning = journal.warning( "mccomponents_TestCase" )
 
 
 import mcni, mccomposite, mccomponents.homogeneous_scatterer as hs
@@ -128,10 +124,6 @@ def pysuite():
 
 
 def main():
-    #debug.activate()
-    #journal.debug("mccomposite.geometry.ArrowIntersector").activate()
-    #journal.debug("mccomposite.geometry.Locator").activate()
-    #journal.debug("CompositeNeutronScatterer_Impl").activate()
     register()
     pytests = pysuite()
     alltests = unittest.TestSuite( (pytests, ) )

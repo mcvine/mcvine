@@ -11,13 +11,6 @@ long_test = False
 
 import os, numpy as np
 import unittestX as unittest
-import journal
-
-debug = journal.debug( "detector_TestCase" )
-warning = journal.warning( "detector_TestCase" )
-# to debug, uncomment the following
-# journal.debug('HomogeneousNeutronScatterer').activate()
-# journal.debug('CompositeNeutronScatterer_Impl').activate()
 
 import mcni, mccomposite, mccomponents.detector as md, \
        mccomposite.geometry.primitives as primitives,\

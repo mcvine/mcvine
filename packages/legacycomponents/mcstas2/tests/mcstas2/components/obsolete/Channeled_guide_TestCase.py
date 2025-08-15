@@ -14,7 +14,6 @@
 
 
 import unittestX as unittest
-import journal
 
 
 componentname = 'Channeled_guide'
@@ -55,8 +54,6 @@ def pysuite():
 
 
 def main():
-    #debug.activate()
-    #journal.debug("CompositeNeutronScatterer_Impl").activate()
     pytests = pysuite()
     alltests = unittest.TestSuite( (pytests, ) )
     res = unittest.TextTestRunner(verbosity=2).run(alltests)

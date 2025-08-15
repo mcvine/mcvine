@@ -24,7 +24,6 @@ class TestCase(unittest.TestCase):
         cmd = '''./testapp1.py \
  --monitor.geometer.m1="(0,0,1),(0,0,0)" \
  --monitor.geometer.m2="(0,0,0),(0,90,0)" \
- --journal.debug.monitor \
 '''
         execute(cmd)
         return
@@ -36,7 +35,6 @@ class TestCase(unittest.TestCase):
  --overwrite-datafiles \
  --monitor.geometer.m1="(0,0,1),(0,0,0)" \
  --monitor.geometer.m2="(0,0,0),(0,90,0)" \
- --journal.debug.monitor \
 '''
         execute(cmd)
         return
@@ -79,7 +77,6 @@ class TestCase(unittest.TestCase):
  --geometer.monitor="(0,0,1),(0,0,0)" \
  --output-dir=out-test3 \
  --overwrite-datafiles \
- --journal.debug.monitor \
 '''
         execute(cmd)
         time.sleep(3)
@@ -117,7 +114,6 @@ def pysuite():
     return unittest.TestSuite( (suite1,) )
 
 def main():
-    #debug.activate()
     pytests = pysuite()
     alltests = unittest.TestSuite( (pytests, ) )
     res = unittest.TextTestRunner(verbosity=2).run(alltests)

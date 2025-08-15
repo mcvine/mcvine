@@ -2,8 +2,6 @@
 #
 #
 
-# Enable logging by journal.info.instrument
-
 from danse.ins.dsm.Connectable import Connectable 
 class SimulationNode(Connectable):
 
@@ -63,9 +61,8 @@ class SimulationNode(Connectable):
 
 
     def _createProcessor(self, name, process, tracer):
-        from mcni import journal
-        logger = journal.logger(
-            'info', 'instrument', header='', footer='', format=' | {!s}')
+        import logging
+        logger = logging.getLogger("MCVine")
         def _(neutrons):
             if tracer:
                 tracer(neutrons,  context=before(self))
@@ -73,7 +70,7 @@ class SimulationNode(Connectable):
             neutrons2 = neutrons.snapshot(len(neutrons))
             # need to swap with the orignal neutron buffer
             neutrons.swap(neutrons2)
-            logger(" %s processing started with %s neutrons ..." % (name, len(neutrons)))
+            logger.info(" %s processing started with %s neutrons ..." % (name, len(neutrons)))
             process(neutrons)
             if tracer:
                 tracer(neutrons,  context=processed(self))

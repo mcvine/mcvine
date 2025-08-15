@@ -14,10 +14,6 @@
 
 
 import unittestX as unittest
-import journal
-
-debug = journal.debug( "Polarizations_TestCase" )
-warning = journal.warning( "Polarizations_TestCase" )
 
 
 datapath = 'dispersion-example'

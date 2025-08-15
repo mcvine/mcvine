@@ -16,10 +16,6 @@ long_test = True
 
 
 import unittestX as unittest
-import journal
-
-debug = journal.debug( "detectorcomponent_TestCase" )
-warning = journal.warning( "detectorcomponent_TestCase" )
 
 
 import mcni
@@ -95,10 +91,6 @@ def pysuite():
 
 
 def main():
-    #debug.activate()
-    #journal.debug("mccomposite.geometry.ArrowIntersector").activate()
-    #journal.debug("mccomposite.geometry.Locator").activate()
-    #journal.debug("CompositeNeutronScatterer_Impl").activate()
     pytests = pysuite()
     alltests = unittest.TestSuite( (pytests, ) )
     res = unittest.TextTestRunner(verbosity=2).run(alltests)

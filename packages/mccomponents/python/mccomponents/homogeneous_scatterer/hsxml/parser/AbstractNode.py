@@ -14,9 +14,8 @@
 from future.standard_library import install_aliases
 install_aliases()
 
-import journal
-debug = journal.debug("homogeneous_scatterer.xmlparser")
-
+import logging
+logger = logging.getLogger("MCVine")
 
 from pyre.xml.Node import Node
 import urllib.request, urllib.parse, urllib.error
@@ -29,7 +28,7 @@ class XMLFormatError(Exception): pass
 class AbstractNode(Node):
 
     def content(self, content):
-        debug.log( "content=%s" % content )
+        logger.debug( "content=%s" % content )
         content = content.strip()
         if len(content)==0: return
         #...

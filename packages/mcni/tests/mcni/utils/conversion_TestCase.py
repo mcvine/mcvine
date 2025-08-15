@@ -17,11 +17,6 @@ Test neutron and neutron buffer interfaces
 """
 
 
-import journal
-debug = journal.debug( "conversion_TestCase" )
-warning = journal.warning( "conversion_TestCase" )
-
-
 from mcni.utils import conversion
 
 import unittestX as unittest
@@ -48,7 +43,6 @@ def pysuite():
     return unittest.TestSuite( (suite1,) )
 
 def main():
-    #debug.activate()
     pytests = pysuite()
     alltests = unittest.TestSuite( (pytests, ) )
     res = unittest.TextTestRunner(verbosity=2).run(alltests)

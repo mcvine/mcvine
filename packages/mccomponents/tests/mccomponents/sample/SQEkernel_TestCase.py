@@ -14,10 +14,6 @@
 
 
 import unittestX as unittest
-import journal
-
-debug = journal.debug( "SQEkernel_TestCase" )
-warning = journal.warning( "SQEkernel_TestCase" )
 
 
 sqe_f = lambda q,e: q*q+e*e 
@@ -63,7 +59,6 @@ def pysuite():
 
 
 def main():
-    #debug.activate()
     pytests = pysuite()
     alltests = unittest.TestSuite( (pytests, ) )
     res = unittest.TextTestRunner(verbosity=2).run(alltests)
