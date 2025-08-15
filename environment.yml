@@ -1,6 +1,7 @@
 name: mcvine-developer
 channels:
   - neutrons
+  - mantid-ornl
   - mantid
   - mcvine/label/rc
   - mcvine
@@ -14,6 +15,7 @@ dependencies:
   - python
   - python_abi
   - mantid =6.11
+  - muparser=2.3.4.* # this is needed for Mantid 6.11.0.1 due to a bug
   - jupyter
   - numpy
   - pillow
