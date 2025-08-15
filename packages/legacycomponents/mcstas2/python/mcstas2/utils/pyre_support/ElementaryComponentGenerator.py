@@ -75,6 +75,10 @@ class Generator:
             def __getattribute__(self, name):
                 try: return base.__getattribute__(self, name)
                 except AttributeError:
+                    import traceback
+                    import logging
+                    logger = logging.getLogger("MCVine")
+                    logger.debug( traceback.format_exc() )
                     engine = self.__dict__.get( 'engine' )
                     if engine is None:
                         raise AttributeError("engine not established")

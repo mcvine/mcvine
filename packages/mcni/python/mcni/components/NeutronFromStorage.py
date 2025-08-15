@@ -14,6 +14,8 @@
 
 category = 'sources'
 
+import logging
+logger = logging.getLogger("MCVine")
 
 from mcni.neutron_storage.idfneutron import ndblsperneutron, filesize
 
@@ -41,10 +43,17 @@ class NeutronFromStorage( ParallelComponent, AbstractComponent ):
 
         # read as numpy array
         npyarr = self._storage.read(n, asnpyarr=True)
+        if len(npyarr):
+            logger.debug(npyarr[0])
+        else:
+            logger.debug("no neutrons")
         
         # convert to neutron buffer 
         from mcni.neutron_storage import neutrons_from_npyarr
         neutrons = neutrons_from_npyarr( npyarr, neutrons )
+
+        if len(neutrons):
+            logger.debug(neutrons[0])
 
         return neutrons
 

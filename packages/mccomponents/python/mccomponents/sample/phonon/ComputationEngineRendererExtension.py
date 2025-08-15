@@ -13,6 +13,8 @@
 
 
 import periodictable
+import logging
+logger = logging.getLogger("MCVine")
 
 
 nsampling = 100
@@ -322,6 +324,7 @@ class ComputationEngineRendererExtension:
         if Emax:
             sqehist = sqehist[(), (None, Emax)].copy()
         hh.dump(sqehist, 'mp-sqe-%d.h5' % mpi.rank)
+        logger.debug("computed multiphonon sqe")
         
         from mccomponents import sample
         # grid sqe

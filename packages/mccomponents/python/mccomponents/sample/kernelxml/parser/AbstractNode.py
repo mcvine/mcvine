@@ -11,6 +11,9 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
 
+import logging
+logger = logging.getLogger("MCVine")
+
 from pyre.xml.Node import Node
 import urllib.request, urllib.parse, urllib.error
 
@@ -43,6 +46,7 @@ class AbstractNode(Node):
 
 
     def content(self, content):
+        logger.debug( "content=%s" % content )
         content = content.strip()
         if len(content)==0: return
         self.element.appendContent( urllib.parse.unquote(content).strip() )

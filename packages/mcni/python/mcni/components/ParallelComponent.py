@@ -14,6 +14,9 @@
 
 ## Supports for parallel computing
 
+import logging
+logger = logging.getLogger("MCVine")
+
 
 class ParallelComponent(object):
 
@@ -65,6 +68,8 @@ class MPI(object):
             size = 1
             parallel = False
             pass
+
+        logger.info( "rank %d of %d" % (rank, size) )
 
         self.size = size
         self.rank = rank

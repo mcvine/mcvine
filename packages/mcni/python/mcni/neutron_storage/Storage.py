@@ -11,7 +11,8 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
 
-
+import logging
+logger = logging.getLogger("MCVine")
 
 # Every directory containing neutron data files must have a
 # text file stating the number of neutrons in each neutron data
@@ -48,6 +49,7 @@ class Storage:
         """
 
         path = self.path = os.path.abspath( path )
+        logger.debug('storage path: %s' % path)
 
         # checking inputs
         if mode in ['w'] and os.path.exists( path ):
@@ -74,6 +76,7 @@ class Storage:
 
         #
         self._buffersize = buffersize
+        logger.debug("buffer size: %s" % buffersize)
         
         import mcni
         self._buffer = mcni.neutron_buffer(0)
@@ -88,6 +91,8 @@ class Storage:
             self._packetsize = packetsize
             self._position = 0 # initial position to start reading
             self._ntotal = idfio.count(stream=self.stream)
+            logger.debug('packet size: %s' % packetsize)
+            logger.debug('total size: %s' % self._ntotal)
         return
 
 
@@ -111,15 +116,19 @@ class Storage:
         
         if whence in ['start', 0]:
             self._position = offset
+            logger.debug('seek from start: position is now %s' % self._position)
         elif whence in ['current', 1]:
             self._position += offset
+            logger.debug('seek from current position: position is now %s' % self._position)
         elif whence in ['end', 2]:
             self._position = self._ntotal + offset
+            logger.debug('seek from end: position is now %s' % self._position)
         else:
             raise ValueError("whence=%s: not supported" % whence)
 
         if wrap:
             self._position %= ntotal
+            logger.debug('wrap position: position is now %s' % self._position)
         else:
             if self._position >= ntotal or self._position < 0:
                 raise RuntimeError("new position %s out of bound" % self._position)
@@ -142,16 +151,20 @@ class Storage:
             raise RuntimeError("Neutron storage %r was opened for write" % path)
 
         position = self._position
+        logger.debug('my current position: %s' % position)
         
         # n defaults to packetsize
         n = n or self._packetsize
+        logger.debug('number of neutrons to read: %s' % n)
 
         # total number of neutrons in the file
         ntotal = self._ntotal
+        logger.debug('total number of neutrons in the storage: %s' % ntotal)
 
         # no default, read all is left
         if n is None:
             n = ntotal - position
+            logger.debug('n was given as None, now set to %s' % n)
 
         # nothing to read
         if n == 0:
@@ -159,11 +172,15 @@ class Storage:
             
         # next position of cursor
         nextpostion = position + n
+        logger.debug('next cursor position: %s' % nextpostion)
         
         if nextpostion < ntotal:
             # if it is not beyond the end of file, just read
+            logger.debug('no wrapping needed because next-cursor-position<ntotal')
             npyarr = idfio.read(stream=self.stream, start=position, n=n)
+            logger.debug('read %s neutrons start from %s' % (n, position))
             self._position = nextpostion
+            logger.debug('set my position to %s' % self._position)
 
         else:
             # if out of bound, read to the end of file

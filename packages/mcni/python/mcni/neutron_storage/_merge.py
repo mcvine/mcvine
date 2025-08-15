@@ -3,7 +3,8 @@
 # Jiao Lin <jiao.lin@gmail.com>
 #
 
-
+import logging
+logger = logging.getLogger("MCVine")
 
 def merge(paths, newpath):
     '''merge neutron files to one neutron file
@@ -16,6 +17,7 @@ def merge(paths, newpath):
     out = storage(newpath, 'w')
 
     for path in paths:
+        logger.info( ' * Working on %r' % path )
         s = storage(path, 'r')
         neutrons = s.read()
 

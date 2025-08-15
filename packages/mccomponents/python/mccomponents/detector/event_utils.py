@@ -13,6 +13,8 @@
 
 
 import numpy as np
+import logging
+logger = logging.getLogger("MCVine")
 
 # please refer to EventModeMCA in libmccomponents/detector/
 # for the struct definition for event
@@ -26,6 +28,7 @@ datatype = np.dtype(
 
 def readEvents(file):
     events = np.fromfile(file, datatype)
+    logger.debug( "read %s events" % len(events) )
     return events
 
 

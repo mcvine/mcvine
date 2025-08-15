@@ -18,7 +18,9 @@ def _import():
     try:
         from . import BoostPythonBinding
     except:
-        import warnings
+        import warnings, logging, traceback
+        logger = logging.getLogger("MCVine")
+        logger.debug(traceback.format_exc())
         warnings.warn('binding not imported')
     return
 
