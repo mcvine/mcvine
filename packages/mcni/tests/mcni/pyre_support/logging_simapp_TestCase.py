@@ -16,9 +16,9 @@ class TestCase(unittest.TestCase):
 
 
     def test(self):
-        'mcni.pyre_support: journaling in instrument simulation app'
+        'mcni.pyre_support: logging in instrument simulation app'
         import subprocess as sp
-        cmd = "./journal_test_sim_app.py"
+        cmd = "./logging_test_sim_app.py"
         out = sp.check_output(cmd, stderr=sp.STDOUT, shell=True)
 
         expected_loop0 = """INFO - loop #0"""

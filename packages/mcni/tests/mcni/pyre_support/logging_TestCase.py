@@ -16,9 +16,9 @@ class TestCase(unittest.TestCase):
 
 
     def test(self):
-        'mcni.pyre_support: journaling'
+        'mcni.pyre_support: logging'
         import subprocess as sp
-        cmd = "./journal_test_app.py"
+        cmd = "./logging_test_app.py"
         out = sp.check_output(cmd, stderr=sp.STDOUT, shell=True)
 
         expected = """DEBUG - hello"""
