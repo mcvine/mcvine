@@ -47,7 +47,6 @@ def pysuite():
     return unittest.TestSuite( (suite1,) )
 
 def main():
-    #debug.activate()
     pytests = pysuite()
     alltests = unittest.TestSuite( (pytests, ) )
     res = unittest.TextTestRunner(verbosity=2).run(alltests)

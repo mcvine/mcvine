@@ -14,10 +14,6 @@
 
 
 import unittestX as unittest
-import journal
-
-debug = journal.debug( "BoostPython_TestCase" )
-warning = journal.warning( "BoostPython_TestCase" )
 
 
 from mccomponents.sample.phonon.bindings import get

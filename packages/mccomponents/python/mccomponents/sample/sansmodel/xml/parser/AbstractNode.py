@@ -12,7 +12,7 @@
 #
 
 from mccomponents.sample.kernelxml.parser.AbstractNode \
-     import AbstractNode, debug
+     import AbstractNode
 
 # version
 __id__ = "$Id$"

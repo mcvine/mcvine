@@ -18,10 +18,6 @@ interactive = False
 
 
 import unittestX as unittest
-import journal
-
-debug = journal.debug( "Dispersion_TestCase" )
-warning = journal.warning( "Dispersion_TestCase" )
 
 
 datapath = 'dispersion-example'
@@ -55,7 +51,6 @@ def main():
     global interactive
     interactive = True
     
-    #debug.activate()
     pytests = pysuite()
     alltests = unittest.TestSuite( (pytests, ) )
     res = unittest.TextTestRunner(verbosity=2).run(alltests)

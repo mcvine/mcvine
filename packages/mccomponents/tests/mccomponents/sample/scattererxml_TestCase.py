@@ -9,10 +9,6 @@ standalone = True
 
 
 import unittestX as unittest
-import journal
-
-debug = journal.debug( "scattererxml_TestCase" )
-warning = journal.warning( "scattererxml_TestCase" )
 
 
 scattererxml = 'scatterers/fccNi/Ni-scatterer-SQEkernel.xml'

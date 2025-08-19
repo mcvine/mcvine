@@ -34,8 +34,9 @@ class Application(Script):
 
     def onComputeNodes(self, *args, **kwds):
         from ..utils import mpi
-        import journal
-        journal.debug('mpi').log("size=%s, rank=%s" % (mpi.size, mpi.rank))
+        import logging
+        logger = logging.getLogger("MCVine")
+        logger.debug("size=%s, rank=%s" % (mpi.size, mpi.rank))
         self.main(*args, **kwds)
         return
 

@@ -12,8 +12,8 @@
 #
 
 
-import journal
-warning = journal.warning( 'mcstas2.parsers.ComponentInfo' )
+import logging
+logger = logging.getLogger("MCVine")
 
 
 formatstr = '''
@@ -98,7 +98,7 @@ class Parameter:
             # Case when type is float and default is a string
             default = 0     
         except Exception as err:
-            warning.log( 'parameter %s: %s: %s' % (
+            logger.warning( 'parameter %s: %s: %s' % (
                 name, err.__class__.__name__, err) )
             default = value_converter( )
         self.default = default

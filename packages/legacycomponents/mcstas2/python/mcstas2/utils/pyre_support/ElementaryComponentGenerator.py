@@ -76,10 +76,9 @@ class Generator:
                 try: return base.__getattribute__(self, name)
                 except AttributeError:
                     import traceback
-                    import journal
-                    jrnltag = 'ElementaryComponentGenerator'
-                    debug = journal.debug( jrnltag )
-                    debug.log( traceback.format_exc() )
+                    import logging
+                    logger = logging.getLogger("MCVine")
+                    logger.debug( traceback.format_exc() )
                     engine = self.__dict__.get( 'engine' )
                     if engine is None:
                         raise AttributeError("engine not established")

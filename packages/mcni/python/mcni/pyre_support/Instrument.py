@@ -13,11 +13,7 @@
 
 
 
-# by default, let us disable this annoying channel.
-# one can always enable it by 
-#  --journal.error.pyre.inventory
-import journal, os
-journal.error('pyre.inventory').deactivate()
+import os
 
 
 # constants
@@ -104,7 +100,6 @@ class Instrument( AppInitMixin, CompositeNeutronComponentMixin, base, ParallelCo
 
     def __init__(self, name):
         base.__init__(self, name)
-        self._warning = journal.warning( name )
         return
 
 
@@ -137,11 +132,10 @@ class Instrument( AppInitMixin, CompositeNeutronComponentMixin, base, ParallelCo
             self.buffer_size = int(self.ncount)
         n = int(self.ncount / self.buffer_size)
         
-        from mcni import journal
-        logger = journal.logger(
-            'info', 'instrument', header='', footer='', format='-> {!s}')
+        import logging
+        logger = logging.getLogger("MCVine")
         for i in range(n):
-            logger("mpi node %s at loop %s" % (self.mpi.rank, i))
+            logger.info("mpi node %s at loop %s" % (self.mpi.rank, i))
             neutrons = mcni.neutron_buffer( self.buffer_size )
             context.iteration_no = i
             mcni.simulate( instrument, geometer, neutrons, context=context)
@@ -149,7 +143,7 @@ class Instrument( AppInitMixin, CompositeNeutronComponentMixin, base, ParallelCo
         
         remain = int(self.ncount % self.buffer_size)
         if remain:
-            logger("mpi node %s at last loop" % (self.mpi.rank,))
+            logger.info("mpi node %s at last loop" % (self.mpi.rank,))
             neutrons = mcni.neutron_buffer(remain)
             context.iteration_no = n
             mcni.simulate( instrument, geometer, neutrons, context=context)
@@ -452,7 +446,7 @@ class Instrument( AppInitMixin, CompositeNeutronComponentMixin, base, ParallelCo
     def _cmdlineDemoStr(self):
         s = ' $ %s ' % self.name
         opts = []
-        skipappprops=['name', 'typos', 'journal', 'geometer', 'sequence', 'weaver']+\
+        skipappprops=['name', 'typos', 'geometer', 'sequence', 'weaver']+\
             self.inventory.sequence
 
         from ._invutils import getComponentPropertyNameTipPairs
@@ -558,7 +552,7 @@ def getPartitionIterator( N, n ):
     return 
 
 
-import os, sys, journal
+import os, sys
 
 
 # version

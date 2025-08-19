@@ -17,10 +17,6 @@ os.environ['MCVINE_MPI_LAUNCHER'] = 'serial'
 
 import mcvine
 import unittestX as unittest
-import journal
-
-debug = journal.debug( "mcni.pyre_support.test" )
-warning = journal.warning( "mcni.pyre_support.test" )
 
 
 
@@ -128,7 +124,6 @@ def pysuite():
     return unittest.TestSuite( (suite1,) )
 
 def main():
-    #debug.activate()
     pytests = pysuite()
     alltests = unittest.TestSuite( (pytests, ) )
     res = unittest.TextTestRunner(verbosity=2).run(alltests)

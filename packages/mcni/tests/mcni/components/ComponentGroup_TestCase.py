@@ -14,7 +14,6 @@
 
 
 import unittestX as unittest
-import journal
 
 
 from mcni.AbstractComponent import AbstractComponent
@@ -117,7 +116,6 @@ def pysuite():
     return unittest.TestSuite( (suite1,) )
 
 def main():
-    #debug.activate()
     pytests = pysuite()
     alltests = unittest.TestSuite( (pytests, ) )
     res = unittest.TextTestRunner(verbosity=2).run(alltests)

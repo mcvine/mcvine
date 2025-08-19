@@ -93,8 +93,6 @@ class Geometer(Component, base):
         Component.__init__(self, name, 'geometer')
         base.__init__(self)
 
-        import journal
-        self._warning = journal.warning( 'mcni.pyre_support.geometer' )
         return
 
 

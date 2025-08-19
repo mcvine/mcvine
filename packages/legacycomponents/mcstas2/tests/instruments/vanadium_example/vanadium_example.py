@@ -13,9 +13,6 @@
 
 
 
-import journal
-
-
 from mcni.pyre_support.Instrument import Instrument as base
 class Instrument(base):
 

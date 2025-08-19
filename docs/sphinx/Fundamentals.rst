@@ -103,8 +103,6 @@ Outputs
 Miscellanesous
 """"""""""""""
 
-* --journal.info.instrument: as simulation progress, print out information
-  regarding simulation loops and component processing loops.
 * --dump-pml:
   Writes out pml file for the simulation. A pml file is a configuration file
   that contains all configuration details of the simulation application.

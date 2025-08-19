@@ -8,10 +8,6 @@ Test of RadialCollimator
 
 import os
 import numpy as np
-import journal
-
-debug = journal.debug( "mcni.components.test" )
-warning = journal.warning( "mcni.components.test" )
 
 from mcni import neutron_buffer, neutron
 from mcni.components.RadialCollimator import RadialCollimator

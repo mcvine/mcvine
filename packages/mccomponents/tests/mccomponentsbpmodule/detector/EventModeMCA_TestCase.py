@@ -14,10 +14,6 @@
 
 
 import unittestX as unittest
-import journal
-
-debug = journal.debug( "EventModeMCA_TestCase" )
-warning = journal.warning( "EventModeMCA_TestCase" )
 
 
 import mcni

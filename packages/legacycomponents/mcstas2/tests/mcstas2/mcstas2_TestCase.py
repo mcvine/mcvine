@@ -19,7 +19,6 @@ is_interactive = False
 
 import os, sys
 import unittestX as unittest
-import journal
 
 import mcstas2
 

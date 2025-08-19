@@ -14,10 +14,6 @@
 
 
 import unittestX as unittest
-import journal
-
-debug = journal.debug( "homogeneous_scatterer_TestCase" )
-warning = journal.warning( "homogeneous_scatterer_TestCase" )
 
 
 import mcni

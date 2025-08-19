@@ -14,10 +14,6 @@
 
 
 import unittestX as unittest
-import journal
-
-debug = journal.debug( "PeriodicDispersion_3D_TestCase" )
-warning = journal.warning( "PeriodicDispersion_3D_TestCase" )
 
 
 import mcni

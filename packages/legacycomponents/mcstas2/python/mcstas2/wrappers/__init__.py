@@ -12,11 +12,9 @@
 #
 
 
-import journal
-debug = journal.debug('mcstas2.wrappers' )
-
-
 import os
+import logging
+logger = logging.getLogger("MCVine")
 
 
 def wrap(
@@ -71,9 +69,8 @@ def createBindingObject(
   bindingname: name of the binding. Eg. E_monitorboostpython
   bindingtype: type of binding. Eg. boostpython (currently only this is supported)
     """
+    logger.debug( 'pythonpackage=%s' % pythonpackage )
     
-    debug.log( 'pythonpackage=%s' % pythonpackage )
-
     if pythonpackage is None:
         pythonpackage = 'mcstas2.components.%s' % componentcategory
         pass
@@ -81,7 +78,7 @@ def createBindingObject(
     if not path:
         from . import temporaryfiles
         path = temporaryfiles.temporarydir()
-        debug.log('generateing wrapper in %s' % path)
+        logger.debug('generateing wrapper in %s' % path)
         pass
 
     if not componentname:

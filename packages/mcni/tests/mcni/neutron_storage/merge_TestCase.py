@@ -16,10 +16,6 @@ standalone = True
 
 
 import unittestX as unittest
-import journal
-
-debug = journal.debug( "mcni.neutron_storage.test" )
-warning = journal.warning( "mcni.neutron_storage.test" )
 
 
 
@@ -80,7 +76,6 @@ def pysuite():
 
 
 def main():
-    #debug.activate()
     pytests = pysuite()
     alltests = unittest.TestSuite( (pytests, ) )
     res = unittest.TextTestRunner(verbosity=2).run(alltests)

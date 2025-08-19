@@ -14,9 +14,8 @@
 
 ## Supports for parallel computing
 
-
-import journal
-info = journal.info( 'mpi' )
+import logging
+logger = logging.getLogger("MCVine")
 
 
 class ParallelComponent(object):
@@ -70,7 +69,7 @@ class MPI(object):
             parallel = False
             pass
 
-        info.log( "rank %d of %d" % (rank, size) )
+        logger.info( "rank %d of %d" % (rank, size) )
 
         self.size = size
         self.rank = rank

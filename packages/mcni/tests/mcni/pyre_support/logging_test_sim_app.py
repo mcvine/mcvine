@@ -5,8 +5,10 @@
 
 
 import random
-import journal
-info = journal.info("source")
+import logging
+# Configure the basic logging setup
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logger = logging.getLogger("MCVine")
 
 from mcni.pyre_support.AbstractComponent import AbstractComponent
 
@@ -15,7 +17,7 @@ class Source( AbstractComponent ):
     def process(self, neutrons):
         import mcni
         for i in range(len(neutrons)):
-            info.log("loop #%d" % i)
+            logger.info("loop #%d" % i)
             neutrons[i] = mcni.neutron( r = ( 0,0,0 ), v = (0,0,random.random()) )
             continue
         return neutrons

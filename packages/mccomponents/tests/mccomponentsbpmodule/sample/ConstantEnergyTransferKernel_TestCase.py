@@ -16,10 +16,6 @@ standalone = True
 
 
 import unittestX as unittest
-import journal
-
-debug = journal.debug( "ConstantEnergyTransferKernel_TestCase" )
-warning = journal.warning( "ConstantEnergyTransferKernel_TestCase" )
 
 
 import mcni

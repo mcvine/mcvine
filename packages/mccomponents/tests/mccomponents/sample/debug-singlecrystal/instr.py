@@ -1,11 +1,8 @@
-import journal
 import os, numpy as np
 import mcvine, mcvine.components as mcomps
 
 
 def instrument(sample='mcstas', debug=False):
-    if debug:
-        journal.debug('mcstas_Single_crystal').activate()
     instrument = mcvine.instrument()
     from mcni.utils import conversion
     a = 4.04932

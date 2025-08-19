@@ -109,14 +109,10 @@ def findcomponentfactory(*args, **kwds):
     return componentfactory(type=type, category=category, supplier=supplier)
 
 
-# mcvine wrapper of journal
-from ._journal import journal
-
 __all__ = [
     'simulate',
     'geometer',
     'instrument',
-    'journal',
     ]
 
 

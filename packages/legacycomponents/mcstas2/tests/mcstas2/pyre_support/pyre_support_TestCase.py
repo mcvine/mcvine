@@ -7,7 +7,6 @@ standalone = True
 
 
 import unittestX as unittest
-import journal
 
 
 class TestCase(unittest.TestCase):

@@ -14,10 +14,6 @@
 
 
 import unittestX as unittest
-import journal
-
-debug = journal.debug( "wrap_c_neutroncomponent_TestCase" )
-warning = journal.warning( "wrap_c_neutroncomponent_TestCase" )
 
 
 import mcni
@@ -64,7 +60,6 @@ def pysuite():
     return unittest.TestSuite( (suite1,) )
 
 def main():
-    #debug.activate()
     pytests = pysuite()
     alltests = unittest.TestSuite( (pytests, ) )
     res = unittest.TextTestRunner(verbosity=2).run(alltests)

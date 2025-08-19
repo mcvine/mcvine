@@ -16,19 +16,17 @@ class TestCase(unittest.TestCase):
 
 
     def test(self):
-        'mcni.pyre_support: journaling in instrument simulation app'
+        'mcni.pyre_support: logging'
         import subprocess as sp
-        cmd = "./journal_test_sim_app.py --journal.info.source --ncount=2"
+        cmd = "./logging_test_app.py"
         out = sp.check_output(cmd, stderr=sp.STDOUT, shell=True)
 
-        expected_loop0 = """./journal_test_sim_app.py:18:process\n -- source(info)\n -- loop #0"""
-        expected_loop1 = """./journal_test_sim_app.py:18:process\n -- source(info)\n -- loop #1"""
+        expected = """DEBUG - hello"""
         print("out.decode()",out.decode())
-        assert expected_loop0 in out.decode()
-        assert expected_loop1 in out.decode()
+        assert expected in out.decode()
         return
-    
-        
+
+
     pass  # end of TestCase
 
 

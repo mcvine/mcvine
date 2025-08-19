@@ -14,10 +14,6 @@
 
 
 import unittestX as unittest
-import journal
-
-debug = journal.debug( "DWFromDOS_TestCase" )
-warning = journal.warning( "DWFromDOS_TestCase" )
 
 
 import mcni

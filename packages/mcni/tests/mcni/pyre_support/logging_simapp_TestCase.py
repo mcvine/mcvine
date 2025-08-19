@@ -16,20 +16,22 @@ class TestCase(unittest.TestCase):
 
 
     def test(self):
-        'mcni.pyre_support: journaling'
+        'mcni.pyre_support: logging in instrument simulation app'
         import subprocess as sp
-        cmd = "./journal_test_app.py --journal.debug.journal_test_app"
+        cmd = "./logging_test_sim_app.py"
         out = sp.check_output(cmd, stderr=sp.STDOUT, shell=True)
 
-        expected = """./journal_test_app.py:22:main\n -- journal_test_app(debug)\n -- hello"""
-        print("out.decode()",out.decode())
-        assert expected in out.decode()
+        expected_loop0 = """INFO - loop #0"""
+        expected_loop1 = """INFO - loop #1"""
+        # print("out.decode()",out.decode())
+        assert expected_loop0 in out.decode()
+        assert expected_loop1 in out.decode()
         return
-    
-        
+
+
     pass  # end of TestCase
 
 
 if __name__ == "__main__": unittest.main()
-    
+
 # End of file 

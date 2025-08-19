@@ -20,8 +20,6 @@ need_user_interaction = True
 
 
 import unittestX as unittest
-import journal
-
 
 
 class TestCase(unittest.TestCase):
