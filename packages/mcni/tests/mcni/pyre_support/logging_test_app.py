@@ -28,6 +28,6 @@ class App(base):
         return
 
 
-if __name__ == "__main__": App('journal_test_app').run()
+if __name__ == "__main__": App('logging_test_app').run()
 
 # End of file 

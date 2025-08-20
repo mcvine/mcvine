@@ -44,6 +44,6 @@ class Instrument(base):
     pass # end of Instrument
 
 
-if __name__ == "__main__": Instrument("journal_test_sim_app").run()
+if __name__ == "__main__": Instrument("logging_test_sim_app").run()
 
 # End of file 
