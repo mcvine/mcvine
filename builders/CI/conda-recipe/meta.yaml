@@ -16,14 +16,13 @@ requirements:
     - libgcc                   {{ libgcc }}
   host:
     - python                   {{ python }}
-    - setuptools
     - pyyaml
     - numpy                    {{ numpy }}
     - psutil
     - h5py
-    - mpi4py
+    - mpi4py                  
+    - openmpi                      
     - libgcc                   {{ libgcc }}
-    - openmpi                  {{ openmpi }}
     - gsl                      {{ gsl }}
     - boost                    {{ boost }}
     - mcpl
@@ -41,13 +40,12 @@ requirements:
     - cmake
     - libgcc                   {{ libgcc }}
     - python                   {{ python }}
-    - setuptools
     - pyyaml
     - numpy                    {{ numpy }}
     - psutil
     - h5py
-    - mpi4py
-    - openmpi                  {{ openmpi }}
+    - mpi4py                   
+    - openmpi                  
     - gsl                      {{ gsl }}
     - boost                    {{ boost }}
     - mcpl
