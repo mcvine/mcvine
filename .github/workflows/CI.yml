@@ -30,7 +30,9 @@ jobs:
         with:
           fetch-depth: 0
       - name: Branch name
-        run: echo running on branch ${GITHUB_REF##*/}
+        run: |
+          echo running on branch ${GITHUB_HEAD_REF##*/}
+          echo "latest_commit_id=$(git log -1 --format=%H)" >> "$GITHUB_OUTPUT"
 
       # setup micromamba
       - name: Micromamba    
@@ -49,7 +51,11 @@ jobs:
         run: micromamba info
       # build and test (have to use pwsh!)
       - name: build / test
+        uses: actions/checkout@v4
+        with:
+        fetch-depth: 0 
         shell: bash -l {0}
         run: |
           echo $PYTHON_VERSION
+          export GIT_FULL_HASH=${{ steps.get_commit.outputs.latest_commit_id }}"
           ./builders/CI/build_and_test.sh
