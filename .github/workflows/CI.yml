@@ -55,5 +55,4 @@ jobs:
         shell: bash -l {0}
         run: |
           echo $PYTHON_VERSION
-          export GIT_FULL_HASH=${{ steps.get_commit.outputs.latest_commit_id }}"
-          ./builders/CI/build_and_test.sh
+          GIT_FULL_HASH=${{ steps.get_commit.outputs.latest_commit_id }} ./builders/CI/build_and_test.sh
