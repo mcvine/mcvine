@@ -21,7 +21,7 @@ requirements:
     - psutil
     - h5py
     - mpi4py                  
-    - openmpi                      
+    - openmpi                  {{ openmpi }}                      
     - libgcc                   {{ libgcc }}
     - gsl                      {{ gsl }}
     - boost                    {{ boost }}
@@ -45,7 +45,7 @@ requirements:
     - psutil
     - h5py
     - mpi4py                   
-    - openmpi                  
+    - openmpi                  {{ openmpi }}                      
     - gsl                      {{ gsl }}
     - boost                    {{ boost }}
     - mcpl
