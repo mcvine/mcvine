@@ -21,14 +21,14 @@ conda install mcvine-core
 ```
 Release candidate versions are provided through the rc channel (mcvine/label/rc), while full production releases through tha main channel (mcvine).
 
-*It is strongly recommended to install the full MCVine ecosystem, instead of selective subpackages, due to internal depedencies.*
+*It is strongly recommended to install the full MCVine ecosystem, instead of selective subpackages, due to internal package dependencies.*
 
 ```bash
 conda install mcvine
 
 ```
 
-To see the full list of the depedencies and subpackages of MCVine and the latest versions, please refer to: [mcvine conda-recipes](https://github.com/mcvine/conda-recipes)
+To see the full list of dependencies, subpackages and the latest versions, please refer to: [mcvine conda-recipes](https://github.com/mcvine/conda-recipes)
 
 # Starting MCViNe for the first time - Prerequisites
 
