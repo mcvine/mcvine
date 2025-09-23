@@ -40,7 +40,7 @@ DownloadInstrument
 
 ```
 
-The [DownloadInstrument](https://docs.mantidproject.org/nightly/algorithms/DownloadInstrument-v1.html). The algorithm downloads the contents of the instruments/ directory and Facilites.xml in the local directory.
+The [DownloadInstrument](https://docs.mantidproject.org/nightly/algorithms/DownloadInstrument-v1.html) algorithm downloads the contents of the instruments/ directory and Facilites.xml in the local directory.
 
 # Using python logging in mcvine-core
 
