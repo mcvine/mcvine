@@ -7,12 +7,12 @@
 * Publications: http://mcvine.github.io/publications.html
 * Training: https://github.com/mcvine/training
 * Development: https://github.com/mcvine/devel
-* Build mcvine-core and subpackages from source: [build-dev](builders/dev/README.md)
+* Build mcvine-core (current repository) and subpackages from source: [build-dev](builders/dev/README.md)
 
 # Installing the MCViNe ecosystem
 
 The MCVine packages are released through conda: [Anaconda Mcvine registry](https://anaconda.org/mcvine/)
-The mcvine-core can be selectively installed as a conda package:
+The mcvine-core is available as a conda package:
 
 ```bash
 
