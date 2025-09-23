@@ -9,10 +9,10 @@
 * Development: https://github.com/mcvine/devel
 * Build mcvine-core and subpackages from source: [build-dev](builders/dev/README.md)
 
-# Using the MCViNe ecosystem
+# Installing the MCViNe ecosystem
 
 The MCVine packages are released through conda: [Anaconda Mcvine registry](https://anaconda.org/mcvine/)
-The mcvine-core can be selectively installed as a conda package in a conda environment:
+The mcvine-core can be selectively installed as a conda package:
 
 ```bash
 
@@ -20,7 +20,7 @@ conda install mcvine-core
 
 ```
 Release candidate versions are provided through the rc channel (mcvine/label/rc), while full production releases through tha main channel (mcvine).
-It is strongly recommended to install the full MCVine ecosystem, instead of selective subpackages, due to internal depedencies
+*It is strongly recommended to install the full MCVine ecosystem, instead of selective subpackages, due to internal depedencies.*
 
 ```bash
 conda install mcvine
