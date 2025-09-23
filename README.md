@@ -12,14 +12,14 @@
 # Using the MCViNe ecosystem
 
 The MCVine packages are released through conda: [Anaconda Mcvine registry](https://anaconda.org/mcvine/)
-The mcvine-core can be selectived installed as a conda package in a conda environment:
+The mcvine-core can be selectively installed as a conda package in a conda environment:
 
 ```bash
 
 conda install mcvine-core
 
 ```
-Release candidates are provided through the rc channel (mcvine/label/rc), while full production releases through tha main channel (mcvine).
+Release candidate versions are provided through the rc channel (mcvine/label/rc), while full production releases through tha main channel (mcvine).
 It is strongly recommended to install the full MCVine ecosystem, instead of selective subpackages, due to internal depedencies
 
 ```bash
@@ -27,11 +27,11 @@ conda install mcvine
 
 ```
 
-To see the full list of the depedencies and subpackages of MCVine, please refer to: [mcvine conda-recipes](https://github.com/mcvine/conda-recipes)
+To see the full list of the depedencies and subpackages of MCVine and the latest versions, please refer to: [mcvine conda-recipes](https://github.com/mcvine/conda-recipes)
 
-# Starting mcvine for the first time - Prerequisites
+# Starting MCViNe for the first time - Prerequisites
 
-MCVine depedends on Mantid and it requires the Mantid workbench to be exeuted at least once on the user's directory or to call the following Mantid function from a script
+MCVine depedends on Mantid and it requires the Mantid workbench to be executed at least once on the user's directory or to call the following Mantid function from a script
 
 ```bash
 
@@ -39,7 +39,7 @@ DownloadInstrument
 
 ```
 
-The [DownloadInstrument](https://docs.mantidproject.org/nightly/algorithms/DownloadInstrument-v1.html). The algorithm downloads the contents of the instruments/ directory and Facilites.xml.
+The [DownloadInstrument](https://docs.mantidproject.org/nightly/algorithms/DownloadInstrument-v1.html). The algorithm downloads the contents of the instruments/ directory and Facilites.xml in the local directory.
 
 # Using python logging in mcvine-core
 
