@@ -20,6 +20,7 @@ conda install mcvine-core
 
 ```
 Release candidate versions are provided through the rc channel (mcvine/label/rc), while full production releases through tha main channel (mcvine).
+
 *It is strongly recommended to install the full MCVine ecosystem, instead of selective subpackages, due to internal depedencies.*
 
 ```bash
