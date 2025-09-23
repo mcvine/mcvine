@@ -7,11 +7,44 @@
 * Publications: http://mcvine.github.io/publications.html
 * Training: https://github.com/mcvine/training
 * Development: https://github.com/mcvine/devel
-* Build mcvine-core and subpackages from source: [build-dev](builders/dev/README.md)
+* Build mcvine-core (current repository) and subpackages from source: [build-dev](builders/dev/README.md)
 
-# Using python logging
+# Installing the MCViNe ecosystem
 
-MCVine uses python logging to log messages. Logging is configured in packages/mcvine/etc/mcvine.conf. The logging level is set by the level tag. By default, logging is set to debug level, which will show all logging messages. The logging levels from lowest to highest are the following:
+The MCVine packages are released through conda: [Anaconda Mcvine Registry](https://anaconda.org/mcvine/).
+The mcvine-core is available as a conda package:
+
+```bash
+
+conda install mcvine-core
+
+```
+Release candidate versions are provided through the rc channel (mcvine/label/rc), while full production releases through the main channel (mcvine).
+
+*It is strongly recommended to install the full MCVine ecosystem, instead of selective subpackages, due to internal package dependencies.*
+
+```bash
+conda install mcvine
+
+```
+
+To see the full list of dependencies, subpackages and the latest versions, please refer to: [mcvine conda-recipes](https://github.com/mcvine/conda-recipes)
+
+# Starting MCViNe for the first time - Prerequisites
+
+MCVine depedends on Mantid and it requires the Mantid workbench to be executed at least once on the user's directory or to call the following Mantid function from a script
+
+```bash
+
+DownloadInstrument
+
+```
+
+The [DownloadInstrument](https://docs.mantidproject.org/nightly/algorithms/DownloadInstrument-v1.html) algorithm downloads the contents of the instruments/ directory and Facilites.xml in the local directory.
+
+# Debugging mcvine-core - Python logging
+
+mcvine-core uses python logging to log messages. Logging is configured in packages/mcvine/etc/mcvine.conf. The logging level is set by the level tag. By default, logging is set to debug level, which will show all logging messages. The logging levels from lowest to highest are the following:
 * DEBUG 
 * INFO
 * WARNING
