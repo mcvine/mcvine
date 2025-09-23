@@ -44,7 +44,7 @@ The [DownloadInstrument](https://docs.mantidproject.org/nightly/algorithms/Downl
 
 # Using python logging in mcvine-core
 
-MCVine uses python logging to log messages. Logging is configured in packages/mcvine/etc/mcvine.conf. The logging level is set by the level tag. By default, logging is set to debug level, which will show all logging messages. The logging levels from lowest to highest are the following:
+mcvine-core uses python logging to log messages. Logging is configured in packages/mcvine/etc/mcvine.conf. The logging level is set by the level tag. By default, logging is set to debug level, which will show all logging messages. The logging levels from lowest to highest are the following:
 * DEBUG 
 * INFO
 * WARNING
