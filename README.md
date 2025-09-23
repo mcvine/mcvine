@@ -11,7 +11,7 @@
 
 # Installing the MCViNe ecosystem
 
-The MCVine packages are released through conda: [Anaconda Mcvine registry](https://anaconda.org/mcvine/)
+The MCVine packages are released through conda: [Anaconda Mcvine Registry](https://anaconda.org/mcvine/).
 The mcvine-core is available as a conda package:
 
 ```bash
