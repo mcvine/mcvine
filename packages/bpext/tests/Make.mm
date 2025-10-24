@@ -4,29 +4,23 @@
 #
 #                               Michael A.G. Aivazis
 #                        California Institute of Technology
-#                        (C) 1998-2005  All Rights Reserved
+#                        (C) 1998-2004  All Rights Reserved
 #
 # <LicenseText>
 #
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
 
-PROJECT = mcvine
+PROJECT = bpext
+PROJECT = tests
 
 # directory structure
 
 BUILD_DIRS = \
-	bpext \
-	mcvine \
-	mcni \
-	mccomposite \
-	mccomponents \
-	legacycomponents \
-	softwareinstallationinfodb/softwareinstallationinfodb.dv \
+    bpext \
+    binding \
 
 OTHER_DIRS = \
-	tests \
-	examples
 
 RECURSE_DIRS = $(BUILD_DIRS) $(OTHER_DIRS)
 
@@ -45,7 +39,9 @@ clean::
 tidy::
 	BLD_ACTION="tidy" $(MM) recurse
 
+
+
 # version
-# $Id$
+# $Id: Make.mm 1252 2007-05-09 16:09:24Z linjiao $
 
 # End of file

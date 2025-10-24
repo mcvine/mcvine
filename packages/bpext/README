@@ -1,0 +1,26 @@
+This package helps developers to build interconnection codes for 
+connecting boost python bindings to other types of bindings through PyCObject.
+
+The main usage of this package are contained in two methods:
+
+ - extract_ptr: extract a pointer from a boost python object and return a PyCObject 
+   of that pointer.
+
+ - wrap_ptr: extract the raw pointer inside a PyCObject and wrap it in a boost python
+   object; return the boost python object.
+
+ - wrap_native_ptr: extract the void pointer inside a PyCObject and put it in
+   a simple WrappedPointer object and then wrap that object in a boost python 
+   object; return the boost python object. This is a workaround for wrap_ptr
+   not handling native pointers.
+
+For developers:
+
+  To extend this package to support more c++ classes, you will need
+  to register new converters. Please read module/register_converters.*
+  for an example. The basic syntax is:
+
+    extractorRegistry[type_name] = extract_ptr< type >;
+    wrapperRegistry[type_name] = wrap_ptr< type >;
+
+  

@@ -1,0 +1,56 @@
+# -*- rpm-spec -*-
+Summary:        @CPACK_PACKAGE_SUMMARY@
+Name:           @CPACK_PACKAGE_NAME@
+Version:        @CPACK_PACKAGE_VERSION@
+Release:        @CPACK_PACKAGE_RELEASE@
+License:        @CPACK_PACKAGE_LICENSE@
+Group:          @CPACK_PACKAGE_APP_GROUP@
+Source:         @CPACK_PACKAGE_NAME@-@CPACK_PACKAGE_VERSION@.tar.gz
+BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root
+BuildRequires:  git
+BuildRequires:  gcc-c++
+BuildRequires:	cmake > 2.6
+BuildRequires:	make
+BuildRequires:  python-devel
+BuildRequires:  boost-devel
+BuildRequires:  boost-python
+
+Requires: python
+Requires:  boost-devel
+Requires:  boost-python
+Requires: danse.ins
+
+%description
+@CPACK_PACKAGE_SUMMARY@
+
+%define prefix @CPACK_PACKAGING_INSTALL_PREFIX@
+%define rpmprefix $RPM_BUILD_ROOT%{prefix}
+%define srcdirname %{name}-%{version}
+
+%prep
+%setup -q -n %{srcdirname}
+
+%build
+cd ..
+rm -rf build_tree
+mkdir build_tree
+cd build_tree
+cmake -DCMAKE_INSTALL_PREFIX=%{rpmprefix} ../%{srcdirname}
+make
+
+%install 
+cd ../build_tree
+make install
+
+%clean
+cd ..
+rm -rf %{srcdirname}
+rm -rf build_tree
+
+%files
+%defattr(-,root,root,-)
+%{prefix}/include/@PARENT_PATH@/@PROJECT_NAME@/*
+%{prefix}/@INSTALL_LIB_DIR@/*
+# %{prefix}/bin/*
+
+%changelog

@@ -4,32 +4,21 @@
 #
 #                               Michael A.G. Aivazis
 #                        California Institute of Technology
-#                        (C) 1998-2005  All Rights Reserved
+#                        (C) 1998-2002  All Rights Reserved
 #
 # <LicenseText>
 #
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
 
-PROJECT = mcni
-PACKAGE = mcnimodule
-MODULE = mcni
+# C++
 
-include std-pythonmodule.def
-include local.def
+PROJ_CXX_INCLUDES += $(BOOSTPYTHON_INCDIR)
 
-PROJ_CXX_SRCLIB = -lboost_python -L$(BOOSTPYTHON_LIBDIR) \
-	-lmcni \
-	-lbpext
-
-PROJ_SRCS = \
-	bindings.cc \
-	exceptions.cc \
-	misc.cc \
-	register_bp_voidptr_converters.cc \
 
 
 # version
-# $Id$
+# $Id: local.def 28 2005-06-12 16:22:03Z linjiao $
 
+#
 # End of file

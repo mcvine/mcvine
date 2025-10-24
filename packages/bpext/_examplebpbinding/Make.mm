@@ -4,32 +4,33 @@
 #
 #                               Michael A.G. Aivazis
 #                        California Institute of Technology
-#                        (C) 1998-2005  All Rights Reserved
+#                        (C) 1998-2004  All Rights Reserved
 #
 # <LicenseText>
 #
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
 
-PROJECT = mcni
-PACKAGE = mcnimodule
-MODULE = mcni
+PROJECT = bpext
+MODULE = _examplebpbinding
+PACKAGE = _examplebpbindingmodule
 
 include std-pythonmodule.def
 include local.def
 
-PROJ_CXX_SRCLIB = -lboost_python -L$(BOOSTPYTHON_LIBDIR) \
-	-lmcni \
-	-lbpext
+PROJ_CXX_SRCLIB = -lboost_python -L$(BOOSTPYTHON_LIBDIR) 
+
 
 PROJ_SRCS = \
-	bindings.cc \
-	exceptions.cc \
-	misc.cc \
-	register_bp_voidptr_converters.cc \
+	wrap.cc \
+
+
+include doxygen/default.def
+docs: export-doxygen-docs
+
 
 
 # version
-# $Id$
+# $Id: Make.mm 619 2007-05-15 04:25:25Z linjiao $
 
 # End of file

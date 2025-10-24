@@ -62,7 +62,7 @@ add_definitions(-DUSE_DANSE_NAMESPACE)
 # 
 set(link_libs
   ${PYTHON_LIBRARY} ${Boost_LIBRARIES} ${GSL_LIBRARIES}
-  "danse_ins_bpext"
+  "-lbpext"
   "-lmcni" "-lmccomposite" "-lfparser"
   "-l${LIB_NAME}"
   )

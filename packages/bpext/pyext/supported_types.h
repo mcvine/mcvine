@@ -1,0 +1,5 @@
+#ifndef H_SUPPORTED_TYPES
+#define H_SUPPORTED_TYPES
+
+
+#endif //H_SUPPORTED_TYPES

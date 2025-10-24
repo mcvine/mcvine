@@ -16,7 +16,7 @@
 template = '''
 #include "mcstas2/boostpython_binding/wrap_component.h"
 #include "%(headername)s.h"
-#include "danse/ins/bpext/bpext.h"
+#include "bpext/bpext.h"
 
 namespace mcstas2 {
 using namespace bpext;
