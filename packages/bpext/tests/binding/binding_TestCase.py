@@ -13,11 +13,11 @@
 
 
 import unittest
-from danse.ins.bpext import _bpext as binding
-from danse.ins.bpext import _examplebpbinding as example
+from bpext import _bpext as binding
+from bpext import _examplebpbinding as example
 
-
-from unittestX import TestCase
+import unittestX as unittest
+from unittest import TestCase
 class binding_TestCase(TestCase):
 
     def test1(self):

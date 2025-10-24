@@ -50,33 +50,7 @@ target_include_directories(${LIB_NAME}
         $<BUILD_INTERFACE:${CMAKE_BINARY_DIR}/export/include>  # build tree headers
         $<INSTALL_INTERFACE:include>                            # installed headers
 )
-  
 
-
-# install headers
-install (
-  DIRECTORY ${CMAKE_BINARY_DIR}/export/include/bpext
-  DESTINATION include/bpext)
-
-  message(" \n\n\n -------- CMkaje list --------------" ${CMAKE_BINARY_DIR}/export/include/bpext)
-# # install shared lib
-# install (TARGETS ${LIB_NAME}
-#   LIBRARY DESTINATION ${INSTALL_LIB_DIR}
-#   )
-
-
-message(" -------- \n CMAKE_CURRENT_BINARY_DIR \n -------------- " ${CMAKE_CURRENT_SOURCE_DIR})
-
-
-# # export headers from this project
-# file(COPY   bpext  extractor_registry   wrapper_registry   extract_ptr  wrap_ptr  WrappedPointer
-#   DESTINATION ${EXPORT_HEADERS}/bpext FILES_MATCHING PATTERN "*.h" PATTERN "*.icc")
-
-
-
-# compile shared lib
-# add_library ( ${LIB_NAME} SHARED ${SRC_FILES} ${INC_FILES} )
-#target_link_libraries(${LIB_NAME} "bpext")
 set_target_properties(${LIB_NAME} PROPERTIES LIBRARY_OUTPUT_DIRECTORY "${EXPORT_LIB}") # install to python directory
 
 

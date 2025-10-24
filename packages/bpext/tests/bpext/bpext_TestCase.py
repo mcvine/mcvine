@@ -15,16 +15,16 @@ from __future__ import print_function
 
 USE_PYRE = 0
 
-import unittest
-from danse.ins import bpext
+import unittestX as unittest
+import bpext
 
 
-from unittestX import TestCase
+from unittest import TestCase
 class bpext_TestCase(TestCase):
 
     def test1(self):
         "bpext bpext"
-        from danse.ins.bpext import _examplebpbinding as example
+        from bpext import _examplebpbinding as example
         v = example.vec_d(5)
         v[:] = 0, 1, 0, 3, 0
         p = bpext.extract_ptr(v, 'vec_double')
