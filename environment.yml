@@ -27,7 +27,6 @@ dependencies:
   - cmake
   - danse.ins.dsm
   - danse.ins.numpyext
-  #- danse.ins.bpext
   - diffpy.Structure=3.0.1 
   - histogram
   - pyre == 0.8.3

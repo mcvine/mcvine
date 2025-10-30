@@ -17,7 +17,6 @@
 
 #include "supported_types.h"
 #include <Python.h>
-#include "bpext.h"
 
 // #ifdef USE_PYRE
 // #include <portinfo>
@@ -25,7 +24,7 @@
 // #endif
 
 #include "misc.h"
-#include "bpext/bpext.h"
+#include "bpext/pext.h"
 #include "capsulethunk.h"
 
 
