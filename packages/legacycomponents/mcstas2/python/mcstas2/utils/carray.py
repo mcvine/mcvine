@@ -13,7 +13,7 @@
 
 
 
-from danse.ins import bpext
+import bpext
 
 
 def pycptr2npyarr( vptr, typename, size ):

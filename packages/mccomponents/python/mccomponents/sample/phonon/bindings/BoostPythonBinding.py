@@ -29,7 +29,7 @@ except ImportError:
     import warnings
     warnings.warn("Using old numpyext. Should use danse.ins.numpyext")
 
-from danse.ins import bpext
+import bpext
 
 
 class New:
