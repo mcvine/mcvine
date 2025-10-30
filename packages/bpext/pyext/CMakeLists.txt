@@ -14,10 +14,10 @@ set ( MOD_NAME _${PYBINDING_NAME} )
 
 # create empty portinfo (pyre-config thing)
 file(MAKE_DIRECTORY "${CMAKE_BINARY_DIR}/lib/include/")
-execute_process(
-  COMMAND ${CMAKE_COMMAND} -E touch ${CMAKE_BINARY_DIR}/packages/bpext/lib/include/portinfo
-)
- message(" \n\n\n -------- PORTINFO --------------" ${PYBINDING_NAME}, ${PKG_NAME} )
+# execute_process(
+#   COMMAND ${CMAKE_COMMAND} -E touch ${CMAKE_BINARY_DIR}/packages/bpext/lib/include/portinfo
+# )
+#  message(" \n\n\n -------- PORTINFO --------------" ${PYBINDING_NAME}, ${PKG_NAME} )
 
 # -I and -L
 include_directories(${PYTHON_INCLUDE_DIRS})

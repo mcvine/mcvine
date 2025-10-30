@@ -13,7 +13,7 @@
 
 
 #include <boost/python.hpp>
-#include "danse/ins/bpext/WrappedPointer.h"
+#include "bpext/WrappedPointer.h"
 #include "histogram/NdArray.h"
 
 

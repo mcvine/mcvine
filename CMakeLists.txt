@@ -175,7 +175,7 @@ set(CPACK_PACKAGE_VENDOR ${VENDOR})
 set(CPACK_PACKAGING_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX})
 set(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_NAME}-${CPACK_PACKAGE_VERSION}-${CPACK_PACKAGE_RELEASE}.${CMAKE_SYSTEM_PROCESSOR}")
 set(CPACK_RPM_PACKAGE_REQUIRES "cmake")
-set(CPACK_DEBIAN_PACKAGE_DEPENDS "python, python-yaml, python-numpy, python-psutil, python-h5py, python-mpi4py, libgsl0-dev, libboost-python-dev, libboost-python1.55.0, pyre, danse.ins.dsm, danse.ins.numpyext, danse.ins.bpext, histogram, danse.ins.matter, mcvine-resources")
+set(CPACK_DEBIAN_PACKAGE_DEPENDS "python, python-yaml, python-numpy, python-psutil, python-h5py, python-mpi4py, libgsl0-dev, libboost-python-dev, libboost-python1.55.0, pyre, danse.ins.dsm, danse.ins.numpyext, histogram, danse.ins.matter, mcvine-resources")
 include(CPack)
 
 # source tar ball
