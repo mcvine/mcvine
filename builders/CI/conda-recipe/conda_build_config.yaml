@@ -8,8 +8,6 @@ numpy:
   - 1.24.*
 numpyext:
   - 0.1.4
-bpext:
-  - 0.1.5
 histogram:
   - 0.4.*
 pyre:
@@ -30,8 +28,6 @@ pin_run_as_build:
   numpy:
     max_pin: x.x
   numpyext:
-    max_pin: x.x
-  bpext:
     max_pin: x.x
   histogram:
     max_pin: x.x

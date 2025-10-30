@@ -29,7 +29,6 @@ requirements:
     - pyre                     {{ pyre }}
     - danse.ins.dsm
     - danse.ins.numpyext       {{ numpyext }}
-    - danse.ins.bpext          {{ bpext }}
     - histogram                {{ histogram }}
     - diffpy.Structure         {{ structure }}
     - periodictable
@@ -52,7 +51,6 @@ requirements:
     - pyre                     {{ pyre }}
     - danse.ins.dsm
     - danse.ins.numpyext       {{ numpyext }}
-    - danse.ins.bpext          {{ bpext }}
     - histogram                {{ histogram }}
     - diffpy.Structure         {{ structure }}
     - periodictable
