@@ -1,4 +1,7 @@
-This package helps developers to build interconnection codes for 
+This package was moved from [danse-inelastic bpext](https://github.com/danse-inelastic/bpext), adjusted, modernized (e.g. journal referenced removed) and added as a mcvine-core package (packages/bpext). 
+It is installed like the other components of the packages/ directory, e.g. mccomponents, in which C header files, python, shared library objects, etc. are built and placed in locations based on the rest of the components.
+
+The package helps developers to build interconnection codes for 
 connecting boost python bindings to other types of bindings through PyCObject.
 
 The main usage of this package are contained in two methods:
