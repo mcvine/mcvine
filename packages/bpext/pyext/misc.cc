@@ -18,11 +18,6 @@
 #include "supported_types.h"
 #include <Python.h>
 
-// #ifdef USE_PYRE
-// #include <portinfo>
-// #include "journal/debug.h"
-// #endif
-
 #include "misc.h"
 #include "bpext/bpext.h"
 #include "capsulethunk.h"
@@ -280,17 +275,6 @@ PyObject * pybpext_wrap_native_ptr(PyObject *, PyObject *args)
   WrappedPointer *wp = new WrappedPointer;
   wp->pointer = ptr;
 
-#ifdef DEBUG
-#ifdef USE_PYRE
-  journal::debug_t debug("wrap_native_ptr");
-  debug << journal::at(__HERE__)
-	<< "wrapped pointer: " << ptr 
-	<< journal::endl;
-#else
-  std::cerr << "wrapped pointer: " << ptr << std::endl;
-#endif
-#endif
-
   using namespace boost::python;
   PyObject * ret;
   ret = incref
@@ -382,17 +366,6 @@ PyObject * pybpext_extract_native_ptr(PyObject *, PyObject *args)
   WrappedPointer *wptr = (WrappedPointer *)ptr;
 
   void *nptr = wptr->pointer;
-
-#ifdef DEBUG
-#ifdef USE_PYRE
-  journal::debug_t debug("extract_native_ptr");
-  debug << journal::at(__HERE__)
-	<< "extracted pointer: " << nptr 
-	<< journal::endl;
-#else
-  std::cerr << "extracted pointer: " << nptr << std::endl;
-#endif
-#endif
 
   return PyCapsule_New( nptr, NULL, pycapsule_donothing );
 }

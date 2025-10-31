@@ -1,8 +1,5 @@
 #include <iostream>
 #include "boost/python/object.hpp"
-#ifdef USE_PYRE
-#include "journal/debug.h"
-#endif
 
 //! wrap a pointer to become a boost python object
 /// This is not a copy!
@@ -14,17 +11,6 @@ PyObject *wrap_ptr( void *ptr )
   using namespace boost::python;
   T  * t_ptr = static_cast<T *> (ptr);
 
-#ifdef DEBUG
-#ifdef USE_PYRE
-  journal::debug_t debug("bpext.wrap_ptr");
-  debug 
-    << journal::at(__HERE__)
-    << "pointer to c++ object: " << t_ptr 
-    << journal::endl;
-#else
-  std::cerr << "pointer to c++ object: " << t_ptr  << std::endl;
-#endif
-#endif
 
   //std::cout << t_ptr << std::endl;
   try {

@@ -16,10 +16,13 @@ from __future__ import print_function
 USE_PYRE = 0
 
 import unittestX as unittest
+from unittest import TestCase
 import bpext
 
 
-from unittest import TestCase
+import logging
+logger = logging.getLogger("MCVine")
+
 class bpext_TestCase(TestCase):
 
     def test1(self):
@@ -36,10 +39,9 @@ class bpext_TestCase(TestCase):
 
     def test2(self):
         "bpext: double array"
-        if USE_PYRE:
-            import journal
-            journal.debug('wrap_native_ptr').activate()
-            journal.debug('extract_native_ptr').activate()
+
+        logger.debug('wrap_native_ptr')
+        logger.debug('extract_native_ptr')
         
         from bpext import _bpext as binding
         arr = binding.newdblarr(10)
@@ -61,8 +63,6 @@ def pysuite():
     return unittest.TestSuite((suite1,))
 
 def main():
-    if USE_PYRE:
-        import journal
     pytests = pysuite()
     alltests = unittest.TestSuite((pytests,))
     unittest.TextTestRunner(verbosity=2).run(alltests)
