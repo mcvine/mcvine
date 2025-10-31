@@ -12,25 +12,11 @@ set ( SRC_FILES
 # alias
 set ( MOD_NAME _${PYBINDING_NAME} )
 
-# create empty portinfo (pyre-config thing)
-file(MAKE_DIRECTORY "${CMAKE_BINARY_DIR}/lib/include/")
-# execute_process(
-#   COMMAND ${CMAKE_COMMAND} -E touch ${CMAKE_BINARY_DIR}/packages/bpext/lib/include/portinfo
-# )
-#  message(" \n\n\n -------- PORTINFO --------------" ${PYBINDING_NAME}, ${PKG_NAME} )
-
 # -I and -L
 include_directories(${PYTHON_INCLUDE_DIRS})
 include_directories(${Boost_INCLUDE_DIRS})
 include_directories(${CMAKE_BINARY_DIR}/packages/bpext/lib/include)
-include_directories(${CMAKE_BINARY_DIR}/packages/bpext/lib/include/danse/ins)
 link_directories(${CMAKE_BINARY_DIR}/packages/bpext/lib)
-
-# include_directories(${PYTHON_INCLUDE_DIRS})
-# include_directories(${Boost_INCLUDE_DIRS})
-# include_directories(${DEPLOYMENT_PREFIX}/lib/include)
-# include_directories(${DEPLOYMENT_PREFIX}/lib/include/danse/ins)
-# link_directories(${DEPLOYMENT_PREFIX}/lib)
 
 # compile shared library
 add_library(${MOD_NAME} SHARED ${SRC_FILES})

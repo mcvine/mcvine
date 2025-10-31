@@ -41,7 +41,7 @@ class bpext_TestCase(TestCase):
             journal.debug('wrap_native_ptr').activate()
             journal.debug('extract_native_ptr').activate()
         
-        from danse.ins.bpext import _bpext as binding
+        from bpext import _bpext as binding
         arr = binding.newdblarr(10)
         print(arr)
 
