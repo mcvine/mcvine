@@ -27,7 +27,7 @@ except ImportError:
     import numpyext
     import warnings
     warnings.warn("Using old numpyext. Should use danse.ins.numpyext")
-from danse.ins import bpext
+import bpext
 
 
 class TestCase(unittest.TestCase):
