@@ -88,14 +88,26 @@ $ mi
 $ mt
 
 ```
-*Currently 7/299 tests are failing: [jclemons555-README](https://github.com/jclemons555/mcvine/blob/master/README.md)
+*Currently 5/301 tests are failing ([jclemons555-README](https://github.com/jclemons555/mcvine/blob/master/README.md)):
+- instrument/instrument/geometry/yaml/parser_TestCase
+- instrument/instrument/geometry/yaml/renderer_TestCase
+- instrument/instrument/factories/ARCSBootstrap_TestCase
+- libmccomposite/geometry/test_intersect.cc
+- libmccomposite/mccomposite/test_neutron_propagation.cc
 
 ## Build/install subpackages from source code
 During the mcvine-core building process, \<build\> and \<export\> directories are created and various artifacts are included.
 
-Mcvine-core's python packages are included in the \<export\>/lib64/ directory (*\<export\>/lib64/python3.10/site-packages/*). All mcvine packages should be installed at the same location. In every mcvine subpackage, ensure that the if *INSTALL_LIB_DIR* is defined in the CMakeLists.txt file, it points to lib64 (instead of lib) directory:
+Mcvine-core's python packages are included in the \<export\>/lib64/ directory (*\<export\>/lib64/python3.10/site-packages/*). All mcvine packages should be installed at the same location. In every mcvine subpackage, ensure that
+-  if *INSTALL_LIB_DIR* is defined in the CMakeLists.txt file, it points to lib64 (instead of lib) directory:
+    ```
+    set(INSTALL_LIB_DIR lib**64** CACHE PATH "Installation directory for libraries")
+    ```
 
-set(INSTALL_LIB_DIR lib**64** CACHE PATH "Installation directory for libraries")
+- the cmake minimum version is set to **3.5** in CMakeLists.txt
+    ```
+    cmake_minimum_required (VERSION 3.5)
+    ```
 
 
 Regarding the mcvine subpackages listed above, update the CMakeLists.txt of: phonon, workflow and ui with the above change.
