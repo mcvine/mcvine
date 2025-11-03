@@ -9,7 +9,7 @@
 * Development: https://github.com/mcvine/devel
 * Build mcvine-core (current repository) and subpackages from source: [build-dev](builders/dev/README.md)
 
-# Installing the MCViNe ecosystem
+# Installing the MCViNE ecosystem
 
 The MCVine packages are released through conda: [Anaconda Mcvine Registry](https://anaconda.org/mcvine/).
 The mcvine-core is available as a conda package:
@@ -30,7 +30,7 @@ conda install mcvine
 
 To see the full list of dependencies, subpackages and the latest versions, please refer to: [mcvine conda-recipes](https://github.com/mcvine/conda-recipes)
 
-# Starting MCViNe for the first time - Prerequisites
+# Starting MCViNE for the first time - Prerequisites
 
 MCVine depedends on Mantid and it requires the Mantid workbench to be executed at least once on the user's directory or to call the following Mantid function from a script
 

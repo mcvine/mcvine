@@ -28,7 +28,6 @@ Requires: boost-python
 Requires: pyre
 Requires: danse.ins.dsm
 Requires: danse.ins.numpyext
-Requires: danse.ins.bpext
 Requires: histogram
 Requires: diffpy.Structure
 Requires: periodictable

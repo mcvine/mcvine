@@ -24,7 +24,7 @@ except ImportError:
     from numpyext import getdataptr
     import warnings
     warnings.warn("Using old numpyext. Should use danse.ins.numpyext")
-from danse.ins import bpext
+import bpext
 
 
 class mcnimodule_TestCase(unittest.TestCase):

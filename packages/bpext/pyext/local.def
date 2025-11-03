@@ -1,0 +1,23 @@
+# -*- Makefile -*-
+#
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#
+#                               Michael A.G. Aivazis
+#                        California Institute of Technology
+#                        (C) 1998-2004  All Rights Reserved
+#
+# <LicenseText>
+#
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#
+
+# C++
+
+PROJ_CXX_INCLUDES = ..
+PROJ_CXX_INCLUDES += $(BOOSTPYTHON_INCDIR)
+
+
+# version
+# $Id: local.def 2 2004-12-07 22:46:28Z linjiao $
+
+# End of file

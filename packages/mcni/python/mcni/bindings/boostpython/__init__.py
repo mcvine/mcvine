@@ -85,7 +85,7 @@ def _import():
     import mcni.mcnibp
     from . import _patch_neutronevents_bp_interface
     import mcni._mcni
-    from danse.ins import bpext
+    import bpext
     return
 
 try:

@@ -24,7 +24,7 @@ link_directories(${DEPLOYMENT_PREFIX}/${INSTALL_LIB_DIR})
 # compile executable
 set(link_libs
   ${PYTHON_LIBRARY} ${Boost_LIBRARIES} ${GSL_LIBRARIES}
-  "danse_ins_bpext"
+  "-lbpext"
   "-l${LIB_NAME}"
   )
 set(deps ${LIB_NAME})

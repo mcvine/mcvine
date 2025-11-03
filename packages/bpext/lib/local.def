@@ -1,0 +1,32 @@
+# -*- Makefile -*-
+#
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#
+#                               Michael A.G. Aivazis
+#                        California Institute of Technology
+#                        (C) 1998-2004  All Rights Reserved
+#
+# <LicenseText>
+#
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#
+
+#
+# Local (project) definitions
+#
+
+# C++
+
+PROJ_CXX_INCLUDES += $(BOOSTPYTHON_INCDIR)
+
+PROJ_CXX_LIBS += -L $(BOOSTPYTHON_LIBDIR) -lboost_python
+
+    PROJ_CXX_FLAGS += $(CXX_SOFLAGS)
+    PROJ_LCXX_FLAGS += $(LCXX_SARFLAGS)
+
+include Python/default.def
+
+# version
+# $Id: local.def 10 2005-01-19 23:18:13Z linjiao $
+
+# End of file
