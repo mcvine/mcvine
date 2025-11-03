@@ -34,7 +34,6 @@ foreach (header ${EXPORT_HEADERS_F})
     "${CMAKE_BINARY_DIR}/export/include/bpext/${header}"
     )
 endforeach (header)
-#"${CMAKE_CURRENT_BINARY_DIR}/include/${PARENT_PATH}/bpext/${header}"
 
 
 configure_file(
